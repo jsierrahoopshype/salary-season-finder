@@ -11,8 +11,9 @@
   let filtered = [];      // current filtered results
   let sortCol = "salary";
   let sortDir = "desc";   // "asc" or "desc"
-  let viewMode = "seasons"; // "seasons" or "agents"
   let activePreset = null;
+  let _exactTeamRank = null;    // set by cell click for exact rank match
+  let _exactLeagueRank = null;  // set by cell click for exact rank match
 
   // Column definitions
   const COLUMNS = [
@@ -38,7 +39,6 @@
     { key: "cost_per_point",    label: "$/Point",     type: "salary", default: false, sortable: true  },
     { key: "cost_per_game",     label: "$/Game",      type: "salary", default: false, sortable: true  },
     { key: "career_earnings",   label: "Career $",    type: "salary", default: true,  sortable: true  },
-    { key: "agent",             label: "Agent",       type: "text",   default: true,  sortable: true  },
     { key: "awards",            label: "Awards",      type: "awards", default: false, sortable: false },
     { key: "pos",               label: "Pos",         type: "text",   default: false, sortable: true  },
     { key: "nationality",       label: "Nat.",        type: "text",   default: false, sortable: true  },
@@ -47,18 +47,6 @@
 
   // Track which columns are visible
   let visibleCols = {};
-
-  // Agent leaderboard columns
-  const AGENT_COLUMNS = [
-    { key: "rank",           label: "#",           type: "rank"   },
-    { key: "agent",          label: "Agent",       type: "text"   },
-    { key: "clients",        label: "Clients",     type: "num"    },
-    { key: "total_salary",   label: "Total $",     type: "salary" },
-    { key: "avg_salary",     label: "Avg $",       type: "salary" },
-    { key: "max_salary",     label: "Max $",       type: "salary" },
-    { key: "top_client",     label: "Top Client",  type: "text"   },
-    { key: "avg_cap_pct",    label: "Avg Cap%",    type: "pct"    },
-  ];
 
   // ---- Formatting Helpers ----
   function fmtSalary(val) {
@@ -197,8 +185,6 @@
       }
     });
 
-    // If team data is empty, hide team column; if agent has data, show it
-    if (hasData["agent"]) visibleCols["agent"] = true;
     if (hasData["career_earnings"]) visibleCols["career_earnings"] = true;
     if (hasData["years_exp"]) visibleCols["years_exp"] = true;
     if (!hasData["team"]) visibleCols["team"] = false;
@@ -321,16 +307,6 @@
     // Share
     document.getElementById("shareBtn").addEventListener("click", shareURL);
 
-    // View mode toggle
-    document.querySelectorAll(".mode-btn").forEach(function (btn) {
-      btn.addEventListener("click", function () {
-        document.querySelectorAll(".mode-btn").forEach(function (b) { b.classList.remove("active"); });
-        btn.classList.add("active");
-        viewMode = btn.dataset.mode;
-        applyFilters();
-      });
-    });
-
     // Preset buttons
     document.querySelectorAll(".preset-btn").forEach(function (btn) {
       btn.addEventListener("click", function () {
@@ -414,11 +390,6 @@
     // Player search autocomplete
     setupAutocomplete("playerSearch", "playerDropdown", function () {
       return DATA.players || [];
-    });
-
-    // Agent search autocomplete
-    setupAutocomplete("agentSearch", "agentDropdown", function () {
-      return DATA.agents || [];
     });
   }
 
@@ -602,7 +573,6 @@
       gpMax: parseNum(document.getElementById("gpMax").value),
       awards: selectedAwards,
       hasAnyAward: document.getElementById("hasAnyAward").checked,
-      agentSearch: document.getElementById("agentSearch").value.trim().toLowerCase(),
     };
   }
 
@@ -622,11 +592,13 @@
     if (f.capPctMin != null && (record.salary_cap_pct == null || record.salary_cap_pct < f.capPctMin)) return false;
     if (f.capPctMax != null && (record.salary_cap_pct == null || record.salary_cap_pct > f.capPctMax)) return false;
 
-    // Team rank
-    if (f.teamRank != null && (record.salary_rank_team == null || record.salary_rank_team > f.teamRank)) return false;
+    // Team rank (top N from select, or exact from cell click)
+    if (_exactTeamRank != null && record.salary_rank_team !== _exactTeamRank) return false;
+    if (_exactTeamRank == null && f.teamRank != null && (record.salary_rank_team == null || record.salary_rank_team > f.teamRank)) return false;
 
-    // League rank
-    if (f.leagueRank != null && (record.salary_rank_league == null || record.salary_rank_league > f.leagueRank)) return false;
+    // League rank (top N from select, or exact from cell click)
+    if (_exactLeagueRank != null && record.salary_rank_league !== _exactLeagueRank) return false;
+    if (_exactLeagueRank == null && f.leagueRank != null && (record.salary_rank_league == null || record.salary_rank_league > f.leagueRank)) return false;
 
     // Cost per point
     if (f.cppMin != null && (record.cost_per_point == null || record.cost_per_point < f.cppMin)) return false;
@@ -701,9 +673,6 @@
 
     if (f.hasAnyAward && (!record.awards || record.awards.length === 0)) return false;
 
-    // Agent
-    if (f.agentSearch && (!record.agent || record.agent.toLowerCase().indexOf(f.agentSearch) < 0)) return false;
-
     return true;
   }
 
@@ -725,11 +694,7 @@
     saveStateToURL();
 
     // Render
-    if (viewMode === "agents") {
-      renderAgentLeaderboard();
-    } else {
-      renderTable();
-    }
+    renderTable();
   }
 
   // ---- Sorting ----
@@ -802,6 +767,26 @@
     document.getElementById("seasonFrom").value = currentFrom;
     document.getElementById("seasonTo").value = currentTo;
 
+    // Helper: set ±10% range on two inputs
+    function setRange10(minId, maxId, val) {
+      var n = parseFloat(val);
+      if (isNaN(n) || n === 0) return;
+      var lo = Math.round(n * 0.9);
+      var hi = Math.round(n * 1.1);
+      document.getElementById(minId).value = lo;
+      document.getElementById(maxId).value = hi;
+    }
+
+    // Helper: set ±10% range for decimal stats
+    function setRange10Dec(minId, maxId, val) {
+      var n = parseFloat(val);
+      if (isNaN(n)) return;
+      var lo = (n * 0.9).toFixed(1);
+      var hi = (n * 1.1).toFixed(1);
+      document.getElementById(minId).value = lo;
+      document.getElementById(maxId).value = hi;
+    }
+
     switch (colKey) {
       case "player":
         document.getElementById("playerSearch").value = rawValue;
@@ -822,9 +807,6 @@
       case "team":
         document.getElementById("teamFilter").value = rawValue;
         break;
-      case "agent":
-        document.getElementById("agentSearch").value = rawValue;
-        break;
       case "nationality":
         document.getElementById("nationality").value = rawValue;
         break;
@@ -842,6 +824,7 @@
         document.querySelectorAll("#awardsFilter .filter-chip.active").forEach(function () { matched = true; });
         if (!matched) document.getElementById("hasAnyAward").checked = true;
         break;
+      // Exact match columns
       case "years_exp":
         document.getElementById("expMin").value = rawValue;
         document.getElementById("expMax").value = rawValue;
@@ -853,46 +836,61 @@
       case "gp":
         document.getElementById("gpMin").value = rawValue;
         break;
-      case "salary":
-        document.getElementById("salaryMin").value = rawValue;
-        break;
-      case "salary_cap_pct":
-        document.getElementById("capPctMin").value = rawValue;
-        break;
-      case "cost_per_point":
-        document.getElementById("cppMin").value = rawValue;
-        visibleCols["cost_per_point"] = true;
-        buildColumnToggles();
-        break;
-      case "cost_per_game":
-        document.getElementById("cpgMin").value = rawValue;
-        visibleCols["cost_per_game"] = true;
-        buildColumnToggles();
-        break;
-      case "career_earnings":
-        document.getElementById("earningsMin").value = rawValue;
-        break;
       case "draft_pick":
         document.getElementById("draftMin").value = rawValue;
         document.getElementById("draftMax").value = rawValue;
         break;
+      // Exact rank match
+      case "salary_rank_team":
+        _exactTeamRank = parseInt(rawValue, 10);
+        break;
+      case "salary_rank_league":
+        _exactLeagueRank = parseInt(rawValue, 10);
+        break;
+      // ±10% range columns (salary/money)
+      case "salary":
+        setRange10("salaryMin", "salaryMax", rawValue);
+        break;
+      case "salary_cap_pct":
+        setRange10Dec("capPctMin", "capPctMax", rawValue);
+        break;
+      case "cost_per_point":
+        setRange10("cppMin", "cppMax", rawValue);
+        visibleCols["cost_per_point"] = true;
+        buildColumnToggles();
+        break;
+      case "cost_per_game":
+        setRange10("cpgMin", "cpgMax", rawValue);
+        visibleCols["cost_per_game"] = true;
+        buildColumnToggles();
+        break;
+      case "career_earnings":
+        setRange10("earningsMin", "earningsMax", rawValue);
+        break;
+      // ±10% range columns (stats)
       case "ppg":
-        document.getElementById("ppgMin").value = rawValue;
+        setRange10Dec("ppgMin", "ppgMax", rawValue);
         break;
       case "rpg":
-        document.getElementById("rpgMin").value = rawValue;
+        setRange10Dec("rpgMin", "rpgMax", rawValue);
         break;
       case "apg":
-        document.getElementById("apgMin").value = rawValue;
+        setRange10Dec("apgMin", "apgMax", rawValue);
+        break;
+      case "spg":
+        // SPG filter inputs don't exist in sidebar, skip range
+        break;
+      case "bpg":
+        // BPG filter inputs don't exist in sidebar, skip range
         break;
       case "fg_pct":
-        document.getElementById("fgPctMin").value = rawValue;
+        setRange10Dec("fgPctMin", "fgPctMax", rawValue);
         break;
       case "tp_pct":
-        document.getElementById("tpPctMin").value = rawValue;
+        setRange10Dec("tpPctMin", "tpPctMax", rawValue);
         break;
       case "ft_pct":
-        document.getElementById("ftPctMin").value = rawValue;
+        setRange10Dec("ftPctMin", "ftPctMax", rawValue);
         break;
       default:
         return; // not a filterable column
@@ -904,7 +902,6 @@
 
   // ---- Table Rendering ----
   function renderTable() {
-    document.getElementById("agentLeaderboard").style.display = "none";
     document.getElementById("tableWrapper").style.display = "";
 
     var activeCols = COLUMNS.filter(function (c) {
@@ -986,96 +983,6 @@
     document.getElementById("tableWrapper").scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
-  // ---- Agent Leaderboard ----
-  function renderAgentLeaderboard() {
-    document.getElementById("tableWrapper").style.display = "none";
-    document.getElementById("agentLeaderboard").style.display = "";
-    document.getElementById("emptyState").style.display = "none";
-
-    // Aggregate by agent
-    var agentMap = {};
-    filtered.forEach(function (r) {
-      if (!r.agent) return;
-      if (!agentMap[r.agent]) {
-        agentMap[r.agent] = {
-          agent: r.agent,
-          clients: new Set(),
-          total_salary: 0,
-          max_salary: 0,
-          top_client: "",
-          total_cap_pct: 0,
-          cap_count: 0,
-          count: 0,
-        };
-      }
-      var ag = agentMap[r.agent];
-      ag.clients.add(r.player);
-      ag.total_salary += r.salary || 0;
-      ag.count++;
-      if (r.salary > ag.max_salary) {
-        ag.max_salary = r.salary;
-        ag.top_client = r.player;
-      }
-      if (r.salary_cap_pct != null) {
-        ag.total_cap_pct += r.salary_cap_pct;
-        ag.cap_count++;
-      }
-    });
-
-    var agents = Object.values(agentMap).map(function (ag) {
-      return {
-        agent: ag.agent,
-        clients: ag.clients.size,
-        total_salary: ag.total_salary,
-        avg_salary: ag.count > 0 ? Math.round(ag.total_salary / ag.count) : 0,
-        max_salary: ag.max_salary,
-        top_client: ag.top_client,
-        avg_cap_pct: ag.cap_count > 0 ? ag.total_cap_pct / ag.cap_count : null,
-      };
-    });
-
-    // Sort by total salary desc
-    agents.sort(function (a, b) { return b.total_salary - a.total_salary; });
-
-    // Header
-    var thead = document.getElementById("agentTableHead");
-    var headerRow = "<tr>";
-    AGENT_COLUMNS.forEach(function (col) {
-      headerRow += "<th>" + col.label + "</th>";
-    });
-    headerRow += "</tr>";
-    thead.innerHTML = headerRow;
-
-    // Body - render all agents (no pagination)
-    var tbody = document.getElementById("agentTableBody");
-    var html = "";
-    var total = agents.length;
-
-    agents.forEach(function (ag, idx) {
-      html += "<tr>";
-      AGENT_COLUMNS.forEach(function (col) {
-        if (col.key === "rank") {
-          html += '<td class="rank">' + (idx + 1) + "</td>";
-        } else if (col.key === "agent") {
-          html += '<td class="agent-name">' + escHtml(ag.agent) + "</td>";
-        } else {
-          var val = ag[col.key];
-          var tdClass = col.type === "salary" ? "salary" : (col.type === "num" || col.type === "pct" ? "num" : "");
-          var display = col.type === "salary" ? fmtSalary(val) :
-                        col.type === "pct" ? fmtPct(val) :
-                        col.type === "num" ? fmtNum(val) :
-                        (val || "-");
-          html += '<td class="' + tdClass + '">' + display + "</td>";
-        }
-      });
-      html += "</tr>";
-    });
-    tbody.innerHTML = html;
-
-    document.getElementById("resultsCount").textContent =
-      "Showing " + total + " agents";
-  }
-
   // ---- Clear Filters ----
   function clearFiltersQuiet() {
     // Reset all inputs without triggering applyFilters
@@ -1085,12 +992,14 @@
       "draftMin", "draftMax",
       "ppgMin", "ppgMax", "rpgMin", "rpgMax", "apgMin", "apgMax",
       "fgPctMin", "fgPctMax", "tpPctMin", "tpPctMax", "ftPctMin", "ftPctMax",
-      "gpMin", "gpMax", "agentSearch"];
+      "gpMin", "gpMax"];
     inputs.forEach(function (id) {
       var el = document.getElementById(id);
       if (el) el.value = "";
     });
 
+    _exactTeamRank = null;
+    _exactLeagueRank = null;
     document.getElementById("teamRank").value = "";
     document.getElementById("leagueRank").value = "";
     document.getElementById("teamFilter").value = "";
@@ -1150,12 +1059,10 @@
     if (f.apgMin != null) params.apg_min = f.apgMin;
     if (f.apgMax != null) params.apg_max = f.apgMax;
     if (f.team) params.team = f.team;
-    if (f.agentSearch) params.agent = f.agentSearch;
     if (f.awards.length > 0) params.awards = f.awards.join(",");
     if (f.hasAnyAward) params.has_award = "1";
     if (sortCol !== "salary") params.sort = sortCol;
     if (sortDir !== "desc") params.dir = sortDir;
-    if (viewMode !== "seasons") params.mode = viewMode;
 
     var hash = Object.keys(params).map(function (k) {
       return encodeURIComponent(k) + "=" + encodeURIComponent(params[k]);
@@ -1206,7 +1113,6 @@
     if (params.apg_min) document.getElementById("apgMin").value = params.apg_min;
     if (params.apg_max) document.getElementById("apgMax").value = params.apg_max;
     if (params.team) document.getElementById("teamFilter").value = params.team;
-    if (params.agent) document.getElementById("agentSearch").value = params.agent;
     if (params.has_award === "1") document.getElementById("hasAnyAward").checked = true;
 
     if (params.pos) {
@@ -1227,13 +1133,6 @@
 
     if (params.sort) sortCol = params.sort;
     if (params.dir) sortDir = params.dir;
-
-    if (params.mode) {
-      viewMode = params.mode;
-      document.querySelectorAll(".mode-btn").forEach(function (b) {
-        b.classList.toggle("active", b.dataset.mode === viewMode);
-      });
-    }
   }
 
   // ---- Export CSV ----

@@ -49,20 +49,6 @@
         <button class="preset-btn" data-preset="rookie-deals">Rookie Deals</button>
       </div>
 
-      <!-- Search Mode -->
-      <div class="filter-section collapsed">
-        <div class="filter-section-header" data-section="mode">
-          <h3>View Mode</h3>
-          <span class="chevron">&#9660;</span>
-        </div>
-        <div class="filter-section-body">
-          <div class="mode-toggle">
-            <button class="mode-btn active" data-mode="seasons">Player Seasons</button>
-            <button class="mode-btn" data-mode="agents">Agent Leaderboard</button>
-          </div>
-        </div>
-      </div>
-
       <!-- Season Filters -->
       <div class="filter-section">
         <div class="filter-section-header" data-section="seasons">
@@ -320,20 +306,6 @@
         </div>
       </div>
 
-      <!-- Agent Filters -->
-      <div class="filter-section collapsed">
-        <div class="filter-section-header" data-section="agent">
-          <h3>Agent</h3>
-          <span class="chevron">&#9660;</span>
-        </div>
-        <div class="filter-section-body">
-          <div class="filter-row autocomplete-wrapper">
-            <label class="filter-label">Agent Name</label>
-            <input class="filter-input" type="text" id="agentSearch" placeholder="Search agent..." aria-label="Agent name search" autocomplete="off">
-            <div class="autocomplete-dropdown" id="agentDropdown"></div>
-          </div>
-        </div>
-      </div>
     </aside>
 
     <!-- Main Content -->
@@ -380,16 +352,6 @@
           <thead id="tableHead"></thead>
           <tbody id="tableBody"></tbody>
         </table>
-      </div>
-
-      <!-- Agent Leaderboard (hidden by default) -->
-      <div id="agentLeaderboard" style="display:none;">
-        <div class="table-wrapper">
-          <table class="nba-table agent-table" id="agentTable">
-            <thead id="agentTableHead"></thead>
-            <tbody id="agentTableBody"></tbody>
-          </table>
-        </div>
       </div>
 
       <!-- Empty state -->
