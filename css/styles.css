@@ -385,6 +385,83 @@ select.filter-input {
   color: #fff;
 }
 
+/* Breadcrumb bar */
+.breadcrumb-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  margin-bottom: 12px;
+  background: #fff8e1;
+  border: 1px solid #ffe082;
+  border-radius: 8px;
+  font-size: 12px;
+  flex-wrap: wrap;
+}
+
+.breadcrumb-label {
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.breadcrumb-trail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  flex: 1;
+}
+
+.breadcrumb-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 8px;
+  background: var(--primary);
+  color: #fff;
+  border-radius: 10px;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.breadcrumb-tag .bc-col {
+  opacity: 0.7;
+}
+
+.breadcrumb-actions {
+  display: flex;
+  gap: 6px;
+  margin-left: auto;
+}
+
+.breadcrumb-btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 3px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.breadcrumb-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.breadcrumb-home {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.breadcrumb-home:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
 /* Summary stats bar */
 .summary-bar {
   display: flex;
