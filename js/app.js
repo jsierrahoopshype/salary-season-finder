@@ -14,6 +14,8 @@
   let activePreset = null;
   let _exactTeamRank = null;    // set by cell click for exact rank match
   let _exactLeagueRank = null;  // set by cell click for exact rank match
+  let _filterHistory = [];       // stack of filter snapshots for breadcrumb back
+  let _breadcrumbs = [];         // trail of {col, label, value} for display
 
   // Column definitions
   const COLUMNS = [
@@ -43,6 +45,7 @@
     { key: "pos",               label: "Pos",         type: "text",   default: false, sortable: true  },
     { key: "nationality",       label: "Nat.",        type: "text",   default: false, sortable: true  },
     { key: "draft_pick",        label: "Pick",        type: "num",    default: false, sortable: true  },
+    { key: "draft_year",        label: "Draft Yr",   type: "num",    default: false, sortable: true  },
   ];
 
   // Track which columns are visible
@@ -88,7 +91,7 @@
         return val.map(function(a) {
           var cls = "award-badge clickable";
           if (a.indexOf("All-Star") >= 0) cls += " all-star";
-          if (a === "MVP") cls += " mvp";
+          if (a.indexOf("Most Valuable Player") >= 0) cls += " mvp";
           return '<span class="' + cls + '" data-award="' + escAttr(a) + '">' + escHtml(a) + "</span>";
         }).join(" ");
       default: return val || "-";
@@ -298,6 +301,10 @@
       }
     });
 
+    // Breadcrumb navigation
+    document.getElementById("breadcrumbBack").addEventListener("click", breadcrumbBack);
+    document.getElementById("breadcrumbHome").addEventListener("click", breadcrumbHome);
+
     // Clear filters
     document.getElementById("clearFiltersBtn").addEventListener("click", clearFilters);
 
@@ -363,7 +370,7 @@
       "cppMin", "cppMax", "cpgMin", "cpgMax",
       "earningsMin", "earningsMax",
       "ageMin", "ageMax", "expMin", "expMax",
-      "draftMin", "draftMax",
+      "draftMin", "draftMax", "draftYearMin", "draftYearMax",
       "ppgMin", "ppgMax", "rpgMin", "rpgMax", "apgMin", "apgMax",
       "fgPctMin", "fgPctMax", "tpPctMin", "tpPctMax", "ftPctMin", "ftPctMax",
       "gpMin", "gpMax",
@@ -555,6 +562,8 @@
       expMax: parseNum(document.getElementById("expMax").value),
       draftMin: parseNum(document.getElementById("draftMin").value),
       draftMax: parseNum(document.getElementById("draftMax").value),
+      draftYearMin: parseNum(document.getElementById("draftYearMin").value),
+      draftYearMax: parseNum(document.getElementById("draftYearMax").value),
       nationality: document.getElementById("nationality").value,
       team: document.getElementById("teamFilter").value,
       ppgMin: parseNum(document.getElementById("ppgMin").value),
@@ -638,6 +647,10 @@
     if (f.draftMin != null && (record.draft_pick == null || record.draft_pick < f.draftMin)) return false;
     if (f.draftMax != null && (record.draft_pick == null || record.draft_pick > f.draftMax)) return false;
 
+    // Draft year
+    if (f.draftYearMin != null && (record.draft_year == null || record.draft_year < f.draftYearMin)) return false;
+    if (f.draftYearMax != null && (record.draft_year == null || record.draft_year > f.draftYearMax)) return false;
+
     // Nationality
     if (f.nationality && record.nationality !== f.nationality) return false;
 
@@ -660,13 +673,13 @@
     if (f.gpMin != null && (record.gp == null || record.gp < f.gpMin)) return false;
     if (f.gpMax != null && (record.gp == null || record.gp > f.gpMax)) return false;
 
-    // Awards
+    // Awards (case-insensitive substring match)
     if (f.awards.length > 0) {
       if (!record.awards || record.awards.length === 0) return false;
-      var awardStr = record.awards.join(" ");
+      var awardStr = record.awards.join(" ").toLowerCase();
       var anyMatch = false;
       for (var j = 0; j < f.awards.length; j++) {
-        if (awardStr.indexOf(f.awards[j]) >= 0) { anyMatch = true; break; }
+        if (awardStr.indexOf(f.awards[j].toLowerCase()) >= 0) { anyMatch = true; break; }
       }
       if (!anyMatch) return false;
     }
@@ -753,9 +766,121 @@
     document.getElementById("summaryTotalSalary").textContent = fmtSalary(totalSalary);
   }
 
+  // ---- Filter Snapshot (for breadcrumb back navigation) ----
+  function captureFilterSnapshot() {
+    var snap = {};
+    // Text/number inputs
+    var inputs = ["salaryMin", "salaryMax", "capPctMin", "capPctMax",
+      "cppMin", "cppMax", "cpgMin", "cpgMax", "earningsMin", "earningsMax",
+      "playerSearch", "ageMin", "ageMax", "expMin", "expMax",
+      "draftMin", "draftMax", "draftYearMin", "draftYearMax",
+      "ppgMin", "ppgMax", "rpgMin", "rpgMax", "apgMin", "apgMax",
+      "fgPctMin", "fgPctMax", "tpPctMin", "tpPctMax", "ftPctMin", "ftPctMax",
+      "gpMin", "gpMax"];
+    snap.inputs = {};
+    inputs.forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) snap.inputs[id] = el.value;
+    });
+    // Selects
+    snap.selects = {};
+    ["seasonFrom", "seasonTo", "teamRank", "leagueRank", "teamFilter", "nationality"].forEach(function (id) {
+      snap.selects[id] = document.getElementById(id).value;
+    });
+    // Checkbox
+    snap.hasAnyAward = document.getElementById("hasAnyAward").checked;
+    // Active chips
+    snap.activePositions = [];
+    document.querySelectorAll("#positionFilter .filter-chip.active").forEach(function (c) {
+      snap.activePositions.push(c.dataset.value);
+    });
+    snap.activeAwards = [];
+    document.querySelectorAll("#awardsFilter .filter-chip.active").forEach(function (c) {
+      snap.activeAwards.push(c.dataset.value);
+    });
+    // State vars
+    snap.exactTeamRank = _exactTeamRank;
+    snap.exactLeagueRank = _exactLeagueRank;
+    snap.sortCol = sortCol;
+    snap.sortDir = sortDir;
+    return snap;
+  }
+
+  function restoreFilterSnapshot(snap) {
+    // Restore inputs
+    Object.keys(snap.inputs).forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.value = snap.inputs[id];
+    });
+    // Restore selects
+    Object.keys(snap.selects).forEach(function (id) {
+      document.getElementById(id).value = snap.selects[id];
+    });
+    // Restore checkbox
+    document.getElementById("hasAnyAward").checked = snap.hasAnyAward;
+    // Restore chips
+    document.querySelectorAll("#positionFilter .filter-chip").forEach(function (c) {
+      c.classList.toggle("active", snap.activePositions.indexOf(c.dataset.value) >= 0);
+    });
+    document.querySelectorAll("#awardsFilter .filter-chip").forEach(function (c) {
+      c.classList.toggle("active", snap.activeAwards.indexOf(c.dataset.value) >= 0);
+    });
+    // Restore state vars
+    _exactTeamRank = snap.exactTeamRank;
+    _exactLeagueRank = snap.exactLeagueRank;
+    sortCol = snap.sortCol;
+    sortDir = snap.sortDir;
+  }
+
+  // ---- Breadcrumb Rendering ----
+  function renderBreadcrumbs() {
+    var bar = document.getElementById("breadcrumbBar");
+    var trail = document.getElementById("breadcrumbTrail");
+    if (_breadcrumbs.length === 0) {
+      bar.style.display = "none";
+      return;
+    }
+    bar.style.display = "";
+    trail.innerHTML = "";
+    _breadcrumbs.forEach(function (bc) {
+      var tag = document.createElement("span");
+      tag.className = "breadcrumb-tag";
+      tag.innerHTML = '<span class="bc-col">' + escHtml(bc.label) + " =</span> " + escHtml(bc.value);
+      trail.appendChild(tag);
+    });
+  }
+
+  function breadcrumbBack() {
+    if (_filterHistory.length === 0) return;
+    var snap = _filterHistory.pop();
+    _breadcrumbs.pop();
+    restoreFilterSnapshot(snap);
+    renderBreadcrumbs();
+    applyFilters();
+  }
+
+  function breadcrumbHome() {
+    _filterHistory = [];
+    _breadcrumbs = [];
+    renderBreadcrumbs();
+    clearFilters();
+  }
+
   // ---- Clickable Cell Filter ----
   function handleCellClick(colKey, rawValue) {
     if (!rawValue || rawValue === "-") return;
+
+    // Snapshot current state for breadcrumb back navigation
+    _filterHistory.push(captureFilterSnapshot());
+
+    // Build breadcrumb label
+    var colDef = COLUMNS.filter(function (c) { return c.key === colKey; })[0];
+    var bcLabel = colDef ? colDef.label : colKey;
+    var bcValue = rawValue;
+    if (colKey === "salary" || colKey === "cost_per_point" || colKey === "cost_per_game" || colKey === "career_earnings") {
+      bcValue = fmtSalary(parseFloat(rawValue));
+    }
+    _breadcrumbs.push({ col: colKey, label: bcLabel, value: bcValue });
 
     // Preserve current season range (unless clicking a season or player)
     var currentFrom = document.getElementById("seasonFrom").value;
@@ -816,8 +941,10 @@
         });
         break;
       case "awards":
+        // Use case-insensitive substring to match award badge click to a chip
+        var rawLower = rawValue.toLowerCase();
         document.querySelectorAll("#awardsFilter .filter-chip").forEach(function (c) {
-          if (c.dataset.value === rawValue) c.classList.add("active");
+          if (rawLower.indexOf(c.dataset.value.toLowerCase()) >= 0) c.classList.add("active");
         });
         // If the award doesn't match any chip, use hasAnyAward
         var matched = false;
@@ -839,6 +966,10 @@
       case "draft_pick":
         document.getElementById("draftMin").value = rawValue;
         document.getElementById("draftMax").value = rawValue;
+        break;
+      case "draft_year":
+        document.getElementById("draftYearMin").value = rawValue;
+        document.getElementById("draftYearMax").value = rawValue;
         break;
       // Exact rank match
       case "salary_rank_team":
@@ -896,6 +1027,7 @@
         return; // not a filterable column
     }
 
+    renderBreadcrumbs();
     applyFilters();
     scrollToTop();
   }
@@ -989,7 +1121,7 @@
     var inputs = ["salaryMin", "salaryMax", "capPctMin", "capPctMax",
       "cppMin", "cppMax", "cpgMin", "cpgMax", "earningsMin", "earningsMax",
       "playerSearch", "ageMin", "ageMax", "expMin", "expMax",
-      "draftMin", "draftMax",
+      "draftMin", "draftMax", "draftYearMin", "draftYearMax",
       "ppgMin", "ppgMax", "rpgMin", "rpgMax", "apgMin", "apgMax",
       "fgPctMin", "fgPctMax", "tpPctMin", "tpPctMax", "ftPctMin", "ftPctMax",
       "gpMin", "gpMax"];
@@ -1024,6 +1156,9 @@
     clearFiltersQuiet();
     sortCol = "salary";
     sortDir = "desc";
+    _filterHistory = [];
+    _breadcrumbs = [];
+    renderBreadcrumbs();
     applyFilters();
   }
 

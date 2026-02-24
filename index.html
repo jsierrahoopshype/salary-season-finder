@@ -62,6 +62,7 @@
             <button class="season-preset-btn" data-from="2010-11" data-to="2019-20">2010s</button>
             <button class="season-preset-btn" data-from="2000-01" data-to="2009-10">2000s</button>
             <button class="season-preset-btn" data-from="1990-91" data-to="1999-00">1990s</button>
+            <button class="season-preset-btn" data-from="1990-91" data-to="2025-26">Since 1990</button>
           </div>
           <div class="filter-range">
             <select class="filter-input" id="seasonFrom" aria-label="Season from"></select>
@@ -188,6 +189,14 @@
             </div>
           </div>
           <div class="filter-row">
+            <label class="filter-label">Draft Class (Year)</label>
+            <div class="filter-range">
+              <input class="filter-input" type="number" id="draftYearMin" placeholder="Min" aria-label="Min draft year">
+              <span class="range-sep">-</span>
+              <input class="filter-input" type="number" id="draftYearMax" placeholder="Max" aria-label="Max draft year">
+            </div>
+          </div>
+          <div class="filter-row">
             <label class="filter-label">Nationality</label>
             <select class="filter-input" id="nationality" aria-label="Nationality">
               <option value="">Any</option>
@@ -289,12 +298,12 @@
             <label class="filter-label">Award Type</label>
             <div class="filter-checks" id="awardsFilter">
               <button class="filter-chip" data-value="All-Star">All-Star</button>
-              <button class="filter-chip" data-value="MVP">MVP</button>
+              <button class="filter-chip" data-value="Most Valuable Player">MVP</button>
               <button class="filter-chip" data-value="All-NBA">All-NBA</button>
               <button class="filter-chip" data-value="All-Defensive">All-Def</button>
-              <button class="filter-chip" data-value="DPOY">DPOY</button>
-              <button class="filter-chip" data-value="MIP">MIP</button>
-              <button class="filter-chip" data-value="ROY">ROY</button>
+              <button class="filter-chip" data-value="Defensive Player of the Year">DPOY</button>
+              <button class="filter-chip" data-value="Most Improved Player">MIP</button>
+              <button class="filter-chip" data-value="Rookie of the Year">ROY</button>
               <button class="filter-chip" data-value="Champion">Champ</button>
             </div>
           </div>
@@ -312,6 +321,16 @@
     <main class="main-content">
       <!-- Mobile filter toggle -->
       <button class="sidebar-toggle" id="sidebarToggle">Filters &amp; Search &#9660;</button>
+
+      <!-- Breadcrumb bar (shown when cell-click filters are active) -->
+      <div class="breadcrumb-bar" id="breadcrumbBar" style="display:none;">
+        <span class="breadcrumb-label">Filtered by:</span>
+        <div class="breadcrumb-trail" id="breadcrumbTrail"></div>
+        <div class="breadcrumb-actions">
+          <button class="breadcrumb-btn" id="breadcrumbBack" title="Go back one step">&#10005; Back</button>
+          <button class="breadcrumb-btn breadcrumb-home" id="breadcrumbHome" title="Reset to default">&#8962; Home</button>
+        </div>
+      </div>
 
       <!-- Summary stats -->
       <div class="summary-bar" id="summaryBar">
