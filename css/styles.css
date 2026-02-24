@@ -385,6 +385,21 @@ select.filter-input {
   color: #fff;
 }
 
+/* Combine toggle */
+.combine-toggle {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  color: var(--text-secondary);
+}
+
+.combine-toggle input[type="checkbox"] {
+  accent-color: var(--accent);
+}
+
 /* Breadcrumb bar */
 .breadcrumb-bar {
   display: flex;

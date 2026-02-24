@@ -327,7 +327,6 @@
         <span class="breadcrumb-label">Filtered by:</span>
         <div class="breadcrumb-trail" id="breadcrumbTrail"></div>
         <div class="breadcrumb-actions">
-          <button class="breadcrumb-btn" id="breadcrumbBack" title="Go back one step">&#10005; Back</button>
           <button class="breadcrumb-btn breadcrumb-home" id="breadcrumbHome" title="Reset to default">&#8962; Home</button>
         </div>
       </div>
@@ -361,6 +360,9 @@
       <!-- Column toggles -->
       <div class="results-header">
         <span class="results-count" id="resultsCount">Showing 0 results</span>
+        <label class="combine-toggle" id="combineToggleWrap" style="display:none;">
+          <input type="checkbox" id="combineToggle" checked> Combine per player
+        </label>
       </div>
 
       <div class="col-toggles" id="colToggles"></div>
