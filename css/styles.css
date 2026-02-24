@@ -462,7 +462,7 @@ table.nba-table {
 table.nba-table th,
 table.nba-table td {
   border: 1px solid var(--border);
-  padding: 6px 10px;
+  padding: 6px 12px;
   white-space: nowrap;
   text-align: left;
 }
@@ -781,12 +781,24 @@ table.nba-table th:nth-child(2) {
   font-size: 13px;
 }
 
+/* Sidebar overlay (mobile) */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 199;
+}
+
+.sidebar-overlay.active {
+  display: block;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
-  :root {
-    --sidebar-width: 100%;
-  }
-
   .header {
     padding: 12px 16px;
   }
@@ -799,25 +811,22 @@ table.nba-table th:nth-child(2) {
     display: none;
   }
 
-  .app-layout {
-    flex-direction: column;
-  }
-
   .sidebar {
-    width: 100%;
-    min-width: 100%;
-    height: auto;
-    position: static;
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-    max-height: none;
-    overflow-y: visible;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 320px;
+    min-width: 320px;
+    height: 100vh;
+    z-index: 200;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    border-right: 1px solid var(--border);
+    box-shadow: 4px 0 16px rgba(0,0,0,0.1);
   }
 
-  .sidebar.collapsed-mobile .filter-section,
-  .sidebar.collapsed-mobile .sidebar-header,
-  .sidebar.collapsed-mobile .presets-bar {
-    display: none;
+  .sidebar.drawer-open {
+    transform: translateX(0);
   }
 
   .sidebar-toggle {
@@ -846,7 +855,7 @@ table.nba-table th:nth-child(2) {
     padding: 5px 8px;
   }
 
-  /* Reset sticky columns on mobile for simpler scrolling */
+  /* Keep sticky columns on mobile */
   table.nba-table th:nth-child(1),
   table.nba-table td:nth-child(1),
   table.nba-table th:nth-child(2),

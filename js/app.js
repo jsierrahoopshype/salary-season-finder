@@ -213,10 +213,7 @@
         DATA.meta.total_records.toLocaleString() + " player-seasons | " + DATA.meta.season_range;
     }
 
-    // Mobile: start with sidebar collapsed
-    if (window.innerWidth <= 768) {
-      document.getElementById("sidebar").classList.add("collapsed-mobile");
-    }
+    // Mobile: sidebar starts hidden (drawer is closed by default via CSS transform)
   }
 
   // ---- Populate filter dropdowns ----
@@ -231,14 +228,16 @@
     seasonsAsc.forEach(function (s) {
       fromSel.appendChild(new Option(s, s));
     });
-    // Default: first season
-    fromSel.value = seasonsAsc[0] || "";
 
     // To: newest first
     seasons.forEach(function (s) {
       toSel.appendChild(new Option(s, s));
     });
-    toSel.value = seasons[0] || "";
+
+    // Default: 2025-26 season only
+    var defaultSeason = "2025-26";
+    fromSel.value = seasons.indexOf(defaultSeason) >= 0 ? defaultSeason : seasonsAsc[0] || "";
+    toSel.value = seasons.indexOf(defaultSeason) >= 0 ? defaultSeason : seasons[0] || "";
 
     // Teams
     var teamSel = document.getElementById("teamFilter");
@@ -285,9 +284,16 @@
       });
     });
 
-    // Sidebar toggle (mobile)
+    // Sidebar toggle (mobile slide-out drawer)
+    var sidebar = document.getElementById("sidebar");
+    var overlay = document.getElementById("sidebarOverlay");
     document.getElementById("sidebarToggle").addEventListener("click", function () {
-      document.getElementById("sidebar").classList.toggle("collapsed-mobile");
+      sidebar.classList.toggle("drawer-open");
+      overlay.classList.toggle("active");
+    });
+    overlay.addEventListener("click", function () {
+      sidebar.classList.remove("drawer-open");
+      overlay.classList.remove("active");
     });
 
     // Per page
@@ -1051,11 +1057,12 @@
     document.getElementById("nationality").value = "";
     document.getElementById("hasAnyAward").checked = false;
 
-    // Reset season range to full
+    // Reset season range to default (2025-26)
     var seasons = DATA.seasons_list || [];
+    var defaultSeason = "2025-26";
     var asc = seasons.slice().reverse();
-    document.getElementById("seasonFrom").value = asc[0] || "";
-    document.getElementById("seasonTo").value = seasons[0] || "";
+    document.getElementById("seasonFrom").value = seasons.indexOf(defaultSeason) >= 0 ? defaultSeason : asc[0] || "";
+    document.getElementById("seasonTo").value = seasons.indexOf(defaultSeason) >= 0 ? defaultSeason : seasons[0] || "";
 
     // Clear chips
     document.querySelectorAll(".filter-chip.active").forEach(function (c) { c.classList.remove("active"); });
