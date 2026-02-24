@@ -1,0 +1,87 @@
+name: Update Salary Data
+
+on:
+  schedule:
+    - cron: '0 6 * * *'  # Daily at 6:00 AM UTC
+  workflow_dispatch:       # Manual trigger
+
+permissions:
+  contents: write
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Download Google Sheets CSVs
+        run: |
+          mkdir -p data_sources
+          echo "Downloading stats..."
+          curl -sL -o data_sources/stats.csv \
+            "https://docs.google.com/spreadsheets/d/1ZrDfzqiC31Hu3YCtxT4aZbZF4QVCVyGe6wBytR2LF30/export?format=csv&gid=0"
+          echo "Downloading historical salaries..."
+          curl -sL -o data_sources/salaries_historical.csv \
+            "https://docs.google.com/spreadsheets/d/1ZrDfzqiC31Hu3YCtxT4aZbZF4QVCVyGe6wBytR2LF30/export?format=csv&gid=1151460858"
+          echo "Downloading future salaries..."
+          curl -sL -o data_sources/salaries_future.csv \
+            "https://docs.google.com/spreadsheets/d/1ZrDfzqiC31Hu3YCtxT4aZbZF4QVCVyGe6wBytR2LF30/export?format=csv&gid=1555460703"
+          echo "Downloading awards..."
+          curl -sL -o data_sources/awards.csv \
+            "https://docs.google.com/spreadsheets/d/1ZrDfzqiC31Hu3YCtxT4aZbZF4QVCVyGe6wBytR2LF30/export?format=csv&gid=1456513900"
+          echo "Downloading bio..."
+          curl -sL -o data_sources/bio.csv \
+            "https://docs.google.com/spreadsheets/d/1ZrDfzqiC31Hu3YCtxT4aZbZF4QVCVyGe6wBytR2LF30/export?format=csv&gid=1488063724"
+          echo "Download complete. File sizes:"
+          wc -c data_sources/*.csv
+
+      - name: Validate downloads
+        run: |
+          for f in data_sources/stats.csv data_sources/salaries_historical.csv data_sources/awards.csv data_sources/bio.csv; do
+            if [ ! -s "$f" ]; then
+              echo "ERROR: $f is empty or missing"
+              exit 1
+            fi
+            lines=$(wc -l < "$f")
+            echo "$f: $lines lines"
+            if [ "$lines" -lt 10 ]; then
+              echo "ERROR: $f has too few lines, download may have failed"
+              exit 1
+            fi
+          done
+          echo "All CSV files validated."
+
+      - name: Build data.json
+        run: python build_data.py --local
+
+      - name: Check for changes
+        id: check_changes
+        run: |
+          if git diff --quiet data/data.json 2>/dev/null; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "No changes detected in data.json"
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "Changes detected in data.json"
+            new_size=$(wc -c < data/data.json)
+            echo "New file size: $new_size bytes"
+          fi
+
+      - name: Commit and push
+        if: steps.check_changes.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/data.json
+          git commit -m "Auto-update salary data [$(date -u +%Y-%m-%d)]"
+          git push

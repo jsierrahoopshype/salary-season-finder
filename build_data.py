@@ -5,8 +5,9 @@ Downloads data from Google Sheets, merges with local agent/salary cap data,
 computes derived fields, and outputs data/data.json.
 
 Usage:
-    python3 build_data.py            # Download from Google Sheets + local files
-    python3 build_data.py --local    # Use only local cached CSV files
+    python3 build_data.py --local      # Read CSVs from data_sources/ (for GH Actions)
+    python3 build_data.py --download   # Download CSVs from Google Sheets, save to data_sources/, then process
+    python3 build_data.py              # Same as --download with fallback to --local
 """
 
 import csv
@@ -15,26 +16,28 @@ import os
 import re
 import sys
 import io
-import urllib.request
-import urllib.error
+import unicodedata
 from collections import defaultdict
 from datetime import datetime, date
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-RAW_DIR = os.path.join(BASE_DIR, "data_raw")
+SOURCES_DIR = os.path.join(BASE_DIR, "data_sources")
 OUT_DIR = os.path.join(BASE_DIR, "data")
 
 SHEET_ID = "1ZrDfzqiC31Hu3YCtxT4aZbZF4QVCVyGe6wBytR2LF30"
-SHEETS = {
-    "stats": {"gid": "0", "file": "stats.csv"},
-    "salaries": {"gid": "1151460858", "file": "salaries.csv"},
-    "future_salaries": {"gid": "1555460703", "file": "future_salaries.csv"},
-    "awards": {"gid": "1456513900", "file": "awards.csv"},
-    "bio": {"gid": "1488063724", "file": "bio.csv"},
+
+# Map from local filename -> Google Sheets gid
+CSV_SOURCES = {
+    "stats.csv":                "0",
+    "salaries_historical.csv":  "1151460858",
+    "salaries_future.csv":      "1555460703",
+    "awards.csv":               "1456513900",
+    "bio.csv":                  "1488063724",
 }
 
-# Team abbreviation mapping: full name -> standard 3-letter code
+# ── Team abbreviation mapping ──────────────────────────────────────────
 TEAM_ABBREV = {
+    # Full names
     "Atlanta Hawks": "ATL", "Boston Celtics": "BOS", "Brooklyn Nets": "BKN",
     "Charlotte Hornets": "CHA", "Charlotte Bobcats": "CHA", "Chicago Bulls": "CHI",
     "Cleveland Cavaliers": "CLE", "Dallas Mavericks": "DAL", "Denver Nuggets": "DEN",
@@ -50,69 +53,80 @@ TEAM_ABBREV = {
     "San Antonio Spurs": "SAS", "Seattle SuperSonics": "SEA",
     "Toronto Raptors": "TOR", "Utah Jazz": "UTA", "Washington Wizards": "WAS",
     "Washington Bullets": "WAS", "New Jersey Nets": "NJN",
-    # Short forms
+    # Standard 3-letter codes
     "ATL": "ATL", "BOS": "BOS", "BKN": "BKN", "CHA": "CHA", "CHI": "CHI",
     "CLE": "CLE", "DAL": "DAL", "DEN": "DEN", "DET": "DET", "GSW": "GSW",
-    "GS": "GSW", "HOU": "HOU", "IND": "IND", "LAC": "LAC", "LAL": "LAL",
-    "MEM": "MEM", "VAN": "VAN", "MIA": "MIA", "MIL": "MIL", "MIN": "MIN",
-    "NOP": "NOP", "NO": "NOP", "NOH": "NOH", "NOK": "NOK", "NYK": "NYK",
-    "NY": "NYK", "OKC": "OKC", "ORL": "ORL", "PHI": "PHI", "PHX": "PHX",
-    "PHO": "PHX", "POR": "POR", "SAC": "SAC", "SAS": "SAS", "SA": "SAS",
-    "SEA": "SEA", "TOR": "TOR", "UTA": "UTA", "UTAH": "UTA",
-    "WAS": "WAS", "WSH": "WAS", "NJN": "NJN", "NJ": "NJN",
+    "HOU": "HOU", "IND": "IND", "LAC": "LAC", "LAL": "LAL", "MEM": "MEM",
+    "VAN": "VAN", "MIA": "MIA", "MIL": "MIL", "MIN": "MIN", "NOP": "NOP",
+    "NOH": "NOH", "NOK": "NOK", "NYK": "NYK", "OKC": "OKC", "ORL": "ORL",
+    "PHI": "PHI", "PHX": "PHX", "POR": "POR", "SAC": "SAC", "SAS": "SAS",
+    "SEA": "SEA", "TOR": "TOR", "UTA": "UTA", "WAS": "WAS", "NJN": "NJN",
+    # Alternate short forms
+    "GS": "GSW", "NO": "NOP", "NY": "NYK", "PHO": "PHX", "SA": "SAS",
+    "WSH": "WAS", "NJ": "NJN", "UTAH": "UTA",
     "CHH": "CHA", "CHO": "CHA",  # Charlotte historical
     "TOT": "TOT",  # Total (multi-team)
 }
 
+# Known name aliases (old_name -> canonical_name used in salary data)
+NAME_ALIASES = {
+    "metta world peace": "ron artest",
+    "metta sandiford-artest": "ron artest",
+}
 
+
+# ── Parsing helpers ────────────────────────────────────────────────────
 def normalize_team(team_str):
-    """Normalize team name/abbreviation to standard 3-letter code."""
     if not team_str:
         return ""
-    team_str = team_str.strip()
-    if team_str in TEAM_ABBREV:
-        return TEAM_ABBREV[team_str]
-    # Try uppercase
-    if team_str.upper() in TEAM_ABBREV:
-        return TEAM_ABBREV[team_str.upper()]
-    return team_str[:3].upper()
+    t = team_str.strip()
+    if t in TEAM_ABBREV:
+        return TEAM_ABBREV[t]
+    if t.upper() in TEAM_ABBREV:
+        return TEAM_ABBREV[t.upper()]
+    return t[:3].upper()
+
+
+def strip_accents(s):
+    """Remove accent marks: Jokić -> Jokic."""
+    return "".join(
+        c for c in unicodedata.normalize("NFD", s)
+        if unicodedata.category(c) != "Mn"
+    )
 
 
 def normalize_name(name):
-    """Normalize player name for matching: strip suffixes, lowercase, etc."""
+    """Normalize player name for fuzzy matching across data sources."""
     if not name:
         return ""
     name = name.strip()
-    # Remove common suffixes for matching purposes
-    name_lower = name.lower()
-    for suffix in [" jr.", " jr", " sr.", " sr", " iii", " ii", " iv"]:
-        name_lower = name_lower.replace(suffix, "")
-    # Remove periods and extra spaces
-    name_lower = name_lower.replace(".", "").replace("  ", " ").strip()
-    return name_lower
+    n = strip_accents(name).lower()
+    # Remove suffixes
+    for suf in [" jr.", " jr", " sr.", " sr", " iii", " ii", " iv", " v"]:
+        n = n.replace(suf, "")
+    n = n.replace(".", "").replace("'", "").replace("-", " ")
+    n = " ".join(n.split())  # collapse whitespace
+    # Apply known aliases
+    if n in NAME_ALIASES:
+        n = NAME_ALIASES[n]
+    return n
 
 
 def year_to_season(year_val):
-    """Convert a year number to season string. e.g., 2025 -> '2024-25', 1999 -> '1998-99'."""
-    if not year_val:
-        return None
+    """2025 -> '2024-25',  1999 -> '1998-99',  2000 -> '1999-00'."""
     try:
         y = int(year_val)
     except (ValueError, TypeError):
         return None
-    if y < 100:
+    if y < 1000:
         return None
-    start = y - 1
-    end_short = str(y)[-2:]
-    # Handle century boundary: 2000 -> '1999-00'
-    return f"{start}-{end_short}"
+    return f"{y-1}-{str(y)[-2:]}"
 
 
 def season_to_year(season):
-    """Convert season string to ending year. e.g., '2024-25' -> 2025."""
+    """'2024-25' -> 2025,  '1999-00' -> 2000."""
     if not season:
         return None
-    # Handle the lockout season format
     if season == "1998--1":
         return 1999
     parts = season.split("-")
@@ -120,19 +134,12 @@ def season_to_year(season):
         return None
     try:
         start = int(parts[0])
-        end_short = parts[1]
-        if len(end_short) == 2:
-            century = start // 100 * 100
-            end = century + int(end_short)
-            # Handle century wrap: 1999-00 -> 2000
-            if end <= start:
-                end += 100
-            return end
-        elif len(end_short) == 1:
-            # Handle "1998--1" -> already handled above
-            return start + 1
-        else:
-            return int(end_short)
+        end_short = int(parts[1])
+        century = start // 100 * 100
+        end = century + end_short
+        if end <= start:
+            end += 100
+        return end
     except (ValueError, TypeError):
         return None
 
@@ -141,104 +148,92 @@ def normalize_season(season_str):
     """Normalize various season formats to 'YYYY-YY'."""
     if not season_str:
         return None
-    season_str = str(season_str).strip()
-
-    # Already in correct format
-    if re.match(r'^\d{4}-\d{2}$', season_str):
-        return season_str
-
-    # Handle "1998--1" lockout format
-    if season_str == "1998--1":
+    s = str(season_str).strip()
+    if re.match(r"^\d{4}-\d{2}$", s):
+        return s
+    if s == "1998--1":
         return "1998-99"
-
-    # Handle plain year (ending year)
-    if re.match(r'^\d{4}$', season_str):
-        return year_to_season(int(season_str))
-
-    # Handle "YYYY-YYYY" format
-    m = re.match(r'^(\d{4})-(\d{4})$', season_str)
+    if re.match(r"^\d{4}$", s):
+        return year_to_season(int(s))
+    m = re.match(r"^(\d{4})-(\d{4})$", s)
     if m:
-        start = int(m.group(1))
-        end_short = m.group(2)[-2:]
-        return f"{start}-{end_short}"
-
+        return f"{m.group(1)}-{m.group(2)[-2:]}"
     return None
 
 
 def parse_salary(val):
-    """Parse salary string like '$48,728,845' or '48728845' to int."""
     if not val:
         return None
-    val = str(val).strip()
-    if val.lower() in ("n/a", "", "-", "nan"):
+    v = str(val).strip()
+    if v.lower() in ("n/a", "", "-", "nan", "none"):
         return None
-    val = val.replace("$", "").replace(",", "").replace(" ", "")
+    v = v.replace("$", "").replace(",", "").replace(" ", "")
     try:
-        return int(float(val))
+        return int(float(v))
     except (ValueError, TypeError):
         return None
 
 
 def parse_float(val):
-    """Parse a float value, return None if invalid."""
     if not val:
         return None
-    val = str(val).strip()
-    if val.lower() in ("n/a", "", "-", "nan"):
+    v = str(val).strip()
+    if v.lower() in ("n/a", "", "-", "nan", "none"):
         return None
     try:
-        return float(val)
+        return float(v)
     except (ValueError, TypeError):
         return None
 
 
 def parse_int(val):
-    """Parse an int value, return None if invalid."""
     if not val:
         return None
-    val = str(val).strip()
-    if val.lower() in ("n/a", "", "-", "nan"):
+    v = str(val).strip()
+    if v.lower() in ("n/a", "", "-", "nan", "none"):
         return None
     try:
-        return int(float(val))
+        return int(float(v))
     except (ValueError, TypeError):
         return None
 
 
-def download_csv(sheet_name, gid, local_file):
-    """Download CSV from Google Sheets, falling back to local file."""
-    local_path = os.path.join(RAW_DIR, local_file)
+def parse_csv_string(csv_string):
+    if not csv_string:
+        return []
+    return list(csv.DictReader(io.StringIO(csv_string)))
 
-    if "--local" not in sys.argv:
-        url = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/export?format=csv&gid={gid}"
-        print(f"  Downloading {sheet_name} from Google Sheets...")
-        try:
-            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-            resp = urllib.request.urlopen(req, timeout=30)
-            data = resp.read().decode("utf-8-sig")
-            os.makedirs(RAW_DIR, exist_ok=True)
-            with open(local_path, "w", encoding="utf-8") as f:
-                f.write(data)
-            print(f"    Saved to {local_path} ({len(data)} bytes)")
-            return data
-        except Exception as e:
-            print(f"    Download failed: {e}")
 
-    if os.path.exists(local_path):
-        print(f"  Using local file: {local_path}")
-        with open(local_path, "r", encoding="utf-8-sig") as f:
-            return f.read()
-
-    print(f"  WARNING: No data available for {sheet_name}")
+# ── Data loading ───────────────────────────────────────────────────────
+def load_csv_file(filename):
+    """Load a CSV from data_sources/ directory."""
+    path = os.path.join(SOURCES_DIR, filename)
+    if os.path.exists(path):
+        with open(path, "r", encoding="utf-8-sig") as f:
+            data = f.read()
+        print(f"  Loaded {filename} ({len(data):,} bytes)")
+        return data
+    print(f"  WARNING: {path} not found")
     return None
 
 
-def parse_csv_string(csv_string):
-    """Parse a CSV string into a list of dicts."""
-    if not csv_string:
-        return []
-    reader = csv.DictReader(io.StringIO(csv_string))
-    return list(reader)
+def download_csvs():
+    """Download all CSVs from Google Sheets into data_sources/."""
+    import urllib.request
+    os.makedirs(SOURCES_DIR, exist_ok=True)
+    for filename, gid in CSV_SOURCES.items():
+        url = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/export?format=csv&gid={gid}"
+        path = os.path.join(SOURCES_DIR, filename)
+        print(f"  Downloading {filename}...")
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+            resp = urllib.request.urlopen(req, timeout=60)
+            data = resp.read()
+            with open(path, "wb") as f:
+                f.write(data)
+            print(f"    Saved {len(data):,} bytes to {path}")
+        except Exception as e:
+            print(f"    FAILED: {e}")
 
 
 def load_salary_cap():
@@ -247,81 +242,59 @@ def load_salary_cap():
     print(f"  Loading salary cap from {cap_path}")
     cap_data = {}
     with open(cap_path, "r", encoding="utf-8-sig") as f:
-        reader = csv.DictReader(f)
-        for row in reader:
+        for row in csv.DictReader(f):
             season_raw = row.get("Season", "").strip()
-            # Convert "2024-2025" to "2024-25"
-            if re.match(r'^\d{4}-\d{4}$', season_raw):
-                start = season_raw[:4]
-                end_short = season_raw[-2:]
-                season = f"{start}-{end_short}"
-            else:
-                season = season_raw
-
+            season = normalize_season(season_raw)
+            if not season:
+                continue
             cap_data[season] = {
                 "cap": parse_salary(row.get("Salary Cap")),
                 "tax": parse_salary(row.get("Luxury Tax")),
                 "apron1": parse_salary(row.get("1st Apron")),
                 "apron2": parse_salary(row.get("2nd Apron")),
             }
-    print(f"    Loaded {len(cap_data)} seasons of cap data")
+    print(f"    Loaded {len(cap_data)} seasons")
     return cap_data
 
 
 def load_agent_data():
-    """Load agent tracker data from data.json."""
-    agent_path = os.path.join(BASE_DIR, "data_raw.json")
-    print(f"  Loading agent data from {agent_path}")
-    with open(agent_path, "r", encoding="utf-8") as f:
+    """Load agent tracker data."""
+    path = os.path.join(BASE_DIR, "data_raw.json")
+    print(f"  Loading agent data from {path}")
+    with open(path, "r", encoding="utf-8") as f:
         data = json.load(f)
-
-    player_salaries = data.get("playerSalaries", {})
-    career_earnings = data.get("playerCareerEarnings", {})
-    agent_records = data.get("agentData", [])
-
-    print(f"    {len(player_salaries)} players with salary data")
-    print(f"    {len(agent_records)} agent-player relationships")
-    print(f"    {len(career_earnings)} career earnings records")
-
-    return player_salaries, career_earnings, agent_records
+    ps = data.get("playerSalaries", {})
+    ce = data.get("playerCareerEarnings", {})
+    ad = data.get("agentData", [])
+    print(f"    {len(ps)} players, {len(ad)} agent records, {len(ce)} career earnings")
+    return ps, ce, ad
 
 
 def build_agent_lookup(agent_records):
-    """Build lookup: player_name_normalized -> list of {agent, start, end, current}."""
     lookup = defaultdict(list)
     for rec in agent_records:
         player = rec.get("player", "").strip()
         if not player:
             continue
-        key = normalize_name(player)
-        start = rec.get("start", "")
-        end = rec.get("end", "")
-        lookup[key].append({
+        lookup[normalize_name(player)].append({
             "agent": rec.get("agent", ""),
-            "player_original": player,
-            "team": rec.get("team", ""),
-            "start": start,
-            "end": end,
+            "start": rec.get("start", ""),
+            "end": rec.get("end", ""),
             "current": rec.get("current", False),
+            "team": rec.get("team", ""),
         })
     return lookup
 
 
 def find_agent_for_season(agent_lookup, player_name, season):
-    """Find which agent represented a player during a given season."""
-    key = normalize_name(player_name)
-    records = agent_lookup.get(key, [])
+    records = agent_lookup.get(normalize_name(player_name), [])
     if not records:
         return None
-
     end_year = season_to_year(season)
     if not end_year:
-        return records[0]["agent"] if records else None
-
-    # Season runs roughly from October of start_year to June of end_year
+        return records[0]["agent"]
     season_end = date(end_year, 6, 30)
     season_start = date(end_year - 1, 10, 1)
-
     best = None
     for rec in records:
         try:
@@ -332,144 +305,151 @@ def find_agent_for_season(agent_lookup, player_name, season):
             a_end = datetime.strptime(rec["end"], "%Y-%m-%d").date() if rec["end"] else date(2099, 12, 31)
         except ValueError:
             a_end = date(2099, 12, 31)
-
-        # Check if agent period overlaps with the season
         if a_start <= season_end and a_end >= season_start:
-            # Prefer the one active at the end of season
-            if a_start <= season_end:
-                best = rec["agent"]
+            best = rec["agent"]
     if best:
         return best
-
-    # Fallback: current agent
     for rec in records:
         if rec.get("current"):
             return rec["agent"]
+    return records[0]["agent"]
 
-    return records[0]["agent"] if records else None
 
-
+# ── CSV processors ─────────────────────────────────────────────────────
 def process_stats(csv_data):
-    """Process player stats CSV into lookup dict keyed by (normalized_name, season)."""
     rows = parse_csv_string(csv_data)
     if not rows:
         return {}
-
-    stats_lookup = {}
+    lookup = {}
     for row in rows:
         player = row.get("PLAYER", "").strip()
         year_raw = row.get("YEAR", "").strip()
         team = row.get("TEAM", "").strip()
-
         if not player or not year_raw:
             continue
-
         season = normalize_season(year_raw)
         if not season:
             continue
-
         key = (normalize_name(player), season)
-
-        # Skip TOT rows if we already have team-specific data, or prefer TOT
-        # We'll keep all entries and let the merge logic handle multi-team players
-
         stats = {
             "player_original": player,
             "team": normalize_team(team),
             "gp": parse_int(row.get("GP")),
             "min": parse_int(row.get("MIN")),
             "pts": parse_int(row.get("PTS")),
-            "fgm": parse_int(row.get("FGM")),
-            "fga": parse_int(row.get("FGA")),
-            "tp": parse_int(row.get("3P")),
-            "tpa": parse_int(row.get("3PA")),
-            "ftm": parse_int(row.get("FTM")),
-            "fta": parse_int(row.get("FTA")),
-            "orb": parse_int(row.get("ORB")),
-            "drb": parse_int(row.get("DRB")),
-            "reb": parse_int(row.get("REB")),
-            "ast": parse_int(row.get("AST")),
-            "stl": parse_int(row.get("STL")),
-            "blk": parse_int(row.get("BLK")),
-            "tov": parse_int(row.get("TOV")),
-            "pf": parse_int(row.get("PF")),
             "age": parse_int(row.get("AGE (Feb 1)")),
             "ppg": parse_float(row.get("PTS/G")),
             "rpg": parse_float(row.get("REB/G")),
             "apg": parse_float(row.get("AST/G")),
             "spg": parse_float(row.get("STL/G")),
             "bpg": parse_float(row.get("BLK/G")),
-            "tov_g": parse_float(row.get("TOV/G")),
             "fg_pct": parse_float(row.get("FG%")),
             "tp_pct": parse_float(row.get("3P%")),
             "ft_pct": parse_float(row.get("FT%")),
         }
+        if key not in lookup:
+            lookup[key] = []
+        lookup[key].append(stats)
+    print(f"    Parsed {len(lookup)} unique player-seasons from stats")
+    return lookup
 
-        # For multi-team: keep a list; we'll pick the best one later
-        if key not in stats_lookup:
-            stats_lookup[key] = []
-        stats_lookup[key].append(stats)
 
-    print(f"    Parsed {len(stats_lookup)} unique player-seasons from stats")
-    return stats_lookup
+def process_salaries_csv(csv_data):
+    rows = parse_csv_string(csv_data)
+    if not rows:
+        return {}
+    lookup = {}
+    for row in rows:
+        player = row.get("PLAYER", "").strip()
+        year_raw = row.get("YEAR", "").strip()
+        team = row.get("TEAM", "").strip()
+        salary = parse_salary(row.get("SALARY"))
+        if not player or not year_raw or salary is None:
+            continue
+        season = normalize_season(year_raw)
+        if not season:
+            continue
+        key = (normalize_name(player), season)
+        if key not in lookup:
+            lookup[key] = []
+        lookup[key].append({
+            "player_original": player,
+            "team": normalize_team(team),
+            "salary": salary,
+        })
+    print(f"    Parsed {len(lookup)} player-seasons from historical salaries")
+    return lookup
+
+
+def process_future_salaries(csv_data):
+    """Process future salaries sheet (one row per player, year columns)."""
+    rows = parse_csv_string(csv_data)
+    if not rows:
+        return {}
+    lookup = {}
+    year_cols = ["2026", "2027", "2028", "2029", "2030", "2031"]
+    for row in rows:
+        player = row.get("PLAYER", "").strip()
+        team = row.get("TEAM", "").strip()
+        if not player:
+            continue
+        for ycol in year_cols:
+            salary = parse_salary(row.get(ycol))
+            if salary is None or salary == 0:
+                continue
+            season = year_to_season(int(ycol))
+            if not season:
+                continue
+            key = (normalize_name(player), season)
+            if key not in lookup:
+                lookup[key] = []
+            lookup[key].append({
+                "player_original": player,
+                "team": normalize_team(team),
+                "salary": salary,
+            })
+    print(f"    Parsed {len(lookup)} player-seasons from future salaries")
+    return lookup
 
 
 def process_awards(csv_data):
-    """Process awards CSV into lookup dict keyed by (normalized_name, season)."""
     rows = parse_csv_string(csv_data)
     if not rows:
         return {}, set()
-
-    awards_lookup = {}
+    lookup = {}
     all_awards = set()
     for row in rows:
         player = row.get("PLAYER/COACH", "").strip()
         year_raw = row.get("YEAR", "").strip()
-        season_awards_str = row.get("SEASON AWARDS", "").strip()
-
+        awards_str = row.get("SEASON AWARDS", "").strip()
         if not player or not year_raw:
             continue
-
         season = normalize_season(year_raw)
         if not season:
             continue
-
         key = (normalize_name(player), season)
-
-        awards = []
-        if season_awards_str:
-            awards = [a.strip() for a in season_awards_str.split(",") if a.strip()]
-            for a in awards:
-                all_awards.add(a)
-
-        if key not in awards_lookup:
-            awards_lookup[key] = {"player_original": player, "awards": awards}
+        awards = [a.strip() for a in awards_str.split(",") if a.strip()] if awards_str else []
+        all_awards.update(awards)
+        if key not in lookup:
+            lookup[key] = awards
         else:
-            # Merge awards
-            existing = set(awards_lookup[key]["awards"])
+            existing = set(lookup[key])
             existing.update(awards)
-            awards_lookup[key]["awards"] = list(existing)
-
-    print(f"    Parsed {len(awards_lookup)} player-seasons with awards")
-    print(f"    Found {len(all_awards)} unique award types")
-    return awards_lookup, all_awards
+            lookup[key] = list(existing)
+    print(f"    Parsed {len(lookup)} player-seasons with awards, {len(all_awards)} award types")
+    return lookup, all_awards
 
 
 def process_bio(csv_data):
-    """Process bio CSV into lookup dict keyed by normalized_name."""
     rows = parse_csv_string(csv_data)
     if not rows:
         return {}
-
-    bio_lookup = {}
+    lookup = {}
     for row in rows:
         player = row.get("PLAYER", "").strip()
         if not player:
             continue
-
-        key = normalize_name(player)
-        bio_lookup[key] = {
-            "player_original": player,
+        lookup[normalize_name(player)] = {
             "pos": row.get("POS", "").strip(),
             "height": row.get("HEIGHT", "").strip(),
             "weight": parse_int(row.get("WEIGHT")),
@@ -478,161 +458,141 @@ def process_bio(csv_data):
             "draft_year": parse_int(row.get("DRAFT (year)")),
             "draft_pick": parse_int(row.get("PICK (overall)")),
             "birthday": row.get("BIRTHDAY", "").strip(),
-            "birth_country": row.get("BIRTH STATE/COUNTRY", "").strip(),
         }
-
-    print(f"    Parsed {len(bio_lookup)} player bios")
-    return bio_lookup
-
-
-def process_salaries_csv(csv_data):
-    """Process salaries CSV (through 2024-25) into salary records."""
-    rows = parse_csv_string(csv_data)
-    if not rows:
-        return {}
-
-    salary_lookup = {}
-    for row in rows:
-        player = row.get("PLAYER", "").strip()
-        year_raw = row.get("YEAR", "").strip()
-        team = row.get("TEAM", "").strip()
-        salary = parse_salary(row.get("SALARY"))
-
-        if not player or not year_raw or salary is None:
-            continue
-
-        season = normalize_season(year_raw)
-        if not season:
-            continue
-
-        key = (normalize_name(player), season)
-        if key not in salary_lookup:
-            salary_lookup[key] = []
-        salary_lookup[key].append({
-            "player_original": player,
-            "team": normalize_team(team),
-            "salary": salary,
-        })
-
-    print(f"    Parsed {len(salary_lookup)} player-seasons from salaries CSV")
-    return salary_lookup
+    print(f"    Parsed {len(lookup)} player bios")
+    return lookup
 
 
+# ── Main build ─────────────────────────────────────────────────────────
 def build_data():
-    """Main build function."""
     print("=" * 60)
-    print("HoopsMatic Salary Season Finder - Data Builder")
+    print("HoopsMatic Salary Season Finder — Data Builder")
     print("=" * 60)
 
-    # 1. Load local data
-    print("\n[1/6] Loading salary cap data...")
+    mode = "auto"
+    if "--local" in sys.argv:
+        mode = "local"
+    elif "--download" in sys.argv:
+        mode = "download"
+
+    # Step 1: Download if requested
+    if mode in ("download", "auto"):
+        print("\n[1/7] Downloading CSVs from Google Sheets...")
+        try:
+            download_csvs()
+        except Exception as e:
+            print(f"  Download failed: {e}")
+            if mode == "download":
+                print("  FATAL: --download mode requires network access")
+                sys.exit(1)
+            print("  Falling back to local files...")
+    else:
+        print("\n[1/7] Skipping download (--local mode)")
+
+    # Step 2: Load local data
+    print("\n[2/7] Loading salary cap data...")
     salary_cap = load_salary_cap()
 
-    print("\n[2/6] Loading agent tracker data...")
-    player_salaries, career_earnings_map, agent_records = load_agent_data()
+    print("\n[3/7] Loading agent tracker data...")
+    agent_salaries, career_earnings_map, agent_records = load_agent_data()
     agent_lookup = build_agent_lookup(agent_records)
 
-    # 3. Download/load Google Sheets CSVs
-    print("\n[3/6] Loading Google Sheets data...")
-    stats_csv = download_csv("stats", SHEETS["stats"]["gid"], SHEETS["stats"]["file"])
-    salaries_csv = download_csv("salaries", SHEETS["salaries"]["gid"], SHEETS["salaries"]["file"])
-    awards_csv = download_csv("awards", SHEETS["awards"]["gid"], SHEETS["awards"]["file"])
-    bio_csv = download_csv("bio", SHEETS["bio"]["gid"], SHEETS["bio"]["file"])
+    # Step 3: Load CSVs from data_sources/
+    print("\n[4/7] Loading CSV data from data_sources/...")
+    stats_csv = load_csv_file("stats.csv")
+    hist_sal_csv = load_csv_file("salaries_historical.csv")
+    future_sal_csv = load_csv_file("salaries_future.csv")
+    awards_csv = load_csv_file("awards.csv")
+    bio_csv = load_csv_file("bio.csv")
 
-    # 4. Parse CSVs
-    print("\n[4/6] Parsing CSV data...")
+    # Step 4: Parse
+    print("\n[5/7] Parsing CSV data...")
     stats_lookup = process_stats(stats_csv) if stats_csv else {}
-    salaries_csv_lookup = process_salaries_csv(salaries_csv) if salaries_csv else {}
+    hist_sal_lookup = process_salaries_csv(hist_sal_csv) if hist_sal_csv else {}
+    future_sal_lookup = process_future_salaries(future_sal_csv) if future_sal_csv else {}
     awards_lookup, all_awards_set = process_awards(awards_csv) if awards_csv else ({}, set())
     bio_lookup = process_bio(bio_csv) if bio_csv else {}
 
-    # 5. Merge all data
-    print("\n[5/6] Merging data and computing derived fields...")
+    # Merge historical + future salary lookups
+    salary_csv_lookup = {}
+    for k, v in hist_sal_lookup.items():
+        salary_csv_lookup[k] = v
+    for k, v in future_sal_lookup.items():
+        if k in salary_csv_lookup:
+            salary_csv_lookup[k].extend(v)
+        else:
+            salary_csv_lookup[k] = v
 
-    # Build the primary dataset from agent tracker salary data
-    # This is our most comprehensive salary source
-    all_records = []
-    player_seasons_seen = set()
-    player_season_list = []
+    # Step 5: Build unified player-season list
+    print("\n[6/7] Merging data and computing derived fields...")
 
-    # Collect all player-season salary records
-    for player_name, seasons in player_salaries.items():
-        for season, salary in seasons.items():
-            season_norm = normalize_season(season)
-            if not season_norm:
+    # Start from agent tracker salary data (most comprehensive salary source)
+    # Key: (normalized_name, season) -> record dict
+    ps_map = {}
+    for player_name, seasons in agent_salaries.items():
+        for season_raw, salary in seasons.items():
+            season = normalize_season(season_raw)
+            if not season:
                 continue
-
-            # Filter to 1990-91 onwards
-            end_year = season_to_year(season_norm)
+            end_year = season_to_year(season)
             if not end_year or end_year < 1991:
                 continue
+            key = (normalize_name(player_name), season)
+            if key not in ps_map or salary > ps_map[key]["salary"]:
+                ps_map[key] = {
+                    "player": player_name,
+                    "season": season,
+                    "salary": salary,
+                    "end_year": end_year,
+                    "team": "",
+                }
 
-            player_season_list.append({
-                "player": player_name,
-                "season": season_norm,
-                "salary": salary,
-                "end_year": end_year,
-            })
-
-    # Also add any from the CSV salaries that aren't in agent tracker
-    for (name_key, season), recs in salaries_csv_lookup.items():
+    # Merge CSV salaries: add missing, update team info
+    for (nk, season), recs in salary_csv_lookup.items():
         for rec in recs:
             end_year = season_to_year(season)
             if not end_year or end_year < 1991:
                 continue
-            # Check if already in agent tracker
-            found = False
-            for ps in player_season_list:
-                if normalize_name(ps["player"]) == name_key and ps["season"] == season:
-                    # Update team from CSV if available
-                    if rec.get("team") and not ps.get("team_from_csv"):
-                        ps["team_from_csv"] = rec["team"]
-                    found = True
-                    break
-            if not found:
-                player_season_list.append({
+            key = (nk, season)
+            if key in ps_map:
+                # Update team from CSV if we don't have one
+                if rec.get("team") and not ps_map[key]["team"]:
+                    ps_map[key]["team"] = rec["team"]
+            else:
+                ps_map[key] = {
                     "player": rec["player_original"],
                     "season": season,
                     "salary": rec["salary"],
                     "end_year": end_year,
-                    "team_from_csv": rec.get("team", ""),
-                })
+                    "team": rec.get("team", ""),
+                }
 
-    print(f"    Total player-season records before dedup: {len(player_season_list)}")
+    player_season_list = list(ps_map.values())
+    print(f"    Total player-season records: {len(player_season_list)}")
 
-    # Compute salary ranks
-    # Group by season for league rank, by (season, team) for team rank
-    season_salaries = defaultdict(list)
+    # Compute league-wide salary ranks per season
+    by_season = defaultdict(list)
     for ps in player_season_list:
-        season_salaries[ps["season"]].append(ps)
-
-    # Compute league-wide salary ranks
-    for season, records in season_salaries.items():
-        sorted_recs = sorted(records, key=lambda x: x["salary"], reverse=True)
-        for rank, rec in enumerate(sorted_recs, 1):
+        by_season[ps["season"]].append(ps)
+    for season, recs in by_season.items():
+        recs.sort(key=lambda x: x["salary"], reverse=True)
+        for rank, rec in enumerate(recs, 1):
             rec["salary_rank_league"] = rank
 
-    # Compute years of experience (cumulative seasons with salary)
-    player_all_seasons = defaultdict(set)
+    # Compute years of experience and career earnings
+    player_years = defaultdict(set)
+    player_yearly_salary = defaultdict(lambda: defaultdict(int))
     for ps in player_season_list:
-        player_all_seasons[normalize_name(ps["player"])].add(ps["end_year"])
+        nk = normalize_name(ps["player"])
+        player_years[nk].add(ps["end_year"])
+        player_yearly_salary[nk][ps["end_year"]] += ps["salary"]
 
-    # Compute career earnings to date
-    player_salary_by_year = defaultdict(lambda: defaultdict(int))
-    for ps in player_season_list:
-        player_salary_by_year[normalize_name(ps["player"])][ps["end_year"]] += ps["salary"]
-
-    # Build team salary lookup from CSV salaries + stats for team rank
-    # For team rank, we need to know which team each player was on
-    # Use salaries CSV, stats, or agent tracker team data
-
-    # Now build final records
+    # Build final records
     print("    Building final records...")
     all_seasons_set = set()
     all_teams_set = set()
     all_agents_set = set()
     all_players_set = set()
-
     final_records = []
 
     for ps in player_season_list:
@@ -640,93 +600,69 @@ def build_data():
         season = ps["season"]
         salary = ps["salary"]
         end_year = ps["end_year"]
-        name_key = normalize_name(player)
+        nk = normalize_name(player)
+        sk = (nk, season)
 
-        # Get stats
-        stats_key = (name_key, season)
-        stats_list = stats_lookup.get(stats_key, [])
-
-        # Pick best stats entry (prefer non-TOT, or TOT if aggregated)
+        # Stats
+        stats_list = stats_lookup.get(sk, [])
         stats = None
         if stats_list:
-            # If there's a TOT entry, use it for aggregate stats
-            tot_entry = None
-            team_entries = []
-            for s in stats_list:
-                if s.get("team") == "TOT":
-                    tot_entry = s
-                else:
-                    team_entries.append(s)
-            stats = tot_entry if tot_entry else (team_entries[0] if team_entries else stats_list[0])
+            tot = [s for s in stats_list if s.get("team") == "TOT"]
+            nontot = [s for s in stats_list if s.get("team") != "TOT"]
+            stats = tot[0] if tot else (nontot[0] if nontot else stats_list[0])
 
-        # Determine team
-        team = ""
-        if ps.get("team_from_csv"):
-            team = ps["team_from_csv"]
-        elif stats and stats.get("team") and stats["team"] != "TOT":
+        # Team: prefer CSV salary team, then stats team
+        team = ps.get("team", "")
+        if not team and stats and stats.get("team") and stats["team"] != "TOT":
             team = stats["team"]
-        elif stats_list:
-            # Use first non-TOT team from stats
+        if not team and stats_list:
             for s in stats_list:
                 if s.get("team") and s["team"] != "TOT":
                     team = s["team"]
                     break
-        # Fallback: try to find team from salaries CSV
         if not team:
-            csv_recs = salaries_csv_lookup.get(stats_key, [])
+            csv_recs = salary_csv_lookup.get(sk, [])
             if csv_recs:
                 team = csv_recs[0].get("team", "")
 
-        # Get awards
-        awards_data = awards_lookup.get(stats_key, {})
-        awards = awards_data.get("awards", [])
+        # Awards
+        awards = awards_lookup.get(sk, [])
 
-        # Get bio
-        bio = bio_lookup.get(name_key, {})
+        # Bio
+        bio = bio_lookup.get(nk, {})
 
-        # Get agent
+        # Agent
         agent = find_agent_for_season(agent_lookup, player, season)
 
-        # Compute cap %
+        # Cap %
         cap_info = salary_cap.get(season, {})
         cap = cap_info.get("cap")
         tax = cap_info.get("tax")
+        cap_pct = round(salary / cap * 100, 2) if cap and salary else None
+        tax_pct = round(salary / tax * 100, 2) if tax and salary else None
 
-        salary_cap_pct = round(salary / cap * 100, 2) if cap and salary else None
-        luxury_tax_pct = round(salary / tax * 100, 2) if tax and salary else None
+        # Years of experience
+        years_exp = sum(1 for y in player_years.get(nk, set()) if y <= end_year)
 
-        # Compute years of experience
-        player_years = sorted(player_all_seasons.get(name_key, set()))
-        years_exp = 0
-        for y in player_years:
-            if y <= end_year:
-                years_exp += 1
+        # Career earnings to date
+        career_earnings = sum(
+            v for y, v in player_yearly_salary.get(nk, {}).items() if y <= end_year
+        )
 
-        # Compute career earnings to date
-        player_yearly = player_salary_by_year.get(name_key, {})
-        career_earnings = sum(v for y, v in player_yearly.items() if y <= end_year)
-
-        # Compute cost metrics
+        # Cost metrics
         gp = stats.get("gp") if stats else None
-        pts_total = stats.get("pts") if stats else None
+        pts = stats.get("pts") if stats else None
         ppg = stats.get("ppg") if stats else None
         rpg = stats.get("rpg") if stats else None
         apg = stats.get("apg") if stats else None
+        cost_per_point = round(salary / pts) if pts and pts > 0 and salary else None
+        cost_per_game = round(salary / gp) if gp and gp > 0 and salary else None
 
-        cost_per_point = None
-        if pts_total and pts_total > 0 and salary:
-            cost_per_point = round(salary / pts_total)
-
-        cost_per_game = None
-        if gp and gp > 0 and salary:
-            cost_per_game = round(salary / gp)
-
-        # Age: from stats or compute from bio birthday
+        # Age
         age = stats.get("age") if stats else None
         if not age and bio.get("birthday"):
             try:
                 bday = datetime.strptime(bio["birthday"], "%m/%d/%Y").date()
-                # Age as of Feb 1 of the season's end year
                 feb1 = date(end_year, 2, 1)
                 age = feb1.year - bday.year - ((feb1.month, feb1.day) < (bday.month, bday.day))
             except (ValueError, TypeError):
@@ -738,9 +674,10 @@ def build_data():
             "team": team,
             "age": age,
             "salary": salary,
-            "salary_cap_pct": salary_cap_pct,
-            "luxury_tax_pct": luxury_tax_pct,
+            "salary_cap_pct": cap_pct,
+            "luxury_tax_pct": tax_pct,
             "salary_rank_league": ps.get("salary_rank_league"),
+            "salary_rank_team": None,  # computed below
             "years_exp": years_exp,
             "agent": agent,
             "gp": gp,
@@ -764,9 +701,7 @@ def build_data():
             "height": bio.get("height", ""),
             "weight": bio.get("weight"),
         }
-
         final_records.append(record)
-
         all_seasons_set.add(season)
         if team:
             all_teams_set.add(team)
@@ -775,23 +710,16 @@ def build_data():
         all_players_set.add(player)
 
     # Compute team salary ranks
-    # Group by (season, team) and rank within each group
     team_season_groups = defaultdict(list)
     for i, rec in enumerate(final_records):
         if rec["team"]:
             team_season_groups[(rec["season"], rec["team"])].append(i)
-
-    for (season, team), indices in team_season_groups.items():
-        sorted_indices = sorted(indices, key=lambda i: final_records[i]["salary"], reverse=True)
-        for rank, idx in enumerate(sorted_indices, 1):
+    for indices in team_season_groups.values():
+        indices.sort(key=lambda i: final_records[i]["salary"], reverse=True)
+        for rank, idx in enumerate(indices, 1):
             final_records[idx]["salary_rank_team"] = rank
 
-    # Set None for records without team rank
-    for rec in final_records:
-        if "salary_rank_team" not in rec:
-            rec["salary_rank_team"] = None
-
-    # Sort seasons descending
+    # Sort reference lists
     seasons_sorted = sorted(all_seasons_set, key=lambda s: season_to_year(s) or 0, reverse=True)
     teams_sorted = sorted(all_teams_set)
     agents_sorted = sorted(all_agents_set)
@@ -800,13 +728,13 @@ def build_data():
     # Build salary cap output
     cap_output = {}
     for season in seasons_sorted:
-        cap_info = salary_cap.get(season, {})
-        if cap_info.get("cap"):
+        ci = salary_cap.get(season, {})
+        if ci.get("cap"):
             cap_output[season] = {
-                "cap": cap_info["cap"],
-                "tax": cap_info.get("tax"),
-                "apron1": cap_info.get("apron1"),
-                "apron2": cap_info.get("apron2"),
+                "cap": ci["cap"],
+                "tax": ci.get("tax"),
+                "apron1": ci.get("apron1"),
+                "apron2": ci.get("apron2"),
             }
 
     output = {
@@ -828,24 +756,25 @@ def build_data():
         },
     }
 
-    # 6. Write output
-    print(f"\n[6/6] Writing output...")
+    # Step 6: Write output
+    print(f"\n[7/7] Writing output...")
     os.makedirs(OUT_DIR, exist_ok=True)
     out_path = os.path.join(OUT_DIR, "data.json")
-
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(output, f, separators=(",", ":"))
 
-    file_size = os.path.getsize(out_path)
+    size_mb = os.path.getsize(out_path) / 1024 / 1024
     print(f"    Written to {out_path}")
-    print(f"    File size: {file_size / 1024 / 1024:.2f} MB")
-    print(f"    Total records: {len(final_records)}")
-    print(f"    Total players: {len(all_players_set)}")
+    print(f"    File size: {size_mb:.2f} MB")
+    print(f"    Records: {len(final_records)}")
+    print(f"    Players: {len(all_players_set)}")
+    print(f"    Teams: {len(all_teams_set)}")
+    print(f"    Agents: {len(all_agents_set)}")
+    print(f"    Awards: {len(all_awards_set)}")
     print(f"    Seasons: {seasons_sorted[-1] if seasons_sorted else 'N/A'} to {seasons_sorted[0] if seasons_sorted else 'N/A'}")
     print(f"    Has stats: {bool(stats_lookup)}")
     print(f"    Has awards: {bool(awards_lookup)}")
     print(f"    Has bio: {bool(bio_lookup)}")
-
     print("\n" + "=" * 60)
     print("Build complete!")
     print("=" * 60)
