@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Salary Season Finder | HoopsMatic</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Loading overlay -->
+  <div id="loading" class="loading-overlay">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">Loading salary data...</div>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-left">
+      <h1><span>HoopsMatic</span> Salary Season Finder</h1>
+      <span class="header-subtitle" id="headerSubtitle">17,000+ player-seasons</span>
+    </div>
+    <div class="header-right">
+      <button class="btn btn-sm" id="exportCsvBtn" title="Export results as CSV">Export CSV</button>
+      <button class="btn btn-sm btn-accent" id="shareBtn" title="Copy shareable link">Share</button>
+    </div>
+  </header>
+
+  <!-- Mobile sidebar overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <div class="app-layout">
+    <!-- Sidebar / Filter Panel -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h2>Filters</h2>
+        <div class="sidebar-actions">
+          <button class="clear-btn" id="clearFiltersBtn">Clear All</button>
+        </div>
+      </div>
+
+      <!-- Preset searches -->
+      <div class="presets-bar" id="presetsBar">
+        <button class="preset-btn" data-preset="overpaid">Most Overpaid</button>
+        <button class="preset-btn" data-preset="value">Best Value</button>
+        <button class="preset-btn" data-preset="max-allstar">Max $ All-Stars</button>
+        <button class="preset-btn" data-preset="underpaid">Underpaid Stars</button>
+        <button class="preset-btn" data-preset="40m-club">$40M+ Club</button>
+        <button class="preset-btn" data-preset="rookie-deals">Rookie Deals</button>
+      </div>
+
+      <!-- Search Mode -->
+      <div class="filter-section collapsed">
+        <div class="filter-section-header" data-section="mode">
+          <h3>View Mode</h3>
+          <span class="chevron">&#9660;</span>
+        </div>
+        <div class="filter-section-body">
+          <div class="mode-toggle">
+            <button class="mode-btn active" data-mode="seasons">Player Seasons</button>
+            <button class="mode-btn" data-mode="agents">Agent Leaderboard</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Season Filters -->
+      <div class="filter-section">
+        <div class="filter-section-header" data-section="seasons">
+          <h3>Season</h3>
+          <span class="chevron">&#9660;</span>
+        </div>
+        <div class="filter-section-body">
+          <div class="season-presets" id="seasonPresets">
+            <button class="season-preset-btn" data-from="2020-21" data-to="2025-26">Last 5</button>
+            <button class="season-preset-btn" data-from="2015-16" data-to="2025-26">Last 10</button>
+            <button class="season-preset-btn" data-from="2010-11" data-to="2019-20">2010s</button>
+            <button class="season-preset-btn" data-from="2000-01" data-to="2009-10">2000s</button>
+            <button class="season-preset-btn" data-from="1990-91" data-to="1999-00">1990s</button>
+          </div>
+          <div class="filter-range">
+            <select class="filter-input" id="seasonFrom" aria-label="Season from"></select>
+            <span class="range-sep">to</span>
+            <select class="filter-input" id="seasonTo" aria-label="Season to"></select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Salary Filters (prominent) -->
+      <div class="filter-section">
+        <div class="filter-section-header" data-section="salary">
+          <h3>Salary</h3>
+          <span class="chevron">&#9660;</span>
+        </div>
+        <div class="filter-section-body">
+          <div class="filter-row">
+            <label class="filter-label">Salary Range</label>
+            <div class="filter-range">
+              <input class="filter-input" type="text" id="salaryMin" placeholder="$0" aria-label="Minimum salary">
+              <span class="range-sep">-</span>
+              <input class="filter-input" type="text" id="salaryMax" placeholder="Any" aria-label="Maximum salary">
+            </div>
+          </div>
+          <div class="filter-row">
+            <label class="filter-label">Cap % Range</label>
+            <div class="filter-range">
+              <input class="filter-input" type="text" id="capPctMin" placeholder="0%" aria-label="Minimum cap percentage">
+              <span class="range-sep">-</span>
+              <input class="filter-input" type="text" id="capPctMax" placeholder="Any" aria-label="Maximum cap percentage">
+            </div>
+          </div>
+          <div class="filter-row">
+            <label class="filter-label">Salary Rank on Team</label>
+            <select class="filter-input" id="teamRank" aria-label="Salary rank on team">
+              <option value="">Any</option>
+              <option value="1">1st (Highest)</option>
+              <option value="2">Top 2</option>
+              <option value="3">Top 3</option>
+              <option value="5">Top 5</option>
+            </select>
+          </div>
+          <div class="filter-row">
+            <label class="filter-label">Salary Rank in League</label>
+            <select class="filter-input" id="leagueRank" aria-label="Salary rank in league">
+              <option value="">Any</option>
+              <option value="1">1st (Highest)</option>
+              <option value="5">Top 5</option>
+              <option value="10">Top 10</option>
+              <option value="25">Top 25</option>
+              <option value="50">Top 50</option>
+              <option value="100">Top 100</option>
+            </select>
+          </div>
+          <div class="filter-row">
+            <label class="filter-label">Cost Per Point</label>
+            <div class="filter-range">
+              <input class="filter-input" type="text" id="cppMin" placeholder="Min" aria-label="Min cost per point">
+              <span class="range-sep">-</span>
+              <input class="filter-input" type="text" id="cppMax" placeholder="Max" aria-label="Max cost per point">
+            </div>
+          </div>
+          <div class="filter-row">
+            <label class="filter-label">Cost Per Game</label>
+            <div class="filter-range">
+              <input class="filter-input" type="text" id="cpgMin" placeholder="Min" aria-label="Min cost per game">
+              <span class="range-sep">-</span>
+              <input class="filter-input" type="text" id="cpgMax" placeholder="Max" aria-label="Max cost per game">
+            </div>
+          </div>
+          <div class="filter-row">
+            <label class="filter-label">Career Earnings</label>
+            <div class="filter-range">
+              <input class="filter-input" type="text" id="earningsMin" placeholder="Min" aria-label="Min career earnings">
+              <span class="range-sep">-</span>
+              <input class="filter-input" type="text" id="earningsMax" placeholder="Max" aria-label="Max career earnings">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Player Filters -->
+      <div class="filter-section collapsed">
+        <div class="filter-section-header" data-section="player">
+          <h3>Player</h3>
+          <span class="chevron">&#9660;</span>
+        </div>
+        <div class="filter-section-body">
+          <div class="filter-row autocomplete-wrapper">
+            <label class="filter-label">Player Name</label>
+            <input class="filter-input" type="text" id="playerSearch" placeholder="Search player..." aria-label="Player name search" autocomplete="off">
+            <div class="autocomplete-dropdown" id="playerDropdown"></div>
+          </div>
+          <div class="filter-row">
+            <label class="filter-label">Position</label>
+            <div class="filter-checks" id="positionFilter">
+              <button class="filter-chip" data-value="G">G</button>
+              <button class="filter-chip" data-value="F">F</button>
+              <button class="filter-chip" data-value="C">C</button>
+            </div>
+          </div>
+          <div class="filter-row">
+            <label class="filter-label">Age</label>
+            <div class="filter-range">
+              <input class="filter-input" type="number" id="ageMin" placeholder="Min" aria-label="Minimum age">
+              <span class="range-sep">-</span>
+              <input class="filter-input" type="number" id="ageMax" placeholder="Max" aria-label="Maximum age">
+            </div>
+          </div>
+          <div class="filter-row">
+            <label class="filter-label">Years of Experience</label>
+            <div class="filter-range">
+              <input class="filter-input" type="number" id="expMin" placeholder="Min" aria-label="Min years experience">
+              <span class="range-sep">-</span>
+              <input class="filter-input" type="number" id="expMax" placeholder="Max" aria-label="Max years experience">
+            </div>
+          </div>
+          <div class="filter-row">
+            <label class="filter-label">Draft Pick</label>
+            <div class="filter-range">
+              <input class="filter-input" type="number" id="draftMin" placeholder="Min" aria-label="Min draft pick">
+              <span class="range-sep">-</span>
+              <input class="filter-input" type="number" id="draftMax" placeholder="Max" aria-label="Max draft pick">
+            </div>
+          </div>
+          <div class="filter-row">
+            <label class="filter-label">Nationality</label>
+            <select class="filter-input" id="nationality" aria-label="Nationality">
+              <option value="">Any</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Team Filters -->
+      <div class="filter-section collapsed">
+        <div class="filter-section-header" data-section="team">
+          <h3>Team</h3>
+          <span class="chevron">&#9660;</span>
+        </div>
+        <div class="filter-section-body">
+          <div class="filter-row">
+            <label class="filter-label">Team</label>
+            <select class="filter-input" id="teamFilter" aria-label="Team filter">
+              <option value="">All Teams</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats Filters -->
+      <div class="filter-section collapsed">
+        <div class="filter-section-header" data-section="stats">
+          <h3>Statistics</h3>
+          <span class="chevron">&#9660;</span>
+        </div>
+        <div class="filter-section-body">
+          <div class="filter-row">
+            <label class="filter-label">PPG</label>
+            <div class="filter-range">
+              <input class="filter-input" type="number" step="0.1" id="ppgMin" placeholder="Min" aria-label="Min PPG">
+              <span class="range-sep">-</span>
+              <input class="filter-input" type="number" step="0.1" id="ppgMax" placeholder="Max" aria-label="Max PPG">
+            </div>
+          </div>
+          <div class="filter-row">
+            <label class="filter-label">RPG</label>
+            <div class="filter-range">
+              <input class="filter-input" type="number" step="0.1" id="rpgMin" placeholder="Min" aria-label="Min RPG">
+              <span class="range-sep">-</span>
+              <input class="filter-input" type="number" step="0.1" id="rpgMax" placeholder="Max" aria-label="Max RPG">
+            </div>
+          </div>
+          <div class="filter-row">
+            <label class="filter-label">APG</label>
+            <div class="filter-range">
+              <input class="filter-input" type="number" step="0.1" id="apgMin" placeholder="Min" aria-label="Min APG">
+              <span class="range-sep">-</span>
+              <input class="filter-input" type="number" step="0.1" id="apgMax" placeholder="Max" aria-label="Max APG">
+            </div>
+          </div>
+          <div class="filter-row">
+            <label class="filter-label">FG%</label>
+            <div class="filter-range">
+              <input class="filter-input" type="number" step="0.1" id="fgPctMin" placeholder="Min" aria-label="Min FG%">
+              <span class="range-sep">-</span>
+              <input class="filter-input" type="number" step="0.1" id="fgPctMax" placeholder="Max" aria-label="Max FG%">
+            </div>
+          </div>
+          <div class="filter-row">
+            <label class="filter-label">3P%</label>
+            <div class="filter-range">
+              <input class="filter-input" type="number" step="0.1" id="tpPctMin" placeholder="Min" aria-label="Min 3P%">
+              <span class="range-sep">-</span>
+              <input class="filter-input" type="number" step="0.1" id="tpPctMax" placeholder="Max" aria-label="Max 3P%">
+            </div>
+          </div>
+          <div class="filter-row">
+            <label class="filter-label">FT%</label>
+            <div class="filter-range">
+              <input class="filter-input" type="number" step="0.1" id="ftPctMin" placeholder="Min" aria-label="Min FT%">
+              <span class="range-sep">-</span>
+              <input class="filter-input" type="number" step="0.1" id="ftPctMax" placeholder="Max" aria-label="Max FT%">
+            </div>
+          </div>
+          <div class="filter-row">
+            <label class="filter-label">Games Played</label>
+            <div class="filter-range">
+              <input class="filter-input" type="number" id="gpMin" placeholder="Min" aria-label="Min games played">
+              <span class="range-sep">-</span>
+              <input class="filter-input" type="number" id="gpMax" placeholder="Max" aria-label="Max games played">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Awards Filters -->
+      <div class="filter-section collapsed">
+        <div class="filter-section-header" data-section="awards">
+          <h3>Awards</h3>
+          <span class="chevron">&#9660;</span>
+        </div>
+        <div class="filter-section-body">
+          <div class="filter-row">
+            <label class="filter-label">Award Type</label>
+            <div class="filter-checks" id="awardsFilter">
+              <button class="filter-chip" data-value="All-Star">All-Star</button>
+              <button class="filter-chip" data-value="MVP">MVP</button>
+              <button class="filter-chip" data-value="All-NBA">All-NBA</button>
+              <button class="filter-chip" data-value="All-Defensive">All-Def</button>
+              <button class="filter-chip" data-value="DPOY">DPOY</button>
+              <button class="filter-chip" data-value="MIP">MIP</button>
+              <button class="filter-chip" data-value="ROY">ROY</button>
+              <button class="filter-chip" data-value="Champion">Champ</button>
+            </div>
+          </div>
+          <div class="filter-row">
+            <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;">
+              <input type="checkbox" id="hasAnyAward"> Has any award this season
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Agent Filters -->
+      <div class="filter-section collapsed">
+        <div class="filter-section-header" data-section="agent">
+          <h3>Agent</h3>
+          <span class="chevron">&#9660;</span>
+        </div>
+        <div class="filter-section-body">
+          <div class="filter-row autocomplete-wrapper">
+            <label class="filter-label">Agent Name</label>
+            <input class="filter-input" type="text" id="agentSearch" placeholder="Search agent..." aria-label="Agent name search" autocomplete="off">
+            <div class="autocomplete-dropdown" id="agentDropdown"></div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Mobile filter toggle -->
+      <button class="sidebar-toggle" id="sidebarToggle">Filters &amp; Search &#9660;</button>
+
+      <!-- Summary stats -->
+      <div class="summary-bar" id="summaryBar">
+        <div class="summary-stat">
+          <span class="stat-label">Matching</span>
+          <span class="stat-value" id="summaryCount">0</span>
+          <span class="stat-detail">seasons</span>
+        </div>
+        <div class="summary-stat">
+          <span class="stat-label">Avg Salary</span>
+          <span class="stat-value" id="summaryAvgSalary">$0</span>
+        </div>
+        <div class="summary-stat">
+          <span class="stat-label">Avg Cap %</span>
+          <span class="stat-value" id="summaryAvgCap">0%</span>
+        </div>
+        <div class="summary-stat">
+          <span class="stat-label">Highest Salary</span>
+          <span class="stat-value" id="summaryHighSalary">$0</span>
+          <span class="stat-detail" id="summaryHighPlayer"></span>
+        </div>
+        <div class="summary-stat">
+          <span class="stat-label">Total Salary</span>
+          <span class="stat-value" id="summaryTotalSalary">$0</span>
+        </div>
+      </div>
+
+      <!-- Column toggles -->
+      <div class="results-header">
+        <span class="results-count" id="resultsCount">Showing 0 of 0</span>
+        <div class="results-actions">
+          <label style="font-size:11px;color:var(--text-muted);">Per page:</label>
+          <select class="per-page-select" id="perPageSelect" aria-label="Results per page">
+            <option value="25">25</option>
+            <option value="50" selected>50</option>
+            <option value="100">100</option>
+            <option value="250">250</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-toggles" id="colToggles"></div>
+
+      <!-- Results Table -->
+      <div class="table-wrapper" id="tableWrapper">
+        <table class="nba-table" id="resultsTable">
+          <thead id="tableHead"></thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+
+      <!-- Agent Leaderboard (hidden by default) -->
+      <div id="agentLeaderboard" style="display:none;">
+        <div class="table-wrapper">
+          <table class="nba-table agent-table" id="agentTable">
+            <thead id="agentTableHead"></thead>
+            <tbody id="agentTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination" id="pagination"></div>
+
+      <!-- Empty state -->
+      <div class="empty-state" id="emptyState" style="display:none;">
+        <h3>No matching seasons found</h3>
+        <p>Try adjusting your filters or clearing them to see all results.</p>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
