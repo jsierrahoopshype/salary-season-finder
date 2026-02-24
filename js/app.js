@@ -9,8 +9,6 @@
   // ---- State ----
   let DATA = null;        // raw loaded data
   let filtered = [];      // current filtered results
-  let currentPage = 1;
-  let perPage = 50;
   let sortCol = "salary";
   let sortDir = "desc";   // "asc" or "desc"
   let viewMode = "seasons"; // "seasons" or "agents"
@@ -100,10 +98,10 @@
       case "awards":
         if (!val || val.length === 0) return "-";
         return val.map(function(a) {
-          var cls = "award-badge";
+          var cls = "award-badge clickable";
           if (a.indexOf("All-Star") >= 0) cls += " all-star";
           if (a === "MVP") cls += " mvp";
-          return '<span class="' + cls + '">' + escHtml(a) + "</span>";
+          return '<span class="' + cls + '" data-award="' + escAttr(a) + '">' + escHtml(a) + "</span>";
         }).join(" ");
       default: return val || "-";
     }
@@ -112,6 +110,11 @@
   function escHtml(str) {
     if (!str) return "";
     return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  }
+
+  function escAttr(str) {
+    if (!str) return "";
+    return str.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/'/g, "&#39;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
 
   function parseMoney(str) {
@@ -296,11 +299,17 @@
       overlay.classList.remove("active");
     });
 
-    // Per page
-    document.getElementById("perPageSelect").addEventListener("change", function () {
-      perPage = parseInt(this.value, 10);
-      currentPage = 1;
-      renderTable();
+    // Clickable table cells (event delegation)
+    document.getElementById("tableBody").addEventListener("click", function (e) {
+      var badge = e.target.closest(".award-badge[data-award]");
+      if (badge) {
+        handleCellClick("awards", badge.dataset.award);
+        return;
+      }
+      var cell = e.target.closest("td[data-col]");
+      if (cell) {
+        handleCellClick(cell.dataset.col, cell.dataset.val);
+      }
     });
 
     // Clear filters
@@ -318,7 +327,6 @@
         document.querySelectorAll(".mode-btn").forEach(function (b) { b.classList.remove("active"); });
         btn.classList.add("active");
         viewMode = btn.dataset.mode;
-        currentPage = 1;
         applyFilters();
       });
     });
@@ -355,7 +363,6 @@
           document.getElementById("seasonFrom").value = btn.dataset.from;
           document.getElementById("seasonTo").value = btn.dataset.to;
         }
-        currentPage = 1;
         applyFilters();
       });
     });
@@ -364,14 +371,12 @@
     document.querySelectorAll(".filter-checks .filter-chip").forEach(function (chip) {
       chip.addEventListener("click", function () {
         chip.classList.toggle("active");
-        currentPage = 1;
         applyFilters();
       });
     });
 
     // Has any award checkbox
     document.getElementById("hasAnyAward").addEventListener("change", function () {
-      currentPage = 1;
       applyFilters();
     });
 
@@ -393,7 +398,6 @@
         el.addEventListener("input", function () {
           clearTimeout(debounceTimer);
           debounceTimer = setTimeout(function () {
-            currentPage = 1;
             applyFilters();
           }, 300);
         });
@@ -403,7 +407,6 @@
     // Select-based filters
     ["seasonFrom", "seasonTo", "teamRank", "leagueRank", "teamFilter", "nationality"].forEach(function (id) {
       document.getElementById(id).addEventListener("change", function () {
-        currentPage = 1;
         applyFilters();
       });
     });
@@ -451,7 +454,6 @@
           e.preventDefault();
           input.value = m;
           dropdown.classList.remove("open");
-          currentPage = 1;
           applyFilters();
         });
         dropdown.appendChild(div);
@@ -463,7 +465,6 @@
       var items = dropdown.querySelectorAll(".autocomplete-item");
       if (!dropdown.classList.contains("open") || items.length === 0) {
         if (e.key === "Enter") {
-          currentPage = 1;
           applyFilters();
         }
         return;
@@ -481,7 +482,6 @@
         if (highlighted >= 0 && highlighted < items.length) {
           input.value = items[highlighted].textContent;
           dropdown.classList.remove("open");
-          currentPage = 1;
           applyFilters();
         }
       } else if (e.key === "Escape") {
@@ -546,7 +546,6 @@
         sortDir = "desc";
         break;
     }
-    currentPage = 1;
     applyFilters();
   }
 
@@ -789,6 +788,120 @@
     document.getElementById("summaryTotalSalary").textContent = fmtSalary(totalSalary);
   }
 
+  // ---- Clickable Cell Filter ----
+  function handleCellClick(colKey, rawValue) {
+    if (!rawValue || rawValue === "-") return;
+
+    // Preserve current season range (unless clicking a season or player)
+    var currentFrom = document.getElementById("seasonFrom").value;
+    var currentTo = document.getElementById("seasonTo").value;
+
+    clearFiltersQuiet();
+
+    // Restore season range by default
+    document.getElementById("seasonFrom").value = currentFrom;
+    document.getElementById("seasonTo").value = currentTo;
+
+    switch (colKey) {
+      case "player":
+        document.getElementById("playerSearch").value = rawValue;
+        // Show all seasons for this player
+        var seasons = DATA.seasons_list || [];
+        var asc = seasons.slice().reverse();
+        document.getElementById("seasonFrom").value = asc[0] || "";
+        document.getElementById("seasonTo").value = seasons[0] || "";
+        sortCol = "season";
+        sortDir = "desc";
+        break;
+      case "season":
+        document.getElementById("seasonFrom").value = rawValue;
+        document.getElementById("seasonTo").value = rawValue;
+        sortCol = "salary";
+        sortDir = "desc";
+        break;
+      case "team":
+        document.getElementById("teamFilter").value = rawValue;
+        break;
+      case "agent":
+        document.getElementById("agentSearch").value = rawValue;
+        break;
+      case "nationality":
+        document.getElementById("nationality").value = rawValue;
+        break;
+      case "pos":
+        document.querySelectorAll("#positionFilter .filter-chip").forEach(function (c) {
+          if (c.dataset.value === rawValue) c.classList.add("active");
+        });
+        break;
+      case "awards":
+        document.querySelectorAll("#awardsFilter .filter-chip").forEach(function (c) {
+          if (c.dataset.value === rawValue) c.classList.add("active");
+        });
+        // If the award doesn't match any chip, use hasAnyAward
+        var matched = false;
+        document.querySelectorAll("#awardsFilter .filter-chip.active").forEach(function () { matched = true; });
+        if (!matched) document.getElementById("hasAnyAward").checked = true;
+        break;
+      case "years_exp":
+        document.getElementById("expMin").value = rawValue;
+        document.getElementById("expMax").value = rawValue;
+        break;
+      case "age":
+        document.getElementById("ageMin").value = rawValue;
+        document.getElementById("ageMax").value = rawValue;
+        break;
+      case "gp":
+        document.getElementById("gpMin").value = rawValue;
+        break;
+      case "salary":
+        document.getElementById("salaryMin").value = rawValue;
+        break;
+      case "salary_cap_pct":
+        document.getElementById("capPctMin").value = rawValue;
+        break;
+      case "cost_per_point":
+        document.getElementById("cppMin").value = rawValue;
+        visibleCols["cost_per_point"] = true;
+        buildColumnToggles();
+        break;
+      case "cost_per_game":
+        document.getElementById("cpgMin").value = rawValue;
+        visibleCols["cost_per_game"] = true;
+        buildColumnToggles();
+        break;
+      case "career_earnings":
+        document.getElementById("earningsMin").value = rawValue;
+        break;
+      case "draft_pick":
+        document.getElementById("draftMin").value = rawValue;
+        document.getElementById("draftMax").value = rawValue;
+        break;
+      case "ppg":
+        document.getElementById("ppgMin").value = rawValue;
+        break;
+      case "rpg":
+        document.getElementById("rpgMin").value = rawValue;
+        break;
+      case "apg":
+        document.getElementById("apgMin").value = rawValue;
+        break;
+      case "fg_pct":
+        document.getElementById("fgPctMin").value = rawValue;
+        break;
+      case "tp_pct":
+        document.getElementById("tpPctMin").value = rawValue;
+        break;
+      case "ft_pct":
+        document.getElementById("ftPctMin").value = rawValue;
+        break;
+      default:
+        return; // not a filterable column
+    }
+
+    applyFilters();
+    scrollToTop();
+  }
+
   // ---- Table Rendering ----
   function renderTable() {
     document.getElementById("agentLeaderboard").style.display = "none";
@@ -826,27 +939,21 @@
       });
     });
 
-    // Body with pagination
+    // Body - render all results (no pagination)
     var total = filtered.length;
-    var totalPages = Math.max(1, Math.ceil(total / perPage));
-    if (currentPage > totalPages) currentPage = totalPages;
-    var start = (currentPage - 1) * perPage;
-    var end = Math.min(start + perPage, total);
-    var pageData = filtered.slice(start, end);
-
     var tbody = document.getElementById("tableBody");
     var html = "";
 
-    if (pageData.length === 0) {
+    if (total === 0) {
       document.getElementById("emptyState").style.display = "";
       tbody.innerHTML = "";
     } else {
       document.getElementById("emptyState").style.display = "none";
-      pageData.forEach(function (record, idx) {
+      filtered.forEach(function (record, idx) {
         html += "<tr>";
         activeCols.forEach(function (col) {
           if (col.key === "rank") {
-            html += '<td class="rank">' + (start + idx + 1) + "</td>";
+            html += '<td class="rank">' + (idx + 1) + "</td>";
           } else {
             var val = record[col.key];
             var tdClass = "";
@@ -854,7 +961,15 @@
             else if (col.type === "num" || col.type === "stat" || col.type === "pct" || col.type === "pct3") tdClass = "num";
             else if (col.key === "player") tdClass = "player-name";
             else if (col.key === "awards") tdClass = "awards-cell";
-            html += '<td class="' + tdClass + '">' + fmtCell(col, val) + "</td>";
+            // Make cells clickable (except awards which use badge-level clicks)
+            var hasVal = val != null && val !== "" && (!Array.isArray(val) || val.length > 0);
+            if (hasVal && col.key !== "awards") {
+              tdClass += " clickable";
+              var raw = Array.isArray(val) ? val.join(",") : String(val);
+              html += '<td class="' + tdClass + '" data-col="' + col.key + '" data-val="' + escAttr(raw) + '">' + fmtCell(col, val) + "</td>";
+            } else {
+              html += '<td class="' + tdClass + '">' + fmtCell(col, val) + "</td>";
+            }
           }
         });
         html += "</tr>";
@@ -864,75 +979,7 @@
 
     // Results count
     document.getElementById("resultsCount").textContent =
-      "Showing " + (total > 0 ? (start + 1) : 0) + "-" + end + " of " + total.toLocaleString();
-
-    // Pagination
-    renderPagination(totalPages);
-  }
-
-  function renderPagination(totalPages) {
-    var container = document.getElementById("pagination");
-    container.innerHTML = "";
-
-    if (totalPages <= 1) return;
-
-    // Previous
-    var prev = document.createElement("button");
-    prev.className = "page-btn";
-    prev.textContent = "\u25C0";
-    prev.disabled = currentPage <= 1;
-    prev.addEventListener("click", function () {
-      if (currentPage > 1) { currentPage--; renderTable(); scrollToTop(); }
-    });
-    container.appendChild(prev);
-
-    // Page numbers
-    var pages = getPaginationRange(currentPage, totalPages);
-    pages.forEach(function (p) {
-      if (p === "...") {
-        var ell = document.createElement("span");
-        ell.textContent = "...";
-        ell.style.padding = "6px 4px";
-        ell.style.color = "var(--text-muted)";
-        container.appendChild(ell);
-      } else {
-        var btn = document.createElement("button");
-        btn.className = "page-btn" + (p === currentPage ? " active" : "");
-        btn.textContent = p;
-        btn.addEventListener("click", function () {
-          currentPage = p;
-          renderTable();
-          scrollToTop();
-        });
-        container.appendChild(btn);
-      }
-    });
-
-    // Next
-    var next = document.createElement("button");
-    next.className = "page-btn";
-    next.textContent = "\u25B6";
-    next.disabled = currentPage >= totalPages;
-    next.addEventListener("click", function () {
-      if (currentPage < totalPages) { currentPage++; renderTable(); scrollToTop(); }
-    });
-    container.appendChild(next);
-  }
-
-  function getPaginationRange(current, total) {
-    if (total <= 7) {
-      var arr = [];
-      for (var i = 1; i <= total; i++) arr.push(i);
-      return arr;
-    }
-    var pages = [1];
-    if (current > 3) pages.push("...");
-    for (var j = Math.max(2, current - 1); j <= Math.min(total - 1, current + 1); j++) {
-      pages.push(j);
-    }
-    if (current < total - 2) pages.push("...");
-    pages.push(total);
-    return pages;
+      "Showing " + total.toLocaleString() + " results";
   }
 
   function scrollToTop() {
@@ -999,19 +1046,16 @@
     headerRow += "</tr>";
     thead.innerHTML = headerRow;
 
-    // Body
+    // Body - render all agents (no pagination)
     var tbody = document.getElementById("agentTableBody");
     var html = "";
     var total = agents.length;
-    var start = (currentPage - 1) * perPage;
-    var end = Math.min(start + perPage, total);
-    var pageData = agents.slice(start, end);
 
-    pageData.forEach(function (ag, idx) {
+    agents.forEach(function (ag, idx) {
       html += "<tr>";
       AGENT_COLUMNS.forEach(function (col) {
         if (col.key === "rank") {
-          html += '<td class="rank">' + (start + idx + 1) + "</td>";
+          html += '<td class="rank">' + (idx + 1) + "</td>";
         } else if (col.key === "agent") {
           html += '<td class="agent-name">' + escHtml(ag.agent) + "</td>";
         } else {
@@ -1029,11 +1073,7 @@
     tbody.innerHTML = html;
 
     document.getElementById("resultsCount").textContent =
-      "Showing " + (total > 0 ? (start + 1) : 0) + "-" + end + " of " + total + " agents";
-
-    // Pagination for agents
-    var totalPages = Math.max(1, Math.ceil(total / perPage));
-    renderPagination(totalPages);
+      "Showing " + total + " agents";
   }
 
   // ---- Clear Filters ----
@@ -1075,7 +1115,6 @@
     clearFiltersQuiet();
     sortCol = "salary";
     sortDir = "desc";
-    currentPage = 1;
     applyFilters();
   }
 

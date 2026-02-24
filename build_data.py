@@ -66,6 +66,19 @@ TEAM_ABBREV = {
     "WSH": "WAS", "NJ": "NJN", "UTAH": "UTA",
     "CHH": "CHA", "CHO": "CHA",  # Charlotte historical
     "TOT": "TOT",  # Total (multi-team)
+    # Common wrong abbreviations from data sources
+    "GOL": "GSW", "NEW": "NOP", "SAN": "SAS", "BRO": "BKN", "OKL": "OKC",
+    # City-only names (from future salaries sheet)
+    "Atlanta": "ATL", "Boston": "BOS", "Brooklyn": "BKN", "Charlotte": "CHA",
+    "Chicago": "CHI", "Cleveland": "CLE", "Dallas": "DAL", "Denver": "DEN",
+    "Detroit": "DET", "Golden State": "GSW", "Houston": "HOU", "Indiana": "IND",
+    "LA Clippers": "LAC", "LA Lakers": "LAL", "Los Angeles": "LAL",
+    "Memphis": "MEM", "Miami": "MIA", "Milwaukee": "MIL", "Minnesota": "MIN",
+    "New Orleans": "NOP", "New York": "NYK", "Oklahoma City": "OKC",
+    "Orlando": "ORL", "Philadelphia": "PHI", "Phoenix": "PHX",
+    "Portland": "POR", "Sacramento": "SAC", "San Antonio": "SAS",
+    "Seattle": "SEA", "Toronto": "TOR", "Utah": "UTA", "Washington": "WAS",
+    "New Jersey": "NJN", "Vancouver": "VAN",
 }
 
 # Known name aliases (old_name -> canonical_name used in salary data)
@@ -649,8 +662,8 @@ def build_data():
         cap_pct = round(salary / cap * 100, 2) if cap and salary else None
         tax_pct = round(salary / tax * 100, 2) if tax and salary else None
 
-        # Years of experience
-        years_exp = sum(1 for y in player_years.get(nk, set()) if y <= end_year)
+        # Years of experience (completed seasons only; current season doesn't count)
+        years_exp = sum(1 for y in player_years.get(nk, set()) if y < end_year)
 
         # Career earnings to date
         career_earnings = sum(

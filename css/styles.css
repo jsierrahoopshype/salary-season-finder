@@ -532,6 +532,25 @@ table.nba-table td.player-name {
   text-overflow: ellipsis;
 }
 
+/* Clickable cells */
+table.nba-table td.clickable {
+  cursor: pointer;
+}
+
+table.nba-table td.clickable:hover {
+  text-decoration: underline;
+  color: var(--accent);
+}
+
+.award-badge.clickable {
+  cursor: pointer;
+}
+
+.award-badge.clickable:hover {
+  text-decoration: underline;
+  filter: brightness(0.85);
+}
+
 table.nba-table td.awards-cell {
   max-width: 200px;
   overflow: hidden;
@@ -586,55 +605,6 @@ table.nba-table td:nth-child(2) {
 table.nba-table th:nth-child(1),
 table.nba-table th:nth-child(2) {
   z-index: 15;
-}
-
-/* Pagination */
-.pagination {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  padding: 12px 0;
-}
-
-.page-btn {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  padding: 6px 10px;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  background: #fff;
-  color: var(--text);
-  cursor: pointer;
-  transition: all 0.15s;
-  min-width: 36px;
-  text-align: center;
-}
-
-.page-btn:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-}
-
-.page-btn.active {
-  background: var(--primary);
-  border-color: var(--primary);
-  color: #fff;
-}
-
-.page-btn:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
-.per-page-select {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  padding: 4px 8px;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  background: #fff;
-  margin-left: 12px;
 }
 
 /* Loading state */
@@ -871,10 +841,6 @@ table.nba-table th:nth-child(2) {
     flex: 1;
     font-size: 11px;
     padding: 8px 8px;
-  }
-
-  .pagination {
-    flex-wrap: wrap;
   }
 }
 
