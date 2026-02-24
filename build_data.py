@@ -338,11 +338,11 @@ def process_stats(csv_data):
             "min": parse_int(row.get("MIN")),
             "pts": parse_int(row.get("PTS")),
             "age": parse_int(row.get("AGE (Feb 1)")),
-            "ppg": parse_float(row.get("PTS/G")),
-            "rpg": parse_float(row.get("REB/G")),
-            "apg": parse_float(row.get("AST/G")),
-            "spg": parse_float(row.get("STL/G")),
-            "bpg": parse_float(row.get("BLK/G")),
+            "ppg": parse_float(row.get("PTS / G")),
+            "rpg": parse_float(row.get("REB / G")),
+            "apg": parse_float(row.get("AST / G")),
+            "spg": parse_float(row.get("STL / G")),
+            "bpg": parse_float(row.get("BLK / G")),
             "fg_pct": parse_float(row.get("FG%")),
             "tp_pct": parse_float(row.get("3P%")),
             "ft_pct": parse_float(row.get("FT%")),
@@ -355,15 +355,23 @@ def process_stats(csv_data):
 
 
 def process_salaries_csv(csv_data):
-    rows = parse_csv_string(csv_data)
-    if not rows:
+    """Parse historical salaries. Uses column positions (0=TEAM, 1=YEAR,
+    2=PLAYER, 3=SALARY) because the header row has duplicate column names
+    from extra spreadsheet sections embedded in the same sheet."""
+    if not csv_data:
+        return {}
+    reader = csv.reader(io.StringIO(csv_data))
+    header = next(reader, None)
+    if not header:
         return {}
     lookup = {}
-    for row in rows:
-        player = row.get("PLAYER", "").strip()
-        year_raw = row.get("YEAR", "").strip()
-        team = row.get("TEAM", "").strip()
-        salary = parse_salary(row.get("SALARY"))
+    for cols in reader:
+        if len(cols) < 4:
+            continue
+        team = cols[0].strip()
+        year_raw = cols[1].strip()
+        player = cols[2].strip()
+        salary = parse_salary(cols[3])
         if not player or not year_raw or salary is None:
             continue
         season = normalize_season(year_raw)
@@ -419,7 +427,7 @@ def process_awards(csv_data):
     lookup = {}
     all_awards = set()
     for row in rows:
-        player = row.get("PLAYER/COACH", "").strip()
+        player = row.get("PLAYER / COACH", "").strip()
         year_raw = row.get("YEAR", "").strip()
         awards_str = row.get("SEASON AWARDS", "").strip()
         if not player or not year_raw:
@@ -454,9 +462,9 @@ def process_bio(csv_data):
             "height": row.get("HEIGHT", "").strip(),
             "weight": parse_int(row.get("WEIGHT")),
             "nationality": row.get("NATIONALITY", "").strip(),
-            "college": row.get("COLLEGE/TEAM", "").strip(),
-            "draft_year": parse_int(row.get("DRAFT (year)")),
-            "draft_pick": parse_int(row.get("PICK (overall)")),
+            "college": row.get("COLLEGE / TEAM", "").strip(),
+            "draft_year": parse_int(row.get("DRAFT")),
+            "draft_pick": parse_int(row.get("PICK")),
             "birthday": row.get("BIRTHDAY", "").strip(),
         }
     print(f"    Parsed {len(lookup)} player bios")
