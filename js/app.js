@@ -16,6 +16,7 @@
   let _exactLeagueRank = null;  // set by cell click for exact rank match
   let _exactPos = null;          // set by cell click for exact position match
   let _breadcrumb = null;         // single {col, label, value} for display (clean-slate)
+  let _savedRankVis = null;       // saved rank column visibility when entering combined mode
 
   // Column definitions
   const COLUMNS = [
@@ -701,6 +702,30 @@
   }
 
   // ---- Multi-Season Combine ----
+  var AWARD_PRIORITY = [
+    "Most Valuable Player",
+    "Finals Most Valuable Player",
+    "All-NBA First Team",
+    "All-NBA Second Team",
+    "All-NBA Third Team",
+    "All-Star",
+    "Defensive Player of the Year",
+    "Most Improved Player",
+    "Rookie of the Year",
+    "Sixth Man of the Year",
+    "NBA Champion"
+  ];
+
+  function highestPriorityAward(awards) {
+    if (!awards || awards.length === 0) return [];
+    for (var i = 0; i < AWARD_PRIORITY.length; i++) {
+      for (var j = 0; j < awards.length; j++) {
+        if (awards[j] === AWARD_PRIORITY[i]) return [awards[j]];
+      }
+    }
+    return [awards[0]];
+  }
+
   function combineByPlayer(records) {
     var groups = {};
     var order = [];
@@ -753,6 +778,12 @@
 
       var totalPoints = wPPG; // wPPG = sum(ppg * gp) = total points
 
+      // Age range: earliest age to latest age
+      var ageDisplay = latest.age;
+      if (recs.length > 1 && earliest.age != null && latest.age != null && earliest.age !== latest.age) {
+        ageDisplay = earliest.age + "-" + latest.age;
+      }
+
       combined.push({
         player: latest.player,
         season: recs.length === 1 ? latest.season : earliest.season + " to " + latest.season,
@@ -760,7 +791,7 @@
         _numSeasons: recs.length,
         _combined: true,
         team: latest.team,
-        age: latest.age,
+        age: ageDisplay,
         salary: totalSalary || null,
         salary_cap_pct: capCount > 0 ? Math.round(capSum / capCount * 10) / 10 : null,
         salary_rank_team: null,
@@ -778,7 +809,7 @@
         cost_per_point: totalPoints > 0 ? Math.round(totalSalary / totalPoints) : null,
         cost_per_game: totalGP > 0 ? Math.round(totalSalary / totalGP) : null,
         career_earnings: latest.career_earnings,
-        awards: allAwards,
+        awards: highestPriorityAward(allAwards),
         pos: latest.pos,
         nationality: latest.nationality,
         draft_year: latest.draft_year,
@@ -804,9 +835,27 @@
     var combineWrap = document.getElementById("combineToggleWrap");
     var combineEl = document.getElementById("combineToggle");
     if (combineWrap) combineWrap.style.display = isMultiSeason ? "" : "none";
-    if (isMultiSeason && combineEl && combineEl.checked) {
+    var isCombineActive = isMultiSeason && combineEl && combineEl.checked;
+    if (isCombineActive) {
       filtered = combineByPlayer(filtered);
     }
+
+    // Auto-hide TM RANK and LG RANK in combined mode, restore when not combined
+    if (isCombineActive) {
+      if (_savedRankVis == null) {
+        _savedRankVis = {
+          salary_rank_team: visibleCols["salary_rank_team"],
+          salary_rank_league: visibleCols["salary_rank_league"]
+        };
+      }
+      visibleCols["salary_rank_team"] = false;
+      visibleCols["salary_rank_league"] = false;
+    } else if (_savedRankVis != null) {
+      visibleCols["salary_rank_team"] = _savedRankVis.salary_rank_team;
+      visibleCols["salary_rank_league"] = _savedRankVis.salary_rank_league;
+      _savedRankVis = null;
+    }
+    buildColumnToggles();
 
     // Sort
     sortData();
