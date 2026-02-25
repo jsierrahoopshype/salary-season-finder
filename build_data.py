@@ -344,15 +344,15 @@ def process_stats(csv_data):
         if not season:
             continue
         key = (normalize_name(player), season)
-        # 2025-26 source data has STL/BLK/TOV columns rotated:
-        # CSV "STL" is actually TOV, "BLK" is actually STL, "TOV" is actually BLK.
-        # Same rotation applies to per-game columns.
-        if year_raw == "2026":
-            spg = parse_float(row.get("BLK / G"))
-            bpg = parse_float(row.get("TOV / G"))
-        else:
+        # CSV headers use the 2025-26+ column order (TOV/G, STL/G, BLK/G).
+        # Pre-2026 rows still have data in the old order (STL/G, BLK/G, TOV/G),
+        # so the header-labeled columns don't match the actual values.
+        if year_raw >= "2026":
             spg = parse_float(row.get("STL / G"))
             bpg = parse_float(row.get("BLK / G"))
+        else:
+            spg = parse_float(row.get("TOV / G"))
+            bpg = parse_float(row.get("STL / G"))
         stats = {
             "player_original": player,
             "team": normalize_team(team),
