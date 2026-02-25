@@ -347,18 +347,27 @@ def process_stats(csv_data):
         # CSV headers use the 2025-26+ column order (TOV/G, STL/G, BLK/G).
         # Pre-2026 rows still have data in the old order (STL/G, BLK/G, TOV/G),
         # so the header-labeled columns don't match the actual values.
+        # Raw total columns (STL, BLK, TOV) are rotated for 2026 data only.
         if year_raw >= "2026":
             spg = parse_float(row.get("STL / G"))
             bpg = parse_float(row.get("BLK / G"))
+            stl_raw = parse_int(row.get("BLK"))
+            blk_raw = parse_int(row.get("TOV"))
         else:
             spg = parse_float(row.get("TOV / G"))
             bpg = parse_float(row.get("STL / G"))
+            stl_raw = parse_int(row.get("STL"))
+            blk_raw = parse_int(row.get("BLK"))
         stats = {
             "player_original": player,
             "team": normalize_team(team),
             "gp": parse_int(row.get("GP")),
             "min": parse_int(row.get("MIN")),
             "pts": parse_int(row.get("PTS")),
+            "reb": parse_int(row.get("REB")),
+            "ast": parse_int(row.get("AST")),
+            "stl": stl_raw,
+            "blk": blk_raw,
             "age": parse_int(row.get("AGE (Feb 1)")),
             "ppg": parse_float(row.get("PTS / G")),
             "rpg": parse_float(row.get("REB / G")),
@@ -682,6 +691,10 @@ def build_data():
         # Cost metrics
         gp = stats.get("gp") if stats else None
         pts = stats.get("pts") if stats else None
+        reb = stats.get("reb") if stats else None
+        ast = stats.get("ast") if stats else None
+        stl = stats.get("stl") if stats else None
+        blk = stats.get("blk") if stats else None
         ppg = stats.get("ppg") if stats else None
         rpg = stats.get("rpg") if stats else None
         apg = stats.get("apg") if stats else None
@@ -711,6 +724,11 @@ def build_data():
             "years_exp": years_exp,
             "agent": agent,
             "gp": gp,
+            "pts": pts,
+            "reb": reb,
+            "ast": ast,
+            "stl": stl,
+            "blk": blk,
             "ppg": round(ppg, 1) if ppg is not None else None,
             "rpg": round(rpg, 1) if rpg is not None else None,
             "apg": round(apg, 1) if apg is not None else None,
