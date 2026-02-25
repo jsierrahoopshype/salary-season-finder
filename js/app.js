@@ -14,7 +14,6 @@
   let activePreset = null;
   let _exactLeagueRank = null;  // set by cell click for exact rank match
   let _exactPos = null;          // set by cell click for exact position match
-  let _breadcrumb = null;         // single {col, label, value} for display (clean-slate)
   let _savedRankVis = null;       // saved rank column visibility when entering combined mode
 
   // Column definitions
@@ -885,6 +884,7 @@
     saveStateToURL();
 
     // Render
+    renderBreadcrumbs();
     renderTable();
   }
 
@@ -952,40 +952,233 @@
     document.getElementById("summaryTotalSalary").textContent = fmtSalary(totalSalary);
   }
 
-  // ---- Breadcrumb Rendering ----
-  function renderBreadcrumb() {
+  // ---- Breadcrumb Rendering (shows all active filters) ----
+  function renderBreadcrumbs() {
     var bar = document.getElementById("breadcrumbBar");
     var trail = document.getElementById("breadcrumbTrail");
-    if (!_breadcrumb) {
+    var f = getFilterState();
+    var tags = [];
+
+    // Default season to compare against
+    var defaultSeason = "2025-26";
+    var isDefaultSeason = (f.seasonFrom === defaultSeason && f.seasonTo === defaultSeason);
+
+    // Season (only show if not default)
+    if (!isDefaultSeason && f.seasonFrom && f.seasonTo) {
+      var sLabel = f.seasonFrom === f.seasonTo ? f.seasonFrom : f.seasonFrom + " to " + f.seasonTo;
+      tags.push({ label: "Season", value: sLabel, clear: function() {
+        document.getElementById("seasonFrom").value = defaultSeason;
+        document.getElementById("seasonTo").value = defaultSeason;
+        document.querySelectorAll(".season-preset-btn.active").forEach(function(b){ b.classList.remove("active"); });
+      }});
+    }
+
+    // Player
+    if (f.playerSearch) tags.push({ label: "Player", value: f.playerSearch, clear: function() {
+      document.getElementById("playerSearch").value = "";
+    }});
+
+    // Position
+    if (f.positions.length > 0) tags.push({ label: "Pos", value: f.positions.join(", "), clear: function() {
+      document.querySelectorAll("#positionFilter .filter-chip.active").forEach(function(c){ c.classList.remove("active"); });
+    }});
+
+    // College
+    if (f.college) tags.push({ label: "College/Club", value: f.college, clear: function() {
+      document.getElementById("collegeFilter").value = "";
+    }});
+
+    // Age
+    if (f.ageMin != null || f.ageMax != null) {
+      var v = fmtRange(f.ageMin, f.ageMax);
+      tags.push({ label: "Age", value: v, clear: function() {
+        document.getElementById("ageMin").value = "";
+        document.getElementById("ageMax").value = "";
+      }});
+    }
+
+    // Experience
+    if (f.expMin != null || f.expMax != null) {
+      tags.push({ label: "Exp", value: fmtRange(f.expMin, f.expMax), clear: function() {
+        document.getElementById("expMin").value = "";
+        document.getElementById("expMax").value = "";
+      }});
+    }
+
+    // Draft Pick
+    if (f.draftMin != null || f.draftMax != null) {
+      tags.push({ label: "Pick", value: fmtRange(f.draftMin, f.draftMax), clear: function() {
+        document.getElementById("draftMin").value = "";
+        document.getElementById("draftMax").value = "";
+      }});
+    }
+
+    // Draft Year
+    if (f.draftYearMin != null || f.draftYearMax != null) {
+      tags.push({ label: "Draft Class", value: fmtRange(f.draftYearMin, f.draftYearMax), clear: function() {
+        document.getElementById("draftYearMin").value = "";
+        document.getElementById("draftYearMax").value = "";
+      }});
+    }
+
+    // Nationality
+    if (f.nationality) tags.push({ label: "Nationality", value: f.nationality, clear: function() {
+      document.getElementById("nationality").value = "";
+    }});
+
+    // Team
+    if (f.team) tags.push({ label: "Team", value: f.team, clear: function() {
+      document.getElementById("teamFilter").value = "";
+    }});
+
+    // Salary
+    if (f.salaryMin != null || f.salaryMax != null) {
+      tags.push({ label: "Salary", value: fmtRange$(f.salaryMin, f.salaryMax), clear: function() {
+        document.getElementById("salaryMin").value = "";
+        document.getElementById("salaryMax").value = "";
+      }});
+    }
+
+    // Cap %
+    if (f.capPctMin != null || f.capPctMax != null) {
+      tags.push({ label: "Cap%", value: fmtRangePct(f.capPctMin, f.capPctMax), clear: function() {
+        document.getElementById("capPctMin").value = "";
+        document.getElementById("capPctMax").value = "";
+      }});
+    }
+
+    // League Rank
+    if (_exactLeagueRank != null) {
+      tags.push({ label: "Lg Rank", value: "#" + _exactLeagueRank, clear: function() {
+        _exactLeagueRank = null;
+      }});
+    } else if (f.leagueRank != null) {
+      tags.push({ label: "Lg Rank", value: "Top " + f.leagueRank, clear: function() {
+        document.getElementById("leagueRank").value = "";
+      }});
+    }
+
+    // Exact position (from cell click)
+    if (_exactPos) {
+      tags.push({ label: "Pos", value: _exactPos, clear: function() {
+        _exactPos = null;
+      }});
+    }
+
+    // Cost per point
+    if (f.cppMin != null || f.cppMax != null) {
+      tags.push({ label: "$/Point", value: fmtRange$(f.cppMin, f.cppMax), clear: function() {
+        document.getElementById("cppMin").value = "";
+        document.getElementById("cppMax").value = "";
+      }});
+    }
+
+    // Cost per game
+    if (f.cpgMin != null || f.cpgMax != null) {
+      tags.push({ label: "$/Game", value: fmtRange$(f.cpgMin, f.cpgMax), clear: function() {
+        document.getElementById("cpgMin").value = "";
+        document.getElementById("cpgMax").value = "";
+      }});
+    }
+
+    // Career Earnings
+    if (f.earningsMin != null || f.earningsMax != null) {
+      tags.push({ label: "Career $", value: fmtRange$(f.earningsMin, f.earningsMax), clear: function() {
+        document.getElementById("earningsMin").value = "";
+        document.getElementById("earningsMax").value = "";
+      }});
+    }
+
+    // Stats: PPG, RPG, APG, FG%, 3P%, FT%, GP
+    var statFilters = [
+      { label: "PPG", min: f.ppgMin, max: f.ppgMax, minId: "ppgMin", maxId: "ppgMax" },
+      { label: "RPG", min: f.rpgMin, max: f.rpgMax, minId: "rpgMin", maxId: "rpgMax" },
+      { label: "APG", min: f.apgMin, max: f.apgMax, minId: "apgMin", maxId: "apgMax" },
+      { label: "FG%", min: f.fgPctMin, max: f.fgPctMax, minId: "fgPctMin", maxId: "fgPctMax" },
+      { label: "3P%", min: f.tpPctMin, max: f.tpPctMax, minId: "tpPctMin", maxId: "tpPctMax" },
+      { label: "FT%", min: f.ftPctMin, max: f.ftPctMax, minId: "ftPctMin", maxId: "ftPctMax" },
+      { label: "GP", min: f.gpMin, max: f.gpMax, minId: "gpMin", maxId: "gpMax" },
+    ];
+    statFilters.forEach(function(sf) {
+      if (sf.min != null || sf.max != null) {
+        tags.push({ label: sf.label, value: fmtRange(sf.min, sf.max), clear: (function(minId, maxId) {
+          return function() {
+            document.getElementById(minId).value = "";
+            document.getElementById(maxId).value = "";
+          };
+        })(sf.minId, sf.maxId) });
+      }
+    });
+
+    // Awards
+    if (f.awards.length > 0) {
+      tags.push({ label: "Award", value: f.awards.map(function(a) {
+        // Shorten for display
+        if (a === "Most Valuable Player") return "MVP";
+        if (a === "Defensive Player of the Year") return "DPOY";
+        if (a === "Most Improved Player") return "MIP";
+        if (a === "Rookie of the Year") return "ROY";
+        if (a === "Sixth Man of the Year") return "6MOY";
+        if (a === "Player of the Week") return "POTW";
+        if (a === "Player of the Month") return "POTM";
+        if (a === "Defensive Player of the Month") return "DPOTM";
+        return a;
+      }).join(", "), clear: function() {
+        document.querySelectorAll("#awardsFilter .filter-chip.active").forEach(function(c){ c.classList.remove("active"); });
+      }});
+    }
+    if (f.hasAnyAward) tags.push({ label: "Has Award", value: "Yes", clear: function() {
+      document.getElementById("hasAnyAward").checked = false;
+    }});
+
+    // Render
+    if (tags.length === 0) {
       bar.style.display = "none";
       return;
     }
     bar.style.display = "";
     trail.innerHTML = "";
-    var tag = document.createElement("span");
-    tag.className = "breadcrumb-tag";
-    tag.innerHTML = '<span class="bc-col">' + escHtml(_breadcrumb.label) + " =</span> " + escHtml(_breadcrumb.value);
-    trail.appendChild(tag);
+    tags.forEach(function(t) {
+      var tag = document.createElement("span");
+      tag.className = "breadcrumb-tag";
+      tag.innerHTML = '<span class="bc-col">' + escHtml(t.label) + ':</span> ' + escHtml(t.value) + ' <span class="bc-remove" title="Remove filter">\u00D7</span>';
+      tag.querySelector(".bc-remove").addEventListener("click", function(e) {
+        e.stopPropagation();
+        t.clear();
+        applyFilters();
+      });
+      trail.appendChild(tag);
+    });
+  }
+
+  // Range formatting helpers for breadcrumbs
+  function fmtRange(min, max) {
+    if (min != null && max != null) {
+      return min === max ? String(min) : min + "–" + max;
+    }
+    if (min != null) return "≥" + min;
+    return "≤" + max;
+  }
+
+  function fmtRange$(min, max) {
+    if (min != null && max != null) return fmtSalary(min) + "–" + fmtSalary(max);
+    if (min != null) return "≥" + fmtSalary(min);
+    return "≤" + fmtSalary(max);
+  }
+
+  function fmtRangePct(min, max) {
+    if (min != null && max != null) return min + "%–" + max + "%";
+    if (min != null) return "≥" + min + "%";
+    return "≤" + max + "%";
   }
 
   function breadcrumbHome() {
-    _breadcrumb = null;
-    renderBreadcrumb();
     clearFilters();
   }
 
   // ---- Clickable Cell Filter ----
   function handleCellClick(colKey, rawValue) {
     if (!rawValue || rawValue === "-") return;
-
-    // Build breadcrumb label
-    var colDef = COLUMNS.filter(function (c) { return c.key === colKey; })[0];
-    var bcLabel = colDef ? colDef.label : colKey;
-    var bcValue = rawValue;
-    if (colKey === "salary" || colKey === "cost_per_point" || colKey === "cost_per_game" || colKey === "career_earnings") {
-      bcValue = fmtSalary(parseFloat(rawValue));
-    }
-    _breadcrumb = { col: colKey, label: bcLabel, value: bcValue };
 
     // Save current season range before clearing filters
     var curFrom = document.getElementById("seasonFrom").value;
@@ -1140,7 +1333,6 @@
         return; // not a filterable column
     }
 
-    renderBreadcrumb();
     applyFilters();
     scrollToTop();
   }
@@ -1271,8 +1463,6 @@
     clearFiltersQuiet();
     sortCol = "salary";
     sortDir = "desc";
-    _breadcrumb = null;
-    renderBreadcrumb();
     applyFilters();
   }
 
