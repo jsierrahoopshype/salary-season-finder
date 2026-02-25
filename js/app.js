@@ -12,7 +12,6 @@
   let sortCol = "salary";
   let sortDir = "desc";   // "asc" or "desc"
   let activePreset = null;
-  let _exactTeamRank = null;    // set by cell click for exact rank match
   let _exactLeagueRank = null;  // set by cell click for exact rank match
   let _exactPos = null;          // set by cell click for exact position match
   let _breadcrumb = null;         // single {col, label, value} for display (clean-slate)
@@ -27,7 +26,6 @@
     { key: "age",               label: "Age",         type: "num",    default: true,  sortable: true  },
     { key: "salary",            label: "Salary",      type: "salary", default: true,  sortable: true  },
     { key: "salary_cap_pct",    label: "Cap%",        type: "pct",    default: true,  sortable: true  },
-    { key: "salary_rank_team",  label: "Tm Rank",     type: "num",    default: true,  sortable: true  },
     { key: "salary_rank_league",label: "Lg Rank",     type: "num",    default: true,  sortable: true  },
     { key: "years_exp",         label: "Exp",         type: "num",    default: true,  sortable: true  },
     { key: "ppg",               label: "PPG",         type: "stat",   default: true,  sortable: true  },
@@ -45,6 +43,7 @@
     { key: "awards",            label: "Awards",      type: "awards", default: false, sortable: false },
     { key: "pos",               label: "Pos",         type: "text",   default: false, sortable: true  },
     { key: "nationality",       label: "Nat.",        type: "text",   default: false, sortable: true  },
+    { key: "college",           label: "College/Club",type: "text",   default: false, sortable: true  },
     { key: "draft_pick",        label: "Pick",        type: "num",    default: false, sortable: true  },
     { key: "draft_year",        label: "Draft Yr",   type: "num",    default: false, sortable: true  },
   ];
@@ -247,6 +246,16 @@
     Array.from(nats).sort().forEach(function (n) {
       natSel.appendChild(new Option(n, n));
     });
+
+    // College/Club
+    var collegeSel = document.getElementById("collegeFilter");
+    var colleges = new Set();
+    (DATA.seasons || []).forEach(function (r) {
+      if (r.college) colleges.add(r.college);
+    });
+    Array.from(colleges).sort().forEach(function (c) {
+      collegeSel.appendChild(new Option(c, c));
+    });
   }
 
   // ---- Column toggles ----
@@ -393,7 +402,7 @@
     });
 
     // Select-based filters
-    ["seasonFrom", "seasonTo", "teamRank", "leagueRank", "teamFilter", "nationality"].forEach(function (id) {
+    ["seasonFrom", "seasonTo", "leagueRank", "teamFilter", "nationality", "collegeFilter"].forEach(function (id) {
       document.getElementById(id).addEventListener("change", function () {
         applyFilters();
       });
@@ -490,26 +499,12 @@
   function applyPreset(preset) {
     clearFiltersQuiet();
     switch (preset) {
-      case "overpaid":
-        document.getElementById("salaryMin").value = "30000000";
-        document.getElementById("seasonFrom").value = "2015-16";
-        sortCol = "salary";
-        sortDir = "desc";
-        break;
       case "value":
         document.getElementById("gpMin").value = "50";
         sortCol = "cost_per_point";
         sortDir = "asc";
         visibleCols["cost_per_point"] = true;
         buildColumnToggles();
-        break;
-      case "max-allstar":
-        document.getElementById("capPctMin").value = "25";
-        document.querySelectorAll("#awardsFilter .filter-chip").forEach(function (c) {
-          if (c.dataset.value === "All-Star") c.classList.add("active");
-        });
-        sortCol = "salary";
-        sortDir = "desc";
         break;
       case "underpaid":
         document.getElementById("ppgMin").value = "20";
@@ -523,9 +518,11 @@
         sortDir = "desc";
         break;
       case "rookie-deals":
-        document.getElementById("expMax").value = "4";
-        document.getElementById("salaryMax").value = "10000000";
-        sortCol = "ppg";
+        document.getElementById("draftMin").value = "1";
+        document.getElementById("draftMax").value = "30";
+        document.getElementById("expMin").value = "0";
+        document.getElementById("expMax").value = "3";
+        sortCol = "salary";
         sortDir = "desc";
         break;
     }
@@ -551,7 +548,6 @@
       salaryMax: parseMoney(document.getElementById("salaryMax").value),
       capPctMin: parseNum(document.getElementById("capPctMin").value),
       capPctMax: parseNum(document.getElementById("capPctMax").value),
-      teamRank: parseNum(document.getElementById("teamRank").value),
       leagueRank: parseNum(document.getElementById("leagueRank").value),
       cppMin: parseMoney(document.getElementById("cppMin").value),
       cppMax: parseMoney(document.getElementById("cppMax").value),
@@ -570,6 +566,7 @@
       draftYearMin: parseNum(document.getElementById("draftYearMin").value),
       draftYearMax: parseNum(document.getElementById("draftYearMax").value),
       nationality: document.getElementById("nationality").value,
+      college: document.getElementById("collegeFilter").value,
       team: document.getElementById("teamFilter").value,
       ppgMin: parseNum(document.getElementById("ppgMin").value),
       ppgMax: parseNum(document.getElementById("ppgMax").value),
@@ -605,10 +602,6 @@
     // Cap %
     if (f.capPctMin != null && (record.salary_cap_pct == null || record.salary_cap_pct < f.capPctMin)) return false;
     if (f.capPctMax != null && (record.salary_cap_pct == null || record.salary_cap_pct > f.capPctMax)) return false;
-
-    // Team rank (top N from select, or exact from cell click)
-    if (_exactTeamRank != null && record.salary_rank_team !== _exactTeamRank) return false;
-    if (_exactTeamRank == null && f.teamRank != null && (record.salary_rank_team == null || record.salary_rank_team > f.teamRank)) return false;
 
     // League rank (top N from select, or exact from cell click)
     if (_exactLeagueRank != null && record.salary_rank_league !== _exactLeagueRank) return false;
@@ -660,6 +653,9 @@
 
     // Nationality
     if (f.nationality && record.nationality !== f.nationality) return false;
+
+    // College/Club
+    if (f.college && record.college !== f.college) return false;
 
     // Team
     if (f.team && record.team !== f.team) return false;
@@ -726,6 +722,27 @@
     return [awards[0]];
   }
 
+  // Format season list: consecutive runs use "to", gaps use commas
+  // e.g. ["2019-20","2020-21","2021-22"] => "2019-20 to 2021-22"
+  // e.g. ["2019-20","2024-25","2025-26"] => "2019-20, 2024-25 to 2025-26"
+  function formatSeasonRange(seasons) {
+    if (seasons.length <= 1) return seasons[0] || "";
+    var years = seasons.map(function(s) { return seasonYear(s); });
+    var runs = [];
+    var runStart = 0;
+    for (var i = 1; i <= years.length; i++) {
+      if (i < years.length && years[i] === years[i - 1] + 1) continue;
+      // End of a run: runStart..i-1
+      if (i - 1 === runStart) {
+        runs.push(seasons[runStart]);
+      } else {
+        runs.push(seasons[runStart] + " to " + seasons[i - 1]);
+      }
+      runStart = i;
+    }
+    return runs.join(", ");
+  }
+
   function combineByPlayer(records) {
     var groups = {};
     var order = [];
@@ -785,7 +802,7 @@
 
       combined.push({
         player: latest.player,
-        season: recs.length === 1 ? latest.season : recs.map(function(r){ return r.season; }).reverse().join(", "),
+        season: recs.length === 1 ? latest.season : formatSeasonRange(recs.map(function(r){ return r.season; }).reverse()),
         _seasonYear: seasonYear(latest.season),
         _numSeasons: recs.length,
         _combined: true,
@@ -793,7 +810,6 @@
         age: ageDisplay,
         salary: totalSalary || null,
         salary_cap_pct: capCount > 0 ? Math.round(capSum / capCount * 10) / 10 : null,
-        salary_rank_team: null,
         salary_rank_league: null,
         years_exp: latest.years_exp,
         gp: totalGP || null,
@@ -816,6 +832,7 @@
         awards: highestPriorityAward(allAwards),
         pos: latest.pos,
         nationality: latest.nationality,
+        college: latest.college,
         draft_year: latest.draft_year,
         draft_pick: latest.draft_pick,
       });
@@ -844,18 +861,15 @@
       filtered = combineByPlayer(filtered);
     }
 
-    // Auto-hide TM RANK and LG RANK in combined mode, restore when not combined
+    // Auto-hide LG RANK in combined mode, restore when not combined
     if (isCombineActive) {
       if (_savedRankVis == null) {
         _savedRankVis = {
-          salary_rank_team: visibleCols["salary_rank_team"],
           salary_rank_league: visibleCols["salary_rank_league"]
         };
       }
-      visibleCols["salary_rank_team"] = false;
       visibleCols["salary_rank_league"] = false;
     } else if (_savedRankVis != null) {
-      visibleCols["salary_rank_team"] = _savedRankVis.salary_rank_team;
       visibleCols["salary_rank_league"] = _savedRankVis.salary_rank_league;
       _savedRankVis = null;
     }
@@ -1035,6 +1049,9 @@
       case "nationality":
         document.getElementById("nationality").value = rawValue;
         break;
+      case "college":
+        document.getElementById("collegeFilter").value = rawValue;
+        break;
       case "pos":
         _exactPos = rawValue;
         break;
@@ -1071,9 +1088,6 @@
         document.getElementById("draftYearMax").value = rawValue;
         break;
       // Exact rank match
-      case "salary_rank_team":
-        _exactTeamRank = parseInt(rawValue, 10);
-        break;
       case "salary_rank_league":
         _exactLeagueRank = parseInt(rawValue, 10);
         break;
@@ -1231,13 +1245,12 @@
       if (el) el.value = "";
     });
 
-    _exactTeamRank = null;
     _exactLeagueRank = null;
     _exactPos = null;
-    document.getElementById("teamRank").value = "";
     document.getElementById("leagueRank").value = "";
     document.getElementById("teamFilter").value = "";
     document.getElementById("nationality").value = "";
+    document.getElementById("collegeFilter").value = "";
     document.getElementById("hasAnyAward").checked = false;
 
     // Reset season range to default (2025-26)
@@ -1274,7 +1287,6 @@
     if (f.salaryMax != null) params.salary_max = f.salaryMax;
     if (f.capPctMin != null) params.cap_min = f.capPctMin;
     if (f.capPctMax != null) params.cap_max = f.capPctMax;
-    if (f.teamRank != null) params.tm_rank = f.teamRank;
     if (f.leagueRank != null) params.lg_rank = f.leagueRank;
     if (f.cppMin != null) params.cpp_min = f.cppMin;
     if (f.cppMax != null) params.cpp_max = f.cppMax;
@@ -1295,6 +1307,7 @@
     if (f.apgMin != null) params.apg_min = f.apgMin;
     if (f.apgMax != null) params.apg_max = f.apgMax;
     if (f.team) params.team = f.team;
+    if (f.college) params.college = f.college;
     if (f.awards.length > 0) params.awards = f.awards.join(",");
     if (f.hasAnyAward) params.has_award = "1";
     if (sortCol !== "salary") params.sort = sortCol;
@@ -1329,7 +1342,6 @@
     if (params.salary_max) document.getElementById("salaryMax").value = params.salary_max;
     if (params.cap_min) document.getElementById("capPctMin").value = params.cap_min;
     if (params.cap_max) document.getElementById("capPctMax").value = params.cap_max;
-    if (params.tm_rank) document.getElementById("teamRank").value = params.tm_rank;
     if (params.lg_rank) document.getElementById("leagueRank").value = params.lg_rank;
     if (params.cpp_min) document.getElementById("cppMin").value = params.cpp_min;
     if (params.cpp_max) document.getElementById("cppMax").value = params.cpp_max;
@@ -1349,6 +1361,7 @@
     if (params.apg_min) document.getElementById("apgMin").value = params.apg_min;
     if (params.apg_max) document.getElementById("apgMax").value = params.apg_max;
     if (params.team) document.getElementById("teamFilter").value = params.team;
+    if (params.college) document.getElementById("collegeFilter").value = params.college;
     if (params.has_award === "1") document.getElementById("hasAnyAward").checked = true;
 
     if (params.pos) {
