@@ -748,7 +748,7 @@
 
       var totalSalary = 0;
       var totalGP = 0;
-      var wPPG = 0, wRPG = 0, wAPG = 0, wSPG = 0, wBPG = 0;
+      var totalPTS = 0, totalREB = 0, totalAST = 0, totalSTL = 0, totalBLK = 0;
       var wFG = 0, wTP = 0, wFT = 0;
       var capSum = 0, capCount = 0;
       var awardsSet = {};
@@ -758,12 +758,13 @@
         if (r.salary) totalSalary += r.salary;
         var gp = r.gp || 0;
         totalGP += gp;
+        // Use raw totals for accurate combined averages
+        if (r.pts != null) totalPTS += r.pts;
+        if (r.reb != null) totalREB += r.reb;
+        if (r.ast != null) totalAST += r.ast;
+        if (r.stl != null) totalSTL += r.stl;
+        if (r.blk != null) totalBLK += r.blk;
         if (gp > 0) {
-          if (r.ppg != null) wPPG += r.ppg * gp;
-          if (r.rpg != null) wRPG += r.rpg * gp;
-          if (r.apg != null) wAPG += r.apg * gp;
-          if (r.spg != null) wSPG += r.spg * gp;
-          if (r.bpg != null) wBPG += r.bpg * gp;
           if (r.fg_pct != null) wFG += r.fg_pct * gp;
           if (r.tp_pct != null) wTP += r.tp_pct * gp;
           if (r.ft_pct != null) wFT += r.ft_pct * gp;
@@ -775,8 +776,6 @@
           });
         }
       });
-
-      var totalPoints = wPPG; // wPPG = sum(ppg * gp) = total points
 
       // Age range: earliest age to latest age
       var ageDisplay = latest.age;
@@ -798,15 +797,20 @@
         salary_rank_league: null,
         years_exp: latest.years_exp,
         gp: totalGP || null,
-        ppg: totalGP > 0 ? Math.round(wPPG / totalGP * 10) / 10 : null,
-        rpg: totalGP > 0 ? Math.round(wRPG / totalGP * 10) / 10 : null,
-        apg: totalGP > 0 ? Math.round(wAPG / totalGP * 10) / 10 : null,
-        spg: totalGP > 0 ? Math.round(wSPG / totalGP * 10) / 10 : null,
-        bpg: totalGP > 0 ? Math.round(wBPG / totalGP * 10) / 10 : null,
+        pts: totalPTS || null,
+        reb: totalREB || null,
+        ast: totalAST || null,
+        stl: totalSTL || null,
+        blk: totalBLK || null,
+        ppg: totalGP > 0 ? Math.round(totalPTS / totalGP * 10) / 10 : null,
+        rpg: totalGP > 0 ? Math.round(totalREB / totalGP * 10) / 10 : null,
+        apg: totalGP > 0 ? Math.round(totalAST / totalGP * 10) / 10 : null,
+        spg: totalGP > 0 ? Math.round(totalSTL / totalGP * 10) / 10 : null,
+        bpg: totalGP > 0 ? Math.round(totalBLK / totalGP * 10) / 10 : null,
         fg_pct: totalGP > 0 ? Math.round(wFG / totalGP * 1000) / 1000 : null,
         tp_pct: totalGP > 0 ? Math.round(wTP / totalGP * 1000) / 1000 : null,
         ft_pct: totalGP > 0 ? Math.round(wFT / totalGP * 1000) / 1000 : null,
-        cost_per_point: totalPoints > 0 ? Math.round(totalSalary / totalPoints) : null,
+        cost_per_point: totalPTS > 0 ? Math.round(totalSalary / totalPTS) : null,
         cost_per_game: totalGP > 0 ? Math.round(totalSalary / totalGP) : null,
         career_earnings: latest.career_earnings,
         awards: highestPriorityAward(allAwards),
@@ -969,12 +973,26 @@
     }
     _breadcrumb = { col: colKey, label: bcLabel, value: bcValue };
 
-    // Clean slate: clear ALL filters, open all seasons
+    // Save current season range before clearing filters
+    var curFrom = document.getElementById("seasonFrom").value;
+    var curTo = document.getElementById("seasonTo").value;
+
+    // Columns that should open all seasons (ignore current range)
+    var allSeasonsCols = { player: true, draft_year: true, salary_rank_league: true };
+
+    // Clean slate: clear ALL filters
     clearFiltersQuiet();
+
+    // Restore season range for most columns; open all seasons for exceptions
     var seasons = DATA.seasons_list || [];
     var asc = seasons.slice().reverse();
-    document.getElementById("seasonFrom").value = asc[0] || "";
-    document.getElementById("seasonTo").value = seasons[0] || "";
+    if (allSeasonsCols[colKey]) {
+      document.getElementById("seasonFrom").value = asc[0] || "";
+      document.getElementById("seasonTo").value = seasons[0] || "";
+    } else {
+      document.getElementById("seasonFrom").value = curFrom;
+      document.getElementById("seasonTo").value = curTo;
+    }
 
     // Helper: set ±10% range on two inputs
     function setRange10(minId, maxId, val) {
@@ -999,6 +1017,9 @@
     switch (colKey) {
       case "player":
         document.getElementById("playerSearch").value = rawValue;
+        // Disable combine so user sees individual seasons
+        var combineEl = document.getElementById("combineToggle");
+        if (combineEl) combineEl.checked = false;
         sortCol = "season";
         sortDir = "desc";
         break;
