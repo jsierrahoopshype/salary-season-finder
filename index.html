@@ -1,382 +1,1064 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Salary Season Finder | HoopsMatic</title>
-  <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
+/* ============================================
+   HoopsMatic Salary Season Finder - Styles
+   Matches HoopsMatic Trade Machine design
+   ============================================ */
 
-  <!-- Loading overlay -->
-  <div id="loading" class="loading-overlay">
-    <div class="loading-spinner"></div>
-    <div class="loading-text">Loading salary data...</div>
-  </div>
+:root {
+  --primary: #1a1a2e;
+  --accent: #e94560;
+  --bg: #f5f5f5;
+  --card-bg: #ffffff;
+  --text: #333333;
+  --text-muted: #888888;
+  --border: #e0e0e0;
+  --stripe: #f7f7f7;
+  --font-mono: "SF Mono", Menlo, Monaco, Consolas, "Courier New", monospace;
+  --sidebar-width: 320px;
+}
 
-  <!-- Header -->
-  <header class="header">
-    <div class="header-left">
-      <h1><span>HoopsMatic</span> Salary Season Finder</h1>
-    </div>
-    <div class="header-right">
-      <button class="btn btn-sm" id="exportCsvBtn" title="Export results as CSV">Export CSV</button>
-      <button class="btn btn-sm btn-accent" id="shareBtn" title="Copy shareable link">Share</button>
-    </div>
-  </header>
+/* Reset & Base */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-  <!-- Mobile sidebar overlay -->
-  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+html {
+  font-size: 14px;
+  -webkit-text-size-adjust: 100%;
+}
 
-  <div class="app-layout">
-    <!-- Sidebar / Filter Panel -->
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-header">
-        <h2>Filters</h2>
-        <div class="sidebar-actions">
-          <button class="clear-btn" id="clearFiltersBtn">Clear All</button>
-        </div>
-      </div>
+body {
+  font-family: var(--font-mono);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  min-height: 100vh;
+}
 
-      <!-- Preset searches -->
-      <div class="presets-bar" id="presetsBar">
-        <button class="shuffle-btn" id="shufflePresetsBtn" title="Show different presets">&#8635;</button>
-      </div>
+/* Header */
+.header {
+  background: var(--primary);
+  color: #fff;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
 
-      <!-- Season Filters -->
-      <div class="filter-section">
-        <div class="filter-section-header" data-section="seasons">
-          <h3>Season</h3>
-          <span class="chevron">&#9660;</span>
-        </div>
-        <div class="filter-section-body">
-          <div class="season-presets" id="seasonPresets">
-            <button class="season-preset-btn" data-from="2020-21" data-to="2025-26">Last 5</button>
-            <button class="season-preset-btn" data-from="2015-16" data-to="2025-26">Last 10</button>
-            <button class="season-preset-btn" data-from="2010-11" data-to="2019-20">2010s</button>
-            <button class="season-preset-btn" data-from="2000-01" data-to="2009-10">2000s</button>
-            <button class="season-preset-btn" data-from="1990-91" data-to="1999-00">1990s</button>
-            <button class="season-preset-btn" data-from="1990-91" data-to="2025-26">Since 1990</button>
-          </div>
-          <div class="filter-range">
-            <select class="filter-input" id="seasonFrom" aria-label="Season from"></select>
-            <span class="range-sep">to</span>
-            <select class="filter-input" id="seasonTo" aria-label="Season to"></select>
-          </div>
-        </div>
-      </div>
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 
-      <!-- Player Filters -->
-      <div class="filter-section">
-        <div class="filter-section-header" data-section="player">
-          <h3>Player</h3>
-          <span class="chevron">&#9660;</span>
-        </div>
-        <div class="filter-section-body">
-          <div class="filter-row autocomplete-wrapper">
-            <label class="filter-label">Player Name</label>
-            <input class="filter-input" type="text" id="playerSearch" placeholder="Search player..." aria-label="Player name search" autocomplete="off">
-            <div class="autocomplete-dropdown" id="playerDropdown"></div>
-          </div>
-          <div class="filter-row">
-            <label class="filter-label">Position</label>
-            <div class="filter-checks" id="positionFilter">
-              <button class="filter-chip" data-value="G">G</button>
-              <button class="filter-chip" data-value="F">F</button>
-              <button class="filter-chip" data-value="C">C</button>
-            </div>
-          </div>
-          <div class="filter-row">
-            <label class="filter-label">College/Club</label>
-            <select class="filter-input" id="collegeFilter" aria-label="College or club filter">
-              <option value="">Any</option>
-            </select>
-          </div>
-          <div class="filter-row">
-            <label class="filter-label">Age</label>
-            <div class="filter-range">
-              <input class="filter-input" type="number" id="ageMin" placeholder="Min" aria-label="Minimum age">
-              <span class="range-sep">-</span>
-              <input class="filter-input" type="number" id="ageMax" placeholder="Max" aria-label="Maximum age">
-            </div>
-          </div>
-          <div class="filter-row">
-            <label class="filter-label">Years of Experience</label>
-            <div class="filter-range">
-              <input class="filter-input" type="number" id="expMin" placeholder="Min" aria-label="Min years experience">
-              <span class="range-sep">-</span>
-              <input class="filter-input" type="number" id="expMax" placeholder="Max" aria-label="Max years experience">
-            </div>
-          </div>
-          <div class="filter-row">
-            <label class="filter-label">Draft Pick</label>
-            <div class="filter-range">
-              <input class="filter-input" type="number" id="draftMin" placeholder="Min" aria-label="Min draft pick">
-              <span class="range-sep">-</span>
-              <input class="filter-input" type="number" id="draftMax" placeholder="Max" aria-label="Max draft pick">
-            </div>
-          </div>
-          <div class="filter-row">
-            <label class="filter-label">Draft Class (Year)</label>
-            <div class="filter-range">
-              <input class="filter-input" type="number" id="draftYearMin" placeholder="Min" aria-label="Min draft year">
-              <span class="range-sep">-</span>
-              <input class="filter-input" type="number" id="draftYearMax" placeholder="Max" aria-label="Max draft year">
-            </div>
-          </div>
-          <div class="filter-row">
-            <label class="filter-label">Nationality</label>
-            <select class="filter-input" id="nationality" aria-label="Nationality">
-              <option value="">Any</option>
-            </select>
-          </div>
-        </div>
-      </div>
+.header h1 {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
 
-      <!-- Salary Filters -->
-      <div class="filter-section">
-        <div class="filter-section-header" data-section="salary">
-          <h3>Salary</h3>
-          <span class="chevron">&#9660;</span>
-        </div>
-        <div class="filter-section-body">
-          <div class="filter-row">
-            <label class="filter-label">Salary Range</label>
-            <div class="filter-range">
-              <input class="filter-input" type="text" id="salaryMin" placeholder="$0" aria-label="Minimum salary">
-              <span class="range-sep">-</span>
-              <input class="filter-input" type="text" id="salaryMax" placeholder="Any" aria-label="Maximum salary">
-            </div>
-          </div>
-          <div class="filter-row">
-            <label class="filter-label">Cap % Range</label>
-            <div class="filter-range">
-              <input class="filter-input" type="text" id="capPctMin" placeholder="0%" aria-label="Minimum cap percentage">
-              <span class="range-sep">-</span>
-              <input class="filter-input" type="text" id="capPctMax" placeholder="Any" aria-label="Maximum cap percentage">
-            </div>
-          </div>
-          <div class="filter-row">
-            <label class="filter-label">Salary Rank in League</label>
-            <select class="filter-input" id="leagueRank" aria-label="Salary rank in league">
-              <option value="">Any</option>
-              <option value="1">1st (Highest)</option>
-              <option value="5">Top 5</option>
-              <option value="10">Top 10</option>
-              <option value="25">Top 25</option>
-              <option value="50">Top 50</option>
-              <option value="100">Top 100</option>
-            </select>
-          </div>
-          <div class="filter-row">
-            <label class="filter-label">Cost Per Point</label>
-            <div class="filter-range">
-              <input class="filter-input" type="text" id="cppMin" placeholder="Min" aria-label="Min cost per point">
-              <span class="range-sep">-</span>
-              <input class="filter-input" type="text" id="cppMax" placeholder="Max" aria-label="Max cost per point">
-            </div>
-          </div>
-          <div class="filter-row">
-            <label class="filter-label">Cost Per Game</label>
-            <div class="filter-range">
-              <input class="filter-input" type="text" id="cpgMin" placeholder="Min" aria-label="Min cost per game">
-              <span class="range-sep">-</span>
-              <input class="filter-input" type="text" id="cpgMax" placeholder="Max" aria-label="Max cost per game">
-            </div>
-          </div>
-          <div class="filter-row">
-            <label class="filter-label">Career Earnings</label>
-            <div class="filter-range">
-              <input class="filter-input" type="text" id="earningsMin" placeholder="Min" aria-label="Min career earnings">
-              <span class="range-sep">-</span>
-              <input class="filter-input" type="text" id="earningsMax" placeholder="Max" aria-label="Max career earnings">
-            </div>
-          </div>
-        </div>
-      </div>
+.header h1 span {
+  color: var(--accent);
+}
 
-      <!-- Team Filters -->
-      <div class="filter-section collapsed">
-        <div class="filter-section-header" data-section="team">
-          <h3>Team</h3>
-          <span class="chevron">&#9660;</span>
-        </div>
-        <div class="filter-section-body">
-          <div class="filter-row">
-            <label class="filter-label">Team</label>
-            <select class="filter-input" id="teamFilter" aria-label="Team filter">
-              <option value="">All Teams</option>
-            </select>
-          </div>
-        </div>
-      </div>
+.header-subtitle {
+  font-size: 11px;
+  color: rgba(255,255,255,0.6);
+}
 
-      <!-- Stats Filters -->
-      <div class="filter-section collapsed">
-        <div class="filter-section-header" data-section="stats">
-          <h3>Statistics</h3>
-          <span class="chevron">&#9660;</span>
-        </div>
-        <div class="filter-section-body">
-          <div class="filter-row">
-            <label class="filter-label">PPG</label>
-            <div class="filter-range">
-              <input class="filter-input" type="number" step="0.1" id="ppgMin" placeholder="Min" aria-label="Min PPG">
-              <span class="range-sep">-</span>
-              <input class="filter-input" type="number" step="0.1" id="ppgMax" placeholder="Max" aria-label="Max PPG">
-            </div>
-          </div>
-          <div class="filter-row">
-            <label class="filter-label">RPG</label>
-            <div class="filter-range">
-              <input class="filter-input" type="number" step="0.1" id="rpgMin" placeholder="Min" aria-label="Min RPG">
-              <span class="range-sep">-</span>
-              <input class="filter-input" type="number" step="0.1" id="rpgMax" placeholder="Max" aria-label="Max RPG">
-            </div>
-          </div>
-          <div class="filter-row">
-            <label class="filter-label">APG</label>
-            <div class="filter-range">
-              <input class="filter-input" type="number" step="0.1" id="apgMin" placeholder="Min" aria-label="Min APG">
-              <span class="range-sep">-</span>
-              <input class="filter-input" type="number" step="0.1" id="apgMax" placeholder="Max" aria-label="Max APG">
-            </div>
-          </div>
-          <div class="filter-row">
-            <label class="filter-label">FG%</label>
-            <div class="filter-range">
-              <input class="filter-input" type="number" step="0.1" id="fgPctMin" placeholder="Min" aria-label="Min FG%">
-              <span class="range-sep">-</span>
-              <input class="filter-input" type="number" step="0.1" id="fgPctMax" placeholder="Max" aria-label="Max FG%">
-            </div>
-          </div>
-          <div class="filter-row">
-            <label class="filter-label">3P%</label>
-            <div class="filter-range">
-              <input class="filter-input" type="number" step="0.1" id="tpPctMin" placeholder="Min" aria-label="Min 3P%">
-              <span class="range-sep">-</span>
-              <input class="filter-input" type="number" step="0.1" id="tpPctMax" placeholder="Max" aria-label="Max 3P%">
-            </div>
-          </div>
-          <div class="filter-row">
-            <label class="filter-label">FT%</label>
-            <div class="filter-range">
-              <input class="filter-input" type="number" step="0.1" id="ftPctMin" placeholder="Min" aria-label="Min FT%">
-              <span class="range-sep">-</span>
-              <input class="filter-input" type="number" step="0.1" id="ftPctMax" placeholder="Max" aria-label="Max FT%">
-            </div>
-          </div>
-          <div class="filter-row">
-            <label class="filter-label">Games Played</label>
-            <div class="filter-range">
-              <input class="filter-input" type="number" id="gpMin" placeholder="Min" aria-label="Min games played">
-              <span class="range-sep">-</span>
-              <input class="filter-input" type="number" id="gpMax" placeholder="Max" aria-label="Max games played">
-            </div>
-          </div>
-        </div>
-      </div>
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 
-      <!-- Awards Filters -->
-      <div class="filter-section collapsed">
-        <div class="filter-section-header" data-section="awards">
-          <h3>Awards</h3>
-          <span class="chevron">&#9660;</span>
-        </div>
-        <div class="filter-section-body">
-          <div class="filter-row">
-            <label class="filter-label">Award Type</label>
-            <div class="filter-checks" id="awardsFilter">
-              <button class="filter-chip" data-value="All-Star">All-Star</button>
-              <button class="filter-chip" data-value="Most Valuable Player">MVP</button>
-              <button class="filter-chip" data-value="All-NBA">All-NBA</button>
-              <button class="filter-chip" data-value="All-Defensive">All-Def</button>
-              <button class="filter-chip" data-value="Defensive Player of the Year">DPOY</button>
-              <button class="filter-chip" data-value="Most Improved Player">MIP</button>
-              <button class="filter-chip" data-value="Rookie of the Year">ROY</button>
-              <button class="filter-chip" data-value="Sixth Man of the Year">6MOY</button>
-              <button class="filter-chip" data-value="Champion">Champ</button>
-              <button class="filter-chip" data-value="Player of the Week">POTW</button>
-              <button class="filter-chip" data-value="Player of the Month">POTM</button>
-              <button class="filter-chip" data-value="Defensive Player of the Month">DPOTM</button>
-            </div>
-          </div>
-          <div class="filter-row">
-            <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;">
-              <input type="checkbox" id="hasAnyAward"> Has any award this season
-            </label>
-          </div>
-        </div>
-      </div>
+.btn {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
 
-    </aside>
+.btn:hover {
+  background: rgba(255,255,255,0.1);
+}
 
-    <!-- Main Content -->
-    <main class="main-content">
-      <!-- Mobile filter toggle -->
-      <button class="sidebar-toggle" id="sidebarToggle">Filters &amp; Search &#9660;</button>
+.btn-accent {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
 
-      <!-- Breadcrumb bar (shown when cell-click filters are active) -->
-      <div class="breadcrumb-bar" id="breadcrumbBar" style="display:none;">
-        <span class="breadcrumb-label">Filtered by:</span>
-        <div class="breadcrumb-trail" id="breadcrumbTrail"></div>
-        <div class="breadcrumb-actions">
-          <button class="breadcrumb-btn breadcrumb-home" id="breadcrumbHome" title="Reset to default">&#8962; Home</button>
-        </div>
-      </div>
+.btn-accent:hover {
+  background: #d63851;
+}
 
-      <!-- Summary stats -->
-      <div class="summary-bar" id="summaryBar">
-        <div class="summary-stat">
-          <span class="stat-label">Matching</span>
-          <span class="stat-value" id="summaryCount">0</span>
-          <span class="stat-detail">seasons</span>
-        </div>
-        <div class="summary-stat">
-          <span class="stat-label">Avg Salary</span>
-          <span class="stat-value" id="summaryAvgSalary">$0</span>
-        </div>
-        <div class="summary-stat">
-          <span class="stat-label">Avg Cap %</span>
-          <span class="stat-value" id="summaryAvgCap">0%</span>
-        </div>
-        <div class="summary-stat">
-          <span class="stat-label">Highest Salary</span>
-          <span class="stat-value" id="summaryHighSalary">$0</span>
-          <span class="stat-detail" id="summaryHighPlayer"></span>
-        </div>
-        <div class="summary-stat">
-          <span class="stat-label">Total Salary</span>
-          <span class="stat-value" id="summaryTotalSalary">$0</span>
-        </div>
-      </div>
+.btn-sm {
+  font-size: 11px;
+  padding: 4px 10px;
+}
 
-      <!-- Column toggles -->
-      <div class="results-header">
-        <span class="results-count" id="resultsCount">Showing 0 results</span>
-        <label class="combine-toggle" id="combineToggleWrap" style="display:none;">
-          <input type="checkbox" id="combineToggle" checked> Combine per player
-        </label>
-      </div>
+.btn-dark {
+  background: var(--primary);
+  border-color: var(--border);
+  color: var(--text);
+}
 
-      <div class="col-toggles" id="colToggles"></div>
+.btn-dark:hover {
+  background: #2a2a4e;
+  color: #fff;
+}
 
-      <!-- Results Table -->
-      <div class="table-wrapper" id="tableWrapper">
-        <table class="nba-table" id="resultsTable">
-          <thead id="tableHead"></thead>
-          <tbody id="tableBody"></tbody>
-        </table>
-      </div>
+/* Layout */
+.app-layout {
+  display: flex;
+  min-height: calc(100vh - 56px);
+}
 
-      <!-- Empty state -->
-      <div class="empty-state" id="emptyState" style="display:none;">
-        <h3>No matching seasons found</h3>
-        <p>Try adjusting your filters or clearing them to see all results.</p>
-      </div>
-    </main>
-  </div>
+/* Sidebar / Filter Panel */
+.sidebar {
+  width: var(--sidebar-width);
+  min-width: var(--sidebar-width);
+  background: var(--card-bg);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  height: calc(100vh - 56px);
+  position: sticky;
+  top: 56px;
+}
 
-  <script src="js/app.js"></script>
-</body>
-</html>
+.sidebar-header {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sidebar-header h2 {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.sidebar-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.clear-btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px 6px;
+}
+
+.clear-btn:hover {
+  text-decoration: underline;
+}
+
+/* Filter sections */
+.filter-section {
+  border-bottom: 1px solid var(--border);
+}
+
+.filter-section-header {
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.1s;
+}
+
+.filter-section-header:hover {
+  background: var(--stripe);
+}
+
+.filter-section-header h3 {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.filter-section-header .chevron {
+  font-size: 10px;
+  color: var(--text-muted);
+  transition: transform 0.2s;
+}
+
+.filter-section.collapsed .chevron {
+  transform: rotate(-90deg);
+}
+
+.filter-section.collapsed .filter-section-body {
+  display: none;
+}
+
+.filter-section-body {
+  padding: 8px 16px 14px;
+}
+
+/* Filter controls */
+.filter-row {
+  margin-bottom: 10px;
+}
+
+.filter-row:last-child {
+  margin-bottom: 0;
+}
+
+.filter-label {
+  display: block;
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.filter-input {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  width: 100%;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--text);
+  transition: border-color 0.15s;
+}
+
+.filter-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.filter-input::placeholder {
+  color: #ccc;
+}
+
+.filter-range {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.filter-range .filter-input {
+  flex: 1;
+}
+
+.filter-range .range-sep {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+select.filter-input {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 28px;
+}
+
+/* Checkbox / radio filter */
+.filter-checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.filter-chip {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 3px 10px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: #fff;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s;
+  user-select: none;
+}
+
+.filter-chip:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.filter-chip.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* Preset searches */
+.presets-bar {
+  padding: 10px 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.preset-btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: #fff;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.preset-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: #fff5f7;
+}
+
+.preset-btn.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+.shuffle-btn {
+  font-size: 16px;
+  padding: 2px 8px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: #fff;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s;
+  line-height: 1;
+}
+
+.shuffle-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: #fff5f7;
+}
+
+/* Main content area */
+.main-content {
+  flex: 1;
+  min-width: 0;
+  padding: 16px 20px;
+  overflow-x: hidden;
+}
+
+/* Mode toggle (Individual / Agent Leaderboard) */
+.mode-toggle {
+  display: flex;
+  gap: 0;
+  margin-bottom: 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  width: fit-content;
+}
+
+.mode-btn {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 8px 16px;
+  background: #fff;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: all 0.15s;
+  border-right: 1px solid var(--border);
+}
+
+.mode-btn:last-child {
+  border-right: none;
+}
+
+.mode-btn:hover {
+  background: var(--stripe);
+}
+
+.mode-btn.active {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* Combine toggle */
+.combine-toggle {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  color: var(--text-secondary);
+}
+
+.combine-toggle input[type="checkbox"] {
+  accent-color: var(--accent);
+}
+
+/* Breadcrumb bar */
+.breadcrumb-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  margin-bottom: 12px;
+  background: #fff8e1;
+  border: 1px solid #ffe082;
+  border-radius: 8px;
+  font-size: 12px;
+  flex-wrap: wrap;
+}
+
+.breadcrumb-label {
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.breadcrumb-trail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  flex: 1;
+}
+
+.breadcrumb-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 8px;
+  background: var(--primary);
+  color: #fff;
+  border-radius: 10px;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.breadcrumb-tag .bc-col {
+  opacity: 0.7;
+}
+
+.breadcrumb-tag .bc-remove {
+  cursor: pointer;
+  opacity: 0.6;
+  font-size: 13px;
+  font-weight: 700;
+  margin-left: 2px;
+  line-height: 1;
+}
+
+.breadcrumb-tag .bc-remove:hover {
+  opacity: 1;
+}
+
+.breadcrumb-actions {
+  display: flex;
+  gap: 6px;
+  margin-left: auto;
+}
+
+.breadcrumb-btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 3px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.breadcrumb-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.breadcrumb-home {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.breadcrumb-home:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* Summary stats bar */
+.summary-bar {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+  padding: 12px 16px;
+  background: var(--card-bg);
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.summary-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.summary-stat .stat-label {
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.summary-stat .stat-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.summary-stat .stat-detail {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+/* Results area */
+.results-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.results-count {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.results-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Table wrapper for horizontal scroll */
+.table-wrapper {
+  overflow-x: auto;
+  background: var(--card-bg);
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  margin-bottom: 16px;
+}
+
+/* NBA-style table */
+table.nba-table {
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  width: 100%;
+  min-width: 900px;
+}
+
+table.nba-table th,
+table.nba-table td {
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  white-space: nowrap;
+  text-align: left;
+}
+
+table.nba-table th {
+  font-weight: 700;
+  background-color: var(--primary);
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  cursor: pointer;
+  user-select: none;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+table.nba-table th:hover {
+  background-color: #2a2a4e;
+}
+
+table.nba-table th .sort-arrow {
+  font-size: 9px;
+  margin-left: 4px;
+  opacity: 0.4;
+}
+
+table.nba-table th.sorted .sort-arrow {
+  opacity: 1;
+  color: var(--accent);
+}
+
+table.nba-table tbody tr:nth-child(odd) {
+  background-color: var(--stripe);
+}
+
+table.nba-table tbody tr:nth-child(even) {
+  background-color: #ffffff;
+}
+
+table.nba-table tbody tr:hover {
+  background-color: #fff5f7;
+}
+
+table.nba-table td.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+table.nba-table td.salary {
+  text-align: right;
+  font-weight: 600;
+  color: #2a7d2a;
+}
+
+table.nba-table td.rank {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+table.nba-table td.player-name {
+  font-weight: 600;
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Clickable cells */
+table.nba-table td.clickable {
+  cursor: pointer;
+}
+
+table.nba-table td.clickable:hover {
+  text-decoration: underline;
+  color: var(--accent);
+}
+
+.award-badge.clickable {
+  cursor: pointer;
+}
+
+.award-badge.clickable:hover {
+  text-decoration: underline;
+  filter: brightness(0.85);
+}
+
+table.nba-table td.awards-cell {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.award-badge {
+  display: inline-block;
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 8px;
+  background: #fff0e0;
+  color: #b8860b;
+  margin: 1px 2px;
+  white-space: nowrap;
+}
+
+.award-badge.all-star {
+  background: #e8f0fe;
+  color: #1a73e8;
+}
+
+.award-badge.mvp {
+  background: #fce8e6;
+  color: #d93025;
+}
+
+/* Sticky player + salary columns */
+table.nba-table th:nth-child(1),
+table.nba-table td:nth-child(1),
+table.nba-table th:nth-child(2),
+table.nba-table td:nth-child(2) {
+  position: sticky;
+  z-index: 5;
+}
+
+table.nba-table th:nth-child(1),
+table.nba-table td:nth-child(1) {
+  left: 0;
+}
+
+table.nba-table th:nth-child(2),
+table.nba-table td:nth-child(2) {
+  left: 40px;
+}
+
+table.nba-table td:nth-child(1),
+table.nba-table td:nth-child(2) {
+  background: inherit;
+}
+
+table.nba-table th:nth-child(1),
+table.nba-table th:nth-child(2) {
+  z-index: 15;
+}
+
+/* Loading state */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255,255,255,0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-text {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+/* Mobile sidebar toggle */
+.sidebar-toggle {
+  display: none;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  padding: 10px 16px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  color: var(--text);
+}
+
+.sidebar-toggle:hover {
+  background: var(--stripe);
+}
+
+/* Column visibility toggles */
+.col-toggles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.col-toggle {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 2px 8px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.col-toggle:hover {
+  border-color: var(--accent);
+}
+
+.col-toggle.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+/* Autocomplete dropdown */
+.autocomplete-wrapper {
+  position: relative;
+}
+
+.autocomplete-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  z-index: 50;
+  display: none;
+}
+
+.autocomplete-dropdown.open {
+  display: block;
+}
+
+.autocomplete-item {
+  padding: 6px 10px;
+  font-size: 12px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--stripe);
+}
+
+.autocomplete-item:hover,
+.autocomplete-item.highlighted {
+  background: var(--stripe);
+  color: var(--accent);
+}
+
+/* Agent leaderboard table */
+.agent-table td.agent-name {
+  font-weight: 600;
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+}
+
+.empty-state h3 {
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+.empty-state p {
+  font-size: 13px;
+}
+
+/* Sidebar overlay (mobile) */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 199;
+}
+
+.sidebar-overlay.active {
+  display: block;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header {
+    padding: 12px 16px;
+  }
+
+  .header h1 {
+    font-size: 15px;
+  }
+
+  .header-subtitle {
+    display: none;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 320px;
+    min-width: 320px;
+    height: 100vh;
+    z-index: 200;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    border-right: 1px solid var(--border);
+    box-shadow: 4px 0 16px rgba(0,0,0,0.1);
+  }
+
+  .sidebar.drawer-open {
+    transform: translateX(0);
+  }
+
+  .sidebar-toggle {
+    display: block;
+  }
+
+  .main-content {
+    padding: 12px;
+  }
+
+  .summary-bar {
+    gap: 12px;
+    padding: 10px 12px;
+  }
+
+  .summary-stat .stat-value {
+    font-size: 14px;
+  }
+
+  table.nba-table {
+    font-size: 11px;
+  }
+
+  table.nba-table th,
+  table.nba-table td {
+    padding: 5px 8px;
+  }
+
+  /* Keep sticky columns on mobile */
+  table.nba-table th:nth-child(1),
+  table.nba-table td:nth-child(1),
+  table.nba-table th:nth-child(2),
+  table.nba-table td:nth-child(2) {
+    position: sticky;
+  }
+
+  .mode-toggle {
+    width: 100%;
+  }
+
+  .mode-btn {
+    flex: 1;
+    font-size: 11px;
+    padding: 8px 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header h1 {
+    font-size: 13px;
+  }
+
+  .summary-bar {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+/* Scrollbar styling */
+.sidebar::-webkit-scrollbar,
+.table-wrapper::-webkit-scrollbar,
+.autocomplete-dropdown::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track,
+.table-wrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb,
+.table-wrapper::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover,
+.table-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
+}
+
+/* Multi-select tags */
+.multi-select-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.tag {
+  font-size: 10px;
+  padding: 2px 8px;
+  background: var(--primary);
+  color: #fff;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tag .remove-tag {
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 1;
+  opacity: 0.7;
+}
+
+.tag .remove-tag:hover {
+  opacity: 1;
+}
+
+/* Season preset buttons */
+.season-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.season-preset-btn {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 2px 8px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.season-preset-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.season-preset-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
