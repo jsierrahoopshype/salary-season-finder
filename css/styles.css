@@ -891,6 +891,11 @@ table.nba-table th:nth-child(2) {
 }
 
 /* Responsive */
+/* Mobile top bar - hidden on desktop */
+.mobile-top-bar {
+  display: none;
+}
+
 @media (max-width: 768px) {
   .header {
     padding: 12px 16px;
@@ -922,44 +927,73 @@ table.nba-table th:nth-child(2) {
     transform: translateX(0);
   }
 
+  /* Hide old sidebar toggle on mobile (replaced by mobile-top-bar) */
   .sidebar-toggle {
+    display: none !important;
+  }
+
+  /* Mobile top bar: search + filter icon */
+  .mobile-top-bar {
     display: flex;
-    align-items: center;
     gap: 8px;
+    margin-bottom: 6px;
+    order: 0;
+  }
+
+  .mobile-search {
+    flex: 1;
     font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: 600;
-    padding: 10px 14px;
+    font-size: 13px;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--text);
+    outline: none;
+  }
+
+  .mobile-search:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(233, 69, 96, 0.15);
+  }
+
+  .mobile-search::placeholder {
+    color: var(--text-muted);
+  }
+
+  .mobile-filter-btn {
+    font-size: 18px;
+    padding: 8px 14px;
     background: var(--primary);
     color: #fff;
     border: none;
     border-radius: 8px;
-    margin-bottom: 8px;
     cursor: pointer;
-    width: 100%;
-    text-align: center;
-    justify-content: center;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
+    line-height: 1;
+    flex-shrink: 0;
   }
 
-  .sidebar-toggle:hover {
+  .mobile-filter-btn:hover {
     background: #252a38;
   }
 
   .main-content {
-    padding: 8px 10px;
+    padding: 8px 8px;
     display: flex;
     flex-direction: column;
+    -webkit-overflow-scrolling: touch;
   }
 
-  /* Compact summary bar on mobile: horizontal grid */
+  /* Summary bar BELOW the table */
   .summary-bar {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 4px 8px;
+    gap: 2px 6px;
     padding: 8px 10px;
-    margin-bottom: 8px;
+    margin-bottom: 0;
+    margin-top: 10px;
+    order: 8;
+    font-size: 11px;
   }
 
   .summary-stat .stat-label {
@@ -967,42 +1001,61 @@ table.nba-table th:nth-child(2) {
   }
 
   .summary-stat .stat-value {
-    font-size: 13px;
+    font-size: 12px;
   }
 
   .summary-stat .stat-detail {
     font-size: 8px;
   }
 
-  /* Move column toggles below the table */
+  /* Column toggles at the very bottom */
   .col-toggles {
-    order: 10;
-    margin-top: 12px;
+    order: 11;
+    margin-top: 8px;
     margin-bottom: 0;
-    padding: 10px 0;
+    padding: 8px 0;
     border-top: 1px solid var(--border);
   }
 
+  /* Results header above summary */
   .results-header {
     order: 9;
-    margin-top: 8px;
+    margin-top: 6px;
     margin-bottom: 0;
   }
 
-  /* Keep table and other elements in order */
-  .sidebar-toggle { order: 0; }
+  /* Element ordering */
   .breadcrumb-bar { order: 1; }
-  #summaryBar { order: 2; }
   #tableWrapper { order: 3; }
   #emptyState { order: 4; }
 
+  /* TABLE: tight columns, less waste */
   table.nba-table {
     font-size: 11px;
   }
 
   table.nba-table th,
   table.nba-table td {
-    padding: 5px 8px;
+    padding: 6px 4px;
+    white-space: nowrap;
+  }
+
+  /* # column: super narrow */
+  table.nba-table th:nth-child(1),
+  table.nba-table td:nth-child(1) {
+    width: 24px;
+    max-width: 24px;
+    padding: 6px 2px 6px 6px;
+    text-align: center;
+  }
+
+  /* Player column: compact */
+  table.nba-table td:nth-child(2) {
+    padding-left: 4px;
+    padding-right: 6px;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   /* Keep sticky columns on mobile */
@@ -1011,6 +1064,11 @@ table.nba-table th:nth-child(2) {
   table.nba-table th:nth-child(2),
   table.nba-table td:nth-child(2) {
     position: sticky;
+  }
+
+  /* Faster table scroll */
+  .table-wrapper {
+    -webkit-overflow-scrolling: touch;
   }
 
   .mode-toggle {
@@ -1025,8 +1083,8 @@ table.nba-table th:nth-child(2) {
 
   /* Breadcrumb compact on mobile */
   .breadcrumb-bar {
-    padding: 6px 10px;
-    margin-bottom: 6px;
+    padding: 6px 8px;
+    margin-bottom: 4px;
     font-size: 11px;
   }
 
@@ -1055,18 +1113,17 @@ table.nba-table th:nth-child(2) {
 }
 
 @media (max-width: 480px) {
-  .header h1 {
-    font-size: 13px;
-  }
-
-  .summary-bar {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px 6px;
-    padding: 6px 8px;
-  }
-
   .summary-stat .stat-value {
-    font-size: 12px;
+    font-size: 11px;
+  }
+
+  table.nba-table {
+    font-size: 10px;
+  }
+
+  table.nba-table th,
+  table.nba-table td {
+    padding: 5px 3px;
   }
 }
 
