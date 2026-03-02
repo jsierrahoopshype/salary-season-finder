@@ -306,6 +306,22 @@
       overlay.classList.remove("active");
     });
 
+    // Mobile search bar syncs with sidebar player search
+    var mobileSearch = document.getElementById("mobileSearch");
+    var sidebarSearch = document.getElementById("playerSearch");
+    if (mobileSearch && sidebarSearch) {
+      var syncTimeout;
+      mobileSearch.addEventListener("input", function () {
+        sidebarSearch.value = mobileSearch.value;
+        clearTimeout(syncTimeout);
+        syncTimeout = setTimeout(function() { applyFilters(); }, 300);
+      });
+      // Also sync the other way (when sidebar search changes)
+      sidebarSearch.addEventListener("input", function () {
+        mobileSearch.value = sidebarSearch.value;
+      });
+    }
+
     // Clickable table cells (event delegation)
     document.getElementById("tableBody").addEventListener("click", function (e) {
       var badge = e.target.closest(".award-badge[data-award]");
@@ -1123,6 +1139,11 @@
     renderBreadcrumbs();
     updatePageTitle();
     renderTable();
+
+    // Sync mobile search with sidebar search
+    var ms = document.getElementById("mobileSearch");
+    var ss = document.getElementById("playerSearch");
+    if (ms && ss && ms !== document.activeElement) ms.value = ss.value;
   }
 
   // ---- Sorting ----
