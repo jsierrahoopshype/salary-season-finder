@@ -16,6 +16,7 @@
   let _exactPos = null;          // set by cell click for exact position match
   let _teammateFilter = null;    // set by teammate preset: Set of "TEAM|SEASON" keys
   let _teammateLabel = null;     // name of the star player for breadcrumb display
+  let _teammateExclude = null;   // star player name to exclude from results
   let _undraftedFilter = false;   // filter for undrafted players only
   let _savedRankVis = null;       // saved rank column visibility when entering combined mode
 
@@ -314,8 +315,6 @@
     // Clear filters
     document.getElementById("clearFiltersBtn").addEventListener("click", clearFilters);
 
-    // Export CSV
-    document.getElementById("exportCsvBtn").addEventListener("click", exportCSV);
 
     // Share
     document.getElementById("shareBtn").addEventListener("click", shareURL);
@@ -623,7 +622,7 @@
       var j = Math.floor(Math.random() * (i + 1));
       var temp = shuffled[i]; shuffled[i] = shuffled[j]; shuffled[j] = temp;
     }
-    var picks = shuffled.slice(0, 5);
+    var picks = shuffled.slice(0, 4);
 
     picks.forEach(function(preset) {
       var btn = document.createElement("button");
@@ -654,13 +653,14 @@
       var seasons = DATA.seasons_list || [];
       var asc = seasons.slice().reverse();
       document.getElementById("seasonFrom").value = asc[0] || "";
-      document.getElementById("seasonTo").value = seasons[0] || "";
+      document.getElementById("seasonTo").value = "2025-26";
     }
 
     // Teammate filter
     if (preset.teammate) {
       var starName = preset.teammate;
       _teammateLabel = starName;
+      _teammateExclude = starName;
       var starSeasons = [];
       DATA.seasons.forEach(function(r) {
         if (r.player === starName) starSeasons.push(r.team + "|" + r.season);
@@ -670,7 +670,7 @@
       var seasons = DATA.seasons_list || [];
       var asc = seasons.slice().reverse();
       document.getElementById("seasonFrom").value = asc[0] || "";
-      document.getElementById("seasonTo").value = seasons[0] || "";
+      document.getElementById("seasonTo").value = "2025-26";
     }
 
     // Map filter keys to UI elements
@@ -816,6 +816,7 @@
 
     // Teammate filter (from preset)
     if (_teammateFilter && !_teammateFilter.has(record.team + "|" + record.season)) return false;
+    if (_teammateExclude && record.player === _teammateExclude) return false;
 
     // Salary
     if (f.salaryMin != null && (record.salary == null || record.salary < f.salaryMin)) return false;
@@ -1111,6 +1112,7 @@
 
     // Render
     renderBreadcrumbs();
+    updatePageTitle();
     renderTable();
   }
 
@@ -1417,6 +1419,41 @@
     clearFilters();
   }
 
+  // ---- Dynamic Page Title ----
+  function updatePageTitle() {
+    var base = "HoopsMatic";
+    // If a preset is active, use its label
+    if (activePreset && activePreset.label) {
+      document.title = activePreset.label + " | " + base;
+      return;
+    }
+    // Build title from active filters
+    var parts = [];
+    var f = getFilterState();
+    if (f.playerSearch) parts.push(f.playerSearch);
+    if (f.team) parts.push(TEAM_NAMES[f.team] || f.team);
+    if (f.college) parts.push(f.college);
+    if (f.nationality) parts.push(f.nationality);
+    if (f.positions.length > 0) parts.push(f.positions.join("/"));
+    if (f.awards.length > 0) {
+      var a = f.awards[0];
+      if (a === "Most Valuable Player") parts.push("MVP");
+      else if (a === "All-Star") parts.push("All-Star");
+      else if (a === "Champion") parts.push("Champions");
+      else parts.push(a);
+    }
+    if (_teammateLabel) parts.push(_teammateLabel + " Teammates");
+    if (f.salaryMin != null && f.salaryMin >= 40000000) parts.push(fmtSalary(f.salaryMin) + "+");
+    if (f.ppgMin != null) parts.push(f.ppgMin + "+ PPG");
+
+    if (parts.length > 0) {
+      document.title = parts.join(" \u2014 ") + " Salaries | " + base;
+    } else {
+      var season = f.seasonFrom === f.seasonTo ? f.seasonFrom : f.seasonFrom + " to " + f.seasonTo;
+      document.title = "Salary Season Finder \u2014 " + season + " | " + base;
+    }
+  }
+
   // ---- Clickable Cell Filter ----
   function handleCellClick(colKey, rawValue) {
     if (!rawValue || rawValue === "-") return;
@@ -1682,6 +1719,7 @@
     _exactPos = null;
     _teammateFilter = null;
     _teammateLabel = null;
+    _teammateExclude = null;
     _undraftedFilter = false;
     document.getElementById("leagueRank").value = "";
     document.getElementById("teamFilter").value = "";
@@ -1818,39 +1856,6 @@
     if (params.dir) sortDir = params.dir;
   }
 
-  // ---- Export CSV ----
-  function exportCSV() {
-    if (filtered.length === 0) return;
-
-    var activeCols = COLUMNS.filter(function (c) {
-      return c.key !== "rank" && visibleCols[c.key];
-    });
-
-    var headers = activeCols.map(function (c) { return c.label; });
-    var rows = [headers.join(",")];
-
-    filtered.forEach(function (r) {
-      var row = activeCols.map(function (c) {
-        var val = r[c.key];
-        if (val == null) return "";
-        if (Array.isArray(val)) return '"' + val.join("; ") + '"';
-        if (typeof val === "string" && (val.indexOf(",") >= 0 || val.indexOf('"') >= 0)) {
-          return '"' + val.replace(/"/g, '""') + '"';
-        }
-        return val;
-      });
-      rows.push(row.join(","));
-    });
-
-    var csv = rows.join("\n");
-    var blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-    var url = URL.createObjectURL(blob);
-    var a = document.createElement("a");
-    a.href = url;
-    a.download = "salary_season_finder_" + new Date().toISOString().split("T")[0] + ".csv";
-    a.click();
-    URL.revokeObjectURL(url);
-  }
 
   // ---- Share URL ----
   function shareURL() {
