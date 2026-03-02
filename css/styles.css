@@ -923,21 +923,78 @@ table.nba-table th:nth-child(2) {
   }
 
   .sidebar-toggle {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 10px 14px;
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .sidebar-toggle:hover {
+    background: #252a38;
   }
 
   .main-content {
-    padding: 12px;
+    padding: 8px 10px;
+    display: flex;
+    flex-direction: column;
   }
 
+  /* Compact summary bar on mobile: horizontal grid */
   .summary-bar {
-    gap: 12px;
-    padding: 10px 12px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px 8px;
+    padding: 8px 10px;
+    margin-bottom: 8px;
+  }
+
+  .summary-stat .stat-label {
+    font-size: 8px;
   }
 
   .summary-stat .stat-value {
-    font-size: 14px;
+    font-size: 13px;
   }
+
+  .summary-stat .stat-detail {
+    font-size: 8px;
+  }
+
+  /* Move column toggles below the table */
+  .col-toggles {
+    order: 10;
+    margin-top: 12px;
+    margin-bottom: 0;
+    padding: 10px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .results-header {
+    order: 9;
+    margin-top: 8px;
+    margin-bottom: 0;
+  }
+
+  /* Keep table and other elements in order */
+  .sidebar-toggle { order: 0; }
+  .breadcrumb-bar { order: 1; }
+  #summaryBar { order: 2; }
+  #tableWrapper { order: 3; }
+  #emptyState { order: 4; }
 
   table.nba-table {
     font-size: 11px;
@@ -965,6 +1022,36 @@ table.nba-table th:nth-child(2) {
     font-size: 11px;
     padding: 8px 8px;
   }
+
+  /* Breadcrumb compact on mobile */
+  .breadcrumb-bar {
+    padding: 6px 10px;
+    margin-bottom: 6px;
+    font-size: 11px;
+  }
+
+  .breadcrumb-tag {
+    font-size: 10px;
+    padding: 2px 6px;
+  }
+
+  /* Compact presets on mobile */
+  .presets-bar {
+    padding: 6px 10px;
+    gap: 4px;
+  }
+
+  .preset-btn {
+    font-size: 10px;
+    padding: 3px 8px;
+    white-space: normal;
+    line-height: 1.3;
+  }
+
+  .shuffle-btn {
+    font-size: 14px;
+    padding: 2px 6px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -973,8 +1060,13 @@ table.nba-table th:nth-child(2) {
   }
 
   .summary-bar {
-    flex-direction: column;
-    gap: 8px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px 6px;
+    padding: 6px 8px;
+  }
+
+  .summary-stat .stat-value {
+    font-size: 12px;
   }
 }
 
