@@ -196,6 +196,16 @@
     if (!hasData["team"]) visibleCols["team"] = false;
     if (!hasData["age"]) visibleCols["age"] = false;
 
+    // Mobile: fewer default columns so Salary is next to Player
+    if (window.innerWidth <= 768) {
+      visibleCols["season"] = false;
+      visibleCols["team"] = false;
+      visibleCols["age"] = false;
+      visibleCols["salary_rank_league"] = false;
+      visibleCols["years_exp"] = false;
+      visibleCols["career_earnings"] = false;
+    }
+
     populateFilters();
     buildColumnToggles();
     bindEvents();
