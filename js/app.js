@@ -484,12 +484,15 @@
   // ---- Rotating Presets System ----
   // Team full names for labels
   var TEAM_NAMES = {
-    ATL:"Hawks",BKN:"Nets",BOS:"Celtics",CHA:"Hornets",CHI:"Bulls",CLE:"Cavaliers",
-    DAL:"Mavericks",DEN:"Nuggets",DET:"Pistons",GSW:"Warriors",HOU:"Rockets",
-    IND:"Pacers",LAC:"Clippers",LAL:"Lakers",MEM:"Grizzlies",MIA:"Heat",
-    MIL:"Bucks",MIN:"Timberwolves",NOP:"Pelicans",NYK:"Knicks",OKC:"Thunder",
-    ORL:"Magic",PHI:"76ers",PHX:"Suns",POR:"Trail Blazers",SAC:"Kings",
-    SAS:"Spurs",TOR:"Raptors",UTA:"Jazz",WAS:"Wizards"
+    ATL:"Atlanta Hawks",BKN:"Brooklyn Nets",BOS:"Boston Celtics",CHA:"Charlotte Hornets",
+    CHI:"Chicago Bulls",CLE:"Cleveland Cavaliers",DAL:"Dallas Mavericks",DEN:"Denver Nuggets",
+    DET:"Detroit Pistons",GSW:"Golden State Warriors",HOU:"Houston Rockets",
+    IND:"Indiana Pacers",LAC:"Los Angeles Clippers",LAL:"Los Angeles Lakers",
+    MEM:"Memphis Grizzlies",MIA:"Miami Heat",MIL:"Milwaukee Bucks",
+    MIN:"Minnesota Timberwolves",NOP:"New Orleans Pelicans",NYK:"New York Knicks",
+    OKC:"Oklahoma City Thunder",ORL:"Orlando Magic",PHI:"Philadelphia 76ers",
+    PHX:"Phoenix Suns",POR:"Portland Trail Blazers",SAC:"Sacramento Kings",
+    SAS:"San Antonio Spurs",TOR:"Toronto Raptors",UTA:"Utah Jazz",WAS:"Washington Wizards"
   };
 
   function buildAllPresets() {
@@ -530,71 +533,69 @@
     // --- By Season ---
     ["2025-26","2024-25","2023-24","2022-23","2020-21","2015-16","2010-11",
      "2005-06","2000-01","1995-96","1990-91"].forEach(function(s) {
-      P.push({label: "Highest-Paid in " + s, f:{seasonFrom:s, seasonTo:s}, sort:"salary", dir:"desc"});
+      P.push({label: "Highest-Paid NBA Players in " + s, f:{seasonFrom:s, seasonTo:s}, sort:"salary", dir:"desc"});
     });
 
     // --- By Award ---
-    P.push({label: "MVP Salaries", f:{awards:["Most Valuable Player"]}, sort:"salary", dir:"desc", allSeasons:true});
-    P.push({label: "DPOY Salaries", f:{awards:["Defensive Player of the Year"]}, sort:"salary", dir:"desc", allSeasons:true});
-    P.push({label: "All-Star Salaries", f:{awards:["All-Star"]}, sort:"salary", dir:"desc", allSeasons:true});
-    P.push({label: "Champions' Paychecks", f:{awards:["Champion"]}, sort:"salary", dir:"desc", allSeasons:true});
-    P.push({label: "All-NBA Salaries", f:{awards:["All-NBA"]}, sort:"salary", dir:"desc", allSeasons:true});
-    P.push({label: "MIP Salaries", f:{awards:["Most Improved Player"]}, sort:"salary", dir:"desc", allSeasons:true});
-    P.push({label: "Rookie of the Year Salaries", f:{awards:["Rookie of the Year"]}, sort:"salary", dir:"desc", allSeasons:true});
-    P.push({label: "Sixth Man Salaries", f:{awards:["Sixth Man of the Year"]}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "NBA MVP Award Winner Salaries", f:{awards:["Most Valuable Player"]}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "Defensive Player of the Year Salaries", f:{awards:["Defensive Player of the Year"]}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "NBA All-Star Salaries", f:{awards:["All-Star"]}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "NBA Champions' Paychecks", f:{awards:["Champion"]}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "All-NBA Team Salaries", f:{awards:["All-NBA"]}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "Most Improved Player Award Salaries", f:{awards:["Most Improved Player"]}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "Rookie of the Year Award Salaries", f:{awards:["Rookie of the Year"]}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "Sixth Man of the Year Award Salaries", f:{awards:["Sixth Man of the Year"]}, sort:"salary", dir:"desc", allSeasons:true});
 
     // --- By Draft ---
-    P.push({label: "#1 Pick Salaries", f:{draftMin:"1", draftMax:"1"}, sort:"salary", dir:"desc", allSeasons:true});
-    P.push({label: "Top 3 Picks' Salaries", f:{draftMin:"1", draftMax:"3"}, sort:"salary", dir:"desc", allSeasons:true});
-    P.push({label: "Top 5 Picks' Salaries", f:{draftMin:"1", draftMax:"5"}, sort:"salary", dir:"desc", allSeasons:true});
-    P.push({label: "Lottery Pick Salaries", f:{draftMin:"1", draftMax:"14"}, sort:"salary", dir:"desc", allSeasons:true});
-    P.push({label: "Second-Round Earners", f:{draftMin:"31", draftMax:"60", salaryMin:"10000000"}, sort:"salary", dir:"desc", allSeasons:true});
-    P.push({label: "Undrafted Earners", f:{undrafted:true}, sort:"salary", dir:"desc", allSeasons:true});
-    P.push({label: "Late First Round Gems", f:{draftMin:"20", draftMax:"30", ppgMin:"15"}, sort:"ppg", dir:"desc", allSeasons:true});
+    P.push({label: "#1 Overall Draft Pick Salaries", f:{draftMin:"1", draftMax:"1"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "Top 3 Draft Picks' Salaries", f:{draftMin:"1", draftMax:"3"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "Top 5 Draft Picks' Salaries", f:{draftMin:"1", draftMax:"5"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "NBA Lottery Pick Salaries", f:{draftMin:"1", draftMax:"14"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "Highest-Paid Second-Round Picks", f:{draftMin:"31", draftMax:"60", salaryMin:"10000000"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "Highest-Paid Undrafted Players", f:{undrafted:true}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "Late First-Round Picks Scoring 15+ PPG", f:{draftMin:"20", draftMax:"30", ppgMin:"15"}, sort:"ppg", dir:"desc", allSeasons:true});
     // Famous draft classes
     ["2003","2018","1996","2024","2023","2022","2020","2015","2009","1984","2011"].forEach(function(yr) {
-      P.push({label: yr + " Draft Class Salaries", f:{draftYearMin:yr, draftYearMax:yr}, sort:"salary", dir:"desc", allSeasons:true});
+      P.push({label: "NBA " + yr + " Draft Class Salaries", f:{draftYearMin:yr, draftYearMax:yr}, sort:"salary", dir:"desc", allSeasons:true});
     });
 
     // --- Career Earnings ---
-    P.push({label: "$500M Career Club", f:{earningsMin:"500000000"}, sort:"career_earnings", dir:"desc"});
-    P.push({label: "$300M Career Club", f:{earningsMin:"300000000"}, sort:"career_earnings", dir:"desc"});
-    P.push({label: "$200M Career Club", f:{earningsMin:"200000000"}, sort:"career_earnings", dir:"desc"});
-    P.push({label: "$100M Career Club", f:{earningsMin:"100000000"}, sort:"career_earnings", dir:"desc"});
+    P.push({label: "$500M Career Earnings Club", f:{earningsMin:"500000000"}, sort:"career_earnings", dir:"desc"});
+    P.push({label: "$300M Career Earnings Club", f:{earningsMin:"300000000"}, sort:"career_earnings", dir:"desc"});
+    P.push({label: "$200M Career Earnings Club", f:{earningsMin:"200000000"}, sort:"career_earnings", dir:"desc"});
+    P.push({label: "$100M Career Earnings Club", f:{earningsMin:"100000000"}, sort:"career_earnings", dir:"desc"});
 
     // --- Salary Thresholds ---
-    P.push({label: "$50M+ Seasons", f:{salaryMin:"50000000"}, sort:"salary", dir:"desc", allSeasons:true});
-    P.push({label: "$40M+ Seasons", f:{salaryMin:"40000000"}, sort:"salary", dir:"desc", allSeasons:true});
-    P.push({label: "$30M+ Seasons", f:{salaryMin:"30000000"}, sort:"salary", dir:"desc", allSeasons:true});
-    P.push({label: "Under $2M Scorers", f:{salaryMax:"2000000", ppgMin:"15", gpMin:"40"}, sort:"ppg", dir:"desc", allSeasons:true});
+    P.push({label: "Players Making $50M+ Per Season", f:{salaryMin:"50000000"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "Players Making $40M+ Per Season", f:{salaryMin:"40000000"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "Players Making $30M+ Per Season", f:{salaryMin:"30000000"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "Under-$2M Players Scoring 15+ PPG", f:{salaryMax:"2000000", ppgMin:"15", gpMin:"40"}, sort:"ppg", dir:"desc", allSeasons:true});
 
     // --- By Age ---
-    P.push({label: "Teenage NBA Earners", f:{ageMin:"18", ageMax:"19"}, sort:"salary", dir:"desc", allSeasons:true});
-    P.push({label: "Under-22 Earners", f:{ageMax:"21"}, sort:"salary", dir:"desc", allSeasons:true});
-    P.push({label: "35+ Still Getting Paid", f:{ageMin:"35"}, sort:"salary", dir:"desc", allSeasons:true});
-    P.push({label: "38+ Veterans' Salaries", f:{ageMin:"38"}, sort:"salary", dir:"desc", allSeasons:true});
-    P.push({label: "40+ Club Salaries", f:{ageMin:"40"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "Teenage NBA Players' Salaries", f:{ageMin:"18", ageMax:"19"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "Highest-Paid Under-22 NBA Players", f:{ageMax:"21"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "Highest-Paid NBA Players 35 and Older", f:{ageMin:"35"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "Highest-Paid NBA Veterans Age 38+", f:{ageMin:"38"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "NBA Players Age 40+ Salaries", f:{ageMin:"40"}, sort:"salary", dir:"desc", allSeasons:true});
 
     // --- By Position ---
-    P.push({label: "Highest-Paid Guards", f:{positions:["G"]}, sort:"salary", dir:"desc"});
-    P.push({label: "Highest-Paid Forwards", f:{positions:["F"]}, sort:"salary", dir:"desc"});
-    P.push({label: "Highest-Paid Centers", f:{positions:["C"]}, sort:"salary", dir:"desc"});
+    P.push({label: "Highest-Paid NBA Guards", f:{positions:["G"]}, sort:"salary", dir:"desc"});
+    P.push({label: "Highest-Paid NBA Forwards", f:{positions:["F"]}, sort:"salary", dir:"desc"});
+    P.push({label: "Highest-Paid NBA Centers", f:{positions:["C"]}, sort:"salary", dir:"desc"});
 
     // --- By Stat ---
-    P.push({label: "25+ PPG Club Salaries", f:{ppgMin:"25"}, sort:"salary", dir:"desc", allSeasons:true});
-    P.push({label: "20+ PPG Earners", f:{ppgMin:"20"}, sort:"salary", dir:"desc", allSeasons:true});
-    P.push({label: "10+ RPG Earners", f:{rpgMin:"10"}, sort:"salary", dir:"desc", allSeasons:true});
-    P.push({label: "10+ APG Earners", f:{apgMin:"10"}, sort:"salary", dir:"desc", allSeasons:true});
-    P.push({label: "2+ BPG Shot Blockers", f:{bpgMin:"2"}, sort:"salary", dir:"desc", allSeasons:true});
-    P.push({label: "2+ SPG Ball Hawks", f:{spgMin:"2"}, sort:"salary", dir:"desc", allSeasons:true});
-    P.push({label: "50% FG Shooters' Salaries", f:{fgPctMin:"50", gpMin:"40"}, sort:"salary", dir:"desc", allSeasons:true});
-    P.push({label: "40%+ 3PT Shooters' Salaries", f:{tpPctMin:"40", gpMin:"40"}, sort:"salary", dir:"desc", allSeasons:true});
-    P.push({label: "90%+ FT Shooters' Salaries", f:{ftPctMin:"90", gpMin:"40"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "25+ PPG Scorers' Salaries", f:{ppgMin:"25"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "20+ PPG Scorers' Salaries", f:{ppgMin:"20"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "10+ RPG Rebounders' Salaries", f:{rpgMin:"10"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "10+ APG Playmakers' Salaries", f:{apgMin:"10"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "50%+ FG Shooters' Salaries", f:{fgPctMin:"50", gpMin:"40"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "40%+ Three-Point Shooters' Salaries", f:{tpPctMin:"40", gpMin:"40"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "90%+ Free Throw Shooters' Salaries", f:{ftPctMin:"90", gpMin:"40"}, sort:"salary", dir:"desc", allSeasons:true});
 
     // --- Value/Contract ---
-    P.push({label: "Best Value Deals", f:{gpMin:"50"}, sort:"cost_per_point", dir:"asc", showCols:["cost_per_point"]});
-    P.push({label: "Underpaid Stars (20+ PPG, <15% Cap)", f:{ppgMin:"20", capPctMax:"15"}, sort:"salary_cap_pct", dir:"asc", allSeasons:true});
-    P.push({label: "Rookie Scale Deals", f:{draftMin:"1", draftMax:"30", expMin:"0", expMax:"3"}, sort:"salary", dir:"desc"});
+    P.push({label: "Best Value NBA Contracts (Cost Per Point)", f:{gpMin:"50"}, sort:"cost_per_point", dir:"asc", showCols:["cost_per_point"]});
+    P.push({label: "Underpaid Stars: 20+ PPG on Less Than 15% of Cap", f:{ppgMin:"20", capPctMax:"15"}, sort:"salary_cap_pct", dir:"asc", allSeasons:true});
+    P.push({label: "Rookie-Scale Contract Salaries (Top 30 Picks)", f:{draftMin:"1", draftMax:"30", expMin:"0", expMax:"3"}, sort:"salary", dir:"desc"});
 
     // --- Star Teammates ---
     [["Kobe Bryant","Kobe's"],["LeBron James","LeBron's"],["Stephen Curry","Curry's"],
@@ -683,8 +684,6 @@
       ppgMin:"ppgMin", ppgMax:"ppgMax",
       rpgMin:"rpgMin", rpgMax:"rpgMax",
       apgMin:"apgMin", apgMax:"apgMax",
-      spgMin:"spgMin", spgMax:"spgMax",
-      bpgMin:"bpgMin", bpgMax:"bpgMax",
       fgPctMin:"fgPctMin", fgPctMax:"fgPctMax",
       tpPctMin:"tpPctMin", tpPctMax:"tpPctMax",
       ftPctMin:"ftPctMin", ftPctMax:"ftPctMax",
@@ -1364,6 +1363,7 @@
       tags.push({ label: "Teammates of", value: _teammateLabel, clear: function() {
         _teammateFilter = null;
         _teammateLabel = null;
+        _teammateExclude = null;
       }});
     }
 
@@ -1420,6 +1420,10 @@
   }
 
   // ---- Dynamic Page Title ----
+  function titleCase(str) {
+    return str.replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+  }
+
   function updatePageTitle() {
     var base = "HoopsMatic";
     // If a preset is active, use its label
@@ -1430,27 +1434,102 @@
     // Build title from active filters
     var parts = [];
     var f = getFilterState();
-    if (f.playerSearch) parts.push(f.playerSearch);
-    if (f.team) parts.push(TEAM_NAMES[f.team] || f.team);
-    if (f.college) parts.push(f.college);
-    if (f.nationality) parts.push(f.nationality);
-    if (f.positions.length > 0) parts.push(f.positions.join("/"));
-    if (f.awards.length > 0) {
-      var a = f.awards[0];
-      if (a === "Most Valuable Player") parts.push("MVP");
-      else if (a === "All-Star") parts.push("All-Star");
-      else if (a === "Champion") parts.push("Champions");
-      else parts.push(a);
+
+    // Player name (capitalized)
+    if (f.playerSearch) parts.push(titleCase(f.playerSearch) + " Salaries");
+
+    // Teammate
+    if (_teammateLabel) parts.push(_teammateLabel + " Teammates' Salaries");
+
+    // Team (full name)
+    if (f.team) parts.push((TEAM_NAMES[f.team] || f.team) + " Salaries");
+
+    // College
+    if (f.college) parts.push(f.college + " Alumni Salaries");
+
+    // Nationality
+    if (f.nationality) {
+      var natAdj = {
+        "United States":"American","Canada":"Canadian","France":"French","Australia":"Australian",
+        "Serbia":"Serbian","Nigeria":"Nigerian","Germany":"German","Spain":"Spanish",
+        "Croatia":"Croatian","Turkey":"Turkish","Brazil":"Brazilian","Lithuania":"Lithuanian",
+        "Slovenia":"Slovenian","Great Britain":"British","Dominican Republic":"Dominican",
+        "Argentina":"Argentinian","Greece":"Greek","Cameroon":"Cameroonian","Japan":"Japanese",
+        "Italy":"Italian","China":"Chinese","Puerto Rico":"Puerto Rican","Ukraine":"Ukrainian",
+        "Mexico":"Mexican","Israel":"Israeli","New Zealand":"New Zealand"
+      };
+      var adj = natAdj[f.nationality] || f.nationality;
+      parts.push("Highest-Paid " + adj + " Players");
     }
-    if (_teammateLabel) parts.push(_teammateLabel + " Teammates");
-    if (f.salaryMin != null && f.salaryMin >= 40000000) parts.push(fmtSalary(f.salaryMin) + "+");
-    if (f.ppgMin != null) parts.push(f.ppgMin + "+ PPG");
+
+    // Position
+    if (f.positions.length > 0) {
+      var posNames = { G: "Guards", F: "Forwards", C: "Centers" };
+      var posLabels = f.positions.map(function(p) { return posNames[p] || p; });
+      parts.push("Highest-Paid " + posLabels.join(" & "));
+    }
+
+    // Awards
+    if (f.awards.length > 0) {
+      var awardNames = {
+        "Most Valuable Player": "MVP",
+        "All-Star": "All-Star",
+        "Champion": "NBA Champion",
+        "All-NBA": "All-NBA",
+        "All-Defensive": "All-Defensive",
+        "Defensive Player of the Year": "DPOY",
+        "Most Improved Player": "MIP",
+        "Rookie of the Year": "Rookie of the Year",
+        "Sixth Man of the Year": "Sixth Man",
+        "Player of the Week": "Player of the Week",
+        "Player of the Month": "Player of the Month",
+        "Defensive Player of the Month": "Defensive Player of the Month"
+      };
+      var aLabels = f.awards.map(function(a) { return awardNames[a] || a; });
+      parts.push(aLabels.join(" & ") + " Salaries");
+    }
+
+    // Salary threshold
+    if (f.salaryMin != null && f.salaryMin >= 30000000) parts.push(fmtSalary(f.salaryMin) + "+ Club");
+
+    // Career earnings
+    if (f.earningsMin != null) parts.push(fmtSalary(f.earningsMin) + "+ Career Earnings");
+
+    // PPG threshold
+    if (f.ppgMin != null) parts.push(f.ppgMin + "+ PPG Scorers");
+
+    // Age
+    if (f.ageMin != null && f.ageMax != null) parts.push("Age " + f.ageMin + "–" + f.ageMax + " Players");
+    else if (f.ageMin != null) parts.push("Age " + f.ageMin + "+ Players");
+    else if (f.ageMax != null) parts.push("Under " + (f.ageMax + 1) + " Players");
+
+    // Draft
+    if (_undraftedFilter) parts.push("Undrafted Players' Salaries");
+    if (f.draftMin != null && f.draftMax != null && f.draftMin === 1 && f.draftMax === 1) parts.push("#1 Overall Picks");
+    else if (f.draftMin != null && f.draftMax != null) parts.push("Picks " + f.draftMin + "–" + f.draftMax);
+
+    // Experience
+    if (f.expMax != null && f.expMax <= 4) parts.push("Rookie-Scale Contracts");
+
+    // Season
+    var defaultSeason = "2025-26";
+    var seasonLabel = "";
+    if (f.seasonFrom === f.seasonTo) {
+      seasonLabel = f.seasonFrom;
+    } else {
+      seasonLabel = f.seasonFrom + " to " + f.seasonTo;
+    }
 
     if (parts.length > 0) {
-      document.title = parts.join(" \u2014 ") + " Salaries | " + base;
+      // Add season context if not default
+      var isDefault = (f.seasonFrom === defaultSeason && f.seasonTo === defaultSeason);
+      if (!isDefault && f.seasonFrom === f.seasonTo) {
+        document.title = parts.join(" \u2014 ") + " (" + seasonLabel + ") | " + base;
+      } else {
+        document.title = parts.join(" \u2014 ") + " | " + base;
+      }
     } else {
-      var season = f.seasonFrom === f.seasonTo ? f.seasonFrom : f.seasonFrom + " to " + f.seasonTo;
-      document.title = "Salary Season Finder \u2014 " + season + " | " + base;
+      document.title = "NBA Salary Season Finder \u2014 " + seasonLabel + " | " + base;
     }
   }
 
