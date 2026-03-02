@@ -14,6 +14,9 @@
   let activePreset = null;
   let _exactLeagueRank = null;  // set by cell click for exact rank match
   let _exactPos = null;          // set by cell click for exact position match
+  let _teammateFilter = null;    // set by teammate preset: Set of "TEAM|SEASON" keys
+  let _teammateLabel = null;     // name of the star player for breadcrumb display
+  let _undraftedFilter = false;   // filter for undrafted players only
   let _savedRankVis = null;       // saved rank column visibility when entering combined mode
 
   // Column definitions
@@ -195,14 +198,9 @@
     populateFilters();
     buildColumnToggles();
     bindEvents();
+    populatePresets();
     loadStateFromURL();
     applyFilters();
-
-    // Update subtitle
-    if (DATA.meta) {
-      document.getElementById("headerSubtitle").textContent =
-        DATA.meta.total_records.toLocaleString() + " player-seasons | " + DATA.meta.season_range;
-    }
 
     // Mobile: sidebar starts hidden (drawer is closed by default via CSS transform)
   }
@@ -322,20 +320,9 @@
     // Share
     document.getElementById("shareBtn").addEventListener("click", shareURL);
 
-    // Preset buttons
-    document.querySelectorAll(".preset-btn").forEach(function (btn) {
-      btn.addEventListener("click", function () {
-        var wasActive = btn.classList.contains("active");
-        document.querySelectorAll(".preset-btn").forEach(function (b) { b.classList.remove("active"); });
-        if (wasActive) {
-          activePreset = null;
-          clearFilters();
-        } else {
-          activePreset = btn.dataset.preset;
-          btn.classList.add("active");
-          applyPreset(activePreset);
-        }
-      });
+    // Shuffle presets button
+    document.getElementById("shufflePresetsBtn").addEventListener("click", function () {
+      populatePresets();
     });
 
     // Season presets
@@ -495,36 +482,269 @@
   }
 
   // ---- Presets ----
+  // ---- Rotating Presets System ----
+  // Team full names for labels
+  var TEAM_NAMES = {
+    ATL:"Hawks",BKN:"Nets",BOS:"Celtics",CHA:"Hornets",CHI:"Bulls",CLE:"Cavaliers",
+    DAL:"Mavericks",DEN:"Nuggets",DET:"Pistons",GSW:"Warriors",HOU:"Rockets",
+    IND:"Pacers",LAC:"Clippers",LAL:"Lakers",MEM:"Grizzlies",MIA:"Heat",
+    MIL:"Bucks",MIN:"Timberwolves",NOP:"Pelicans",NYK:"Knicks",OKC:"Thunder",
+    ORL:"Magic",PHI:"76ers",PHX:"Suns",POR:"Trail Blazers",SAC:"Kings",
+    SAS:"Spurs",TOR:"Raptors",UTA:"Jazz",WAS:"Wizards"
+  };
+
+  function buildAllPresets() {
+    var P = [];
+
+    // --- By College (top 30) ---
+    ["Kentucky","Duke","North Carolina","UCLA","Arizona","Kansas","Michigan",
+     "Georgia Tech","Connecticut","Michigan St","Florida","Texas","LSU","Syracuse",
+     "Alabama","Arkansas","Georgetown","Villanova","Maryland","USC","Wake Forest",
+     "Indiana","Washington","Memphis","Florida St","UNLV","Ohio St","Stanford",
+     "Virginia","Gonzaga"].forEach(function(c) {
+      P.push({label: c + " Alumni Salaries", f:{college:c}, sort:"salary", dir:"desc", allSeasons:true});
+    });
+
+    // --- International Clubs ---
+    ["Barcelona","Real Madrid","Partizan","Mega Basket","Baskonia","Anadolu Efes",
+     "Olimpia Milano","Fenerbahce","Maccabi Tel Aviv","ASVEL","Cibona","Union Olimpija",
+     "Pau Orthez","Split"].forEach(function(c) {
+      P.push({label: c + " Alumni Salaries", f:{college:c}, sort:"salary", dir:"desc", allSeasons:true});
+    });
+
+    // --- By Nationality (top 20) ---
+    [["Canada","Canadian"],["France","French"],["Australia","Australian"],
+     ["Serbia","Serbian"],["Nigeria","Nigerian"],["Germany","German"],
+     ["Spain","Spanish"],["Croatia","Croatian"],["Turkey","Turkish"],
+     ["Brazil","Brazilian"],["Lithuania","Lithuanian"],["Slovenia","Slovenian"],
+     ["Great Britain","British"],["Dominican Republic","Dominican"],
+     ["Argentina","Argentinian"],["Greece","Greek"],["Cameroon","Cameroonian"],
+     ["Japan","Japanese"],["Italy","Italian"],["China","Chinese"]].forEach(function(pair) {
+      P.push({label: "Highest-Paid " + pair[1] + " Players", f:{nationality:pair[0]}, sort:"salary", dir:"desc", allSeasons:true});
+    });
+
+    // --- By Team (all 30, all-time) ---
+    Object.keys(TEAM_NAMES).forEach(function(tm) {
+      P.push({label: TEAM_NAMES[tm] + " All-Time Salaries", f:{team:tm}, sort:"salary", dir:"desc", allSeasons:true});
+    });
+
+    // --- By Season ---
+    ["2025-26","2024-25","2023-24","2022-23","2020-21","2015-16","2010-11",
+     "2005-06","2000-01","1995-96","1990-91"].forEach(function(s) {
+      P.push({label: "Highest-Paid in " + s, f:{seasonFrom:s, seasonTo:s}, sort:"salary", dir:"desc"});
+    });
+
+    // --- By Award ---
+    P.push({label: "MVP Salaries", f:{awards:["Most Valuable Player"]}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "DPOY Salaries", f:{awards:["Defensive Player of the Year"]}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "All-Star Salaries", f:{awards:["All-Star"]}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "Champions' Paychecks", f:{awards:["Champion"]}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "All-NBA Salaries", f:{awards:["All-NBA"]}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "MIP Salaries", f:{awards:["Most Improved Player"]}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "Rookie of the Year Salaries", f:{awards:["Rookie of the Year"]}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "Sixth Man Salaries", f:{awards:["Sixth Man of the Year"]}, sort:"salary", dir:"desc", allSeasons:true});
+
+    // --- By Draft ---
+    P.push({label: "#1 Pick Salaries", f:{draftMin:"1", draftMax:"1"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "Top 3 Picks' Salaries", f:{draftMin:"1", draftMax:"3"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "Top 5 Picks' Salaries", f:{draftMin:"1", draftMax:"5"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "Lottery Pick Salaries", f:{draftMin:"1", draftMax:"14"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "Second-Round Earners", f:{draftMin:"31", draftMax:"60", salaryMin:"10000000"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "Undrafted Earners", f:{undrafted:true}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "Late First Round Gems", f:{draftMin:"20", draftMax:"30", ppgMin:"15"}, sort:"ppg", dir:"desc", allSeasons:true});
+    // Famous draft classes
+    ["2003","2018","1996","2024","2023","2022","2020","2015","2009","1984","2011"].forEach(function(yr) {
+      P.push({label: yr + " Draft Class Salaries", f:{draftYearMin:yr, draftYearMax:yr}, sort:"salary", dir:"desc", allSeasons:true});
+    });
+
+    // --- Career Earnings ---
+    P.push({label: "$500M Career Club", f:{earningsMin:"500000000"}, sort:"career_earnings", dir:"desc"});
+    P.push({label: "$300M Career Club", f:{earningsMin:"300000000"}, sort:"career_earnings", dir:"desc"});
+    P.push({label: "$200M Career Club", f:{earningsMin:"200000000"}, sort:"career_earnings", dir:"desc"});
+    P.push({label: "$100M Career Club", f:{earningsMin:"100000000"}, sort:"career_earnings", dir:"desc"});
+
+    // --- Salary Thresholds ---
+    P.push({label: "$50M+ Seasons", f:{salaryMin:"50000000"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "$40M+ Seasons", f:{salaryMin:"40000000"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "$30M+ Seasons", f:{salaryMin:"30000000"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "Under $2M Scorers", f:{salaryMax:"2000000", ppgMin:"15", gpMin:"40"}, sort:"ppg", dir:"desc", allSeasons:true});
+
+    // --- By Age ---
+    P.push({label: "Teenage NBA Earners", f:{ageMin:"18", ageMax:"19"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "Under-22 Earners", f:{ageMax:"21"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "35+ Still Getting Paid", f:{ageMin:"35"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "38+ Veterans' Salaries", f:{ageMin:"38"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "40+ Club Salaries", f:{ageMin:"40"}, sort:"salary", dir:"desc", allSeasons:true});
+
+    // --- By Position ---
+    P.push({label: "Highest-Paid Guards", f:{positions:["G"]}, sort:"salary", dir:"desc"});
+    P.push({label: "Highest-Paid Forwards", f:{positions:["F"]}, sort:"salary", dir:"desc"});
+    P.push({label: "Highest-Paid Centers", f:{positions:["C"]}, sort:"salary", dir:"desc"});
+
+    // --- By Stat ---
+    P.push({label: "25+ PPG Club Salaries", f:{ppgMin:"25"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "20+ PPG Earners", f:{ppgMin:"20"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "10+ RPG Earners", f:{rpgMin:"10"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "10+ APG Earners", f:{apgMin:"10"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "2+ BPG Shot Blockers", f:{bpgMin:"2"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "2+ SPG Ball Hawks", f:{spgMin:"2"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "50% FG Shooters' Salaries", f:{fgPctMin:"50", gpMin:"40"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "40%+ 3PT Shooters' Salaries", f:{tpPctMin:"40", gpMin:"40"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "90%+ FT Shooters' Salaries", f:{ftPctMin:"90", gpMin:"40"}, sort:"salary", dir:"desc", allSeasons:true});
+
+    // --- Value/Contract ---
+    P.push({label: "Best Value Deals", f:{gpMin:"50"}, sort:"cost_per_point", dir:"asc", showCols:["cost_per_point"]});
+    P.push({label: "Underpaid Stars (20+ PPG, <15% Cap)", f:{ppgMin:"20", capPctMax:"15"}, sort:"salary_cap_pct", dir:"asc", allSeasons:true});
+    P.push({label: "Rookie Scale Deals", f:{draftMin:"1", draftMax:"30", expMin:"0", expMax:"3"}, sort:"salary", dir:"desc"});
+
+    // --- Star Teammates ---
+    [["Kobe Bryant","Kobe's"],["LeBron James","LeBron's"],["Stephen Curry","Curry's"],
+     ["Kevin Durant","Durant's"],["Michael Jordan","Jordan's"],["Tim Duncan","Duncan's"],
+     ["Dirk Nowitzki","Dirk's"],["Shaquille O'Neal","Shaq's"],["Dwyane Wade","Wade's"],
+     ["Kevin Garnett","Garnett's"],["Giannis Antetokounmpo","Giannis'"],["Nikola Jokic","Jokic's"],
+     ["Luka Doncic","Luka's"],["Allen Iverson","Iverson's"],["Vince Carter","Vince Carter's"]].forEach(function(pair) {
+      P.push({label: pair[1] + " Teammates' Salaries", teammate: pair[0], sort:"salary", dir:"desc"});
+    });
+
+    return P;
+  }
+
+  var ALL_PRESETS = null;
+
+  function populatePresets() {
+    if (!ALL_PRESETS) ALL_PRESETS = buildAllPresets();
+    var bar = document.getElementById("presetsBar");
+    // Remove old preset buttons (keep shuffle btn)
+    bar.querySelectorAll(".preset-btn").forEach(function(b) { b.remove(); });
+
+    // Pick 5 random presets
+    var shuffled = ALL_PRESETS.slice();
+    for (var i = shuffled.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = shuffled[i]; shuffled[i] = shuffled[j]; shuffled[j] = temp;
+    }
+    var picks = shuffled.slice(0, 5);
+
+    picks.forEach(function(preset) {
+      var btn = document.createElement("button");
+      btn.className = "preset-btn";
+      btn.textContent = preset.label;
+      btn.addEventListener("click", function() {
+        var wasActive = btn.classList.contains("active");
+        bar.querySelectorAll(".preset-btn").forEach(function(b) { b.classList.remove("active"); });
+        if (wasActive) {
+          activePreset = null;
+          clearFilters();
+        } else {
+          activePreset = preset;
+          btn.classList.add("active");
+          applyPreset(preset);
+        }
+      });
+      bar.insertBefore(btn, document.getElementById("shufflePresetsBtn"));
+    });
+  }
+
   function applyPreset(preset) {
     clearFiltersQuiet();
-    switch (preset) {
-      case "value":
-        document.getElementById("gpMin").value = "50";
-        sortCol = "cost_per_point";
-        sortDir = "asc";
-        visibleCols["cost_per_point"] = true;
-        buildColumnToggles();
-        break;
-      case "underpaid":
-        document.getElementById("ppgMin").value = "20";
-        document.getElementById("capPctMax").value = "15";
-        sortCol = "salary_cap_pct";
-        sortDir = "asc";
-        break;
-      case "40m-club":
-        document.getElementById("salaryMin").value = "40000000";
-        sortCol = "salary";
-        sortDir = "desc";
-        break;
-      case "rookie-deals":
-        document.getElementById("draftMin").value = "1";
-        document.getElementById("draftMax").value = "30";
-        document.getElementById("expMin").value = "0";
-        document.getElementById("expMax").value = "3";
-        sortCol = "salary";
-        sortDir = "desc";
-        break;
+    var fl = preset.f || {};
+
+    // Open all seasons if specified
+    if (preset.allSeasons) {
+      var seasons = DATA.seasons_list || [];
+      var asc = seasons.slice().reverse();
+      document.getElementById("seasonFrom").value = asc[0] || "";
+      document.getElementById("seasonTo").value = seasons[0] || "";
     }
+
+    // Teammate filter
+    if (preset.teammate) {
+      var starName = preset.teammate;
+      _teammateLabel = starName;
+      var starSeasons = [];
+      DATA.seasons.forEach(function(r) {
+        if (r.player === starName) starSeasons.push(r.team + "|" + r.season);
+      });
+      _teammateFilter = new Set(starSeasons);
+      // Open all seasons for teammate search
+      var seasons = DATA.seasons_list || [];
+      var asc = seasons.slice().reverse();
+      document.getElementById("seasonFrom").value = asc[0] || "";
+      document.getElementById("seasonTo").value = seasons[0] || "";
+    }
+
+    // Map filter keys to UI elements
+    var inputMap = {
+      salaryMin:"salaryMin", salaryMax:"salaryMax",
+      capPctMin:"capPctMin", capPctMax:"capPctMax",
+      cppMin:"cppMin", cppMax:"cppMax",
+      cpgMin:"cpgMin", cpgMax:"cpgMax",
+      earningsMin:"earningsMin", earningsMax:"earningsMax",
+      ppgMin:"ppgMin", ppgMax:"ppgMax",
+      rpgMin:"rpgMin", rpgMax:"rpgMax",
+      apgMin:"apgMin", apgMax:"apgMax",
+      spgMin:"spgMin", spgMax:"spgMax",
+      bpgMin:"bpgMin", bpgMax:"bpgMax",
+      fgPctMin:"fgPctMin", fgPctMax:"fgPctMax",
+      tpPctMin:"tpPctMin", tpPctMax:"tpPctMax",
+      ftPctMin:"ftPctMin", ftPctMax:"ftPctMax",
+      gpMin:"gpMin", gpMax:"gpMax",
+      ageMin:"ageMin", ageMax:"ageMax",
+      expMin:"expMin", expMax:"expMax",
+      draftMin:"draftMin", draftMax:"draftMax",
+      draftYearMin:"draftYearMin", draftYearMax:"draftYearMax"
+    };
+    Object.keys(inputMap).forEach(function(key) {
+      if (fl[key] != null) {
+        var el = document.getElementById(inputMap[key]);
+        if (el) el.value = fl[key];
+      }
+    });
+
+    // Select elements
+    if (fl.college) document.getElementById("collegeFilter").value = fl.college;
+    if (fl.nationality) document.getElementById("nationality").value = fl.nationality;
+    if (fl.team) document.getElementById("teamFilter").value = fl.team;
+    if (fl.leagueRank) document.getElementById("leagueRank").value = fl.leagueRank;
+    if (fl.seasonFrom) document.getElementById("seasonFrom").value = fl.seasonFrom;
+    if (fl.seasonTo) document.getElementById("seasonTo").value = fl.seasonTo;
+
+    // Position chips
+    if (fl.positions) {
+      fl.positions.forEach(function(pos) {
+        document.querySelectorAll("#positionFilter .filter-chip").forEach(function(c) {
+          if (c.dataset.value === pos) c.classList.add("active");
+        });
+      });
+    }
+
+    // Award chips
+    if (fl.awards) {
+      fl.awards.forEach(function(a) {
+        document.querySelectorAll("#awardsFilter .filter-chip").forEach(function(c) {
+          if (c.dataset.value === a) c.classList.add("active");
+        });
+      });
+    }
+
+    if (fl.hasAnyAward) document.getElementById("hasAnyAward").checked = true;
+
+    // Undrafted: filter by draft_pick being null (we need a special flag)
+    // We'll handle undrafted with a special _undraftedFilter
+    if (fl.undrafted) {
+      _undraftedFilter = true;
+    }
+
+    // Sort and visible columns
+    sortCol = preset.sort || "salary";
+    sortDir = preset.dir || "desc";
+    if (preset.showCols) {
+      preset.showCols.forEach(function(col) {
+        visibleCols[col] = true;
+      });
+      buildColumnToggles();
+    }
+
     applyFilters();
   }
 
@@ -594,6 +814,9 @@
     if (fromYear && rYear < fromYear) return false;
     if (toYear && rYear > toYear) return false;
 
+    // Teammate filter (from preset)
+    if (_teammateFilter && !_teammateFilter.has(record.team + "|" + record.season)) return false;
+
     // Salary
     if (f.salaryMin != null && (record.salary == null || record.salary < f.salaryMin)) return false;
     if (f.salaryMax != null && (record.salary == null || record.salary > f.salaryMax)) return false;
@@ -645,6 +868,9 @@
     // Draft pick
     if (f.draftMin != null && (record.draft_pick == null || record.draft_pick < f.draftMin)) return false;
     if (f.draftMax != null && (record.draft_pick == null || record.draft_pick > f.draftMax)) return false;
+
+    // Undrafted filter
+    if (_undraftedFilter && record.draft_pick != null) return false;
 
     // Draft year
     if (f.draftYearMin != null && (record.draft_year == null || record.draft_year < f.draftYearMin)) return false;
@@ -1131,6 +1357,21 @@
       document.getElementById("hasAnyAward").checked = false;
     }});
 
+    // Teammate filter
+    if (_teammateFilter && _teammateLabel) {
+      tags.push({ label: "Teammates of", value: _teammateLabel, clear: function() {
+        _teammateFilter = null;
+        _teammateLabel = null;
+      }});
+    }
+
+    // Undrafted filter
+    if (_undraftedFilter) {
+      tags.push({ label: "Draft", value: "Undrafted", clear: function() {
+        _undraftedFilter = false;
+      }});
+    }
+
     // Render
     if (tags.length === 0) {
       bar.style.display = "none";
@@ -1439,6 +1680,9 @@
 
     _exactLeagueRank = null;
     _exactPos = null;
+    _teammateFilter = null;
+    _teammateLabel = null;
+    _undraftedFilter = false;
     document.getElementById("leagueRank").value = "";
     document.getElementById("teamFilter").value = "";
     document.getElementById("nationality").value = "";
