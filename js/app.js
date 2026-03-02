@@ -204,12 +204,27 @@
       visibleCols["salary_rank_league"] = false;
       visibleCols["years_exp"] = false;
       visibleCols["career_earnings"] = false;
+      visibleCols["salary_cap_pct"] = false;
+      visibleCols["rpg"] = false;
+      visibleCols["apg"] = false;
+      visibleCols["gp"] = false;
     }
 
     populateFilters();
     buildColumnToggles();
     bindEvents();
     populatePresets();
+
+    // Mobile: move presets bar from sidebar into main content
+    if (window.innerWidth <= 768) {
+      var presetsBar = document.getElementById("presetsBar");
+      var mainContent = document.querySelector(".main-content");
+      var mobileTopBar = document.querySelector(".mobile-top-bar");
+      if (presetsBar && mainContent && mobileTopBar) {
+        mobileTopBar.after(presetsBar);
+      }
+    }
+
     loadStateFromURL();
     applyFilters();
 
