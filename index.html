@@ -303,8 +303,11 @@
 
     <!-- Main Content -->
     <main class="main-content">
-      <!-- Mobile filter toggle -->
-      <button class="sidebar-toggle" id="sidebarToggle">&#9776; Filters &amp; Search</button>
+      <!-- Mobile top bar: search + filter button -->
+      <div class="mobile-top-bar">
+        <input type="text" class="mobile-search" id="mobileSearch" placeholder="Search player...">
+        <button class="mobile-filter-btn" id="sidebarToggle" title="All Filters">&#9776;</button>
+      </div>
 
       <!-- Breadcrumb bar (shown when cell-click filters are active) -->
       <div class="breadcrumb-bar" id="breadcrumbBar" style="display:none;">
