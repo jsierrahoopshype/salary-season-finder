@@ -891,8 +891,10 @@ table.nba-table th:nth-child(2) {
 }
 
 /* Responsive */
-/* Mobile top bar - hidden on desktop */
-.mobile-top-bar {
+/* Mobile-only elements - hidden on desktop */
+.mobile-top-bar,
+.mobile-categories,
+.mobile-presets {
   display: none;
 }
 
@@ -933,19 +935,135 @@ table.nba-table th:nth-child(2) {
 
   /* === LAYOUT: flex column with ordering === */
   .main-content {
-    padding: 6px 4px;
+    padding: 6px 6px;
     display: flex;
     flex-direction: column;
   }
 
-  .mobile-top-bar { order: 0; }
-  .presets-bar    { order: 1; margin-bottom: 2px; }
-  .breadcrumb-bar { order: 2; }
-  #tableWrapper   { order: 3; }
-  #emptyState     { order: 4; }
-  #summaryBar     { order: 5; }
-  .results-header { order: 6; margin-top: 0; margin-bottom: 0; }
-  .col-toggles    { order: 7; margin-top: 4px; margin-bottom: 0; padding: 6px 0; border-top: 1px solid var(--border); }
+  .mobile-top-bar    { order: 0; }
+  .mobile-categories { order: 1; }
+  .mobile-presets    { order: 2; }
+  .breadcrumb-bar    { order: 3; }
+  #tableWrapper      { order: 4; }
+  #emptyState        { order: 5; }
+  #summaryBar        { order: 6; }
+  .results-header    { order: 7; margin-top: 0; margin-bottom: 0; }
+  .col-toggles       { order: 8; margin-top: 4px; margin-bottom: 0; padding: 6px 0; border-top: 1px solid var(--border); }
+  .presets-bar       { display: none !important; }
+
+  /* === MOBILE CATEGORIES === */
+  .mobile-categories {
+    display: block;
+    margin: 4px 0;
+  }
+
+  .cat-chips-row {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 2px 2px;
+    scrollbar-width: none;
+  }
+  .cat-chips-row::-webkit-scrollbar { display: none; }
+
+  .cat-chip {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    background: #fff;
+    color: var(--text);
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: all 0.15s;
+  }
+
+  .cat-chip.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: #fff;
+  }
+
+  .cat-options-tray {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 6px 2px;
+    max-height: 160px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .cat-option {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    padding: 4px 8px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--stripe);
+    color: var(--text);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.12s;
+  }
+
+  .cat-option:active {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+
+  /* === MOBILE PRESETS === */
+  .mobile-presets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 2px 0 4px;
+    align-items: center;
+  }
+
+  .mobile-presets .preset-btn {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    padding: 4px 8px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: #fff;
+    color: var(--text);
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 220px;
+    transition: all 0.15s;
+  }
+
+  .mobile-presets .preset-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .mobile-presets .preset-btn.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: #fff;
+  }
+
+  .mobile-presets .shuffle-btn {
+    font-size: 14px;
+    padding: 3px 7px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: #fff;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+    line-height: 1;
+  }
 
   /* === SUMMARY: compact grid below table === */
   .summary-bar {
@@ -957,43 +1075,39 @@ table.nba-table th:nth-child(2) {
   .summary-stat .stat-value { font-size: 12px; }
   .summary-stat .stat-detail { font-size: 8px; }
 
-  /* === TABLE: tight, no waste === */
-  table.nba-table { font-size: 12px; }
+  /* === TABLE: fill width, no sticky overlap === */
+  table.nba-table { font-size: 12px; width: 100%; table-layout: auto; }
   table.nba-table th, table.nba-table td {
-    padding: 7px 5px; white-space: nowrap;
+    padding: 8px 6px; white-space: nowrap;
   }
 
-  /* # column: absolute minimum */
+  /* # column: minimal */
   table.nba-table th:nth-child(1),
   table.nba-table td:nth-child(1) {
     width: 20px; min-width: 20px; max-width: 26px;
-    padding: 7px 1px 7px 4px; text-align: center;
+    padding: 8px 1px 8px 4px; text-align: center;
   }
 
-  /* Player column: trim */
-  table.nba-table th:nth-child(2) { padding-left: 2px; }
+  /* Player column */
+  table.nba-table th:nth-child(2) { padding-left: 4px; }
   table.nba-table td:nth-child(2) {
-    max-width: 130px; overflow: hidden; text-overflow: ellipsis;
-    padding-left: 2px; padding-right: 4px;
+    overflow: hidden; text-overflow: ellipsis;
+    padding-left: 4px; padding-right: 4px;
   }
 
-  /* Salary column: ensure red text visible */
-  table.nba-table td.salary { font-weight: 600; }
-
-  /* Sticky # and Player */
+  /* Disable sticky on mobile - columns fit naturally */
   table.nba-table th:nth-child(1),
   table.nba-table td:nth-child(1),
   table.nba-table th:nth-child(2),
   table.nba-table td:nth-child(2) {
-    position: sticky;
+    position: static;
+    left: auto;
   }
 
   /* Smooth fast scroll */
   .table-wrapper {
     -webkit-overflow-scrolling: touch;
     will-change: scroll-position;
-    overflow-x: auto;
-    overflow-y: visible;
   }
 
   .mode-toggle { width: 100%; }
@@ -1019,7 +1133,6 @@ table.nba-table th:nth-child(2) {
   .summary-stat .stat-value { font-size: 11px; }
   table.nba-table { font-size: 11px; }
   table.nba-table th, table.nba-table td { padding: 6px 4px; }
-  table.nba-table td:nth-child(2) { max-width: 110px; }
 }
 
 
