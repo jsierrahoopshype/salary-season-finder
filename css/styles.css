@@ -1000,7 +1000,7 @@ table.nba-table td:nth-child(2) {
   /* === TABLE === */
   table.nba-table { font-size: 11px; border-collapse: separate; border-spacing: 0; min-width: auto !important; }
   table.nba-table th, table.nba-table td {
-    padding: 6px 4px; white-space: nowrap;
+    padding: 6px 8px; white-space: nowrap;
     text-align: center;
   }
 
@@ -1092,7 +1092,7 @@ table.nba-table td:nth-child(2) {
 @media (max-width: 480px) {
   .summary-stat .stat-value { font-size: 11px; }
   table.nba-table { font-size: 10px; }
-  table.nba-table th, table.nba-table td { padding: 5px 3px; }
+  table.nba-table th, table.nba-table td { padding: 5px 6px; }
   table.nba-table td:nth-child(2) { max-width: 105px; }
 }
 
