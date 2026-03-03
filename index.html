@@ -78,9 +78,10 @@
           </div>
           <div class="filter-row">
             <label class="filter-label">College/Club</label>
-            <select class="filter-input" id="collegeFilter" aria-label="College or club filter">
-              <option value="">Any</option>
-            </select>
+            <div class="autocomplete-wrapper">
+              <input class="filter-input" type="text" id="collegeFilter" placeholder="Type to search..." autocomplete="off" aria-label="College or club filter">
+              <div class="autocomplete-dropdown" id="collegeDropdown"></div>
+            </div>
           </div>
           <div class="filter-row">
             <label class="filter-label">Age</label>
@@ -308,8 +309,8 @@
 
     <!-- Main Content -->
     <main class="main-content">
-      <!-- Mobile: burger to reopen filters -->
-      <button class="mobile-burger" id="mobileBurger" title="Filters &amp; Search">&#9776;</button>
+      <!-- Mobile: full-width search bar to reopen filters -->
+      <button class="mobile-burger" id="mobileBurger" title="Filters &amp; Search">&#9776; Search &amp; Filter</button>
 
       <!-- Breadcrumb bar (shown when cell-click filters are active) -->
       <div class="breadcrumb-bar" id="breadcrumbBar" style="display:none;">
