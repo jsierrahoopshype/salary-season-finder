@@ -897,6 +897,11 @@ table.nba-table th:nth-child(2) {
   display: none;
 }
 
+/* Sticky top wrapper: normal flow on desktop */
+.mobile-sticky-top {
+  display: block;
+}
+
 @media (max-width: 768px) {
   .header { padding: 12px 16px; }
   .header h1 { font-size: 15px; }
@@ -934,19 +939,35 @@ table.nba-table th:nth-child(2) {
     cursor: pointer; letter-spacing: 0.5px;
   }
 
-  /* Search bar button: full-width */
+  /* Sticky top container: burger + breadcrumbs */
+  .mobile-sticky-top {
+    display: block;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #fff;
+    padding: 6px 6px 8px;
+    margin: 0 -6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  }
+
+  /* Search bar button */
   .mobile-burger {
     display: block;
     width: 100%;
     font-family: var(--font-mono);
     font-size: 13px; font-weight: 600;
-    padding: 12px 16px;
+    padding: 10px 16px;
     background: var(--primary); color: #fff;
     border: none; border-radius: 8px;
     cursor: pointer; text-align: left;
     letter-spacing: 0.3px;
-    margin-bottom: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  /* Breadcrumbs inside sticky top */
+  .mobile-sticky-top .breadcrumb-bar {
+    margin-top: 6px;
   }
 
   .main-content {
@@ -977,10 +998,17 @@ table.nba-table th:nth-child(2) {
     text-align: center; /* CENTER everything by default */
   }
 
+  /* Override .num and .salary right-align to center on mobile */
+  table.nba-table td.num,
+  table.nba-table td.salary,
+  table.nba-table td.rank {
+    text-align: center !important;
+  }
+
   /* Player column: LEFT-aligned, narrow */
   table.nba-table th:nth-child(2),
   table.nba-table td:nth-child(2) {
-    text-align: left;
+    text-align: left !important;
     max-width: 110px;
     overflow: hidden;
     text-overflow: ellipsis;
