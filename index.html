@@ -309,15 +309,16 @@
 
     <!-- Main Content -->
     <main class="main-content">
-      <!-- Mobile: full-width search bar to reopen filters -->
-      <button class="mobile-burger" id="mobileBurger" title="Filters &amp; Search">&#9776; Search &amp; Filter</button>
-
-      <!-- Breadcrumb bar (shown when cell-click filters are active) -->
-      <div class="breadcrumb-bar" id="breadcrumbBar" style="display:none;">
-        <span class="breadcrumb-label">Filtered by:</span>
-        <div class="breadcrumb-trail" id="breadcrumbTrail"></div>
-        <div class="breadcrumb-actions">
-          <button class="breadcrumb-btn breadcrumb-home" id="breadcrumbHome" title="Reset to default">&#8962; Home</button>
+      <!-- Mobile sticky top: search button + breadcrumbs -->
+      <div class="mobile-sticky-top" id="mobileStickyTop">
+        <button class="mobile-burger" id="mobileBurger" title="Filters &amp; Search">&#9776; Search &amp; Filter</button>
+        <!-- Breadcrumb bar (shown when cell-click filters are active) -->
+        <div class="breadcrumb-bar" id="breadcrumbBar" style="display:none;">
+          <span class="breadcrumb-label">Filtered by:</span>
+          <div class="breadcrumb-trail" id="breadcrumbTrail"></div>
+          <div class="breadcrumb-actions">
+            <button class="breadcrumb-btn breadcrumb-home" id="breadcrumbHome" title="Reset to default">&#8962; Home</button>
+          </div>
         </div>
       </div>
 
