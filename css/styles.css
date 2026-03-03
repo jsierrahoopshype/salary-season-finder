@@ -364,7 +364,6 @@ select.filter-input {
   flex: 1;
   min-width: 0;
   padding: 16px 20px;
-  overflow-x: hidden;
 }
 
 /* Mode toggle (Individual / Agent Leaderboard) */
@@ -587,7 +586,7 @@ table.nba-table td {
   border: 1px solid var(--border);
   padding: 6px 12px;
   white-space: nowrap;
-  text-align: left;
+  text-align: center;
 }
 
 table.nba-table th {
@@ -632,12 +631,12 @@ table.nba-table tbody tr:hover {
 }
 
 table.nba-table td.num {
-  text-align: right;
+  text-align: center;
   font-variant-numeric: tabular-nums;
 }
 
 table.nba-table td.salary {
-  text-align: right;
+  text-align: center;
   font-weight: 600;
   color: #2a7d2a;
 }
@@ -728,6 +727,11 @@ table.nba-table td:nth-child(2) {
 table.nba-table th:nth-child(1),
 table.nba-table th:nth-child(2) {
   z-index: 15;
+}
+
+/* Player name column: always left-aligned */
+table.nba-table td:nth-child(2) {
+  text-align: left;
 }
 
 /* Loading state */
@@ -972,6 +976,7 @@ table.nba-table th:nth-child(2) {
 
   .main-content {
     padding: 8px 6px;
+    overflow: visible;
   }
 
   /* PREVENT iOS ZOOM on input focus */
@@ -994,7 +999,7 @@ table.nba-table th:nth-child(2) {
   /* === TABLE === */
   table.nba-table { font-size: 11px; border-collapse: separate; border-spacing: 0; }
   table.nba-table th, table.nba-table td {
-    padding: 6px 4px; white-space: nowrap;
+    padding: 6px 3px; white-space: nowrap;
     text-align: center; /* CENTER everything by default */
   }
 
