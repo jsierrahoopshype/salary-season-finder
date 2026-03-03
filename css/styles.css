@@ -892,9 +892,8 @@ table.nba-table th:nth-child(2) {
 
 /* Responsive */
 /* Mobile-only elements - hidden on desktop */
-.mobile-top-bar,
-.mobile-categories,
-.mobile-presets {
+.mobile-burger,
+.mobile-show-results {
   display: none;
 }
 
@@ -903,236 +902,127 @@ table.nba-table th:nth-child(2) {
   .header h1 { font-size: 15px; }
   .header-subtitle { display: none; }
 
+  /* Sidebar: fixed overlay, opens on load */
   .sidebar {
-    position: fixed; top: 0; left: 0; width: 320px; min-width: 320px;
+    position: fixed; top: 0; left: 0; width: 85vw; max-width: 320px;
     height: 100vh; z-index: 200; transform: translateX(-100%);
     transition: transform 0.25s ease;
     border-right: 1px solid var(--border);
-    box-shadow: 4px 0 16px rgba(0,0,0,0.1);
+    box-shadow: 4px 0 16px rgba(0,0,0,0.15);
+    padding-bottom: 70px; /* room for Show Results button */
   }
   .sidebar.drawer-open { transform: translateX(0); }
   .sidebar-toggle { display: none !important; }
 
-  /* Mobile top bar */
-  .mobile-top-bar {
-    display: flex; gap: 8px; margin-bottom: 4px;
-  }
-  .mobile-search {
-    flex: 1; font-family: var(--font-mono); font-size: 13px;
-    padding: 10px 12px; border: 1px solid var(--border);
-    border-radius: 8px; background: #fff; color: var(--text); outline: none;
-  }
-  .mobile-search:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 2px rgba(233, 69, 96, 0.15);
-  }
-  .mobile-search::placeholder { color: var(--text-muted); }
-  .mobile-filter-btn {
-    font-size: 18px; padding: 8px 14px; background: var(--primary);
-    color: #fff; border: none; border-radius: 8px; cursor: pointer;
-    line-height: 1; flex-shrink: 0;
-  }
-
-  /* === LAYOUT: flex column with ordering === */
-  .main-content {
-    padding: 6px 6px;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .mobile-top-bar    { order: 0; }
-  .mobile-categories { order: 1; }
-  .mobile-presets    { order: 2; }
-  .breadcrumb-bar    { order: 3; }
-  #tableWrapper      { order: 4; }
-  #emptyState        { order: 5; }
-  #summaryBar        { order: 6; }
-  .results-header    { order: 7; margin-top: 0; margin-bottom: 0; }
-  .col-toggles       { order: 8; margin-top: 4px; margin-bottom: 0; padding: 6px 0; border-top: 1px solid var(--border); }
-  .presets-bar       { display: none !important; }
-
-  /* === MOBILE CATEGORIES === */
-  .mobile-categories {
+  /* Show Results button at bottom of sidebar */
+  .mobile-show-results {
     display: block;
-    margin: 4px 0;
-  }
-
-  .cat-chips-row {
-    display: flex;
-    gap: 6px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    padding: 2px 2px;
-    scrollbar-width: none;
-  }
-  .cat-chips-row::-webkit-scrollbar { display: none; }
-
-  .cat-chip {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    font-weight: 600;
-    padding: 6px 12px;
-    border: 1.5px solid var(--border);
-    border-radius: 16px;
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px 16px;
     background: #fff;
-    color: var(--text);
-    cursor: pointer;
-    white-space: nowrap;
-    flex-shrink: 0;
-    transition: all 0.15s;
+    border-top: 1px solid var(--border);
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.08);
   }
-
-  .cat-chip.active {
-    background: var(--primary);
-    border-color: var(--primary);
-    color: #fff;
-  }
-
-  .cat-options-tray {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    padding: 6px 2px;
-    max-height: 160px;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .cat-option {
+  .show-results-btn {
+    width: 100%;
     font-family: var(--font-mono);
-    font-size: 10px;
-    padding: 4px 8px;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    background: var(--stripe);
-    color: var(--text);
-    cursor: pointer;
-    white-space: nowrap;
-    transition: all 0.12s;
-  }
-
-  .cat-option:active {
+    font-size: 14px;
+    font-weight: 700;
+    padding: 12px;
     background: var(--accent);
     color: #fff;
-    border-color: var(--accent);
-  }
-
-  /* === MOBILE PRESETS === */
-  .mobile-presets {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    padding: 2px 0 4px;
-    align-items: center;
-  }
-
-  .mobile-presets .preset-btn {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    padding: 4px 8px;
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    background: #fff;
-    color: var(--text);
+    border: none;
+    border-radius: 8px;
     cursor: pointer;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 220px;
-    transition: all 0.15s;
+    letter-spacing: 0.5px;
   }
 
-  .mobile-presets .preset-btn:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-  }
-
-  .mobile-presets .preset-btn.active {
+  /* Burger icon: fixed top-left */
+  .mobile-burger {
+    display: block;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 150;
+    font-size: 20px;
+    padding: 8px 12px;
     background: var(--primary);
-    border-color: var(--primary);
     color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    line-height: 1;
   }
 
-  .mobile-presets .shuffle-btn {
-    font-size: 14px;
-    padding: 3px 7px;
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    background: #fff;
-    color: var(--muted);
-    cursor: pointer;
-    transition: all 0.15s;
-    line-height: 1;
+  /* Main content: full width, normal layout */
+  .main-content {
+    padding: 8px 6px;
+    padding-top: 50px; /* room for burger */
   }
 
   /* === SUMMARY: compact grid below table === */
   .summary-bar {
     display: grid; grid-template-columns: repeat(3, 1fr);
     gap: 2px 6px; padding: 8px 10px;
-    margin-bottom: 4px; margin-top: 8px;
+    margin-bottom: 4px;
   }
   .summary-stat .stat-label { font-size: 8px; }
   .summary-stat .stat-value { font-size: 12px; }
   .summary-stat .stat-detail { font-size: 8px; }
 
-  /* === TABLE: fill width, no sticky overlap === */
-  table.nba-table { font-size: 12px; width: 100%; table-layout: auto; }
+  /* === TABLE: all columns, horizontal scroll, narrow player name === */
+  table.nba-table {
+    font-size: 11px;
+  }
   table.nba-table th, table.nba-table td {
-    padding: 8px 6px; white-space: nowrap;
+    padding: 6px 5px; white-space: nowrap;
   }
 
   /* # column: minimal */
   table.nba-table th:nth-child(1),
   table.nba-table td:nth-child(1) {
-    width: 20px; min-width: 20px; max-width: 26px;
-    padding: 8px 1px 8px 4px; text-align: center;
+    width: 22px; min-width: 22px; max-width: 28px;
+    padding: 6px 2px 6px 4px; text-align: center;
   }
 
-  /* Player column */
-  table.nba-table th:nth-child(2) { padding-left: 4px; }
+  /* Player column: only as wide as needed */
+  table.nba-table th:nth-child(2),
   table.nba-table td:nth-child(2) {
-    overflow: hidden; text-overflow: ellipsis;
-    padding-left: 4px; padding-right: 4px;
+    white-space: nowrap;
+    padding-left: 4px; padding-right: 6px;
   }
 
-  /* Disable sticky on mobile - columns fit naturally */
+  /* Keep sticky # and Player for horizontal scroll */
   table.nba-table th:nth-child(1),
   table.nba-table td:nth-child(1),
   table.nba-table th:nth-child(2),
   table.nba-table td:nth-child(2) {
-    position: static;
-    left: auto;
+    position: sticky;
   }
 
-  /* Smooth fast scroll */
+  /* Smooth horizontal scroll */
   .table-wrapper {
     -webkit-overflow-scrolling: touch;
     will-change: scroll-position;
+    overflow-x: auto;
   }
 
   .mode-toggle { width: 100%; }
-  .mode-btn { flex: 1; font-size: 11px; padding: 8px 8px; }
+  .mode-btn { flex: 1; font-size: 11px; padding: 8px; }
 
   /* Breadcrumbs compact */
   .breadcrumb-bar { padding: 5px 6px; margin-bottom: 3px; font-size: 10px; }
   .breadcrumb-tag { font-size: 9px; padding: 2px 5px; }
-
-  /* Presets (moved from sidebar to main on mobile) */
-  .presets-bar {
-    padding: 2px 0; gap: 4px; flex-wrap: wrap;
-  }
-  .preset-btn {
-    font-size: 10px; padding: 4px 8px;
-    white-space: nowrap; overflow: hidden;
-    text-overflow: ellipsis; max-width: 200px;
-  }
-  .shuffle-btn { font-size: 14px; padding: 2px 6px; }
 }
 
 @media (max-width: 480px) {
   .summary-stat .stat-value { font-size: 11px; }
-  table.nba-table { font-size: 11px; }
-  table.nba-table th, table.nba-table td { padding: 6px 4px; }
+  table.nba-table { font-size: 10px; }
+  table.nba-table th, table.nba-table td { padding: 5px 4px; }
 }
 
 
