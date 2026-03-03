@@ -309,6 +309,22 @@
         <button class="mobile-filter-btn" id="sidebarToggle" title="All Filters">&#9776;</button>
       </div>
 
+      <!-- Mobile category browse (hidden on desktop) -->
+      <div class="mobile-categories" id="mobileCategories">
+        <div class="cat-chips-row">
+          <button class="cat-chip" data-cat="teams">Teams</button>
+          <button class="cat-chip" data-cat="schools">Schools</button>
+          <button class="cat-chip" data-cat="countries">Countries</button>
+          <button class="cat-chip" data-cat="awards">Awards</button>
+          <button class="cat-chip" data-cat="draft">Draft</button>
+          <button class="cat-chip" data-cat="eras">Eras</button>
+        </div>
+        <div class="cat-options-tray" id="catOptionsTray" style="display:none;"></div>
+      </div>
+
+      <!-- Mobile presets (populated by JS on mobile) -->
+      <div class="mobile-presets" id="mobilePresetsBar"></div>
+
       <!-- Breadcrumb bar (shown when cell-click filters are active) -->
       <div class="breadcrumb-bar" id="breadcrumbBar" style="display:none;">
         <span class="breadcrumb-label">Filtered by:</span>
