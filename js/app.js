@@ -215,20 +215,218 @@
     bindEvents();
     populatePresets();
 
-    // Mobile: move presets bar from sidebar into main content
+    // Mobile: set up mobile-specific UI
     if (window.innerWidth <= 768) {
-      var presetsBar = document.getElementById("presetsBar");
-      var mainContent = document.querySelector(".main-content");
-      var mobileTopBar = document.querySelector(".mobile-top-bar");
-      if (presetsBar && mainContent && mobileTopBar) {
-        mobileTopBar.after(presetsBar);
-      }
+      populateMobilePresets();
+      setupCategoryChips();
+      startRotatingPlaceholder();
     }
 
     loadStateFromURL();
     applyFilters();
 
     // Mobile: sidebar starts hidden (drawer is closed by default via CSS transform)
+  }
+
+  // ---- Mobile: Rotating search placeholder ----
+  function startRotatingPlaceholder() {
+    var el = document.getElementById("mobileSearch");
+    if (!el) return;
+    var hints = [
+      "Search LeBron James...",
+      "Search Stephen Curry...",
+      "Search Nikola Jokic...",
+      "Search Luka Doncic...",
+      "Search Giannis...",
+      "Search Kevin Durant...",
+      "Search Jayson Tatum...",
+      "Search any player..."
+    ];
+    var idx = 0;
+    setInterval(function() {
+      if (el === document.activeElement || el.value) return; // don't rotate if focused/has text
+      idx = (idx + 1) % hints.length;
+      el.placeholder = hints[idx];
+    }, 3000);
+  }
+
+  // ---- Mobile: Category chips ----
+  function setupCategoryChips() {
+    var tray = document.getElementById("catOptionsTray");
+    var chips = document.querySelectorAll(".cat-chip");
+    var activeCat = null;
+
+    var catData = {
+      teams: (function() {
+        var arr = [];
+        Object.keys(TEAM_NAMES).sort().forEach(function(tm) {
+          arr.push({ label: tm, value: tm, filter: "team" });
+        });
+        return arr;
+      })(),
+      schools: ["Kentucky","Duke","North Carolina","UCLA","Arizona","Kansas","Michigan",
+        "Georgia Tech","Connecticut","Michigan St","Florida","Texas","LSU","Syracuse",
+        "Alabama","Villanova","Georgetown","Maryland","Gonzaga","Indiana"].map(function(c) {
+        return { label: c, value: c, filter: "college" };
+      }),
+      countries: [
+        {label:"Canada",value:"Canada"},{label:"France",value:"France"},
+        {label:"Australia",value:"Australia"},{label:"Serbia",value:"Serbia"},
+        {label:"Nigeria",value:"Nigeria"},{label:"Germany",value:"Germany"},
+        {label:"Spain",value:"Spain"},{label:"Croatia",value:"Croatia"},
+        {label:"Turkey",value:"Turkey"},{label:"Brazil",value:"Brazil"},
+        {label:"Lithuania",value:"Lithuania"},{label:"Slovenia",value:"Slovenia"},
+        {label:"Great Britain",value:"Great Britain"},{label:"Greece",value:"Greece"},
+        {label:"Argentina",value:"Argentina"},{label:"Japan",value:"Japan"},
+        {label:"Cameroon",value:"Cameroon"},{label:"Dominican Republic",value:"Dominican Republic"}
+      ].map(function(c) { c.filter = "nationality"; return c; }),
+      awards: [
+        {label:"All-Star",value:"All-Star"},
+        {label:"Champion",value:"Champion"},
+        {label:"MVP",value:"Most Valuable Player"},
+        {label:"All-NBA",value:"All-NBA"},
+        {label:"DPOY",value:"Defensive Player of the Year"},
+        {label:"MIP",value:"Most Improved Player"},
+        {label:"ROY",value:"Rookie of the Year"},
+        {label:"6MOY",value:"Sixth Man of the Year"}
+      ].map(function(a) { a.filter = "awards"; return a; }),
+      draft: [
+        {label:"#1 Pick",action:function(){ setInput("draftMin","1"); setInput("draftMax","1"); }},
+        {label:"Top 5",action:function(){ setInput("draftMin","1"); setInput("draftMax","5"); }},
+        {label:"Lottery (1-14)",action:function(){ setInput("draftMin","1"); setInput("draftMax","14"); }},
+        {label:"2nd Round",action:function(){ setInput("draftMin","31"); setInput("draftMax","60"); }},
+        {label:"Undrafted",action:function(){ _undraftedFilter = true; }},
+        {label:"2024 Class",action:function(){ setInput("draftYearMin","2024"); setInput("draftYearMax","2024"); }},
+        {label:"2023 Class",action:function(){ setInput("draftYearMin","2023"); setInput("draftYearMax","2023"); }},
+        {label:"2003 Class",action:function(){ setInput("draftYearMin","2003"); setInput("draftYearMax","2003"); }},
+        {label:"1996 Class",action:function(){ setInput("draftYearMin","1996"); setInput("draftYearMax","1996"); }}
+      ],
+      eras: [
+        {label:"2025-26",action:function(){ setSeasons("2025-26","2025-26"); }},
+        {label:"2024-25",action:function(){ setSeasons("2024-25","2024-25"); }},
+        {label:"2023-24",action:function(){ setSeasons("2023-24","2023-24"); }},
+        {label:"2020s",action:function(){ setSeasons("2020-21","2025-26"); }},
+        {label:"2010s",action:function(){ setSeasons("2010-11","2019-20"); }},
+        {label:"2000s",action:function(){ setSeasons("2000-01","2009-10"); }},
+        {label:"1990s",action:function(){ setSeasons("1990-91","1999-00"); }},
+        {label:"All-Time",action:function(){ var s=DATA.seasons_list||[]; var a=s.slice().reverse(); setSeasons(a[0],"2025-26"); }}
+      ]
+    };
+
+    function setInput(id, val) {
+      var el = document.getElementById(id);
+      if (el) el.value = val;
+    }
+
+    function setSeasons(from, to) {
+      document.getElementById("seasonFrom").value = from;
+      document.getElementById("seasonTo").value = to;
+    }
+
+    chips.forEach(function(chip) {
+      chip.addEventListener("click", function() {
+        var cat = chip.dataset.cat;
+        // Toggle same category off
+        if (activeCat === cat) {
+          activeCat = null;
+          chip.classList.remove("active");
+          tray.style.display = "none";
+          tray.innerHTML = "";
+          return;
+        }
+        // Deactivate previous
+        chips.forEach(function(c) { c.classList.remove("active"); });
+        activeCat = cat;
+        chip.classList.add("active");
+
+        // Populate tray
+        tray.innerHTML = "";
+        var items = catData[cat] || [];
+        items.forEach(function(item) {
+          var btn = document.createElement("button");
+          btn.className = "cat-option";
+          btn.textContent = item.label;
+          btn.addEventListener("click", function() {
+            clearFiltersQuiet();
+            // Open all seasons for browsing
+            var seasons = DATA.seasons_list || [];
+            var asc = seasons.slice().reverse();
+            document.getElementById("seasonFrom").value = asc[0] || "";
+            document.getElementById("seasonTo").value = "2025-26";
+
+            if (item.action) {
+              item.action();
+            } else if (item.filter === "team") {
+              document.getElementById("teamFilter").value = item.value;
+            } else if (item.filter === "college") {
+              document.getElementById("collegeFilter").value = item.value;
+            } else if (item.filter === "nationality") {
+              document.getElementById("nationality").value = item.value;
+            } else if (item.filter === "awards") {
+              document.querySelectorAll("#awardsFilter .filter-chip").forEach(function(c) {
+                if (c.dataset.value === item.value) c.classList.add("active");
+              });
+            }
+            sortCol = "salary";
+            sortDir = "desc";
+            applyFilters();
+            // Close tray
+            activeCat = null;
+            chips.forEach(function(c) { c.classList.remove("active"); });
+            tray.style.display = "none";
+            tray.innerHTML = "";
+          });
+          tray.appendChild(btn);
+        });
+        tray.style.display = "flex";
+      });
+    });
+  }
+
+  // ---- Mobile: Presets in main area ----
+  function populateMobilePresets() {
+    if (!ALL_PRESETS) ALL_PRESETS = buildAllPresets();
+    var bar = document.getElementById("mobilePresetsBar");
+    if (!bar) return;
+    // Clear old
+    bar.innerHTML = "";
+
+    // Pick 4 random
+    var shuffled = ALL_PRESETS.slice();
+    for (var i = shuffled.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = shuffled[i]; shuffled[i] = shuffled[j]; shuffled[j] = tmp;
+    }
+    var picks = shuffled.slice(0, 4);
+
+    picks.forEach(function(preset) {
+      var btn = document.createElement("button");
+      btn.className = "preset-btn";
+      btn.textContent = preset.label;
+      btn.addEventListener("click", function() {
+        var wasActive = btn.classList.contains("active");
+        bar.querySelectorAll(".preset-btn").forEach(function(b) { b.classList.remove("active"); });
+        if (wasActive) {
+          activePreset = null;
+          clearFilters();
+        } else {
+          activePreset = preset;
+          btn.classList.add("active");
+          applyPreset(preset);
+        }
+      });
+      bar.appendChild(btn);
+    });
+
+    // Shuffle button
+    var shuf = document.createElement("button");
+    shuf.className = "shuffle-btn";
+    shuf.innerHTML = "&#8635;";
+    shuf.title = "Show different presets";
+    shuf.addEventListener("click", function() {
+      populateMobilePresets();
+    });
+    bar.appendChild(shuf);
   }
 
   // ---- Populate filter dropdowns ----
