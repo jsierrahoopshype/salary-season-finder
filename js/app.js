@@ -196,19 +196,24 @@
     if (!hasData["team"]) visibleCols["team"] = false;
     if (!hasData["age"]) visibleCols["age"] = false;
 
+    // Mobile: hide Season/Team/Age so Salary is the 3rd visible column
+    if (window.innerWidth <= 768) {
+      visibleCols["season"] = false;
+      visibleCols["team"] = false;
+      visibleCols["age"] = false;
+    }
+
     populateFilters();
     buildColumnToggles();
     bindEvents();
     populatePresets();
 
-    // Mobile: open sidebar on load so users see filters first, hide burger
+    // Mobile: open sidebar on load so users see filters first
     if (window.innerWidth <= 768) {
       var sb = document.getElementById("sidebar");
       var ov = document.getElementById("sidebarOverlay");
-      var bg = document.getElementById("mobileBurger");
       if (sb) sb.classList.add("drawer-open");
       if (ov) ov.classList.add("active");
-      if (bg) bg.style.display = "none";
     }
 
     loadStateFromURL();
@@ -254,14 +259,41 @@
       natSel.appendChild(new Option(n, n));
     });
 
-    // College/Club
-    var collegeSel = document.getElementById("collegeFilter");
+    // College/Club - searchable autocomplete
+    var collegeInput = document.getElementById("collegeFilter");
+    var collegeDropdown = document.getElementById("collegeDropdown");
+    var collegeList = [];
     var colleges = new Set();
     (DATA.seasons || []).forEach(function (r) {
       if (r.college) colleges.add(r.college);
     });
-    Array.from(colleges).sort().forEach(function (c) {
-      collegeSel.appendChild(new Option(c, c));
+    collegeList = Array.from(colleges).sort();
+
+    collegeInput.addEventListener("input", function () {
+      var q = collegeInput.value.toLowerCase().trim();
+      collegeDropdown.innerHTML = "";
+      if (!q) { collegeDropdown.style.display = "none"; applyFilters(); return; }
+      var matches = collegeList.filter(function(c) { return c.toLowerCase().indexOf(q) >= 0; });
+      if (matches.length === 0) { collegeDropdown.style.display = "none"; return; }
+      matches.slice(0, 15).forEach(function(c) {
+        var div = document.createElement("div");
+        div.className = "autocomplete-item";
+        div.textContent = c;
+        div.addEventListener("mousedown", function(e) {
+          e.preventDefault();
+          collegeInput.value = c;
+          collegeDropdown.style.display = "none";
+          applyFilters();
+        });
+        collegeDropdown.appendChild(div);
+      });
+      collegeDropdown.style.display = "block";
+    });
+    collegeInput.addEventListener("blur", function() {
+      setTimeout(function() { collegeDropdown.style.display = "none"; }, 150);
+    });
+    collegeInput.addEventListener("focus", function() {
+      if (collegeInput.value) collegeInput.dispatchEvent(new Event("input"));
     });
   }
 
@@ -303,14 +335,12 @@
       burger.addEventListener("click", function () {
         sidebar.classList.add("drawer-open");
         overlay.classList.add("active");
-        burger.style.display = "none";
       });
     }
 
     overlay.addEventListener("click", function () {
       sidebar.classList.remove("drawer-open");
       overlay.classList.remove("active");
-      if (burger && window.innerWidth <= 768) burger.style.display = "block";
     });
 
     // Mobile: "Show Results" closes sidebar
@@ -320,7 +350,6 @@
         applyFilters();
         sidebar.classList.remove("drawer-open");
         overlay.classList.remove("active");
-        if (burger) burger.style.display = "block";
       });
     }
 
