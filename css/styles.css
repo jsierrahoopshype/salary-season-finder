@@ -909,7 +909,7 @@ table.nba-table th:nth-child(2) {
     transition: transform 0.25s ease;
     border-right: 1px solid var(--border);
     box-shadow: 4px 0 16px rgba(0,0,0,0.15);
-    padding-bottom: 70px; /* room for Show Results button */
+    padding-bottom: 70px;
   }
   .sidebar.drawer-open { transform: translateX(0); }
   .sidebar-toggle { display: none !important; }
@@ -918,9 +918,7 @@ table.nba-table th:nth-child(2) {
   .mobile-show-results {
     display: block;
     position: sticky;
-    bottom: 0;
-    left: 0;
-    width: 100%;
+    bottom: 0; left: 0; width: 100%;
     padding: 10px 16px;
     background: #fff;
     border-top: 1px solid var(--border);
@@ -929,82 +927,107 @@ table.nba-table th:nth-child(2) {
   .show-results-btn {
     width: 100%;
     font-family: var(--font-mono);
-    font-size: 14px;
-    font-weight: 700;
+    font-size: 14px; font-weight: 700;
     padding: 12px;
-    background: var(--accent);
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    letter-spacing: 0.5px;
+    background: var(--accent); color: #fff;
+    border: none; border-radius: 8px;
+    cursor: pointer; letter-spacing: 0.5px;
   }
 
-  /* Burger icon: fixed top-left */
+  /* Search bar button: full-width */
   .mobile-burger {
     display: block;
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    z-index: 150;
-    font-size: 20px;
-    padding: 8px 12px;
-    background: var(--primary);
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    line-height: 1;
+    width: 100%;
+    font-family: var(--font-mono);
+    font-size: 13px; font-weight: 600;
+    padding: 12px 16px;
+    background: var(--primary); color: #fff;
+    border: none; border-radius: 8px;
+    cursor: pointer; text-align: left;
+    letter-spacing: 0.3px;
+    margin-bottom: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   }
 
-  /* Main content: full width, normal layout */
   .main-content {
     padding: 8px 6px;
-    padding-top: 50px; /* room for burger */
   }
 
-  /* === SUMMARY: compact grid below table === */
+  /* PREVENT iOS ZOOM on input focus */
+  .sidebar input[type="text"],
+  .sidebar input[type="number"],
+  .sidebar select,
+  .sidebar textarea {
+    font-size: 16px !important;
+  }
+
+  /* === SUMMARY: compact grid === */
   .summary-bar {
     display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 2px 6px; padding: 8px 10px;
-    margin-bottom: 4px;
+    gap: 2px 6px; padding: 8px 10px; margin-bottom: 4px;
   }
   .summary-stat .stat-label { font-size: 8px; }
   .summary-stat .stat-value { font-size: 12px; }
   .summary-stat .stat-detail { font-size: 8px; }
 
-  /* === TABLE: all columns, horizontal scroll, narrow player name === */
-  table.nba-table {
-    font-size: 11px;
-  }
+  /* === TABLE === */
+  table.nba-table { font-size: 11px; border-collapse: separate; border-spacing: 0; }
   table.nba-table th, table.nba-table td {
-    padding: 6px 5px; white-space: nowrap;
+    padding: 6px 4px; white-space: nowrap;
+    text-align: center; /* CENTER everything by default */
   }
 
-  /* # column: minimal */
+  /* Player column: LEFT-aligned, narrow */
+  table.nba-table th:nth-child(2),
+  table.nba-table td:nth-child(2) {
+    text-align: left;
+    max-width: 110px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-left: 2px; padding-right: 2px;
+  }
+
+  /* # column: exact width, no gap */
   table.nba-table th:nth-child(1),
   table.nba-table td:nth-child(1) {
-    width: 22px; min-width: 22px; max-width: 28px;
-    padding: 6px 2px 6px 4px; text-align: center;
+    width: 24px; min-width: 24px; max-width: 24px;
+    padding: 6px 0 6px 2px; text-align: center;
+    box-sizing: border-box;
   }
 
-  /* Player column: only as wide as needed */
-  table.nba-table th:nth-child(2),
-  table.nba-table td:nth-child(2) {
-    white-space: nowrap;
-    padding-left: 4px; padding-right: 6px;
-  }
-
-  /* Keep sticky # and Player for horizontal scroll */
+  /* STICKY columns with SOLID backgrounds (no bleed) */
   table.nba-table th:nth-child(1),
-  table.nba-table td:nth-child(1),
+  table.nba-table td:nth-child(1) {
+    position: sticky; left: 0; z-index: 5;
+  }
   table.nba-table th:nth-child(2),
   table.nba-table td:nth-child(2) {
-    position: sticky;
+    position: sticky; left: 24px; z-index: 5;
+    /* Shadow edge to hide any sub-pixel gap */
+    box-shadow: 2px 0 4px rgba(0,0,0,0.06);
+  }
+  table.nba-table th:nth-child(1),
+  table.nba-table th:nth-child(2) {
+    z-index: 15;
+    background: var(--primary) !important;
+  }
+  /* Even rows (white bg) */
+  table.nba-table tbody tr:nth-child(even) td:nth-child(1),
+  table.nba-table tbody tr:nth-child(even) td:nth-child(2) {
+    background: #ffffff !important;
+  }
+  /* Odd rows (stripe bg) */
+  table.nba-table tbody tr:nth-child(odd) td:nth-child(1),
+  table.nba-table tbody tr:nth-child(odd) td:nth-child(2) {
+    background: var(--stripe) !important;
+  }
+  /* Hover rows */
+  table.nba-table tbody tr:hover td:nth-child(1),
+  table.nba-table tbody tr:hover td:nth-child(2) {
+    background: #fff5f7 !important;
   }
 
-  /* Smooth horizontal scroll */
+  /* Smooth scroll */
   .table-wrapper {
     -webkit-overflow-scrolling: touch;
     will-change: scroll-position;
@@ -1017,12 +1040,26 @@ table.nba-table th:nth-child(2) {
   /* Breadcrumbs compact */
   .breadcrumb-bar { padding: 5px 6px; margin-bottom: 3px; font-size: 10px; }
   .breadcrumb-tag { font-size: 9px; padding: 2px 5px; }
+
+  /* Preset buttons: truncate long text */
+  .preset-btn {
+    max-width: 260px; white-space: nowrap;
+    overflow: hidden; text-overflow: ellipsis;
+  }
+
+  /* Season & Position buttons: match preset size */
+  .season-preset-btn {
+    font-size: 11px !important; padding: 4px 10px !important;
+    border-radius: 14px !important;
+  }
+  .filter-chip { font-size: 11px; padding: 4px 10px; }
 }
 
 @media (max-width: 480px) {
   .summary-stat .stat-value { font-size: 11px; }
   table.nba-table { font-size: 10px; }
-  table.nba-table th, table.nba-table td { padding: 5px 4px; }
+  table.nba-table th, table.nba-table td { padding: 5px 3px; }
+  table.nba-table td:nth-child(2) { max-width: 105px; }
 }
 
 
