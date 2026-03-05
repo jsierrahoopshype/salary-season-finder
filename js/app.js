@@ -360,6 +360,12 @@
         handleCellClick("awards", badge.dataset.award);
         return;
       }
+      // Multi-team clickable spans (e.g. "MIL, POR" where each is separate)
+      var teamLink = e.target.closest(".team-link[data-col]");
+      if (teamLink) {
+        handleCellClick(teamLink.dataset.col, teamLink.dataset.val);
+        return;
+      }
       var cell = e.target.closest("td[data-col]");
       if (cell) {
         handleCellClick(cell.dataset.col, cell.dataset.val);
@@ -939,8 +945,24 @@
     // College/Club
     if (f.college && record.college !== f.college) return false;
 
-    // Team
-    if (f.team && record.team !== f.team) return false;
+    // Team (support multi-team records with team_salaries)
+    if (f.team) {
+      if (record.team === f.team) {
+        // Exact match — single-team record
+      } else if (record.team_salaries && record.team_salaries[f.team] != null) {
+        // Multi-team record: override salary to team-specific amount
+        record._display_salary = record.team_salaries[f.team];
+        record._display_team = f.team;
+      } else if (record.team && record.team.indexOf(f.team) >= 0) {
+        // Comma-separated team list match without team_salaries breakdown
+      } else {
+        return false;
+      }
+    } else {
+      // No team filter: clear any overrides
+      delete record._display_salary;
+      delete record._display_team;
+    }
 
     // Stats
     if (f.ppgMin != null && (record.ppg == null || record.ppg < f.ppgMin)) return false;
@@ -1799,24 +1821,41 @@
       document.getElementById("emptyState").style.display = "none";
       filtered.forEach(function (record, idx) {
         html += "<tr>";
+        // Use display overrides for team-filtered multi-team records
+        var displaySalary = record._display_salary != null ? record._display_salary : record.salary;
+        var displayTeam = record._display_team || record.team;
         activeCols.forEach(function (col) {
           if (col.key === "rank") {
             html += '<td class="rank">' + (idx + 1) + "</td>";
           } else {
             var val = record[col.key];
+            // Override salary and team for multi-team filtered records
+            if (col.key === "salary") val = displaySalary;
+            if (col.key === "team") val = displayTeam;
             var tdClass = "";
             if (col.type === "salary") tdClass = "salary";
             else if (col.type === "num" || col.type === "stat" || col.type === "pct" || col.type === "pct3") tdClass = "num";
             else if (col.key === "player") tdClass = "player-name";
             else if (col.key === "awards") tdClass = "awards-cell";
-            // Make cells clickable (except awards which use badge-level clicks)
-            var hasVal = val != null && val !== "" && (!Array.isArray(val) || val.length > 0);
-            if (hasVal && col.key !== "awards") {
-              tdClass += " clickable";
-              var raw = Array.isArray(val) ? val.join(",") : String(val);
-              html += '<td class="' + tdClass + '" data-col="' + col.key + '" data-val="' + escAttr(raw) + '">' + fmtCell(col, val) + "</td>";
+
+            // Multi-team cell: render each team as separate clickable span
+            if (col.key === "team" && val && val.indexOf(", ") >= 0) {
+              var teams = val.split(", ");
+              tdClass += " clickable-teams";
+              var teamHtml = teams.map(function(t) {
+                return '<span class="team-link clickable" data-col="team" data-val="' + escAttr(t.trim()) + '">' + escHtml(t.trim()) + '</span>';
+              }).join(", ");
+              html += '<td class="' + tdClass + '">' + teamHtml + '</td>';
             } else {
-              html += '<td class="' + tdClass + '">' + fmtCell(col, val) + "</td>";
+              // Make cells clickable (except awards which use badge-level clicks)
+              var hasVal = val != null && val !== "" && (!Array.isArray(val) || val.length > 0);
+              if (hasVal && col.key !== "awards") {
+                tdClass += " clickable";
+                var raw = Array.isArray(val) ? val.join(",") : String(val);
+                html += '<td class="' + tdClass + '" data-col="' + col.key + '" data-val="' + escAttr(raw) + '">' + fmtCell(col, val) + "</td>";
+              } else {
+                html += '<td class="' + tdClass + '">' + fmtCell(col, val) + "</td>";
+              }
             }
           }
         });
