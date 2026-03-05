@@ -424,17 +424,24 @@ def process_salaries_csv(csv_data):
 
 
 def process_future_salaries(csv_data):
-    """Process future salaries sheet (one row per player, year columns)."""
+    """Process future salaries sheet (one row per player-team, year columns).
+    A player can appear on multiple rows (different teams), e.g. Lillard has
+    one row for POR and one for MIL. We combine them per player-season with
+    per-team salary breakdowns, same as 2025-26 logic.
+    """
     rows = parse_csv_string(csv_data)
     if not rows:
         return {}
-    lookup = {}
-    year_cols = ["2026", "2027", "2028", "2029", "2030", "2031"]
+    # Accumulate: (nk, season) -> { "team_salaries": {team: int}, "display_name": str }
+    accum = {}
+    year_cols = ["2027", "2028", "2029", "2030", "2031"]
     for row in rows:
         player = row.get("PLAYER", "").strip()
         team = row.get("TEAM", "").strip()
         if not player:
             continue
+        team_abbr = normalize_team(team) if team else ""
+        nk = normalize_name(player)
         for ycol in year_cols:
             salary = parse_salary(row.get(ycol))
             if salary is None or salary == 0:
@@ -442,15 +449,33 @@ def process_future_salaries(csv_data):
             season = year_to_season(int(ycol))
             if not season:
                 continue
-            key = (normalize_name(player), season)
-            if key not in lookup:
-                lookup[key] = []
-            lookup[key].append({
-                "player_original": player,
-                "team": normalize_team(team),
-                "salary": salary,
-            })
-    print(f"    Parsed {len(lookup)} player-seasons from future salaries")
+            key = (nk, season)
+            if key not in accum:
+                accum[key] = {"team_salaries": defaultdict(int), "display_name": player}
+            if team_abbr:
+                accum[key]["team_salaries"][team_abbr] += salary
+
+    # Build lookup with combined records
+    lookup = {}
+    multi_team = 0
+    for (nk, season), data in accum.items():
+        ts = dict(data["team_salaries"])
+        total_salary = sum(ts.values())
+        if total_salary <= 0:
+            continue
+        teams_sorted = sorted(ts.keys())
+        team_str = ", ".join(teams_sorted) if teams_sorted else ""
+        rec = {
+            "player_original": data["display_name"],
+            "team": team_str,
+            "salary": total_salary,
+        }
+        if len(teams_sorted) > 1:
+            rec["team_salaries"] = ts
+            multi_team += 1
+        lookup[(nk, season)] = [rec]
+
+    print(f"    Parsed {len(lookup)} player-seasons from future salaries ({multi_team} multi-team)")
     return lookup
 
 
@@ -734,9 +759,11 @@ def build_data():
                 # Update team from CSV if we don't have one
                 if rec.get("team") and not ps_map[key]["team"]:
                     ps_map[key]["team"] = rec["team"]
-                # Carry team_salaries for multi-team players
+                # Multi-team records: override salary, team, and carry breakdown
                 if rec.get("team_salaries"):
                     ps_map[key]["team_salaries"] = rec["team_salaries"]
+                    ps_map[key]["salary"] = rec["salary"]
+                    ps_map[key]["team"] = rec["team"]
             else:
                 ps_map[key] = {
                     "player": rec["player_original"],
