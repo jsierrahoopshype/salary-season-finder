@@ -457,8 +457,11 @@ def process_future_salaries(csv_data):
 def process_2526_salaries(current_csv, dead_csv):
     """Process Cyro's 2025-26 salary sheets (current salaries + dead money).
     
-    Current salaries: Col A=PLAYER, Col C=TEAM, Col D=2026 salary (real money).
-    Dead money:       Col A=PLAYER, Col D=TEAM, Col I=SALARY 25-26 (real money).
+    Uses HEADER-BASED column lookup (not fixed indices) because sheets
+    may have hidden columns that shift positions in CSV export.
+    
+    Current salaries: headers PLAYER, TEAM, 2026 (salary column).
+    Dead money:       headers PLAYER, TEAM, SALARY 25-26.
     
     Rules:
     - A player can appear in both sheets for the same team (e.g. Rupert: dead money
@@ -470,49 +473,73 @@ def process_2526_salaries(current_csv, dead_csv):
     # Accumulate (player_normalized -> { team_set, total_salary, display_name })
     player_data = {}  # normalized_name -> { "teams": set(), "salary": int, "display_name": str }
     
-    # Parse current salaries (Col A=PLAYER, Col C=TEAM, Col D=salary)
+    # Parse current salaries using header lookup
     if current_csv:
         reader = csv.reader(io.StringIO(current_csv))
         header = next(reader, None)
-        count = 0
-        for cols in reader:
-            if len(cols) < 4:
-                continue
-            player = cols[0].strip()
-            team = cols[2].strip() if len(cols) > 2 else ""
-            salary = parse_salary(cols[3])
-            if not player or salary is None:
-                continue
-            nk = normalize_name(player)
-            if nk not in player_data:
-                player_data[nk] = {"teams": set(), "salary": 0, "display_name": player}
-            player_data[nk]["salary"] += salary
-            if team:
-                player_data[nk]["teams"].add(normalize_team(team))
-            count += 1
-        print(f"    Parsed {count} rows from 2025-26 current salaries")
+        if header:
+            # Find columns by header name
+            h = [c.strip().upper() for c in header]
+            player_col = h.index("PLAYER") if "PLAYER" in h else 0
+            team_col = h.index("TEAM") if "TEAM" in h else 2
+            salary_col = h.index("2026") if "2026" in h else None
+            print(f"    Current salaries columns: PLAYER={player_col}, TEAM={team_col}, 2026={salary_col}")
+            if salary_col is None:
+                print(f"    WARNING: Could not find '2026' column in headers: {header[:10]}")
+            else:
+                count = 0
+                for cols in reader:
+                    if len(cols) <= salary_col:
+                        continue
+                    player = cols[player_col].strip()
+                    team = cols[team_col].strip() if len(cols) > team_col else ""
+                    salary = parse_salary(cols[salary_col])
+                    if not player or salary is None:
+                        continue
+                    nk = normalize_name(player)
+                    if nk not in player_data:
+                        player_data[nk] = {"teams": set(), "salary": 0, "display_name": player}
+                    player_data[nk]["salary"] += salary
+                    if team:
+                        player_data[nk]["teams"].add(normalize_team(team))
+                    count += 1
+                print(f"    Parsed {count} rows from 2025-26 current salaries")
     
-    # Parse dead money (Col A=PLAYER, Col D=TEAM, Col I=salary)
+    # Parse dead money using header lookup
     if dead_csv:
         reader = csv.reader(io.StringIO(dead_csv))
         header = next(reader, None)
-        count = 0
-        for cols in reader:
-            if len(cols) < 9:
-                continue
-            player = cols[0].strip()
-            team = cols[3].strip() if len(cols) > 3 else ""
-            salary = parse_salary(cols[8])
-            if not player or salary is None:
-                continue
-            nk = normalize_name(player)
-            if nk not in player_data:
-                player_data[nk] = {"teams": set(), "salary": 0, "display_name": player}
-            player_data[nk]["salary"] += salary
-            if team:
-                player_data[nk]["teams"].add(normalize_team(team))
-            count += 1
-        print(f"    Parsed {count} rows from 2025-26 dead money")
+        if header:
+            h = [c.strip().upper() for c in header]
+            player_col = h.index("PLAYER") if "PLAYER" in h else 0
+            team_col = h.index("TEAM") if "TEAM" in h else 3
+            # Look for salary column: "SALARY 25-26" or similar
+            salary_col = None
+            for i, col_name in enumerate(h):
+                if "SALARY" in col_name and "25-26" in col_name:
+                    salary_col = i
+                    break
+            if salary_col is None:
+                # Fallback: try column I (index 8)
+                salary_col = 8
+            print(f"    Dead money columns: PLAYER={player_col}, TEAM={team_col}, SALARY={salary_col}")
+            count = 0
+            for cols in reader:
+                if len(cols) <= salary_col:
+                    continue
+                player = cols[player_col].strip()
+                team = cols[team_col].strip() if len(cols) > team_col else ""
+                salary = parse_salary(cols[salary_col])
+                if not player or salary is None:
+                    continue
+                nk = normalize_name(player)
+                if nk not in player_data:
+                    player_data[nk] = {"teams": set(), "salary": 0, "display_name": player}
+                player_data[nk]["salary"] += salary
+                if team:
+                    player_data[nk]["teams"].add(normalize_team(team))
+                count += 1
+            print(f"    Parsed {count} rows from 2025-26 dead money")
     
     # Build lookup, filtering out $0 players
     lookup = {}
