@@ -603,7 +603,7 @@
     P.push({label: "NBA MVP Award Winner Salaries", f:{awards:["Most Valuable Player"]}, sort:"salary", dir:"desc", allSeasons:true});
     P.push({label: "Defensive Player of the Year Salaries", f:{awards:["Defensive Player of the Year"]}, sort:"salary", dir:"desc", allSeasons:true});
     P.push({label: "NBA All-Star Salaries", f:{awards:["All-Star"]}, sort:"salary", dir:"desc", allSeasons:true});
-    P.push({label: "NBA Champions' Paychecks", f:{awards:["Champion"]}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "NBA Champions' Paychecks", f:{awards:["NBA Champion"]}, sort:"salary", dir:"desc", allSeasons:true});
     P.push({label: "All-NBA Team Salaries", f:{awards:["All-NBA"]}, sort:"salary", dir:"desc", allSeasons:true});
     P.push({label: "Most Improved Player Award Salaries", f:{awards:["Most Improved Player"]}, sort:"salary", dir:"desc", allSeasons:true});
     P.push({label: "Rookie of the Year Award Salaries", f:{awards:["Rookie of the Year"]}, sort:"salary", dir:"desc", allSeasons:true});
@@ -632,7 +632,7 @@
     P.push({label: "Players Making $50M+ Per Season", f:{salaryMin:"50000000"}, sort:"salary", dir:"desc", allSeasons:true});
     P.push({label: "Players Making $40M+ Per Season", f:{salaryMin:"40000000"}, sort:"salary", dir:"desc", allSeasons:true});
     P.push({label: "Players Making $30M+ Per Season", f:{salaryMin:"30000000"}, sort:"salary", dir:"desc", allSeasons:true});
-    P.push({label: "Under-$2M Players Scoring 15+ PPG", f:{salaryMax:"2000000", ppgMin:"15", gpMin:"40"}, sort:"ppg", dir:"desc", allSeasons:true});
+    P.push({label: "Under-$2M Players Scoring 15+ PPG", f:{salaryMax:"2000000", ppgMin:"15", gpMin:"40"}, sort:"ppg", dir:"desc"});
 
     // --- By Age ---
     P.push({label: "Teenage NBA Players' Salaries", f:{ageMin:"18", ageMax:"19"}, sort:"salary", dir:"desc", allSeasons:true});
@@ -657,7 +657,7 @@
 
     // --- Value/Contract ---
     P.push({label: "Best Value NBA Contracts (Cost Per Point)", f:{gpMin:"50"}, sort:"cost_per_point", dir:"asc", showCols:["cost_per_point"]});
-    P.push({label: "Underpaid Stars: 20+ PPG on Less Than 15% of Cap", f:{ppgMin:"20", capPctMax:"15"}, sort:"salary_cap_pct", dir:"asc", allSeasons:true});
+    P.push({label: "Underpaid Stars: 20+ PPG on Less Than 15% of Cap", f:{ppgMin:"20", capPctMax:"15"}, sort:"salary_cap_pct", dir:"asc"});
     P.push({label: "Rookie-Scale Contract Salaries (Top 30 Picks)", f:{draftMin:"1", draftMax:"30", expMin:"0", expMax:"3"}, sort:"salary", dir:"desc"});
 
     // --- Star Teammates ---
