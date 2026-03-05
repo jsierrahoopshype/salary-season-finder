@@ -33,9 +33,15 @@ jobs:
           echo "Downloading historical salaries..."
           curl -sL -o data_sources/salaries_historical.csv \
             "https://docs.google.com/spreadsheets/d/1ZrDfzqiC31Hu3YCtxT4aZbZF4QVCVyGe6wBytR2LF30/export?format=csv&gid=1151460858"
-          echo "Downloading future salaries..."
+          echo "Downloading future salaries (2026-27 onwards)..."
           curl -sL -o data_sources/salaries_future.csv \
             "https://docs.google.com/spreadsheets/d/1ZrDfzqiC31Hu3YCtxT4aZbZF4QVCVyGe6wBytR2LF30/export?format=csv&gid=1555460703"
+          echo "Downloading 2025-26 current salaries (Cyro)..."
+          curl -sL -o data_sources/salaries_2526_current.csv \
+            "https://docs.google.com/spreadsheets/d/14TQPdQ9mDhHMMMQa5vcs0coL98ZloHORtYElDikKoWY/export?format=csv&gid=1402642613"
+          echo "Downloading 2025-26 dead money (Cyro)..."
+          curl -sL -o data_sources/salaries_2526_dead.csv \
+            "https://docs.google.com/spreadsheets/d/14TQPdQ9mDhHMMMQa5vcs0coL98ZloHORtYElDikKoWY/export?format=csv&gid=1668033956"
           echo "Downloading awards..."
           curl -sL -o data_sources/awards.csv \
             "https://docs.google.com/spreadsheets/d/1ZrDfzqiC31Hu3YCtxT4aZbZF4QVCVyGe6wBytR2LF30/export?format=csv&gid=1456513900"
@@ -47,7 +53,7 @@ jobs:
 
       - name: Validate downloads
         run: |
-          for f in data_sources/stats.csv data_sources/salaries_historical.csv data_sources/awards.csv data_sources/bio.csv; do
+          for f in data_sources/stats.csv data_sources/salaries_historical.csv data_sources/salaries_2526_current.csv data_sources/salaries_2526_dead.csv data_sources/awards.csv data_sources/bio.csv; do
             if [ ! -s "$f" ]; then
               echo "ERROR: $f is empty or missing"
               exit 1
