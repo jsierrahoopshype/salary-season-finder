@@ -479,59 +479,62 @@ def process_future_salaries(csv_data):
     return lookup
 
 
-def process_2526_salaries(current_csv, dead_csv):
-    """Process Cyro's 2025-26 salary sheets (current salaries + dead money).
+def process_cyro_salaries(current_csv, dead_csv):
+    """Process Cyro's salary sheets for ALL seasons (current + dead money).
     
-    Uses HEADER-BASED column lookup (not fixed indices) because sheets
-    may have hidden columns that shift positions in CSV export.
+    Current salaries: year columns 2026, 2027, 2028, ... (2026 = season 2025-26).
+    Dead money: columns SALARY 25-26, SALARY 26-27, SALARY 27-28, ...
     
-    Current salaries: headers PLAYER, TEAM, 2026 (salary column).
-    Dead money:       headers PLAYER, TEAM, SALARY 25-26.
-    
-    Rules:
-    - A player can appear in both sheets for the same team (e.g. Rupert: dead money
-      from 10-day contract + current salary from new contract). Sum those.
-    - A player can appear with multiple teams. Combine into one record with
-      comma-separated team names and summed salary.
-    - Filter out players with $0 total salary (e.g. Ben Simmons).
+    Both sheets can have the same player on different teams (multi-team).
+    We combine per player-season with per-team salary breakdowns.
     """
-    # Accumulate per-player AND per-team salary
-    # player_data[nk] = { "team_salaries": {team: amount}, "display_name": str }
-    player_data = {}
+    # Accumulate: (nk, season) -> { "team_salaries": {team: int}, "display_name": str }
+    accum = {}
     
-    # Parse current salaries using header lookup
+    def add_entry(nk, display_name, team_abbr, season, salary):
+        key = (nk, season)
+        if key not in accum:
+            accum[key] = {"team_salaries": defaultdict(int), "display_name": display_name}
+        if team_abbr:
+            accum[key]["team_salaries"][team_abbr] += salary
+    
+    # Parse current salaries — find all year columns (2026, 2027, ...)
     if current_csv:
         reader = csv.reader(io.StringIO(current_csv))
         header = next(reader, None)
         if header:
-            # Find columns by header name
             h = [c.strip().upper() for c in header]
             player_col = h.index("PLAYER") if "PLAYER" in h else 0
             team_col = h.index("TEAM") if "TEAM" in h else 2
-            salary_col = h.index("2026") if "2026" in h else None
-            print(f"    Current salaries columns: PLAYER={player_col}, TEAM={team_col}, 2026={salary_col}")
-            if salary_col is None:
-                print(f"    WARNING: Could not find '2026' column in headers: {header[:10]}")
-            else:
-                count = 0
-                for cols in reader:
-                    if len(cols) <= salary_col:
+            # Find all year columns
+            year_cols = {}  # { col_index: season_str }
+            for i, col_name in enumerate(h):
+                if col_name.isdigit() and len(col_name) == 4:
+                    yr = int(col_name)
+                    if 2026 <= yr <= 2035:
+                        season = year_to_season(yr)
+                        if season:
+                            year_cols[i] = season
+            print(f"    Current salaries: PLAYER={player_col}, TEAM={team_col}, year cols={list(year_cols.values())}")
+            count = 0
+            for cols in reader:
+                player = cols[player_col].strip() if len(cols) > player_col else ""
+                team = cols[team_col].strip() if len(cols) > team_col else ""
+                if not player:
+                    continue
+                nk = normalize_name(player)
+                team_abbr = normalize_team(team) if team else ""
+                for col_idx, season in year_cols.items():
+                    if len(cols) <= col_idx:
                         continue
-                    player = cols[player_col].strip()
-                    team = cols[team_col].strip() if len(cols) > team_col else ""
-                    salary = parse_salary(cols[salary_col])
-                    if not player or salary is None:
+                    salary = parse_salary(cols[col_idx])
+                    if salary is None or salary == 0:
                         continue
-                    nk = normalize_name(player)
-                    if nk not in player_data:
-                        player_data[nk] = {"team_salaries": defaultdict(int), "display_name": player}
-                    team_abbr = normalize_team(team) if team else ""
-                    if team_abbr:
-                        player_data[nk]["team_salaries"][team_abbr] += salary
+                    add_entry(nk, player, team_abbr, season, salary)
                     count += 1
-                print(f"    Parsed {count} rows from 2025-26 current salaries")
+            print(f"    Parsed {count} salary entries from current salaries")
     
-    # Parse dead money using header lookup
+    # Parse dead money — find all "SALARY XX-YY" columns
     if dead_csv:
         reader = csv.reader(io.StringIO(dead_csv))
         header = next(reader, None)
@@ -539,39 +542,41 @@ def process_2526_salaries(current_csv, dead_csv):
             h = [c.strip().upper() for c in header]
             player_col = h.index("PLAYER") if "PLAYER" in h else 0
             team_col = h.index("TEAM") if "TEAM" in h else 3
-            # Look for salary column: "SALARY 25-26" or similar
-            salary_col = None
+            # Find all SALARY XX-YY columns
+            salary_cols = {}  # { col_index: season_str }
             for i, col_name in enumerate(h):
-                if "SALARY" in col_name and "25-26" in col_name:
-                    salary_col = i
-                    break
-            if salary_col is None:
-                # Fallback: try column I (index 8)
-                salary_col = 8
-            print(f"    Dead money columns: PLAYER={player_col}, TEAM={team_col}, SALARY={salary_col}")
+                m = re.search(r'SALARY\s+(\d{2})-(\d{2})', col_name)
+                if m:
+                    start_yr = int(m.group(1))
+                    end_yr = int(m.group(2))
+                    # Convert "25-26" to "2025-26"
+                    season = f"20{start_yr}-{end_yr:02d}"
+                    salary_cols[i] = season
+            print(f"    Dead money: PLAYER={player_col}, TEAM={team_col}, salary cols={list(salary_cols.values())}")
             count = 0
             for cols in reader:
-                if len(cols) <= salary_col:
-                    continue
-                player = cols[player_col].strip()
+                player = cols[player_col].strip() if len(cols) > player_col else ""
                 team = cols[team_col].strip() if len(cols) > team_col else ""
-                salary = parse_salary(cols[salary_col])
-                if not player or salary is None:
+                if not player:
                     continue
                 nk = normalize_name(player)
-                if nk not in player_data:
-                    player_data[nk] = {"team_salaries": defaultdict(int), "display_name": player}
                 team_abbr = normalize_team(team) if team else ""
-                if team_abbr:
-                    player_data[nk]["team_salaries"][team_abbr] += salary
-                count += 1
-            print(f"    Parsed {count} rows from 2025-26 dead money")
+                for col_idx, season in salary_cols.items():
+                    if len(cols) <= col_idx:
+                        continue
+                    salary = parse_salary(cols[col_idx])
+                    if salary is None or salary == 0:
+                        continue
+                    add_entry(nk, player, team_abbr, season, salary)
+                    count += 1
+            print(f"    Parsed {count} salary entries from dead money")
     
-    # Build lookup, filtering out $0 players
+    # Build lookup per season, filtering out $0 players
     lookup = {}
     skipped = 0
     multi_team = 0
-    for nk, data in player_data.items():
+    seasons_found = set()
+    for (nk, season), data in accum.items():
         ts = dict(data["team_salaries"])
         total_salary = sum(ts.values())
         if total_salary <= 0:
@@ -584,15 +589,16 @@ def process_2526_salaries(current_csv, dead_csv):
             "team": team_str,
             "salary": total_salary,
         }
-        # Include per-team breakdown for multi-team players
         if len(teams_sorted) > 1:
             rec["team_salaries"] = ts
             multi_team += 1
-        key = (nk, "2025-26")
-        lookup[key] = [rec]
+        lookup[(nk, season)] = [rec]
+        seasons_found.add(season)
     
-    print(f"    Combined into {len(lookup)} player records for 2025-26 (skipped {skipped} with $0, {multi_team} multi-team)")
-    return lookup
+    seasons_list = sorted(seasons_found)
+    print(f"    Combined into {len(lookup)} player-season records across {seasons_list}")
+    print(f"    Skipped {skipped} with $0, {multi_team} multi-team")
+    return lookup, seasons_found
 
 
 def process_awards(csv_data):
@@ -695,26 +701,26 @@ def build_data():
     stats_lookup = process_stats(stats_csv) if stats_csv else {}
     hist_sal_lookup = process_salaries_csv(hist_sal_csv) if hist_sal_csv else {}
     future_sal_lookup = process_future_salaries(future_sal_csv) if future_sal_csv else {}
-    sal_2526_lookup = process_2526_salaries(sal_2526_current_csv, sal_2526_dead_csv)
+    cyro_lookup, cyro_seasons = process_cyro_salaries(sal_2526_current_csv, sal_2526_dead_csv)
     awards_lookup, all_awards_set = process_awards(awards_csv) if awards_csv else ({}, set())
     bio_lookup = process_bio(bio_csv) if bio_csv else {}
 
     # Merge historical + future salary lookups
-    # For 2025-26: use Cyro's data (sal_2526_lookup) exclusively
-    # For 2026-27+: use old future salaries sheet
+    # For seasons covered by Cyro's sheets: use Cyro's data exclusively
+    # For other future seasons: use old future salaries sheet
     salary_csv_lookup = {}
     for k, v in hist_sal_lookup.items():
         salary_csv_lookup[k] = v
     for k, v in future_sal_lookup.items():
-        # Skip 2025-26 from old future sheet — Cyro's data replaces it
-        if k[1] == "2025-26":
+        # Skip any season Cyro covers — his data is authoritative
+        if k[1] in cyro_seasons:
             continue
         if k in salary_csv_lookup:
             salary_csv_lookup[k].extend(v)
         else:
             salary_csv_lookup[k] = v
-    # Add Cyro's 2025-26 data
-    for k, v in sal_2526_lookup.items():
+    # Add Cyro's data for all seasons he covers
+    for k, v in cyro_lookup.items():
         if k in salary_csv_lookup:
             salary_csv_lookup[k].extend(v)
         else:
@@ -725,15 +731,15 @@ def build_data():
 
     # Start from agent tracker salary data (most comprehensive salary source)
     # Key: (normalized_name, season) -> record dict
-    # NOTE: Skip 2025-26 from agent tracker — Cyro's sheets are the
-    # authoritative source for that season (real salary, not cap hold)
+    # NOTE: Skip seasons covered by Cyro's sheets — they have authoritative
+    # real salary data (not cap holds)
     ps_map = {}
     for player_name, seasons in agent_salaries.items():
         for season_raw, salary in seasons.items():
             season = normalize_season(season_raw)
             if not season:
                 continue
-            if season == "2025-26":
+            if season in cyro_seasons:
                 continue  # Cyro's data handles this season
             end_year = season_to_year(season)
             if not end_year or end_year < 1991:
