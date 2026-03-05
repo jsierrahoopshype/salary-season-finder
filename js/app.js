@@ -651,9 +651,9 @@
     P.push({label: "20+ PPG Scorers' Salaries", f:{ppgMin:"20"}, sort:"salary", dir:"desc", allSeasons:true});
     P.push({label: "10+ RPG Rebounders' Salaries", f:{rpgMin:"10"}, sort:"salary", dir:"desc", allSeasons:true});
     P.push({label: "10+ APG Playmakers' Salaries", f:{apgMin:"10"}, sort:"salary", dir:"desc", allSeasons:true});
-    P.push({label: "50%+ FG Shooters' Salaries", f:{fgPctMin:"50", gpMin:"40"}, sort:"salary", dir:"desc", allSeasons:true});
-    P.push({label: "40%+ Three-Point Shooters' Salaries", f:{tpPctMin:"40", gpMin:"40"}, sort:"salary", dir:"desc", allSeasons:true});
-    P.push({label: "90%+ Free Throw Shooters' Salaries", f:{ftPctMin:"90", gpMin:"40"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "50%+ FG Shooters' Salaries", f:{fgPctMin:"0.50", gpMin:"40"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "40%+ Three-Point Shooters' Salaries", f:{tpPctMin:"0.40", gpMin:"40"}, sort:"salary", dir:"desc", allSeasons:true});
+    P.push({label: "90%+ Free Throw Shooters' Salaries", f:{ftPctMin:"0.90", gpMin:"40"}, sort:"salary", dir:"desc", allSeasons:true});
 
     // --- Value/Contract ---
     P.push({label: "Best Value NBA Contracts (Cost Per Point)", f:{gpMin:"50"}, sort:"cost_per_point", dir:"asc", showCols:["cost_per_point"]});
