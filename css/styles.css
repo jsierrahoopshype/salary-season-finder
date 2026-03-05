@@ -673,6 +673,23 @@ table.nba-table td.clickable:hover {
   filter: brightness(0.85);
 }
 
+.team-link.clickable {
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 2px;
+}
+
+.team-link.clickable:hover {
+  text-decoration: underline;
+  text-decoration-style: solid;
+  color: var(--accent);
+  background: rgba(233, 69, 96, 0.08);
+  border-radius: 3px;
+  padding: 0 2px;
+  margin: 0 -2px;
+}
+
 table.nba-table td.awards-cell {
   max-width: 200px;
   overflow: hidden;
