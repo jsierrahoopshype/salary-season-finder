@@ -470,8 +470,9 @@ def process_2526_salaries(current_csv, dead_csv):
       comma-separated team names and summed salary.
     - Filter out players with $0 total salary (e.g. Ben Simmons).
     """
-    # Accumulate (player_normalized -> { team_set, total_salary, display_name })
-    player_data = {}  # normalized_name -> { "teams": set(), "salary": int, "display_name": str }
+    # Accumulate per-player AND per-team salary
+    # player_data[nk] = { "team_salaries": {team: amount}, "display_name": str }
+    player_data = {}
     
     # Parse current salaries using header lookup
     if current_csv:
@@ -498,10 +499,10 @@ def process_2526_salaries(current_csv, dead_csv):
                         continue
                     nk = normalize_name(player)
                     if nk not in player_data:
-                        player_data[nk] = {"teams": set(), "salary": 0, "display_name": player}
-                    player_data[nk]["salary"] += salary
-                    if team:
-                        player_data[nk]["teams"].add(normalize_team(team))
+                        player_data[nk] = {"team_salaries": defaultdict(int), "display_name": player}
+                    team_abbr = normalize_team(team) if team else ""
+                    if team_abbr:
+                        player_data[nk]["team_salaries"][team_abbr] += salary
                     count += 1
                 print(f"    Parsed {count} rows from 2025-26 current salaries")
     
@@ -534,31 +535,38 @@ def process_2526_salaries(current_csv, dead_csv):
                     continue
                 nk = normalize_name(player)
                 if nk not in player_data:
-                    player_data[nk] = {"teams": set(), "salary": 0, "display_name": player}
-                player_data[nk]["salary"] += salary
-                if team:
-                    player_data[nk]["teams"].add(normalize_team(team))
+                    player_data[nk] = {"team_salaries": defaultdict(int), "display_name": player}
+                team_abbr = normalize_team(team) if team else ""
+                if team_abbr:
+                    player_data[nk]["team_salaries"][team_abbr] += salary
                 count += 1
             print(f"    Parsed {count} rows from 2025-26 dead money")
     
     # Build lookup, filtering out $0 players
     lookup = {}
     skipped = 0
+    multi_team = 0
     for nk, data in player_data.items():
-        if data["salary"] <= 0:
+        ts = dict(data["team_salaries"])
+        total_salary = sum(ts.values())
+        if total_salary <= 0:
             skipped += 1
             continue
-        # Comma-separate team names if multiple
-        teams_sorted = sorted(data["teams"])
+        teams_sorted = sorted(ts.keys())
         team_str = ", ".join(teams_sorted) if teams_sorted else ""
-        key = (nk, "2025-26")
-        lookup[key] = [{
+        rec = {
             "player_original": data["display_name"],
             "team": team_str,
-            "salary": data["salary"],
-        }]
+            "salary": total_salary,
+        }
+        # Include per-team breakdown for multi-team players
+        if len(teams_sorted) > 1:
+            rec["team_salaries"] = ts
+            multi_team += 1
+        key = (nk, "2025-26")
+        lookup[key] = [rec]
     
-    print(f"    Combined into {len(lookup)} player records for 2025-26 (skipped {skipped} with $0)")
+    print(f"    Combined into {len(lookup)} player records for 2025-26 (skipped {skipped} with $0, {multi_team} multi-team)")
     return lookup
 
 
@@ -726,6 +734,9 @@ def build_data():
                 # Update team from CSV if we don't have one
                 if rec.get("team") and not ps_map[key]["team"]:
                     ps_map[key]["team"] = rec["team"]
+                # Carry team_salaries for multi-team players
+                if rec.get("team_salaries"):
+                    ps_map[key]["team_salaries"] = rec["team_salaries"]
             else:
                 ps_map[key] = {
                     "player": rec["player_original"],
@@ -734,6 +745,8 @@ def build_data():
                     "end_year": end_year,
                     "team": rec.get("team", ""),
                 }
+                if rec.get("team_salaries"):
+                    ps_map[key]["team_salaries"] = rec["team_salaries"]
 
     player_season_list = list(ps_map.values())
     print(f"    Total player-season records: {len(player_season_list)}")
@@ -878,10 +891,17 @@ def build_data():
             "height": bio.get("height", ""),
             "weight": bio.get("weight"),
         }
+        # Add per-team salary breakdown for multi-team players
+        if ps.get("team_salaries"):
+            record["team_salaries"] = ps["team_salaries"]
         final_records.append(record)
         all_seasons_set.add(season)
         if team:
-            all_teams_set.add(team)
+            # For multi-team records like "MIL, POR", add each individual team
+            for t in team.split(", "):
+                t = t.strip()
+                if t:
+                    all_teams_set.add(t)
         if agent:
             all_agents_set.add(agent)
         all_players_set.add(player)
