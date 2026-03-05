@@ -25,14 +25,17 @@ SOURCES_DIR = os.path.join(BASE_DIR, "data_sources")
 OUT_DIR = os.path.join(BASE_DIR, "data")
 
 SHEET_ID = "1ZrDfzqiC31Hu3YCtxT4aZbZF4QVCVyGe6wBytR2LF30"
+CYRO_SHEET_ID = "14TQPdQ9mDhHMMMQa5vcs0coL98ZloHORtYElDikKoWY"
 
-# Map from local filename -> Google Sheets gid
+# Map from local filename -> (sheet_id, gid)
 CSV_SOURCES = {
-    "stats.csv":                "0",
-    "salaries_historical.csv":  "1151460858",
-    "salaries_future.csv":      "1555460703",
-    "awards.csv":               "1456513900",
-    "bio.csv":                  "1488063724",
+    "stats.csv":                (SHEET_ID, "0"),
+    "salaries_historical.csv":  (SHEET_ID, "1151460858"),
+    "salaries_future.csv":      (SHEET_ID, "1555460703"),
+    "salaries_2526_current.csv": (CYRO_SHEET_ID, "1402642613"),
+    "salaries_2526_dead.csv":   (CYRO_SHEET_ID, "1668033956"),
+    "awards.csv":               (SHEET_ID, "1456513900"),
+    "bio.csv":                  (SHEET_ID, "1488063724"),
 }
 
 # ── Team abbreviation mapping ──────────────────────────────────────────
@@ -234,8 +237,8 @@ def download_csvs():
     """Download all CSVs from Google Sheets into data_sources/."""
     import urllib.request
     os.makedirs(SOURCES_DIR, exist_ok=True)
-    for filename, gid in CSV_SOURCES.items():
-        url = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/export?format=csv&gid={gid}"
+    for filename, (sheet_id, gid) in CSV_SOURCES.items():
+        url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv&gid={gid}"
         path = os.path.join(SOURCES_DIR, filename)
         print(f"  Downloading {filename}...")
         try:
@@ -451,6 +454,87 @@ def process_future_salaries(csv_data):
     return lookup
 
 
+def process_2526_salaries(current_csv, dead_csv):
+    """Process Cyro's 2025-26 salary sheets (current salaries + dead money).
+    
+    Current salaries: Col A=PLAYER, Col C=TEAM, Col D=2026 salary (real money).
+    Dead money:       Col A=PLAYER, Col D=TEAM, Col I=SALARY 25-26 (real money).
+    
+    Rules:
+    - A player can appear in both sheets for the same team (e.g. Rupert: dead money
+      from 10-day contract + current salary from new contract). Sum those.
+    - A player can appear with multiple teams. Combine into one record with
+      comma-separated team names and summed salary.
+    - Filter out players with $0 total salary (e.g. Ben Simmons).
+    """
+    # Accumulate (player_normalized -> { team_set, total_salary, display_name })
+    player_data = {}  # normalized_name -> { "teams": set(), "salary": int, "display_name": str }
+    
+    # Parse current salaries (Col A=PLAYER, Col C=TEAM, Col D=salary)
+    if current_csv:
+        reader = csv.reader(io.StringIO(current_csv))
+        header = next(reader, None)
+        count = 0
+        for cols in reader:
+            if len(cols) < 4:
+                continue
+            player = cols[0].strip()
+            team = cols[2].strip() if len(cols) > 2 else ""
+            salary = parse_salary(cols[3])
+            if not player or salary is None:
+                continue
+            nk = normalize_name(player)
+            if nk not in player_data:
+                player_data[nk] = {"teams": set(), "salary": 0, "display_name": player}
+            player_data[nk]["salary"] += salary
+            if team:
+                player_data[nk]["teams"].add(normalize_team(team))
+            count += 1
+        print(f"    Parsed {count} rows from 2025-26 current salaries")
+    
+    # Parse dead money (Col A=PLAYER, Col D=TEAM, Col I=salary)
+    if dead_csv:
+        reader = csv.reader(io.StringIO(dead_csv))
+        header = next(reader, None)
+        count = 0
+        for cols in reader:
+            if len(cols) < 9:
+                continue
+            player = cols[0].strip()
+            team = cols[3].strip() if len(cols) > 3 else ""
+            salary = parse_salary(cols[8])
+            if not player or salary is None:
+                continue
+            nk = normalize_name(player)
+            if nk not in player_data:
+                player_data[nk] = {"teams": set(), "salary": 0, "display_name": player}
+            player_data[nk]["salary"] += salary
+            if team:
+                player_data[nk]["teams"].add(normalize_team(team))
+            count += 1
+        print(f"    Parsed {count} rows from 2025-26 dead money")
+    
+    # Build lookup, filtering out $0 players
+    lookup = {}
+    skipped = 0
+    for nk, data in player_data.items():
+        if data["salary"] <= 0:
+            skipped += 1
+            continue
+        # Comma-separate team names if multiple
+        teams_sorted = sorted(data["teams"])
+        team_str = ", ".join(teams_sorted) if teams_sorted else ""
+        key = (nk, "2025-26")
+        lookup[key] = [{
+            "player_original": data["display_name"],
+            "team": team_str,
+            "salary": data["salary"],
+        }]
+    
+    print(f"    Combined into {len(lookup)} player records for 2025-26 (skipped {skipped} with $0)")
+    return lookup
+
+
 def process_awards(csv_data):
     rows = parse_csv_string(csv_data)
     if not rows:
@@ -541,6 +625,8 @@ def build_data():
     stats_csv = load_csv_file("stats.csv")
     hist_sal_csv = load_csv_file("salaries_historical.csv")
     future_sal_csv = load_csv_file("salaries_future.csv")
+    sal_2526_current_csv = load_csv_file("salaries_2526_current.csv")
+    sal_2526_dead_csv = load_csv_file("salaries_2526_dead.csv")
     awards_csv = load_csv_file("awards.csv")
     bio_csv = load_csv_file("bio.csv")
 
@@ -549,14 +635,26 @@ def build_data():
     stats_lookup = process_stats(stats_csv) if stats_csv else {}
     hist_sal_lookup = process_salaries_csv(hist_sal_csv) if hist_sal_csv else {}
     future_sal_lookup = process_future_salaries(future_sal_csv) if future_sal_csv else {}
+    sal_2526_lookup = process_2526_salaries(sal_2526_current_csv, sal_2526_dead_csv)
     awards_lookup, all_awards_set = process_awards(awards_csv) if awards_csv else ({}, set())
     bio_lookup = process_bio(bio_csv) if bio_csv else {}
 
     # Merge historical + future salary lookups
+    # For 2025-26: use Cyro's data (sal_2526_lookup) exclusively
+    # For 2026-27+: use old future salaries sheet
     salary_csv_lookup = {}
     for k, v in hist_sal_lookup.items():
         salary_csv_lookup[k] = v
     for k, v in future_sal_lookup.items():
+        # Skip 2025-26 from old future sheet — Cyro's data replaces it
+        if k[1] == "2025-26":
+            continue
+        if k in salary_csv_lookup:
+            salary_csv_lookup[k].extend(v)
+        else:
+            salary_csv_lookup[k] = v
+    # Add Cyro's 2025-26 data
+    for k, v in sal_2526_lookup.items():
         if k in salary_csv_lookup:
             salary_csv_lookup[k].extend(v)
         else:
@@ -567,12 +665,16 @@ def build_data():
 
     # Start from agent tracker salary data (most comprehensive salary source)
     # Key: (normalized_name, season) -> record dict
+    # NOTE: Skip 2025-26 from agent tracker — Cyro's sheets are the
+    # authoritative source for that season (real salary, not cap hold)
     ps_map = {}
     for player_name, seasons in agent_salaries.items():
         for season_raw, salary in seasons.items():
             season = normalize_season(season_raw)
             if not season:
                 continue
+            if season == "2025-26":
+                continue  # Cyro's data handles this season
             end_year = season_to_year(season)
             if not end_year or end_year < 1991:
                 continue
