@@ -726,6 +726,37 @@ def build_data():
         else:
             salary_csv_lookup[k] = v
 
+    # Combine multi-team records in salary_csv_lookup
+    # e.g. Griffin 2020-21: [{team:DET, salary:32M}, {team:BKN, salary:1.2M}]
+    # becomes: [{team:"BKN, DET", salary:33.9M, team_salaries:{BKN:1.2M, DET:32M}}]
+    for key, recs in salary_csv_lookup.items():
+        if len(recs) <= 1:
+            continue
+        # Already a combined record from Cyro? Skip
+        if recs[0].get("team_salaries"):
+            continue
+        # Collect unique teams
+        team_sals = defaultdict(int)
+        display_name = recs[0]["player_original"]
+        for rec in recs:
+            tm = rec.get("team", "")
+            sal = rec.get("salary", 0)
+            if tm and sal:
+                team_sals[tm] += sal
+            elif sal:
+                team_sals[""] += sal
+        if len(team_sals) > 1:
+            # Multi-team: combine into one record
+            teams_sorted = sorted(t for t in team_sals.keys() if t)
+            total = sum(team_sals.values())
+            combined = {
+                "player_original": display_name,
+                "team": ", ".join(teams_sorted),
+                "salary": total,
+                "team_salaries": {t: s for t, s in team_sals.items() if t},
+            }
+            salary_csv_lookup[key] = [combined]
+
     # Step 5: Build unified player-season list
     print("\n[6/7] Merging data and computing derived fields...")
 
