@@ -27,27 +27,36 @@ jobs:
       - name: Download Google Sheets CSVs
         run: |
           mkdir -p data_sources
+          UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+          CURL_OPTS="-sL --retry 3 --retry-delay 5 --max-time 60 -H \"User-Agent: $UA\""
+          
           echo "Downloading stats..."
-          curl -sL -o data_sources/stats.csv \
-            "https://docs.google.com/spreadsheets/d/1ZrDfzqiC31Hu3YCtxT4aZbZF4QVCVyGe6wBytR2LF30/export?format=csv&gid=0"
+          eval curl $CURL_OPTS -o data_sources/stats.csv \
+            "\"https://docs.google.com/spreadsheets/d/1ZrDfzqiC31Hu3YCtxT4aZbZF4QVCVyGe6wBytR2LF30/export?format=csv&gid=0\""
+          sleep 2
           echo "Downloading historical salaries..."
-          curl -sL -o data_sources/salaries_historical.csv \
-            "https://docs.google.com/spreadsheets/d/1ZrDfzqiC31Hu3YCtxT4aZbZF4QVCVyGe6wBytR2LF30/export?format=csv&gid=1151460858"
+          eval curl $CURL_OPTS -o data_sources/salaries_historical.csv \
+            "\"https://docs.google.com/spreadsheets/d/1ZrDfzqiC31Hu3YCtxT4aZbZF4QVCVyGe6wBytR2LF30/export?format=csv&gid=1151460858\""
+          sleep 2
           echo "Downloading future salaries (2026-27 onwards)..."
-          curl -sL -o data_sources/salaries_future.csv \
-            "https://docs.google.com/spreadsheets/d/1ZrDfzqiC31Hu3YCtxT4aZbZF4QVCVyGe6wBytR2LF30/export?format=csv&gid=1555460703"
+          eval curl $CURL_OPTS -o data_sources/salaries_future.csv \
+            "\"https://docs.google.com/spreadsheets/d/1ZrDfzqiC31Hu3YCtxT4aZbZF4QVCVyGe6wBytR2LF30/export?format=csv&gid=1555460703\""
+          sleep 2
           echo "Downloading 2025-26 current salaries (Cyro)..."
-          curl -sL -o data_sources/salaries_2526_current.csv \
-            "https://docs.google.com/spreadsheets/d/14TQPdQ9mDhHMMMQa5vcs0coL98ZloHORtYElDikKoWY/export?format=csv&gid=1402642613"
+          eval curl $CURL_OPTS -o data_sources/salaries_2526_current.csv \
+            "\"https://docs.google.com/spreadsheets/d/14TQPdQ9mDhHMMMQa5vcs0coL98ZloHORtYElDikKoWY/export?format=csv&gid=1402642613\""
+          sleep 2
           echo "Downloading 2025-26 dead money (Cyro)..."
-          curl -sL -o data_sources/salaries_2526_dead.csv \
-            "https://docs.google.com/spreadsheets/d/14TQPdQ9mDhHMMMQa5vcs0coL98ZloHORtYElDikKoWY/export?format=csv&gid=1668033956"
+          eval curl $CURL_OPTS -o data_sources/salaries_2526_dead.csv \
+            "\"https://docs.google.com/spreadsheets/d/14TQPdQ9mDhHMMMQa5vcs0coL98ZloHORtYElDikKoWY/export?format=csv&gid=1668033956\""
+          sleep 2
           echo "Downloading awards..."
-          curl -sL -o data_sources/awards.csv \
-            "https://docs.google.com/spreadsheets/d/1ZrDfzqiC31Hu3YCtxT4aZbZF4QVCVyGe6wBytR2LF30/export?format=csv&gid=1456513900"
+          eval curl $CURL_OPTS -o data_sources/awards.csv \
+            "\"https://docs.google.com/spreadsheets/d/1ZrDfzqiC31Hu3YCtxT4aZbZF4QVCVyGe6wBytR2LF30/export?format=csv&gid=1456513900\""
+          sleep 2
           echo "Downloading bio..."
-          curl -sL -o data_sources/bio.csv \
-            "https://docs.google.com/spreadsheets/d/1ZrDfzqiC31Hu3YCtxT4aZbZF4QVCVyGe6wBytR2LF30/export?format=csv&gid=1488063724"
+          eval curl $CURL_OPTS -o data_sources/bio.csv \
+            "\"https://docs.google.com/spreadsheets/d/1ZrDfzqiC31Hu3YCtxT4aZbZF4QVCVyGe6wBytR2LF30/export?format=csv&gid=1488063724\""
           echo "Download complete. File sizes:"
           wc -c data_sources/*.csv
 
