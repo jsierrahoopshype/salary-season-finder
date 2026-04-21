@@ -11,7 +11,7 @@
   <!-- Loading overlay -->
   <div id="loading" class="loading-overlay">
     <div class="loading-spinner"></div>
-    <div class="loading-text">Loading salary data...</div>
+    <div class="loading-text">Loading salary data…</div>
   </div>
 
   <!-- Mobile sidebar overlay -->
@@ -140,7 +140,7 @@
             </div>
           </div>
           <div class="filter-row">
-            <label class="filter-label">Cap % Range</label>
+            <label class="filter-label" title="Player's salary as a percentage of the league salary cap that season. Max contracts range from 25% to 35% depending on tenure.">Cap % Range</label>
             <div class="filter-range">
               <input class="filter-input" type="text" id="capPctMin" placeholder="0%" aria-label="Minimum cap percentage">
               <span class="range-sep">-</span>
@@ -148,7 +148,7 @@
             </div>
           </div>
           <div class="filter-row">
-            <label class="filter-label">Salary Rank in League</label>
+            <label class="filter-label" title="Player's rank by salary across the whole league that season (1 = highest paid).">Salary Rank in League</label>
             <select class="filter-input" id="leagueRank" aria-label="Salary rank in league">
               <option value="">Any</option>
               <option value="1">1st (Highest)</option>
@@ -160,7 +160,7 @@
             </select>
           </div>
           <div class="filter-row">
-            <label class="filter-label">Cost Per Point</label>
+            <label class="filter-label" title="Player salary divided by total points scored that season — a value-for-money metric. Lower = better value per point.">Cost Per Point</label>
             <div class="filter-range">
               <input class="filter-input" type="text" id="cppMin" placeholder="Min" aria-label="Min cost per point">
               <span class="range-sep">-</span>
@@ -168,7 +168,7 @@
             </div>
           </div>
           <div class="filter-row">
-            <label class="filter-label">Cost Per Game</label>
+            <label class="filter-label" title="Player salary divided by games played that season. Lower = better per-game availability.">Cost Per Game</label>
             <div class="filter-range">
               <input class="filter-input" type="text" id="cpgMin" placeholder="Min" aria-label="Min cost per game">
               <span class="range-sep">-</span>
@@ -379,5 +379,37 @@
   </footer>
 
   <script src="js/app.js"></script>
+  <script>
+  // URL state for ?team= — additive, runs after app.js. Restores the team filter
+  // on load and keeps the URL in sync when the filter changes.
+  (function() {
+    const teamSel = document.getElementById('teamFilter');
+    if (!teamSel) return;
+
+    const urlTeam = new URLSearchParams(location.search).get('team');
+    // Wait until app.js has populated the options, then restore
+    if (urlTeam) {
+      let tries = 0;
+      const tryRestore = () => {
+        if ([...teamSel.options].some(o => o.value === urlTeam)) {
+          teamSel.value = urlTeam;
+          teamSel.dispatchEvent(new Event('change', { bubbles: true }));
+        } else if (tries++ < 40) {
+          setTimeout(tryRestore, 150);
+        }
+      };
+      tryRestore();
+    }
+
+    // Sync URL when user changes the team filter
+    teamSel.addEventListener('change', function() {
+      const val = this.value;
+      const url = new URL(location.href);
+      if (val) url.searchParams.set('team', val);
+      else url.searchParams.delete('team');
+      history.replaceState(null, '', url);
+    });
+  })();
+  </script>
 </body>
 </html>
