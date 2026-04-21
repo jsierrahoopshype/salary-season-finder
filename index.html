@@ -1,415 +1,2418 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Salary Season Finder | HoopsMatic</title>
-  <link rel="stylesheet" href="css/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NBA Season Comparison Tool - HoopsHype</title>
+    <meta name="description" content="Compare any two NBA player seasons across 80+ categories including stats, advanced metrics, and more.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f5f5f7;
+            --surface: #ffffff;
+            --surface-hover: #f0f0f2;
+            --border: #d1d1d6;
+            --text: #1d1d1f;
+            --text-secondary: #6e6e73;
+            --accent: #3b82f6;
+            --accent-dim: rgba(59, 130, 246, 0.15);
+            --green: #34c759;
+            --green-dim: rgba(52, 199, 89, 0.15);
+            --orange: #f59e0b;
+            --orange-dim: rgba(245, 158, 11, 0.15);
+            --red: #ef4444;
+            --red-dim: rgba(239, 68, 68, 0.15);
+            --purple: #667eea;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.5;
+            overflow-x: hidden;
+            max-width: 100vw;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+        
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 0.9375rem;
+        }
+        
+        .player-selector {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            align-items: start;
+        }
+        
+        .player-select-card {
+            background: var(--surface);
+            padding: 1.25rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+        
+        .player-select-card h3 {
+            font-size: 0.6875rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .select-group { margin-bottom: 1rem; }
+        
+        .select-group label {
+            display: block;
+            font-size: 0.6875rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.375rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+        }
+        
+        .player-autocomplete, .season-select {
+            width: 100%;
+            padding: 0.625rem 1rem;
+            font-size: 0.875rem;
+            font-family: inherit;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--surface);
+            color: var(--text);
+            transition: all 0.15s;
+        }
+        
+        .player-autocomplete:hover, .season-select:hover { border-color: var(--accent); }
+        .player-autocomplete:focus, .season-select:focus { 
+            outline: none; 
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-dim);
+        }
+        
+        .player-autocomplete::placeholder { color: var(--text-secondary); }
+        
+        .player-select-wrapper { position: relative; }
+        
+        .autocomplete-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--surface);
+            border: 1px solid var(--accent);
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .autocomplete-suggestion {
+            padding: 0.625rem 1rem;
+            cursor: pointer;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.875rem;
+            transition: background 0.15s;
+        }
+        
+        .autocomplete-suggestion:hover { background: var(--surface-hover); }
+        .autocomplete-suggestion:last-child { border-bottom: none; }
+        
+        .vs-text {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            text-align: center;
+            padding-top: 3.5rem;
+            letter-spacing: -0.02em;
+        }
+        
+        .compare-button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            font-size: 0.9375rem;
+            font-family: inherit;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto 1.5rem;
+            transition: all 0.15s;
+        }
+        
+        .compare-button:hover { background: #2563eb; }
+        .compare-button:disabled { background: var(--border); cursor: not-allowed; }
+        
+        .loop-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .loop-button {
+            background: var(--green-dim);
+            color: var(--green);
+            border: 1px solid transparent;
+            padding: 0.625rem 1.25rem;
+            font-size: 0.875rem;
+            font-family: inherit;
+            font-weight: 500;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        
+        .loop-button:hover { background: var(--green); color: white; }
+        
+        .loop-button.active {
+            background: var(--orange);
+            color: white;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .loop-button.active:hover { background: #d97706; }
+
+        .loop-stop-floating {
+            display: none;
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 9999;
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.25rem;
+            border-radius: 50px;
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(220,38,38,0.4);
+            transition: all 0.15s;
+        }
+        .loop-stop-floating:hover { background: #b91c1c; transform: scale(1.05); }
+        .loop-stop-floating.visible { display: block; }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .loop-interval {
+            padding: 0.625rem 0.875rem;
+            font-size: 0.875rem;
+            font-family: inherit;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text);
+            cursor: pointer;
+        }
+        
+        .loop-progress {
+            width: 100%;
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            margin-top: 0.75rem;
+            overflow: hidden;
+        }
+        
+        .loop-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--green), #10b981);
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+        
+        .loading { 
+            text-align: center; 
+            padding: 3rem; 
+            font-size: 1rem; 
+            color: var(--text-secondary);
+        }
+        
+        .spinner {
+            border: 3px solid var(--border);
+            border-top: 3px solid var(--accent);
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            animation: spin 1s linear infinite;
+            margin: 1.25rem auto;
+        }
+        
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        .loading-status { font-size: 0.8125rem; color: var(--text-secondary); margin-top: 0.75rem; }
+        
+        .progress-bar {
+            width: 180px;
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            margin: 1rem auto;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 2px;
+            transition: width 0.3s;
+        }
+        
+        .score-summary {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--surface);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        
+        .player-score { text-align: center; }
+        
+        .player-name-score { 
+            font-size: 1rem; 
+            font-weight: 600; 
+            margin-bottom: 0.25rem; 
+            color: var(--text);
+            cursor: pointer; 
+            transition: color 0.15s; 
+        }
+        
+        .player-name-score:hover { color: var(--accent); }
+        
+        .clickable-name { cursor: pointer; transition: color 0.15s; }
+        .clickable-name:hover { color: var(--accent); }
+        
+        .player-season-label { font-size: 0.8125rem; color: var(--text-secondary); margin-bottom: 0.25rem; }
+        .player-team-label { font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 1rem; }
+        
+        .score-value { 
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2.5rem; 
+            font-weight: 700; 
+            color: var(--accent);
+        }
+        
+        .score-divider { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 1.5rem; 
+            font-weight: 300; 
+            color: var(--text-secondary); 
+        }
+        
+        .suggested-matchups { 
+            margin-top: 2.5rem; 
+            padding: 1.25rem; 
+            background: var(--surface); 
+            border-radius: 12px; 
+            border: 1px solid var(--border);
+        }
+        
+        .suggested-matchups h3 { 
+            font-size: 1rem; 
+            color: var(--text); 
+            margin-bottom: 1rem; 
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .matchup-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); 
+            gap: 0.75rem; 
+        }
+        
+        .matchup-card { 
+            background: var(--surface-hover); 
+            padding: 0.875rem 1rem; 
+            border-radius: 8px; 
+            border: 1px solid var(--border); 
+            cursor: pointer; 
+            transition: all 0.15s; 
+            text-align: center; 
+        }
+        
+        .matchup-card:hover { 
+            border-color: var(--accent); 
+            box-shadow: 0 2px 8px var(--accent-dim); 
+        }
+        
+        .matchup-players { font-weight: 600; color: var(--text); margin-bottom: 0.25rem; font-size: 0.875rem; }
+        .matchup-seasons { font-size: 0.75rem; color: var(--text-secondary); }
+        
+        .category-section { margin-bottom: 2.5rem; }
+        
+        .category-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .section-score { 
+            font-size: 0.8125rem; 
+            font-weight: 500; 
+            color: var(--text-secondary); 
+            margin-top: 0.5rem;
+        }
+        
+        .comparison-row {
+            display: grid;
+            grid-template-columns: 2fr 3fr 1fr 3fr 2fr;
+            gap: 1rem;
+            padding: 1rem 1.25rem;
+            margin-bottom: 0.5rem;
+            border-radius: 8px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            align-items: center;
+            transition: all 0.15s;
+        }
+        
+        .comparison-row:hover { 
+            border-color: var(--accent);
+            box-shadow: 0 2px 8px var(--accent-dim);
+        }
+        
+        .comparison-row.winner-left {
+            background: linear-gradient(90deg, var(--green-dim) 0%, var(--surface) 40%);
+            border-left: 3px solid var(--green);
+        }
+        
+        .comparison-row.winner-right {
+            background: linear-gradient(90deg, var(--surface) 60%, var(--green-dim) 100%);
+            border-right: 3px solid var(--green);
+        }
+        
+        .comparison-row.tie {
+            background: linear-gradient(90deg, var(--orange-dim) 0%, var(--surface) 30%, var(--surface) 70%, var(--orange-dim) 100%);
+            border-left: 3px solid var(--orange);
+            border-right: 3px solid var(--orange);
+        }
+        
+        .player-value { 
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9375rem; 
+            font-weight: 500; 
+            text-align: center; 
+            color: var(--text); 
+        }
+        
+        .player-value.winner { 
+            color: var(--green); 
+            font-weight: 600;
+        }
+        
+        .metric-name { 
+            font-size: 0.8125rem; 
+            color: var(--text-secondary); 
+            text-align: center; 
+            font-weight: 500; 
+        }
+        
+        .no-data { color: var(--text-secondary); font-style: italic; font-weight: 400; }
+        
+        .error-message {
+            background: var(--red-dim);
+            color: var(--red);
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            border: 1px solid var(--red);
+            font-size: 0.9375rem;
+        }
+        
+        .data-timestamp {
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 0.75rem;
+        }
+        
+        .bottom-selector {
+            margin-top: 2.5rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        
+        .bottom-selector .player-selector { margin-bottom: 1.25rem; }
+        .bottom-selector .compare-button { margin-bottom: 1rem; }
+        .bottom-selector .loop-controls { margin-bottom: 0.75rem; }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 1rem; width: 100%; max-width: 100vw; }
+            h1 { font-size: 1.25rem; margin-bottom: 0.375rem; }
+            .subtitle { font-size: 0.8125rem; margin-bottom: 1rem; }
+
+            /* Horizontal compact selector on mobile */
+            .player-selector { 
+                grid-template-columns: 1fr auto 1fr; 
+                gap: 0.5rem; 
+                margin-bottom: 1rem;
+                align-items: start;
+            }
+            .player-select-card { 
+                padding: 0.5rem; 
+                background: transparent;
+                border: none;
+            }
+            /* Hide headers and labels on mobile */
+            .player-select-card h3 { display: none; }
+            .select-group label { display: none; }
+            
+            .player-autocomplete, .season-select { 
+                padding: 0.5rem 0.625rem; 
+                font-size: 0.8125rem; 
+            }
+            .vs-text { 
+                padding-top: 0.5rem; 
+                font-size: 0.875rem;
+                font-weight: 600;
+            }
+            .select-group { margin-bottom: 0.375rem; }
+            .select-group:last-child { margin-bottom: 0; }
+
+            .compare-button { padding: 0.625rem 1.25rem; font-size: 0.8125rem; margin-bottom: 0.75rem; }
+            .loop-controls { flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+            .loop-button { padding: 0.5rem 0.75rem; font-size: 0.75rem; }
+            .loop-interval { padding: 0.375rem 0.5rem; font-size: 0.75rem; }
+
+            .score-summary {
+                grid-template-columns: 1fr auto 1fr;
+                gap: 0.5rem;
+                padding: 1rem 0.75rem;
+                margin-bottom: 1.5rem;
+                max-width: 100%;
+            }
+            .score-summary > * { min-width: 0; overflow: hidden; }
+            .player-name-score { font-size: 0.8125rem; word-break: break-word; }
+            .player-season-label { font-size: 0.6875rem; }
+            .player-team-label { font-size: 0.625rem; margin-bottom: 0.5rem; }
+            .score-value { font-size: 1.75rem; }
+            .score-divider { font-size: 1.25rem; }
+
+            .category-section { margin-bottom: 2rem; }
+            .category-title { font-size: 1rem; padding-bottom: 0.5rem; margin-bottom: 0.75rem; }
+            .section-score { font-size: 0.75rem; }
+
+            .comparison-row {
+                grid-template-columns: 1fr auto 1fr;
+                gap: 0.375rem;
+                padding: 0.75rem 0.625rem;
+                margin-bottom: 0.375rem;
+                max-width: 100%;
+            }
+            .comparison-row:hover { box-shadow: none; }
+            .comparison-row .player-name-cell { display: none; }
+            .comparison-row > * { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+            .player-value { font-size: 0.8125rem; }
+            .player-value.winner { font-size: 0.875rem; }
+            .metric-name { font-size: 0.6875rem; min-width: 0; }
+
+            .suggested-matchups { padding: 1rem; margin-top: 2rem; max-width: 100%; }
+            .suggested-matchups h3 { font-size: 0.875rem; margin-bottom: 0.75rem; }
+            .matchup-grid { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+            .matchup-card { padding: 0.75rem; }
+            .matchup-players { font-size: 0.75rem; }
+            .matchup-seasons { font-size: 0.6875rem; }
+
+            .bottom-selector { margin-top: 2rem; padding-top: 1.5rem; }
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 </head>
 <body>
+    <div class="container">
+        <h1>🏀 NBA Season Comparison Tool</h1>
+        <div class="subtitle">Compare any two player seasons across 80+ categories</div>
 
-  <!-- Loading overlay -->
-  <div id="loading" class="loading-overlay">
-    <div class="loading-spinner"></div>
-    <div class="loading-text">Loading salary data…</div>
-  </div>
-
-  <!-- Mobile sidebar overlay -->
-  <div class="sidebar-overlay" id="sidebarOverlay"></div>
-
-  <div class="app-layout">
-    <!-- Sidebar / Filter Panel -->
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-header">
-        <h2>Filters</h2>
-        <div class="sidebar-actions">
-          <button class="clear-btn" id="clearFiltersBtn">Clear All</button>
-          <button class="btn btn-sm btn-accent" id="shareBtn" title="Copy shareable link">Share</button>
+        <div id="loadingMessage" class="loading">
+            <div class="spinner"></div>
+            <div>Loading player database…</div>
+            <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width: 0%"></div></div>
+            <div class="loading-status" id="loadingStatus">Connecting to data sources…</div>
         </div>
-      </div>
 
-      <!-- Preset searches -->
-      <div class="presets-bar" id="presetsBar">
-        <button class="shuffle-btn" id="shufflePresetsBtn" title="Show different presets">&#8635;</button>
-      </div>
+        <div id="mainContent" style="display: none;">
+            <div class="player-selector">
+                <div class="player-select-card">
+                    <h3>Player 1</h3>
+                    <div class="select-group">
+                        <label>Player Name</label>
+                        <div class="player-select-wrapper">
+                            <input type="text" id="player1Input" class="player-autocomplete" placeholder="Type player name...">
+                            <div id="suggestions1" class="autocomplete-suggestions"></div>
+                        </div>
+                    </div>
+                    <div class="select-group">
+                        <label>Season</label>
+                        <select id="season1Select" class="season-select" disabled>
+                            <option value="">-- Select Player First --</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="vs-text">VS</div>
+                <div class="player-select-card">
+                    <h3>Player 2</h3>
+                    <div class="select-group">
+                        <label>Player Name</label>
+                        <div class="player-select-wrapper">
+                            <input type="text" id="player2Input" class="player-autocomplete" placeholder="Type player name...">
+                            <div id="suggestions2" class="autocomplete-suggestions"></div>
+                        </div>
+                    </div>
+                    <div class="select-group">
+                        <label>Season</label>
+                        <select id="season2Select" class="season-select" disabled>
+                            <option value="">-- Select Player First --</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <button class="compare-button" id="compareBtn" disabled>Compare Seasons</button>
+            <div class="loop-controls">
+                <button class="loop-button" id="loopBtn">Start Comparison Loop</button>
+                <select id="scrollDuration" class="loop-interval" title="Scroll speed">
+                    <option value="15">15s scroll</option>
+                    <option value="30" selected>30s scroll</option>
+                    <option value="45">45s scroll</option>
+                </select>
+                <select id="stickyPlayer" class="loop-interval">
+                    <option value="none">Randomize Both</option>
+                    <option value="p1" id="stickyP1Option">Keep Player 1</option>
+                    <option value="p2" id="stickyP2Option">Keep Player 2</option>
+                </select>
+            </div>
+            <div id="dataTimestamp" class="data-timestamp" style="display: none;"></div>
+            <div id="results"></div>
+        </div>
+        <div id="errorMessage" style="display: none;"></div>
+    </div>
 
-      <!-- Season Filters -->
-      <div class="filter-section">
-        <div class="filter-section-header" data-section="seasons">
-          <h3>Season</h3>
-          <span class="chevron">&#9660;</span>
-        </div>
-        <div class="filter-section-body">
-          <div class="season-presets" id="seasonPresets">
-            <button class="season-preset-btn" data-from="2020-21" data-to="2025-26">Last 5</button>
-            <button class="season-preset-btn" data-from="2015-16" data-to="2025-26">Last 10</button>
-            <button class="season-preset-btn" data-from="2010-11" data-to="2019-20">2010s</button>
-            <button class="season-preset-btn" data-from="2000-01" data-to="2009-10">2000s</button>
-            <button class="season-preset-btn" data-from="1990-91" data-to="1999-00">1990s</button>
-            <button class="season-preset-btn" data-from="1990-91" data-to="2025-26">Since 1990</button>
-          </div>
-          <div class="filter-range">
-            <select class="filter-input" id="seasonFrom" aria-label="Season from"></select>
-            <span class="range-sep">to</span>
-            <select class="filter-input" id="seasonTo" aria-label="Season to"></select>
-          </div>
-        </div>
-      </div>
-
-      <!-- Player Filters -->
-      <div class="filter-section">
-        <div class="filter-section-header" data-section="player">
-          <h3>Player</h3>
-          <span class="chevron">&#9660;</span>
-        </div>
-        <div class="filter-section-body">
-          <div class="filter-row autocomplete-wrapper">
-            <label class="filter-label">Player Name</label>
-            <input class="filter-input" type="text" id="playerSearch" placeholder="Search player..." aria-label="Player name search" autocomplete="off">
-            <div class="autocomplete-dropdown" id="playerDropdown"></div>
-          </div>
-          <div class="filter-row">
-            <label class="filter-label">Position</label>
-            <div class="filter-checks" id="positionFilter">
-              <button class="filter-chip" data-value="G">G</button>
-              <button class="filter-chip" data-value="F">F</button>
-              <button class="filter-chip" data-value="C">C</button>
-            </div>
-          </div>
-          <div class="filter-row">
-            <label class="filter-label">College/Club</label>
-            <div class="autocomplete-wrapper">
-              <input class="filter-input" type="text" id="collegeFilter" placeholder="Type to search..." autocomplete="off" aria-label="College or club filter">
-              <div class="autocomplete-dropdown" id="collegeDropdown"></div>
-            </div>
-          </div>
-          <div class="filter-row">
-            <label class="filter-label">Age</label>
-            <div class="filter-range">
-              <input class="filter-input" type="number" id="ageMin" placeholder="Min" aria-label="Minimum age">
-              <span class="range-sep">-</span>
-              <input class="filter-input" type="number" id="ageMax" placeholder="Max" aria-label="Maximum age">
-            </div>
-          </div>
-          <div class="filter-row">
-            <label class="filter-label">Years of Experience</label>
-            <div class="filter-range">
-              <input class="filter-input" type="number" id="expMin" placeholder="Min" aria-label="Min years experience">
-              <span class="range-sep">-</span>
-              <input class="filter-input" type="number" id="expMax" placeholder="Max" aria-label="Max years experience">
-            </div>
-          </div>
-          <div class="filter-row">
-            <label class="filter-label">Draft Pick</label>
-            <div class="filter-range">
-              <input class="filter-input" type="number" id="draftMin" placeholder="Min" aria-label="Min draft pick">
-              <span class="range-sep">-</span>
-              <input class="filter-input" type="number" id="draftMax" placeholder="Max" aria-label="Max draft pick">
-            </div>
-          </div>
-          <div class="filter-row">
-            <label class="filter-label">Draft Class (Year)</label>
-            <div class="filter-range">
-              <input class="filter-input" type="number" id="draftYearMin" placeholder="Min" aria-label="Min draft year">
-              <span class="range-sep">-</span>
-              <input class="filter-input" type="number" id="draftYearMax" placeholder="Max" aria-label="Max draft year">
-            </div>
-          </div>
-          <div class="filter-row">
-            <label class="filter-label">Nationality</label>
-            <select class="filter-input" id="nationality" aria-label="Nationality">
-              <option value="">Any</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <!-- Salary Filters -->
-      <div class="filter-section">
-        <div class="filter-section-header" data-section="salary">
-          <h3>Salary</h3>
-          <span class="chevron">&#9660;</span>
-        </div>
-        <div class="filter-section-body">
-          <div class="filter-row">
-            <label class="filter-label">Salary Range</label>
-            <div class="filter-range">
-              <input class="filter-input" type="text" id="salaryMin" placeholder="$0" aria-label="Minimum salary">
-              <span class="range-sep">-</span>
-              <input class="filter-input" type="text" id="salaryMax" placeholder="Any" aria-label="Maximum salary">
-            </div>
-          </div>
-          <div class="filter-row">
-            <label class="filter-label" title="Player's salary as a percentage of the league salary cap that season. Max contracts range from 25% to 35% depending on tenure.">Cap % Range</label>
-            <div class="filter-range">
-              <input class="filter-input" type="text" id="capPctMin" placeholder="0%" aria-label="Minimum cap percentage">
-              <span class="range-sep">-</span>
-              <input class="filter-input" type="text" id="capPctMax" placeholder="Any" aria-label="Maximum cap percentage">
-            </div>
-          </div>
-          <div class="filter-row">
-            <label class="filter-label" title="Player's rank by salary across the whole league that season (1 = highest paid).">Salary Rank in League</label>
-            <select class="filter-input" id="leagueRank" aria-label="Salary rank in league">
-              <option value="">Any</option>
-              <option value="1">1st (Highest)</option>
-              <option value="5">Top 5</option>
-              <option value="10">Top 10</option>
-              <option value="25">Top 25</option>
-              <option value="50">Top 50</option>
-              <option value="100">Top 100</option>
-            </select>
-          </div>
-          <div class="filter-row">
-            <label class="filter-label" title="Player salary divided by total points scored that season — a value-for-money metric. Lower = better value per point.">Cost Per Point</label>
-            <div class="filter-range">
-              <input class="filter-input" type="text" id="cppMin" placeholder="Min" aria-label="Min cost per point">
-              <span class="range-sep">-</span>
-              <input class="filter-input" type="text" id="cppMax" placeholder="Max" aria-label="Max cost per point">
-            </div>
-          </div>
-          <div class="filter-row">
-            <label class="filter-label" title="Player salary divided by games played that season. Lower = better per-game availability.">Cost Per Game</label>
-            <div class="filter-range">
-              <input class="filter-input" type="text" id="cpgMin" placeholder="Min" aria-label="Min cost per game">
-              <span class="range-sep">-</span>
-              <input class="filter-input" type="text" id="cpgMax" placeholder="Max" aria-label="Max cost per game">
-            </div>
-          </div>
-          <div class="filter-row">
-            <label class="filter-label">Career Earnings</label>
-            <div class="filter-range">
-              <input class="filter-input" type="text" id="earningsMin" placeholder="Min" aria-label="Min career earnings">
-              <span class="range-sep">-</span>
-              <input class="filter-input" type="text" id="earningsMax" placeholder="Max" aria-label="Max career earnings">
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Team Filters -->
-      <div class="filter-section collapsed">
-        <div class="filter-section-header" data-section="team">
-          <h3>Team</h3>
-          <span class="chevron">&#9660;</span>
-        </div>
-        <div class="filter-section-body">
-          <div class="filter-row">
-            <label class="filter-label">Team</label>
-            <select class="filter-input" id="teamFilter" aria-label="Team filter">
-              <option value="">All Teams</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <!-- Stats Filters -->
-      <div class="filter-section collapsed">
-        <div class="filter-section-header" data-section="stats">
-          <h3>Statistics</h3>
-          <span class="chevron">&#9660;</span>
-        </div>
-        <div class="filter-section-body">
-          <div class="filter-row">
-            <label class="filter-label">PPG</label>
-            <div class="filter-range">
-              <input class="filter-input" type="number" step="0.1" id="ppgMin" placeholder="Min" aria-label="Min PPG">
-              <span class="range-sep">-</span>
-              <input class="filter-input" type="number" step="0.1" id="ppgMax" placeholder="Max" aria-label="Max PPG">
-            </div>
-          </div>
-          <div class="filter-row">
-            <label class="filter-label">RPG</label>
-            <div class="filter-range">
-              <input class="filter-input" type="number" step="0.1" id="rpgMin" placeholder="Min" aria-label="Min RPG">
-              <span class="range-sep">-</span>
-              <input class="filter-input" type="number" step="0.1" id="rpgMax" placeholder="Max" aria-label="Max RPG">
-            </div>
-          </div>
-          <div class="filter-row">
-            <label class="filter-label">APG</label>
-            <div class="filter-range">
-              <input class="filter-input" type="number" step="0.1" id="apgMin" placeholder="Min" aria-label="Min APG">
-              <span class="range-sep">-</span>
-              <input class="filter-input" type="number" step="0.1" id="apgMax" placeholder="Max" aria-label="Max APG">
-            </div>
-          </div>
-          <div class="filter-row">
-            <label class="filter-label">FG%</label>
-            <div class="filter-range">
-              <input class="filter-input" type="number" step="0.1" id="fgPctMin" placeholder="Min" aria-label="Min FG%">
-              <span class="range-sep">-</span>
-              <input class="filter-input" type="number" step="0.1" id="fgPctMax" placeholder="Max" aria-label="Max FG%">
-            </div>
-          </div>
-          <div class="filter-row">
-            <label class="filter-label">3P%</label>
-            <div class="filter-range">
-              <input class="filter-input" type="number" step="0.1" id="tpPctMin" placeholder="Min" aria-label="Min 3P%">
-              <span class="range-sep">-</span>
-              <input class="filter-input" type="number" step="0.1" id="tpPctMax" placeholder="Max" aria-label="Max 3P%">
-            </div>
-          </div>
-          <div class="filter-row">
-            <label class="filter-label">FT%</label>
-            <div class="filter-range">
-              <input class="filter-input" type="number" step="0.1" id="ftPctMin" placeholder="Min" aria-label="Min FT%">
-              <span class="range-sep">-</span>
-              <input class="filter-input" type="number" step="0.1" id="ftPctMax" placeholder="Max" aria-label="Max FT%">
-            </div>
-          </div>
-          <div class="filter-row">
-            <label class="filter-label">Games Played</label>
-            <div class="filter-range">
-              <input class="filter-input" type="number" id="gpMin" placeholder="Min" aria-label="Min games played">
-              <span class="range-sep">-</span>
-              <input class="filter-input" type="number" id="gpMax" placeholder="Max" aria-label="Max games played">
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Awards Filters -->
-      <div class="filter-section collapsed">
-        <div class="filter-section-header" data-section="awards">
-          <h3>Awards</h3>
-          <span class="chevron">&#9660;</span>
-        </div>
-        <div class="filter-section-body">
-          <div class="filter-row">
-            <label class="filter-label">Award Type</label>
-            <div class="filter-checks" id="awardsFilter">
-              <button class="filter-chip" data-value="All-Star">All-Star</button>
-              <button class="filter-chip" data-value="Most Valuable Player">MVP</button>
-              <button class="filter-chip" data-value="All-NBA">All-NBA</button>
-              <button class="filter-chip" data-value="All-Defensive">All-Def</button>
-              <button class="filter-chip" data-value="Defensive Player of the Year">DPOY</button>
-              <button class="filter-chip" data-value="Most Improved Player">MIP</button>
-              <button class="filter-chip" data-value="Rookie of the Year">ROY</button>
-              <button class="filter-chip" data-value="Sixth Man of the Year">6MOY</button>
-              <button class="filter-chip" data-value="NBA Champion">Champ</button>
-              <button class="filter-chip" data-value="Player of the Week">POTW</button>
-              <button class="filter-chip" data-value="Player of the Month">POTM</button>
-              <button class="filter-chip" data-value="Defensive Player of the Month">DPOTM</button>
-            </div>
-          </div>
-          <div class="filter-row">
-            <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;">
-              <input type="checkbox" id="hasAnyAward"> Has any award this season
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <!-- Mobile: Show Results button (sticks to bottom of sidebar) -->
-      <div class="mobile-show-results" id="mobileShowResults">
-        <button class="show-results-btn" id="showResultsBtn">Show Results ›</button>
-      </div>
-
-    </aside>
-
-    <!-- Main Content -->
-    <main class="main-content">
-      <!-- Mobile sticky top: search button + breadcrumbs -->
-      <div class="mobile-sticky-top" id="mobileStickyTop">
-        <button class="mobile-burger" id="mobileBurger" title="Filters &amp; Search">&#9776; Search &amp; Filter</button>
-        <!-- Breadcrumb bar (shown when cell-click filters are active) -->
-        <div class="breadcrumb-bar" id="breadcrumbBar" style="display:none;">
-          <span class="breadcrumb-label">Filtered by:</span>
-          <div class="breadcrumb-trail" id="breadcrumbTrail"></div>
-          <div class="breadcrumb-actions">
-            <button class="breadcrumb-btn breadcrumb-home" id="breadcrumbHome" title="Reset to default">&#8962; Home</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Summary stats -->
-      <div class="summary-bar" id="summaryBar">
-        <div class="summary-stat">
-          <span class="stat-label">Matching</span>
-          <span class="stat-value" id="summaryCount">0</span>
-          <span class="stat-detail">seasons</span>
-        </div>
-        <div class="summary-stat">
-          <span class="stat-label">Avg Salary</span>
-          <span class="stat-value" id="summaryAvgSalary">$0</span>
-        </div>
-        <div class="summary-stat">
-          <span class="stat-label">Avg Cap %</span>
-          <span class="stat-value" id="summaryAvgCap">0%</span>
-        </div>
-        <div class="summary-stat">
-          <span class="stat-label">Highest Salary</span>
-          <span class="stat-value" id="summaryHighSalary">$0</span>
-          <span class="stat-detail" id="summaryHighPlayer"></span>
-        </div>
-        <div class="summary-stat">
-          <span class="stat-label">Total Salary</span>
-          <span class="stat-value" id="summaryTotalSalary">$0</span>
-        </div>
-      </div>
-
-      <!-- Column toggles -->
-      <div class="results-header">
-        <span class="results-count" id="resultsCount">Showing 0 results</span>
-        <label class="combine-toggle" id="combineToggleWrap" style="display:none;">
-          <input type="checkbox" id="combineToggle" checked> Combine per player
-        </label>
-      </div>
-
-      <div class="col-toggles" id="colToggles"></div>
-
-      <!-- Results Table -->
-      <div class="table-wrapper" id="tableWrapper">
-        <table class="nba-table" id="resultsTable">
-          <thead id="tableHead"></thead>
-          <tbody id="tableBody"></tbody>
-        </table>
-      </div>
-
-      <!-- Empty state -->
-      <div class="empty-state" id="emptyState" style="display:none;">
-        <h3>No matching seasons found</h3>
-        <p>Try adjusting your filters or clearing them to see all results.</p>
-      </div>
-    </main>
-  </div>
-
-  <footer class="site-footer">
-    Anything wrong? Contact us at <a href="mailto:hoopshype@hoopshype.com">hoopshype@hoopshype.com</a>
-  </footer>
-
-  <script src="js/app.js"></script>
-  <script>
-  // URL state for ?team= — additive, runs after app.js. Restores the team filter
-  // on load and keeps the URL in sync when the filter changes.
-  (function() {
-    const teamSel = document.getElementById('teamFilter');
-    if (!teamSel) return;
-
-    const urlTeam = new URLSearchParams(location.search).get('team');
-    // Wait until app.js has populated the options, then restore
-    if (urlTeam) {
-      let tries = 0;
-      const tryRestore = () => {
-        if ([...teamSel.options].some(o => o.value === urlTeam)) {
-          teamSel.value = urlTeam;
-          teamSel.dispatchEvent(new Event('change', { bubbles: true }));
-        } else if (tries++ < 40) {
-          setTimeout(tryRestore, 150);
+    <script>
+        // ===== CONFIGURATION =====
+        // Google Sheet for 2025-26 data
+        const GSHEET_ID = '1JH2FUBIyQ1zEHzZBxgP8vHBZ7d8EtP5-fSVG3zMgCgg';
+        
+        // Google Sheet tab GIDs
+        const GSHEET_TABS = {
+            rsStats: 1169156479,           // Player Traditional Stats (totals)
+            rsStatsPerGame: 1181534071,    // Player Traditional Stats Per Game
+            advanced: 339737563,           // Player Advanced
+            misc: 52077302,                // Player Misc (includes scoring breakdown)
+            scoring: 867936474,            // Player Scoring
+            usage: 1415078232,             // Player Usage
+            clutch: 10789411,              // Player Clutch
+            bio: 442838927,                // Player Bio
+            hustle: 439158060,             // Player Hustle
+            shotLocation: 1205457990,      // Shot Location
+            defense: 1957258468            // Defense
+        };
+        
+        // Helper to build Google Sheets CSV export URL
+        function getGSheetURL(gid) {
+            return `https://docs.google.com/spreadsheets/d/${GSHEET_ID}/export?format=csv&gid=${gid}`;
         }
-      };
-      tryRestore();
-    }
+        
+        // Fallback JSON URL (in case Google Sheets is unavailable)
+        const JSON_URL = 'https://jsierrahoopshype.github.io/nba-player-data/nba-2025-26-data.json';
+        
+        // Fetch and parse Google Sheet CSV
+        async function fetchGoogleSheet(gid, sheetName) {
+            const url = getGSheetURL(gid);
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    console.warn(`Failed to fetch Google Sheet ${sheetName}: ${response.status}`);
+                    return null;
+                }
+                const csvText = await response.text();
+                const lines = csvText.split('\n');
+                
+                // Skip rows until we find one that looks like column headers
+                let headerRowIndex = 0;
+                for (let i = 0; i < Math.min(lines.length, 10); i++) {
+                    const line = lines[i].toLowerCase();
+                    if (line.includes('player') || line.includes('team') || line.includes('gp,') || line.includes(',gp,')) {
+                        headerRowIndex = i;
+                        break;
+                    }
+                }
+                
+                // Remove all rows before the header row
+                const cleanedLines = lines.slice(headerRowIndex);
+                const cleanedCsv = cleanedLines.join('\n');
+                
+                // Parse CSV using Papa Parse
+                const parsed = Papa.parse(cleanedCsv, {
+                    header: true,
+                    skipEmptyLines: true,
+                    dynamicTyping: false,
+                    transformHeader: (header) => header.trim(),
+                    transform: (value) => typeof value === 'string' ? value.trim() : value
+                });
+                
+                console.log(`${sheetName}: ${parsed.data.length} rows, cols: ${Object.keys(parsed.data[0] || {}).slice(0, 5).join(', ')}...`);
+                return parsed.data;
+            } catch (error) {
+                console.warn(`Error fetching Google Sheet ${sheetName}:`, error);
+                return null;
+            }
+        }
+        
+        // Load all 2025-26 data from Google Sheets
+        async function loadGoogleSheetsData() {
+            const data = {
+                rsStats: null,
+                rsStatsPerGame: null,
+                advanced: null,
+                misc: null,
+                scoring: null,
+                usage: null,
+                clutch: null,
+                bio: null,
+                hustle: null,
+                shotLocation: null,
+                defense: null,
+                lastUpdated: new Date().toISOString()
+            };
+            
+            // Fetch each configured tab in parallel for speed
+            const fetchPromises = Object.entries(GSHEET_TABS).map(async ([key, gid]) => {
+                if (gid) {
+                    const result = await fetchGoogleSheet(gid, key);
+                    return { key, result };
+                }
+                return { key, result: null };
+            });
+            
+            const results = await Promise.all(fetchPromises);
+            results.forEach(({ key, result }) => {
+                data[key] = result;
+            });
+            
+            return data;
+        }
+        
+        // Static JSON files for historical data (1996-2025) - split for GitHub 25MB limit
+        const HISTORICAL_RS_URL = 'https://jsierrahoopshype.github.io/nba-player-data/nba-historical-rs.json';
+        const HISTORICAL_PO_URL = 'https://jsierrahoopshype.github.io/nba-player-data/nba-historical-po.json';
+        const HISTORICAL_ADV1_URL = 'https://jsierrahoopshype.github.io/nba-player-data/nba-historical-adv1.json';
+        const HISTORICAL_ADV2_URL = 'https://jsierrahoopshype.github.io/nba-player-data/nba-historical-adv2.json';
 
-    // Sync URL when user changes the team filter
-    teamSel.addEventListener('change', function() {
-      const val = this.value;
-      const url = new URL(location.href);
-      if (val) url.searchParams.set('team', val);
-      else url.searchParams.delete('team');
-      history.replaceState(null, '', url);
-    });
-  })();
-  </script>
+        // 2025-26 Stars for random matchups
+        const STARS_2526 = [
+            'Shai Gilgeous-Alexander', 'Victor Wembanyama', 'Luka Doncic', 'Giannis Antetokounmpo',
+            'Nikola Jokic', 'Jayson Tatum', 'Anthony Edwards', 'Kevin Durant', 'LeBron James',
+            'Stephen Curry', 'Donovan Mitchell', 'Tyrese Haliburton', 'Ja Morant', 'Trae Young',
+            'Devin Booker', 'Anthony Davis', 'Jaylen Brown', "De'Aaron Fox", 'Paolo Banchero',
+            'Chet Holmgren', 'Tyrese Maxey', 'Domantas Sabonis', 'Jalen Brunson', 'Bam Adebayo',
+            'Karl-Anthony Towns', 'Alperen Sengun', 'Franz Wagner', 'Evan Mobley', 'Scottie Barnes'
+        ];
+
+        // ===== DATA STORAGE =====
+        let data = {
+            rsStats: [],
+            poStats: [],
+            teamStats: [],
+            current: {}, // 2025-26 from JSON
+            historical: {}
+        };
+        let players = [];
+        let playerSeasons = {};
+        let playerPOSeasons = {};
+        let current2526Players = {}; // Index by player name for fast lookup
+        let current2526PlayersNormalized = {}; // Index by normalized name
+        let dataLastUpdated = null;
+        let dataSource = 'JSON'; // 'Google Sheets' or 'JSON'
+        let historicalDataLoaded = false;
+
+        // Normalize player names (remove accents/diacritics)
+        function normalizeName(name) {
+            if (!name) return '';
+            return fixMojibake(name).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+        }
+
+        // Fix mojibake encoding in historical JSON (e.g. "JokiÄ‡" → "Jokić")
+        function fixMojibake(str) {
+            if (!str) return str;
+            let hi = false;
+            for (let i = 0; i < str.length; i++) if (str.charCodeAt(i) > 127) { hi = true; break; }
+            if (!hi) return str;
+            const w = {0x2021:0x87,0x20AC:0x80,0x201A:0x82,0x0192:0x83,0x201E:0x84,0x2026:0x85,0x2020:0x86,0x02C6:0x88,0x2030:0x89,0x0160:0x8A,0x2039:0x8B,0x0152:0x8C,0x017D:0x8E,0x2018:0x91,0x2019:0x92,0x201C:0x93,0x201D:0x94,0x2022:0x95,0x2013:0x96,0x2014:0x97,0x02DC:0x98,0x2122:0x99,0x0161:0x9A,0x203A:0x9B,0x0153:0x9C,0x017E:0x9E,0x0178:0x9F};
+            try {
+                const b = [];
+                for (let i = 0; i < str.length; i++) {
+                    const c = str.charCodeAt(i);
+                    if (c < 128) b.push(c);
+                    else if (w[c] !== undefined) b.push(w[c]);
+                    else if (c < 256) b.push(c);
+                    else return str;
+                }
+                const d = new TextDecoder('utf-8').decode(new Uint8Array(b));
+                if (d && !d.includes('\uFFFD')) return d;
+            } catch(e) {}
+            return str;
+        }
+
+        // Clean mojibake names in all historical arrays after loading
+        function fixHistoricalNames(arrays) {
+            let n = 0;
+            arrays.forEach(arr => {
+                if (!arr) return;
+                arr.forEach(row => {
+                    ['PLAYER_NAME', 'PLAYER', 'NAME'].forEach(k => {
+                        if (row[k]) {
+                            const fixed = fixMojibake(row[k]);
+                            if (fixed !== row[k]) {
+                                row[k] = fixed.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                                n++;
+                            }
+                        }
+                    });
+                });
+            });
+            if (n > 0) console.log('Fixed ' + n + ' mojibake player names');
+        }
+
+        // Fix column swaps in data
+        // 2025-26 RS: STL/BLK/TOV columns are rotated (STL has TOV values, BLK has STL, TOV has BLK)
+        // Historical PO: STL and TOV columns are swapped
+        function fixColumnSwaps() {
+            let rsFixed = 0, poFixed = 0;
+            
+            // Fix 2025-26 RS data: 3-way rotation
+            data.rsStats.forEach(row => {
+                if (row.YEAR === '2026') {
+                    // Per-game: actual STL = old BLK, actual BLK = old TOV, actual TOV = old STL
+                    const oldSTLG = row['STL / G'];
+                    const oldBLKG = row['BLK / G'];
+                    const oldTOVG = row['TOV / G'];
+                    row['STL / G'] = oldBLKG;
+                    row['BLK / G'] = oldTOVG;
+                    row['TOV / G'] = oldSTLG;
+                    
+                    // Totals (if they exist)
+                    if (row['STL'] !== undefined || row['BLK'] !== undefined || row['TOV'] !== undefined) {
+                        const oldSTL = row['STL'];
+                        const oldBLK = row['BLK'];
+                        const oldTOV = row['TOV'];
+                        row['STL'] = oldBLK;
+                        row['BLK'] = oldTOV;
+                        row['TOV'] = oldSTL;
+                    }
+                    rsFixed++;
+                }
+            });
+            
+            // Fix all historical PO data: STL ↔ TOV swap
+            data.poStats.forEach(row => {
+                // Per-game swap
+                const tmpG = row['STL / G'];
+                row['STL / G'] = row['TOV / G'];
+                row['TOV / G'] = tmpG;
+                
+                // Totals swap (if they exist)
+                if (row['STL'] !== undefined || row['TOV'] !== undefined) {
+                    const tmpT = row['STL'];
+                    row['STL'] = row['TOV'];
+                    row['TOV'] = tmpT;
+                }
+                poFixed++;
+            });
+            
+            console.log('Fixed column swaps: ' + rsFixed + ' RS rows (2025-26), ' + poFixed + ' PO rows');
+        }
+
+        // ===== DATA LOADING =====
+        async function fetchJSON(url) {
+            console.log('Fetching:', url.split('/').pop()); // Log filename only
+            try {
+                // Add 30-second timeout
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 30000);
+                
+                const response = await fetch(url, { signal: controller.signal });
+                clearTimeout(timeoutId);
+                
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                return await response.json();
+            } catch (error) {
+                if (error.name === 'AbortError') {
+                    console.error('Fetch timeout:', url);
+                } else {
+                    console.error('Error fetching JSON:', url, error);
+                }
+                return null;
+            }
+        }
+
+        function updateProgress(percent, message) {
+            document.getElementById('progressFill').style.width = percent + '%';
+            document.getElementById('loadingStatus').textContent = message;
+        }
+
+        async function loadAllData() {
+            try {
+                console.time('Total Load');
+                updateProgress(5, 'Loading data…');
+                
+                // Try to load 2025-26 data from Google Sheets first
+                updateProgress(10, 'Loading current-season data…');
+                let currentData = await loadGoogleSheetsData();
+                
+                // Check if we got any data from Google Sheets
+                const hasGSheetData = currentData && (currentData.rsStats || currentData.advanced);
+                
+                if (hasGSheetData) {
+                    dataSource = 'Google Sheets';
+                    console.log('2025-26 data loaded from Google Sheets');
+                } else {
+                    // Fallback to JSON if Google Sheets failed
+                    dataSource = 'JSON';
+                    console.log('Google Sheets unavailable, falling back to JSON...');
+                    updateProgress(15, 'Loading current-season data (fallback)…');
+                    currentData = await fetchJSON(JSON_URL);
+                }
+                
+                console.log('Starting historical data load...');
+                updateProgress(20, 'Loading historical data…');
+                
+                // Load historical JSON files in parallel
+                const [rsData, poData, adv1Data, adv2Data] = await Promise.all([
+                    fetchJSON(HISTORICAL_RS_URL).then(d => { console.log('RS data fetched'); return d; }),
+                    fetchJSON(HISTORICAL_PO_URL).then(d => { console.log('PO data fetched'); return d; }),
+                    fetchJSON(HISTORICAL_ADV1_URL).then(d => { console.log('ADV1 data fetched'); return d; }),
+                    fetchJSON(HISTORICAL_ADV2_URL).then(d => { console.log('ADV2 data fetched'); return d; })
+                ]);
+                
+                console.log('All historical data fetched');
+                
+                updateProgress(50, 'Processing data…');
+                
+                // Process historical RS stats
+                if (rsData) {
+                    data.rsStats = rsData.rsStats || [];
+                    console.log('RS Stats loaded:', data.rsStats.length);
+                }
+                
+                // Process historical PO stats
+                if (poData) {
+                    data.poStats = poData.poStats || [];
+                    console.log('PO Stats loaded:', data.poStats.length);
+                }
+                
+                // Process historical advanced data (part 1)
+                if (adv1Data) {
+                    data.historical.advanced = adv1Data.advanced || [];
+                    data.historical.scoring = adv1Data.scoring || [];
+                    data.historical.shotLocation = adv1Data.shotLocation || [];
+                    data.historical.defense = adv1Data.defense || [];
+                    console.log('Historical adv1 loaded:', {
+                        advanced: data.historical.advanced.length,
+                        scoring: data.historical.scoring.length
+                    });
+                }
+                
+                // Process historical advanced data (part 2)
+                if (adv2Data) {
+                    data.historical.usage = adv2Data.usage || [];
+                    data.historical.clutch = adv2Data.clutch || [];
+                    data.historical.hustle = adv2Data.hustle || [];
+                    data.historical.plusMinus = adv2Data.plusMinus || [];
+                    data.historical.winsLosses = adv2Data.winsLosses || [];
+                    console.log('Historical adv2 loaded:', {
+                        clutch: data.historical.clutch.length,
+                        hustle: data.historical.hustle.length,
+                        plusMinus: data.historical.plusMinus.length
+                    });
+                    historicalDataLoaded = true;
+                }
+                
+                // Fix mojibake player names in ALL data (JokiÄ‡ → Jokic, DonÄiÄ‡ → Doncic, etc.)
+                fixHistoricalNames([
+                    data.rsStats, data.poStats,
+                    data.historical.advanced, data.historical.scoring,
+                    data.historical.shotLocation, data.historical.defense,
+                    data.historical.usage, data.historical.clutch,
+                    data.historical.hustle, data.historical.plusMinus,
+                    data.historical.winsLosses
+                ]);
+                
+                // Fix column swaps in data
+                fixColumnSwaps();
+                
+                // Process 2025-26 current season data (from Google Sheets or JSON)
+                if (currentData) {
+                    dataLastUpdated = currentData.lastUpdated;
+                    data.current = {
+                        rsStats: currentData.rsStats || [],
+                        rsStatsPerGame: currentData.rsStatsPerGame || [],
+                        poStats: currentData.poStats || [],
+                        teamStats: currentData.teamStats || [],
+                        advanced: currentData.advanced || [],
+                        misc: currentData.misc || [],
+                        scoring: currentData.scoring || [],
+                        shotLocation: currentData.shotLocation || [],
+                        defense: currentData.defense || [],
+                        usage: currentData.usage || [],
+                        clutch: currentData.clutch || [],
+                        bio: currentData.bio || [],
+                        hustle: currentData.hustle || []
+                    };
+                    
+                    // Build index of 2025-26 players from all data sources
+                    // Helper to find player name from various possible column names
+                    function getPlayerNameFromRow(row) {
+                        // Try exact matches first
+                        if (row.PLAYER_NAME) return row.PLAYER_NAME;
+                        if (row.PLAYER) return row.PLAYER;
+                        if (row.Player) return row.Player;
+                        if (row.player) return row.player;
+                        if (row['Player Name']) return row['Player Name'];
+                        if (row['PLAYER NAME']) return row['PLAYER NAME'];
+                        if (row.NAME) return row.NAME;
+                        if (row.Name) return row.Name;
+                        
+                        // Try to find any column containing 'player' or 'name'
+                        const keys = Object.keys(row);
+                        const playerCol = keys.find(k => 
+                            k.toLowerCase().includes('player') && 
+                            !k.toLowerCase().includes('id') &&
+                            typeof row[k] === 'string'
+                        );
+                        if (playerCol && row[playerCol]) return row[playerCol];
+                        
+                        return null;
+                    }
+                    
+                    const sources = ['advanced', 'misc', 'scoring', 'shotLocation', 'defense', 'usage', 'clutch', 'hustle', 'bio', 'rsStatsPerGame'];
+                    sources.forEach(key => {
+                        if (data.current[key]) {
+                            let count = 0;
+                            data.current[key].forEach(row => {
+                                const name = getPlayerNameFromRow(row);
+                                if (name) {
+                                    if (!current2526Players[name]) current2526Players[name] = {};
+                                    current2526Players[name][key] = row;
+                                    
+                                    const normalizedName = normalizeName(name);
+                                    if (!current2526PlayersNormalized[normalizedName]) {
+                                        current2526PlayersNormalized[normalizedName] = {};
+                                    }
+                                    current2526PlayersNormalized[normalizedName][key] = row;
+                                    current2526PlayersNormalized[normalizedName]._originalName = name;
+                                    count++;
+                                }
+                            });
+                            console.log(`Indexed ${count} players from ${key}`);
+                        }
+                    });
+                    
+                    // Index RS stats for 2025-26
+                    if (data.current.rsStats) {
+                        data.current.rsStats.forEach(row => {
+                            const name = getPlayerNameFromRow(row);
+                            if (name) {
+                                if (!current2526Players[name]) current2526Players[name] = {};
+                                current2526Players[name].rsStats = row;
+                                
+                                const normalizedName = normalizeName(name);
+                                if (!current2526PlayersNormalized[normalizedName]) {
+                                    current2526PlayersNormalized[normalizedName] = {};
+                                }
+                                current2526PlayersNormalized[normalizedName].rsStats = row;
+                                current2526PlayersNormalized[normalizedName]._originalName = name;
+                            }
+                        });
+                    }
+                    
+                    // Index PO stats for 2025-26
+                    if (data.current.poStats) {
+                        data.current.poStats.forEach(row => {
+                            const name = getPlayerNameFromRow(row);
+                            if (name) {
+                                if (!current2526Players[name]) current2526Players[name] = {};
+                                current2526Players[name].poStats = row;
+                                
+                                const normalizedName = normalizeName(name);
+                                if (!current2526PlayersNormalized[normalizedName]) {
+                                    current2526PlayersNormalized[normalizedName] = {};
+                                }
+                                current2526PlayersNormalized[normalizedName].poStats = row;
+                                current2526PlayersNormalized[normalizedName]._originalName = name;
+                            }
+                        });
+                    }
+                    
+                    console.log('2025-26 data loaded:', Object.keys(current2526Players).length, 'players');
+                }
+
+                updateProgress(80, 'Building player database…');
+
+                if (data.rsStats.length > 0) {
+                    buildPlayerList();
+                    
+                    updateProgress(100, 'Ready!');
+                    console.timeEnd('Total Load');
+                    
+                    return true;
+                }
+                return false;
+            } catch (error) {
+                console.error('Error loading data:', error);
+                return false;
+            }
+        }
+        
+        function buildPlayerList() {
+            const playersMap = new Map();
+            const poPlayersMap = new Map();
+
+            data.rsStats.forEach(row => {
+                const name = row.PLAYER;
+                const year = row.YEAR;
+                const team = row.TEAM;
+                if (name && year) {
+                    if (!playersMap.has(name)) playersMap.set(name, []);
+                    playersMap.get(name).push({ year, team, data: row });
+                }
+            });
+
+            data.poStats.forEach(row => {
+                const name = row.PLAYER;
+                const year = row.YEAR;
+                const team = row.TEAM;
+                if (name && year) {
+                    if (!poPlayersMap.has(name)) poPlayersMap.set(name, []);
+                    poPlayersMap.get(name).push({ year, team, data: row });
+                }
+            });
+
+            players = Array.from(playersMap.keys()).sort();
+            playersMap.forEach((seasons, name) => {
+                playerSeasons[name] = seasons.sort((a, b) => parseInt(b.year) - parseInt(a.year));
+            });
+            poPlayersMap.forEach((seasons, name) => {
+                playerPOSeasons[name] = seasons.sort((a, b) => parseInt(b.year) - parseInt(a.year));
+            });
+
+            console.log('Built player list:', players.length, 'players');
+        }
+
+        // ===== COMPARISON CONFIGURATION =====
+        const comparisonConfig = [
+            {
+                category: 'COUNTING STATS: AVERAGES',
+                metrics: [
+                    { name: 'Points', src: 'rs', col: 'PTS', higher: true, fmt: 'dec', pg: 'GP' },
+                    { name: 'Rebounds', src: 'rs', col: 'REB', higher: true, fmt: 'dec', pg: 'GP' },
+                    { name: 'Assists', src: 'rs', col: 'AST', higher: true, fmt: 'dec', pg: 'GP' },
+                    { name: 'Steals', src: 'rs', col: 'STL', higher: true, fmt: 'dec', pg: 'GP' },
+                    { name: 'Blocks', src: 'rs', col: 'BLK', higher: true, fmt: 'dec', pg: 'GP' },
+                    { name: 'Field Goal %', src: 'rs', col: 'FG%', higher: true, fmt: 'pct' },
+                    { name: 'Three Point %', src: 'rs', col: '3P%', higher: true, fmt: 'pct' },
+                    { name: 'Free Throw %', src: 'rs', col: 'FT%', higher: true, fmt: 'pct' },
+                    { name: 'Turnovers', src: 'rs', col: 'TOV', higher: false, fmt: 'dec', pg: 'GP' },
+                    { name: 'Points PO', src: 'po', col: 'PTS', higher: true, fmt: 'dec', pg: 'GP' },
+                    { name: 'Rebounds PO', src: 'po', col: 'REB', higher: true, fmt: 'dec', pg: 'GP' },
+                    { name: 'Assists PO', src: 'po', col: 'AST', higher: true, fmt: 'dec', pg: 'GP' },
+                    { name: 'Steals PO', src: 'po', col: 'STL', higher: true, fmt: 'dec', pg: 'GP' },
+                    { name: 'Blocks PO', src: 'po', col: 'BLK', higher: true, fmt: 'dec', pg: 'GP' },
+                    { name: 'Field Goal % PO', src: 'po', col: 'FG%', higher: true, fmt: 'pct' },
+                    { name: 'Three Point % PO', src: 'po', col: '3P%', higher: true, fmt: 'pct' },
+                    { name: 'Free Throw % PO', src: 'po', col: 'FT%', higher: true, fmt: 'pct' },
+                    { name: 'Turnovers PO', src: 'po', col: 'TOV', higher: false, fmt: 'dec', pg: 'GP' }
+                ]
+            },
+            {
+                category: 'COUNTING STATS: TOTALS',
+                metrics: [
+                    { name: 'Points', src: 'rs', col: 'PTS', higher: true, fmt: 'int' },
+                    { name: 'Rebounds', src: 'rs', col: 'REB', higher: true, fmt: 'int' },
+                    { name: 'Assists', src: 'rs', col: 'AST', higher: true, fmt: 'int' },
+                    { name: 'Steals', src: 'rs', col: 'STL', higher: true, fmt: 'int' },
+                    { name: 'Blocks', src: 'rs', col: 'BLK', higher: true, fmt: 'int' },
+                    { name: 'Turnovers', src: 'rs', col: 'TOV', higher: false, fmt: 'int' },
+                    { name: 'Points PO', src: 'po', col: 'PTS', higher: true, fmt: 'int' },
+                    { name: 'Rebounds PO', src: 'po', col: 'REB', higher: true, fmt: 'int' },
+                    { name: 'Assists PO', src: 'po', col: 'AST', higher: true, fmt: 'int' },
+                    { name: 'Steals PO', src: 'po', col: 'STL', higher: true, fmt: 'int' },
+                    { name: 'Blocks PO', src: 'po', col: 'BLK', higher: true, fmt: 'int' },
+                    { name: 'Turnovers PO', src: 'po', col: 'TOV', higher: false, fmt: 'int' }
+                ]
+            },
+            {
+                category: 'ADVANCED STATS',
+                metrics: [
+                    { name: 'Plus-Minus', src: 'plusMinus', col: 'PLUS_MINUS', higher: true, fmt: 'dec' },
+                    { name: 'Offensive Rating', src: 'adv', col: 'OFF_RATING', higher: true, fmt: 'dec' },
+                    { name: 'Defensive Rating', src: 'adv', col: 'DEF_RATING', higher: false, fmt: 'dec' },
+                    { name: 'Net Rating', src: 'adv', col: 'NET_RATING', higher: true, fmt: 'dec' },
+                    { name: 'Global Rating', src: 'rs', col: 'RAT', higher: true, fmt: 'dec' }
+                ]
+            },
+            {
+                category: 'SCORING',
+                metrics: [
+                    { name: 'Effective FG %', src: 'adv', col: 'EFG_PCT', higher: true, fmt: 'pct' },
+                    { name: 'True Shooting %', src: 'adv', col: 'TS_PCT', higher: true, fmt: 'pct' },
+                    { name: 'Points off turnovers', src: 'misc', col: 'PTS_OFF_TOV', higher: true, fmt: 'dec', pg: 'GP' },
+                    { name: 'Second-chance points', src: 'misc', col: 'PTS_2ND_CHANCE', higher: true, fmt: 'dec', pg: 'GP' },
+                    { name: 'Fast-break points', src: 'misc', col: 'PTS_FB', higher: true, fmt: 'dec', pg: 'GP' },
+                    { name: 'Points in the paint', src: 'misc', col: 'PTS_PAINT', higher: true, fmt: 'dec', pg: 'GP' }
+                ]
+            },
+            {
+                category: 'SHOT LOCATION',
+                metrics: [
+                    { name: 'Paint FG%', src: 'shotLocation', col: 'Restricted Area_FG_PCT', higher: true, fmt: 'pct' },
+                    { name: 'Mid-Range FG%', src: 'shotLocation', col: 'Mid-Range_FG_PCT', higher: true, fmt: 'pct' },
+                    { name: 'Left Corner 3P%', src: 'shotLocation', col: 'Left Corner 3_FG_PCT', higher: true, fmt: 'pct' },
+                    { name: 'Right Corner 3P%', src: 'shotLocation', col: 'Right Corner 3_FG_PCT', higher: true, fmt: 'pct' },
+                    { name: 'Above the Break 3P%', src: 'shotLocation', col: 'Above the Break 3_FG_PCT', higher: true, fmt: 'pct' },
+                    { name: 'Backcourt FG%', src: 'shotLocation', col: 'Backcourt_FG_PCT', higher: true, fmt: 'pct' }
+                ]
+            },
+            {
+                category: 'DEFENSE',
+                metrics: [
+                    { name: 'Defended FG %', src: 'defense', col: 'D_FG_PCT', higher: false, fmt: 'pct' },
+                    { name: 'Opponent expected FG %', src: 'defense', col: 'NORMAL_FG_PCT', higher: false, fmt: 'pct' },
+                    { name: 'Plus minus FG %', src: 'defense', col: 'PCT_PLUSMINUS', higher: false, fmt: 'pcts' }
+                ]
+            },
+            {
+                category: 'REBOUNDS',
+                metrics: [
+                    { name: 'Offensive rebounding %', src: 'adv', col: 'OREB_PCT', higher: true, fmt: 'pct' },
+                    { name: 'Defensive rebounding %', src: 'adv', col: 'DREB_PCT', higher: true, fmt: 'pct' },
+                    { name: 'Total rebounding %', src: 'adv', col: 'REB_PCT', higher: true, fmt: 'pct' }
+                ]
+            },
+            {
+                category: 'ASSISTS & TURNOVERS',
+                metrics: [
+                    { name: 'Assist percentage', src: 'adv', col: 'AST_PCT', higher: true, fmt: 'pct' },
+                    { name: 'Assists ratio', src: 'adv', col: 'AST_RATIO', higher: true, fmt: 'dec' },
+                    { name: 'Assists / turnover ratio', src: 'adv', col: 'AST_TO', higher: true, fmt: 'dec' },
+                    { name: 'Turnover %', src: 'adv', col: 'TM_TOV_PCT', higher: false, fmt: 'pct' }
+                ]
+            },
+            {
+                category: 'USAGE',
+                metrics: [
+                    { name: 'Usage percentage', src: 'usage', col: 'USG_PCT', higher: true, fmt: 'pct' },
+                    { name: "Percentage of team's points", src: 'usage', col: 'PCT_PTS', higher: true, fmt: 'pct' },
+                    { name: "Percentage of team's rebounds", src: 'usage', col: 'PCT_REB', higher: true, fmt: 'pct' },
+                    { name: "Percentage of team's assists", src: 'usage', col: 'PCT_AST', higher: true, fmt: 'pct' },
+                    { name: "Percentage of team's blocks", src: 'usage', col: 'PCT_BLK', higher: true, fmt: 'pct' },
+                    { name: "Percentage of team's steals", src: 'usage', col: 'PCT_STL', higher: true, fmt: 'pct' }
+                ]
+            },
+            {
+                category: 'CLUTCH',
+                metrics: [
+                    { name: 'Points', src: 'clutch', col: 'PTS', higher: true, fmt: 'dec', pg: 'GP' },
+                    { name: 'Rebounds', src: 'clutch', col: 'REB', higher: true, fmt: 'dec', pg: 'GP' },
+                    { name: 'Assists', src: 'clutch', col: 'AST', higher: true, fmt: 'dec', pg: 'GP' },
+                    { name: 'Steals', src: 'clutch', col: 'STL', higher: true, fmt: 'dec', pg: 'GP' },
+                    { name: 'Blocks', src: 'clutch', col: 'BLK', higher: true, fmt: 'dec', pg: 'GP' },
+                    { name: 'Field Goal %', src: 'clutch', col: 'FG_PCT', higher: true, fmt: 'pct' },
+                    { name: 'Three Point %', src: 'clutch', col: 'FG3_PCT', higher: true, fmt: 'pct' },
+                    { name: 'Free Throw %', src: 'clutch', col: 'FT_PCT', higher: true, fmt: 'pct' },
+                    { name: 'Turnovers', src: 'clutch', col: 'TOV', higher: false, fmt: 'dec', pg: 'GP' }
+                ]
+            },
+            {
+                category: 'HUSTLE',
+                metrics: [
+                    { name: 'Contested shots', src: 'hustle', col: 'CONTESTED_SHOTS', higher: true, fmt: 'dec', pg: 'G' },
+                    { name: 'Deflections', src: 'hustle', col: 'DEFLECTIONS', higher: true, fmt: 'dec', pg: 'G' },
+                    { name: 'Charges drawn', src: 'hustle', col: 'CHARGES_DRAWN', higher: true, fmt: 'dec', pg: 'G' },
+                    { name: 'Screen assists', src: 'hustle', col: 'SCREEN_ASSISTS', higher: true, fmt: 'dec', pg: 'G' },
+                    { name: 'Screen assist points', src: 'hustle', col: 'SCREEN_AST_PTS', higher: true, fmt: 'dec', pg: 'G' },
+                    { name: 'Loose balls recovered', src: 'hustle', col: 'LOOSE_BALLS_RECOVERED', higher: true, fmt: 'dec', pg: 'G' },
+                    { name: 'Offensive boxouts', src: 'hustle', col: 'OFF_BOXOUTS', higher: true, fmt: 'dec', pg: 'G' },
+                    { name: 'Defensive boxouts', src: 'hustle', col: 'DEF_BOXOUTS', higher: true, fmt: 'dec', pg: 'G' }
+                ]
+            },
+            {
+                category: 'TEAM SUCCESS',
+                metrics: [
+                    { name: 'Wins', src: 'adv', col: 'W', higher: true, fmt: 'int' },
+                    { name: 'Winning percentage', src: 'adv', col: 'W_PCT', higher: true, fmt: 'pct' },
+                    { name: 'Wins PO', src: 'winsLosses', col: 'W PO', higher: true, fmt: 'int' },
+                    { name: 'Winning percentage PO', src: 'winsLosses', col: 'W_PCT_PO', higher: true, fmt: 'pct', calcFromWL: true }
+                ]
+            },
+            {
+                category: 'FOULS',
+                metrics: [
+                    { name: 'Personal fouls per game', src: 'rs', col: 'PF', higher: false, fmt: 'dec', pg: 'GP' },
+                    { name: 'Personal fouls per game PO', src: 'po', col: 'PF', higher: false, fmt: 'dec', pg: 'GP' }
+                ]
+            }
+        ];
+
+        // ===== UI FUNCTIONS =====
+        function setupAutocomplete() {
+            const configs = [
+                { input: 'player1Input', suggestions: 'suggestions1', season: 'season1Select' },
+                { input: 'player2Input', suggestions: 'suggestions2', season: 'season2Select' }
+            ];
+            
+            configs.forEach(config => {
+                const inputEl = document.getElementById(config.input);
+                const suggestionsEl = document.getElementById(config.suggestions);
+                const seasonEl = document.getElementById(config.season);
+                
+                inputEl.addEventListener('input', function() {
+                    const value = this.value.toLowerCase();
+                    if (value.length < 2) { suggestionsEl.style.display = 'none'; return; }
+                    
+                    const matches = players.filter(p => p.toLowerCase().includes(value)).slice(0, 10);
+                    if (matches.length === 0) { suggestionsEl.style.display = 'none'; return; }
+                    
+                    suggestionsEl.innerHTML = matches.map(player => 
+                        `<div class="autocomplete-suggestion" data-player="${player}">${player}</div>`
+                    ).join('');
+                    suggestionsEl.style.display = 'block';
+                    
+                    suggestionsEl.querySelectorAll('.autocomplete-suggestion').forEach(el => {
+                        el.addEventListener('click', function() {
+                            const selectedPlayer = this.getAttribute('data-player');
+                            inputEl.value = selectedPlayer;
+                            suggestionsEl.style.display = 'none';
+                            populateSeasonSelect(seasonEl, selectedPlayer, true);
+                            updateCompareButton();
+                        });
+                    });
+                });
+                
+                document.addEventListener('click', function(e) {
+                    if (!inputEl.contains(e.target) && !suggestionsEl.contains(e.target)) {
+                        suggestionsEl.style.display = 'none';
+                    }
+                });
+                
+                seasonEl.addEventListener('change', updateCompareButton);
+            });
+        }
+
+        function populateSeasonSelect(selectEl, playerName, autoSelect2526 = false) {
+            selectEl.innerHTML = '<option value="">-- Choose Season --</option>';
+            if (!playerName || !playerSeasons[playerName]) { selectEl.disabled = true; return; }
+            
+            const seasons = playerSeasons[playerName];
+            seasons.forEach(s => {
+                const option = document.createElement('option');
+                option.value = s.year;
+                option.textContent = formatSeasonYear(s.year) + (s.team ? ` (${s.team})` : '');
+                selectEl.appendChild(option);
+            });
+            selectEl.disabled = false;
+            
+            if (autoSelect2526) {
+                const has2526 = seasons.some(s => s.year === '2026');
+                if (has2526) {
+                    selectEl.value = '2026';
+                } else if (seasons.length > 0) {
+                    selectEl.value = seasons[0].year;
+                }
+            }
+        }
+
+        function formatSeasonYear(year) {
+            const endYear = parseInt(year);
+            if (isNaN(endYear)) return year;
+            return `${endYear - 1}-${String(endYear).slice(-2)}`;
+        }
+
+        function updateCompareButton() {
+            const p1 = document.getElementById('player1Input').value;
+            const s1 = document.getElementById('season1Select').value;
+            const p2 = document.getElementById('player2Input').value;
+            const s2 = document.getElementById('season2Select').value;
+            document.getElementById('compareBtn').disabled = !(p1 && s1 && p2 && s2);
+            updateStickyPlayerOptions();
+        }
+
+        // ===== URL & RANDOM =====
+        function playerNameToURL(name) {
+            return name.toLowerCase().replace(/\./g, '').replace(/'/g, '').replace(/,/g, '')
+                .replace(/jr$/i, 'jr').replace(/sr$/i, 'sr').replace(/iii$/i, 'iii').replace(/ii$/i, 'ii').replace(/iv$/i, 'iv')
+                .replace(/\s+/g, '-');
+        }
+
+        function urlToPlayerName(url) {
+            const urlLower = url.toLowerCase();
+            return players.find(p => playerNameToURL(p) === urlLower) || null;
+        }
+
+        function loadFromURL() {
+            const params = new URLSearchParams(window.location.search);
+            const p1 = params.get('p1'), s1 = params.get('s1');
+            const p2 = params.get('p2'), s2 = params.get('s2');
+            
+            if (p1 && s1 && p2 && s2) {
+                const player1 = urlToPlayerName(p1);
+                const player2 = urlToPlayerName(p2);
+                if (player1 && player2) {
+                    document.getElementById('player1Input').value = player1;
+                    populateSeasonSelect(document.getElementById('season1Select'), player1);
+                    document.getElementById('season1Select').value = s1;
+                    document.getElementById('player2Input').value = player2;
+                    populateSeasonSelect(document.getElementById('season2Select'), player2);
+                    document.getElementById('season2Select').value = s2;
+                    updateCompareButton();
+                    setTimeout(() => runComparison(), 100);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function loadRandomStars() {
+            const availableStars = STARS_2526.filter(name => {
+                const seasons = playerSeasons[name];
+                return seasons && seasons.some(s => s.year === '2026');
+            });
+            
+            if (availableStars.length < 2) {
+                console.log('Not enough stars found');
+                return;
+            }
+            
+            const idx1 = Math.floor(Math.random() * availableStars.length);
+            let idx2 = Math.floor(Math.random() * availableStars.length);
+            while (idx2 === idx1) idx2 = Math.floor(Math.random() * availableStars.length);
+            
+            const player1 = availableStars[idx1];
+            const player2 = availableStars[idx2];
+            
+            document.getElementById('player1Input').value = player1;
+            populateSeasonSelect(document.getElementById('season1Select'), player1, true);
+            
+            document.getElementById('player2Input').value = player2;
+            populateSeasonSelect(document.getElementById('season2Select'), player2, true);
+            
+            updateCompareButton();
+            setTimeout(() => runComparison(), 100);
+        }
+
+        function randomizeOpponent(keepPlayer) {
+            const currentPlayer1 = document.getElementById('player1Input').value;
+            const currentPlayer2 = document.getElementById('player2Input').value;
+            const currentSeason1 = document.getElementById('season1Select').value;
+            const currentSeason2 = document.getElementById('season2Select').value;
+            
+            // Determine which player/season to keep and which to randomize
+            const keepPlayerName = keepPlayer === 1 ? currentPlayer1 : currentPlayer2;
+            const keepSeason = keepPlayer === 1 ? currentSeason1 : currentSeason2;
+            const otherPlayer = keepPlayer === 1 ? currentPlayer2 : currentPlayer1;
+            
+            // Get top scorers from the same season
+            let topScorers = [];
+            
+            if (keepSeason === '2026') {
+                // Use 2025-26 stars list for current season
+                topScorers = STARS_2526.filter(name => {
+                    const seasons = playerSeasons[name];
+                    return seasons && seasons.some(s => s.year === '2026');
+                });
+            } else {
+                // Find top 70 scorers from that historical season
+                const seasonPlayers = data.rsStats
+                    .filter(row => row.YEAR === keepSeason && row.PLAYER)
+                    .map(row => ({
+                        name: row.PLAYER,
+                        pts: parseFloat(row['PTS / G']) || parseFloat(row['PTS']) / parseFloat(row['GP']) || 0
+                    }))
+                    .sort((a, b) => b.pts - a.pts)
+                    .slice(0, 70)
+                    .map(p => p.name);
+                
+                topScorers = seasonPlayers;
+            }
+            
+            if (topScorers.length < 2) {
+                console.log('Not enough players found for season', keepSeason);
+                return;
+            }
+            
+            // Pick a new random opponent that's different from both current players
+            let newOpponent;
+            let attempts = 0;
+            do {
+                newOpponent = topScorers[Math.floor(Math.random() * topScorers.length)];
+                attempts++;
+            } while ((newOpponent === keepPlayerName || newOpponent === otherPlayer) && attempts < 50);
+            
+            if (keepPlayer === 1) {
+                // Keep player 1, randomize player 2 with same season
+                document.getElementById('player2Input').value = newOpponent;
+                populateSeasonSelect(document.getElementById('season2Select'), newOpponent);
+                document.getElementById('season2Select').value = keepSeason;
+            } else {
+                // Keep player 2, randomize player 1 with same season
+                document.getElementById('player1Input').value = newOpponent;
+                populateSeasonSelect(document.getElementById('season1Select'), newOpponent);
+                document.getElementById('season1Select').value = keepSeason;
+            }
+            
+            updateCompareButton();
+            setTimeout(() => runComparison(), 100);
+        }
+
+        // ===== COMPARISON LOGIC =====
+        // Helper to find player in current2526Players with flexible name matching
+        function findCurrent2526Player(playerName) {
+            // Try exact match first
+            if (current2526Players[playerName]) {
+                return current2526Players[playerName];
+            }
+            
+            // Try normalized name
+            const normalizedSearch = normalizeName(playerName);
+            if (current2526PlayersNormalized[normalizedSearch]) {
+                return current2526PlayersNormalized[normalizedSearch];
+            }
+            
+            // Try adding/removing suffixes (Jr., Sr., III, II, IV)
+            const suffixes = [' Jr.', ' Sr.', ' III', ' II', ' IV', ' Jr', ' Sr'];
+            for (const suffix of suffixes) {
+                // Try adding suffix
+                if (current2526Players[playerName + suffix]) {
+                    return current2526Players[playerName + suffix];
+                }
+                // Try removing suffix
+                if (playerName.endsWith(suffix)) {
+                    const baseName = playerName.slice(0, -suffix.length);
+                    if (current2526Players[baseName]) {
+                        return current2526Players[baseName];
+                    }
+                }
+            }
+            
+            return null;
+        }
+
+        function getPlayerData(playerName, season, source) {
+            const isCurrent = (season === '2026');
+            
+            if (source === 'rs') {
+                // For 2025-26, check JSON data first
+                if (isCurrent) {
+                    const playerObj = findCurrent2526Player(playerName);
+                    if (playerObj) {
+                        // Return rsStats for totals - DO NOT merge with rsStatsPerGame
+                        // The getStatValue function will handle column alternatives
+                        if (playerObj.rsStats) return playerObj.rsStats;
+                    }
+                }
+                // Fall back to all-time database
+                const seasons = playerSeasons[playerName];
+                if (!seasons) return null;
+                const match = seasons.find(s => s.year === season);
+                return match ? match.data : null;
+            }
+            
+            // Special handling for per-game stats in 2025-26
+            if (source === 'rsPerGame') {
+                if (isCurrent) {
+                    const playerObj = findCurrent2526Player(playerName);
+                    if (playerObj?.rsStatsPerGame) return playerObj.rsStatsPerGame;
+                }
+                return null;
+            }
+            
+            if (source === 'po') {
+                // For 2025-26, check JSON data first
+                if (isCurrent) {
+                    const playerObj = findCurrent2526Player(playerName);
+                    if (playerObj?.poStats) return playerObj.poStats;
+                }
+                // Fall back to all-time database
+                const seasons = playerPOSeasons[playerName];
+                if (!seasons) return null;
+                const match = seasons.find(s => s.year === season);
+                return match ? match.data : null;
+            }
+            
+            const sourceMap = {
+                'adv': 'advanced',
+                'scoring': 'scoring',
+                'shotLocation': 'shotLocation',
+                'defense': 'defense',
+                'usage': 'usage',
+                'clutch': 'clutch',
+                'hustle': 'hustle',
+                'plusMinus': 'plusMinus',
+                'winsLosses': 'winsLosses',
+                'misc': 'misc',
+                'bio': 'bio',
+                'rsPerGame': 'rsStatsPerGame'
+            };
+            
+            const dataKey = sourceMap[source] || source;
+            
+            if (isCurrent) {
+                const playerObj = findCurrent2526Player(playerName);
+                // For plusMinus in current season, use rsStats (column PLUS_MINUS in gid=1169156479)
+                if (source === 'plusMinus') {
+                    if (playerObj && playerObj['rsStats']) {
+                        return playerObj['rsStats'];
+                    }
+                    return null;
+                }
+                if (playerObj && playerObj[dataKey]) {
+                    return playerObj[dataKey];
+                }
+                return null;
+            } else {
+                const dataSource = data.historical[dataKey];
+                if (!dataSource || dataSource.length === 0) return null;
+                
+                // Convert season (e.g., "2025") to historical format (e.g., "2024-25")
+                const seasonYear = parseInt(season);
+                const historicalFormat = `${seasonYear - 1}-${String(seasonYear).slice(-2)}`;
+                
+                const normalizedPlayerName = normalizeName(playerName);
+                
+                // For fuzzy matching: get first name and start of last name
+                const nameParts = playerName.split(' ');
+                const firstName = nameParts[0] ? nameParts[0].toLowerCase() : '';
+                const lastNameStart = nameParts[1] ? nameParts[1].substring(0, 3).toLowerCase() : '';
+                
+                const found = dataSource.find(row => {
+                    // Try different name columns (PLAYER_NAME, PLAYER, NAME)
+                    const rowName = row.PLAYER_NAME || row.PLAYER || row.NAME;
+                    if (!rowName) return false;
+                    
+                    // Check season first (quick filter)
+                    const rowSeason = row.SEASON_ID || row.SEASON || row.GROUP_VALUE || row.YEAR;
+                    const seasonMatch = rowSeason === historicalFormat || rowSeason === season || rowSeason === String(seasonYear);
+                    if (!seasonMatch) return false;
+                    
+                    // Match player name - try multiple approaches
+                    // 1. Exact match
+                    if (rowName === playerName) return true;
+                    
+                    // 2. Normalized match (strips accents)
+                    if (normalizeName(rowName) === normalizedPlayerName) return true;
+                    
+                    // 3. Fuzzy match for Cyrillic/accented names (e.g., Jokić → Jokic)
+                    // Match if first name exact and last name starts the same
+                    if (firstName && lastNameStart) {
+                        const rowParts = rowName.split(' ');
+                        const rowFirst = rowParts[0] ? rowParts[0].toLowerCase() : '';
+                        const rowLastStart = rowParts[1] ? rowParts[1].substring(0, 3).toLowerCase() : '';
+                        if (rowFirst === firstName && rowLastStart === lastNameStart) return true;
+                    }
+                    
+                    return false;
+                });
+                
+                return found;
+            }
+        }
+
+        function getStatValue(playerData, column, perGameCol = null, metric = null) {
+            if (!playerData || !column) return null;
+            
+            // Special handling for playoff win percentage calculation
+            if (metric && metric.calcFromWL) {
+                const wins = parseFloat(playerData['W PO'] || playerData['W'] || 0);
+                const losses = parseFloat(playerData['L PO'] || playerData['L'] || 0);
+                if (!isNaN(wins) && !isNaN(losses) && (wins + losses) > 0) {
+                    return wins / (wins + losses);
+                }
+                return null;
+            }
+            
+            // Column name alternatives (JSON might have different names)
+            const columnAlternatives = {
+                'PLUS_MINUS': ['PLUS_MINUS', '+/-', 'PM', 'PLUSMINUS', 'PLUS MINUS'],
+                'OFF_RATING': ['OFF_RATING', 'OFFRTG', 'ORtg', 'O_RTG', 'E_OFF_RATING'],
+                'DEF_RATING': ['DEF_RATING', 'DEFRTG', 'DRtg', 'D_RTG', 'E_DEF_RATING'],
+                'NET_RATING': ['NET_RATING', 'NETRTG', 'NRtg', 'N_RTG', 'E_NET_RATING'],
+                'EFG_PCT': ['EFG_PCT', 'eFG%', 'EFG', 'EFF_FG_PCT'],
+                'TS_PCT': ['TS_PCT', 'TS%', 'TS', 'TRUE_SHOOTING_PCT'],
+                'OREB_PCT': ['OREB_PCT', 'ORB%', 'OREB'],
+                'DREB_PCT': ['DREB_PCT', 'DRB%', 'DREB'],
+                'REB_PCT': ['REB_PCT', 'TRB%', 'REB'],
+                'AST_PCT': ['AST_PCT', 'AST%'],
+                'AST_RATIO': ['AST_RATIO', 'AST/TO'],
+                'AST_TO': ['AST_TO', 'AST_TOV', 'A/TO'],
+                'TM_TOV_PCT': ['TM_TOV_PCT', 'TOV%', 'TOV_PCT'],
+                'USG_PCT': ['USG_PCT', 'USG%', 'USG'],
+                'W_PCT': ['W_PCT', 'WIN%', 'WPCT'],
+                'FG_PCT': ['FG_PCT', 'FG%'],
+                'FG3_PCT': ['FG3_PCT', 'FG3%', '3P%', '3PT_PCT'],
+                'FT_PCT': ['FT_PCT', 'FT%'],
+                'D_FG_PCT': ['D_FG_PCT', 'DFG%', 'DFG_PCT'],
+                'NORMAL_FG_PCT': ['NORMAL_FG_PCT', 'DFGM_PCT'],
+                'PCT_PLUSMINUS': ['PCT_PLUSMINUS', 'DIFF%', 'DIFF', 'PCT_PLUS_MINUS'],
+                'PTS_OFF_TOV': ['PTS_OFF_TOV', 'PTS_TOV'],
+                'PTS_2ND_CHANCE': ['PTS_2ND_CHANCE', '2ND_PTS'],
+                'PTS_FB': ['PTS_FB', 'FB_PTS'],
+                'PTS_PAINT': ['PTS_PAINT', 'PAINT_PTS'],
+                'PCT_PTS': ['PCT_PTS', 'PCT_TEAM_PTS'],
+                'PCT_REB': ['PCT_REB', 'PCT_TEAM_REB'],
+                'PCT_AST': ['PCT_AST', 'PCT_TEAM_AST'],
+                'PCT_BLK': ['PCT_BLK', 'PCT_TEAM_BLK'],
+                'PCT_STL': ['PCT_STL', 'PCT_TEAM_STL'],
+                // Totals columns (historical uses different names)
+                'PTS': ['PTS', 'POINTS'],
+                'REB': ['REB', 'TRB', 'REBOUNDS'],
+                'AST': ['AST', 'ASSISTS'],
+                'STL': ['STL', 'STEALS'],
+                'BLK': ['BLK', 'BLOCKS'],
+                'TOV': ['TOV', 'TURNOVERS', 'TO'],
+                'GP': ['GP', 'G', 'GAMES'],
+                // Percentage columns
+                'FG%': ['FG%', 'FG_PCT'],
+                '3P%': ['3P%', 'FG3_PCT', '3PT_PCT'],
+                'FT%': ['FT%', 'FT_PCT'],
+                // Global Rating
+                'RAT': ['RAT', 'PIE', 'RATING'],
+                // Shot Location columns
+                'Restricted Area_FG_PCT': ['Restricted Area_FG_PCT', 'RA_FG_PCT', 'RESTRICTED_AREA_FG_PCT'],
+                'Mid-Range_FG_PCT': ['Mid-Range_FG_PCT', 'MR_FG_PCT', 'MID_RANGE_FG_PCT'],
+                'Left Corner 3_FG_PCT': ['Left Corner 3_FG_PCT', 'LC3_FG_PCT', 'LEFT_CORNER_3_FG_PCT'],
+                'Right Corner 3_FG_PCT': ['Right Corner 3_FG_PCT', 'RC3_FG_PCT', 'RIGHT_CORNER_3_FG_PCT'],
+                'Above the Break 3_FG_PCT': ['Above the Break 3_FG_PCT', 'ATB3_FG_PCT', 'ABOVE_THE_BREAK_3_FG_PCT'],
+                'Backcourt_FG_PCT': ['Backcourt_FG_PCT', 'BC_FG_PCT', 'BACKCOURT_FG_PCT']
+            };
+            
+            // Try to find the value with primary column first
+            let val = playerData[column];
+            
+            // If not found, try alternate column names
+            if (val === undefined || val === null || val === '') {
+                const alternatives = columnAlternatives[column];
+                if (alternatives) {
+                    for (const alt of alternatives) {
+                        if (playerData[alt] !== undefined && playerData[alt] !== null && playerData[alt] !== '') {
+                            val = playerData[alt];
+                            break;
+                        }
+                    }
+                }
+            }
+            
+            // Try altCol if specified in metric
+            if ((val === undefined || val === '' || val === null) && metric && metric.altCol) {
+                val = playerData[metric.altCol];
+            }
+            
+            // For shooting percentages, ALWAYS calculate from made/attempted for accuracy
+            // The pre-stored FG%, 3P%, FT% values are often rounded
+            const shootingCalc = {
+                'FG%': { made: ['FGM', 'FG'], att: ['FGA'] },
+                'FG_PCT': { made: ['FGM', 'FG'], att: ['FGA'] },
+                '3P%': { made: ['3PM', '3P', 'FG3M'], att: ['3PA', 'FG3A'] },
+                'FG3_PCT': { made: ['3PM', '3P', 'FG3M'], att: ['3PA', 'FG3A'] },
+                'FT%': { made: ['FTM', 'FT'], att: ['FTA'] },
+                'FT_PCT': { made: ['FTM', 'FT'], att: ['FTA'] }
+            };
+            
+            const calcConfig = shootingCalc[column];
+            if (calcConfig) {
+                let made = null, att = null;
+                for (const col of calcConfig.made) {
+                    const v = parseFloat(playerData[col]);
+                    if (!isNaN(v)) { made = v; break; }
+                }
+                for (const col of calcConfig.att) {
+                    const v = parseFloat(playerData[col]);
+                    if (!isNaN(v)) { att = v; break; }
+                }
+                // Always use calculated value if we have made/attempted
+                if (made !== null && att !== null && att > 0) {
+                    val = (made / att) * 100; // Return as percentage (e.g., 49.5)
+                }
+            }
+            
+            if (val === undefined || val === '' || val === null) return null;
+            
+            if (perGameCol) {
+                let gp = parseFloat(playerData[perGameCol]);
+                
+                // If GP not in this data source, it will be passed separately via the metric
+                if (isNaN(gp) && metric && metric._gp) {
+                    gp = metric._gp;
+                }
+                
+                const total = parseFloat(val);
+                if (!isNaN(gp) && !isNaN(total) && gp > 0) {
+                    return total / gp;
+                }
+                return null;
+            }
+            return val;
+        }
+
+        function formatValue(value, format) {
+            if (value === null || value === undefined || value === '' || value === '-') return '-';
+            const num = parseFloat(value);
+            if (isNaN(num)) return value;
+            
+            switch (format) {
+                case 'int': return Math.round(num).toLocaleString();
+                case 'dec': return num.toFixed(1);
+                case 'pct':
+                    if (Math.abs(num) > 1) return num.toFixed(1) + '%';
+                    return (num * 100).toFixed(1) + '%';
+                case 'pcts':
+                    const pct = Math.abs(num) > 1 ? num : num * 100;
+                    return (pct >= 0 ? '+' : '') + pct.toFixed(1) + '%';
+                default: return value;
+            }
+        }
+
+        function compareValues(val1, val2, higherWins, isPercentage = false) {
+            let num1 = parseFloat(val1);
+            let num2 = parseFloat(val2);
+            
+            // If EITHER player has no data, it's a tie (no points awarded)
+            if (isNaN(num1) || isNaN(num2)) return 'tie';
+            
+            // Normalize percentages - if one is decimal (< 1) and one is not, convert
+            if (isPercentage) {
+                // If value is less than 1.5, assume it's decimal format (e.g., 0.462 = 46.2%)
+                if (num1 < 1.5 && num1 > 0) num1 = num1 * 100;
+                if (num2 < 1.5 && num2 > 0) num2 = num2 * 100;
+            }
+            
+            // Both have valid data - compare them
+            if (Math.abs(num1 - num2) < 0.001) return 'tie';
+            return higherWins ? (num1 > num2 ? 'p1' : 'p2') : (num1 < num2 ? 'p1' : 'p2');
+        }
+
+        function runComparison() {
+            const player1 = document.getElementById('player1Input').value;
+            const season1 = document.getElementById('season1Select').value;
+            const player2 = document.getElementById('player2Input').value;
+            const season2 = document.getElementById('season2Select').value;
+            
+            if (!player1 || !season1 || !player2 || !season2) return;
+            
+            const rsData1 = getPlayerData(player1, season1, 'rs');
+            const rsData2 = getPlayerData(player2, season2, 'rs');
+            const advData1 = getPlayerData(player1, season1, 'adv');
+            const advData2 = getPlayerData(player2, season2, 'adv');
+
+            const team1 = rsData1?.TEAM || advData1?.TEAM_ABBREVIATION || '';
+            const team2 = rsData2?.TEAM || advData2?.TEAM_ABBREVIATION || '';
+            
+            let p1Score = 0, p2Score = 0;
+            let html = '';
+            const sectionScores = {};
+            
+            const shareURL = `${window.location.origin}${window.location.pathname}?p1=${playerNameToURL(player1)}&s1=${season1}&p2=${playerNameToURL(player2)}&s2=${season2}`;
+            window.history.replaceState({}, '', shareURL);
+            
+            // Update page title
+            document.title = `${player1} ${formatSeasonYear(season1)} vs ${player2} ${formatSeasonYear(season2)} - NBA Season Comparison`;
+            
+            comparisonConfig.forEach(category => {
+                let categoryHtml = '';
+                let hasData = false;
+                sectionScores[category.category] = { p1: 0, p2: 0 };
+                
+                category.metrics.forEach(metric => {
+                    const data1 = getPlayerData(player1, season1, metric.src);
+                    const data2 = getPlayerData(player2, season2, metric.src);
+                    
+                    // For per-game stats where the data source doesn't have GP, get it from RS stats
+                    const needsExternalGP = metric.pg && (metric.pg === 'GP' || metric.pg === 'G');
+                    
+                    if (needsExternalGP && data1 && !data1.GP && !data1.G) {
+                        const rs1 = getPlayerData(player1, season1, 'rs');
+                        metric._gp = null;
+                        if (rs1) {
+                            const gp1 = parseFloat(rs1.GP || rs1.G);
+                            if (!isNaN(gp1)) metric._gp = gp1;
+                        }
+                    } else {
+                        metric._gp = null;
+                    }
+                    let val1 = getStatValue(data1, metric.col, metric.pg, metric);
+                    
+                    if (needsExternalGP && data2 && !data2.GP && !data2.G) {
+                        const rs2 = getPlayerData(player2, season2, 'rs');
+                        metric._gp = null;
+                        if (rs2) {
+                            const gp2 = parseFloat(rs2.GP || rs2.G);
+                            if (!isNaN(gp2)) metric._gp = gp2;
+                        }
+                    } else {
+                        metric._gp = null;
+                    }
+                    let val2 = getStatValue(data2, metric.col, metric.pg, metric);
+                    
+                    if ((val1 === null || val1 === '') && (val2 === null || val2 === '')) return;
+                    
+                    hasData = true;
+                    const isPercentage = metric.fmt === 'pct';
+                    const winner = compareValues(val1, val2, metric.higher, isPercentage);
+                    
+                    if (winner === 'p1') { p1Score++; sectionScores[category.category].p1++; }
+                    if (winner === 'p2') { p2Score++; sectionScores[category.category].p2++; }
+                    
+                    const formatted1 = formatValue(val1, metric.fmt);
+                    const formatted2 = formatValue(val2, metric.fmt);
+                    
+                    const rowClass = winner === 'p1' ? 'winner-left' : winner === 'p2' ? 'winner-right' : 'tie';
+                    const p1Class = winner === 'p1' ? 'player-value winner' : 'player-value';
+                    const p2Class = winner === 'p2' ? 'player-value winner' : 'player-value';
+                    
+                    categoryHtml += `
+                        <div class="comparison-row ${rowClass}">
+                            <div class="${p1Class}">${formatted1 === '-' ? '<span class="no-data">–</span>' : formatted1}</div>
+                            <div class="player-value clickable-name player-name-cell" style="font-weight: normal; font-size: 16px;" onclick="randomizeOpponent(1)" title="Click to get a new random opponent">${player1}</div>
+                            <div class="metric-name">${metric.name}</div>
+                            <div class="player-value clickable-name player-name-cell" style="font-weight: normal; font-size: 16px;" onclick="randomizeOpponent(2)" title="Click to get a new random opponent">${player2}</div>
+                            <div class="${p2Class}">${formatted2 === '-' ? '<span class="no-data">–</span>' : formatted2}</div>
+                        </div>
+                    `;
+                });
+                
+                if (hasData) {
+                    const sScore = sectionScores[category.category];
+                    const sectionScoreHTML = (sScore.p1 > 0 || sScore.p2 > 0) ? 
+                        `<div class="section-score"><span class="clickable-name" onclick="randomizeOpponent(1)">${player1}</span> ${sScore.p1} – <span class="clickable-name" onclick="randomizeOpponent(2)">${player2}</span> ${sScore.p2}</div>` : '';
+                    html += `<div class="category-section"><div class="category-title">${category.category}${sectionScoreHTML}</div>${categoryHtml}</div>`;
+                }
+            });
+            
+            document.getElementById('results').innerHTML = `
+                <div class="score-summary">
+                    <div class="player-score">
+                        <div class="player-name-score" onclick="randomizeOpponent(1)" title="Click to get a new random opponent">${player1}</div>
+                        <div class="player-season-label">${formatSeasonYear(season1)}</div>
+                        ${team1 ? `<div class="player-team-label">${team1}</div>` : ''}
+                        <div class="score-value">${p1Score}</div>
+                    </div>
+                    <div class="score-divider">–</div>
+                    <div class="player-score">
+                        <div class="player-name-score" onclick="randomizeOpponent(2)" title="Click to get a new random opponent">${player2}</div>
+                        <div class="player-season-label">${formatSeasonYear(season2)}</div>
+                        ${team2 ? `<div class="player-team-label">${team2}</div>` : ''}
+                        <div class="score-value">${p2Score}</div>
+                    </div>
+                </div>
+                ${html}
+                ${generateSuggestedMatchups(player1, player2)}
+                ${generateBottomSelector()}
+            `;
+            // Only scroll to results during loop mode; otherwise stay at top
+            if (loopActive) {
+                document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+            // Sync bottom selector with current values
+            syncBottomSelector();
+        }
+
+        function generateBottomSelector() {
+            return `
+                <div class="bottom-selector">
+                    <div class="player-selector">
+                        <div class="player-select-card">
+                            <h3>Player 1</h3>
+                            <div class="select-group">
+                                <label>Player Name</label>
+                                <div class="player-select-wrapper">
+                                    <input type="text" id="player1InputBottom" class="player-autocomplete" placeholder="Type player name...">
+                                    <div id="suggestionsBottom1" class="autocomplete-suggestions"></div>
+                                </div>
+                            </div>
+                            <div class="select-group">
+                                <label>Season</label>
+                                <select id="season1SelectBottom" class="season-select">
+                                    <option value="">-- Choose Season --</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="vs-text">VS</div>
+                        <div class="player-select-card">
+                            <h3>Player 2</h3>
+                            <div class="select-group">
+                                <label>Player Name</label>
+                                <div class="player-select-wrapper">
+                                    <input type="text" id="player2InputBottom" class="player-autocomplete" placeholder="Type player name...">
+                                    <div id="suggestionsBottom2" class="autocomplete-suggestions"></div>
+                                </div>
+                            </div>
+                            <div class="select-group">
+                                <label>Season</label>
+                                <select id="season2SelectBottom" class="season-select">
+                                    <option value="">-- Choose Season --</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="compare-button" id="compareBtnBottom" onclick="compareFromBottom()">Compare Seasons</button>
+                    <div class="loop-controls">
+                        <button class="loop-button" id="loopBtnBottom" onclick="toggleLoop()">${loopActive ? 'Stop Comparison Loop' : 'Start Comparison Loop'}</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function syncBottomSelector() {
+            const p1Bottom = document.getElementById('player1InputBottom');
+            const p2Bottom = document.getElementById('player2InputBottom');
+            const s1Bottom = document.getElementById('season1SelectBottom');
+            const s2Bottom = document.getElementById('season2SelectBottom');
+            if (!p1Bottom) return;
+
+            const p1 = document.getElementById('player1Input').value;
+            const p2 = document.getElementById('player2Input').value;
+            const s1 = document.getElementById('season1Select').value;
+            const s2 = document.getElementById('season2Select').value;
+
+            p1Bottom.value = p1;
+            p2Bottom.value = p2;
+            populateSeasonSelect(s1Bottom, p1);
+            s1Bottom.value = s1;
+            populateSeasonSelect(s2Bottom, p2);
+            s2Bottom.value = s2;
+
+            // Setup autocomplete for bottom inputs
+            setupBottomAutocomplete('player1InputBottom', 'suggestionsBottom1', 'season1SelectBottom');
+            setupBottomAutocomplete('player2InputBottom', 'suggestionsBottom2', 'season2SelectBottom');
+        }
+
+        function setupBottomAutocomplete(inputId, suggestionsId, seasonId) {
+            const inputEl = document.getElementById(inputId);
+            const suggestionsEl = document.getElementById(suggestionsId);
+            const seasonEl = document.getElementById(seasonId);
+            if (!inputEl) return;
+
+            // Remove old listeners by cloning
+            const newInput = inputEl.cloneNode(true);
+            inputEl.parentNode.replaceChild(newInput, inputEl);
+
+            newInput.addEventListener('input', function() {
+                const value = this.value.toLowerCase();
+                if (value.length < 2) { suggestionsEl.style.display = 'none'; return; }
+                const matches = players.filter(p => p.toLowerCase().includes(value)).slice(0, 10);
+                if (matches.length === 0) { suggestionsEl.style.display = 'none'; return; }
+                suggestionsEl.innerHTML = matches.map(player =>
+                    `<div class="autocomplete-suggestion" data-player="${player}">${player}</div>`
+                ).join('');
+                suggestionsEl.style.display = 'block';
+                suggestionsEl.querySelectorAll('.autocomplete-suggestion').forEach(el => {
+                    el.addEventListener('click', function() {
+                        newInput.value = this.getAttribute('data-player');
+                        suggestionsEl.style.display = 'none';
+                        populateSeasonSelect(seasonEl, newInput.value, true);
+                    });
+                });
+            });
+
+            document.addEventListener('click', function(e) {
+                if (!newInput.contains(e.target) && !suggestionsEl.contains(e.target)) {
+                    suggestionsEl.style.display = 'none';
+                }
+            });
+        }
+
+        function compareFromBottom() {
+            const p1 = document.getElementById('player1InputBottom').value;
+            const p2 = document.getElementById('player2InputBottom').value;
+            const s1 = document.getElementById('season1SelectBottom').value;
+            const s2 = document.getElementById('season2SelectBottom').value;
+            if (!p1 || !s1 || !p2 || !s2) return;
+
+            // Sync to top selectors
+            document.getElementById('player1Input').value = p1;
+            populateSeasonSelect(document.getElementById('season1Select'), p1);
+            document.getElementById('season1Select').value = s1;
+            document.getElementById('player2Input').value = p2;
+            populateSeasonSelect(document.getElementById('season2Select'), p2);
+            document.getElementById('season2Select').value = s2;
+            updateCompareButton();
+
+            // Scroll to top, then run comparison
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setTimeout(() => runComparison(), 300);
+        }
+
+        function generateSuggestedMatchups(currentP1, currentP2) {
+            // Generate 6 random suggested matchups
+            const matchups = [];
+            const usedPairs = new Set([`${currentP1}-${currentP2}`, `${currentP2}-${currentP1}`]);
+            
+            const availableStars = STARS_2526.filter(name => {
+                const seasons = playerSeasons[name];
+                return seasons && seasons.some(s => s.year === '2026');
+            });
+            
+            // Generate matchups - mix of current players vs new opponents and completely random
+            const attempts = 0;
+            
+            // 2 matchups with current player 1 vs random
+            for (let i = 0; i < 2 && matchups.length < 6; i++) {
+                const opponent = availableStars[Math.floor(Math.random() * availableStars.length)];
+                const pairKey = `${currentP1}-${opponent}`;
+                if (opponent !== currentP1 && opponent !== currentP2 && !usedPairs.has(pairKey)) {
+                    matchups.push({ p1: currentP1, p2: opponent, s1: '2026', s2: '2026' });
+                    usedPairs.add(pairKey);
+                    usedPairs.add(`${opponent}-${currentP1}`);
+                }
+            }
+            
+            // 2 matchups with current player 2 vs random
+            for (let i = 0; i < 2 && matchups.length < 6; i++) {
+                const opponent = availableStars[Math.floor(Math.random() * availableStars.length)];
+                const pairKey = `${currentP2}-${opponent}`;
+                if (opponent !== currentP1 && opponent !== currentP2 && !usedPairs.has(pairKey)) {
+                    matchups.push({ p1: currentP2, p2: opponent, s1: '2026', s2: '2026' });
+                    usedPairs.add(pairKey);
+                    usedPairs.add(`${opponent}-${currentP2}`);
+                }
+            }
+            
+            // Fill remaining with completely random matchups
+            while (matchups.length < 6) {
+                const p1 = availableStars[Math.floor(Math.random() * availableStars.length)];
+                const p2 = availableStars[Math.floor(Math.random() * availableStars.length)];
+                const pairKey = `${p1}-${p2}`;
+                if (p1 !== p2 && !usedPairs.has(pairKey)) {
+                    matchups.push({ p1, p2, s1: '2026', s2: '2026' });
+                    usedPairs.add(pairKey);
+                    usedPairs.add(`${p2}-${p1}`);
+                }
+            }
+            
+            const matchupCards = matchups.map(m => `
+                <div class="matchup-card" onclick="loadMatchup('${m.p1}', '${m.s1}', '${m.p2}', '${m.s2}')">
+                    <div class="matchup-players">${m.p1} vs ${m.p2}</div>
+                    <div class="matchup-seasons">${formatSeasonYear(m.s1)}</div>
+                </div>
+            `).join('');
+            
+            return `
+                <div class="suggested-matchups">
+                    <h3>🔥 More Matchups to Explore</h3>
+                    <div class="matchup-grid">${matchupCards}</div>
+                </div>
+            `;
+        }
+
+        function loadMatchup(p1, s1, p2, s2) {
+            document.getElementById('player1Input').value = p1;
+            populateSeasonSelect(document.getElementById('season1Select'), p1);
+            document.getElementById('season1Select').value = s1;
+            
+            document.getElementById('player2Input').value = p2;
+            populateSeasonSelect(document.getElementById('season2Select'), p2);
+            document.getElementById('season2Select').value = s2;
+            
+            updateCompareButton();
+            runComparison();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ===== COMPARISON LOOP =====
+        let loopActive = false;
+        let usedOpponents = new Set();
+        let scrollAnimationId = null;
+
+        function updateStickyPlayerOptions() {
+            const p1Name = document.getElementById('player1Input').value || 'Player 1';
+            const p2Name = document.getElementById('player2Input').value || 'Player 2';
+            
+            document.getElementById('stickyP1Option').textContent = `Keep ${p1Name}`;
+            document.getElementById('stickyP2Option').textContent = `Keep ${p2Name}`;
+        }
+
+        function getTopPlayersForSeason(season) {
+            if (season === '2026') {
+                // Use current season stars
+                return STARS_2526.filter(name => {
+                    const seasons = playerSeasons[name];
+                    return seasons && seasons.some(s => s.year === '2026');
+                });
+            } else {
+                // Get top 70 scorers from that historical season
+                const seasonPlayers = data.rsStats
+                    .filter(r => r.YEAR === season && r.PLAYER)
+                    .map(r => ({
+                        name: r.PLAYER,
+                        pts: parseFloat(r['PTS / G']) || parseFloat(r['PTS']) / parseFloat(r['GP']) || 0
+                    }))
+                    .sort((a, b) => b.pts - a.pts)
+                    .slice(0, 70)
+                    .map(p => p.name);
+                
+                return seasonPlayers;
+            }
+        }
+
+        function getRandomOpponent(season, excludePlayers) {
+            const topPlayers = getTopPlayersForSeason(season);
+            const available = topPlayers.filter(p => 
+                !excludePlayers.includes(p) && !usedOpponents.has(p)
+            );
+            
+            // If we've used all opponents, reset the used list
+            if (available.length === 0) {
+                usedOpponents.clear();
+                const freshAvailable = topPlayers.filter(p => !excludePlayers.includes(p));
+                if (freshAvailable.length === 0) return null;
+                const pick = freshAvailable[Math.floor(Math.random() * freshAvailable.length)];
+                usedOpponents.add(pick);
+                return pick;
+            }
+            
+            const pick = available[Math.floor(Math.random() * available.length)];
+            usedOpponents.add(pick);
+            return pick;
+        }
+
+        function smoothScrollToBottom(durationMs) {
+            // Cancel any existing scroll animation
+            if (scrollAnimationId) {
+                cancelAnimationFrame(scrollAnimationId);
+            }
+            
+            // Start from the results/score area, not the very top
+            const resultsHeader = document.querySelector('.results-header');
+            const startY = resultsHeader ? resultsHeader.offsetTop - 20 : 200;
+            
+            // Scroll to starting position instantly
+            window.scrollTo(0, startY);
+            
+            const targetY = document.documentElement.scrollHeight - window.innerHeight;
+            const distance = targetY - startY;
+            const startTime = performance.now();
+            
+            // If no scrolling needed, trigger next comparison after pause
+            if (distance <= 0) {
+                setTimeout(() => {
+                    if (loopActive) runLoopComparison();
+                }, 1500);
+                return;
+            }
+            
+            function animateScroll(currentTime) {
+                if (!loopActive) return; // Stop if loop was stopped
+                
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / durationMs, 1);
+                
+                // Linear scrolling - constant speed
+                window.scrollTo(0, startY + (distance * progress));
+                
+                if (progress < 1) {
+                    scrollAnimationId = requestAnimationFrame(animateScroll);
+                } else {
+                    // Scroll finished - trigger next comparison after 1.5 seconds
+                    setTimeout(() => {
+                        if (loopActive) runLoopComparison();
+                    }, 1500);
+                }
+            }
+            
+            scrollAnimationId = requestAnimationFrame(animateScroll);
+        }
+
+        function startLoop() {
+            const loopBtn = document.getElementById('loopBtn');
+            const scrollSelect = document.getElementById('scrollDuration');
+            const stickySelect = document.getElementById('stickyPlayer');
+            
+            loopActive = true;
+            loopBtn.textContent = 'Stop Comparison Loop';
+            loopBtn.classList.add('active');
+            scrollSelect.disabled = true;
+            stickySelect.disabled = true;
+            usedOpponents.clear();
+            const floatBtn = document.getElementById('loopStopFloat');
+            if (floatBtn) floatBtn.classList.add('visible');
+            
+            // Run first comparison immediately (scroll callback will trigger next)
+            runLoopComparison();
+        }
+
+        function stopLoop() {
+            const loopBtn = document.getElementById('loopBtn');
+            const scrollSelect = document.getElementById('scrollDuration');
+            const stickySelect = document.getElementById('stickyPlayer');
+            
+            loopActive = false;
+            loopBtn.textContent = 'Start Comparison Loop';
+            loopBtn.classList.remove('active');
+            scrollSelect.disabled = false;
+            stickySelect.disabled = false;
+            const floatBtn = document.getElementById('loopStopFloat');
+            if (floatBtn) floatBtn.classList.remove('visible');
+            
+            if (scrollAnimationId) {
+                cancelAnimationFrame(scrollAnimationId);
+                scrollAnimationId = null;
+            }
+        }
+
+        function toggleLoop() {
+            if (loopActive) {
+                stopLoop();
+            } else {
+                startLoop();
+            }
+        }
+
+        function runLoopComparison() {
+            const stickyMode = document.getElementById('stickyPlayer').value;
+            const scrollDuration = parseInt(document.getElementById('scrollDuration').value) * 1000;
+            const currentP1 = document.getElementById('player1Input').value;
+            const currentP2 = document.getElementById('player2Input').value;
+            const currentS1 = document.getElementById('season1Select').value;
+            const currentS2 = document.getElementById('season2Select').value;
+            
+            // Use the season from the sticky player, or player 1's season if both random
+            const activeSeason = stickyMode === 'p2' ? currentS2 : currentS1;
+            
+            if (stickyMode === 'p1') {
+                // Keep Player 1, randomize Player 2
+                const newOpponent = getRandomOpponent(activeSeason, [currentP1]);
+                if (!newOpponent) return;
+                
+                document.getElementById('player2Input').value = newOpponent;
+                populateSeasonSelect(document.getElementById('season2Select'), newOpponent);
+                document.getElementById('season2Select').value = activeSeason;
+                
+            } else if (stickyMode === 'p2') {
+                // Keep Player 2, randomize Player 1
+                const newOpponent = getRandomOpponent(activeSeason, [currentP2]);
+                if (!newOpponent) return;
+                
+                document.getElementById('player1Input').value = newOpponent;
+                populateSeasonSelect(document.getElementById('season1Select'), newOpponent);
+                document.getElementById('season1Select').value = activeSeason;
+                
+            } else {
+                // Randomize both players from the same season
+                const topPlayers = getTopPlayersForSeason(activeSeason);
+                if (topPlayers.length < 2) return;
+                
+                const idx1 = Math.floor(Math.random() * Math.min(topPlayers.length, 40));
+                let idx2 = Math.floor(Math.random() * Math.min(topPlayers.length, 40));
+                while (idx2 === idx1) idx2 = Math.floor(Math.random() * Math.min(topPlayers.length, 40));
+                
+                document.getElementById('player1Input').value = topPlayers[idx1];
+                populateSeasonSelect(document.getElementById('season1Select'), topPlayers[idx1]);
+                document.getElementById('season1Select').value = activeSeason;
+                
+                document.getElementById('player2Input').value = topPlayers[idx2];
+                populateSeasonSelect(document.getElementById('season2Select'), topPlayers[idx2]);
+                document.getElementById('season2Select').value = activeSeason;
+            }
+            
+            updateCompareButton();
+            runComparison();
+            
+            // Start smooth scroll after brief delay for content to render
+            setTimeout(() => {
+                if (loopActive) {
+                    smoothScrollToBottom(scrollDuration);
+                }
+            }, 1500);
+        }
+
+        // ===== INIT =====
+        async function init() {
+            const success = await loadAllData();
+            if (success && players.length > 0) {
+                document.getElementById('loadingMessage').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+                
+                // Show last updated timestamp and data source
+                if (dataLastUpdated) {
+                    const date = new Date(dataLastUpdated);
+                    document.getElementById('dataTimestamp').textContent = 
+                        `2025-26 data (${dataSource}): ${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+                } else if (dataSource === 'Google Sheets') {
+                    document.getElementById('dataTimestamp').textContent = 
+                        `2025-26 data: Live from Google Sheets`;
+                }
+                
+                setupAutocomplete();
+                document.getElementById('compareBtn').addEventListener('click', runComparison);
+                document.getElementById('loopBtn').addEventListener('click', toggleLoop);
+                if (!loadFromURL()) loadRandomStars();
+            } else {
+                document.getElementById('loadingMessage').innerHTML = `
+                    <div class="error-message">
+                        <h3>Couldn't load the season data</h3>
+                        <p>Try refreshing — if this keeps happening, the data might be updating right now.</p>
+                    </div>
+                `;
+            }
+        }
+
+        init();
+    </script>
+    <button class="loop-stop-floating" id="loopStopFloat" onclick="toggleLoop()">⏹ Stop Loop</button>
 </body>
 </html>
