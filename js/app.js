@@ -19,6 +19,7 @@
   let _teammateExclude = null;   // star player name to exclude from results
   let _undraftedFilter = false;   // filter for undrafted players only
   let _savedRankVis = null;       // saved rank column visibility when entering combined mode
+  let DEFAULT_SEASON = null;      // newest fully-rostered season; see computeDefaultSeason()
 
   // Column definitions
   const COLUMNS = [
@@ -138,6 +139,49 @@
     return end;
   }
 
+  // Newest season the tool should open on.
+  // Future seasons are in the data but only carry contracts already signed, so they
+  // thin out fast (2027-28 has 341 salary records where 2026-27 has 580). Walk the
+  // list newest-first and take the first season that looks fully rostered, i.e. at
+  // least 15 paid players per team. Falls back to the newest season with any salary,
+  // then to the newest key in the file.
+  function computeDefaultSeason() {
+    var seasons = DATA.seasons_list || [];
+    var teamCount = (DATA.teams || []).length || 30;
+    var minRostered = teamCount * 15;
+
+    var counts = {};
+    (DATA.seasons || []).forEach(function (r) {
+      if (r.salary) counts[r.season] = (counts[r.season] || 0) + 1;
+    });
+
+    for (var i = 0; i < seasons.length; i++) {
+      if ((counts[seasons[i]] || 0) >= minRostered) return seasons[i];
+    }
+    for (var j = 0; j < seasons.length; j++) {
+      if (counts[seasons[j]]) return seasons[j];
+    }
+    return seasons[0] || "";
+  }
+
+  // The "Last 5", "Last 10" and "Since 1990" buttons track the current season. They
+  // carry data-to="latest" plus an optional data-from-offset counted in seasons.
+  // Resolve both to real season strings here so the click handler stays unchanged.
+  function resolveSeasonPresets() {
+    var seasons = DATA.seasons_list || [];   // newest first
+    var defaultIdx = seasons.indexOf(DEFAULT_SEASON);
+    if (defaultIdx < 0) defaultIdx = 0;
+
+    document.querySelectorAll(".season-preset-btn").forEach(function (btn) {
+      if (btn.dataset.to === "latest") btn.dataset.to = DEFAULT_SEASON;
+      var offset = parseInt(btn.dataset.fromOffset, 10);
+      if (!isNaN(offset)) {
+        var idx = Math.min(defaultIdx + offset, seasons.length - 1);
+        btn.dataset.from = seasons[idx] || seasons[seasons.length - 1] || "";
+      }
+    });
+  }
+
   // ---- Data Loading ----
   function loadData() {
     var xhr = new XMLHttpRequest();
@@ -203,6 +247,9 @@
       visibleCols["age"] = false;
     }
 
+    DEFAULT_SEASON = computeDefaultSeason();
+    resolveSeasonPresets();
+
     populateFilters();
     buildColumnToggles();
     bindEvents();
@@ -238,8 +285,8 @@
       toSel.appendChild(new Option(s, s));
     });
 
-    // Default: 2025-26 season only
-    var defaultSeason = "2025-26";
+    // Default: newest fully-rostered season only
+    var defaultSeason = DEFAULT_SEASON;
     fromSel.value = seasons.indexOf(defaultSeason) >= 0 ? defaultSeason : seasonsAsc[0] || "";
     toSel.value = seasons.indexOf(defaultSeason) >= 0 ? defaultSeason : seasons[0] || "";
 
@@ -594,8 +641,13 @@
     });
 
     // --- By Season ---
+    // Lead with the season the tool opens on, then a fixed historical spread.
+    var seasonPresets = DEFAULT_SEASON ? [DEFAULT_SEASON] : [];
     ["2025-26","2024-25","2023-24","2022-23","2020-21","2015-16","2010-11",
      "2005-06","2000-01","1995-96","1990-91"].forEach(function(s) {
+      if (seasonPresets.indexOf(s) < 0 && (DATA.seasons_list || []).indexOf(s) >= 0) seasonPresets.push(s);
+    });
+    seasonPresets.forEach(function(s) {
       P.push({label: "Highest-Paid NBA Players in " + s, f:{seasonFrom:s, seasonTo:s}, sort:"salary", dir:"desc"});
     });
 
@@ -617,8 +669,16 @@
     P.push({label: "Highest-Paid Second-Round Picks", f:{draftMin:"31", draftMax:"60", salaryMin:"10000000"}, sort:"salary", dir:"desc", allSeasons:true});
     P.push({label: "Highest-Paid Undrafted Players", f:{undrafted:true}, sort:"salary", dir:"desc", allSeasons:true});
     P.push({label: "Late First-Round Picks Scoring 15+ PPG", f:{draftMin:"20", draftMax:"30", ppgMin:"15"}, sort:"ppg", dir:"desc", allSeasons:true});
-    // Famous draft classes
+    // Famous draft classes, led by the most recent class present in the data
+    var latestDraft = 0;
+    (DATA.seasons || []).forEach(function(r) {
+      if (r.draft_year && r.draft_year > latestDraft) latestDraft = r.draft_year;
+    });
+    var draftPresets = latestDraft ? [String(latestDraft)] : [];
     ["2003","2018","1996","2024","2023","2022","2020","2015","2009","1984","2011"].forEach(function(yr) {
+      if (draftPresets.indexOf(yr) < 0) draftPresets.push(yr);
+    });
+    draftPresets.forEach(function(yr) {
       P.push({label: "NBA " + yr + " Draft Class Salaries", f:{draftYearMin:yr, draftYearMax:yr}, sort:"salary", dir:"desc", allSeasons:true});
     });
 
@@ -717,7 +777,7 @@
       var seasons = DATA.seasons_list || [];
       var asc = seasons.slice().reverse();
       document.getElementById("seasonFrom").value = asc[0] || "";
-      document.getElementById("seasonTo").value = "2025-26";
+      document.getElementById("seasonTo").value = DEFAULT_SEASON;
     }
 
     // Teammate filter
@@ -734,7 +794,7 @@
       var seasons = DATA.seasons_list || [];
       var asc = seasons.slice().reverse();
       document.getElementById("seasonFrom").value = asc[0] || "";
-      document.getElementById("seasonTo").value = "2025-26";
+      document.getElementById("seasonTo").value = DEFAULT_SEASON;
     }
 
     // Map filter keys to UI elements
@@ -1266,7 +1326,7 @@
     var tags = [];
 
     // Default season to compare against
-    var defaultSeason = "2025-26";
+    var defaultSeason = DEFAULT_SEASON;
     var isDefaultSeason = (f.seasonFrom === defaultSeason && f.seasonTo === defaultSeason);
 
     // Season (only show if not default)
@@ -1591,7 +1651,7 @@
     if (f.expMax != null && f.expMax <= 4) parts.push("Rookie-Scale Contracts");
 
     // Season
-    var defaultSeason = "2025-26";
+    var defaultSeason = DEFAULT_SEASON;
     var seasonLabel = "";
     if (f.seasonFrom === f.seasonTo) {
       seasonLabel = f.seasonFrom;
@@ -1902,9 +1962,9 @@
     document.getElementById("collegeFilter").value = "";
     document.getElementById("hasAnyAward").checked = false;
 
-    // Reset season range to default (2025-26)
+    // Reset season range to the derived default season
     var seasons = DATA.seasons_list || [];
-    var defaultSeason = "2025-26";
+    var defaultSeason = DEFAULT_SEASON;
     var asc = seasons.slice().reverse();
     document.getElementById("seasonFrom").value = seasons.indexOf(defaultSeason) >= 0 ? defaultSeason : asc[0] || "";
     document.getElementById("seasonTo").value = seasons.indexOf(defaultSeason) >= 0 ? defaultSeason : seasons[0] || "";
