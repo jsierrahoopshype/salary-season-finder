@@ -1,97 +1,113 @@
-/* ============================================
-   HoopsMatic Salary Season Finder - Styles
-   Matches HoopsMatic Trade Machine design
-   ============================================ */
+/* ==========================================================================
+   Salary Season Finder — app styles.
+
+   The shared HoopsMatic design system lives in css/polymarket.css (a verbatim
+   copy of nba-polymarket/docs/styles.css) and is loaded first. Everything here
+   is Salary Season Finder specific and is built on that sheet's tokens:
+
+     surfaces   --bg / --surface / --surface-hover / --border
+     text       --text / --text-secondary
+     accent     --accent / --accent-dim
+     semantic   --green / --red / --orange (+ their -dim variants)
+     type       DM Sans for prose, JetBrains Mono for numbers and labels
+     scale      html{font-size:115%} from the shared sheet — size in rem
+
+   Component patterns follow reporter-rankings, which applies the same tokens
+   to a data-heavy table: .chip filter rails, a .lb-style results table, and a
+   table-to-cards switch on narrow viewports. That switch matters more here
+   than anywhere else in the family because this tool renders up to 27 columns.
+   ========================================================================== */
 
 :root {
-  --primary: #1a1a2e;
-  --accent: #e94560;
-  --bg: #f5f5f5;
-  --card-bg: #ffffff;
-  --text: #333333;
-  --text-muted: #888888;
-  --border: #e0e0e0;
-  --stripe: #f7f7f7;
-  --font-mono: "SF Mono", Menlo, Monaco, Consolas, "Courier New", monospace;
-  --sidebar-width: 320px;
-}
-
-/* Reset & Base */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  font-size: 14px;
-  -webkit-text-size-adjust: 100%;
+  --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --sidebar-width: 20.5rem;
+  /* the mobile filter drawer / sticky bar breakpoint, kept at the value the
+     tool already shipped; the table-to-cards switch uses the design system's
+     860px instead (see the media queries at the bottom) */
 }
 
 body {
-  font-family: var(--font-mono);
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.5;
+  font-family: var(--sans);
+}
+
+/* ==========================================================================
+   Layout
+   ========================================================================== */
+
+.app-layout {
+  display: flex;
+  align-items: flex-start;
   min-height: 100vh;
 }
 
-/* Header */
-.header {
-  background: var(--primary);
-  color: #fff;
-  padding: 16px 24px;
+.main-content {
+  flex: 1;
+  min-width: 0;
+  padding: 1.25rem 1.25rem 3rem;
+}
+
+/* ==========================================================================
+   Sidebar / filter panel
+   ========================================================================== */
+
+.sidebar {
+  width: var(--sidebar-width);
+  min-width: var(--sidebar-width);
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+}
+
+.sidebar-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: .6rem;
+  padding: 1rem 1rem .8rem;
+  border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
-  z-index: 100;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  background: var(--surface);
+  z-index: 20;
 }
 
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.header h1 {
-  font-size: 18px;
+.sidebar-header h2 {
+  font-family: var(--mono);
+  font-size: .72rem;
   font-weight: 700;
-  letter-spacing: -0.5px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-secondary);
 }
 
-.header h1 span {
-  color: var(--accent);
-}
-
-.header-subtitle {
-  font-size: 11px;
-  color: rgba(255,255,255,0.6);
-}
-
-.header-right {
+.sidebar-actions {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: .4rem;
 }
 
+/* buttons */
 .btn {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  padding: 6px 14px;
-  border-radius: 6px;
-  border: 1px solid rgba(255,255,255,0.2);
-  background: transparent;
-  color: #fff;
+  font-family: var(--mono);
+  font-size: .7rem;
+  font-weight: 600;
+  padding: .34rem .7rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-secondary);
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: .12s;
   white-space: nowrap;
 }
 
 .btn:hover {
-  background: rgba(255,255,255,0.1);
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 .btn-accent {
@@ -101,107 +117,116 @@ body {
 }
 
 .btn-accent:hover {
-  background: #d63851;
-}
-
-.btn-sm {
-  font-size: 11px;
-  padding: 4px 10px;
-}
-
-.btn-dark {
-  background: var(--primary);
-  border-color: var(--border);
-  color: var(--text);
-}
-
-.btn-dark:hover {
-  background: #2a2a4e;
+  background: #2f6fdd;
+  border-color: #2f6fdd;
   color: #fff;
 }
 
-/* Layout */
-.app-layout {
-  display: flex;
-  min-height: calc(100vh - 56px);
-}
-
-/* Sidebar / Filter Panel */
-.sidebar {
-  width: var(--sidebar-width);
-  min-width: var(--sidebar-width);
-  background: var(--card-bg);
-  border-right: 1px solid var(--border);
-  overflow-y: auto;
-  height: calc(100vh - 56px);
-  position: sticky;
-  top: 56px;
-}
-
-.sidebar-header {
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.sidebar-header h2 {
-  font-size: 13px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.sidebar-actions {
-  display: flex;
-  gap: 8px;
+.btn-sm {
+  font-size: .66rem;
+  padding: .28rem .55rem;
 }
 
 .clear-btn {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--accent);
+  font-family: var(--mono);
+  font-size: .66rem;
+  font-weight: 600;
   background: none;
   border: none;
+  color: var(--text-secondary);
   cursor: pointer;
-  padding: 2px 6px;
+  padding: .28rem .2rem;
 }
 
 .clear-btn:hover {
+  color: var(--accent);
   text-decoration: underline;
 }
 
-/* Filter sections */
+/* preset search rail */
+.presets-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .3rem;
+  padding: .8rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.preset-btn {
+  font-family: var(--mono);
+  font-size: .66rem;
+  font-weight: 600;
+  padding: .3rem .6rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: .12s;
+  text-align: left;
+}
+
+.preset-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.preset-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.shuffle-btn {
+  font-family: var(--mono);
+  font-size: .8rem;
+  line-height: 1;
+  padding: .3rem .5rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: .12s;
+}
+
+.shuffle-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* collapsible filter sections */
 .filter-section {
   border-bottom: 1px solid var(--border);
 }
 
 .filter-section-header {
-  padding: 10px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: .7rem 1rem;
   cursor: pointer;
   user-select: none;
-  transition: background 0.1s;
+  transition: background .12s;
 }
 
 .filter-section-header:hover {
-  background: var(--stripe);
+  background: var(--surface-hover);
 }
 
 .filter-section-header h3 {
-  font-size: 12px;
-  font-weight: 600;
+  font-family: var(--mono);
+  font-size: .66rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.3px;
+  letter-spacing: .08em;
+  color: var(--text);
 }
 
 .filter-section-header .chevron {
-  font-size: 10px;
-  color: var(--text-muted);
-  transition: transform 0.2s;
+  font-size: .55rem;
+  color: var(--text-secondary);
+  transition: transform .15s;
 }
 
 .filter-section.collapsed .chevron {
@@ -213,12 +238,11 @@ body {
 }
 
 .filter-section-body {
-  padding: 8px 16px 14px;
+  padding: 0 1rem 1rem;
 }
 
-/* Filter controls */
 .filter-row {
-  margin-bottom: 10px;
+  margin-bottom: .8rem;
 }
 
 .filter-row:last-child {
@@ -227,74 +251,95 @@ body {
 
 .filter-label {
   display: block;
-  font-size: 11px;
-  color: var(--text-muted);
-  margin-bottom: 4px;
-  font-weight: 500;
+  font-family: var(--mono);
+  font-size: .6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: var(--text-secondary);
+  margin-bottom: .3rem;
+}
+
+/* a label carrying a title="" explainer gets a hint underline */
+.filter-label[title] {
+  cursor: help;
+  text-decoration: underline dotted var(--border);
+  text-underline-offset: 3px;
 }
 
 .filter-input {
-  font-family: var(--font-mono);
-  font-size: 12px;
   width: 100%;
-  padding: 6px 10px;
+  font-family: var(--sans);
+  font-size: .82rem;
+  padding: .42rem .6rem;
   border: 1px solid var(--border);
-  border-radius: 6px;
-  background: #fff;
+  border-radius: 8px;
+  background: var(--surface);
   color: var(--text);
-  transition: border-color 0.15s;
+  transition: .12s;
 }
 
 .filter-input:focus {
   outline: none;
   border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-dim);
 }
 
 .filter-input::placeholder {
-  color: #ccc;
-}
-
-.filter-range {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.filter-range .filter-input {
-  flex: 1;
-}
-
-.filter-range .range-sep {
-  font-size: 11px;
-  color: var(--text-muted);
+  color: var(--text-secondary);
+  opacity: .7;
 }
 
 select.filter-input {
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E");
+  -webkit-appearance: none;
+  cursor: pointer;
+  padding-right: 1.8rem;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%236e6e73' d='M2 4.5h8L6 9z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right 10px center;
-  padding-right: 28px;
+  background-position: right .55rem center;
+  background-size: .7rem;
 }
 
-/* Checkbox / radio filter */
+.filter-range {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+}
+
+.filter-range .filter-input {
+  flex: 1;
+  min-width: 0;
+}
+
+.filter-range .range-sep {
+  font-family: var(--mono);
+  font-size: .7rem;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+/* chip groups (position, awards) */
 .filter-checks {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
+  gap: .3rem;
 }
 
 .filter-chip {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  padding: 3px 10px;
+  font-family: var(--mono);
+  font-size: .66rem;
+  font-weight: 600;
+  padding: .3rem .6rem;
   border: 1px solid var(--border);
-  border-radius: 14px;
-  background: #fff;
-  color: var(--text-muted);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text-secondary);
   cursor: pointer;
-  transition: all 0.15s;
-  user-select: none;
+  transition: .12s;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  white-space: nowrap;
 }
 
 .filter-chip:hover {
@@ -308,884 +353,26 @@ select.filter-input {
   color: #fff;
 }
 
-/* Preset searches */
-.presets-bar {
-  padding: 10px 16px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.preset-btn {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  padding: 4px 10px;
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  background: #fff;
-  color: var(--text);
-  cursor: pointer;
-  transition: all 0.15s;
-  white-space: nowrap;
-}
-
-.preset-btn:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-  background: #fff5f7;
-}
-
-.preset-btn.active {
-  background: var(--primary);
-  border-color: var(--primary);
-  color: #fff;
-}
-
-.shuffle-btn {
-  font-size: 16px;
-  padding: 2px 8px;
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  background: #fff;
-  color: var(--muted);
-  cursor: pointer;
-  transition: all 0.15s;
-  line-height: 1;
-}
-
-.shuffle-btn:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-  background: #fff5f7;
-}
-
-/* Main content area */
-.main-content {
-  flex: 1;
-  min-width: 0;
-  padding: 16px 20px;
-}
-
-/* Mode toggle (Individual / Agent Leaderboard) */
-.mode-toggle {
-  display: flex;
-  gap: 0;
-  margin-bottom: 16px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  overflow: hidden;
-  width: fit-content;
-}
-
-.mode-btn {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  padding: 8px 16px;
-  background: #fff;
-  border: none;
-  cursor: pointer;
-  color: var(--text-muted);
-  transition: all 0.15s;
-  border-right: 1px solid var(--border);
-}
-
-.mode-btn:last-child {
-  border-right: none;
-}
-
-.mode-btn:hover {
-  background: var(--stripe);
-}
-
-.mode-btn.active {
-  background: var(--primary);
-  color: #fff;
-}
-
-/* Combine toggle */
-.combine-toggle {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 12px;
-  cursor: pointer;
-  white-space: nowrap;
-  color: var(--text-secondary);
-}
-
-.combine-toggle input[type="checkbox"] {
-  accent-color: var(--accent);
-}
-
-/* Breadcrumb bar */
-.breadcrumb-bar {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 14px;
-  margin-bottom: 12px;
-  background: #fff8e1;
-  border: 1px solid #ffe082;
-  border-radius: 8px;
-  font-size: 12px;
-  flex-wrap: wrap;
-}
-
-.breadcrumb-label {
-  font-weight: 600;
-  color: var(--text);
-  white-space: nowrap;
-}
-
-.breadcrumb-trail {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  flex: 1;
-}
-
-.breadcrumb-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 3px;
-  padding: 2px 8px;
-  background: var(--primary);
-  color: #fff;
-  border-radius: 10px;
-  font-size: 11px;
-  white-space: nowrap;
-}
-
-.breadcrumb-tag .bc-col {
-  opacity: 0.7;
-}
-
-.breadcrumb-tag .bc-remove {
-  cursor: pointer;
-  opacity: 0.6;
-  font-size: 13px;
-  font-weight: 700;
-  margin-left: 2px;
-  line-height: 1;
-}
-
-.breadcrumb-tag .bc-remove:hover {
-  opacity: 1;
-}
-
-.breadcrumb-actions {
-  display: flex;
-  gap: 6px;
-  margin-left: auto;
-}
-
-.breadcrumb-btn {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  padding: 3px 10px;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  background: #fff;
-  color: var(--text);
-  cursor: pointer;
-  transition: all 0.15s;
-  white-space: nowrap;
-}
-
-.breadcrumb-btn:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-}
-
-.breadcrumb-home {
-  border-color: var(--accent);
-  color: var(--accent);
-}
-
-.breadcrumb-home:hover {
-  background: var(--accent);
-  color: #fff;
-}
-
-/* Summary stats bar */
-.summary-bar {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-  margin-bottom: 16px;
-  padding: 12px 16px;
-  background: var(--card-bg);
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-}
-
-.summary-stat {
-  display: flex;
-  flex-direction: column;
-}
-
-.summary-stat .stat-label {
-  font-size: 10px;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-}
-
-.summary-stat .stat-value {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--text);
-}
-
-.summary-stat .stat-detail {
-  font-size: 10px;
-  color: var(--text-muted);
-}
-
-/* Results area */
-.results-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 12px;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.results-count {
-  font-size: 12px;
-  color: var(--text-muted);
-}
-
-.results-actions {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-/* Table wrapper for horizontal scroll */
-.table-wrapper {
-  overflow-x: auto;
-  background: var(--card-bg);
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  margin-bottom: 16px;
-}
-
-/* NBA-style table */
-table.nba-table {
-  border-collapse: collapse;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  width: 100%;
-  min-width: 900px;
-}
-
-table.nba-table th,
-table.nba-table td {
-  border: 1px solid var(--border);
-  padding: 6px 12px;
-  white-space: nowrap;
-  text-align: center;
-}
-
-table.nba-table th {
-  font-weight: 700;
-  background-color: var(--primary);
-  color: #fff;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  cursor: pointer;
-  user-select: none;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-}
-
-table.nba-table th:hover {
-  background-color: #2a2a4e;
-}
-
-table.nba-table th .sort-arrow {
-  font-size: 9px;
-  margin-left: 4px;
-  opacity: 0.4;
-}
-
-table.nba-table th.sorted .sort-arrow {
-  opacity: 1;
-  color: var(--accent);
-}
-
-table.nba-table tbody tr:nth-child(odd) {
-  background-color: var(--stripe);
-}
-
-table.nba-table tbody tr:nth-child(even) {
-  background-color: #ffffff;
-}
-
-table.nba-table tbody tr:hover {
-  background-color: #fff5f7;
-}
-
-table.nba-table td.num {
-  text-align: center;
-  font-variant-numeric: tabular-nums;
-}
-
-table.nba-table td.salary {
-  text-align: center;
-  font-weight: 600;
-  color: #2a7d2a;
-}
-
-table.nba-table td.rank {
-  text-align: center;
-  color: var(--text-muted);
-  font-size: 11px;
-}
-
-table.nba-table td.player-name {
-  font-weight: 600;
-  max-width: 180px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* Clickable cells */
-table.nba-table td.clickable {
-  cursor: pointer;
-}
-
-table.nba-table td.clickable:hover {
-  text-decoration: underline;
-  color: var(--accent);
-}
-
-.award-badge.clickable {
-  cursor: pointer;
-}
-
-.award-badge.clickable:hover {
-  text-decoration: underline;
-  filter: brightness(0.85);
-}
-
-.team-link.clickable {
-  cursor: pointer;
-  text-decoration: underline;
-  text-decoration-style: dotted;
-  text-underline-offset: 2px;
-}
-
-.team-link.clickable:hover {
-  text-decoration: underline;
-  text-decoration-style: solid;
-  color: var(--accent);
-  background: rgba(233, 69, 96, 0.08);
-  border-radius: 3px;
-  padding: 0 2px;
-  margin: 0 -2px;
-}
-
-table.nba-table td.awards-cell {
-  max-width: 200px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.award-badge {
-  display: inline-block;
-  font-size: 10px;
-  padding: 1px 6px;
-  border-radius: 8px;
-  background: #fff0e0;
-  color: #b8860b;
-  margin: 1px 2px;
-  white-space: nowrap;
-}
-
-.award-badge.all-star {
-  background: #e8f0fe;
-  color: #1a73e8;
-}
-
-.award-badge.mvp {
-  background: #fce8e6;
-  color: #d93025;
-}
-
-/* Sticky player + salary columns */
-table.nba-table th:nth-child(1),
-table.nba-table td:nth-child(1),
-table.nba-table th:nth-child(2),
-table.nba-table td:nth-child(2) {
-  position: sticky;
-  z-index: 5;
-}
-
-table.nba-table th:nth-child(1),
-table.nba-table td:nth-child(1) {
-  left: 0;
-}
-
-table.nba-table th:nth-child(2),
-table.nba-table td:nth-child(2) {
-  left: 40px;
-}
-
-table.nba-table td:nth-child(1),
-table.nba-table td:nth-child(2) {
-  background: inherit;
-}
-
-table.nba-table th:nth-child(1),
-table.nba-table th:nth-child(2) {
-  z-index: 15;
-}
-
-/* Player name column: always left-aligned */
-table.nba-table td:nth-child(2) {
-  text-align: left;
-}
-
-/* Loading state */
-.loading-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(255,255,255,0.9);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.loading-spinner {
-  width: 40px;
-  height: 40px;
-  border: 3px solid var(--border);
-  border-top-color: var(--accent);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-.loading-text {
-  font-size: 14px;
-  color: var(--text-muted);
-}
-
-/* Mobile sidebar toggle */
-.sidebar-toggle {
-  display: none;
-  font-family: var(--font-mono);
-  font-size: 13px;
-  padding: 10px 16px;
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  margin-bottom: 12px;
-  cursor: pointer;
-  width: 100%;
-  text-align: left;
-  color: var(--text);
-}
-
-.sidebar-toggle:hover {
-  background: var(--stripe);
-}
-
-/* Column visibility toggles */
-.col-toggles {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  margin-bottom: 12px;
-}
-
-.col-toggle {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  padding: 2px 8px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  background: #fff;
-  color: var(--text-muted);
-  cursor: pointer;
-  transition: all 0.15s;
-}
-
-.col-toggle:hover {
-  border-color: var(--accent);
-}
-
-.col-toggle.active {
-  background: var(--primary);
-  border-color: var(--primary);
-  color: #fff;
-}
-
-/* Autocomplete dropdown */
-.autocomplete-wrapper {
-  position: relative;
-}
-
-.autocomplete-dropdown {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  max-height: 200px;
-  overflow-y: auto;
-  background: #fff;
-  border: 1px solid var(--border);
-  border-top: none;
-  border-radius: 0 0 6px 6px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  z-index: 50;
-  display: none;
-}
-
-.autocomplete-dropdown.open {
-  display: block;
-}
-
-.autocomplete-item {
-  padding: 6px 10px;
-  font-size: 12px;
-  cursor: pointer;
-  border-bottom: 1px solid var(--stripe);
-}
-
-.autocomplete-item:hover,
-.autocomplete-item.highlighted {
-  background: var(--stripe);
-  color: var(--accent);
-}
-
-/* Agent leaderboard table */
-.agent-table td.agent-name {
-  font-weight: 600;
-}
-
-/* Empty state */
-.empty-state {
-  text-align: center;
-  padding: 60px 20px;
-  color: var(--text-muted);
-}
-
-.empty-state h3 {
-  font-size: 16px;
-  margin-bottom: 8px;
-  color: var(--text);
-}
-
-.empty-state p {
-  font-size: 13px;
-}
-
-/* Sidebar overlay (mobile) */
-.sidebar-overlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0,0,0,0.4);
-  z-index: 199;
-}
-
-.sidebar-overlay.active {
-  display: block;
-}
-
-/* Responsive */
-/* Mobile-only elements - hidden on desktop */
-.mobile-burger,
-.mobile-show-results {
-  display: none;
-}
-
-/* Sticky top wrapper: normal flow on desktop */
-.mobile-sticky-top {
-  display: block;
-}
-
-@media (max-width: 768px) {
-  .header { padding: 12px 16px; }
-  .header h1 { font-size: 15px; }
-  .header-subtitle { display: none; }
-
-  /* Sidebar: fixed overlay, opens on load */
-  .sidebar {
-    position: fixed; top: 0; left: 0; width: 85vw; max-width: 320px;
-    height: 100vh; z-index: 200; transform: translateX(-100%);
-    transition: transform 0.25s ease;
-    border-right: 1px solid var(--border);
-    box-shadow: 4px 0 16px rgba(0,0,0,0.15);
-    padding-bottom: 70px;
-  }
-  .sidebar.drawer-open { transform: translateX(0); }
-  .sidebar-toggle { display: none !important; }
-
-  /* Show Results button at bottom of sidebar */
-  .mobile-show-results {
-    display: block;
-    position: sticky;
-    bottom: 0; left: 0; width: 100%;
-    padding: 10px 16px;
-    background: #fff;
-    border-top: 1px solid var(--border);
-    box-shadow: 0 -2px 8px rgba(0,0,0,0.08);
-  }
-  .show-results-btn {
-    width: 100%;
-    font-family: var(--font-mono);
-    font-size: 14px; font-weight: 700;
-    padding: 12px;
-    background: var(--accent); color: #fff;
-    border: none; border-radius: 8px;
-    cursor: pointer; letter-spacing: 0.5px;
-  }
-
-  /* Fixed top container: burger + breadcrumbs */
-  .mobile-sticky-top {
-    display: block;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    background: #fff;
-    padding: 6px 6px 8px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-  }
-
-  /* Search bar button */
-  .mobile-burger {
-    display: block;
-    width: 100%;
-    font-family: var(--font-mono);
-    font-size: 13px; font-weight: 600;
-    padding: 10px 16px;
-    background: var(--primary); color: #fff;
-    border: none; border-radius: 8px;
-    cursor: pointer; text-align: left;
-    letter-spacing: 0.3px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  }
-
-  /* Breadcrumbs inside fixed top */
-  .mobile-sticky-top .breadcrumb-bar {
-    margin-top: 6px;
-  }
-
-  .main-content {
-    padding: 8px 6px;
-    padding-top: 52px; /* space for fixed top bar */
-  }
-
-  /* PREVENT iOS ZOOM on input focus */
-  .sidebar input[type="text"],
-  .sidebar input[type="number"],
-  .sidebar select,
-  .sidebar textarea {
-    font-size: 16px !important;
-  }
-
-  /* === SUMMARY: compact grid === */
-  .summary-bar {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 2px 6px; padding: 8px 10px; margin-bottom: 4px;
-  }
-  .summary-stat .stat-label { font-size: 8px; }
-  .summary-stat .stat-value { font-size: 12px; }
-  .summary-stat .stat-detail { font-size: 8px; }
-
-  /* === TABLE === */
-  table.nba-table { font-size: 11px; border-collapse: separate; border-spacing: 0; min-width: auto !important; }
-  table.nba-table th, table.nba-table td {
-    padding: 6px 8px; white-space: nowrap;
-    text-align: center;
-  }
-
-  /* Override .num and .salary right-align to center on mobile */
-  table.nba-table td.num,
-  table.nba-table td.salary,
-  table.nba-table td.rank {
-    text-align: center !important;
-  }
-
-  /* Player column: LEFT-aligned, narrow */
-  table.nba-table th:nth-child(2),
-  table.nba-table td:nth-child(2) {
-    text-align: left !important;
-    max-width: 110px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    padding-left: 2px; padding-right: 2px;
-  }
-
-  /* # column: exact width, no gap */
-  table.nba-table th:nth-child(1),
-  table.nba-table td:nth-child(1) {
-    width: 24px; min-width: 24px; max-width: 24px;
-    padding: 6px 0 6px 2px; text-align: center;
-    box-sizing: border-box;
-  }
-
-  /* STICKY columns with SOLID backgrounds (no bleed) */
-  table.nba-table th:nth-child(1),
-  table.nba-table td:nth-child(1) {
-    position: sticky; left: 0; z-index: 5;
-  }
-  table.nba-table th:nth-child(2),
-  table.nba-table td:nth-child(2) {
-    position: sticky; left: 24px; z-index: 5;
-    /* Shadow edge to hide any sub-pixel gap */
-    box-shadow: 2px 0 4px rgba(0,0,0,0.06);
-  }
-  table.nba-table th:nth-child(1),
-  table.nba-table th:nth-child(2) {
-    z-index: 15;
-    background: var(--primary) !important;
-  }
-  /* Even rows (white bg) */
-  table.nba-table tbody tr:nth-child(even) td:nth-child(1),
-  table.nba-table tbody tr:nth-child(even) td:nth-child(2) {
-    background: #ffffff !important;
-  }
-  /* Odd rows (stripe bg) */
-  table.nba-table tbody tr:nth-child(odd) td:nth-child(1),
-  table.nba-table tbody tr:nth-child(odd) td:nth-child(2) {
-    background: var(--stripe) !important;
-  }
-  /* Hover rows */
-  table.nba-table tbody tr:hover td:nth-child(1),
-  table.nba-table tbody tr:hover td:nth-child(2) {
-    background: #fff5f7 !important;
-  }
-
-  /* Smooth scroll */
-  .table-wrapper {
-    -webkit-overflow-scrolling: touch;
-    will-change: scroll-position;
-    overflow-x: auto;
-  }
-
-  .mode-toggle { width: 100%; }
-  .mode-btn { flex: 1; font-size: 11px; padding: 8px; }
-
-  /* Breadcrumbs compact */
-  .breadcrumb-bar { padding: 5px 6px; margin-bottom: 3px; font-size: 10px; }
-  .breadcrumb-tag { font-size: 9px; padding: 2px 5px; }
-
-  /* Preset buttons: truncate long text */
-  .preset-btn {
-    max-width: 260px; white-space: nowrap;
-    overflow: hidden; text-overflow: ellipsis;
-  }
-
-  /* Season & Position buttons: match preset size */
-  .season-preset-btn {
-    font-size: 11px !important; padding: 4px 10px !important;
-    border-radius: 14px !important;
-  }
-  .filter-chip { font-size: 11px; padding: 4px 10px; }
-}
-
-@media (max-width: 480px) {
-  .summary-stat .stat-value { font-size: 11px; }
-  table.nba-table { font-size: 10px; }
-  table.nba-table th, table.nba-table td { padding: 5px 6px; }
-  table.nba-table td:nth-child(2) { max-width: 105px; }
-}
-
-
-/* Scrollbar styling */
-.sidebar::-webkit-scrollbar,
-.table-wrapper::-webkit-scrollbar,
-.autocomplete-dropdown::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-.sidebar::-webkit-scrollbar-track,
-.table-wrapper::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.sidebar::-webkit-scrollbar-thumb,
-.table-wrapper::-webkit-scrollbar-thumb {
-  background: #ccc;
-  border-radius: 3px;
-}
-
-.sidebar::-webkit-scrollbar-thumb:hover,
-.table-wrapper::-webkit-scrollbar-thumb:hover {
-  background: #aaa;
-}
-
-/* Multi-select tags */
-.multi-select-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  margin-top: 4px;
-}
-
-.tag {
-  font-size: 10px;
-  padding: 2px 8px;
-  background: var(--primary);
-  color: #fff;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.tag .remove-tag {
-  cursor: pointer;
-  font-size: 12px;
-  line-height: 1;
-  opacity: 0.7;
-}
-
-.tag .remove-tag:hover {
-  opacity: 1;
-}
-
-/* Season preset buttons */
+/* season quick-range buttons */
 .season-presets {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
-  margin-bottom: 8px;
+  gap: .3rem;
+  margin-bottom: .7rem;
 }
 
 .season-preset-btn {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  padding: 2px 8px;
+  font-family: var(--mono);
+  font-size: .66rem;
+  font-weight: 600;
+  padding: .3rem .6rem;
   border: 1px solid var(--border);
-  border-radius: 10px;
-  background: #fff;
-  color: var(--text-muted);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text-secondary);
   cursor: pointer;
-  transition: all 0.15s;
+  transition: .12s;
+  white-space: nowrap;
 }
 
 .season-preset-btn:hover {
@@ -1199,22 +386,1037 @@ table.nba-table td:nth-child(2) {
   color: #fff;
 }
 
-/* Footer */
+/* checkbox row ("has any award this season") */
+.check-row {
+  display: flex;
+  align-items: center;
+  gap: .45rem;
+  font-size: .78rem;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.check-row input[type="checkbox"] {
+  accent-color: var(--accent);
+  width: .9rem;
+  height: .9rem;
+  cursor: pointer;
+}
+
+/* autocomplete */
+.autocomplete-wrapper {
+  position: relative;
+}
+
+.autocomplete-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 150;
+  margin-top: .25rem;
+  max-height: 14rem;
+  overflow-y: auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .12);
+}
+
+.autocomplete-dropdown.open {
+  display: block;
+}
+
+.autocomplete-item {
+  padding: .42rem .7rem;
+  font-size: .8rem;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border);
+}
+
+.autocomplete-item:last-child {
+  border-bottom: none;
+}
+
+.autocomplete-item:hover,
+.autocomplete-item.highlighted {
+  background: var(--surface-hover);
+  color: var(--accent);
+}
+
+/* ==========================================================================
+   Main column: header, breadcrumbs, summary, results
+   ========================================================================== */
+
+.hdr {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: .35rem;
+}
+
+.hdr h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: -.03em;
+}
+
+.hdr .brand {
+  font-family: var(--mono);
+  font-size: .7rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  font-size: .86rem;
+  margin-bottom: 1rem;
+  max-width: 60rem;
+}
+
+/* breadcrumb bar (cell-click filters) */
+.breadcrumb-bar {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  flex-wrap: wrap;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: .45rem .6rem;
+  margin-bottom: .7rem;
+}
+
+.breadcrumb-label {
+  font-family: var(--mono);
+  font-size: .58rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--text-secondary);
+}
+
+.breadcrumb-trail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .3rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.breadcrumb-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  font-family: var(--mono);
+  font-size: .64rem;
+  font-weight: 500;
+  padding: .18rem .45rem;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  background: var(--accent-dim);
+  color: var(--text);
+}
+
+.breadcrumb-tag .bc-col {
+  color: var(--accent);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: .56rem;
+  letter-spacing: .04em;
+}
+
+.breadcrumb-tag .bc-remove {
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.breadcrumb-tag .bc-remove:hover {
+  color: var(--red);
+}
+
+.breadcrumb-actions {
+  display: flex;
+  gap: .3rem;
+  flex-shrink: 0;
+}
+
+.breadcrumb-btn {
+  font-family: var(--mono);
+  font-size: .64rem;
+  font-weight: 600;
+  padding: .24rem .5rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: .12s;
+  white-space: nowrap;
+}
+
+.breadcrumb-btn:hover,
+.breadcrumb-home:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* summary strip — the design system's .stat-cards pattern */
+.summary-bar {
+  display: grid;
+  /* auto-fit rather than a fixed 5-up: the totals run to $6,088,198,475 and a
+     rigid fifth column clips them on a narrow desktop window */
+  grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr));
+  gap: .6rem;
+  margin-bottom: 1rem;
+}
+
+.summary-stat {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: .7rem .75rem;
+  min-width: 0;
+}
+
+.summary-stat .stat-label {
+  display: block;
+  font-family: var(--mono);
+  font-size: .58rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--text-secondary);
+  margin-bottom: .2rem;
+}
+
+.summary-stat .stat-value {
+  display: block;
+  font-family: var(--mono);
+  /* sized so a 14-character league total ($6,088,198,475) clears a five-up
+     strip beside the filter rail rather than ellipsising */
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -.02em;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.summary-stat .stat-detail {
+  display: block;
+  font-family: var(--mono);
+  font-size: .62rem;
+  color: var(--text-secondary);
+  margin-top: .15rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* results header + combine toggle */
+.results-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: .5rem;
+}
+
+.results-count {
+  font-family: var(--mono);
+  font-size: .72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: var(--text-secondary);
+}
+
+.combine-toggle {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  font-family: var(--mono);
+  font-size: .68rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.combine-toggle input[type="checkbox"] {
+  accent-color: var(--accent);
+  width: .9rem;
+  height: .9rem;
+  cursor: pointer;
+}
+
+/* column toggles */
+.col-toggles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .3rem;
+  margin-bottom: .8rem;
+}
+
+.col-toggle {
+  font-family: var(--mono);
+  font-size: .64rem;
+  font-weight: 600;
+  padding: .26rem .55rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: .12s;
+  white-space: nowrap;
+}
+
+.col-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.col-toggle.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* ==========================================================================
+   Results table — the design system's table.lb pattern
+   ========================================================================== */
+
+.table-wrapper {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 1rem;
+}
+
+table.nba-table {
+  width: 100%;
+  min-width: 60rem;
+  border-collapse: collapse;
+  font-size: .82rem;
+}
+
+table.nba-table thead th {
+  background: var(--surface-hover);
+  color: var(--text-secondary);
+  font-family: var(--mono);
+  font-size: .62rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  padding: .6rem .55rem;
+  text-align: center;
+  white-space: nowrap;
+  user-select: none;
+  cursor: pointer;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 1px solid var(--border);
+  transition: color .15s;
+}
+
+table.nba-table thead th:hover {
+  color: var(--accent);
+}
+
+table.nba-table thead th.sorted {
+  background: var(--accent-dim);
+  color: var(--accent);
+  font-weight: 700;
+}
+
+table.nba-table th .sort-arrow {
+  font-size: .55rem;
+  margin-left: .2rem;
+  opacity: .35;
+}
+
+table.nba-table th.sorted .sort-arrow {
+  opacity: 1;
+}
+
+table.nba-table tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background .12s;
+}
+
+table.nba-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+table.nba-table tbody tr:hover {
+  background: var(--surface-hover);
+}
+
+table.nba-table td {
+  padding: .45rem .55rem;
+  text-align: center;
+  font-family: var(--mono);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+table.nba-table td.num {
+  font-variant-numeric: tabular-nums;
+}
+
+table.nba-table td.salary {
+  font-weight: 600;
+  color: var(--green);
+}
+
+table.nba-table td.rank {
+  color: var(--text-secondary);
+  font-size: .72rem;
+  width: 2.4rem;
+}
+
+table.nba-table td.player-name {
+  font-family: var(--sans);
+  font-weight: 600;
+  text-align: left;
+  max-width: 13rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* click-to-filter cells */
+table.nba-table td.clickable {
+  cursor: pointer;
+}
+
+table.nba-table td.clickable:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.team-link.clickable {
+  cursor: pointer;
+  text-decoration: underline dotted;
+  text-underline-offset: 2px;
+}
+
+.team-link.clickable:hover {
+  color: var(--accent);
+  text-decoration: underline solid;
+}
+
+/* awards */
+table.nba-table td.awards-cell {
+  max-width: 15rem;
+  white-space: normal;
+}
+
+.award-badge {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: .56rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  padding: .08rem .35rem;
+  border-radius: 4px;
+  margin: .05rem .1rem;
+  background: var(--orange-dim);
+  color: var(--orange);
+  white-space: nowrap;
+}
+
+.award-badge.all-star {
+  background: var(--accent-dim);
+  color: var(--accent);
+}
+
+.award-badge.mvp {
+  background: var(--red-dim);
+  color: var(--red);
+}
+
+.award-badge.clickable {
+  cursor: pointer;
+}
+
+.award-badge.clickable:hover {
+  filter: brightness(.9);
+  text-decoration: underline;
+}
+
+/* sticky rank + player columns while the rest scrolls sideways */
+table.nba-table th:nth-child(1),
+table.nba-table td:nth-child(1) {
+  position: sticky;
+  left: 0;
+  z-index: 5;
+  background: var(--surface);
+}
+
+table.nba-table th:nth-child(2),
+table.nba-table td:nth-child(2) {
+  position: sticky;
+  left: 2.4rem;
+  z-index: 5;
+  background: var(--surface);
+  text-align: left;
+}
+
+table.nba-table thead th:nth-child(1),
+table.nba-table thead th:nth-child(2) {
+  z-index: 15;
+  background: var(--surface-hover);
+}
+
+table.nba-table thead th.sorted:nth-child(1),
+table.nba-table thead th.sorted:nth-child(2) {
+  background: #dfeaff; /* opaque twin of --accent-dim: sticky cells cannot be translucent */
+}
+
+table.nba-table tbody tr:hover td:nth-child(1),
+table.nba-table tbody tr:hover td:nth-child(2) {
+  background: var(--surface-hover);
+}
+
+/* ==========================================================================
+   States
+   ========================================================================== */
+
+.empty-state {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text-secondary);
+}
+
+.empty-state h3 {
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: .35rem;
+}
+
+.empty-state p {
+  font-size: .82rem;
+}
+
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .9rem;
+  background: var(--bg);
+}
+
+.loading-spinner {
+  width: 2.2rem;
+  height: 2.2rem;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-text {
+  font-family: var(--mono);
+  font-size: .78rem;
+  color: var(--text-secondary);
+}
+
 .site-footer {
   text-align: center;
-  padding: 24px 16px;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--text-muted);
+  font-family: var(--mono);
+  font-size: .68rem;
+  color: var(--text-secondary);
+  padding: 1.2rem 1rem 2rem;
   border-top: 1px solid var(--border);
-  margin-top: 20px;
+  line-height: 1.7;
 }
 
-.site-footer a {
-  color: var(--accent);
-  text-decoration: none;
+/* ==========================================================================
+   Mobile chrome (drawer + sticky top) — hidden on desktop
+   ========================================================================== */
+
+.mobile-burger,
+.mobile-show-results {
+  display: none;
 }
 
-.site-footer a:hover {
-  text-decoration: underline;
+.mobile-sticky-top {
+  display: block;
+}
+
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .4);
+  z-index: 199;
+}
+
+.sidebar-overlay.active {
+  display: block;
+}
+
+/* ==========================================================================
+   Table → cards, the reporter-rankings responsive switch.
+
+   At 860px the results table stops being a sideways scroller and each row
+   becomes a card: rank and player form the card head, every other visible
+   column becomes a label/value line fed by the td's data-label. The header row
+   stays on screen as a wrapping rail of sort chips, so sorting still works
+   where the column headings no longer do. No second copy of the rows is
+   rendered — the same <td> elements are relaid out, so the cell-click filters
+   and the sort bindings carry over untouched.
+   ========================================================================== */
+
+@media (max-width: 860px) {
+  .main-content {
+    padding: .8rem .7rem 2.5rem;
+  }
+
+  .hdr h1 {
+    font-size: 1.15rem;
+  }
+
+  .hdr .brand {
+    display: none;
+  }
+
+  .subtitle {
+    font-size: .8rem;
+    margin-bottom: .8rem;
+  }
+
+  /* five separate cards cost half a screen before any data. Collapse the strip
+     into one surface panel with the stats gridded inside it. */
+  .summary-bar {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .4rem .6rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: .6rem .7rem;
+    margin-bottom: .7rem;
+  }
+
+  .summary-stat {
+    background: none;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+  }
+
+  /* the widest figure here is a 14-character league total; scale it with the
+     viewport rather than letting a three-up grid ellipsis it away */
+  .summary-stat .stat-value {
+    font-size: clamp(.6rem, 2.9vw, .82rem);
+  }
+
+  .summary-stat .stat-label {
+    font-size: .5rem;
+    margin-bottom: .05rem;
+  }
+
+  .summary-stat .stat-detail {
+    font-size: .54rem;
+    white-space: normal;
+  }
+
+  /* the wrapper stops being a scroll frame — the cards are the layout */
+  .table-wrapper {
+    background: none;
+    border: none;
+    border-radius: 0;
+    overflow: visible;
+  }
+
+  /* the sort rail below needs saying, now that it is no longer a table head */
+  .table-wrapper::before {
+    content: "Sort by";
+    display: block;
+    font-family: var(--mono);
+    font-size: .52rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--text-secondary);
+    margin-bottom: .25rem;
+  }
+
+  table.nba-table {
+    display: block;
+    min-width: 0;
+    font-size: .82rem;
+  }
+
+  /* header row → wrapping rail of sort chips */
+  table.nba-table thead,
+  table.nba-table thead tr {
+    display: block;
+  }
+
+  /* one scrolling line rather than a wrapping block: a second wrapped chip
+     field under the column toggles reads as duplicate furniture */
+  table.nba-table thead tr {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: .3rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: .3rem;
+    margin-bottom: .6rem;
+  }
+
+  table.nba-table thead th {
+    position: static;
+    display: inline-block;
+    flex: 0 0 auto;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    padding: .26rem .55rem;
+    font-size: .62rem;
+  }
+
+  table.nba-table thead th:not([data-sort]) {
+    opacity: .55;
+    cursor: default;
+  }
+
+  /* the desktop sticky-column rules are :nth-child based, so they outrank the
+     plain element selectors above — unstick them explicitly */
+  table.nba-table thead th:nth-child(1),
+  table.nba-table thead th:nth-child(2) {
+    position: static;
+    left: auto;
+    z-index: auto;
+    background: var(--surface);
+  }
+
+  table.nba-table thead th.sorted:nth-child(1),
+  table.nba-table thead th.sorted:nth-child(2) {
+    background: var(--accent);
+  }
+
+  table.nba-table thead th.sorted {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+
+  table.nba-table thead th.sorted .sort-arrow {
+    opacity: .9;
+  }
+
+  /* rows → cards */
+  table.nba-table tbody {
+    display: block;
+  }
+
+  table.nba-table tbody tr {
+    display: block;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: .65rem .8rem .2rem;
+    margin-bottom: .6rem;
+  }
+
+  table.nba-table tbody tr:last-child {
+    border-bottom: 1px solid var(--border);
+  }
+
+  table.nba-table tbody tr:hover {
+    background: var(--surface);
+  }
+
+  /* every cell is a label/value line... */
+  table.nba-table tbody td {
+    position: static;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: .8rem;
+    width: auto;
+    max-width: none;
+    padding: .3rem 0;
+    border-bottom: 1px solid var(--border);
+    text-align: right;
+    white-space: normal;
+    overflow: visible;
+  }
+
+  table.nba-table tbody td:nth-child(1),
+  table.nba-table tbody td:nth-child(2) {
+    position: static;
+    left: auto;
+    z-index: auto;
+    background: none;
+    width: auto;
+  }
+
+  table.nba-table tbody tr:hover td:nth-child(1),
+  table.nba-table tbody tr:hover td:nth-child(2) {
+    background: none;
+  }
+
+  table.nba-table tbody td::before {
+    content: attr(data-label);
+    font-family: var(--mono);
+    font-size: .58rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: var(--text-secondary);
+    text-align: left;
+    flex-shrink: 0;
+  }
+
+  table.nba-table tbody td:last-child {
+    border-bottom: none;
+  }
+
+  table.nba-table tbody td.clickable:hover {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  /* ...except rank and player, which share the card's head line */
+  table.nba-table tbody td.rank,
+  table.nba-table tbody td.player-name {
+    display: inline;
+    padding: 0;
+    border-bottom: none;
+    background: none;
+  }
+
+  table.nba-table tbody td.rank::before,
+  table.nba-table tbody td.player-name::before {
+    content: none;
+  }
+
+  table.nba-table tbody td.rank {
+    font-size: .74rem;
+    margin-right: .35rem;
+  }
+
+  table.nba-table tbody td.player-name {
+    font-size: .95rem;
+    font-weight: 700;
+  }
+
+  /* the head line needs its own rule under the name, drawn on the first
+     labelled cell that follows */
+  table.nba-table tbody td.player-name + td {
+    margin-top: .45rem;
+    border-top: 1px solid var(--border);
+    padding-top: .4rem;
+  }
+
+  table.nba-table tbody td.awards-cell {
+    flex-wrap: wrap;
+    row-gap: .2rem;
+  }
+
+  table.nba-table tbody td.salary {
+    font-size: .88rem;
+  }
+
+  /* 27 column chips ran to a third of a screen. Cap and scroll them in place,
+     the way reporter-rankings caps its team / player picker on a phone. */
+  .col-toggles {
+    gap: .25rem;
+    max-height: 6.5rem;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: .35rem;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    background: var(--surface);
+    margin-bottom: .7rem;
+  }
+
+  .col-toggle {
+    font-size: .62rem;
+    padding: .28rem .5rem;
+  }
+
+  .results-header {
+    margin-bottom: .35rem;
+  }
+
+  .results-count {
+    font-size: .66rem;
+  }
+}
+
+/* below ~360px a three-up strip can no longer hold a 14-character total */
+@media (max-width: 360px) {
+  .summary-bar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ==========================================================================
+   Filter drawer + fixed top bar (unchanged breakpoint: 768px)
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 85vw;
+    /* the desktop rail sets min-width too, which would otherwise hold the
+       drawer at its full width on a phone narrower than the rail */
+    min-width: 0;
+    max-width: 20.5rem;
+    height: 100vh;
+    z-index: 200;
+    transform: translateX(-100%);
+    transition: transform .25s ease;
+    border-right: 1px solid var(--border);
+    box-shadow: 4px 0 16px rgba(0, 0, 0, .15);
+    padding-bottom: 4.5rem;
+  }
+
+  .sidebar.drawer-open {
+    transform: translateX(0);
+  }
+
+  /* "Show Results" pinned to the bottom of the drawer */
+  .mobile-show-results {
+    display: block;
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: .7rem 1rem;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, .08);
+  }
+
+  .show-results-btn {
+    width: 100%;
+    font-family: var(--mono);
+    font-size: .82rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    padding: .7rem;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  /* fixed top: filter button + breadcrumbs */
+  .mobile-sticky-top {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: var(--bg);
+    padding: .4rem .5rem .5rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .06);
+  }
+
+  .mobile-burger {
+    display: block;
+    width: 100%;
+    font-family: var(--mono);
+    font-size: .74rem;
+    font-weight: 600;
+    letter-spacing: .04em;
+    padding: .6rem .9rem;
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: left;
+  }
+
+  .mobile-burger:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .mobile-sticky-top .breadcrumb-bar {
+    margin: .4rem 0 0;
+  }
+
+  .main-content {
+    padding-top: 3.4rem;
+  }
+
+  /* iOS zooms any input under 16px on focus */
+  .sidebar input[type="text"],
+  .sidebar input[type="number"],
+  .sidebar select,
+  .sidebar textarea {
+    font-size: 16px !important;
+  }
+
+  .preset-btn {
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+
+/* ==========================================================================
+   Scrollbars
+   ========================================================================== */
+
+.sidebar::-webkit-scrollbar,
+.table-wrapper::-webkit-scrollbar,
+.autocomplete-dropdown::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.sidebar::-webkit-scrollbar-track,
+.table-wrapper::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+.sidebar::-webkit-scrollbar-thumb,
+.table-wrapper::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover,
+.table-wrapper::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
 }

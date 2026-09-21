@@ -3,7 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Salary Season Finder | HoopsMatic</title>
+  <title>NBA Salary Season Finder - filter every player season by salary, cap hit and stats | HoopsMatic</title>
+  <meta name="description" content="Search every NBA player season by salary, share of the cap, league salary rank, stats, awards, draft slot and more. Cross-filter any combination and sort the results.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- shared HoopsMatic design system (verbatim copy of nba-polymarket/docs/styles.css) -->
+  <link rel="stylesheet" href="css/polymarket.css">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -293,7 +299,7 @@
             </div>
           </div>
           <div class="filter-row">
-            <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;">
+            <label class="check-row">
               <input type="checkbox" id="hasAnyAward"> Has any award this season
             </label>
           </div>
@@ -321,6 +327,13 @@
           </div>
         </div>
       </div>
+
+      <!-- Page header -->
+      <div class="hdr">
+        <h1>NBA Salary Season Finder</h1>
+        <span class="brand">HoopsMatic</span>
+      </div>
+      <div class="subtitle">Every NBA player season, filterable by salary, share of the cap, league salary rank, production, awards and draft slot. Click any cell to filter by it.</div>
 
       <!-- Summary stats -->
       <div class="summary-bar" id="summaryBar">
