@@ -1,0 +1,306 @@
+/* ==========================================================================
+   NBA Polymarket tracker — shared stylesheet.
+
+   Design tokens (fonts, colors, surfaces, the sortable table.lb pattern, the
+   sticky filter bar, the mobile card fallback) are lifted directly from the
+   HoopsHype media-vote-tracker / hh-teammates pages so this reads as the same
+   family of tools. Detail-page additions (stat cards, chart wrapper, sparkline)
+   follow the same token system.
+   ========================================================================== */
+
+:root{
+  --bg:#f5f5f7;--surface:#fff;--surface-hover:#f0f0f2;--border:#d1d1d6;
+  --text:#1d1d1f;--text-secondary:#6e6e73;--accent:#3b82f6;--accent-dim:rgba(59,130,246,.15);
+  --green:#1d8a40;--green-dim:rgba(52,199,89,.16);--green-bar:#34c759;
+  --red:#d12c2c;--red-dim:rgba(239,68,68,.13);--red-bar:#ef4444;
+  --orange:#b26b00;--orange-dim:rgba(245,158,11,.16);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+/* Global +15% type scale: everything is sized in rem off this root, so the whole
+   tool scales proportionally. Viewport-px media-query breakpoints are unaffected. */
+html{font-size:115%}
+body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);
+  color:var(--text);min-height:100vh;line-height:1.5;-webkit-font-smoothing:antialiased}
+.container{max-width:1400px;margin:0 auto;padding:1.5rem 1.5rem 4rem}
+.container.narrow{max-width:1100px}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+
+/* nav tabs */
+.tabs{display:flex;gap:.3rem;margin-bottom:1rem;flex-wrap:wrap}
+.tabs a{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:600;padding:.4rem .8rem;
+  border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text-secondary);text-decoration:none}
+.tabs a:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.tabs a.active{background:var(--accent);border-color:var(--accent);color:#fff}
+
+/* header */
+.hdr{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin-bottom:.35rem;flex-wrap:wrap}
+.hdr h1{font-size:1.4rem;font-weight:700;letter-spacing:-.03em}
+.hdr .brand{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--text-secondary);
+  text-transform:uppercase;letter-spacing:.08em}
+.subtitle{color:var(--text-secondary);font-size:.9rem;margin-bottom:1.25rem;max-width:60rem}
+.subtitle .stamp{font-family:'JetBrains Mono',monospace;font-size:.78rem}
+
+/* section heading shared by movers / standings blocks */
+.block{margin-bottom:1.6rem}
+.block-head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;
+  margin-bottom:.6rem;flex-wrap:wrap}
+.block-head h2{font-size:.95rem;font-weight:700;letter-spacing:-.01em}
+.block-head .more{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:600}
+.block-head .sub{font-family:'JetBrains Mono',monospace;font-size:.66rem;color:var(--text-secondary);
+  text-transform:uppercase;letter-spacing:.05em}
+
+/* filter / chip bar (sticky) */
+.filters{position:sticky;top:0;z-index:100;background:var(--bg);padding:.6rem 0 .7rem;margin-bottom:.7rem}
+.chips{display:flex;gap:.3rem;flex-wrap:wrap}
+.chip{font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:600;padding:.34rem .7rem;
+  border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text-secondary);
+  cursor:pointer;transition:.12s;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+.chip:hover{border-color:var(--accent);color:var(--accent)}
+.chip.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.chip .ct{opacity:.7;margin-left:.3rem;font-weight:500}
+
+/* segmented toggle (movers 24h/7d, chart range) */
+.toggle{display:flex;gap:.3rem;flex-wrap:wrap}
+.toggle button{font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:500;padding:.32rem .6rem;
+  border:1px solid var(--border);border-radius:6px;background:var(--surface);color:var(--text-secondary);
+  cursor:pointer;transition:.12s}
+.toggle button:hover{border-color:var(--accent);color:var(--accent)}
+.toggle button.active{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+
+/* table */
+.table-wrap{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+table.lb{width:100%;border-collapse:collapse;font-size:.86rem}
+table.lb thead th{background:var(--surface-hover);color:var(--text-secondary);text-transform:uppercase;
+  letter-spacing:.04em;font-size:.66rem;font-weight:600;padding:.7rem .6rem;text-align:center;
+  border-bottom:1px solid var(--border);white-space:nowrap;user-select:none;transition:color .15s}
+table.lb thead th.sortable{cursor:pointer}
+table.lb thead th.sortable:hover{color:var(--accent)}
+table.lb thead th.sorted-by{background:var(--accent-dim);color:var(--accent);font-weight:700}
+table.lb thead th.left{text-align:left}
+table.lb thead th .arr{font-size:.6rem;opacity:.7;margin-left:.15rem}
+table.lb tbody tr{border-bottom:1px solid var(--border);transition:background .12s;cursor:pointer}
+table.lb tbody tr:last-child{border-bottom:none}
+table.lb tbody tr:hover{background:var(--surface-hover)}
+table.lb td{padding:.55rem .6rem;text-align:center;font-family:'JetBrains Mono',monospace;
+  font-weight:500;white-space:nowrap}
+table.lb td.sorted-by{background:rgba(59,130,246,.05)}
+td.rank{color:var(--text-secondary);font-size:.78rem;width:2.4rem}
+table.lb td.name{text-align:left;font-family:'DM Sans',sans-serif;max-width:24rem;white-space:normal}
+.name .q{font-weight:600;color:var(--text);display:block;line-height:1.3}
+.name .ev{font-size:.7rem;color:var(--text-secondary);font-family:'JetBrains Mono',monospace}
+.cat{display:inline-block;font-size:.58rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;
+  padding:.08rem .4rem;border-radius:4px;background:var(--accent-dim);color:var(--accent);white-space:nowrap}
+.badge-settled{display:inline-block;font-size:.54rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;
+  padding:.05rem .35rem;border-radius:4px;background:var(--surface-hover);color:var(--text-secondary);
+  margin-right:.35rem;vertical-align:middle}
+td.pct{font-size:.92rem;font-weight:600;color:var(--text)}
+.delta{font-weight:600}
+.delta.pos{color:var(--green)}.delta.neg{color:var(--red)}.delta.flat{color:var(--text-secondary)}
+.dash{color:var(--text-secondary)}
+
+/* sparkline cell */
+td.spark{width:6.5rem}
+.spark svg{display:block;width:5.5rem;height:1.5rem;margin:0 auto;overflow:visible}
+.spark path{fill:none;stroke-width:1.5;stroke-linejoin:round;stroke-linecap:round}
+.spark path.up{stroke:var(--green-bar)}
+.spark path.down{stroke:var(--red-bar)}
+.spark path.flat{stroke:var(--text-secondary)}
+.spark .dot{stroke:none}
+
+/* group header inside standings */
+.group{margin-bottom:1.1rem}
+.group-head{display:flex;align-items:baseline;gap:.5rem;margin:0 0 .4rem .2rem}
+.group-head h3{font-size:.84rem;font-weight:700}
+.group-head .ct{font-family:'JetBrains Mono',monospace;font-size:.66rem;color:var(--text-secondary)}
+.showmore{margin:.5rem 0 0 .2rem;font-size:.74rem;font-family:'JetBrains Mono',monospace;
+  background:none;border:none;color:var(--accent);cursor:pointer}
+.showmore:hover{text-decoration:underline}
+
+/* mobile cards */
+.cards{display:none}
+.card{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:12px;
+  padding:.8rem .9rem;margin-bottom:.6rem;cursor:pointer;transition:.15s}
+.card:hover{border-color:var(--accent)}
+.card .q{font-weight:600;font-size:.92rem;color:var(--text);padding-right:5.5rem;line-height:1.3}
+.card .ev{font-size:.7rem;color:var(--text-secondary);font-family:'JetBrains Mono',monospace;margin-top:.1rem}
+.card .now{position:absolute;top:.7rem;right:.9rem;text-align:right}
+.card .now .p{font-family:'JetBrains Mono',monospace;font-size:1.15rem;font-weight:700}
+.card-foot{display:flex;align-items:center;gap:.8rem;margin-top:.5rem;font-family:'JetBrains Mono',monospace;font-size:.74rem}
+.card-foot .lbl{color:var(--text-secondary);text-transform:uppercase;font-size:.58rem;letter-spacing:.04em;margin-right:.25rem}
+.card .spark svg{margin:0;width:4.5rem}
+/* outcomes list reusing the .card component: an always-visible responsive grid
+   (the homepage .cards container above is deliberately mobile-only). */
+.outcome-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(15rem,1fr));gap:.6rem;margin-bottom:.6rem}
+.outcome-cards .card{margin-bottom:0}
+/* every outcome shares one event, so the event-title line is redundant here
+   (the homepage cards keep it) */
+.outcome-cards .card .ev{display:none}
+
+/* ---- detail page ---- */
+.back{font-size:.78rem;font-family:'JetBrains Mono',monospace;color:var(--text-secondary);
+  display:inline-block;margin-bottom:1rem}
+.back:hover{color:var(--accent);text-decoration:none}
+.phead{border-bottom:1px solid var(--border);padding-bottom:1rem;margin-bottom:1.2rem}
+.phead .cat{margin-bottom:.5rem}
+.phead h1{font-size:1.6rem;font-weight:700;letter-spacing:-.02em;line-height:1.25}
+.phead .meta{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--text-secondary);
+  margin-top:.5rem;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+.phead .meta .sep{opacity:.5}
+.phead .meta .resolved{color:var(--green);font-weight:600}
+.poly-link{display:inline-block;margin-top:.7rem;font-family:'JetBrains Mono',monospace;
+  font-size:.72rem;font-weight:600;color:var(--accent)}
+.section-head .poly-link{margin-top:0;font-size:.68rem}
+
+.stat-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-bottom:1.2rem}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:.9rem 1rem}
+.stat-card .lbl{font-size:.6rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.06em;
+  font-weight:600;margin-bottom:.3rem}
+.stat-card .num{font-family:'JetBrains Mono',monospace;font-size:1.7rem;font-weight:700;letter-spacing:-.02em}
+.stat-card .num.pos{color:var(--green)}.stat-card .num.neg{color:var(--red)}.stat-card .num.flat{color:var(--text)}
+
+.section{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.1rem 1.2rem;margin-bottom:1.1rem}
+.section h2{font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--text-secondary);
+  font-weight:600;margin-bottom:.2rem}
+.section .hint{font-size:.74rem;color:var(--text-secondary);margin-bottom:.9rem}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:.9rem}
+.section-head h2{margin-bottom:0}
+
+/* chart */
+.chart-wrap{position:relative;height:340px;width:100%}
+.chart-empty{color:var(--text-secondary);font-size:.82rem;text-align:center;padding:2.5rem 1rem}
+
+/* siblings (other outcomes in this race) */
+.siblings{display:flex;flex-direction:column;gap:.1rem}
+.sib{display:grid;grid-template-columns:1fr 4rem 4rem 4.5rem;align-items:center;gap:.6rem;
+  padding:.4rem .2rem;border-bottom:1px solid var(--border);font-size:.84rem}
+.sib:last-child{border-bottom:none}
+.sib .nm{font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sib .nm a{color:var(--text)}
+.sib .v{font-family:'JetBrains Mono',monospace;font-size:.74rem;color:var(--text-secondary);text-align:right}
+.sib .p{font-family:'JetBrains Mono',monospace;font-weight:600;text-align:right}
+.sib .d{font-family:'JetBrains Mono',monospace;font-size:.76rem;text-align:right}
+
+/* volume cell */
+td.vol{font-size:.8rem;color:var(--text-secondary);width:5rem}
+
+/* low-volume toggle bar */
+.lowvol-bar{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;margin-bottom:1rem}
+.lowvol-toggle{font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:600;padding:.34rem .7rem;
+  border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text-secondary);
+  cursor:pointer;transition:.12s}
+.lowvol-toggle:hover{border-color:var(--accent);color:var(--accent)}
+.lowvol-toggle.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.lowvol-note{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--text-secondary)}
+
+/* stat-card secondary line + normalized tag */
+.stat-card .sub{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--text-secondary);margin-top:.25rem}
+.stat-card .lbl .tag{display:inline-block;font-size:.5rem;font-weight:700;letter-spacing:.04em;
+  padding:.04rem .3rem;border-radius:3px;background:var(--accent-dim);color:var(--accent);vertical-align:middle}
+
+/* resolved outcome badge */
+.oc{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.66rem;font-weight:700;
+  letter-spacing:.04em;padding:.1rem .45rem;border-radius:4px}
+.oc.yes{background:var(--green-dim);color:var(--green)}
+.oc.no{background:var(--red-dim);color:var(--red)}
+.card .now .oc{font-size:.74rem}
+
+/* entity thumbnail in a market name cell / card */
+.ethumb{float:left;margin:0 .5rem 0 0;line-height:0}
+.ethumb img{width:22px;height:22px;border-radius:50%;display:block;background:var(--surface-hover);object-fit:cover}
+td.name::after,.card .q::after{content:"";display:table;clear:both}
+.card .q .ethumb{margin-top:.1rem}
+
+/* entity page header */
+.ehead{display:flex;align-items:center;gap:1rem;border-bottom:1px solid var(--border);
+  padding-bottom:1rem;margin-bottom:1.2rem}
+.eimg{width:72px;height:72px;border-radius:14px;object-fit:contain;background:var(--surface-hover);flex-shrink:0}
+.ehead h1{font-size:1.6rem;font-weight:700;letter-spacing:-.02em;line-height:1.2}
+.esub{font-family:'JetBrains Mono',monospace;font-size:.74rem;color:var(--text-secondary);
+  text-transform:uppercase;letter-spacing:.05em;margin-top:.25rem}
+.seo-list{list-style:none;display:flex;flex-direction:column;gap:.35rem}
+.seo-list li a{color:var(--text)}
+
+/* directory pages (/players/, /teams/) */
+.esearch{width:100%;max-width:30rem;padding:.5rem .8rem;font-size:16px;font-family:inherit;
+  border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text);margin-bottom:1rem}
+.esearch:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-dim)}
+.egrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(15rem,1fr));gap:.4rem}
+.ecard{display:flex;align-items:center;gap:.6rem;padding:.5rem .6rem;border:1px solid var(--border);
+  border-radius:10px;background:var(--surface);color:var(--text);text-decoration:none;transition:.12s}
+.ecard:hover{border-color:var(--accent);text-decoration:none}
+.ecard img{width:40px;height:40px;border-radius:50%;object-fit:contain;background:var(--surface-hover);flex-shrink:0}
+.ecard .en{flex:1;font-weight:600;font-size:.86rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ecard .ec{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--text-secondary)}
+
+.empty{text-align:center;padding:3rem 1rem;color:var(--text-secondary)}
+.loading{text-align:center;padding:3rem 1rem;color:var(--text-secondary);font-family:'JetBrains Mono',monospace;font-size:.8rem}
+.foot{text-align:center;font-size:.72rem;color:var(--text-secondary);margin-top:1.6rem;
+  font-family:'JetBrains Mono',monospace;line-height:1.7}
+
+@media(max-width:860px){
+  .container{padding:1rem 1rem 3rem}
+  .table-wrap{display:none}
+  .cards{display:block}
+  .hdr h1{font-size:1.15rem}
+  .hdr .brand{display:none}
+  .subtitle{font-size:.82rem;margin-bottom:.8rem}
+  .stat-cards{grid-template-columns:1fr 1fr 1fr;gap:.5rem}
+  .stat-card{padding:.7rem .6rem}
+  .stat-card .num{font-size:1.25rem}
+  .phead h1{font-size:1.3rem}
+  .chart-wrap{height:280px}
+}
+@media(max-width:560px){
+  /* Narrow viewport: the 4-column grid squeezes the label to a useless
+     ellipsis ("Will Le…"). Switch to flex-wrap — the label takes the full first
+     line and wraps to ~2 lines, and the vol/prob/delta drop to a second line,
+     right-aligned. Desktop keeps the single-line grid above. */
+  .sib{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:baseline;
+    column-gap:.7rem;row-gap:.15rem}
+  .sib .nm{flex:1 1 100%;white-space:normal;overflow:visible;text-overflow:clip}
+}
+
+/* --- entity chips (item 11): clickable player/team links on rows + titles --- */
+.echips{display:inline-flex;flex-wrap:wrap;gap:.25rem;margin-top:.2rem}
+.phead .echips{margin:.5rem 0 0}
+.echip{display:inline-flex;align-items:center;gap:.25rem;font-family:'JetBrains Mono',monospace;
+  font-size:.62rem;font-weight:600;padding:.1rem .4rem .1rem .12rem;border:1px solid var(--border);
+  border-radius:999px;background:var(--surface);color:var(--text-secondary);text-decoration:none;white-space:nowrap}
+.echip:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.echip img{width:16px;height:16px;border-radius:50%;object-fit:cover;background:var(--surface-hover)}
+
+/* --- global search (item 10) --- */
+.gsearch-wrap{position:relative;margin:1.5rem 0 1rem}
+/* directory sort tabs (Most markets / A–Z) need air above the grid */
+#esort{margin-bottom:1.1rem}
+.gsearch{width:100%;padding:.6rem .9rem;font-size:16px;font-family:inherit;border:1px solid var(--border);
+  border-radius:10px;background:var(--surface);color:var(--text)}
+.gsearch:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-dim)}
+.gsearch-results{position:absolute;top:100%;left:0;right:0;margin-top:.25rem;background:var(--surface);
+  border:1px solid var(--border);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.12);
+  max-height:22rem;overflow-y:auto;z-index:200;display:none}
+.gsearch-results.open{display:block}
+.gs-item{display:flex;align-items:center;gap:.55rem;padding:.5rem .8rem;border-bottom:1px solid var(--border);
+  text-decoration:none;color:var(--text)}
+.gs-item:last-child{border-bottom:none}
+.gs-item:hover{background:var(--surface-hover);text-decoration:none}
+.gs-item img{width:20px;height:20px;border-radius:50%;object-fit:cover;background:var(--surface-hover);flex-shrink:0}
+.gs-dot{width:8px;height:8px;border-radius:50%;background:var(--text-secondary);flex-shrink:0;margin:0 6px}
+.gs-dot.player{background:var(--accent)}.gs-dot.team{background:var(--green)}
+.gs-main{flex:1;font-size:.86rem;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gs-sub{font-family:'JetBrains Mono',monospace;font-size:.66rem;color:var(--text-secondary);flex-shrink:0}
+
+/* race chart (item 8): taller for the bottom legend */
+#racewrap{height:400px}
+@media(max-width:860px){#racewrap{height:340px}}
+
+/* race chart controls (isolate hint + Show all reset) */
+.race-controls{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap}
+.race-controls .showmore{margin:0}
+
+/* directory leaderboard (PR F): same look as standings tables, but the wrapper
+   stays visible on mobile (unlike .table-wrap which flips to cards) */
+.dirtable{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.lb-ent{display:flex;align-items:center;gap:.6rem;font-family:'DM Sans',sans-serif}
+.lb-ent img{width:28px;height:28px;border-radius:50%;object-fit:contain;background:var(--surface-hover);flex-shrink:0}
+.lb-ent span{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}

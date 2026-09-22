@@ -240,13 +240,6 @@
     if (!hasData["team"]) visibleCols["team"] = false;
     if (!hasData["age"]) visibleCols["age"] = false;
 
-    // Mobile: hide Season/Team/Age so Salary is the 3rd visible column
-    if (window.innerWidth <= 768) {
-      visibleCols["season"] = false;
-      visibleCols["team"] = false;
-      visibleCols["age"] = false;
-    }
-
     DEFAULT_SEASON = computeDefaultSeason();
     resolveSeasonPresets();
 
@@ -1898,6 +1891,10 @@
             else if (col.key === "player") tdClass = "player-name";
             else if (col.key === "awards") tdClass = "awards-cell";
 
+            // Presentation only: the mobile card layout in css/styles.css prints
+            // this as the cell's label once the column headings are gone.
+            var lblAttr = ' data-label="' + escAttr(col.label) + '"';
+
             // Multi-team cell: render each team as separate clickable span
             if (col.key === "team" && val && val.indexOf(", ") >= 0) {
               var teams = val.split(", ");
@@ -1905,16 +1902,16 @@
               var teamHtml = teams.map(function(t) {
                 return '<span class="team-link clickable" data-col="team" data-val="' + escAttr(t.trim()) + '">' + escHtml(t.trim()) + '</span>';
               }).join(", ");
-              html += '<td class="' + tdClass + '">' + teamHtml + '</td>';
+              html += '<td class="' + tdClass + '"' + lblAttr + '>' + teamHtml + '</td>';
             } else {
               // Make cells clickable (except awards which use badge-level clicks)
               var hasVal = val != null && val !== "" && (!Array.isArray(val) || val.length > 0);
               if (hasVal && col.key !== "awards") {
                 tdClass += " clickable";
                 var raw = Array.isArray(val) ? val.join(",") : String(val);
-                html += '<td class="' + tdClass + '" data-col="' + col.key + '" data-val="' + escAttr(raw) + '">' + fmtCell(col, val) + "</td>";
+                html += '<td class="' + tdClass + '"' + lblAttr + ' data-col="' + col.key + '" data-val="' + escAttr(raw) + '">' + fmtCell(col, val) + "</td>";
               } else {
-                html += '<td class="' + tdClass + '">' + fmtCell(col, val) + "</td>";
+                html += '<td class="' + tdClass + '"' + lblAttr + '>' + fmtCell(col, val) + "</td>";
               }
             }
           }
