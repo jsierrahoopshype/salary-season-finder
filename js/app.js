@@ -240,13 +240,6 @@
     if (!hasData["team"]) visibleCols["team"] = false;
     if (!hasData["age"]) visibleCols["age"] = false;
 
-    // Mobile: hide Season/Team/Age so Salary is the 3rd visible column
-    if (window.innerWidth <= 768) {
-      visibleCols["season"] = false;
-      visibleCols["team"] = false;
-      visibleCols["age"] = false;
-    }
-
     DEFAULT_SEASON = computeDefaultSeason();
     resolveSeasonPresets();
 

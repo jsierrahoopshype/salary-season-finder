@@ -22,6 +22,10 @@
   --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   --sidebar-width: 20.5rem;
+  /* Zebra stripe: a local addition, not a design system token. Deliberately
+     lighter than --surface-hover (#f0f0f2) so the hover tint still reads as
+     distinct on top of a striped row. */
+  --stripe: #fafafb;
   /* the mobile filter drawer / sticky bar breakpoint, kept at the value the
      tool already shipped; the table-to-cards switch uses the design system's
      860px instead (see the media queries at the bottom) */
@@ -760,6 +764,15 @@ table.nba-table tbody tr:last-child {
   border-bottom: none;
 }
 
+/* Zebra striping — a local addition on top of the design system's table.lb,
+   which uses row borders alone. The reference tables in that system carry five
+   or six columns; this one carries up to twenty-seven, and the stripe is what
+   keeps the eye on one row across the full scroll width. Declared before the
+   hover rule so hover wins on equal specificity. */
+table.nba-table tbody tr:nth-child(even) {
+  background: var(--stripe);
+}
+
 table.nba-table tbody tr:hover {
   background: var(--surface-hover);
 }
@@ -884,6 +897,14 @@ table.nba-table thead th:nth-child(2) {
 table.nba-table thead th.sorted:nth-child(1),
 table.nba-table thead th.sorted:nth-child(2) {
   background: #dfeaff; /* opaque twin of --accent-dim: sticky cells cannot be translucent */
+}
+
+/* The frozen columns paint their own opaque background, so they need the
+   stripe too or a striped row shows two white cells at its left edge. Again
+   declared before the hover pair so hover wins. */
+table.nba-table tbody tr:nth-child(even) td:nth-child(1),
+table.nba-table tbody tr:nth-child(even) td:nth-child(2) {
+  background: var(--stripe);
 }
 
 table.nba-table tbody tr:hover td:nth-child(1),
@@ -1151,8 +1172,15 @@ table.nba-table tbody tr:hover td:nth-child(2) {
     border-bottom: 1px solid var(--border);
   }
 
+  /* each row is its own card surface here, so the stripe has nothing to do */
+  table.nba-table tbody tr:nth-child(even),
   table.nba-table tbody tr:hover {
     background: var(--surface);
+  }
+
+  table.nba-table tbody tr:nth-child(even) td:nth-child(1),
+  table.nba-table tbody tr:nth-child(even) td:nth-child(2) {
+    background: none;
   }
 
   /* every cell is a label/value line... */
