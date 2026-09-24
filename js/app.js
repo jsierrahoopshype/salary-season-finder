@@ -20,6 +20,11 @@
   let _undraftedFilter = false;   // filter for undrafted players only
   let _savedRankVis = null;       // saved rank column visibility when entering combined mode
   let DEFAULT_SEASON = null;      // newest fully-rostered season; see computeDefaultSeason()
+  let _drawerReturnFocus = null;  // element focus returns to when the mobile drawer closes
+  let _scrollYBeforeLock = 0;     // page offset preserved across the drawer's body scroll lock
+
+  // The mobile filter drawer breakpoint — the value the tool already shipped.
+  const DRAWER_MEDIA = "(max-width: 768px)";
 
   // Column definitions
   const COLUMNS = [
@@ -248,13 +253,9 @@
     bindEvents();
     populatePresets();
 
-    // Mobile: open sidebar on load so users see filters first
-    if (window.innerWidth <= 768) {
-      var sb = document.getElementById("sidebar");
-      var ov = document.getElementById("sidebarOverlay");
-      if (sb) sb.classList.add("drawer-open");
-      if (ov) ov.classList.add("active");
-    }
+    // Below the desktop breakpoint the rail starts closed: the results are what
+    // the page is for, and the sticky "Filters" button reopens the drawer at any
+    // scroll position. Desktop keeps the rail permanently visible.
 
     loadStateFromURL();
     applyFilters();
@@ -365,32 +366,57 @@
       });
     });
 
-    // Sidebar toggle (mobile slide-out drawer)
-    var sidebar = document.getElementById("sidebar");
+    // Sidebar toggle (mobile slide-out drawer) — see the drawer helpers below
     var overlay = document.getElementById("sidebarOverlay");
 
-    // Mobile burger button to reopen sidebar
     var burger = document.getElementById("mobileBurger");
     if (burger) {
       burger.addEventListener("click", function () {
-        sidebar.classList.add("drawer-open");
-        overlay.classList.add("active");
+        openDrawer();
       });
     }
 
+    var drawerClose = document.getElementById("drawerCloseBtn");
+    if (drawerClose) {
+      drawerClose.addEventListener("click", function () {
+        closeDrawer();
+      });
+    }
+
+    // Backdrop tap
     overlay.addEventListener("click", function () {
-      sidebar.classList.remove("drawer-open");
-      overlay.classList.remove("active");
+      closeDrawer();
     });
 
-    // Mobile: "Show Results" closes sidebar
+    // Escape closes the drawer; Tab stays inside it while it is open
+    document.addEventListener("keydown", function (e) {
+      if (!isDrawerOpen()) return;
+      if (e.key === "Escape" || e.key === "Esc") {
+        e.preventDefault();
+        closeDrawer();
+      } else if (e.key === "Tab") {
+        trapDrawerTab(e);
+      }
+    });
+
+    // Mobile: "Show Results" closes the drawer (filter state is untouched)
     var showResultsBtn = document.getElementById("showResultsBtn");
     if (showResultsBtn) {
       showResultsBtn.addEventListener("click", function () {
         applyFilters();
-        sidebar.classList.remove("drawer-open");
-        overlay.classList.remove("active");
+        closeDrawer();
       });
+    }
+
+    // Leaving the mobile breakpoint with the drawer open would strand the scroll
+    // lock on a desktop layout that has no drawer to close.
+    if (window.matchMedia) {
+      var mq = window.matchMedia(DRAWER_MEDIA);
+      var onChange = function () {
+        if (!mq.matches && isDrawerOpen()) closeDrawer({ restoreFocus: false });
+      };
+      if (mq.addEventListener) mq.addEventListener("change", onChange);
+      else if (mq.addListener) mq.addListener(onChange);
     }
 
     // Clickable table cells (event delegation)
@@ -410,6 +436,17 @@
       if (cell) {
         handleCellClick(cell.dataset.col, cell.dataset.val);
       }
+    });
+
+    // Same click-to-filter contract inside the player season table
+    document.getElementById("playerView").addEventListener("click", function (e) {
+      var badge = e.target.closest(".award-badge[data-award]");
+      if (badge) {
+        handleCellClick("awards", badge.dataset.award);
+        return;
+      }
+      var teamLink = e.target.closest(".team-link[data-col]");
+      if (teamLink) handleCellClick(teamLink.dataset.col, teamLink.dataset.val);
     });
 
     // Breadcrumb navigation (Home resets to default)
@@ -500,6 +537,114 @@
     setupAutocomplete("playerSearch", "playerDropdown", function () {
       return DATA.players || [];
     });
+  }
+
+  /* ============================================
+     Mobile filter drawer
+     Below DRAWER_MEDIA the rail is an overlay drawer over the results: it starts
+     closed, the sticky "Filters (n)" button opens it, and a close button,
+     Escape, a backdrop tap or "Show Results" close it again. None of this runs
+     on desktop, where the rail is a permanent column.
+     ============================================ */
+
+  function isDrawerOpen() {
+    var sb = document.getElementById("sidebar");
+    return !!sb && sb.classList.contains("drawer-open");
+  }
+
+  function drawerFocusables() {
+    var sb = document.getElementById("sidebar");
+    if (!sb) return [];
+    var sel = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    return Array.prototype.filter.call(sb.querySelectorAll(sel), function (el) {
+      return el.offsetParent !== null || el === document.activeElement;
+    });
+  }
+
+  function trapDrawerTab(e) {
+    var items = drawerFocusables();
+    if (items.length === 0) return;
+    var first = items[0];
+    var last = items[items.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    } else if (items.indexOf(document.activeElement) < 0) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
+
+  // iOS ignores `overflow:hidden` on body alone, so pin the body at its current
+  // offset and put it back on close.
+  function lockBodyScroll() {
+    _scrollYBeforeLock = window.pageYOffset || document.documentElement.scrollTop || 0;
+    document.body.style.top = -_scrollYBeforeLock + "px";
+    document.body.classList.add("drawer-scroll-lock");
+  }
+
+  function unlockBodyScroll() {
+    if (!document.body.classList.contains("drawer-scroll-lock")) return;
+    document.body.classList.remove("drawer-scroll-lock");
+    document.body.style.top = "";
+    window.scrollTo(0, _scrollYBeforeLock);
+  }
+
+  function openDrawer() {
+    var sb = document.getElementById("sidebar");
+    var ov = document.getElementById("sidebarOverlay");
+    var burger = document.getElementById("mobileBurger");
+    if (!sb || isDrawerOpen()) return;
+
+    _drawerReturnFocus = document.activeElement;
+    sb.classList.add("drawer-open");
+    if (ov) ov.classList.add("active");
+    if (burger) burger.setAttribute("aria-expanded", "true");
+    sb.setAttribute("role", "dialog");
+    sb.setAttribute("aria-modal", "true");
+    sb.setAttribute("aria-labelledby", "sidebarTitle");
+    lockBodyScroll();
+
+    var closeBtn = document.getElementById("drawerCloseBtn");
+    var target = closeBtn && closeBtn.offsetParent !== null ? closeBtn : drawerFocusables()[0];
+    if (target) target.focus();
+  }
+
+  function closeDrawer(opts) {
+    var sb = document.getElementById("sidebar");
+    var ov = document.getElementById("sidebarOverlay");
+    var burger = document.getElementById("mobileBurger");
+    if (!sb || !isDrawerOpen()) return;
+    var restoreFocus = !opts || opts.restoreFocus !== false;
+
+    sb.classList.remove("drawer-open");
+    if (ov) ov.classList.remove("active");
+    if (burger) burger.setAttribute("aria-expanded", "false");
+    sb.removeAttribute("role");
+    sb.removeAttribute("aria-modal");
+    sb.removeAttribute("aria-labelledby");
+    unlockBodyScroll();
+
+    if (restoreFocus) {
+      var back = (burger && burger.offsetParent !== null) ? burger : _drawerReturnFocus;
+      if (back && typeof back.focus === "function") back.focus();
+    }
+    _drawerReturnFocus = null;
+  }
+
+  // "Filters" / "Filters (2)" — count comes from the same tag list the
+  // breadcrumb trail is built from, so the two never disagree.
+  function updateFilterCount(count) {
+    var el = document.getElementById("filterCount");
+    var burger = document.getElementById("mobileBurger");
+    if (el) el.textContent = count > 0 ? "(" + count + ")" : "";
+    if (burger) {
+      burger.classList.toggle("has-filters", count > 0);
+      burger.setAttribute("aria-label", count > 0 ? "Filters, " + count + " active" : "Filters");
+    }
   }
 
   // ---- Autocomplete ----
@@ -1507,6 +1652,7 @@
     }
 
     // Render
+    updateFilterCount(tags.length);
     if (tags.length === 0) {
       bar.style.display = "none";
       return;
@@ -1826,8 +1972,206 @@
     scrollToTop();
   }
 
+  /* ============================================
+     Player season table
+
+     One row per season for a single player, oldest first, so seasons already
+     under contract for the future fall at the bottom of the list. Built as a
+     standalone function over plain season records plus an options bag — no
+     reads of the page's filter state, no DOM lookups — so the pre-rendered
+     player pages can call it with the same records straight out of data.json.
+     Exposed on window at the bottom of this file.
+     ============================================ */
+
+  // Season, Team, Salary, % of cap, League rank, Team rank, Career earnings,
+  // Age and Awards as specified; Exp / GP / PPG / RPG / APG carried over from
+  // the per-season cards this table replaces, so no field is lost.
+  const PLAYER_SEASON_COLUMNS = [
+    { key: "season",             label: "Season",    cls: "ps-season" },
+    { key: "team",               label: "Team",      cls: "ps-team" },
+    { key: "salary",             label: "Salary",    cls: "ps-num ps-salary" },
+    { key: "salary_cap_pct",     label: "% of cap",  cls: "ps-num" },
+    { key: "salary_rank_league", label: "Lg rank",   cls: "ps-num" },
+    { key: "salary_rank_team",   label: "Tm rank",   cls: "ps-num" },
+    { key: "career_earnings",    label: "Career $",  cls: "ps-num ps-career" },
+    { key: "age",                label: "Age",       cls: "ps-num" },
+    { key: "years_exp",          label: "Exp",       cls: "ps-num" },
+    { key: "gp",                 label: "GP",        cls: "ps-num" },
+    { key: "ppg",                label: "PPG",       cls: "ps-num" },
+    { key: "rpg",                label: "RPG",       cls: "ps-num" },
+    { key: "apg",                label: "APG",       cls: "ps-num" },
+    { key: "awards",             label: "Awards",    cls: "ps-awards" },
+  ];
+
+  // Short money for the split-team cell, where two or three figures share one
+  // column. The exact number rides along in the title attribute.
+  function fmtSalaryShort(val) {
+    if (val == null) return "-";
+    var n = Math.round(val);
+    if (Math.abs(n) >= 1000000) return "$" + (n / 1000000).toFixed(1).replace(/\.0$/, "") + "M";
+    if (Math.abs(n) >= 1000) return "$" + Math.round(n / 1000) + "K";
+    return "$" + n;
+  }
+
+  function playerSeasonTeamCell(record, clickable) {
+    var ts = record.team_salaries;
+    var wrap = function (abbr) {
+      if (!clickable) return escHtml(abbr);
+      return '<span class="team-link clickable" data-col="team" data-val="' + escAttr(abbr) + '">' + escHtml(abbr) + "</span>";
+    };
+
+    // Mid-season move: team_salaries carries what each team actually paid.
+    // Ordered by amount so the team that carried the deal reads first.
+    if (ts && Object.keys(ts).length > 1) {
+      var keys = Object.keys(ts).sort(function (a, b) { return ts[b] - ts[a]; });
+      return '<span class="ps-team-split">' + keys.map(function (t) {
+        return '<span class="ps-team-part">' + wrap(t) +
+          ' <span class="ps-team-amt" title="' + escAttr(fmtSalary(ts[t])) + '">' + fmtSalaryShort(ts[t]) + "</span></span>";
+      }).join('<span class="ps-team-sep">/</span>') + "</span>";
+    }
+
+    var teams = String(record.team || "").split(",").map(function (t) { return t.trim(); }).filter(Boolean);
+    if (teams.length === 0) return "-";
+    return teams.map(wrap).join('<span class="ps-team-sep">/</span>');
+  }
+
+  function playerSeasonAwardsCell(awards, clickable) {
+    if (!awards || awards.length === 0) return '<span class="ps-empty">-</span>';
+    return awards.map(function (a) {
+      var cls = "award-badge";
+      if (clickable) cls += " clickable";
+      if (a.indexOf("All-Star") >= 0) cls += " all-star";
+      if (a.indexOf("Most Valuable Player") >= 0) cls += " mvp";
+      var dataAttr = clickable ? ' data-award="' + escAttr(a) + '"' : "";
+      return '<span class="' + cls + '"' + dataAttr + ">" + escHtml(a) + "</span>";
+    }).join(" ");
+  }
+
+  /**
+   * Build the markup for a player's season table.
+   *
+   * @param {Array}  records  season records for one player (any order)
+   * @param {Object} [opts]
+   *   opts.currentSeason  season treated as "now"; anything after it is
+   *                       contracted money. Defaults to the tool's own
+   *                       default-season calculation.
+   *   opts.playerName     shown above the table; omit to skip the heading.
+   *   opts.clickable      wire team / award cells for click-to-filter
+   *                       (default true in the app, pass false when
+   *                       pre-rendering a static page).
+   * @returns {string} HTML for the scroll container plus the table
+   */
+  function buildPlayerSeasonTable(records, opts) {
+    opts = opts || {};
+    var currentSeason = opts.currentSeason || DEFAULT_SEASON || "";
+    var currentYear = seasonYear(currentSeason);
+    var clickable = opts.clickable !== false;
+
+    var rows = (records || []).slice().sort(function (a, b) {
+      return seasonYear(a.season) - seasonYear(b.season);
+    });
+
+    var html = "";
+    if (opts.playerName) {
+      html += '<div class="ps-head"><h2 class="ps-name">' + escHtml(opts.playerName) + "</h2>" +
+        '<span class="ps-count">' + rows.length + (rows.length === 1 ? " season" : " seasons") + "</span></div>";
+    }
+
+    html += '<div class="ps-scroll"><table class="player-season-table"><thead><tr>';
+    PLAYER_SEASON_COLUMNS.forEach(function (col) {
+      html += '<th class="' + col.cls + '" scope="col">' + escHtml(col.label) + "</th>";
+    });
+    html += "</tr></thead><tbody>";
+
+    rows.forEach(function (r) {
+      var isFuture = currentYear > 0 && seasonYear(r.season) > currentYear;
+      html += '<tr class="ps-row' + (isFuture ? " ps-contracted" : "") + '">';
+
+      PLAYER_SEASON_COLUMNS.forEach(function (col) {
+        var v = r[col.key];
+        var cell;
+        switch (col.key) {
+          case "season":
+            cell = '<th class="' + col.cls + '" scope="row"><span class="ps-season-label">' + escHtml(r.season || "-") + "</span>" +
+              (isFuture ? '<span class="ps-tag">contracted</span>' : "") + "</th>";
+            html += cell;
+            return;
+          case "team":
+            cell = playerSeasonTeamCell(r, clickable);
+            break;
+          case "salary":
+          case "career_earnings":
+            cell = v == null ? '<span class="ps-empty">-</span>' : fmtSalary(v);
+            break;
+          case "salary_cap_pct":
+            cell = v == null ? '<span class="ps-empty">-</span>' : fmtPct(v);
+            break;
+          case "ppg":
+          case "rpg":
+          case "apg":
+            cell = v == null ? '<span class="ps-empty">-</span>' : fmtStat(v);
+            break;
+          case "awards":
+            cell = playerSeasonAwardsCell(v, clickable);
+            break;
+          default:
+            cell = v == null || v === "" ? '<span class="ps-empty">-</span>' : escHtml(String(v));
+        }
+        html += '<td class="' + col.cls + '">' + cell + "</td>";
+      });
+
+      html += "</tr>";
+    });
+
+    html += "</tbody></table></div>";
+
+    if (rows.some(function (r) { return currentYear > 0 && seasonYear(r.season) > currentYear; })) {
+      html += '<p class="ps-note"><span class="ps-tag">contracted</span> Scheduled money on a signed deal, not money already paid.</p>';
+    }
+
+    return html;
+  }
+
+  // Is the current result set a single player the user asked for by name?
+  // Returns that player's records, or null when the generic results table
+  // should render instead.
+  function playerViewRecords() {
+    var input = document.getElementById("playerSearch");
+    if (!input || !input.value.trim()) return null;
+    if (filtered.length === 0 || filtered[0]._combined) return null;
+    var name = filtered[0].player;
+    for (var i = 1; i < filtered.length; i++) {
+      if (filtered[i].player !== name) return null;
+    }
+    return filtered;
+  }
+
+  function renderPlayerView(records) {
+    var host = document.getElementById("playerView");
+    document.getElementById("tableWrapper").style.display = "none";
+    document.getElementById("colToggles").style.display = "none";
+    document.getElementById("emptyState").style.display = "none";
+    host.style.display = "";
+    host.innerHTML = buildPlayerSeasonTable(records, {
+      currentSeason: DEFAULT_SEASON,
+      playerName: records[0].player,
+      clickable: true,
+    });
+    document.getElementById("resultsCount").textContent =
+      "Showing " + records.length.toLocaleString() + (records.length === 1 ? " season" : " seasons");
+  }
+
   // ---- Table Rendering ----
   function renderTable() {
+    // A single named player renders as the player season table instead.
+    var pv = playerViewRecords();
+    if (pv) {
+      renderPlayerView(pv);
+      return;
+    }
+    document.getElementById("playerView").style.display = "none";
+    document.getElementById("playerView").innerHTML = "";
+    document.getElementById("colToggles").style.display = "";
     document.getElementById("tableWrapper").style.display = "";
 
     var activeCols = COLUMNS.filter(function (c) {
@@ -1929,7 +2273,9 @@
   }
 
   function scrollToTop() {
-    document.getElementById("tableWrapper").scrollIntoView({ behavior: "smooth", block: "start" });
+    var pv = document.getElementById("playerView");
+    var target = (pv && pv.style.display !== "none") ? pv : document.getElementById("tableWrapper");
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   // ---- Clear Filters ----
@@ -2100,6 +2446,15 @@
       });
     }
   }
+
+  /* The player season table is the one piece of this file that is meant to be
+     reused outside it — the pre-rendered player pages need the same markup.
+     Everything it needs travels in its arguments, so a caller only has to hand
+     it records and a current season. */
+  window.HoopsMaticPlayerSeasonTable = {
+    build: buildPlayerSeasonTable,
+    columns: PLAYER_SEASON_COLUMNS,
+  };
 
   // ---- Start ----
   loadData();

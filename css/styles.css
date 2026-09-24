@@ -913,6 +913,232 @@ table.nba-table tbody tr:hover td:nth-child(2) {
 }
 
 /* ==========================================================================
+   Player season table
+
+   The single-player view. Same table.lb tokens as the results table, but a
+   fixed column set and a fixed order (oldest season first, so seasons already
+   under contract land at the bottom), and its own scroll frame: this one stays
+   a sideways scroller at every width rather than switching to cards, with the
+   season column frozen at the left edge. .ps-scroll is the only thing that
+   scrolls sideways — the page body never does.
+   ========================================================================== */
+
+.player-view {
+  margin-bottom: 1rem;
+}
+
+.ps-head {
+  display: flex;
+  align-items: baseline;
+  gap: .6rem;
+  flex-wrap: wrap;
+  margin-bottom: .5rem;
+}
+
+.ps-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -.02em;
+}
+
+.ps-count {
+  font-family: var(--mono);
+  font-size: .64rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--text-secondary);
+}
+
+.ps-scroll {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+
+table.player-season-table {
+  width: 100%;
+  min-width: 46rem;
+  border-collapse: collapse;
+  font-size: .82rem;
+}
+
+table.player-season-table thead th {
+  background: var(--surface-hover);
+  color: var(--text-secondary);
+  font-family: var(--mono);
+  font-size: .62rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  padding: .6rem .55rem;
+  text-align: center;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--border);
+}
+
+table.player-season-table tbody tr {
+  border-bottom: 1px solid var(--border);
+}
+
+table.player-season-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+table.player-season-table tbody tr:nth-child(even) {
+  background: var(--stripe);
+}
+
+table.player-season-table tbody tr:hover {
+  background: var(--surface-hover);
+}
+
+table.player-season-table td,
+table.player-season-table tbody th {
+  padding: .45rem .55rem;
+  text-align: center;
+  vertical-align: middle;
+  font-family: var(--mono);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* every figure in this table is compared down its column */
+table.player-season-table th.ps-num,
+table.player-season-table td.ps-num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+table.player-season-table td.ps-salary {
+  font-weight: 600;
+  color: var(--green);
+}
+
+table.player-season-table td.ps-career {
+  color: var(--text-secondary);
+}
+
+table.player-season-table td.ps-team {
+  text-align: left;
+}
+
+/* one line per season is the whole point of this table, so the award badges
+   run along the row and ride the container's sideways scroll rather than
+   wrapping and stretching the row to four or five lines */
+table.player-season-table td.ps-awards {
+  text-align: left;
+  white-space: nowrap;
+}
+
+.ps-empty {
+  color: var(--text-secondary);
+  opacity: .6;
+}
+
+/* season column frozen at the left edge; it paints its own opaque background,
+   so the stripe, hover and contracted tints have to be repeated on it */
+table.player-season-table th.ps-season {
+  position: sticky;
+  left: 0;
+  z-index: 5;
+  text-align: left;
+  background: var(--surface);
+  font-family: var(--mono);
+  font-weight: 600;
+  min-width: 7.4rem;
+}
+
+table.player-season-table thead th.ps-season {
+  z-index: 15;
+  background: var(--surface-hover);
+}
+
+table.player-season-table tbody tr:nth-child(even) th.ps-season {
+  background: var(--stripe);
+}
+
+table.player-season-table tbody tr:hover th.ps-season {
+  background: var(--surface-hover);
+}
+
+.ps-season-label {
+  display: inline-block;
+}
+
+/* split team cell for a mid-season move: "OKC $26.2M / NYK $8.7M" */
+.ps-team-split {
+  display: inline-flex;
+  align-items: baseline;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  gap: .15rem;
+}
+
+.ps-team-amt {
+  color: var(--text-secondary);
+  font-size: .74rem;
+}
+
+.ps-team-sep {
+  color: var(--border);
+  margin: 0 .3rem;
+}
+
+/* seasons past the current one: money scheduled, not money paid */
+table.player-season-table tbody tr.ps-contracted,
+table.player-season-table tbody tr.ps-contracted:nth-child(even) {
+  background: var(--orange-dim);
+}
+
+table.player-season-table tbody tr.ps-contracted th.ps-season,
+table.player-season-table tbody tr.ps-contracted:nth-child(even) th.ps-season {
+  background: #fdf3e0; /* opaque twin of --orange-dim: sticky cells cannot be translucent */
+  box-shadow: inset 3px 0 0 var(--orange);
+}
+
+table.player-season-table tbody tr.ps-contracted:hover,
+table.player-season-table tbody tr.ps-contracted:hover th.ps-season {
+  background: #fbe9cd;
+}
+
+table.player-season-table tbody tr.ps-contracted td.ps-salary {
+  color: var(--orange);
+}
+
+.ps-tag {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: .52rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  padding: .08rem .3rem;
+  border-radius: 4px;
+  background: var(--orange);
+  color: #fff;
+  margin-left: .35rem;
+  vertical-align: middle;
+}
+
+.ps-note {
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+  font-family: var(--mono);
+  font-size: .62rem;
+  color: var(--text-secondary);
+  margin-top: .5rem;
+}
+
+.ps-note .ps-tag {
+  margin-left: 0;
+}
+
+/* ==========================================================================
    States
    ========================================================================== */
 
@@ -982,8 +1208,19 @@ table.nba-table tbody tr:hover td:nth-child(2) {
    ========================================================================== */
 
 .mobile-burger,
-.mobile-show-results {
+.mobile-show-results,
+.drawer-close {
   display: none;
+}
+
+/* the body is pinned while the filter drawer is open — iOS ignores overflow
+   alone, so the offset is held here and restored in closeDrawer() */
+body.drawer-scroll-lock {
+  position: fixed;
+  left: 0;
+  right: 0;
+  width: 100%;
+  overflow: hidden;
 }
 
 .mobile-sticky-top {
@@ -1275,6 +1512,22 @@ table.nba-table tbody tr:hover td:nth-child(2) {
     font-size: .88rem;
   }
 
+  /* the player season table keeps its columns and scrolls sideways inside
+     .ps-scroll rather than joining the table-to-cards switch above — one row
+     per season is the point of it */
+  table.player-season-table {
+    font-size: .76rem;
+    min-width: 42rem;
+  }
+
+  table.player-season-table th.ps-season {
+    min-width: 6.6rem;
+  }
+
+  .ps-name {
+    font-size: .95rem;
+  }
+
   /* 27 column chips ran to a third of a screen. Cap and scroll them in place,
      the way reporter-rankings caps its team / player picker on a phone. */
   .col-toggles {
@@ -1330,11 +1583,37 @@ table.nba-table tbody tr:hover td:nth-child(2) {
     transition: transform .25s ease;
     border-right: 1px solid var(--border);
     box-shadow: 4px 0 16px rgba(0, 0, 0, .15);
-    padding-bottom: 4.5rem;
+    /* clears the sticky "Show Results" footer plus the home indicator */
+    padding-bottom: calc(4.5rem + env(safe-area-inset-bottom));
+    padding-left: env(safe-area-inset-left);
   }
 
   .sidebar.drawer-open {
     transform: translateX(0);
+  }
+
+  .sidebar-header {
+    padding-top: calc(1rem + env(safe-area-inset-top));
+  }
+
+  /* drawer close — only exists while the rail is an overlay */
+  .drawer-close {
+    display: block;
+    font-family: var(--mono);
+    font-size: 1.15rem;
+    line-height: 1;
+    padding: .2rem .45rem;
+    background: none;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    color: var(--text-secondary);
+    cursor: pointer;
+  }
+
+  .drawer-close:hover,
+  .drawer-close:focus-visible {
+    border-color: var(--accent);
+    color: var(--accent);
   }
 
   /* "Show Results" pinned to the bottom of the drawer */
@@ -1344,7 +1623,7 @@ table.nba-table tbody tr:hover td:nth-child(2) {
     bottom: 0;
     left: 0;
     width: 100%;
-    padding: .7rem 1rem;
+    padding: .7rem 1rem calc(.7rem + env(safe-area-inset-bottom));
     background: var(--surface);
     border-top: 1px solid var(--border);
     box-shadow: 0 -2px 8px rgba(0, 0, 0, .08);
@@ -1364,7 +1643,8 @@ table.nba-table tbody tr:hover td:nth-child(2) {
     cursor: pointer;
   }
 
-  /* fixed top: filter button + breadcrumbs */
+  /* fixed top: filter button + breadcrumbs. Fixed rather than sticky so the
+     button is reachable at every scroll position, drawer open or closed. */
   .mobile-sticky-top {
     position: fixed;
     top: 0;
@@ -1372,12 +1652,17 @@ table.nba-table tbody tr:hover td:nth-child(2) {
     right: 0;
     z-index: 100;
     background: var(--bg);
-    padding: .4rem .5rem .5rem;
+    padding: calc(.4rem + env(safe-area-inset-top))
+             calc(.5rem + env(safe-area-inset-right))
+             .5rem
+             calc(.5rem + env(safe-area-inset-left));
     box-shadow: 0 2px 6px rgba(0, 0, 0, .06);
   }
 
   .mobile-burger {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: .4rem;
     width: 100%;
     font-family: var(--mono);
     font-size: .74rem;
@@ -1392,9 +1677,20 @@ table.nba-table tbody tr:hover td:nth-child(2) {
     text-align: left;
   }
 
-  .mobile-burger:hover {
+  .mobile-burger:hover,
+  .mobile-burger:focus-visible {
     border-color: var(--accent);
     color: var(--accent);
+  }
+
+  /* an active count is the one thing on this bar worth colouring */
+  .mobile-burger.has-filters {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .mobile-burger .burger-count {
+    font-weight: 700;
   }
 
   .mobile-sticky-top .breadcrumb-bar {
@@ -1402,7 +1698,7 @@ table.nba-table tbody tr:hover td:nth-child(2) {
   }
 
   .main-content {
-    padding-top: 3.4rem;
+    padding-top: calc(3.4rem + env(safe-area-inset-top));
   }
 
   /* iOS zooms any input under 16px on focus */
