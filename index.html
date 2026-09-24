@@ -74,9 +74,16 @@
         </div>
         <div class="filter-section-body">
           <div class="filter-row autocomplete-wrapper">
-            <label class="filter-label">Player Name</label>
-            <input class="filter-input" type="text" id="playerSearch" placeholder="Search player..." aria-label="Player name search" autocomplete="off">
-            <div class="autocomplete-dropdown" id="playerDropdown"></div>
+            <label class="filter-label" id="playerSearchLabel" for="playerSearch">Player Name</label>
+            <!-- combobox/listbox pair: js/app.js owns aria-expanded and
+                 aria-activedescendant, the rows own role="option" -->
+            <input class="filter-input" type="text" id="playerSearch" placeholder="Search player..."
+                   autocomplete="off" role="combobox" aria-expanded="false"
+                   aria-controls="playerDropdown" aria-autocomplete="list"
+                   aria-labelledby="playerSearchLabel" aria-describedby="playerSuggestHint">
+            <div class="autocomplete-dropdown player-suggest" id="playerDropdown" role="listbox" aria-labelledby="playerSearchLabel"></div>
+            <span class="sr-only" id="playerSuggestHint">Type at least two letters, then use the arrow keys to pick a player.</span>
+            <span class="sr-only" id="playerSuggestStatus" role="status" aria-live="polite"></span>
           </div>
           <div class="filter-row">
             <label class="filter-label">Position</label>
@@ -340,34 +347,6 @@
         <h1>NBA Salary Season Finder</h1>
         <span class="brand">HoopsMatic</span>
       </div>
-      <div class="subtitle">Every NBA player season, filterable by salary, share of the cap, league salary rank, production, awards and draft slot. Click any cell to filter by it.</div>
-
-      <!-- Summary stats -->
-      <div class="summary-bar" id="summaryBar">
-        <div class="summary-stat">
-          <span class="stat-label">Matching</span>
-          <span class="stat-value" id="summaryCount">0</span>
-          <span class="stat-detail">seasons</span>
-        </div>
-        <div class="summary-stat">
-          <span class="stat-label">Avg Salary</span>
-          <span class="stat-value" id="summaryAvgSalary">$0</span>
-        </div>
-        <div class="summary-stat">
-          <span class="stat-label">Avg Cap %</span>
-          <span class="stat-value" id="summaryAvgCap">0%</span>
-        </div>
-        <div class="summary-stat">
-          <span class="stat-label">Highest Salary</span>
-          <span class="stat-value" id="summaryHighSalary">$0</span>
-          <span class="stat-detail" id="summaryHighPlayer"></span>
-        </div>
-        <div class="summary-stat">
-          <span class="stat-label">Total Salary</span>
-          <span class="stat-value" id="summaryTotalSalary">$0</span>
-        </div>
-      </div>
-
       <!-- Column toggles -->
       <div class="results-header">
         <span class="results-count" id="resultsCount">Showing 0 results</span>

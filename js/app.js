@@ -21,7 +21,8 @@
   let _savedRankVis = null;       // saved rank column visibility when entering combined mode
   let DEFAULT_SEASON = null;      // newest fully-rostered season; see computeDefaultSeason()
   let _drawerReturnFocus = null;  // element focus returns to when the mobile drawer closes
-  let _scrollYBeforeLock = 0;     // page offset preserved across the drawer's body scroll lock
+  let _exactPlayer = null;        // lowercased name pinned by a suggestion pick
+  let PLAYER_INDEX = [];          // one entry per player, for the suggestion list
 
   // The mobile filter drawer breakpoint — the value the tool already shipped.
   const DRAWER_MEDIA = "(max-width: 768px)";
@@ -252,14 +253,23 @@
     buildColumnToggles();
     bindEvents();
     populatePresets();
+    buildPlayerIndex();
+    watchSiteNavHeight();
     watchMobileTopOffset();
-
-    // Below the desktop breakpoint the rail starts closed: the results are what
-    // the page is for, and the sticky "Filters" button reopens the drawer at any
-    // scroll position. Desktop keeps the rail permanently visible.
 
     loadStateFromURL();
     applyFilters();
+
+    // Below the desktop breakpoint the drawer starts OPEN: the filters are what
+    // a phone visitor came for, and the results they would otherwise see first
+    // are one default season deep. Closing it is a × in the drawer header, the
+    // "Show Results" button or a backdrop tap, and the fixed "Filters (n)"
+    // button under the site nav opens it again at any scroll position. No focus
+    // grab on load — the drawer is already the thing on screen.
+    // Desktop keeps the rail as a permanent column and is untouched.
+    if (window.matchMedia && window.matchMedia(DRAWER_MEDIA).matches) {
+      openDrawer({ focus: false });
+    }
   }
 
   // ---- Populate filter dropdowns ----
@@ -534,10 +544,8 @@
       });
     });
 
-    // Player search autocomplete
-    setupAutocomplete("playerSearch", "playerDropdown", function () {
-      return DATA.players || [];
-    });
+    // Player search: a suggestion list, not a plain autocomplete (see below)
+    setupPlayerSuggest();
   }
 
   /* ============================================
@@ -579,26 +587,33 @@
     }
   }
 
-  // iOS ignores `overflow:hidden` on body alone, so pin the body at its current
-  // offset and put it back on close.
-  function lockBodyScroll() {
-    _scrollYBeforeLock = window.pageYOffset || document.documentElement.scrollTop || 0;
-    document.body.style.top = -_scrollYBeforeLock + "px";
-    document.body.classList.add("drawer-scroll-lock");
+  // The drawer used to lock the page by pinning <body> with `position: fixed`.
+  // That also flattened every `position: sticky` element on the page, the
+  // HoopsMatic site nav the hoopsmatic.com Worker injects above this tool
+  // included, so the nav stopped tracking the top of the viewport for as long
+  // as the drawer was open. The lock now sits on the drawer and the backdrop:
+  // `overscroll-behavior: contain` on the drawer keeps its scroll to itself and
+  // the backdrop swallows the touch. <body> is never repositioned.
+  function blockBackdropScroll(e) {
+    e.preventDefault();
   }
 
-  function unlockBodyScroll() {
-    if (!document.body.classList.contains("drawer-scroll-lock")) return;
-    document.body.classList.remove("drawer-scroll-lock");
-    document.body.style.top = "";
-    window.scrollTo(0, _scrollYBeforeLock);
+  function lockBackgroundScroll() {
+    var ov = document.getElementById("sidebarOverlay");
+    if (ov) ov.addEventListener("touchmove", blockBackdropScroll, { passive: false });
   }
 
-  function openDrawer() {
+  function unlockBackgroundScroll() {
+    var ov = document.getElementById("sidebarOverlay");
+    if (ov) ov.removeEventListener("touchmove", blockBackdropScroll);
+  }
+
+  function openDrawer(opts) {
     var sb = document.getElementById("sidebar");
     var ov = document.getElementById("sidebarOverlay");
     var burger = document.getElementById("mobileBurger");
     if (!sb || isDrawerOpen()) return;
+    var moveFocus = !opts || opts.focus !== false;
 
     _drawerReturnFocus = document.activeElement;
     sb.classList.add("drawer-open");
@@ -607,8 +622,9 @@
     sb.setAttribute("role", "dialog");
     sb.setAttribute("aria-modal", "true");
     sb.setAttribute("aria-labelledby", "sidebarTitle");
-    lockBodyScroll();
+    lockBackgroundScroll();
 
+    if (!moveFocus) return;
     var closeBtn = document.getElementById("drawerCloseBtn");
     var target = closeBtn && closeBtn.offsetParent !== null ? closeBtn : drawerFocusables()[0];
     if (target) target.focus();
@@ -627,13 +643,75 @@
     sb.removeAttribute("role");
     sb.removeAttribute("aria-modal");
     sb.removeAttribute("aria-labelledby");
-    unlockBodyScroll();
+    unlockBackgroundScroll();
 
     if (restoreFocus) {
       var back = (burger && burger.offsetParent !== null) ? burger : _drawerReturnFocus;
       if (back && typeof back.focus === "function") back.focus();
     }
     _drawerReturnFocus = null;
+  }
+
+  /* ============================================
+     Injected site nav
+
+     hoopsmatic.com is served through a Cloudflare Worker that injects the
+     shared HoopsMatic nav above this page's own markup. That nav pins itself
+     to the top of the viewport. This tool's mobile chrome is fixed too, and at
+     top:0 it covered the nav outright — burger included — which is why the nav
+     read as "not sticky, no burger" on a phone. (The same top:0 bar was on main
+     before the mobile-drawer PR, so this predates that work.)
+
+     Measure whatever the host pins above us and publish it as --site-nav-h.
+     The stylesheet offsets the fixed "Filters" bar, the drawer and the backdrop
+     by it. With no injected nav — a local checkout, GitHub Pages — it is 0 and
+     everything sits where it did.
+     ============================================ */
+
+  // Direct children of <body> that this page did not put there and that pin
+  // themselves to the top of the viewport.
+  function measureSiteNavHeight() {
+    var bottom = 0;
+    var kids = document.body ? document.body.children : [];
+    for (var i = 0; i < kids.length; i++) {
+      var el = kids[i];
+      if (!el.tagName) continue;
+      var tag = el.tagName;
+      if (tag === "SCRIPT" || tag === "STYLE" || tag === "LINK" || tag === "NOSCRIPT" || tag === "TEMPLATE") continue;
+      // ours
+      if (el.id === "loading") continue;
+      if (el.classList && (el.classList.contains("sidebar-overlay") ||
+                           el.classList.contains("app-layout") ||
+                           el.classList.contains("site-footer"))) continue;
+      var cs = window.getComputedStyle(el);
+      if (cs.display === "none" || cs.visibility === "hidden") continue;
+      if (cs.position !== "fixed" && cs.position !== "sticky") continue;
+      var top = parseFloat(cs.top);
+      if (isNaN(top) || top > 1) continue;   // pinned somewhere else, not our problem
+      var r = el.getBoundingClientRect();
+      if (r.height > 0 && r.top <= 1 && r.bottom > bottom) bottom = r.bottom;
+    }
+    return Math.round(bottom);
+  }
+
+  function syncSiteNavHeight() {
+    document.documentElement.style.setProperty("--site-nav-h", measureSiteNavHeight() + "px");
+  }
+
+  function watchSiteNavHeight() {
+    syncSiteNavHeight();
+    window.addEventListener("resize", syncSiteNavHeight);
+    window.addEventListener("orientationchange", syncSiteNavHeight);
+    window.addEventListener("load", syncSiteNavHeight);
+    // the nav is injected and may hydrate, swap logo or wrap after we first run
+    if (window.ResizeObserver) {
+      var ro = new ResizeObserver(syncSiteNavHeight);
+      if (document.body) ro.observe(document.body);
+    }
+    if (window.MutationObserver && document.body) {
+      new MutationObserver(syncSiteNavHeight).observe(document.body, { childList: true });
+    }
+    [150, 600, 2000].forEach(function (ms) { setTimeout(syncSiteNavHeight, ms); });
   }
 
   // The mobile top bar is fixed, so the content below it has to be pushed down
@@ -674,85 +752,249 @@
     }
   }
 
-  // ---- Autocomplete ----
-  function setupAutocomplete(inputId, dropdownId, getItems) {
-    var input = document.getElementById(inputId);
-    var dropdown = document.getElementById(dropdownId);
+  /* ============================================
+     Player name suggestions
+
+     The player filter matches by substring, so "Jabari Smith" is two players
+     (Jabari Smith and Jabari Smith Sr) and the results stay a generic table
+     with no obvious next step. From two characters the field offers the
+     matching players by name, with the seasons they are in the data for and
+     the team of their most recent one. Picking a row pins that exact name,
+     closes the drawer and renders his season table.
+
+     Wired as the ARIA combobox/listbox pair: the input owns aria-expanded and
+     aria-activedescendant, each row is a role="option".
+     ============================================ */
+
+  const SUGGEST_MIN_CHARS = 2;
+  const SUGGEST_MAX_ROWS = 8;
+
+  // One entry per player: name, the span of seasons in the data, and the team
+  // of the latest of them. Built once, off the same records the table renders.
+  function buildPlayerIndex() {
+    var byName = Object.create(null);
+    (DATA.seasons || []).forEach(function (r) {
+      var name = r.player;
+      if (!name) return;
+      var year = seasonYear(r.season);
+      var e = byName[name];
+      if (!e) {
+        byName[name] = {
+          name: name,
+          lower: name.toLowerCase(),
+          firstSeason: r.season, firstYear: year,
+          lastSeason: r.season, lastYear: year,
+          lastTeam: r.team || ""
+        };
+        return;
+      }
+      if (year < e.firstYear) { e.firstYear = year; e.firstSeason = r.season; }
+      if (year >= e.lastYear) { e.lastYear = year; e.lastSeason = r.season; e.lastTeam = r.team || e.lastTeam; }
+    });
+    PLAYER_INDEX = Object.keys(byName).map(function (k) { return byName[k]; });
+  }
+
+  // Exact name, then name-start, then any word start, then anywhere. Within a
+  // band the more recent player comes first — "Jabari Smith" outranks his
+  // father, who last played in 2004-05.
+  function suggestScore(entry, query) {
+    var i = entry.lower.indexOf(query);
+    if (i < 0) return -1;
+    if (entry.lower === query) return 0;
+    if (i === 0) return 1;
+    if (entry.lower.charAt(i - 1) === " " || entry.lower.charAt(i - 1) === "-") return 2;
+    return 3;
+  }
+
+  function playerSuggestions(query) {
+    query = (query || "").toLowerCase().trim();
+    if (query.length < SUGGEST_MIN_CHARS) return [];
+    var hits = [];
+    for (var i = 0; i < PLAYER_INDEX.length; i++) {
+      var score = suggestScore(PLAYER_INDEX[i], query);
+      if (score >= 0) hits.push({ entry: PLAYER_INDEX[i], score: score });
+    }
+    hits.sort(function (a, b) {
+      if (a.score !== b.score) return a.score - b.score;
+      if (a.entry.lastYear !== b.entry.lastYear) return b.entry.lastYear - a.entry.lastYear;
+      return a.entry.name.localeCompare(b.entry.name);
+    });
+    return hits.slice(0, SUGGEST_MAX_ROWS).map(function (h) { return h.entry; });
+  }
+
+  function suggestSeasonLabel(entry) {
+    return entry.firstSeason === entry.lastSeason
+      ? entry.firstSeason
+      : entry.firstSeason + "\u2013" + entry.lastSeason;
+  }
+
+  // A picked suggestion is a fresh, single-player question: clear everything,
+  // open every season, pin the exact name and let renderTable() hand it to the
+  // player season table.
+  function selectPlayerSuggestion(name) {
+    clearFiltersQuiet();
+
+    var seasons = DATA.seasons_list || [];
+    var asc = seasons.slice().reverse();
+    document.getElementById("seasonFrom").value = asc[0] || "";
+    document.getElementById("seasonTo").value = seasons[0] || "";
+
+    document.getElementById("playerSearch").value = name;
+    _exactPlayer = name.toLowerCase();
+
+    // one row per season is the point of the player table
+    var combineEl = document.getElementById("combineToggle");
+    if (combineEl) combineEl.checked = false;
+    sortCol = "season";
+    sortDir = "desc";
+
+    applyFilters();
+    closeDrawer();
+    scrollToTop();
+  }
+
+  function setupPlayerSuggest() {
+    var input = document.getElementById("playerSearch");
+    var list = document.getElementById("playerDropdown");
+    var status = document.getElementById("playerSuggestStatus");
+    if (!input || !list) return;
+    var current = [];       // entries currently rendered
     var highlighted = -1;
 
-    input.addEventListener("input", function () {
-      var query = input.value.toLowerCase().trim();
-      if (!query || query.length < 2) {
-        dropdown.classList.remove("open");
-        return;
-      }
-      var items = getItems();
-      var matches = items.filter(function (item) {
-        return item.toLowerCase().indexOf(query) >= 0;
-      }).slice(0, 20);
-
-      if (matches.length === 0) {
-        dropdown.classList.remove("open");
-        return;
-      }
-
-      dropdown.innerHTML = "";
+    function close() {
+      list.classList.remove("open");
+      list.innerHTML = "";
+      input.setAttribute("aria-expanded", "false");
+      input.removeAttribute("aria-activedescendant");
+      current = [];
       highlighted = -1;
-      matches.forEach(function (m, i) {
-        var div = document.createElement("div");
-        div.className = "autocomplete-item";
-        div.textContent = m;
-        div.addEventListener("mousedown", function (e) {
+    }
+
+    function setHighlight(next) {
+      highlighted = next;
+      var rows = list.querySelectorAll(".suggest-item");
+      for (var i = 0; i < rows.length; i++) {
+        var on = i === highlighted;
+        rows[i].classList.toggle("highlighted", on);
+        rows[i].setAttribute("aria-selected", on ? "true" : "false");
+      }
+      if (highlighted >= 0 && rows[highlighted]) {
+        input.setAttribute("aria-activedescendant", rows[highlighted].id);
+      } else {
+        input.removeAttribute("aria-activedescendant");
+      }
+    }
+
+    function render(entries) {
+      current = entries;
+      highlighted = -1;
+      list.innerHTML = "";
+      entries.forEach(function (entry, i) {
+        var row = document.createElement("div");
+        row.className = "suggest-item";
+        row.id = "playerSuggest-" + i;
+        row.setAttribute("role", "option");
+        row.setAttribute("aria-selected", "false");
+
+        var main = document.createElement("span");
+        main.className = "suggest-main";
+        var nameEl = document.createElement("span");
+        nameEl.className = "suggest-name";
+        nameEl.textContent = entry.name;
+        var metaEl = document.createElement("span");
+        metaEl.className = "suggest-meta";
+        metaEl.textContent = suggestSeasonLabel(entry);
+        main.appendChild(nameEl);
+        main.appendChild(metaEl);
+        row.appendChild(main);
+
+        if (entry.lastTeam) {
+          var teamEl = document.createElement("span");
+          teamEl.className = "suggest-team";
+          teamEl.textContent = entry.lastTeam;
+          row.appendChild(teamEl);
+        }
+
+        // mousedown, not click: it lands before the input's blur, so the row is
+        // still there when the finger lifts
+        row.addEventListener("mousedown", function (e) {
           e.preventDefault();
-          input.value = m;
-          dropdown.classList.remove("open");
-          applyFilters();
+          close();
+          selectPlayerSuggestion(entry.name);
         });
-        dropdown.appendChild(div);
+        list.appendChild(row);
       });
-      dropdown.classList.add("open");
+      list.classList.add("open");
+      input.setAttribute("aria-expanded", "true");
+      if (status) {
+        status.textContent = entries.length === 1
+          ? "1 player matches"
+          : entries.length + " players match";
+      }
+    }
+
+    input.addEventListener("input", function () {
+      // typing again reopens the substring search
+      _exactPlayer = null;
+      var entries = playerSuggestions(input.value);
+      if (entries.length === 0) { close(); return; }
+      render(entries);
+    });
+
+    input.addEventListener("focus", function () {
+      if (input.value.trim().length >= SUGGEST_MIN_CHARS && !list.classList.contains("open")) {
+        var entries = playerSuggestions(input.value);
+        if (entries.length > 0) render(entries);
+      }
     });
 
     input.addEventListener("keydown", function (e) {
-      var items = dropdown.querySelectorAll(".autocomplete-item");
-      if (!dropdown.classList.contains("open") || items.length === 0) {
-        if (e.key === "Enter") {
-          applyFilters();
-        }
+      var open = list.classList.contains("open") && current.length > 0;
+
+      if (e.key === "ArrowDown" && open) {
+        e.preventDefault();
+        setHighlight(highlighted < current.length - 1 ? highlighted + 1 : 0);
         return;
       }
-      if (e.key === "ArrowDown") {
+      if (e.key === "ArrowUp" && open) {
         e.preventDefault();
-        highlighted = Math.min(highlighted + 1, items.length - 1);
-        updateHighlight(items);
-      } else if (e.key === "ArrowUp") {
-        e.preventDefault();
-        highlighted = Math.max(highlighted - 1, 0);
-        updateHighlight(items);
-      } else if (e.key === "Enter") {
-        e.preventDefault();
-        if (highlighted >= 0 && highlighted < items.length) {
-          input.value = items[highlighted].textContent;
-          dropdown.classList.remove("open");
-          applyFilters();
-        }
-      } else if (e.key === "Escape") {
-        dropdown.classList.remove("open");
+        setHighlight(highlighted > 0 ? highlighted - 1 : current.length - 1);
+        return;
       }
+      if (e.key === "Escape") {
+        // Escape closes the suggestion list first; the drawer's own Escape
+        // handler on document only gets it once the list is already shut.
+        if (open) { e.preventDefault(); e.stopPropagation(); close(); }
+        return;
+      }
+      if (e.key !== "Enter") return;
+
+      // Enter on a highlighted row takes that row.
+      if (open && highlighted >= 0) {
+        e.preventDefault();
+        var picked = current[highlighted];
+        close();
+        selectPlayerSuggestion(picked.name);
+        return;
+      }
+      // Enter on text that names exactly one player takes that player.
+      var typed = input.value.toLowerCase().trim();
+      var exact = PLAYER_INDEX.filter(function (p) { return p.lower === typed; });
+      if (exact.length === 1) {
+        e.preventDefault();
+        close();
+        selectPlayerSuggestion(exact[0].name);
+        return;
+      }
+      // Anything else keeps the old behaviour: filter on what was typed.
+      e.preventDefault();
+      close();
+      applyFilters();
     });
 
     input.addEventListener("blur", function () {
-      setTimeout(function () { dropdown.classList.remove("open"); }, 150);
+      setTimeout(close, 150);
     });
-
-    function updateHighlight(items) {
-      items.forEach(function (item, i) {
-        item.classList.toggle("highlighted", i === highlighted);
-      });
-      if (highlighted >= 0 && items[highlighted]) {
-        items[highlighted].scrollIntoView({ block: "nearest" });
-      }
-    }
   }
 
   // ---- Presets ----
@@ -1130,7 +1372,13 @@
     if (f.earningsMax != null && (record.career_earnings == null || record.career_earnings > f.earningsMax)) return false;
 
     // Player search
-    if (f.playerSearch && record.player.toLowerCase().indexOf(f.playerSearch) < 0) return false;
+    // A suggestion pick names one player, so it matches on the whole name.
+    // Typing keeps the substring match: "smith" is still every Smith.
+    if (_exactPlayer) {
+      if (record.player.toLowerCase() !== _exactPlayer) return false;
+    } else if (f.playerSearch && record.player.toLowerCase().indexOf(f.playerSearch) < 0) {
+      return false;
+    }
 
     // Position (exact match from cell click, or substring from sidebar chips)
     if (_exactPos) {
@@ -1417,9 +1665,6 @@
     // Sort
     sortData();
 
-    // Update summary
-    updateSummary();
-
     // Update URL state
     saveStateToURL();
 
@@ -1461,38 +1706,6 @@
     });
   }
 
-  // ---- Summary Bar ----
-  function updateSummary() {
-    var count = filtered.length;
-    var totalSalary = 0;
-    var totalCap = 0;
-    var capCount = 0;
-    var highSalary = 0;
-    var highPlayer = "";
-
-    for (var i = 0; i < count; i++) {
-      var r = filtered[i];
-      if (r.salary) {
-        totalSalary += r.salary;
-        if (r.salary > highSalary) {
-          highSalary = r.salary;
-          highPlayer = r.player + " (" + r.season + ")";
-        }
-      }
-      if (r.salary_cap_pct != null) {
-        totalCap += r.salary_cap_pct;
-        capCount++;
-      }
-    }
-
-    document.getElementById("summaryCount").textContent = count.toLocaleString();
-    document.getElementById("summaryAvgSalary").textContent = count > 0 ? fmtSalary(totalSalary / count) : "$0";
-    document.getElementById("summaryAvgCap").textContent = capCount > 0 ? (totalCap / capCount).toFixed(1) + "%" : "0%";
-    document.getElementById("summaryHighSalary").textContent = fmtSalary(highSalary);
-    document.getElementById("summaryHighPlayer").textContent = highPlayer;
-    document.getElementById("summaryTotalSalary").textContent = fmtSalary(totalSalary);
-  }
-
   // ---- Breadcrumb Rendering (shows all active filters) ----
   function renderBreadcrumbs() {
     var bar = document.getElementById("breadcrumbBar");
@@ -1517,6 +1730,7 @@
     // Player
     if (f.playerSearch) tags.push({ label: "Player", value: f.playerSearch, clear: function() {
       document.getElementById("playerSearch").value = "";
+      _exactPlayer = null;
     }});
 
     // Position
@@ -2343,6 +2557,7 @@
 
     _exactLeagueRank = null;
     _exactPos = null;
+    _exactPlayer = null;
     _teammateFilter = null;
     _teammateLabel = null;
     _teammateExclude = null;
@@ -2393,6 +2608,7 @@
     if (f.earningsMin != null) params.earn_min = f.earningsMin;
     if (f.earningsMax != null) params.earn_max = f.earningsMax;
     if (f.playerSearch) params.player = f.playerSearch;
+    if (_exactPlayer) params.player_exact = 1;
     if (f.positions.length > 0) params.pos = f.positions.join(",");
     if (f.ageMin != null) params.age_min = f.ageMin;
     if (f.ageMax != null) params.age_max = f.ageMax;
@@ -2447,7 +2663,10 @@
     if (params.cpg_max) document.getElementById("cpgMax").value = params.cpg_max;
     if (params.earn_min) document.getElementById("earningsMin").value = params.earn_min;
     if (params.earn_max) document.getElementById("earningsMax").value = params.earn_max;
-    if (params.player) document.getElementById("playerSearch").value = params.player;
+    if (params.player) {
+      document.getElementById("playerSearch").value = params.player;
+      if (params.player_exact) _exactPlayer = String(params.player).toLowerCase();
+    }
     if (params.age_min) document.getElementById("ageMin").value = params.age_min;
     if (params.age_max) document.getElementById("ageMax").value = params.age_max;
     if (params.exp_min) document.getElementById("expMin").value = params.exp_min;
