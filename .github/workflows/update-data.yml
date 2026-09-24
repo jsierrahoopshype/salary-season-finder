@@ -100,3 +100,50 @@ jobs:
           git add data/data.json
           git commit -m "Auto-update salary data [$(date -u +%Y-%m-%d)]"
           git push
+
+  # Factoids are built in a separate job that starts only after update-data has
+  # finished and pushed. Nothing here can delay, fail or roll back the data.json
+  # commit: it is already on the branch before this job checks out. The job is
+  # also continue-on-error, so a red factoid build never reds the workflow.
+  build-factoids:
+    needs: update-data
+    if: always() && needs.update-data.result == 'success'
+    runs-on: ubuntu-latest
+    continue-on-error: true
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install test dependencies
+        run: pip install pytest
+
+      - name: Run factoid tests
+        run: python -m pytest scripts/tests/test_factoids.py -q
+
+      - name: Build factoids.json
+        run: python scripts/build_factoids.py
+
+      - name: Commit and push factoids
+        run: |
+          if git diff --quiet data/factoids.json 2>/dev/null; then
+            echo "No changes in factoids.json"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/factoids.json
+          git commit -m "Auto-update factoids [$(date -u +%Y-%m-%d)]"
+          # update-data pushed moments ago; rebase rather than race it
+          for attempt in 1 2 3; do
+            git pull --rebase origin "${GITHUB_REF_NAME}" && git push && exit 0
+            echo "push attempt $attempt failed, retrying"
+            sleep $((attempt * 5))
+          done
+          echo "could not push factoids.json; data.json is unaffected"
+          exit 1

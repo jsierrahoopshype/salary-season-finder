@@ -1,0 +1,212 @@
+{
+  "_meta": {
+    "purpose": "Team code -> franchise identity, for factoid scoping. data/data.json already carries modern team codes for historical seasons (Seattle records carry OKC, Vancouver records carry MEM, New Jersey records carry BKN, Bullets records carry WAS), so this file names the franchise behind each code and records the eras that code spans inside the 1990-91 window. A team code that is not a key here gets no franchise factoids.",
+    "scope_first_season": "1990-91",
+    "era_note": "Era ranges are bounded by the data window, not by the franchise's real founding date. 'from' is the first season inside the window, 'to' is null for the current era.",
+    "charlotte_note": "The 1988-89 to 2001-02 Charlotte Hornets history belongs to today's Charlotte franchise (CHA), not to New Orleans. NOP begins in 2002-03 as the New Orleans Hornets. CHA has no seasons in 2002-03 and 2003-04, which is the gap before the Bobcats began play.",
+    "source": "Official NBA franchise histories."
+  },
+  "franchises": {
+    "ATL": {
+      "franchise_id": "hawks",
+      "name": "Hawks",
+      "full_name": "Atlanta Hawks",
+      "eras": [{ "name": "Atlanta Hawks", "from": "1990-91", "to": null }]
+    },
+    "BKN": {
+      "franchise_id": "nets",
+      "name": "Nets",
+      "full_name": "Brooklyn Nets",
+      "eras": [
+        { "name": "New Jersey Nets", "from": "1990-91", "to": "2011-12" },
+        { "name": "Brooklyn Nets", "from": "2012-13", "to": null }
+      ]
+    },
+    "BOS": {
+      "franchise_id": "celtics",
+      "name": "Celtics",
+      "full_name": "Boston Celtics",
+      "eras": [{ "name": "Boston Celtics", "from": "1990-91", "to": null }]
+    },
+    "CHA": {
+      "franchise_id": "hornets",
+      "name": "Hornets",
+      "full_name": "Charlotte Hornets",
+      "eras": [
+        { "name": "Charlotte Hornets", "from": "1990-91", "to": "2001-02" },
+        { "name": "Charlotte Bobcats", "from": "2004-05", "to": "2013-14" },
+        { "name": "Charlotte Hornets", "from": "2014-15", "to": null }
+      ]
+    },
+    "CHI": {
+      "franchise_id": "bulls",
+      "name": "Bulls",
+      "full_name": "Chicago Bulls",
+      "eras": [{ "name": "Chicago Bulls", "from": "1990-91", "to": null }]
+    },
+    "CLE": {
+      "franchise_id": "cavaliers",
+      "name": "Cavaliers",
+      "full_name": "Cleveland Cavaliers",
+      "eras": [{ "name": "Cleveland Cavaliers", "from": "1990-91", "to": null }]
+    },
+    "DAL": {
+      "franchise_id": "mavericks",
+      "name": "Mavericks",
+      "full_name": "Dallas Mavericks",
+      "eras": [{ "name": "Dallas Mavericks", "from": "1990-91", "to": null }]
+    },
+    "DEN": {
+      "franchise_id": "nuggets",
+      "name": "Nuggets",
+      "full_name": "Denver Nuggets",
+      "eras": [{ "name": "Denver Nuggets", "from": "1990-91", "to": null }]
+    },
+    "DET": {
+      "franchise_id": "pistons",
+      "name": "Pistons",
+      "full_name": "Detroit Pistons",
+      "eras": [{ "name": "Detroit Pistons", "from": "1990-91", "to": null }]
+    },
+    "GSW": {
+      "franchise_id": "warriors",
+      "name": "Warriors",
+      "full_name": "Golden State Warriors",
+      "eras": [{ "name": "Golden State Warriors", "from": "1990-91", "to": null }]
+    },
+    "HOU": {
+      "franchise_id": "rockets",
+      "name": "Rockets",
+      "full_name": "Houston Rockets",
+      "eras": [{ "name": "Houston Rockets", "from": "1990-91", "to": null }]
+    },
+    "IND": {
+      "franchise_id": "pacers",
+      "name": "Pacers",
+      "full_name": "Indiana Pacers",
+      "eras": [{ "name": "Indiana Pacers", "from": "1990-91", "to": null }]
+    },
+    "LAC": {
+      "franchise_id": "clippers",
+      "name": "Clippers",
+      "full_name": "Los Angeles Clippers",
+      "eras": [{ "name": "Los Angeles Clippers", "from": "1990-91", "to": null }]
+    },
+    "LAL": {
+      "franchise_id": "lakers",
+      "name": "Lakers",
+      "full_name": "Los Angeles Lakers",
+      "eras": [{ "name": "Los Angeles Lakers", "from": "1990-91", "to": null }]
+    },
+    "MEM": {
+      "franchise_id": "grizzlies",
+      "name": "Grizzlies",
+      "full_name": "Memphis Grizzlies",
+      "eras": [
+        { "name": "Vancouver Grizzlies", "from": "1995-96", "to": "2000-01" },
+        { "name": "Memphis Grizzlies", "from": "2001-02", "to": null }
+      ]
+    },
+    "MIA": {
+      "franchise_id": "heat",
+      "name": "Heat",
+      "full_name": "Miami Heat",
+      "eras": [{ "name": "Miami Heat", "from": "1990-91", "to": null }]
+    },
+    "MIL": {
+      "franchise_id": "bucks",
+      "name": "Bucks",
+      "full_name": "Milwaukee Bucks",
+      "eras": [{ "name": "Milwaukee Bucks", "from": "1990-91", "to": null }]
+    },
+    "MIN": {
+      "franchise_id": "timberwolves",
+      "name": "Timberwolves",
+      "full_name": "Minnesota Timberwolves",
+      "eras": [{ "name": "Minnesota Timberwolves", "from": "1990-91", "to": null }]
+    },
+    "NOP": {
+      "franchise_id": "pelicans",
+      "name": "Pelicans",
+      "full_name": "New Orleans Pelicans",
+      "eras": [
+        { "name": "New Orleans Hornets", "from": "2002-03", "to": "2004-05" },
+        { "name": "New Orleans/Oklahoma City Hornets", "from": "2005-06", "to": "2006-07" },
+        { "name": "New Orleans Hornets", "from": "2007-08", "to": "2012-13" },
+        { "name": "New Orleans Pelicans", "from": "2013-14", "to": null }
+      ]
+    },
+    "NYK": {
+      "franchise_id": "knicks",
+      "name": "Knicks",
+      "full_name": "New York Knicks",
+      "eras": [{ "name": "New York Knicks", "from": "1990-91", "to": null }]
+    },
+    "OKC": {
+      "franchise_id": "thunder",
+      "name": "Thunder",
+      "full_name": "Oklahoma City Thunder",
+      "eras": [
+        { "name": "Seattle SuperSonics", "from": "1990-91", "to": "2007-08" },
+        { "name": "Oklahoma City Thunder", "from": "2008-09", "to": null }
+      ]
+    },
+    "ORL": {
+      "franchise_id": "magic",
+      "name": "Magic",
+      "full_name": "Orlando Magic",
+      "eras": [{ "name": "Orlando Magic", "from": "1990-91", "to": null }]
+    },
+    "PHI": {
+      "franchise_id": "sixers",
+      "name": "76ers",
+      "full_name": "Philadelphia 76ers",
+      "eras": [{ "name": "Philadelphia 76ers", "from": "1990-91", "to": null }]
+    },
+    "PHX": {
+      "franchise_id": "suns",
+      "name": "Suns",
+      "full_name": "Phoenix Suns",
+      "eras": [{ "name": "Phoenix Suns", "from": "1990-91", "to": null }]
+    },
+    "POR": {
+      "franchise_id": "trail-blazers",
+      "name": "Trail Blazers",
+      "full_name": "Portland Trail Blazers",
+      "eras": [{ "name": "Portland Trail Blazers", "from": "1990-91", "to": null }]
+    },
+    "SAC": {
+      "franchise_id": "kings",
+      "name": "Kings",
+      "full_name": "Sacramento Kings",
+      "eras": [{ "name": "Sacramento Kings", "from": "1990-91", "to": null }]
+    },
+    "SAS": {
+      "franchise_id": "spurs",
+      "name": "Spurs",
+      "full_name": "San Antonio Spurs",
+      "eras": [{ "name": "San Antonio Spurs", "from": "1990-91", "to": null }]
+    },
+    "TOR": {
+      "franchise_id": "raptors",
+      "name": "Raptors",
+      "full_name": "Toronto Raptors",
+      "eras": [{ "name": "Toronto Raptors", "from": "1995-96", "to": null }]
+    },
+    "UTA": {
+      "franchise_id": "jazz",
+      "name": "Jazz",
+      "full_name": "Utah Jazz",
+      "eras": [{ "name": "Utah Jazz", "from": "1990-91", "to": null }]
+    },
+    "WAS": {
+      "franchise_id": "wizards",
+      "name": "Wizards",
+      "full_name": "Washington Wizards",
+      "eras": [
+        { "name": "Washington Bullets", "from": "1990-91", "to": "1996-97" },
+        { "name": "Washington Wizards", "from": "1997-98", "to": null }
+      ]
+    }
+  }
+}
