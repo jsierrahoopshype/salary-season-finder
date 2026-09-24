@@ -252,6 +252,7 @@
     buildColumnToggles();
     bindEvents();
     populatePresets();
+    watchMobileTopOffset();
 
     // Below the desktop breakpoint the rail starts closed: the results are what
     // the page is for, and the sticky "Filters" button reopens the drawer at any
@@ -633,6 +634,32 @@
       if (back && typeof back.focus === "function") back.focus();
     }
     _drawerReturnFocus = null;
+  }
+
+  // The mobile top bar is fixed, so the content below it has to be pushed down
+  // by however tall it currently is. That height is not a constant: the
+  // breadcrumb trail appears, disappears and wraps to more lines as filters
+  // change. Measure it and publish it as --mobile-top-h; the stylesheet falls
+  // back to the bare-button height before this first runs and on desktop,
+  // where the bar is not fixed at all.
+  function syncMobileTopOffset() {
+    var bar = document.getElementById("mobileStickyTop");
+    if (!bar) return;
+    var isFixed = window.getComputedStyle(bar).position === "fixed";
+    document.documentElement.style.setProperty(
+      "--mobile-top-h", isFixed ? bar.offsetHeight + "px" : ""
+    );
+  }
+
+  function watchMobileTopOffset() {
+    var bar = document.getElementById("mobileStickyTop");
+    if (!bar) return;
+    syncMobileTopOffset();
+    if (window.ResizeObserver) {
+      new ResizeObserver(syncMobileTopOffset).observe(bar);
+    }
+    window.addEventListener("resize", syncMobileTopOffset);
+    window.addEventListener("orientationchange", syncMobileTopOffset);
   }
 
   // "Filters" / "Filters (2)" — count comes from the same tag list the
@@ -1351,14 +1378,24 @@
       return matchesFilter(r, f);
     });
 
-    // If multi-season range and combine is checked, aggregate by player
+    // If multi-season range and combine is checked, aggregate by player.
+    //
+    // One exception: a search that resolves to exactly one player opens that
+    // player's season table whichever way the box is set. Collapsing a single
+    // name into a single aggregate row is not what someone who searched that
+    // name is asking for, and the box has nothing to combine. Searches that
+    // match more than one player keep the combine behaviour untouched, and the
+    // box keeps its checked state for when the player filter is cleared.
     var fromYear = seasonYear(f.seasonFrom);
     var toYear = seasonYear(f.seasonTo);
     var isMultiSeason = fromYear !== toYear;
+    var isSinglePlayer = isSinglePlayerResult(filtered);
     var combineWrap = document.getElementById("combineToggleWrap");
     var combineEl = document.getElementById("combineToggle");
-    if (combineWrap) combineWrap.style.display = isMultiSeason ? "" : "none";
-    var isCombineActive = isMultiSeason && combineEl && combineEl.checked;
+    if (combineWrap) {
+      combineWrap.style.display = (isMultiSeason && !isSinglePlayer) ? "" : "none";
+    }
+    var isCombineActive = isMultiSeason && !isSinglePlayer && combineEl && combineEl.checked;
     if (isCombineActive) {
       filtered = combineByPlayer(filtered);
     }
@@ -1655,6 +1692,7 @@
     updateFilterCount(tags.length);
     if (tags.length === 0) {
       bar.style.display = "none";
+      syncMobileTopOffset();
       return;
     }
     bar.style.display = "";
@@ -1670,6 +1708,7 @@
       });
       trail.appendChild(tag);
     });
+    syncMobileTopOffset();
   }
 
   // Range formatting helpers for breadcrumbs
@@ -2135,14 +2174,23 @@
   // Is the current result set a single player the user asked for by name?
   // Returns that player's records, or null when the generic results table
   // should render instead.
-  function playerViewRecords() {
+  // True when a result set is one named player: the player filter is set and
+  // every remaining record carries the same name. A name that matches two
+  // players ("Jabari Smith" also matches "Jabari Smith Sr") is not one player.
+  function isSinglePlayerResult(records) {
     var input = document.getElementById("playerSearch");
-    if (!input || !input.value.trim()) return null;
-    if (filtered.length === 0 || filtered[0]._combined) return null;
-    var name = filtered[0].player;
-    for (var i = 1; i < filtered.length; i++) {
-      if (filtered[i].player !== name) return null;
+    if (!input || !input.value.trim()) return false;
+    if (!records || records.length === 0) return false;
+    var name = records[0].player;
+    for (var i = 1; i < records.length; i++) {
+      if (records[i].player !== name) return false;
     }
+    return true;
+  }
+
+  function playerViewRecords() {
+    if (!isSinglePlayerResult(filtered)) return null;
+    if (filtered[0]._combined) return null;
     return filtered;
   }
 

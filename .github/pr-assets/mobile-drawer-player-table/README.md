@@ -13,6 +13,44 @@ Shots captured under `colorScheme: 'dark'` come back byte-identical to their
 light twins — `rail-closed-375-dark.png` and `player-sga-contracted-seasons-1280-dark.png`
 are here as evidence of that, not as a second palette.
 
+All 375 px shots were re-taken after the three follow-up fixes (single-player
+search vs the combine box, the fixed top bar's clearance, and the drawer
+footer). The 1280 px shots are unchanged: desktop geometry was compared against
+`main` again and still matches at 1280 and 1024.
+
+## Follow-up fixes — 375 px
+
+### A single-player search opens the season table, combine box or not
+
+Same flow on both: full season range, "Combine per player" left checked, then a
+search for one player.
+
+| Before (`main`) | After |
+|---|---|
+| ![Combine collapses the player into one row](fix1-combine-before-375-light.png) | ![The season table opens instead](fix1-combine-after-375-light.png) |
+
+"Showing 1 players (combined)" becomes "Showing 13 seasons". The box keeps its
+checked state and reappears the moment the search matches more than one player,
+so nothing about the combine feature itself changes.
+
+### The fixed top bar no longer overlaps the results
+
+![Top bar clear of the content](topbar-breadcrumbs-clear-375-light.png)
+
+`.main-content` reserved a fixed `3.4rem`, but the bar grows whenever the
+breadcrumb trail appears or wraps. Its height is now measured into
+`--mobile-top-h` and the padding follows it. Measured clearance with the trail
+showing: 0 px overlap, in both colour schemes.
+
+### "Show Results" sits flush at the drawer's bottom
+
+![Show Results flush at the bottom of the drawer](drawer-footer-flush-375-light.png)
+
+The rail carried `padding-bottom: 4.5rem`, and a sticky element cannot travel
+past the bottom of its containing block, so the footer floated that far up. The
+padding is gone; the footer keeps its own `env(safe-area-inset-bottom)` so it
+still clears the home indicator.
+
 ## Mobile filter rail — 375 px
 
 ### Closed on load

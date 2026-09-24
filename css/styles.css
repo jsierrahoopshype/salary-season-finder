@@ -1583,8 +1583,11 @@ body.drawer-scroll-lock {
     transition: transform .25s ease;
     border-right: 1px solid var(--border);
     box-shadow: 4px 0 16px rgba(0, 0, 0, .15);
-    /* clears the sticky "Show Results" footer plus the home indicator */
-    padding-bottom: calc(4.5rem + env(safe-area-inset-bottom));
+    /* No bottom padding. A sticky element cannot travel past the bottom of its
+       containing block, so padding here would hold "Show Results" that far off
+       the drawer's bottom edge. The footer carries the home-indicator inset
+       itself. */
+    padding-bottom: 0;
     padding-left: env(safe-area-inset-left);
   }
 
@@ -1697,8 +1700,19 @@ body.drawer-scroll-lock {
     margin: .4rem 0 0;
   }
 
+  /* The bar is fixed and its height moves: the breadcrumb trail appears and
+     wraps as filters change. js/app.js measures it into --mobile-top-h; the
+     fallback is the height of the bare Filters button, which is what the bar
+     is before any filter is set. */
   .main-content {
-    padding-top: calc(3.4rem + env(safe-area-inset-top));
+    padding-top: var(--mobile-top-h, calc(3.4rem + env(safe-area-inset-top)));
+  }
+
+  /* Cell-click filtering scrolls the results into view, which would otherwise
+     land them under the same fixed bar. */
+  .table-wrapper,
+  .player-view {
+    scroll-margin-top: var(--mobile-top-h, calc(3.4rem + env(safe-area-inset-top)));
   }
 
   /* iOS zooms any input under 16px on focus */
