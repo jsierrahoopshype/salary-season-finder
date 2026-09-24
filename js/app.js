@@ -2316,7 +2316,7 @@
     // Results count
     var isCombined = total > 0 && filtered[0] && filtered[0]._combined;
     document.getElementById("resultsCount").textContent = isCombined
-      ? "Showing " + total.toLocaleString() + " players (combined)"
+      ? "Showing " + total.toLocaleString() + (total === 1 ? " player" : " players") + " (combined)"
       : "Showing " + total.toLocaleString() + " results";
   }
 
