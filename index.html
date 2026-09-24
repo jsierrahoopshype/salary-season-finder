@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- viewport-fit=cover so env(safe-area-inset-*) resolves to real values on
+       notched iPhones; the mobile chrome below pads itself back off the notch. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>NBA Salary Season Finder - filter every player season by salary, cap hit and stats | HoopsMatic</title>
   <meta name="description" content="Search every NBA salary since 1990-91. Filter by season, team, position or cap percentage, with career earnings and stats for every player.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,10 +29,12 @@
     <!-- Sidebar / Filter Panel -->
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-header">
-        <h2>Filters</h2>
+        <h2 id="sidebarTitle">Filters</h2>
         <div class="sidebar-actions">
           <button class="clear-btn" id="clearFiltersBtn">Clear All</button>
           <button class="btn btn-sm btn-accent" id="shareBtn" title="Copy shareable link">Share</button>
+          <!-- drawer close, mobile only (see the 768px block in css/styles.css) -->
+          <button class="drawer-close" id="drawerCloseBtn" type="button" aria-label="Close filters">&#215;</button>
         </div>
       </div>
 
@@ -317,7 +321,10 @@
     <main class="main-content">
       <!-- Mobile sticky top: search button + breadcrumbs -->
       <div class="mobile-sticky-top" id="mobileStickyTop">
-        <button class="mobile-burger" id="mobileBurger" title="Filters &amp; Search">&#9776; Search &amp; Filter</button>
+        <button class="mobile-burger" id="mobileBurger" type="button" title="Filters &amp; Search"
+                aria-expanded="false" aria-controls="sidebar" aria-haspopup="dialog">
+          <span class="burger-icon" aria-hidden="true">&#9776;</span><span class="burger-label">Filters</span><span class="burger-count" id="filterCount"></span>
+        </button>
         <!-- Breadcrumb bar (shown when cell-click filters are active) -->
         <div class="breadcrumb-bar" id="breadcrumbBar" style="display:none;">
           <span class="breadcrumb-label">Filtered by:</span>
@@ -378,6 +385,9 @@
           <tbody id="tableBody"></tbody>
         </table>
       </div>
+
+      <!-- Player view: one row per season, rendered by buildPlayerSeasonTable() -->
+      <div class="player-view" id="playerView" style="display:none;"></div>
 
       <!-- Empty state -->
       <div class="empty-state" id="emptyState" style="display:none;">
