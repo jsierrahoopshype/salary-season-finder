@@ -1,21 +1,23 @@
 {
  "alias_to_canonical": {
-  "Andre Jackson Jr": "Andre Jackson",
+  "Andre Jackson": "Andre Jackson Jr",
   "Marcus Thornton II": "Marcus Thornton",
-  "Ricky Council IV": "Ricky Council",
-  "Terrence Shannon Jr.": "Terrence Shannon",
-  "Tristan da Silva": "Tristan Da Silva",
+  "Ricky Council": "Ricky Council IV",
+  "Terrence Shannon": "Terrence Shannon Jr",
+  "Terrence Shannon Jr.": "Terrence Shannon Jr",
+  "Tristan Da Silva": "Tristan da Silva",
   "Wendell Carter": "Wendell Carter Jr"
  },
+ "canonical_names": "The canonical spelling is the name printed and the name a page is titled with, so it is the player's real name rather than whichever spelling the data happens to use most. Suffixes are written the way the rest of the data writes them, with no full stop. The alias keys are the raw spellings in data.json and never change: they are what matches.",
  "groups": [
   {
    "aliases": [
-    "Andre Jackson Jr"
+    "Andre Jackson"
    ],
-   "canonical": "Andre Jackson",
+   "canonical": "Andre Jackson Jr",
    "college": "Connecticut",
    "draft_year": 2023,
-   "evidence": "same name once the suffix, full stops and apostrophes are stripped; draft year 2023; no season in common; Andre Jackson and Andre Jackson Jr run continuously together from 2023-24 to 2026-27",
+   "evidence": "same name once the suffix, full stops and apostrophes are stripped; draft year 2023; no season in common; Andre Jackson Jr and Andre Jackson run continuously together from 2023-24 to 2026-27",
    "spellings": [
     {
      "college": "Connecticut",
@@ -64,12 +66,12 @@
   },
   {
    "aliases": [
-    "Ricky Council IV"
+    "Ricky Council"
    ],
-   "canonical": "Ricky Council",
+   "canonical": "Ricky Council IV",
    "college": "Arkansas",
    "draft_year": 2023,
-   "evidence": "same name once the suffix, full stops and apostrophes are stripped; draft year 2023; no season in common; Ricky Council and Ricky Council IV run continuously together from 2023-24 to 2024-25",
+   "evidence": "same name once the suffix, full stops and apostrophes are stripped; draft year 2023; no season in common; Ricky Council IV and Ricky Council run continuously together from 2023-24 to 2024-25",
    "spellings": [
     {
      "college": "Arkansas",
@@ -91,12 +93,13 @@
   },
   {
    "aliases": [
+    "Terrence Shannon",
     "Terrence Shannon Jr."
    ],
-   "canonical": "Terrence Shannon",
+   "canonical": "Terrence Shannon Jr",
    "college": "Illinois",
    "draft_year": 2024,
-   "evidence": "same name once the suffix, full stops and apostrophes are stripped; draft year 2024; no season in common; Terrence Shannon and Terrence Shannon Jr. run continuously together from 2024-25 to 2027-28",
+   "evidence": "same name once the suffix, full stops and apostrophes are stripped; draft year 2024; no season in common; Terrence Shannon Jr and Terrence Shannon, Terrence Shannon Jr. run continuously together from 2024-25 to 2027-28",
    "spellings": [
     {
      "college": "Illinois",
@@ -118,12 +121,12 @@
   },
   {
    "aliases": [
-    "Tristan da Silva"
+    "Tristan Da Silva"
    ],
-   "canonical": "Tristan Da Silva",
+   "canonical": "Tristan da Silva",
    "college": "Colorado",
    "draft_year": 2024,
-   "evidence": "same name once the suffix, full stops and apostrophes are stripped; draft year 2024; no season in common; Tristan Da Silva and Tristan da Silva run continuously together from 2024-25 to 2027-28",
+   "evidence": "same name once the suffix, full stops and apostrophes are stripped; draft year 2024; no season in common; Tristan da Silva and Tristan Da Silva run continuously together from 2024-25 to 2027-28",
    "spellings": [
     {
      "college": "Colorado",
