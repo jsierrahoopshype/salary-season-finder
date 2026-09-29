@@ -1,0 +1,176 @@
+{
+ "alias_to_canonical": {
+  "Andre Jackson Jr": "Andre Jackson",
+  "Marcus Thornton II": "Marcus Thornton",
+  "Ricky Council IV": "Ricky Council",
+  "Terrence Shannon Jr.": "Terrence Shannon",
+  "Tristan da Silva": "Tristan Da Silva",
+  "Wendell Carter": "Wendell Carter Jr"
+ },
+ "groups": [
+  {
+   "aliases": [
+    "Andre Jackson Jr"
+   ],
+   "canonical": "Andre Jackson",
+   "college": "Connecticut",
+   "draft_year": 2023,
+   "evidence": "same name once the suffix, full stops and apostrophes are stripped; draft year 2023; no season in common; Andre Jackson and Andre Jackson Jr run continuously together from 2023-24 to 2026-27",
+   "spellings": [
+    {
+     "college": "Connecticut",
+     "draft_year": 2023,
+     "first_season": "2023-24",
+     "last_season": "2024-25",
+     "name": "Andre Jackson Jr",
+     "seasons": 2
+    },
+    {
+     "college": "Connecticut",
+     "draft_year": 2023,
+     "first_season": "2025-26",
+     "last_season": "2026-27",
+     "name": "Andre Jackson",
+     "seasons": 2
+    }
+   ]
+  },
+  {
+   "aliases": [
+    "Marcus Thornton II"
+   ],
+   "canonical": "Marcus Thornton",
+   "college": "LSU",
+   "draft_year": 2009,
+   "evidence": "same name once the suffix, full stops and apostrophes are stripped; draft year 2009; no season in common; Marcus Thornton and Marcus Thornton II run continuously together from 2009-10 to 2017-18",
+   "spellings": [
+    {
+     "college": "LSU",
+     "draft_year": 2009,
+     "first_season": "2009-10",
+     "last_season": "2016-17",
+     "name": "Marcus Thornton",
+     "seasons": 8
+    },
+    {
+     "college": "LSU",
+     "draft_year": 2009,
+     "first_season": "2017-18",
+     "last_season": "2017-18",
+     "name": "Marcus Thornton II",
+     "seasons": 1
+    }
+   ]
+  },
+  {
+   "aliases": [
+    "Ricky Council IV"
+   ],
+   "canonical": "Ricky Council",
+   "college": "Arkansas",
+   "draft_year": 2023,
+   "evidence": "same name once the suffix, full stops and apostrophes are stripped; draft year 2023; no season in common; Ricky Council and Ricky Council IV run continuously together from 2023-24 to 2024-25",
+   "spellings": [
+    {
+     "college": "Arkansas",
+     "draft_year": 2023,
+     "first_season": "2023-24",
+     "last_season": "2023-24",
+     "name": "Ricky Council IV",
+     "seasons": 1
+    },
+    {
+     "college": "Arkansas",
+     "draft_year": 2023,
+     "first_season": "2024-25",
+     "last_season": "2024-25",
+     "name": "Ricky Council",
+     "seasons": 1
+    }
+   ]
+  },
+  {
+   "aliases": [
+    "Terrence Shannon Jr."
+   ],
+   "canonical": "Terrence Shannon",
+   "college": "Illinois",
+   "draft_year": 2024,
+   "evidence": "same name once the suffix, full stops and apostrophes are stripped; draft year 2024; no season in common; Terrence Shannon and Terrence Shannon Jr. run continuously together from 2024-25 to 2027-28",
+   "spellings": [
+    {
+     "college": "Illinois",
+     "draft_year": 2024,
+     "first_season": "2024-25",
+     "last_season": "2024-25",
+     "name": "Terrence Shannon Jr.",
+     "seasons": 1
+    },
+    {
+     "college": "Illinois",
+     "draft_year": 2024,
+     "first_season": "2025-26",
+     "last_season": "2027-28",
+     "name": "Terrence Shannon",
+     "seasons": 3
+    }
+   ]
+  },
+  {
+   "aliases": [
+    "Tristan da Silva"
+   ],
+   "canonical": "Tristan Da Silva",
+   "college": "Colorado",
+   "draft_year": 2024,
+   "evidence": "same name once the suffix, full stops and apostrophes are stripped; draft year 2024; no season in common; Tristan Da Silva and Tristan da Silva run continuously together from 2024-25 to 2027-28",
+   "spellings": [
+    {
+     "college": "Colorado",
+     "draft_year": 2024,
+     "first_season": "2024-25",
+     "last_season": "2024-25",
+     "name": "Tristan da Silva",
+     "seasons": 1
+    },
+    {
+     "college": "Colorado",
+     "draft_year": 2024,
+     "first_season": "2025-26",
+     "last_season": "2027-28",
+     "name": "Tristan Da Silva",
+     "seasons": 3
+    }
+   ]
+  },
+  {
+   "aliases": [
+    "Wendell Carter"
+   ],
+   "canonical": "Wendell Carter Jr",
+   "college": "Duke",
+   "draft_year": 2018,
+   "evidence": "same name once the suffix, full stops and apostrophes are stripped; draft year 2018; no season in common; Wendell Carter Jr and Wendell Carter run continuously together from 2018-19 to 2028-29",
+   "spellings": [
+    {
+     "college": "Duke",
+     "draft_year": 2018,
+     "first_season": "2018-19",
+     "last_season": "2028-29",
+     "name": "Wendell Carter Jr",
+     "seasons": 10
+    },
+    {
+     "college": "Duke",
+     "draft_year": 2018,
+     "first_season": "2024-25",
+     "last_season": "2024-25",
+     "name": "Wendell Carter",
+     "seasons": 1
+    }
+   ]
+  }
+ ],
+ "readme": "Two spellings of one player, merged into one identity for the engine. Read by scripts/factoids.py and reusable by the prerender script; build_data.py and data.json are untouched. Without this, each half looks like a separate short career: the older spelling looks finished and the newer one starts mid-career with the other half's running total already on it. Candidate rule and evidence below; the canonical spelling is the one the data uses most, and on a tie the one carrying the most recent season.",
+ "rule": "Names that match once Jr / Sr / II / III / IV / V, full stops and apostrophes are stripped, with the same draft year (or one missing), no season in common, and seasons that run continuously together (no gap longer than 1 season). A shared season means two men; a hole in the run is a career gap, which data/identity_splits.json handles instead."
+}

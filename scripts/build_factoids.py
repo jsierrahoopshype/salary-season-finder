@@ -124,6 +124,7 @@ def make_payload(index, factoids, seasons_covered):
                     if any(k[0] == p for k in index.segment_owns_metadata)
                 ),
                 "career_total_carried_in": sorted(index.career_total_carried_in),
+                "name_aliases": dict(sorted(index.name_aliases.items())),
                 "college_display_names": len(index.college_names),
                 "current_season_in_progress": index.current_season_in_progress,
                 "career_status_unknown": sorted(

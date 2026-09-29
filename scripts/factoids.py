@@ -101,6 +101,13 @@ IDENTITY_SPLITS_PATH = os.path.join("data", "identity_splits.json")
 #: not move; only the sentence changes. The prerender script reads the same file.
 COLLEGE_NAMES_PATH = os.path.join("data", "college_names.json")
 
+#: Two spellings of one player, merged into one identity. data.json files
+#: "Wendell Carter" for 2024-25 and "Wendell Carter Jr" for the rest of the same
+#: career, which without this reads as two men: one finished, one starting
+#: mid-career with the other's running total already on him. Read by the engine
+#: only, and by the prerender script; build_data.py never sees it.
+NAME_ALIASES_PATH = os.path.join("data", "name_aliases.json")
+
 #: 1998-99 held no All-Star Game. The lockout cut the season to 50 games and the
 #: February game was cancelled, so no selections exist and a count of zero is the
 #: correct answer rather than a scrape that came back empty. 1996-97 and 2006-07
@@ -355,6 +362,7 @@ class FactoidIndex:
         self.final_season = {}
         # display names
         self.college_names = {}
+        self.name_aliases = {}
         # identity splits
         self.identity_splits = {}
         self.split_suppressed = set()   # (player, season) that must not be named
@@ -411,6 +419,15 @@ class FactoidIndex:
         """The name to print for a season. The data key unless a confirmed split
         says that segment belongs to someone else."""
         return self.segment_display.get((player, season), player)
+
+    def canonical(self, player):
+        """The one spelling this engine files a player under.
+
+        data.json can hold one career under two spellings, so every read of a
+        player's name goes through here: comparison sets, career totals, the
+        rank-shift history and the printed name all have to agree on who he is.
+        """
+        return self.name_aliases.get(player, player)
 
     def college_display(self, college):
         """The college name to print. The raw value is still what matches."""
@@ -535,6 +552,18 @@ def load_college_names(path=None):
         return {}
     with open(path, "r", encoding="utf-8") as fh:
         return json.load(fh).get("mapping") or {}
+
+
+def load_name_aliases(path=None):
+    """Load data/name_aliases.json as {alias spelling: canonical spelling}.
+    Missing file is not an error: every spelling is then its own player."""
+    if path is None:
+        here = os.path.dirname(os.path.abspath(__file__))
+        path = os.path.join(os.path.dirname(here), NAME_ALIASES_PATH)
+    if not os.path.exists(path):
+        return {}
+    with open(path, "r", encoding="utf-8") as fh:
+        return json.load(fh).get("alias_to_canonical") or {}
 
 
 def load_identity_splits(path=None):
@@ -663,7 +692,8 @@ def compute_current_season(data):
     return seasons[0] if seasons else ""
 
 
-def build_index(data, franchises=None, identity_splits=None, college_names=None):
+def build_index(data, franchises=None, identity_splits=None, college_names=None,
+                name_aliases=None):
     """Build the whole comparison structure once. This is the expensive call."""
     idx = FactoidIndex()
     idx.records = list(data.get("seasons") or [])
@@ -675,12 +705,19 @@ def build_index(data, franchises=None, identity_splits=None, college_names=None)
     idx.college_names = (
         college_names if college_names is not None else load_college_names()
     )
+    idx.name_aliases = (
+        name_aliases if name_aliases is not None else load_name_aliases()
+    )
     idx.current_season = compute_current_season(data)
     idx.current_key = season_key(idx.current_season)
 
     for rec in idx.records:
-        idx.by_key[(rec["player"], rec["season"])] = rec
-        idx.by_player[rec["player"]].append(rec)
+        name = idx.canonical(rec["player"])
+        idx.by_key[(name, rec["season"])] = rec
+        if name != rec["player"]:
+            # still findable by the spelling data.json actually stores
+            idx.by_key[(rec["player"], rec["season"])] = rec
+        idx.by_player[name].append(rec)
     for player, recs in idx.by_player.items():
         recs.sort(key=lambda r: season_key(r["season"]))
     idx.seasons = sorted({r["season"] for r in idx.records}, key=season_key)
@@ -758,12 +795,13 @@ def _index_awards(idx):
     all_nba = defaultdict(set)
     for rec in idx.records:
         awards = set(rec.get("awards") or ())
+        name = idx.canonical(rec["player"])
         if awards & ALL_STAR_AWARDS:
-            all_star[rec["season"]].add(rec["player"])
-            idx.all_star_players.add(rec["player"])
+            all_star[rec["season"]].add(name)
+            idx.all_star_players.add(name)
         if awards & ALL_NBA_AWARDS:
-            all_nba[rec["season"]].add(rec["player"])
-            idx.all_nba_players.add(rec["player"])
+            all_nba[rec["season"]].add(name)
+            idx.all_nba_players.add(name)
 
     played = [s for s in idx.seasons if season_key(s) < idx.current_key]
     idx.awards_known_through = played[-1] if played else ""
@@ -832,7 +870,7 @@ def _cohorts_for(record, idx):
     out of Kentucky".
     """
     out = []
-    player = record["player"]
+    player = idx.canonical(record["player"])
 
     # Eleven names carry draft metadata that postdates their own debut, which
     # means it belongs to a son of the same name: Glen Rice reads draft 2013,
@@ -896,7 +934,7 @@ def _build_universes(idx):
     team_season = defaultdict(list)
 
     for rec in idx.records:
-        player, season = rec["player"], rec["season"]
+        player, season = idx.canonical(rec["player"]), rec["season"]
         key = (player, season)
         salary = rec.get("salary") or 0
         season_salaries[season].append((salary, player))
@@ -1883,6 +1921,16 @@ def _family_rank_shift(ctx, out, log):
     if record is None:
         log.drop("rank_shift", season, "no_record", "team rank needs a roster")
         return
+    if is_split_season(record):
+        log.drop(
+            "rank_shift", season, "split_season",
+            "a team high-earner shift compares two seasons on one roster, and "
+            "{} splits across {} teams in team_salaries, which is cap-sheet "
+            "allocation rather than money paid while on a roster".format(
+                season, len(record.get("team_salaries") or {})
+            ),
+        )
+        return
     amounts = team_amounts(record)
     if len(amounts) != 1:
         log.drop(
@@ -1902,6 +1950,18 @@ def _family_rank_shift(ctx, out, log):
     previous = prior[-1]
     if season_key(previous["season"]) != season_key(season) - 1:
         log.drop("rank_shift", season, "non_consecutive_seasons")
+        return
+    # Either season being split sinks the claim, not just this one. The season
+    # being compared against is where salary_rank_team comes from, and on a
+    # split season there is no single roster that rank belongs to.
+    if is_split_season(previous):
+        log.drop(
+            "rank_shift", previous["season"], "split_season",
+            "the season being compared against splits across {} teams, so its "
+            "roster rank belongs to no single team".format(
+                len(previous.get("team_salaries") or {})
+            ),
+        )
         return
     prev_teams = team_amounts(previous)
     if len(prev_teams) != 1 or prev_teams[0][0] != team:
@@ -1979,6 +2039,8 @@ def factoids_for(data, player, season, salary=None, index=None, debug=False, sup
     idx = index if index is not None else _cached_index(data)
     log = _Log(debug or suppressed is not None)
 
+    # A caller may name either spelling; the engine works in the canonical one.
+    player = idx.canonical(player)
     record = idx.record(player, season)
     known_player = player in idx.by_player
     if record is None and salary is None:

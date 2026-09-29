@@ -393,13 +393,13 @@ def test_hypothetical_salary_on_a_split_season_is_refused():
     assert "split_season" in gates(data, "Traded", "2023-24", salary=90000000)
 
 
-def test_mid_season_move_blocks_team_high_earner_shifts():
+def test_a_split_season_blocks_team_high_earner_shifts():
     data = make_data(tail("OKC") + [
         rec("Mover", "2022-23", 10000000, team="OKC", salary_rank_team=3),
         rec("Mover", "2023-24", 40000000, team="OKC, BOS",
             team_salaries={"OKC": 22000000, "BOS": 18000000}),
     ])
-    assert "mid_season_move" in gates(data, "Mover", "2023-24")
+    assert "split_season" in gates(data, "Mover", "2023-24")
 
 
 # --------------------------------------------------------------------------
@@ -1779,3 +1779,174 @@ def test_pj_tucker_is_confirmed_and_ranks_as_one_career():
     idx = build_index(data, franchises=FRANCHISES)
     assert "PJ Tucker" not in idx.identity_suspect
     assert idx.career_eligible("PJ Tucker") is True
+
+
+# --------------------------------------------------------------------------
+# rank shifts: either season being split sinks the claim
+# --------------------------------------------------------------------------
+
+
+def _high_earner_pair(prev_kw=None, now_kw=None):
+    """A player who goes from second on the roster to first, plus a team-mate
+    above him last season so the shift has somewhere to come from."""
+    prev_kw = prev_kw or {}
+    now_kw = now_kw or {}
+    prev_kw.setdefault("team", "OKC")
+    now_kw.setdefault("team", "OKC")
+    return tail("OKC", season="2022-23") + [
+        rec("Rich Guy", "2022-23", 30000000, team="OKC", salary_rank_team=1),
+        rec("Climber", "2022-23", 20000000, salary_rank_team=2, **prev_kw),
+        rec("Climber", "2023-24", 40000000, salary_rank_team=1, **now_kw),
+    ]
+
+
+def test_team_high_earner_shift_fires_on_two_clean_seasons():
+    data = make_data(_high_earner_pair())
+    out = facts(data, "Climber", "2023-24", family="rank_shift")
+    assert [f["key"] for f in out] == ["team_high_becomes|Climber|2023-24"]
+    assert "after ranking second on the roster in 2022-23" in out[0]["text"]
+
+
+def test_a_split_current_season_sinks_the_shift():
+    data = make_data(_high_earner_pair(
+        now_kw={"team": "OKC, BOS", "team_salaries": {"OKC": 22000000, "BOS": 18000000}}
+    ))
+    assert facts(data, "Climber", "2023-24", family="rank_shift") == []
+    assert "split_season" in gates(data, "Climber", "2023-24")
+
+
+def test_a_split_previous_season_sinks_the_shift():
+    """The season being compared against is where salary_rank_team comes from.
+    On a split season that rank belongs to no single roster."""
+    data = make_data(_high_earner_pair(
+        prev_kw={"team": "OKC, BOS", "team_salaries": {"OKC": 12000000, "BOS": 8000000}}
+    ))
+    assert facts(data, "Climber", "2023-24", family="rank_shift") == []
+    dropped = gates(data, "Climber", "2023-24")
+    assert "split_season" in dropped
+    # named for what it is, not as a franchise change
+    assert "franchise_changed" not in dropped
+
+
+def test_league_rank_shifts_survive_a_split_season():
+    """A split season's salary is the whole season's money, so the league rank
+    it earns is sound. Only the team rank has no roster to belong to."""
+    data = make_data(tail("OKC", season="2023-24") + [
+        rec("Topper", "2023-24", 90000000, team="OKC, BOS", salary_rank_league=1,
+            team_salaries={"OKC": 50000000, "BOS": 40000000}),
+        rec("Topper", "2022-23", 10000000, team="OKC", salary_rank_league=200),
+    ])
+    out = facts(data, "Topper", "2023-24", family="rank_shift")
+    assert [f["key"] for f in out] == ["rank_league_first|Topper|2023-24"]
+
+
+# --------------------------------------------------------------------------
+# name-variant duplicates merge into one player
+# --------------------------------------------------------------------------
+
+
+ALIASES = {"Split Spelling": "Split Spelling Jr"}
+
+
+def _two_spellings():
+    """One career filed under two spellings, the Wendell Carter shape: the
+    stray season fills a hole in the other key's run."""
+    return [
+        rec("Split Spelling Jr", "2019-20", 5000000, career_earnings=5000000),
+        rec("Split Spelling Jr", "2020-21", 5000000, career_earnings=10000000),
+        rec("Split Spelling", "2021-22", 5000000, career_earnings=15000000),
+        rec("Split Spelling Jr", "2022-23", 5000000, career_earnings=20000000),
+        rec("Split Spelling Jr", CURRENT, 5000000, career_earnings=25000000),
+    ]
+
+
+def index_with_aliases(data, aliases=None):
+    return build_index(data, franchises=FRANCHISES, identity_splits={},
+                       name_aliases=aliases or {})
+
+
+def test_two_spellings_become_one_player():
+    data = make_data(_two_spellings())
+    idx = index_with_aliases(data, ALIASES)
+    assert "Split Spelling" not in idx.by_player
+    assert len(idx.by_player["Split Spelling Jr"]) == 5
+    assert idx.final_season["Split Spelling Jr"] == CURRENT
+    # the stray spelling is still findable by the name data.json stores
+    assert idx.record("Split Spelling", "2021-22") is not None
+
+
+def test_neither_half_looks_like_a_completed_career():
+    data = make_data(_two_spellings())
+    unmerged = index_with_aliases(data)
+    # apart, the older spelling's run ends in 2021-22 and reads as finished
+    assert unmerged.career_complete("Split Spelling") is True
+    merged = index_with_aliases(data, ALIASES)
+    assert merged.career_complete("Split Spelling Jr") is False
+    assert "Split Spelling" not in {e["player"] for e in merged.u_career.entries}
+
+
+def test_merging_clears_the_carried_in_career_total():
+    """Apart, the newer spelling starts mid-career with the other half's running
+    total already on it, which is the carried-in fault. Together it starts at
+    its own first salary."""
+    data = make_data([
+        rec("Split Spelling", "2019-20", 5000000, career_earnings=5000000),
+        rec("Split Spelling Jr", "2020-21", 5000000, career_earnings=10000000),
+        rec("Split Spelling Jr", "2021-22", 5000000, career_earnings=15000000),
+    ])
+    apart = index_with_aliases(data)
+    assert "Split Spelling Jr" in apart.career_total_carried_in
+    together = index_with_aliases(data, {"Split Spelling": "Split Spelling Jr"})
+    assert together.career_total_carried_in == set()
+
+
+def test_a_merged_player_appears_once_in_a_comparison_set():
+    data = make_data(_two_spellings() + tail("OKC", season="2019-20"))
+    idx = index_with_aliases(data, ALIASES)
+    names = [e["player"] for e in idx.u_franchise["OKC"].entries]
+    assert "Split Spelling" not in names
+    # one entry per season, all five under the one spelling
+    assert names.count("Split Spelling Jr") == 5
+
+
+def test_either_spelling_can_be_asked_for():
+    data = make_data(_two_spellings() + tail("OKC", season="2019-20"))
+    idx = index_with_aliases(data, ALIASES)
+    a = factoids_for(data, "Split Spelling", "2021-22", index=idx)
+    b = factoids_for(data, "Split Spelling Jr", "2021-22", index=idx)
+    assert [f["key"] for f in a] == [f["key"] for f in b]
+    assert all("Split Spelling Jr" in f["text"] for f in a if "Split Spelling" in f["text"])
+
+
+def test_missing_name_aliases_file_is_not_an_error():
+    assert F.load_name_aliases(os.path.join(REPO, "data", "no-such-file.json")) == {}
+
+
+@pytest.mark.skipif(
+    not os.path.exists(os.path.join(REPO, "data", "name_aliases.json")),
+    reason="data/name_aliases.json not present",
+)
+def test_shipped_aliases_merge_the_six_pairs_and_leave_the_fathers_alone():
+    with open(REAL_DATA, "r", encoding="utf-8") as fh:
+        data = json.load(fh)
+    aliases = F.load_name_aliases()
+    assert aliases["Wendell Carter"] == "Wendell Carter Jr"
+    assert len(aliases) == 6
+    # a genuine father and son share a name but never a career
+    for father_son in ("Gary Payton II", "Glen Rice Jr", "Tim Hardaway Jr",
+                       "Larry Nance Jr", "Ron Harper Jr", "Glenn Robinson III",
+                       "Gary Trent Jr", "Larry Drew II", "Jameer Nelson Jr"):
+        assert father_son not in aliases, father_son
+        assert father_son not in aliases.values(), father_son
+    idx = build_index(data, franchises=FRANCHISES)
+    carter = idx.by_player["Wendell Carter Jr"]
+    assert len(carter) == 11
+    assert [r["season"] for r in carter] == sorted(
+        (r["season"] for r in carter), key=season_key
+    )
+    # continuous, so 2024-25 is no longer a hole
+    keys = [season_key(r["season"]) for r in carter]
+    assert max(keys[i] - keys[i - 1] for i in range(1, len(keys))) == 1
+    assert idx.career_eligible("Wendell Carter Jr") is True
+    assert "Wendell Carter Jr" not in idx.career_total_carried_in
+    assert "Wendell Carter" not in idx.by_player

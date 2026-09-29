@@ -31,6 +31,7 @@ from factoids import (  # noqa: E402
     build_index,
     is_split_season,
     load_data,
+    load_name_aliases,
     load_identity_splits,
     season_key,
     team_amounts,
@@ -282,6 +283,34 @@ def audit_splits(data, idx):
     print("   season salary and are unaffected.")
 
 
+def audit_name_aliases(data, idx):
+    rule("(h) NAME-VARIANT DUPLICATES")
+    print("data.json can file one career under two spellings. Wendell Carter's")
+    print("2024-25 sits under \"Wendell Carter\" while the rest of the same")
+    print("career is \"Wendell Carter Jr\", so apart, one half looks finished and")
+    print("the other starts mid-career with the first half's running total.\n")
+    aliases = load_name_aliases()
+    if not aliases:
+        print("data/name_aliases.json not present.")
+        return
+    print("merged pairs: {}".format(len(aliases)))
+    for alias in sorted(aliases):
+        canonical = aliases[alias]
+        recs = idx.by_player.get(canonical) or []
+        print("   {:24s} <- {:24s}  merged run {} to {}, {} seasons".format(
+            canonical, alias,
+            recs[0]["season"] if recs else "-",
+            recs[-1]["season"] if recs else "-", len(recs),
+        ))
+    print("\n-> the rule: same name once the suffix, full stops and apostrophes")
+    print("   are stripped, same draft year or one missing, no season in common,")
+    print("   and seasons that run continuously together. A shared season means")
+    print("   two men; a hole in the run is a career gap, which identity_splits")
+    print("   handles instead. Every genuine father and son in this data fails")
+    print("   the rule on the gap: Gary Payton to Gary Payton II is 10 seasons,")
+    print("   Larry Nance to Larry Nance Jr is 22.")
+
+
 def audit_franchises(data, idx):
     rule("(d) FRANCHISE MAP")
     codes = collections.defaultdict(list)
@@ -347,6 +376,7 @@ SECTIONS = {
     "franchises": audit_franchises,
     "seasons": audit_current_and_caps,
     "splits": audit_splits,
+    "aliases": audit_name_aliases,
 }
 
 
@@ -362,8 +392,8 @@ def main(argv=None):
         len(idx.records), len(idx.seasons), len(idx.by_player)
     ))
     sections = [SECTIONS[args.section]] if args.section else [
-        audit_agents, audit_awards, audit_truncated, audit_splits,
-        audit_franchises, audit_current_and_caps,
+        audit_agents, audit_awards, audit_truncated, audit_name_aliases,
+        audit_splits, audit_franchises, audit_current_and_caps,
     ]
     for section in sections:
         section(data, idx)
