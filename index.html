@@ -368,6 +368,13 @@
       <!-- Player view: one row per season, rendered by buildPlayerSeasonTable() -->
       <div class="player-view" id="playerView" style="display:none;"></div>
 
+<!-- prerender:browse:start -->
+      <section class="hm-browse">
+        <h2>Browse every NBA salary</h2>
+        <ul class="hm-roll"><li><a href="https://hoopsmatic.com/salary-season-finder/agents/">Agents</a></li><li><a href="https://hoopsmatic.com/salary-season-finder/colleges/">Colleges</a></li><li><a href="https://hoopsmatic.com/salary-season-finder/countries/">Countries</a></li><li><a href="https://hoopsmatic.com/salary-season-finder/draft-classes/">Draft classes</a></li><li><a href="https://hoopsmatic.com/salary-season-finder/picks/">Draft picks</a></li><li><a href="https://hoopsmatic.com/salary-season-finder/positions/">Positions</a></li></ul>
+      </section>
+      <!-- prerender:browse:end -->
+
       <!-- Empty state -->
       <div class="empty-state" id="emptyState" style="display:none;">
         <h3>No matching seasons found</h3>
@@ -380,6 +387,9 @@
     Anything wrong? Contact us at <a href="mailto:hoopshype@hoopshype.com">hoopshype@hoopshype.com</a>
   </footer>
 
+  <!-- player page slugs, written by scripts/prerender_pages.py. Absent, the
+       results table renders player names as plain text. -->
+  <script src="js/player-pages.js"></script>
   <script src="js/app.js"></script>
   <script>
   // URL state for ?team= — additive, runs after app.js. Restores the team filter

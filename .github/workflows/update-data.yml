@@ -147,3 +147,59 @@ jobs:
           done
           echo "could not push factoids.json; data.json is unaffected"
           exit 1
+
+  # The pages are prerendered in a third job, after the factoids are on the
+  # branch. Same guarantee as build-factoids: data.json was committed and
+  # pushed two jobs ago, this job only ever adds its own files, and
+  # continue-on-error keeps a red prerender from reding the workflow or
+  # touching the data commit.
+  prerender-pages:
+    needs: [update-data, build-factoids]
+    if: always() && needs.update-data.result == 'success'
+    runs-on: ubuntu-latest
+    continue-on-error: true
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install test dependencies
+        run: pip install pytest
+
+      - name: Build the pages
+        run: python scripts/prerender_pages.py
+
+      - name: Run prerender tests
+        run: python -m pytest scripts/tests/test_prerender.py -q
+
+      - name: Commit and push pages
+        run: |
+          git add -A agent agents college colleges countries country draft \
+            draft-classes pick picks player position positions season team \
+            404.html sitemap.xml data/slugs.json data/page_hashes.json \
+            js/player-pages.js index.html
+          if git diff --cached --quiet; then
+            echo "No page changes"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -m "Auto-update entity pages [$(date -u +%Y-%m-%d)]"
+          # the two jobs before this one pushed; rebase rather than race them
+          for attempt in 1 2 3; do
+            git pull --rebase origin "${GITHUB_REF_NAME}" && git push && exit 0
+            echo "push attempt $attempt failed, retrying"
+            sleep $((attempt * 5))
+          done
+          echo "could not push the pages; data.json is unaffected"
+          exit 1

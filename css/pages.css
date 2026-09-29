@@ -1,0 +1,323 @@
+/* ==========================================================================
+   Pre-rendered entity pages.
+
+   Additive: css/polymarket.css and css/styles.css are loaded first and are not
+   touched. Everything here is built on their tokens, and the ranked tables
+   deliberately reuse the .ps-scroll frame and the sticky-first-column pattern
+   the player season table already uses, so a page and the tool read as one
+   thing and a phone never scrolls the body sideways.
+   ========================================================================== */
+
+.hm-page {
+  max-width: 62rem;
+  margin: 0 auto;
+  padding: 1.25rem 1.25rem 3rem;
+}
+
+/* breadcrumbs */
+.hm-crumbs {
+  font-family: var(--mono);
+  font-size: .68rem;
+  color: var(--text-secondary);
+  margin-bottom: .9rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .3rem .45rem;
+  align-items: center;
+}
+
+.hm-crumbs a {
+  color: var(--text-secondary);
+}
+
+.hm-crumbs a:hover {
+  color: var(--accent);
+}
+
+.hm-crumbs .sep {
+  opacity: .5;
+}
+
+.hm-page h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -.03em;
+  line-height: 1.2;
+  margin-bottom: .3rem;
+}
+
+.hm-lede {
+  color: var(--text-secondary);
+  font-size: .9rem;
+  margin-bottom: .5rem;
+  max-width: 48rem;
+}
+
+.hm-scope {
+  font-family: var(--mono);
+  font-size: .64rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--text-secondary);
+  margin-bottom: 1.4rem;
+}
+
+.hm-section {
+  margin-bottom: 1.8rem;
+}
+
+.hm-section > h2 {
+  font-size: .95rem;
+  font-weight: 700;
+  margin-bottom: .2rem;
+}
+
+.hm-section > .hm-hint {
+  font-size: .78rem;
+  color: var(--text-secondary);
+  margin-bottom: .6rem;
+}
+
+/* ranked tables, in the same frame as the season table */
+table.hm-rank-table {
+  width: 100%;
+  min-width: 34rem;
+  border-collapse: collapse;
+  font-size: .82rem;
+}
+
+table.hm-rank-table thead th {
+  background: var(--surface-hover);
+  color: var(--text-secondary);
+  font-family: var(--mono);
+  font-size: .62rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  padding: .6rem .55rem;
+  text-align: center;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--border);
+}
+
+table.hm-rank-table tbody tr {
+  border-bottom: 1px solid var(--border);
+}
+
+table.hm-rank-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+table.hm-rank-table tbody tr:nth-child(even) {
+  background: var(--stripe);
+}
+
+table.hm-rank-table td,
+table.hm-rank-table tbody th {
+  padding: .45rem .55rem;
+  text-align: center;
+  font-family: var(--mono);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+table.hm-rank-table td.hm-num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+table.hm-rank-table td.hm-money {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: var(--green);
+}
+
+table.hm-rank-table td.hm-text {
+  text-align: left;
+  font-family: var(--sans);
+  white-space: normal;
+}
+
+/* first column frozen, the pattern the season table uses; it paints its own
+   background so the stripe has to be repeated on it */
+table.hm-rank-table th.hm-who {
+  position: sticky;
+  left: 0;
+  z-index: 5;
+  text-align: left;
+  background: var(--surface);
+  font-family: var(--sans);
+  font-weight: 600;
+  min-width: 10.5rem;
+  white-space: nowrap;
+}
+
+table.hm-rank-table thead th.hm-who {
+  z-index: 15;
+  background: var(--surface-hover);
+  font-family: var(--mono);
+  font-weight: 600;
+}
+
+table.hm-rank-table tbody tr:nth-child(even) th.hm-who {
+  background: var(--stripe);
+}
+
+table.hm-rank-table .hm-rank {
+  color: var(--text-secondary);
+  font-family: var(--mono);
+  font-size: .7rem;
+  margin-right: .45rem;
+}
+
+.hm-contracted {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: .52rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  padding: .06rem .3rem;
+  border-radius: 4px;
+  background: var(--orange-dim);
+  color: var(--orange);
+  margin-left: .35rem;
+}
+
+/* factoid sentences */
+.hm-facts {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+.hm-facts li {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 8px;
+  padding: .55rem .75rem;
+  font-size: .86rem;
+  line-height: 1.5;
+}
+
+/* roll call of every member, and the hub grids */
+.hm-roll {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .3rem;
+  list-style: none;
+}
+
+.hm-roll li {
+  margin: 0;
+}
+
+.hm-roll a {
+  display: inline-block;
+  font-size: .78rem;
+  padding: .22rem .5rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.hm-roll a:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.hm-roll .hm-roll-count {
+  color: var(--text-secondary);
+  font-family: var(--mono);
+  font-size: .66rem;
+  margin-left: .3rem;
+}
+
+/* related links on a player page */
+.hm-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem;
+  list-style: none;
+}
+
+.hm-links a {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: .7rem;
+  font-weight: 600;
+  padding: .3rem .6rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text-secondary);
+}
+
+.hm-links a:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.hm-empty {
+  font-size: .82rem;
+  color: var(--text-secondary);
+}
+
+/* the Browse block on the tool root, and the hub list on 404 */
+.hm-browse {
+  border-top: 1px solid var(--border);
+  margin-top: 2rem;
+  padding-top: 1.1rem;
+}
+
+.hm-browse h2 {
+  font-family: var(--mono);
+  font-size: .68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-secondary);
+  margin-bottom: .5rem;
+}
+
+.hm-404 {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 4rem 1.25rem;
+  text-align: center;
+}
+
+.hm-404 h1 {
+  font-size: 1.6rem;
+  margin-bottom: .5rem;
+}
+
+.hm-404 p {
+  color: var(--text-secondary);
+  margin-bottom: 1.2rem;
+}
+
+.hm-404 .hm-roll {
+  justify-content: center;
+}
+
+@media (max-width: 860px) {
+  .hm-page {
+    padding: .9rem .8rem 2.5rem;
+  }
+
+  .hm-page h1 {
+    font-size: 1.2rem;
+  }
+
+  .hm-lede {
+    font-size: .84rem;
+  }
+}
