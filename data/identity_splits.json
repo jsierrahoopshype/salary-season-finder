@@ -1,0 +1,994 @@
+{
+ "entries": {
+  "Alan Anderson": {
+   "confirmed": false,
+   "evidence": "age 30 in 2012-13 continues age 24 in 2006-07",
+   "people": [
+    {
+     "college": "Michigan St",
+     "display_name": "Alan Anderson",
+     "draft_pick": null,
+     "draft_year": 2005,
+     "first_season": "2005-06",
+     "last_season": "2016-17",
+     "seasons": 7,
+     "teams": [
+      "BKN",
+      "CHA",
+      "LAC",
+      "TOR",
+      "WAS"
+     ]
+    }
+   ],
+   "split": false
+  },
+  "Andre Emmett": {
+   "confirmed": false,
+   "evidence": "age 29 in 2011-12 continues age 23 in 2005-06",
+   "people": [
+    {
+     "college": "Texas Tech",
+     "display_name": "Andre Emmett",
+     "draft_pick": 35,
+     "draft_year": 2004,
+     "first_season": "2004-05",
+     "last_season": "2011-12",
+     "seasons": 3,
+     "teams": [
+      "BKN",
+      "MEM",
+      "MIA"
+     ]
+    }
+   ],
+   "split": false
+  },
+  "Anthony Barber": {
+   "confirmed": false,
+   "evidence": "age 27 in 2021-22 continues age 22 in 2016-17",
+   "people": [
+    {
+     "college": "North Carolina St",
+     "display_name": "Anthony Barber",
+     "draft_pick": null,
+     "draft_year": 2016,
+     "first_season": "2016-17",
+     "last_season": "2021-22",
+     "seasons": 2,
+     "teams": [
+      "ATL",
+      "PHI"
+     ]
+    }
+   ],
+   "split": false
+  },
+  "Anthony Goldwire": {
+   "confirmed": false,
+   "evidence": "age 31 in 2002-03 continues age 26 in 1997-98",
+   "people": [
+    {
+     "college": "Houston",
+     "display_name": "Anthony Goldwire",
+     "draft_pick": 52,
+     "draft_year": 1994,
+     "first_season": "1996-97",
+     "last_season": "2005-06",
+     "seasons": 5,
+     "teams": [
+      "CHA",
+      "DEN",
+      "LAC",
+      "MIL",
+      "SAS"
+     ]
+    }
+   ],
+   "split": false
+  },
+  "Anthony Parker": {
+   "confirmed": false,
+   "evidence": "age 31 in 2006-07 continues age 24 in 1999-00",
+   "people": [
+    {
+     "college": "Bradley",
+     "display_name": "Anthony Parker",
+     "draft_pick": 21,
+     "draft_year": 1997,
+     "first_season": "1997-98",
+     "last_season": "2011-12",
+     "seasons": 9,
+     "teams": [
+      "CLE",
+      "ORL",
+      "PHI",
+      "TOR"
+     ]
+    }
+   ],
+   "split": false
+  },
+  "Bobby Brown": {
+   "confirmed": false,
+   "evidence": "age 32 in 2016-17 continues age 25 in 2009-10",
+   "people": [
+    {
+     "college": "UC-Fullerton",
+     "display_name": "Bobby Brown",
+     "draft_pick": null,
+     "draft_year": 2007,
+     "first_season": "2008-09",
+     "last_season": "2017-18",
+     "seasons": 4,
+     "teams": [
+      "HOU",
+      "LAC",
+      "MIN"
+     ]
+    }
+   ],
+   "split": false
+  },
+  "Brandon Williams": {
+   "confirmed": true,
+   "evidence": "age -1 in 1998-99, which no NBA player has, so that row carries another man's birth date",
+   "people": [
+    {
+     "college": "Davidson",
+     "display_name": "Brandon Williams",
+     "draft_pick": null,
+     "draft_year": null,
+     "first_season": "1998-99",
+     "last_season": "1999-00",
+     "seasons": 2,
+     "teams": [
+      "ATL",
+      "SAS"
+     ]
+    },
+    {
+     "college": "Arizona",
+     "display_name": "Brandon Williams",
+     "draft_pick": null,
+     "draft_year": 2021,
+     "first_season": "2021-22",
+     "last_season": "2026-27",
+     "seasons": 5,
+     "teams": [
+      "DAL",
+      "GSW",
+      "POR"
+     ]
+    }
+   ],
+   "split": true
+  },
+  "Chris Smith": {
+   "confirmed": true,
+   "evidence": "no age on either side of the 1994-95-to-2013-14 gap, so the data cannot say; treated as a split until checked",
+   "people": [
+    {
+     "college": "Connecticut",
+     "display_name": "Chris Smith",
+     "draft_pick": 34,
+     "draft_year": 1992,
+     "first_season": "1992-93",
+     "last_season": "1994-95",
+     "seasons": 3,
+     "teams": [
+      "MIN"
+     ]
+    },
+    {
+     "college": "Louisville",
+     "display_name": "Chris Smith",
+     "draft_pick": null,
+     "draft_year": null,
+     "first_season": "2013-14",
+     "last_season": "2013-14",
+     "seasons": 1,
+     "teams": [
+      "NYK"
+     ]
+    }
+   ],
+   "split": true
+  },
+  "Corey Brewer": {
+   "confirmed": true,
+   "evidence": "age 13 in 1999-00, which no NBA player has, so that row carries another man's birth date",
+   "people": [
+    {
+     "college": null,
+     "display_name": null,
+     "draft_pick": null,
+     "draft_year": null,
+     "first_season": "1999-00",
+     "last_season": "1999-00",
+     "note": "Miami 1999-00, $100,000, no games played, age 13 on the record. Whoever this is, he is not the 2007 Corey Brewer. Name unknown, so the season is still held back even though the split is confirmed.",
+     "seasons": 1,
+     "teams": [
+      "MIA"
+     ]
+    },
+    {
+     "college": "Florida",
+     "display_name": "Corey Brewer",
+     "draft_pick": 7,
+     "draft_year": 2007,
+     "first_season": "2007-08",
+     "last_season": "2019-20",
+     "seasons": 13,
+     "teams": [
+      "DEN",
+      "HOU",
+      "LAL",
+      "MIN",
+      "NYK",
+      "OKC",
+      "PHI",
+      "SAC"
+     ]
+    }
+   ],
+   "split": true
+  },
+  "DJ Stephens": {
+   "confirmed": false,
+   "evidence": "age 28 in 2018-19 continues age 23 in 2013-14",
+   "people": [
+    {
+     "college": "Memphis",
+     "display_name": "DJ Stephens",
+     "draft_pick": null,
+     "draft_year": 2013,
+     "first_season": "2013-14",
+     "last_season": "2018-19",
+     "seasons": 2,
+     "teams": [
+      "MEM",
+      "MIL"
+     ]
+    }
+   ],
+   "split": false
+  },
+  "Damien Wilkins": {
+   "confirmed": false,
+   "evidence": "age 38 in 2017-18 continues age 33 in 2012-13",
+   "people": [
+    {
+     "college": "Georgia",
+     "display_name": "Damien Wilkins",
+     "draft_pick": null,
+     "draft_year": 2004,
+     "first_season": "2004-05",
+     "last_season": "2017-18",
+     "seasons": 10,
+     "teams": [
+      "ATL",
+      "DET",
+      "IND",
+      "MIN",
+      "OKC",
+      "PHI"
+     ]
+    }
+   ],
+   "split": false
+  },
+  "Fred Vinson": {
+   "confirmed": false,
+   "evidence": "age 29 in 1999-00 continues age 24 in 1994-95",
+   "people": [
+    {
+     "college": "Georgia Tech",
+     "display_name": "Fred Vinson",
+     "draft_pick": null,
+     "draft_year": 1994,
+     "first_season": "1994-95",
+     "last_season": "1999-00",
+     "seasons": 2,
+     "teams": [
+      "ATL",
+      "OKC"
+     ]
+    }
+   ],
+   "split": false
+  },
+  "Gerald Henderson": {
+   "confirmed": true,
+   "evidence": "age 22 in 2009-10 where the same man would be 54, a 32-year jump across the gap; age 62 in 2017-18, which no NBA player has, so that row carries another man's birth date",
+   "people": [
+    {
+     "college": "VCU",
+     "display_name": "Gerald Henderson",
+     "draft_pick": 64,
+     "draft_year": 1978,
+     "first_season": "1990-91",
+     "last_season": "1990-91",
+     "seasons": 1,
+     "teams": [
+      "DET"
+     ]
+    },
+    {
+     "college": "Duke",
+     "display_name": "Gerald Henderson Jr",
+     "draft_pick": 12,
+     "draft_year": 2009,
+     "first_season": "2009-10",
+     "last_season": "2017-18",
+     "seasons": 9,
+     "teams": [
+      "CHA",
+      "PHI",
+      "POR"
+     ]
+    }
+   ],
+   "split": true
+  },
+  "Hot Rod Williams": {
+   "confirmed": false,
+   "evidence": "age 37 in 1999-00 continues age 30 in 1992-93",
+   "people": [
+    {
+     "college": "Tulane",
+     "display_name": "Hot Rod Williams",
+     "draft_pick": 45,
+     "draft_year": 1985,
+     "first_season": "1990-91",
+     "last_season": "1999-00",
+     "seasons": 4,
+     "teams": [
+      "CLE",
+      "DAL"
+     ]
+    }
+   ],
+   "split": false
+  },
+  "James Nunnally": {
+   "confirmed": false,
+   "evidence": "age 28 in 2018-19 continues age 23 in 2013-14",
+   "people": [
+    {
+     "college": "UC Santa Barbara",
+     "display_name": "James Nunnally",
+     "draft_pick": null,
+     "draft_year": 2012,
+     "first_season": "2013-14",
+     "last_season": "2020-21",
+     "seasons": 3,
+     "teams": [
+      "ATL",
+      "HOU",
+      "MIN",
+      "NOP"
+     ]
+    }
+   ],
+   "split": false
+  },
+  "James White": {
+   "confirmed": false,
+   "evidence": "age 30 in 2012-13 continues age 24 in 2006-07",
+   "people": [
+    {
+     "college": "Cincinnati",
+     "display_name": "James White",
+     "draft_pick": 31,
+     "draft_year": 2006,
+     "first_season": "2006-07",
+     "last_season": "2012-13",
+     "seasons": 2,
+     "teams": [
+      "IND",
+      "NYK",
+      "SAS"
+     ]
+    }
+   ],
+   "split": false
+  },
+  "Jaren Jackson Jr": {
+   "confirmed": true,
+   "evidence": "age 19 in 2018-19 where the same man would be 51, a 32-year jump across the gap",
+   "people": [
+    {
+     "college": "Georgetown",
+     "display_name": "Jaren Jackson",
+     "draft_pick": null,
+     "draft_year": null,
+     "first_season": "1992-93",
+     "last_season": "2001-02",
+     "seasons": 7,
+     "teams": [
+      "LAC",
+      "PHI",
+      "SAS",
+      "WAS"
+     ]
+    },
+    {
+     "college": "Michigan St",
+     "display_name": "Jaren Jackson Jr",
+     "draft_pick": 4,
+     "draft_year": 2018,
+     "first_season": "2018-19",
+     "last_season": "2029-30",
+     "seasons": 12,
+     "teams": [
+      "MEM",
+      "UTA"
+     ]
+    }
+   ],
+   "split": true
+  },
+  "Jeff Sanders": {
+   "confirmed": false,
+   "evidence": "age 33 in 1998-99 continues age 27 in 1992-93",
+   "people": [
+    {
+     "college": "Georgia Southern",
+     "display_name": "Jeff Sanders",
+     "draft_pick": 20,
+     "draft_year": 1989,
+     "first_season": "1991-92",
+     "last_season": "1998-99",
+     "seasons": 3,
+     "teams": [
+      "ATL",
+      "CHI",
+      "MIA"
+     ]
+    }
+   ],
+   "split": false
+  },
+  "Jimmy Oliver": {
+   "confirmed": false,
+   "evidence": "age 28 in 1997-98 continues age 22 in 1991-92",
+   "people": [
+    {
+     "college": "Purdue",
+     "display_name": "Jimmy Oliver",
+     "draft_pick": 39,
+     "draft_year": 1991,
+     "first_season": "1991-92",
+     "last_season": "1999-00",
+     "seasons": 3,
+     "teams": [
+      "CLE",
+      "NYK",
+      "WAS"
+     ]
+    }
+   ],
+   "split": false
+  },
+  "John Long": {
+   "confirmed": false,
+   "evidence": "age 40 in 1996-97 continues age 34 in 1990-91",
+   "people": [
+    {
+     "college": "Detroit",
+     "display_name": "John Long",
+     "draft_pick": 29,
+     "draft_year": 1978,
+     "first_season": "1990-91",
+     "last_season": "1997-98",
+     "seasons": 3,
+     "teams": [
+      "DET",
+      "TOR"
+     ]
+    }
+   ],
+   "split": false
+  },
+  "John Morton": {
+   "confirmed": false,
+   "evidence": "age 32 in 1999-00 continues age 24 in 1991-92",
+   "people": [
+    {
+     "college": "Seton Hall",
+     "display_name": "John Morton",
+     "draft_pick": 25,
+     "draft_year": 1989,
+     "first_season": "1990-91",
+     "last_season": "1999-00",
+     "seasons": 3,
+     "teams": [
+      "CLE",
+      "GSW"
+     ]
+    }
+   ],
+   "split": false
+  },
+  "John Thomas": {
+   "confirmed": false,
+   "evidence": "age 30 in 2005-06 continues age 24 in 1999-00",
+   "people": [
+    {
+     "college": "Minnesota",
+     "display_name": "John Thomas",
+     "draft_pick": 25,
+     "draft_year": 1997,
+     "first_season": "1997-98",
+     "last_season": "2005-06",
+     "seasons": 4,
+     "teams": [
+      "ATL",
+      "BOS",
+      "MEM",
+      "TOR"
+     ]
+    }
+   ],
+   "split": false
+  },
+  "Josh Davis": {
+   "confirmed": false,
+   "evidence": "age 31 in 2011-12 continues age 25 in 2005-06",
+   "people": [
+    {
+     "college": "Wyoming",
+     "display_name": "Josh Davis",
+     "draft_pick": null,
+     "draft_year": 2002,
+     "first_season": "2004-05",
+     "last_season": "2014-15",
+     "seasons": 4,
+     "teams": [
+      "HOU",
+      "MEM",
+      "MIL",
+      "PHI",
+      "PHX",
+      "SAS"
+     ]
+    }
+   ],
+   "split": false
+  },
+  "Larry Robinson": {
+   "confirmed": false,
+   "evidence": "age 33 in 2000-01 continues age 27 in 1994-95",
+   "people": [
+    {
+     "college": "Centenary-Louisiana",
+     "display_name": "Larry Robinson",
+     "draft_pick": null,
+     "draft_year": 1990,
+     "first_season": "1994-95",
+     "last_season": "2001-02",
+     "seasons": 3,
+     "teams": [
+      "ATL",
+      "HOU",
+      "NYK"
+     ]
+    }
+   ],
+   "split": false
+  },
+  "Maceo Baston": {
+   "confirmed": false,
+   "evidence": "age 30 in 2006-07 continues age 24 in 2000-01",
+   "people": [
+    {
+     "college": "Michigan",
+     "display_name": "Maceo Baston",
+     "draft_pick": 58,
+     "draft_year": 1998,
+     "first_season": "1999-00",
+     "last_season": "2008-09",
+     "seasons": 5,
+     "teams": [
+      "CHI",
+      "IND",
+      "MIL",
+      "TOR"
+     ]
+    }
+   ],
+   "split": false
+  },
+  "Marcus Haislip": {
+   "confirmed": false,
+   "evidence": "age 29 in 2009-10 continues age 24 in 2004-05",
+   "people": [
+    {
+     "college": "Tennessee",
+     "display_name": "Marcus Haislip",
+     "draft_pick": 13,
+     "draft_year": 2002,
+     "first_season": "2002-03",
+     "last_season": "2009-10",
+     "seasons": 4,
+     "teams": [
+      "IND",
+      "MIL",
+      "SAS"
+     ]
+    }
+   ],
+   "split": false
+  },
+  "Mario Hezonja": {
+   "confirmed": false,
+   "evidence": "age 30 in 2025-26 continues age 25 in 2020-21",
+   "people": [
+    {
+     "college": "Barcelona",
+     "display_name": "Mario Hezonja",
+     "draft_pick": 5,
+     "draft_year": 2015,
+     "first_season": "2015-16",
+     "last_season": "2026-27",
+     "seasons": 8,
+     "teams": [
+      "CLE",
+      "MEM",
+      "NYK",
+      "ORL",
+      "POR"
+     ]
+    }
+   ],
+   "split": false
+  },
+  "Mickael Gelabale": {
+   "confirmed": false,
+   "evidence": "age 29 in 2012-13 continues age 24 in 2007-08",
+   "people": [
+    {
+     "college": "Real Madrid",
+     "display_name": "Mickael Gelabale",
+     "draft_pick": 48,
+     "draft_year": 2005,
+     "first_season": "2006-07",
+     "last_season": "2012-13",
+     "seasons": 3,
+     "teams": [
+      "MIN",
+      "OKC"
+     ]
+    }
+   ],
+   "split": false
+  },
+  "Mike Brown (1963)": {
+   "confirmed": false,
+   "evidence": "age 36 in 1999-00 continues age 31 in 1994-95",
+   "people": [
+    {
+     "college": "George Washington",
+     "display_name": "Mike Brown (1963)",
+     "draft_pick": 69,
+     "draft_year": 1985,
+     "first_season": "1990-91",
+     "last_season": "1999-00",
+     "seasons": 6,
+     "teams": [
+      "MIN",
+      "PHX",
+      "UTA"
+     ]
+    }
+   ],
+   "split": false
+  },
+  "Nate Huffman": {
+   "confirmed": false,
+   "evidence": "age 27 in 2002-03 continues age 22 in 1997-98",
+   "people": [
+    {
+     "college": "Central Michigan",
+     "display_name": "Nate Huffman",
+     "draft_pick": null,
+     "draft_year": 1997,
+     "first_season": "1997-98",
+     "last_season": "2004-05",
+     "seasons": 4,
+     "teams": [
+      "LAC",
+      "TOR"
+     ]
+    }
+   ],
+   "split": false
+  },
+  "Nigel Hayes": {
+   "confirmed": false,
+   "evidence": "age 31 in 2025-26 continues age 23 in 2017-18",
+   "people": [
+    {
+     "college": "Wisconsin",
+     "display_name": "Nigel Hayes",
+     "draft_pick": null,
+     "draft_year": 2017,
+     "first_season": "2017-18",
+     "last_season": "2025-26",
+     "seasons": 2,
+     "teams": [
+      "LAL",
+      "MIL",
+      "SAC",
+      "TOR"
+     ]
+    }
+   ],
+   "split": false
+  },
+  "PJ Tucker": {
+   "confirmed": true,
+   "evidence": "age 27 in 2012-13 continues age 21 in 2006-07; confirmed by hand: one man, Toronto as a 2006 second-round pick, then Israel, Ukraine, Greece and Germany, back in the NBA with Phoenix in 2012-13 and 13 straight seasons after that",
+   "people": [
+    {
+     "college": "Texas",
+     "display_name": "PJ Tucker",
+     "draft_pick": 35,
+     "draft_year": 2006,
+     "first_season": "2006-07",
+     "last_season": "2024-25",
+     "seasons": 14,
+     "teams": [
+      "HOU",
+      "LAC",
+      "MIA",
+      "MIL",
+      "PHI",
+      "PHX",
+      "TOR"
+     ]
+    }
+   ],
+   "split": false
+  },
+  "Randolph Keys": {
+   "confirmed": false,
+   "evidence": "age 29 in 1995-96 continues age 24 in 1990-91",
+   "people": [
+    {
+     "college": "Southern Mississippi",
+     "display_name": "Randolph Keys",
+     "draft_pick": 22,
+     "draft_year": 1988,
+     "first_season": "1990-91",
+     "last_season": "1995-96",
+     "seasons": 2,
+     "teams": [
+      "CHA",
+      "MIL"
+     ]
+    }
+   ],
+   "split": false
+  },
+  "Scott Machado": {
+   "confirmed": false,
+   "evidence": "age 28 in 2018-19 continues age 22 in 2012-13",
+   "people": [
+    {
+     "college": "Iona",
+     "display_name": "Scott Machado",
+     "draft_pick": null,
+     "draft_year": 2012,
+     "first_season": "2012-13",
+     "last_season": "2018-19",
+     "seasons": 2,
+     "teams": [
+      "GSW",
+      "HOU",
+      "LAL"
+     ]
+    }
+   ],
+   "split": false
+  },
+  "Sergio Rodriguez": {
+   "confirmed": false,
+   "evidence": "age 30 in 2016-17 continues age 23 in 2009-10",
+   "people": [
+    {
+     "college": "Estudiantes",
+     "display_name": "Sergio Rodriguez",
+     "draft_pick": 27,
+     "draft_year": 2006,
+     "first_season": "2006-07",
+     "last_season": "2016-17",
+     "seasons": 5,
+     "teams": [
+      "NYK",
+      "PHI",
+      "POR"
+     ]
+    }
+   ],
+   "split": false
+  },
+  "Shane Heal": {
+   "confirmed": false,
+   "evidence": "age 33 in 2003-04 continues age 27 in 1997-98",
+   "people": [
+    {
+     "college": "Brisbane Bullets",
+     "display_name": "Shane Heal",
+     "draft_pick": null,
+     "draft_year": 1992,
+     "first_season": "1996-97",
+     "last_season": "2003-04",
+     "seasons": 3,
+     "teams": [
+      "MIN",
+      "SAS"
+     ]
+    }
+   ],
+   "split": false
+  },
+  "Skal Labissiere": {
+   "confirmed": false,
+   "evidence": "age 29 in 2025-26 continues age 23 in 2019-20",
+   "people": [
+    {
+     "college": "Kentucky",
+     "display_name": "Skal Labissiere",
+     "draft_pick": 28,
+     "draft_year": 2016,
+     "first_season": "2016-17",
+     "last_season": "2025-26",
+     "seasons": 5,
+     "teams": [
+      "ATL",
+      "POR",
+      "SAC",
+      "WAS"
+     ]
+    }
+   ],
+   "split": false
+  },
+  "Sonny Weems": {
+   "confirmed": false,
+   "evidence": "age 29 in 2015-16 continues age 24 in 2010-11",
+   "people": [
+    {
+     "college": "Arkansas",
+     "display_name": "Sonny Weems",
+     "draft_pick": 39,
+     "draft_year": 2008,
+     "first_season": "2008-09",
+     "last_season": "2015-16",
+     "seasons": 4,
+     "teams": [
+      "DEN",
+      "PHI",
+      "TOR"
+     ]
+    }
+   ],
+   "split": false
+  },
+  "Tacko Fall": {
+   "confirmed": false,
+   "evidence": "age 31 in 2026-27 continues age 26 in 2021-22",
+   "people": [
+    {
+     "college": "UCF",
+     "display_name": "Tacko Fall",
+     "draft_pick": null,
+     "draft_year": 2019,
+     "first_season": "2019-20",
+     "last_season": "2026-27",
+     "seasons": 4,
+     "teams": [
+      "BOS",
+      "CLE",
+      "PHI"
+     ]
+    }
+   ],
+   "split": false
+  },
+  "Thurl Bailey": {
+   "confirmed": false,
+   "evidence": "age 37 in 1998-99 continues age 32 in 1993-94",
+   "people": [
+    {
+     "college": "North Carolina St",
+     "display_name": "Thurl Bailey",
+     "draft_pick": 7,
+     "draft_year": 1983,
+     "first_season": "1990-91",
+     "last_season": "1999-00",
+     "seasons": 6,
+     "teams": [
+      "MIN",
+      "UTA"
+     ]
+    }
+   ],
+   "split": false
+  },
+  "Victor Alexander": {
+   "confirmed": false,
+   "evidence": "age 32 in 2001-02 continues age 26 in 1995-96",
+   "people": [
+    {
+     "college": "Iowa St",
+     "display_name": "Victor Alexander",
+     "draft_pick": 17,
+     "draft_year": 1991,
+     "first_season": "1991-92",
+     "last_season": "2001-02",
+     "seasons": 6,
+     "teams": [
+      "DET",
+      "GSW",
+      "TOR"
+     ]
+    }
+   ],
+   "split": false
+  },
+  "Willie Solomon": {
+   "confirmed": false,
+   "evidence": "age 30 in 2008-09 continues age 23 in 2001-02",
+   "people": [
+    {
+     "college": "Clemson",
+     "display_name": "Willie Solomon",
+     "draft_pick": 32,
+     "draft_year": 2001,
+     "first_season": "2001-02",
+     "last_season": "2008-09",
+     "seasons": 2,
+     "teams": [
+      "MEM",
+      "SAC"
+     ]
+    }
+   ],
+   "split": false
+  },
+  "Yi Jianlian": {
+   "confirmed": false,
+   "evidence": "age 29 in 2016-17 continues age 24 in 2011-12",
+   "people": [
+    {
+     "college": "Guangdong",
+     "display_name": "Yi Jianlian",
+     "draft_pick": 6,
+     "draft_year": 2007,
+     "first_season": "2007-08",
+     "last_season": "2016-17",
+     "seasons": 6,
+     "teams": [
+      "BKN",
+      "DAL",
+      "LAL",
+      "MIL",
+      "WAS"
+     ]
+    }
+   ],
+   "split": false
+  }
+ },
+ "evidence_rule": "data.json carries an explicit age per record. A gap where the later age continues the earlier one is one man coming back; a gap where it jumps is two men. An age outside 17-45 is the same finding by another route: that row carries someone else's birth date. A gap with no age on either side is treated as a split until someone checks it, since printing the wrong man's name costs more than losing a factoid.",
+ "fields": {
+  "confirmed": "a human has checked this entry; false means the engine stays cautious",
+  "evidence": "what the data says, from the age rule below",
+  "people": "one block per person, oldest first; display_name null means the name is unknown",
+  "split": "true when the key covers more than one player"
+ },
+ "readme": "One entry per name that data.json files under a single key but that may cover more than one player. Read by scripts/factoids.py only: build_data.py and data.json do not know this file exists. Candidates are names whose career has a gap longer than 4 seasons. split: true means two people, split: false means one player who came back after a spell away. confirmed says a human has checked the entry. An unconfirmed split holds back every season in an earlier segment, as a subject and as a previous holder, so no sentence carries the wrong man's name. A confirmed split prints each segment's own display_name and counts each segment as its own man, so \"his own mark\" never reaches across the two; a segment whose display_name is null is a man whose name is not known and stays held back. Career-level claims stay closed for every split key either way, because career_earnings on a merged record sums two men. An unconfirmed split: false entry keeps the career-level exclusion its gap triggered: a long gap under one name is not proof of one person. Confirming it is what lets the name rank as one career."
+}
