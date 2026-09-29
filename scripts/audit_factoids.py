@@ -170,7 +170,30 @@ def audit_truncated(data, idx):
         print("   {:20s} draft_year={} pick={} first season {}".format(
             player, recs[0].get("draft_year"), recs[0].get("draft_pick"), recs[0]["season"]
         ))
-    print("-> excluded from draft-class and draft-slot cohorts.\n")
+    print("-> excluded from every identity cohort: college, country and")
+    print("   position come off the same player record as the draft fields.")
+    restored = sorted(
+        p for p in idx.draft_meta_suspect
+        if any(k[0] == p for k in idx.segment_owns_metadata)
+    )
+    print("   Exception: a confirmed split names which segment the metadata")
+    print("   describes, and that segment gets its cohorts back: {}".format(
+        ", ".join(restored) or "none"
+    ))
+    print()
+    print("career_earnings is a running total, so a first record should read")
+    print("exactly the first salary. Where it reads more, the total was already")
+    print("running under someone else's name: {} players".format(
+        len(idx.career_total_carried_in)
+    ))
+    for player in sorted(idx.career_total_carried_in):
+        first = sorted(idx.by_player[player], key=lambda r: season_key(r["season"]))[0]
+        print("   {:22s} first {} salary {:>12,} career {:>13,}".format(
+            player, first["season"], int(first.get("salary") or 0),
+            int(first.get("career_earnings") or 0),
+        ))
+    print("-> excluded from every career-level claim, their own and anyone")
+    print("   else's measured against them.\n")
     print("careers with a gap longer than {} seasons, which means two players".format(
         MAX_CAREER_GAP_SEASONS
     ))

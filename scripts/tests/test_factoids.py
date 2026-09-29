@@ -846,12 +846,19 @@ def test_current_season_matches_the_front_end_rule():
 PREVIOUS = "2025-26"  # the season before CURRENT
 
 
+def opener(player, season, salary, **kw):
+    """A player's first season. career_earnings is a running total, so a first
+    record reads exactly its own salary; anything else is the carried-in-total
+    fault the engine now gates on."""
+    kw.setdefault("career_earnings", salary)
+    return rec(player, season, salary, **kw)
+
+
 def _finished_field(last_season="2018-19", n=12):
     """A field of completed careers, all of them ended well before CURRENT so
     none of them is caught by the status-unknown rule."""
     return [
-        rec("Done {}".format(i), last_season, 1000000 + i * 1000,
-            career_earnings=10000000 + i * 100000, team="BOS",
+        opener("Done {}".format(i), last_season, 1000000 + i * 1000, team="BOS",
             salary_cap_pct=0.001, salary_rank_league=300 + i, salary_rank_team=10,
             draft_year=2016, draft_pick=55, college="Filler U",
             nationality="Fillerland")
@@ -865,6 +872,7 @@ def test_career_rank_does_not_fire_on_a_mid_career_season():
     "$338.8 million through 2022-23 ... passing Kevin Love's $280.4 million
     (2025-26)": two numbers from different points in time."""
     data = make_data(_finished_field() + [
+        opener("Grinder", "2015-16", 20000000),
         rec("Grinder", "2016-17", 20000000, career_earnings=200000000),
         rec("Grinder", "2017-18", 20000000, career_earnings=220000000),
         rec("Grinder", "2018-19", 20000000, career_earnings=240000000),
@@ -876,6 +884,7 @@ def test_career_rank_does_not_fire_on_a_mid_career_season():
 
 def test_career_rank_fires_on_the_final_season():
     data = make_data(_finished_field() + [
+        opener("Grinder", "2015-16", 20000000),
         rec("Grinder", "2016-17", 20000000, career_earnings=200000000),
         rec("Grinder", "2017-18", 20000000, career_earnings=220000000),
         rec("Grinder", "2018-19", 20000000, career_earnings=240000000),
@@ -888,11 +897,11 @@ def test_career_rank_fires_on_the_final_season():
 
 def test_cohort_career_rank_also_waits_for_the_final_season():
     peers = [
-        rec("Peer {}".format(i), "2018-19", 1000000 + i,
-            career_earnings=5000000 + i, college="Kentucky", team="BOS")
+        opener("Peer {}".format(i), "2018-19", 1000000 + i, college="Kentucky", team="BOS")
         for i in range(15)
     ]
     data = make_data(peers + [
+        opener("Grinder", "2015-16", 20000000, college="Kentucky"),
         rec("Grinder", "2017-18", 20000000, career_earnings=220000000, college="Kentucky"),
         rec("Grinder", "2018-19", 20000000, career_earnings=240000000, college="Kentucky"),
     ])
@@ -907,6 +916,7 @@ def test_cohort_career_rank_also_waits_for_the_final_season():
 def test_milestones_still_fire_mid_career():
     """A milestone carries no comparison, so it is not anachronistic."""
     data = make_data(_finished_field() + [
+        opener("Grinder", "2015-16", 20000000),
         rec("Grinder", "2017-18", 20000000, career_earnings=220000000),
         rec("Grinder", "2018-19", 20000000, career_earnings=240000000),
     ])
@@ -923,14 +933,14 @@ def test_last_season_before_the_current_one_is_status_unknown():
     """An unsigned free agent in September is not a retired player. Westbrook
     and Terry Rozier both last appear in the previous season with no current-
     season record, which under the old rule read as a finished career."""
-    data = make_data([rec("Unsigned", PREVIOUS, 20000000, career_earnings=200000000)])
+    data = make_data([opener("Unsigned", PREVIOUS, 20000000)])
     idx = index_for(data)
     assert idx.career_complete("Unsigned") is False
     assert idx.career_status_unknown("Unsigned") is True
 
 
 def test_two_clear_seasons_of_absence_completes_a_career():
-    data = make_data([rec("Retired", "2024-25", 20000000, career_earnings=200000000)])
+    data = make_data([opener("Retired", "2024-25", 20000000)])
     idx = index_for(data)
     assert idx.career_complete("Retired") is True
     assert idx.career_status_unknown("Retired") is False
@@ -938,6 +948,7 @@ def test_two_clear_seasons_of_absence_completes_a_career():
 
 def test_status_unknown_player_gets_no_career_rank():
     data = make_data(_finished_field() + [
+        opener("Unsigned", "2024-25", 20000000),
         rec("Unsigned", PREVIOUS, 20000000, career_earnings=900000000),
     ])
     assert facts(data, "Unsigned", PREVIOUS, family="career_earnings", kind="sets") == []
@@ -950,7 +961,7 @@ def test_status_unknown_player_is_out_of_the_retired_negative_space_universe():
     data = make_data(
         all_star_class("2018-19") + unselected_peers("2018-19")
         + all_star_class(PREVIOUS)
-        + [rec("Unsigned", PREVIOUS, 50000000, career_earnings=200000000)]
+        + [opener("Unsigned", PREVIOUS, 50000000)]
     )
     idx = index_for(data)
     retired = {e["player"] for e in idx.u_no_all_star.entries}
@@ -1071,6 +1082,7 @@ def test_missing_identity_splits_file_is_not_an_error():
 def test_shipped_identity_splits_cover_every_flagged_name():
     with open(REAL_DATA, "r", encoding="utf-8") as fh:
         data = json.load(fh)
+    # built with no splits file, so identity_suspect is the raw gap flag
     idx = build_index(data, franchises=FRANCHISES, identity_splits={})
     entries = F.load_identity_splits()
     assert set(entries) == idx.identity_suspect
@@ -1079,8 +1091,6 @@ def test_shipped_identity_splits_cover_every_flagged_name():
         if entry["split"]:
             assert len(entry["people"]) >= 2, key
         else:
-            # one man with a gap, unconfirmed until a human says otherwise
-            assert entry["confirmed"] is False, key
             assert len(entry["people"]) == 1, key
 
 
@@ -1333,7 +1343,7 @@ def test_unconfirmed_comeback_gets_no_career_rank():
         }
     }
     data = make_data(_finished_field() + [
-        rec("Comeback", "2005-06", 20000000, career_earnings=20000000),
+        opener("Comeback", "2005-06", 20000000),
         rec("Comeback", "2018-19", 20000000, career_earnings=900000000),
     ])
     assert facts(data, "Comeback", "2018-19", family="career_earnings", splits=entry) == []
@@ -1349,7 +1359,7 @@ def test_confirming_a_comeback_lets_it_rank_as_one_career():
         }
     }
     data = make_data(_finished_field() + [
-        rec("Comeback", "2005-06", 20000000, career_earnings=20000000),
+        opener("Comeback", "2005-06", 20000000),
         rec("Comeback", "2018-19", 20000000, career_earnings=900000000),
     ])
     out = facts(data, "Comeback", "2018-19", family="career_earnings", kind="sets",
@@ -1362,15 +1372,20 @@ def test_confirming_a_comeback_lets_it_rank_as_one_career():
     not os.path.exists(os.path.join(REPO, "data", "identity_splits.json")),
     reason="data/identity_splits.json not present",
 )
-def test_every_comeback_ships_unconfirmed_and_stays_excluded():
+def test_only_the_confirmed_comeback_ranks_as_one_career():
+    """A gap stays a career-level exclusion until a human confirms the entry.
+    PJ Tucker is the one that has been confirmed."""
     with open(REAL_DATA, "r", encoding="utf-8") as fh:
         data = json.load(fh)
     entries = F.load_identity_splits()
     comebacks = [k for k, v in entries.items() if not v["split"]]
     assert len(comebacks) == 38
-    assert all(entries[k]["confirmed"] is False for k in comebacks)
+    confirmed = {k for k in comebacks if entries[k]["confirmed"]}
+    assert confirmed == {"PJ Tucker"}
     idx = build_index(data, franchises=FRANCHISES)
-    for key in comebacks:
+    assert "PJ Tucker" not in idx.identity_suspect
+    assert idx.career_eligible("PJ Tucker") is True
+    for key in set(comebacks) - confirmed:
         assert key in idx.identity_suspect, key
         assert idx.career_eligible(key) is False, key
 
@@ -1461,11 +1476,306 @@ def test_a_clean_record_still_gets_all_five_cohorts():
 
 
 @pytest.mark.skipif(not os.path.exists(REAL_DATA), reason="data/data.json not present")
-def test_the_eleven_suspects_are_in_no_cohort_universe():
+def test_only_the_vouched_for_suspects_are_in_a_cohort_universe():
+    """The eleven are out by default. The three whose confirmed split says which
+    segment owns the metadata are back in, for that segment only."""
     with open(REAL_DATA, "r", encoding="utf-8") as fh:
         data = json.load(fh)
     idx = build_index(data, franchises=FRANCHISES)
     assert len(idx.draft_meta_suspect) == 11
-    members = {e["player"] for u in idx.u_cohort_season.values() for e in u.entries}
+    entries = [e for u in idx.u_cohort_season.values() for e in u.entries]
+    entries += [e for u in idx.u_cohort_career.values() for e in u.entries]
+    members = {e["player"] for e in entries}
+    vouched = {"Brandon Williams", "Corey Brewer", "Jaren Jackson Jr"}
+    assert members & idx.draft_meta_suspect == vouched
+    # and only for the seasons their split vouches for
+    for entry in entries:
+        if entry["player"] in vouched and entry["season"] is not None:
+            assert idx.cohorts_allowed(entry["player"], entry["season"]), entry
+
+
+# --------------------------------------------------------------------------
+# a confirmed split gets its later segment's cohorts back
+# --------------------------------------------------------------------------
+
+
+def _merged_with_metadata():
+    """One key covering a 1990s player and a 2010s one, where the key's draft
+    fields and college belong to the younger man."""
+    peers = [
+        rec("Peer {}".format(i), "2019-20", 1000000 + i, college="Kentucky",
+            draft_year=2018, draft_pick=4, pos="C", nationality="Spain")
+        for i in range(15)
+    ]
+    return peers + [
+        rec("Merged Name", "1995-96", 30000000, team="OKC", age=30,
+            college="Kentucky", draft_year=2018, draft_pick=4, pos="C",
+            nationality="Spain"),
+        rec("Merged Name", "2018-19", 40000000, team="OKC", age=19,
+            college="Kentucky", draft_year=2018, draft_pick=4, pos="C",
+            nationality="Spain"),
+    ]
+
+
+METADATA_SPLIT = {
+    "Merged Name": {
+        "split": True,
+        "confirmed": True,
+        "people": [
+            {"display_name": "Merged Name", "first_season": "1995-96",
+             "last_season": "1995-96", "draft_year": None, "draft_pick": None,
+             "college": "Georgetown"},
+            {"display_name": "Merged Name Jr", "first_season": "2018-19",
+             "last_season": "2018-19", "draft_year": 2018, "draft_pick": 4,
+             "college": "Kentucky"},
+        ],
+    }
+}
+
+
+def test_confirmed_split_gives_the_matching_segment_its_cohorts_back():
+    data = make_data(_merged_with_metadata())
+    idx = index_for(data, METADATA_SPLIT)
+    assert "Merged Name" in idx.draft_meta_suspect
+    assert idx.cohorts_allowed("Merged Name", "2018-19") is True
+    kinds = {k for k, _c, _l in F._cohorts_for(idx.record("Merged Name", "2018-19"), idx)}
+    assert kinds == {"draft_class", "draft_slot", "college", "nationality", "position"}
+    out = facts(data, "Merged Name", "2018-19", family="cohort", splits=METADATA_SPLIT)
+    assert out
+
+
+def test_the_earlier_segment_stays_out_of_those_cohorts():
+    data = make_data(_merged_with_metadata())
+    idx = index_for(data, METADATA_SPLIT)
+    assert idx.cohorts_allowed("Merged Name", "1995-96") is False
+    assert F._cohorts_for(idx.record("Merged Name", "1995-96"), idx) == []
+    assert facts(data, "Merged Name", "1995-96", family="cohort",
+                 splits=METADATA_SPLIT) == []
+    # and the $30m 1995-96 season is not in anyone's comparison set
+    universe = idx.u_cohort_season[("college", "Kentucky")]
+    assert ("Merged Name", "1995-96") not in {e["key"] for e in universe.entries}
+    assert ("Merged Name", "2018-19") in {e["key"] for e in universe.entries}
+
+
+def test_a_segment_whose_metadata_disagrees_gets_nothing_back():
+    """Matching is on the key's own draft year, pick and college. A segment that
+    disagrees with them is not the man the metadata describes."""
+    mismatch = {
+        "Merged Name": dict(
+            METADATA_SPLIT["Merged Name"],
+            people=[
+                dict(METADATA_SPLIT["Merged Name"]["people"][0]),
+                dict(METADATA_SPLIT["Merged Name"]["people"][1], draft_pick=9),
+            ],
+        )
+    }
+    data = make_data(_merged_with_metadata())
+    idx = index_for(data, mismatch)
+    assert idx.cohorts_allowed("Merged Name", "2018-19") is False
+
+
+def test_an_unconfirmed_split_gets_no_cohorts_back():
+    unconfirmed = {
+        "Merged Name": dict(METADATA_SPLIT["Merged Name"], confirmed=False),
+    }
+    data = make_data(_merged_with_metadata())
+    idx = index_for(data, unconfirmed)
+    assert idx.cohorts_allowed("Merged Name", "2018-19") is False
+
+
+@pytest.mark.skipif(not os.path.exists(REAL_DATA), reason="data/data.json not present")
+def test_jaren_jackson_jr_is_back_in_michigan_state():
+    with open(REAL_DATA, "r", encoding="utf-8") as fh:
+        data = json.load(fh)
+    idx = build_index(data, franchises=FRANCHISES)
+    assert idx.cohorts_allowed("Jaren Jackson Jr", "2026-27") is True
+    assert idx.cohorts_allowed("Jaren Jackson Jr", "1997-98") is False
+    kinds = dict(
+        (k, c) for k, c, _l in F._cohorts_for(idx.record("Jaren Jackson Jr", "2026-27"), idx)
+    )
+    assert kinds["college"] == "Michigan St"
+    assert kinds["draft_slot"] == "4"
+    assert kinds["draft_class"] == "2018"
+    # the other eight suspects, with no split to vouch for them, stay out
+    for player in ("Glen Rice", "Gary Payton", "Tim Hardaway"):
+        assert idx.cohorts_allowed(player, idx.by_player[player][0]["season"]) is False
+
+
+# --------------------------------------------------------------------------
+# college display names
+# --------------------------------------------------------------------------
+
+
+def test_college_display_spells_out_the_truncation():
+    names = {"Michigan St": "Michigan State"}
+    data = make_data([
+        rec("Peer {}".format(i), "2019-20", 1000000 + i, college="Michigan St")
+        for i in range(15)
+    ] + [rec("Big", "2019-20", 40000000, college="Michigan St")])
+    idx = build_index(data, franchises=FRANCHISES, identity_splits={}, college_names=names)
+    out = [f for f in factoids_for(data, "Big", "2019-20", index=idx)
+           if f["key"].startswith("cohort_season|college|")]
+    assert len(out) == 1
+    assert "out of Michigan State since" in out[0]["text"]
+    # the key keeps the raw value, so ids and matching do not move
+    assert out[0]["key"] == "cohort_season|college|Michigan St|Big|2019-20"
+
+
+def test_a_college_with_no_entry_prints_as_stored():
+    data = make_data([
+        rec("Peer {}".format(i), "2019-20", 1000000 + i, college="Duke")
+        for i in range(15)
+    ] + [rec("Big", "2019-20", 40000000, college="Duke")])
+    idx = build_index(data, franchises=FRANCHISES, identity_splits={}, college_names={})
+    out = [f for f in factoids_for(data, "Big", "2019-20", index=idx)
+           if f["key"].startswith("cohort_season|college|")]
+    assert "out of Duke since" in out[0]["text"]
+
+
+def test_missing_college_names_file_is_not_an_error():
+    assert F.load_college_names(os.path.join(REPO, "data", "no-such-file.json")) == {}
+
+
+@pytest.mark.skipif(
+    not os.path.exists(os.path.join(REPO, "data", "college_names.json")),
+    reason="data/college_names.json not present",
+)
+def test_shipped_college_names_only_change_the_printed_text():
+    mapping = F.load_college_names()
+    assert mapping["Michigan St"] == "Michigan State"
+    assert mapping["Oklahoma St"] == "Oklahoma State"
+    assert mapping["Arizona St"] == "Arizona State"
+    # "St." with a full stop is Saint and is left alone
+    assert "St. John's" not in mapping
+    assert "St. Bonaventure" not in mapping
+    # the acronyms people search for are left alone
+    for acronym in ("LSU", "UCLA", "USC", "UNLV", "BYU", "TCU", "VCU", "UCF"):
+        assert acronym not in mapping, acronym
+    with open(REAL_DATA, "r", encoding="utf-8") as fh:
+        data = json.load(fh)
+    known = {(r.get("college") or "").strip() for r in data["seasons"]}
+    assert set(mapping) <= known, sorted(set(mapping) - known)
+
+
+# --------------------------------------------------------------------------
+# milestone tense while the current season is being played
+# --------------------------------------------------------------------------
+
+
+def test_a_milestone_in_the_current_season_reads_will_pass():
+    data = make_data([
+        opener("Earner", PREVIOUS, 60000000),
+        rec("Earner", CURRENT, 60000000, career_earnings=120000000),
+    ])
+    idx = index_for(data)
+    assert idx.current_season_in_progress is True
+    out = facts(data, "Earner", CURRENT, family="career_earnings", kind="milestone")
+    assert out
+    assert out[0]["text"].startswith("Earner will pass $100 million")
+    assert "is being played" in out[0]["scope_note"]
+
+
+def test_a_finished_current_season_goes_back_to_passed():
+    """The tense flips on its own once the season's selections are on record."""
+    data = make_data(all_star_class(CURRENT) + [
+        opener("Earner", PREVIOUS, 60000000),
+        rec("Earner", CURRENT, 60000000, career_earnings=120000000),
+    ])
+    idx = index_for(data)
+    assert idx.current_season_in_progress is False
+    out = facts(data, "Earner", CURRENT, family="career_earnings", kind="milestone")
+    assert out[0]["text"].startswith("Earner passed $100 million")
+
+
+def test_a_past_season_milestone_is_unchanged():
+    data = make_data([
+        opener("Earner", "2017-18", 60000000),
+        rec("Earner", "2018-19", 60000000, career_earnings=120000000),
+        rec("Earner", "2019-20", 60000000, career_earnings=180000000),
+    ])
+    out = facts(data, "Earner", "2018-19", family="career_earnings", kind="milestone")
+    assert out[0]["text"] == "Earner passed $100 million in career earnings in 2018-19."
+
+
+def test_a_contracted_milestone_keeps_its_own_wording():
+    data = make_data([
+        opener("Earner", CURRENT, 60000000),
+        rec("Earner", CONTRACTED, 60000000, career_earnings=120000000),
+    ])
+    out = facts(data, "Earner", CONTRACTED, family="career_earnings", kind="milestone")
+    assert "is on track to pass $100 million" in out[0]["text"]
+    assert "if his contract is paid in full" in out[0]["text"]
+
+
+# --------------------------------------------------------------------------
+# a career total that started under someone else's name
+# --------------------------------------------------------------------------
+
+
+def test_a_carried_in_career_total_is_out_of_career_claims():
+    """career_earnings is a running total, so a first record should read exactly
+    the first salary. Glen Rice Jr's reads $67.2 million, his father's career."""
+    data = make_data(_finished_field() + [
+        rec("Son Name", "2013-14", 500000, career_earnings=67000000),
+        rec("Son Name", "2014-15", 500000, career_earnings=67500000),
+    ])
+    idx = index_for(data)
+    assert "Son Name" in idx.career_total_carried_in
+    assert idx.career_eligible("Son Name") is False
+    assert facts(data, "Son Name", "2014-15", family="career_earnings") == []
+    assert "career_total_carried_in" in gates(data, "Son Name", "2014-15")
+
+
+def test_a_carried_in_total_is_never_quoted_by_anyone_else():
+    data = make_data(_finished_field() + [
+        rec("Son Name", "2013-14", 500000, career_earnings=67000000, college="Kentucky"),
+        rec("Son Name", "2014-15", 500000, career_earnings=67500000, college="Kentucky"),
+    ] + [
+        opener("Peer {}".format(i), "2018-19", 1000000 + i, college="Kentucky")
+        for i in range(15)
+    ] + [
+        opener("Honest", "2018-19", 5000000, college="Kentucky"),
+    ])
+    idx = index_for(data)
+    universe = idx.u_cohort_career.get(("college", "Kentucky"))
+    assert "Son Name" not in {e["player"] for e in universe.entries}
+    out = [f for f in facts(data, "Honest", "2018-19", family="cohort")
+           if f["key"].startswith("cohort_career|")]
+    assert out
+    assert all("Son Name" not in f["text"] for f in out)
+
+
+def test_a_clean_first_record_stays_eligible():
+    data = make_data(_finished_field() + [
+        rec("Clean Start", "2013-14", 500000, career_earnings=500000),
+        rec("Clean Start", "2014-15", 500000, career_earnings=1000000),
+    ])
+    idx = index_for(data)
+    assert "Clean Start" not in idx.career_total_carried_in
+    assert idx.career_eligible("Clean Start") is True
+
+
+@pytest.mark.skipif(not os.path.exists(REAL_DATA), reason="data/data.json not present")
+def test_the_real_carried_in_totals_are_all_caught():
+    with open(REAL_DATA, "r", encoding="utf-8") as fh:
+        data = json.load(fh)
+    idx = build_index(data, franchises=FRANCHISES)
+    assert "Glen Rice Jr" in idx.career_total_carried_in
+    assert "Tim Hardaway Jr" in idx.career_total_carried_in
+    for player in idx.career_total_carried_in:
+        assert idx.career_eligible(player) is False, player
+    members = {e["player"] for e in idx.u_career.entries}
     members |= {e["player"] for u in idx.u_cohort_career.values() for e in u.entries}
-    assert not (members & idx.draft_meta_suspect), sorted(members & idx.draft_meta_suspect)
+    assert not (members & idx.career_total_carried_in)
+
+
+@pytest.mark.skipif(not os.path.exists(REAL_DATA), reason="data/data.json not present")
+def test_pj_tucker_is_confirmed_and_ranks_as_one_career():
+    with open(REAL_DATA, "r", encoding="utf-8") as fh:
+        data = json.load(fh)
+    entries = F.load_identity_splits()
+    assert entries["PJ Tucker"]["split"] is False
+    assert entries["PJ Tucker"]["confirmed"] is True
+    idx = build_index(data, franchises=FRANCHISES)
+    assert "PJ Tucker" not in idx.identity_suspect
+    assert idx.career_eligible("PJ Tucker") is True

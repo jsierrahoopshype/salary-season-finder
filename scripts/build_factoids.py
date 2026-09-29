@@ -119,6 +119,13 @@ def make_payload(index, factoids, seasons_covered):
                     1 for r in index.records if is_split_season(r)
                 ),
                 "draft_metadata_suspect": sorted(index.draft_meta_suspect),
+                "cohorts_restored_by_split": sorted(
+                    p for p in index.draft_meta_suspect
+                    if any(k[0] == p for k in index.segment_owns_metadata)
+                ),
+                "career_total_carried_in": sorted(index.career_total_carried_in),
+                "college_display_names": len(index.college_names),
+                "current_season_in_progress": index.current_season_in_progress,
                 "career_status_unknown": sorted(
                     p for p in index.recently_active if p not in index.active_players
                 ),

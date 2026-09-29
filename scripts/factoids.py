@@ -95,6 +95,12 @@ MAX_CAREER_GAP_SEASONS = 4
 #: data.json are untouched by it.
 IDENTITY_SPLITS_PATH = os.path.join("data", "identity_splits.json")
 
+#: College values print through data/college_names.json, which spells out the
+#: truncations data.json stores: "Michigan St" reads "Michigan State". The raw
+#: value stays the matching key everywhere, so cohort keys and factoid ids do
+#: not move; only the sentence changes. The prerender script reads the same file.
+COLLEGE_NAMES_PATH = os.path.join("data", "college_names.json")
+
 #: 1998-99 held no All-Star Game. The lockout cut the season to 50 games and the
 #: February game was cancelled, so no selections exist and a count of zero is the
 #: correct answer rather than a scrape that came back empty. 1996-97 and 2006-07
@@ -343,14 +349,18 @@ class FactoidIndex:
         self.truncated = set()
         self.identity_suspect = set()
         self.draft_meta_suspect = set()
+        self.career_total_carried_in = set()
         self.active_players = set()
         self.recently_active = set()
         self.final_season = {}
+        # display names
+        self.college_names = {}
         # identity splits
         self.identity_splits = {}
         self.split_suppressed = set()   # (player, season) that must not be named
         self.segment_of = {}            # (player, season) -> which person, 0-based
         self.segment_display = {}        # (player, season) -> the name to print, or None
+        self.segment_owns_metadata = set()  # (player, season) whose segment matches the key's draft fields
         # awards
         self.all_star_players = set()
         self.all_nba_players = set()
@@ -360,6 +370,7 @@ class FactoidIndex:
         self.all_star_unsafe_seasons = set()
         self.all_nba_unsafe_seasons = set()
         self.awards_known_through = ""
+        self.current_season_in_progress = True
         # agent
         self.agent_coverage = {}
         self.agent_seasons_safe = set()
@@ -401,6 +412,28 @@ class FactoidIndex:
         says that segment belongs to someone else."""
         return self.segment_display.get((player, season), player)
 
+    def college_display(self, college):
+        """The college name to print. The raw value is still what matches."""
+        return self.college_names.get(college, college)
+
+    def cohorts_allowed(self, player, season):
+        """Whether a record's identity fields can be trusted for cohorts.
+
+        The eleven names carrying a son's draft metadata are out by default:
+        college, nationality and position come off the same player record as the
+        draft fields, so none of them can be trusted on those names.
+
+        A confirmed split is the exception. Once identity_splits.json says which
+        seasons belong to which man, the segment whose own draft year, pick and
+        college match what the key carries is the segment that metadata
+        describes, so that segment gets its cohorts back. Jaren Jackson Jr's
+        2018-19 onward seasons are Michigan State, No. 4, 2018; his father's
+        1990s seasons under the same key are not, and stay out.
+        """
+        if player not in self.draft_meta_suspect:
+            return True
+        return (player, season) in self.segment_owns_metadata
+
     def career_complete(self, player):
         """Complete when the player has no record in the current season and none
         in the one before it.
@@ -425,9 +458,13 @@ class FactoidIndex:
         return self.final_season.get(player) == season
 
     def career_eligible(self, player):
-        """Eligible for career-level rankings: full career inside the window and
-        not a merged identity."""
-        return player not in self.truncated and player not in self.identity_suspect
+        """Eligible for career-level rankings: a career that starts inside the
+        window, under one name, with a running total that starts at zero."""
+        return (
+            player not in self.truncated
+            and player not in self.identity_suspect
+            and player not in self.career_total_carried_in
+        )
 
 
 def position_group(pos):
@@ -488,6 +525,18 @@ def load_franchises(path=None):
         return json.load(fh)["franchises"]
 
 
+def load_college_names(path=None):
+    """Load data/college_names.json. Missing file is not an error: every college
+    then prints exactly as data.json stores it."""
+    if path is None:
+        here = os.path.dirname(os.path.abspath(__file__))
+        path = os.path.join(os.path.dirname(here), COLLEGE_NAMES_PATH)
+    if not os.path.exists(path):
+        return {}
+    with open(path, "r", encoding="utf-8") as fh:
+        return json.load(fh).get("mapping") or {}
+
+
 def load_identity_splits(path=None):
     """Load data/identity_splits.json. Missing file is not an error.
 
@@ -502,6 +551,25 @@ def load_identity_splits(path=None):
         return {}
     with open(path, "r", encoding="utf-8") as fh:
         return json.load(fh).get("entries") or {}
+
+
+def _segment_matches_metadata(person, record):
+    """Does this person's own draft year, pick and college match the record's?
+
+    All three have to agree, and at least one has to be present, so a segment
+    with nothing on file never inherits the key's metadata by default.
+    """
+    pairs = (
+        (person.get("draft_year"), record.get("draft_year")),
+        (person.get("draft_pick"), record.get("draft_pick")),
+        (
+            (person.get("college") or "").strip() or None,
+            (record.get("college") or "").strip() or None,
+        ),
+    )
+    if not any(mine is not None for mine, _theirs in pairs):
+        return False
+    return all(mine == theirs for mine, theirs in pairs)
 
 
 def _index_identity_splits(idx):
@@ -565,6 +633,11 @@ def _index_identity_splits(idx):
                     idx.split_suppressed.add(pair)
                     continue
                 idx.segment_display[pair] = name
+                # The key carries one set of draft fields. Whichever segment's
+                # own draft year, pick and college match them is the segment
+                # that metadata describes, so its identity cohorts are sound.
+                if _segment_matches_metadata(person, rec):
+                    idx.segment_owns_metadata.add(pair)
 
 
 def compute_current_season(data):
@@ -590,7 +663,7 @@ def compute_current_season(data):
     return seasons[0] if seasons else ""
 
 
-def build_index(data, franchises=None, identity_splits=None):
+def build_index(data, franchises=None, identity_splits=None, college_names=None):
     """Build the whole comparison structure once. This is the expensive call."""
     idx = FactoidIndex()
     idx.records = list(data.get("seasons") or [])
@@ -598,6 +671,9 @@ def build_index(data, franchises=None, identity_splits=None):
     idx.franchises = franchises if franchises is not None else load_franchises()
     idx.identity_splits = (
         identity_splits if identity_splits is not None else load_identity_splits()
+    )
+    idx.college_names = (
+        college_names if college_names is not None else load_college_names()
     )
     idx.current_season = compute_current_season(data)
     idx.current_key = season_key(idx.current_season)
@@ -644,6 +720,17 @@ def _flag_players(idx):
         if draft_year is not None and draft_year > first_start:
             idx.draft_meta_suspect.add(player)
 
+        # career_earnings is a running total, so a player's first record should
+        # read exactly his first salary. Where it reads more, the total was
+        # already running under someone else's name when he arrived: Glen Rice
+        # Jr's first season carries $67.2 million, which is his father's career.
+        # The figure is not his, so no career-level claim can use it, his own or
+        # anyone else's measured against it.
+        first_total = first.get("career_earnings")
+        first_salary = first.get("salary") or 0
+        if first_total is not None and first_total > first_salary + 1:
+            idx.career_total_carried_in.add(player)
+
         # A long gap means two careers merged under one name.
         keys = [season_key(r["season"]) for r in recs]
         for i in range(1, len(keys)):
@@ -680,6 +767,15 @@ def _index_awards(idx):
 
     played = [s for s in idx.seasons if season_key(s) < idx.current_key]
     idx.awards_known_through = played[-1] if played else ""
+
+    # Whether the current season has finished, read off the data rather than a
+    # clock, so a build stays reproducible. Selections are made at the end of a
+    # season, so a current season with no All-Star and no All-NBA names on
+    # record has not finished yet. It flips on its own the moment the awards
+    # land, which is the earliest this file can know.
+    idx.current_season_in_progress = not (
+        all_star.get(idx.current_season) or all_nba.get(idx.current_season)
+    )
     for season in idx.seasons:
         idx.all_star_counts[season] = len(all_star.get(season, ()))
         idx.all_nba_counts[season] = len(all_nba.get(season, ()))
@@ -747,7 +843,7 @@ def _cohorts_for(record, idx):
     # is Oregon St too but for a different man. None of the five identity
     # cohorts can be trusted on these names, so they join none of them, as
     # subjects or as members of anyone else's comparison set.
-    if player in idx.draft_meta_suspect:
+    if not idx.cohorts_allowed(player, record["season"]):
         return out
 
     draft_year = record.get("draft_year")
@@ -761,7 +857,11 @@ def _cohorts_for(record, idx):
 
     college = (record.get("college") or "").strip()
     if college:
-        out.append(("college", college, "among players out of " + college))
+        # the cohort key stays the raw value; only the sentence is spelled out
+        out.append((
+            "college", college,
+            "among players out of " + idx.college_display(college),
+        ))
 
     nationality = (record.get("nationality") or "").strip()
     if nationality:
@@ -1021,6 +1121,17 @@ def _behind_clause(entry, money=True, subject=None):
     return "{} {} ({})".format(_possessive(_name(entry)), value, entry["season"])
 
 
+def _career_gate(idx, player):
+    """Which of the career-level gates a player fails, for the debug log."""
+    if player in idx.truncated:
+        return "truncated_career"
+    if player in idx.identity_suspect:
+        return "merged_identity"
+    if player in idx.career_total_carried_in:
+        return "career_total_carried_in"
+    return "career_ineligible"
+
+
 class _Log:
     """Collects the gate that dropped each candidate, for --debug."""
 
@@ -1161,8 +1272,7 @@ def _family_career(ctx, out, log):
     subject_name, subject_person = ctx["name"], ctx["person"]
 
     if not idx.career_eligible(player):
-        reason = "truncated_career" if player in idx.truncated else "merged_identity"
-        log.drop("career_earnings", player, reason)
+        log.drop("career_earnings", player, _career_gate(idx, player))
         return
 
     career_total = ctx["career_total"]
@@ -1181,10 +1291,17 @@ def _family_career(ctx, out, log):
         universe = idx.u_career
         verdict = universe.evaluate(milestone, (player, None))
         reached = sum(1 for e in universe.entries if e["value"] >= milestone and e["player"] != player)
+        in_progress = season == idx.current_season and idx.current_season_in_progress
         if contracted:
             text = (
                 "{} is on track to pass {} in career earnings in {} "
                 "if his contract is paid in full.".format(subject_name, label, season)
+            )
+        elif in_progress:
+            # The season is being played, so the salary is not earned yet.
+            # "Passed" would be wrong until it ends.
+            text = "{} will pass {} in career earnings in {}.".format(
+                subject_name, label, season
             )
         else:
             text = "{} passed {} in career earnings in {}.".format(subject_name, label, season)
@@ -1192,6 +1309,11 @@ def _family_career(ctx, out, log):
             "Career earnings are nominal dollars {}. Completed careers that "
             "began before 1990-91 are excluded.".format(SCOPE_SUFFIX)
         )
+        if in_progress:
+            scope += (
+                " {} is being played: no selections are on record for it yet, "
+                "so this salary is not earned in full.".format(season)
+            )
         if reached:
             scope += " {} completed career{} had reached it.".format(
                 reached, "s" if reached != 1 else ""
@@ -1299,7 +1421,7 @@ def _family_cohorts(ctx, out, log):
         log.drop("cohort", season, "no_record")
         return
 
-    if player in idx.draft_meta_suspect:
+    if not idx.cohorts_allowed(player, season):
         log.drop(
             "cohort", player, "draft_metadata_suspect",
             "draft metadata postdates his debut, so it belongs to a son of the "
@@ -1445,8 +1567,7 @@ def _family_negative_space(ctx, out, log):
     recs = idx.by_player.get(player) or []
 
     if not idx.career_eligible(player):
-        reason = "truncated_career" if player in idx.truncated else "merged_identity"
-        log.drop("negative_space", player, reason)
+        log.drop("negative_space", player, _career_gate(idx, player))
         return
     active = not idx.career_complete(player)
     # An active subject is ranked against everyone's record to date; a finished
