@@ -124,12 +124,14 @@ def all_star_class(season, n_all_star=24, n_all_nba=15):
     return out
 
 
-def index_for(data):
-    return build_index(data, franchises=FRANCHISES)
+def index_for(data, splits=None):
+    """Synthetic fixtures never read data/identity_splits.json: pass the entries
+    a test needs explicitly, default none."""
+    return build_index(data, franchises=FRANCHISES, identity_splits=splits or {})
 
 
-def facts(data, player, season, salary=None, family=None, kind=None):
-    idx = index_for(data)
+def facts(data, player, season, salary=None, family=None, kind=None, splits=None):
+    idx = index_for(data, splits)
     out = factoids_for(data, player, season, salary, index=idx)
     if family:
         out = [f for f in out if f["family"] == family]
@@ -138,12 +140,19 @@ def facts(data, player, season, salary=None, family=None, kind=None):
     return out
 
 
-def gates(data, player, season, salary=None):
+def gates(data, player, season, salary=None, splits=None):
     """The set of gate names that suppressed candidates for this subject."""
-    idx = index_for(data)
+    idx = index_for(data, splits)
     dropped = []
     factoids_for(data, player, season, salary, index=idx, suppressed=dropped)
     return {d["gate"] for d in dropped}
+
+
+@pytest.fixture
+def agents_on(monkeypatch):
+    """The agent family ships off (AGENT_FACTOIDS_ENABLED). Its rules still have
+    to hold, so the tests that exercise them turn it on for their duration."""
+    monkeypatch.setattr(F, "AGENT_FACTOIDS_ENABLED", True)
 
 
 # --------------------------------------------------------------------------
@@ -326,21 +335,50 @@ def test_unmapped_team_code_gets_no_franchise_factoid():
 # --------------------------------------------------------------------------
 
 
-def test_mid_season_split_is_judged_on_the_per_team_amount():
-    """A $40m season split two ways is not a $40m franchise record anywhere."""
+def test_split_season_emits_no_franchise_factoid():
+    """team_salaries is cap-sheet allocation, not money paid on a roster.
+
+    Westbrook's 2022-23 reads $46.3m against Utah, a team he never played for.
+    Neither share is a franchise's to claim, so a split season says nothing about
+    any franchise rather than saying the wrong thing about two.
+    """
     data = make_data(tail("OKC") + tail("BOS") + [
         rec("Incumbent", "2021-22", 25000000, team="OKC"),
         rec("Traded", "2023-24", 40000000, team="OKC, BOS",
             team_salaries={"OKC": 22000000, "BOS": 18000000}),
     ])
-    out = facts(data, "Traded", "2023-24", family="franchise")
-    by_value = {f["value"] for f in out}
-    assert 40000000 not in by_value
-    assert 22000000 in by_value
-    okc = [f for f in out if f["value"] == 22000000][0]
-    assert okc["type"] == "approaches"  # 22m trails the 25m incumbent
-    assert "OKC salary alone" in okc["text"]
-    assert "only the OKC share" in okc["scope_note"]
+    assert facts(data, "Traded", "2023-24", family="franchise") == []
+    assert "split_season" in gates(data, "Traded", "2023-24")
+
+
+def test_split_season_is_not_a_franchise_record_holder():
+    """It cannot win the record, and it cannot be the mark someone else passes."""
+    data = make_data(tail("OKC") + [
+        rec("Traded", "2022-23", 90000000, team="OKC, BOS",
+            team_salaries={"OKC": 60000000, "BOS": 30000000}),
+        rec("Incumbent", "2021-22", 25000000, team="OKC"),
+        rec("Challenger", "2023-24", 26000000, team="OKC"),
+    ])
+    out = facts(data, "Challenger", "2023-24", family="franchise")
+    assert len(out) == 1
+    assert out[0]["type"] == "sets"
+    # the $60m OKC share is out of the universe, so the mark to beat is the
+    # $25m single-team season
+    assert out[0]["previous_holder"]["player"] == "Incumbent"
+
+
+def test_split_season_still_feeds_cohort_and_cap_claims():
+    """Only the franchise family is blocked. The full-season salary is real."""
+    data = make_data(tail("OKC", season="2019-20") + [
+        rec("Peer {}".format(i), "2019-20", 1000000 + i, college="Kentucky")
+        for i in range(15)
+    ] + [
+        rec("Traded", "2023-24", 40000000, team="OKC, BOS",
+            team_salaries={"OKC": 22000000, "BOS": 18000000}, college="Kentucky"),
+    ])
+    cohort = facts(data, "Traded", "2023-24", family="cohort")
+    assert cohort, "cohort claims use the whole-season salary"
+    assert all(f["value"] == 40000000 for f in cohort)
 
 
 def test_hypothetical_salary_on_a_split_season_is_refused():
@@ -349,7 +387,7 @@ def test_hypothetical_salary_on_a_split_season_is_refused():
             team_salaries={"OKC": 22000000, "BOS": 18000000}),
     ])
     assert facts(data, "Traded", "2023-24", salary=90000000, family="franchise") == []
-    assert "hypothetical_split" in gates(data, "Traded", "2023-24", salary=90000000)
+    assert "split_season" in gates(data, "Traded", "2023-24", salary=90000000)
 
 
 def test_mid_season_move_blocks_team_high_earner_shifts():
@@ -476,7 +514,16 @@ def _agent_roster(season, agent="Super Agent", n=6):
     ] + [rec("Top Client", season, 60000000, agent=agent)]
 
 
-def test_agent_factoid_fires_on_the_current_season():
+def test_agent_family_is_off_by_default():
+    """Shipped off: the current agent values are unverified and at least one is
+    wrong (Jokic reads "Mike Lindeman"). The rules below still have to hold."""
+    assert F.AGENT_FACTOIDS_ENABLED is False
+    data = make_data(_agent_roster(CURRENT))
+    assert facts(data, "Top Client", CURRENT, family="agent") == []
+    assert "agent_factoids_disabled" in gates(data, "Top Client", CURRENT)
+
+
+def test_agent_factoid_fires_on_the_current_season(agents_on):
     data = make_data(_agent_roster(CURRENT))
     out = facts(data, "Top Client", CURRENT, family="agent")
     assert len(out) == 1
@@ -485,20 +532,20 @@ def test_agent_factoid_fires_on_the_current_season():
     assert "current-clients claim" in out[0]["scope_note"]
 
 
-def test_agent_factoid_fires_on_a_contracted_season():
+def test_agent_factoid_fires_on_a_contracted_season(agents_on):
     data = make_data(_agent_roster(CURRENT) + _agent_roster(CONTRACTED))
     out = facts(data, "Top Client", CONTRACTED, family="agent")
     assert len(out) == 1
     assert out[0]["contracted"] is True
 
 
-def test_agent_factoid_is_refused_for_a_historical_season():
+def test_agent_factoid_is_refused_for_a_historical_season(agents_on):
     data = make_data(_agent_roster("2015-16") + _agent_roster(CURRENT))
     assert facts(data, "Top Client", "2015-16", family="agent") == []
     assert "agent_history_unreliable" in gates(data, "Top Client", "2015-16")
 
 
-def test_agent_with_too_few_clients_emits_nothing():
+def test_agent_with_too_few_clients_emits_nothing(agents_on):
     data = make_data(_agent_roster(CURRENT, n=F.AGENT_MIN_CLIENTS - 3))
     assert facts(data, "Top Client", CURRENT, family="agent") == []
     assert "too_few_clients" in gates(data, "Top Client", CURRENT)
@@ -786,3 +833,342 @@ def test_current_season_matches_the_front_end_rule():
         data["seasons_list"][0],
     )
     assert F.compute_current_season(data) == expected
+
+
+# --------------------------------------------------------------------------
+# career ranks fire on the final season only
+# --------------------------------------------------------------------------
+
+
+PREVIOUS = "2025-26"  # the season before CURRENT
+
+
+def _finished_field(last_season="2018-19", n=12):
+    """A field of completed careers, all of them ended well before CURRENT so
+    none of them is caught by the status-unknown rule."""
+    return [
+        rec("Done {}".format(i), last_season, 1000000 + i * 1000,
+            career_earnings=10000000 + i * 100000, team="BOS",
+            salary_cap_pct=0.001, salary_rank_league=300 + i, salary_rank_team=10,
+            draft_year=2016, draft_pick=55, college="Filler U",
+            nationality="Fillerland")
+        for i in range(n)
+    ]
+
+
+def test_career_rank_does_not_fire_on_a_mid_career_season():
+    """career_earnings on a record is a running total. Ranking a 2022-23 running
+    total against other players' finished careers is what produced Westbrook's
+    "$338.8 million through 2022-23 ... passing Kevin Love's $280.4 million
+    (2025-26)": two numbers from different points in time."""
+    data = make_data(_finished_field() + [
+        rec("Grinder", "2016-17", 20000000, career_earnings=200000000),
+        rec("Grinder", "2017-18", 20000000, career_earnings=220000000),
+        rec("Grinder", "2018-19", 20000000, career_earnings=240000000),
+    ])
+    mid = facts(data, "Grinder", "2017-18", family="career_earnings", kind="sets")
+    assert mid == []
+    assert "not_final_season" in gates(data, "Grinder", "2017-18")
+
+
+def test_career_rank_fires_on_the_final_season():
+    data = make_data(_finished_field() + [
+        rec("Grinder", "2016-17", 20000000, career_earnings=200000000),
+        rec("Grinder", "2017-18", 20000000, career_earnings=220000000),
+        rec("Grinder", "2018-19", 20000000, career_earnings=240000000),
+    ])
+    out = facts(data, "Grinder", "2018-19", family="career_earnings", kind="sets")
+    assert len(out) == 1
+    assert out[0]["value"] == 240000000
+    assert "through 2018-19" in out[0]["text"]
+
+
+def test_cohort_career_rank_also_waits_for_the_final_season():
+    peers = [
+        rec("Peer {}".format(i), "2018-19", 1000000 + i,
+            career_earnings=5000000 + i, college="Kentucky", team="BOS")
+        for i in range(15)
+    ]
+    data = make_data(peers + [
+        rec("Grinder", "2017-18", 20000000, career_earnings=220000000, college="Kentucky"),
+        rec("Grinder", "2018-19", 20000000, career_earnings=240000000, college="Kentucky"),
+    ])
+    mid = [f for f in facts(data, "Grinder", "2017-18", family="cohort")
+           if f["key"].startswith("cohort_career|")]
+    assert mid == []
+    final = [f for f in facts(data, "Grinder", "2018-19", family="cohort")
+             if f["key"].startswith("cohort_career|")]
+    assert final
+
+
+def test_milestones_still_fire_mid_career():
+    """A milestone carries no comparison, so it is not anachronistic."""
+    data = make_data(_finished_field() + [
+        rec("Grinder", "2017-18", 20000000, career_earnings=220000000),
+        rec("Grinder", "2018-19", 20000000, career_earnings=240000000),
+    ])
+    out = facts(data, "Grinder", "2017-18", family="career_earnings", kind="milestone")
+    assert out, "milestones are open to any season"
+
+
+# --------------------------------------------------------------------------
+# completed vs status unknown
+# --------------------------------------------------------------------------
+
+
+def test_last_season_before_the_current_one_is_status_unknown():
+    """An unsigned free agent in September is not a retired player. Westbrook
+    and Terry Rozier both last appear in the previous season with no current-
+    season record, which under the old rule read as a finished career."""
+    data = make_data([rec("Unsigned", PREVIOUS, 20000000, career_earnings=200000000)])
+    idx = index_for(data)
+    assert idx.career_complete("Unsigned") is False
+    assert idx.career_status_unknown("Unsigned") is True
+
+
+def test_two_clear_seasons_of_absence_completes_a_career():
+    data = make_data([rec("Retired", "2024-25", 20000000, career_earnings=200000000)])
+    idx = index_for(data)
+    assert idx.career_complete("Retired") is True
+    assert idx.career_status_unknown("Retired") is False
+
+
+def test_status_unknown_player_gets_no_career_rank():
+    data = make_data(_finished_field() + [
+        rec("Unsigned", PREVIOUS, 20000000, career_earnings=900000000),
+    ])
+    assert facts(data, "Unsigned", PREVIOUS, family="career_earnings", kind="sets") == []
+    assert "career_status_unknown" in gates(data, "Unsigned", PREVIOUS)
+
+
+def test_status_unknown_player_is_out_of_the_retired_negative_space_universe():
+    """Kept in the to-date universe, so he is still rankable, but never described
+    as a player who never made an All-Star team."""
+    data = make_data(
+        all_star_class("2018-19") + unselected_peers("2018-19")
+        + all_star_class(PREVIOUS)
+        + [rec("Unsigned", PREVIOUS, 50000000, career_earnings=200000000)]
+    )
+    idx = index_for(data)
+    retired = {e["player"] for e in idx.u_no_all_star.entries}
+    todate = {e["player"] for e in idx.u_no_all_star_todate.entries}
+    assert "Unsigned" not in retired
+    assert "Unsigned" in todate
+    out = facts(data, "Unsigned", PREVIOUS, family="negative_space")
+    assert out
+    assert all("never made an" not in f["text"] for f in out)
+    all_star = [f for f in out if f["key"].startswith("no_all_star|")]
+    assert len(all_star) == 1
+    assert "without an All-Star selection" in all_star[0]["text"]
+    assert "whether he is finished is unknown" in all_star[0]["scope_note"]
+
+
+# --------------------------------------------------------------------------
+# identity splits
+# --------------------------------------------------------------------------
+
+
+def _merged_pair():
+    """One key covering a 1990s player and a 2010s one, the Jaren Jackson shape."""
+    return [
+        rec("Merged Name", "1995-96", 30000000, team="OKC", age=30),
+        rec("Merged Name", "2018-19", 5000000, team="OKC", age=19),
+    ]
+
+
+SPLIT_ENTRY = {
+    "Merged Name": {
+        "split": True,
+        "confirmed": False,
+        "people": [
+            {"display_name": "Merged Name", "first_season": "1995-96", "last_season": "1995-96"},
+            {"display_name": "Merged Name Jr", "first_season": "2018-19", "last_season": "2018-19"},
+        ],
+    }
+}
+
+
+def test_unconfirmed_split_suppresses_the_earlier_segment():
+    data = make_data(tail("OKC") + _merged_pair())
+    assert facts(data, "Merged Name", "1995-96", splits=SPLIT_ENTRY) == []
+    assert "identity_split_unconfirmed" in gates(
+        data, "Merged Name", "1995-96", splits=SPLIT_ENTRY
+    )
+
+
+def test_unconfirmed_split_leaves_the_last_segment_alone():
+    data = make_data(tail("OKC") + _merged_pair())
+    idx = index_for(data, SPLIT_ENTRY)
+    assert ("Merged Name", "2018-19") not in idx.split_suppressed
+    assert ("Merged Name", "1995-96") in idx.split_suppressed
+
+
+def test_unconfirmed_split_is_never_a_previous_holder():
+    """The suppressed season cannot turn up inside someone else's sentence."""
+    data = make_data(tail("OKC") + _merged_pair() + [
+        rec("Challenger", "2023-24", 25000000, team="OKC"),
+    ])
+    plain = facts(data, "Challenger", "2023-24", family="franchise")
+    assert plain and plain[0]["previous_holder"]["player"] == "Merged Name"
+    assert plain[0]["previous_holder"]["season"] == "1995-96"
+    split = facts(data, "Challenger", "2023-24", family="franchise", splits=SPLIT_ENTRY)
+    assert split
+    holder = split[0]["previous_holder"]
+    # the 1995-96 season is gone from the universe; the later segment, whose name
+    # is not in doubt, is still quotable
+    assert (holder["player"], holder["season"]) != ("Merged Name", "1995-96")
+
+
+def test_confirming_a_split_restores_the_earlier_segment():
+    confirmed = {"Merged Name": dict(SPLIT_ENTRY["Merged Name"], confirmed=True)}
+    data = make_data(tail("OKC") + _merged_pair())
+    idx = index_for(data, confirmed)
+    assert idx.split_suppressed == set()
+
+
+def test_a_confirmed_comeback_lifts_the_career_level_exclusion():
+    """A gap that is one man's spell abroad is not a merged identity, so once it
+    is confirmed the career-level gate has no premise left."""
+    entry = {
+        "Merged Name": {
+            "split": False,
+            "confirmed": True,
+            "people": [{"display_name": "Merged Name",
+                        "first_season": "1995-96", "last_season": "2018-19"}],
+        }
+    }
+    data = make_data(tail("OKC") + _merged_pair())
+    assert "Merged Name" in index_for(data).identity_suspect
+    assert "Merged Name" not in index_for(data, entry).identity_suspect
+
+
+def test_an_unconfirmed_comeback_suppresses_nothing():
+    entry = {
+        "Merged Name": {
+            "split": False,
+            "confirmed": False,
+            "people": [{"display_name": "Merged Name",
+                        "first_season": "1995-96", "last_season": "2018-19"}],
+        }
+    }
+    data = make_data(tail("OKC") + _merged_pair())
+    idx = index_for(data, entry)
+    assert idx.split_suppressed == set()
+    assert "Merged Name" in idx.identity_suspect
+
+
+def test_missing_identity_splits_file_is_not_an_error():
+    assert F.load_identity_splits(os.path.join(REPO, "data", "no-such-file.json")) == {}
+
+
+@pytest.mark.skipif(
+    not os.path.exists(os.path.join(REPO, "data", "identity_splits.json")),
+    reason="data/identity_splits.json not present",
+)
+def test_shipped_identity_splits_cover_every_flagged_name():
+    with open(REAL_DATA, "r", encoding="utf-8") as fh:
+        data = json.load(fh)
+    idx = build_index(data, franchises=FRANCHISES, identity_splits={})
+    entries = F.load_identity_splits()
+    assert set(entries) == idx.identity_suspect
+    for key, entry in entries.items():
+        assert entry["confirmed"] is False, key
+        assert entry["evidence"], key
+        if entry["split"]:
+            assert len(entry["people"]) >= 2, key
+        else:
+            assert len(entry["people"]) == 1, key
+
+
+# --------------------------------------------------------------------------
+# awards audit: the 1998-99 lockout
+# --------------------------------------------------------------------------
+
+
+def test_1998_99_is_not_flagged_for_having_no_all_stars():
+    """The lockout cancelled the 1999 game, so zero selections is the correct
+    answer rather than a scrape that came back empty."""
+    data = make_data(
+        [rec("Nobody", "1998-99", 1000000)]
+        + [rec("AllNBA {}".format(i), "1998-99", 2000000 + i,
+               awards=["All-NBA First Team"]) for i in range(15)]
+    )
+    idx = index_for(data)
+    assert idx.all_star_counts["1998-99"] == 0
+    assert "1998-99" not in idx.awards_unsafe_seasons
+
+
+def test_a_missing_all_star_list_is_still_flagged_in_an_ordinary_season():
+    data = make_data(
+        [rec("Nobody", "2001-02", 1000000)]
+        + [rec("AllNBA {}".format(i), "2001-02", 2000000 + i,
+               awards=["All-NBA First Team"]) for i in range(15)]
+    )
+    assert "2001-02" in index_for(data).awards_unsafe_seasons
+
+
+def test_1998_99_still_fails_on_a_bad_all_nba_count():
+    """The lockout exempts the All-Star count only."""
+    data = make_data([
+        rec("AllNBA {}".format(i), "1998-99", 2000000 + i, awards=["All-NBA First Team"])
+        for i in range(9)
+    ])
+    assert "1998-99" in index_for(data).awards_unsafe_seasons
+
+
+@pytest.mark.skipif(not os.path.exists(REAL_DATA), reason="data/data.json not present")
+def test_real_awards_flags_keep_the_29_selection_seasons_and_free_1998_99():
+    with open(REAL_DATA, "r", encoding="utf-8") as fh:
+        data = json.load(fh)
+    idx = build_index(data, franchises=FRANCHISES, identity_splits={})
+    assert "1998-99" not in idx.awards_unsafe_seasons
+    assert idx.all_star_counts["1998-99"] == 0
+    # 29 selections each, above the band, and not checked against the published
+    # rosters, so both stay flagged
+    assert {"1996-97", "2006-07"} <= idx.awards_unsafe_seasons
+    # every flagged season is flagged for a stated reason, never by accident
+    for season in idx.awards_unsafe_seasons:
+        n_as = idx.all_star_counts[season]
+        n_nba = idx.all_nba_counts[season]
+        out_of_band = not (F.ALL_STAR_COUNT_MIN <= n_as <= F.ALL_STAR_COUNT_MAX)
+        assert out_of_band or n_nba != F.ALL_NBA_COUNT_EXPECTED, season
+
+
+# --------------------------------------------------------------------------
+# positions collapse to guard / forward / center
+# --------------------------------------------------------------------------
+
+
+@pytest.mark.parametrize(
+    "code,expected",
+    [
+        ("G", ("G", "guard")),
+        ("F", ("F", "forward")),
+        ("C", ("C", "center")),
+        ("G-F", ("G", "guard")),
+        ("F-G", ("F", "forward")),
+        ("F-C", ("F", "forward")),
+        ("C-F", ("C", "center")),
+        ("", (None, None)),
+        (None, (None, None)),
+        ("X", (None, None)),
+    ],
+)
+def test_position_group_collapses_to_three(code, expected):
+    assert F.position_group(code) == expected
+
+
+def test_hyphenated_positions_share_one_cohort():
+    data = make_data(
+        [rec("Wing {}".format(i), "2019-20", 1000000 + i, pos="F-C")
+         for i in range(10)]
+        + [rec("Big", "2019-20", 40000000, pos="F")]
+    )
+    idx = index_for(data)
+    keys = {k for k in idx.u_cohort_season if k[0] == "position"}
+    assert keys == {("position", "F"), ("position", "G")}  # G comes from the filler
+    out = [f for f in facts(data, "Big", "2019-20", family="cohort")
+           if f["key"].startswith("cohort_season|position|")]
+    assert len(out) == 1
+    assert "by a forward" in out[0]["text"]
+    assert "forward-center" not in out[0]["text"]

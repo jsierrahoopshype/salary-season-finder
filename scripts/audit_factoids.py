@@ -27,8 +27,11 @@ from factoids import (  # noqa: E402
     ALL_STAR_COUNT_MIN,
     FIRST_DRAFT_YEAR_IN_WINDOW,
     MAX_CAREER_GAP_SEASONS,
+    SEASONS_WITHOUT_ALL_STAR_GAME,
     build_index,
+    is_split_season,
     load_data,
+    load_identity_splits,
     season_key,
     team_amounts,
 )
@@ -109,6 +112,8 @@ def audit_awards(data, idx):
         n_nba = idx.all_nba_counts[season]
         if season_key(season) >= idx.current_key:
             verdict = "unknown (not played yet)"
+        elif season in SEASONS_WITHOUT_ALL_STAR_GAME:
+            verdict = "no game held (lockout) -> zero is correct"
         elif season in idx.awards_unsafe_seasons:
             verdict = "UNSAFE -> negative space suppressed"
         else:
@@ -116,6 +121,13 @@ def audit_awards(data, idx):
         print("{:9s} {:>9d} {:>9d}   {}".format(season, n_as, n_nba, verdict))
     print("\nunsafe seasons: {}".format(sorted(idx.awards_unsafe_seasons)))
     print("awards known through: {}".format(idx.awards_known_through))
+    print("\nexempt from the All-Star band: {}".format(sorted(SEASONS_WITHOUT_ALL_STAR_GAME)))
+    print("   the 1999 All-Star Game was cancelled by the lockout, so no")
+    print("   selections exist and a count of zero is the right answer rather")
+    print("   than a scrape that came back empty. The All-NBA check still runs.")
+    print("   1996-97 and 2006-07 carry 29 each and stay flagged: injury")
+    print("   replacements plausibly explain the extra names, but the list has")
+    print("   not been checked against the published rosters.")
 
 
 def audit_truncated(data, idx):
@@ -165,6 +177,65 @@ def audit_truncated(data, idx):
     for gap, player, first, last in sorted(worst, reverse=True)[:8]:
         print("   {:20s} {} to {}  (gap {})".format(player, first, last, gap))
     print("-> excluded from every career-level claim.")
+
+    rule("(c3) IDENTITY SPLITS: which gaps are two men and which are one")
+    splits = load_identity_splits()
+    if not splits:
+        print("data/identity_splits.json not present.")
+        return
+    print("data.json carries an explicit age per record, so a gap where the")
+    print("later age continues the earlier one is one man coming back, and a")
+    print("gap where it jumps is two men filed under one name. An age no NBA")
+    print("player can have is the same finding by another route.\n")
+    two = {k: v for k, v in splits.items() if v.get("split")}
+    one = {k: v for k, v in splits.items() if not v.get("split")}
+    print("names covering two people : {}".format(len(two)))
+    for key in sorted(two):
+        entry = two[key]
+        print("   {}".format(key))
+        for person in entry["people"]:
+            print("      {:24s} {} to {}  draft {} pick {} college {}".format(
+                person["display_name"], person["first_season"], person["last_season"],
+                person.get("draft_year"), person.get("draft_pick"), person.get("college"),
+            ))
+        print("      evidence: {}".format(entry["evidence"]))
+    print("\none man with a gap (a spell abroad): {}".format(len(one)))
+    print("   {}".format(", ".join(sorted(one))))
+    unconfirmed = sorted(k for k, v in two.items() if not v.get("confirmed"))
+    print("\nunconfirmed splits, whose earlier segments are suppressed: {}".format(
+        len(unconfirmed)
+    ))
+    print("suppressed (player, season) pairs: {}".format(len(idx.split_suppressed)))
+    for pair in sorted(idx.split_suppressed):
+        print("   {} {}".format(*pair))
+
+
+def audit_splits(data, idx):
+    rule("(g) SPLIT SEASONS")
+    print("team_salaries is a cap-sheet allocation, not money paid while on a")
+    print("roster: Russell Westbrook's 2022-23 reads $46.3 million against UTA,")
+    print("a team he never played a game for, while the Lakers paid most of")
+    print("that season. DeMar DeRozan's 2026-27 is split DEN/SAC before a game")
+    print("has been played.\n")
+    split_recs = [r for r in idx.records if is_split_season(r)]
+    print("records with more than one team in team_salaries: {} of {}".format(
+        len(split_recs), len(idx.records)
+    ))
+    by_season = collections.Counter(r["season"] for r in split_recs)
+    print("busiest seasons: {}".format(
+        ", ".join("{} ({})".format(s, n) for s, n in by_season.most_common(5))
+    ))
+    for player, season in (("Russell Westbrook", "2022-23"), ("DeMar DeRozan", "2026-27")):
+        rec = idx.record(player, season)
+        if rec:
+            print("   {} {}: team={} salary={} splits={}".format(
+                player, season, rec.get("team"), rec.get("salary"), rec.get("team_salaries")
+            ))
+    print("\n-> a split record emits no franchise factoid (gate split_season)")
+    print("   and is kept out of every franchise comparison set, so it can")
+    print("   neither hold a franchise record nor be quoted as a previous")
+    print("   holder. Season, cohort, cap and career claims use the whole")
+    print("   season salary and are unaffected.")
 
 
 def audit_franchises(data, idx):
@@ -231,6 +302,7 @@ SECTIONS = {
     "careers": audit_truncated,
     "franchises": audit_franchises,
     "seasons": audit_current_and_caps,
+    "splits": audit_splits,
 }
 
 
@@ -246,7 +318,8 @@ def main(argv=None):
         len(idx.records), len(idx.seasons), len(idx.by_player)
     ))
     sections = [SECTIONS[args.section]] if args.section else [
-        audit_agents, audit_awards, audit_truncated, audit_franchises, audit_current_and_caps
+        audit_agents, audit_awards, audit_truncated, audit_splits,
+        audit_franchises, audit_current_and_caps,
     ]
     for section in sections:
         section(data, idx)

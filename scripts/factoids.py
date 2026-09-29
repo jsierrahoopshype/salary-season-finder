@@ -61,6 +61,14 @@ POSITION_MIN_PLAYERS = 10
 #: Agent factoids need enough clients for "highest-paid client" to mean anything.
 AGENT_MIN_CLIENTS = 5
 
+#: Agent factoids are off. The agent field is not only unreliable as history
+#: (audit (a)); the current values are unverified too, and at least one is
+#: plainly wrong: Nikola Jokic's 2026-27 record reads "Mike Lindeman". Naming an
+#: agent in published copy on that basis is not a risk worth the factoid. The
+#: family, its gates and its tests all stay in place, so flipping this back to
+#: True once the field is verified is a one-line change.
+AGENT_FACTOIDS_ENABLED = False
+
 #: Career-earnings milestones, in nominal dollars.
 CAREER_MILESTONES = (100e6, 150e6, 200e6, 250e6, 300e6, 400e6, 500e6)
 
@@ -77,10 +85,23 @@ ALL_STAR_COUNT_MIN = 24
 ALL_STAR_COUNT_MAX = 28
 ALL_NBA_COUNT_EXPECTED = 15
 
-#: A career with a gap this long is almost certainly two players merged under
-#: one name (Jaren Jackson Sr and Jr, Gerald Henderson Sr and Jr, and so on).
-#: Such a player is excluded from every career-level claim.
+#: A career with a gap this long is either two players merged under one name or
+#: a spell abroad. Either way the career total cannot be read as a career, so
+#: the player is excluded from every career-level claim. data/identity_splits.json
+#: says which of the two each flagged name is; see load_identity_splits.
 MAX_CAREER_GAP_SEASONS = 4
+
+#: Where identity_splits.json lives. Read by the engine only: build_data.py and
+#: data.json are untouched by it.
+IDENTITY_SPLITS_PATH = os.path.join("data", "identity_splits.json")
+
+#: 1998-99 held no All-Star Game. The lockout cut the season to 50 games and the
+#: February game was cancelled, so no selections exist and a count of zero is the
+#: correct answer rather than a scrape that came back empty. 1996-97 and 2006-07
+#: both carry 29, above the 24-28 band, and stay flagged: injury replacements
+#: plausibly explain the extra names, but "plausibly" is not the same as checked
+#: against the published rosters, and the cheaper error is losing factoids.
+SEASONS_WITHOUT_ALL_STAR_GAME = frozenset({"1998-99"})
 
 #: The oldest draft year that can produce a career fully inside the window.
 FIRST_DRAFT_YEAR_IN_WINDOW = 1990
@@ -104,16 +125,16 @@ NATIONALITY_TAKES_THE = frozenset({
     "United States",
 })
 
-#: Exact position strings mapped to nouns. A position outside this map gets no
-#: position cohort rather than a guessed noun.
-POSITION_NOUNS = {
+#: Positions collapse to three groups by the first letter of the pos code, so a
+#: "forward-center" is a forward and a "guard-forward" is a guard. Seven raw
+#: codes and seven cohorts split the field into slices too thin to rank inside
+#: and read as false precision in the text: nobody searches for the
+#: highest-paid center-forward. A code whose first letter is not G, F or C gets
+#: no position cohort rather than a guessed noun.
+POSITION_GROUP_NOUNS = {
     "G": "guard",
     "F": "forward",
     "C": "center",
-    "G-F": "guard-forward",
-    "F-G": "forward-guard",
-    "F-C": "forward-center",
-    "C-F": "center-forward",
 }
 
 #: Cap share is ranked at the precision it is printed at, so two salaries that
@@ -323,6 +344,11 @@ class FactoidIndex:
         self.identity_suspect = set()
         self.draft_meta_suspect = set()
         self.active_players = set()
+        self.recently_active = set()
+        self.final_season = {}
+        # identity splits
+        self.identity_splits = {}
+        self.split_suppressed = set()   # (player, season) in an unconfirmed earlier segment
         # awards
         self.all_star_players = set()
         self.all_nba_players = set()
@@ -357,13 +383,63 @@ class FactoidIndex:
         return season_key(season) > self.current_key
 
     def career_complete(self, player):
-        """A career is complete when the player has no current or later season."""
-        return player not in self.active_players
+        """Complete when the player has no record in the current season and none
+        in the one before it.
+
+        "Absent from the current season" alone is not retirement. The current
+        season's rosters fill through the autumn, so in September an unsigned
+        free agent who played last season reads as a completed career and gets
+        ranked among finished careers and called a player who "never made an
+        All-Star team". One clear season of absence is the cheapest rule that
+        does not do that.
+        """
+        return player not in self.recently_active
+
+    def career_status_unknown(self, player):
+        """Last season on file is the one before the current season: he may be
+        unsigned, he may be finished, and the data cannot tell which."""
+        return player in self.recently_active and player not in self.active_players
+
+    def is_final_season(self, player, season):
+        """The player's last season on file, where the running career-earnings
+        total is the career total rather than a total to date."""
+        return self.final_season.get(player) == season
 
     def career_eligible(self, player):
         """Eligible for career-level rankings: full career inside the window and
         not a merged identity."""
         return player not in self.truncated and player not in self.identity_suspect
+
+
+def position_group(pos):
+    """Collapse a pos code to (initial, noun): "F-C" -> ("F", "forward").
+
+    Returns (None, None) for an empty code or one that does not start with
+    G, F or C.
+    """
+    code = (pos or "").strip().upper()
+    if not code:
+        return None, None
+    initial = code[0]
+    noun = POSITION_GROUP_NOUNS.get(initial)
+    if noun is None:
+        return None, None
+    return initial, noun
+
+
+def is_split_season(record):
+    """True when the record's salary is spread over more than one team.
+
+    team_salaries is a cap-sheet allocation, not money paid while on a roster:
+    Russell Westbrook's 2022-23 reads $46.3 million against UTA, a team he never
+    played a game for, while the Lakers paid most of that season; DeMar DeRozan's
+    2026-27 is split DEN/SAC before a game has been played. Neither share can be
+    read as what a franchise paid a player to play for it, so a split record is
+    kept out of franchise claims entirely rather than attributed to the wrong
+    team. Season, cohort, cap and career claims use the full-season salary and
+    are unaffected.
+    """
+    return len(record.get("team_salaries") or {}) > 1
 
 
 def team_amounts(record):
@@ -393,6 +469,59 @@ def load_franchises(path=None):
         return json.load(fh)["franchises"]
 
 
+def load_identity_splits(path=None):
+    """Load data/identity_splits.json. Missing file is not an error.
+
+    Additive by design: the engine reads it, build_data.py does not know it
+    exists, and data.json is untouched. An empty dict here reproduces the
+    behaviour from before the file existed.
+    """
+    if path is None:
+        here = os.path.dirname(os.path.abspath(__file__))
+        path = os.path.join(os.path.dirname(here), IDENTITY_SPLITS_PATH)
+    if not os.path.exists(path):
+        return {}
+    with open(path, "r", encoding="utf-8") as fh:
+        return json.load(fh).get("entries") or {}
+
+
+def _index_identity_splits(idx):
+    """Mark the (player, season) pairs an unconfirmed split makes unsafe to name.
+
+    A merged key prints one name over two people, and it is the *earlier*
+    segment that gets the wrong one: a 1997-98 record filed under "Jaren Jackson
+    Jr" is Jaren Jackson Sr. Until a split is confirmed by hand, every season in
+    an earlier segment is held back, both as the subject of a factoid and as the
+    previous holder inside someone else's, so no sentence ever carries the wrong
+    person's name.
+
+    An entry marked split: false is one person with a gap in his career, a spell
+    abroad rather than a merge, so it suppresses nothing. Confirming such an
+    entry also lifts the career-level gap exclusion, since the premise for it is
+    then gone.
+    """
+    for key, entry in (idx.identity_splits or {}).items():
+        recs = idx.by_player.get(key)
+        if not recs:
+            continue
+        people = entry.get("people") or []
+        confirmed = bool(entry.get("confirmed"))
+        if not entry.get("split"):
+            if confirmed:
+                idx.identity_suspect.discard(key)
+            continue
+        if confirmed or len(people) < 2:
+            continue
+        # every segment but the last one
+        for person in people[:-1]:
+            first = season_key(person.get("first_season") or "")
+            last = season_key(person.get("last_season") or "")
+            for rec in recs:
+                k = season_key(rec["season"])
+                if first <= k <= last:
+                    idx.split_suppressed.add((key, rec["season"]))
+
+
 def compute_current_season(data):
     """The newest fully-rostered season, derived exactly as the front end does.
 
@@ -416,12 +545,15 @@ def compute_current_season(data):
     return seasons[0] if seasons else ""
 
 
-def build_index(data, franchises=None):
+def build_index(data, franchises=None, identity_splits=None):
     """Build the whole comparison structure once. This is the expensive call."""
     idx = FactoidIndex()
     idx.records = list(data.get("seasons") or [])
     idx.cap = data.get("salary_cap") or {}
     idx.franchises = franchises if franchises is not None else load_franchises()
+    idx.identity_splits = (
+        identity_splits if identity_splits is not None else load_identity_splits()
+    )
     idx.current_season = compute_current_season(data)
     idx.current_key = season_key(idx.current_season)
 
@@ -433,6 +565,7 @@ def build_index(data, franchises=None):
     idx.seasons = sorted({r["season"] for r in idx.records}, key=season_key)
 
     _flag_players(idx)
+    _index_identity_splits(idx)
     _index_awards(idx)
     _index_agents(idx)
     _build_universes(idx)
@@ -473,8 +606,12 @@ def _flag_players(idx):
                 idx.identity_suspect.add(player)
                 break
 
-        if season_key(recs[-1]["season"]) >= idx.current_key:
+        idx.final_season[player] = recs[-1]["season"]
+        last_key = season_key(recs[-1]["season"])
+        if last_key >= idx.current_key:
             idx.active_players.add(player)
+        if last_key >= idx.current_key - 1:
+            idx.recently_active.add(player)
 
 
 def _index_awards(idx):
@@ -505,9 +642,15 @@ def _index_awards(idx):
             continue  # unknown, not implausible
         n_as = idx.all_star_counts[season]
         n_nba = idx.all_nba_counts[season]
-        if not (ALL_STAR_COUNT_MIN <= n_as <= ALL_STAR_COUNT_MAX):
+        if season in SEASONS_WITHOUT_ALL_STAR_GAME:
+            # No game was played, so no selections exist. Zero is the right
+            # answer here and proves nothing about the scrape; the All-NBA
+            # check below still has to pass.
+            pass
+        elif not (ALL_STAR_COUNT_MIN <= n_as <= ALL_STAR_COUNT_MAX):
             idx.awards_unsafe_seasons.add(season)
-        elif n_nba != ALL_NBA_COUNT_EXPECTED:
+            continue
+        if n_nba != ALL_NBA_COUNT_EXPECTED:
             idx.awards_unsafe_seasons.add(season)
 
 
@@ -562,11 +705,10 @@ def _cohorts_for(record, idx):
         article = "the " if nationality in NATIONALITY_TAKES_THE else ""
         out.append(("nationality", nationality, "by a player from " + article + nationality))
 
-    pos = (record.get("pos") or "").strip()
-    noun = POSITION_NOUNS.get(pos)
-    if noun:
+    group, noun = position_group(record.get("pos"))
+    if group:
         article = "an" if noun[0] in "aeiou" else "a"
-        out.append(("position", pos, "by {} {}".format(article, noun)))
+        out.append(("position", group, "by {} {}".format(article, noun)))
 
     return out
 
@@ -596,14 +738,25 @@ def _build_universes(idx):
         salary = rec.get("salary") or 0
         season_salaries[season].append((salary, player))
 
+        # A season filed under a merged name whose split is not confirmed yet
+        # cannot be named in any sentence, so it never enters a comparison set
+        # and can never turn up as a previous holder.
+        if key in idx.split_suppressed:
+            continue
+
         # Records to beat are records that have been paid. A contracted season
         # is money on a signed deal, so it never stands as the mark another
         # season has to clear; it can only be the subject of a "would be" claim.
         paid = not idx.is_contracted(season)
 
+        # A split season is cap-sheet allocation, not money a franchise paid a
+        # player to play for it, so it is no franchise's record to hold. It stays
+        # in the team-rank rows below, which are a within-season ordering rather
+        # than a claim about franchise history.
+        split = is_split_season(rec)
         for code, amount in team_amounts(rec):
             team_season[(season, code)].append((amount, player))
-            if paid and code in idx.franchises:
+            if paid and not split and code in idx.franchises:
                 franchise_entries[code].append(
                     {"value": amount, "player": player, "season": season, "key": key}
                 )
@@ -657,6 +810,8 @@ def _build_universes(idx):
         total = last.get("career_earnings")
         if total is None:
             continue
+        if (player, last["season"]) in idx.split_suppressed:
+            continue
         entry = {
             "value": total,
             "player": player,
@@ -687,7 +842,11 @@ def _build_universes(idx):
             continue
         if any(r["season"] in idx.awards_unsafe_seasons for r in recs):
             continue
-        paid_recs = [r for r in recs if not idx.is_contracted(r["season"])]
+        paid_recs = [
+            r for r in recs
+            if not idx.is_contracted(r["season"])
+            and (player, r["season"]) not in idx.split_suppressed
+        ]
         if not paid_recs:
             continue
         best = max(paid_recs, key=lambda r: (r.get("salary") or 0, r["season"]))
@@ -795,6 +954,15 @@ def _family_franchise(ctx, out, log):
     if record is None:
         log.drop("franchise", season, "no_record", "no season record to read a team from")
         return
+    if is_split_season(record):
+        log.drop(
+            "franchise", season, "split_season",
+            "team_salaries splits this season across {} teams, which is cap-sheet "
+            "allocation rather than money paid while on a roster".format(
+                len(record.get("team_salaries") or {})
+            ),
+        )
+        return
     amounts = team_amounts(record)
     if ctx["hypothetical"]:
         if len(amounts) > 1:
@@ -828,15 +996,14 @@ def _family_franchise(ctx, out, log):
 
         top = verdict["top"]
         name = franchise["name"]
-        split_note = " for his {} salary alone".format(code) if len(amounts) > 1 else ""
+        # A record reaching here has a single team, so there is no share to note.
+        split_note = ""
         scope = PAID_ONLY_NOTE.format(idx.current_season)
         eras = [e["name"] for e in franchise.get("eras", [])]
         if len(eras) > 1:
             scope += " {} franchise history here includes the {} seasons.".format(
                 name, " and ".join(sorted({e for e in eras[:-1]}))
             )
-        if len(amounts) > 1:
-            scope += " Mid-season move: only the {} share of the salary is counted.".format(code)
         if contracted:
             scope += " " + CONTRACTED_NOTE
 
@@ -949,9 +1116,25 @@ def _family_career(ctx, out, log):
     # still playing. Milestones above stay open to active players, because
     # "passed $300 million in career earnings" carries no comparison at all.
     if not idx.career_complete(player):
+        reason = (
+            "career_status_unknown"
+            if idx.career_status_unknown(player)
+            else "career_incomplete"
+        )
         log.drop(
-            "career_earnings", player, "career_incomplete",
+            "career_earnings", player, reason,
             "career-earnings rank is only claimed once a career is complete",
+        )
+        return
+    # career_earnings on a record is the running total through that season, so
+    # only the final season's figure is a career total. Ranking a mid-career
+    # running total against other players' finished careers is what produced
+    # "Westbrook's $338.8 million through 2022-23 ... passing Kevin Love's
+    # $280.4 million (2025-26)": a 2022-23 number measured against a 2025-26 one.
+    if not idx.is_final_season(player, season):
+        log.drop(
+            "career_earnings", player, "not_final_season",
+            "career_earnings through {} is a running total, not a career total".format(season),
         )
         return
 
@@ -1074,9 +1257,20 @@ def _family_cohorts(ctx, out, log):
         if not idx.career_eligible(player):
             continue
         if not idx.career_complete(player):
+            reason = (
+                "career_status_unknown"
+                if idx.career_status_unknown(player)
+                else "career_incomplete"
+            )
             log.drop(
-                "cohort", "{}:{}".format(kind_name, ckey), "career_incomplete",
+                "cohort", "{}:{}".format(kind_name, ckey), reason,
                 "cohort career earnings are only claimed once a career is complete",
+            )
+            continue
+        if not idx.is_final_season(player, season):
+            log.drop(
+                "cohort", "{}:{}".format(kind_name, ckey), "not_final_season",
+                "career_earnings through {} is a running total, not a career total".format(season),
             )
             continue
         career_total = ctx["career_total"]
@@ -1178,7 +1372,14 @@ def _family_negative_space(ctx, out, log):
             "and seasons whose selection lists failed the audit are excluded."
         )
         scope += " " + PAID_ONLY_NOTE.format(idx.current_season)
-        if active:
+        if active and idx.career_status_unknown(player):
+            scope += (
+                " {} has no {} record and last appears in {}, so whether he is "
+                "finished is unknown and this describes selections to date.".format(
+                    player, idx.current_season, idx.final_season.get(player, "")
+                )
+            )
+        elif active:
             scope += " {} is still active, so this describes selections to date.".format(player)
         if contracted:
             scope += " " + CONTRACTED_NOTE
@@ -1295,6 +1496,12 @@ def _family_agent(ctx, out, log):
     idx, player, season = ctx["index"], ctx["player"], ctx["season"]
     contracted, salary, record = ctx["contracted"], ctx["salary"], ctx["record"]
 
+    if not AGENT_FACTOIDS_ENABLED:
+        log.drop(
+            "agent", season, "agent_factoids_disabled",
+            "the agent field is unverified, so the family is off (AGENT_FACTOIDS_ENABLED)",
+        )
+        return
     if season not in idx.agent_seasons_safe:
         log.drop(
             "agent", season, "agent_history_unreliable",
@@ -1521,6 +1728,17 @@ def factoids_for(data, player, season, salary=None, index=None, debug=False, sup
         )
     if not known_player:
         log.drop("all", player, "unknown_player", "not present in data.json")
+        if suppressed is not None:
+            suppressed.extend(log.items)
+        return []
+
+    if (player, season) in idx.split_suppressed:
+        log.drop(
+            "all", player, "identity_split_unconfirmed",
+            "{} covers more than one player and the split is not confirmed; {} "
+            "belongs to an earlier segment, so the name on it cannot be "
+            "trusted".format(player, season),
+        )
         if suppressed is not None:
             suppressed.extend(log.items)
         return []

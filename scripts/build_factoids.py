@@ -22,13 +22,16 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from factoids import (  # noqa: E402
+    AGENT_FACTOIDS_ENABLED,
     AGENT_MIN_CLIENTS,
     APPROACH_MAX_RANK,
     APPROACH_WITHIN_PCT,
     COHORT_MINIMUMS,
     SCOPE_FIRST_SEASON,
+    SEASONS_WITHOUT_ALL_STAR_GAME,
     build_index,
     factoids_for,
+    is_split_season,
     load_data,
     season_key,
 )
@@ -88,13 +91,25 @@ def make_payload(index, factoids, seasons_covered):
             "gates": {
                 "approach_max_rank": APPROACH_MAX_RANK,
                 "approach_within_pct": APPROACH_WITHIN_PCT,
+                "agent_factoids_enabled": AGENT_FACTOIDS_ENABLED,
                 "agent_min_clients": AGENT_MIN_CLIENTS,
                 "cohort_minimums": dict(sorted(COHORT_MINIMUMS.items())),
                 "awards_unsafe_seasons": sorted(index.awards_unsafe_seasons),
+                "seasons_without_all_star_game": sorted(SEASONS_WITHOUT_ALL_STAR_GAME),
                 "agent_seasons": sorted(index.agent_seasons_safe, key=season_key),
                 "truncated_careers": len(index.truncated),
                 "merged_identities": len(index.identity_suspect),
+                "identity_splits_unconfirmed": sorted(
+                    k for k, v in (index.identity_splits or {}).items()
+                    if v.get("split") and not v.get("confirmed")
+                ),
+                "split_season_records": sum(
+                    1 for r in index.records if is_split_season(r)
+                ),
                 "draft_metadata_suspect": sorted(index.draft_meta_suspect),
+                "career_status_unknown": sorted(
+                    p for p in index.recently_active if p not in index.active_players
+                ),
             },
         },
         "factoids": factoids,
