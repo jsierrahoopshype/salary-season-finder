@@ -201,20 +201,34 @@ def audit_truncated(data, idx):
         entry = two[key]
         print("   {}".format(key))
         for person in entry["people"]:
+            name = person.get("display_name") or "(name unknown)"
             print("      {:24s} {} to {}  draft {} pick {} college {}".format(
-                person["display_name"], person["first_season"], person["last_season"],
-                person.get("draft_year"), person.get("draft_pick"), person.get("college"),
+                name, person["first_season"], person["last_season"],
+                person.get("draft_year") or "-", person.get("draft_pick") or "-",
+                person.get("college") or "-",
             ))
+            if person.get("note"):
+                print("         {}".format(person["note"]))
         print("      evidence: {}".format(entry["evidence"]))
+        print("      confirmed: {}".format(entry.get("confirmed", False)))
     print("\none man with a gap (a spell abroad): {}".format(len(one)))
     print("   {}".format(", ".join(sorted(one))))
+    print("   confirmed: {} of {}".format(
+        sum(1 for v in one.values() if v.get("confirmed")), len(one)
+    ))
+    print("   an unconfirmed gap keeps the career-level exclusion it triggered:")
+    print("   a long gap under one name is not proof of one person.")
     unconfirmed = sorted(k for k, v in two.items() if not v.get("confirmed"))
-    print("\nunconfirmed splits, whose earlier segments are suppressed: {}".format(
+    print("\nunconfirmed splits, whose earlier segments are held back: {}".format(
         len(unconfirmed)
     ))
-    print("suppressed (player, season) pairs: {}".format(len(idx.split_suppressed)))
+    print("seasons held back: {}".format(len(idx.split_suppressed)))
     for pair in sorted(idx.split_suppressed):
         print("   {} {}".format(*pair))
+    renamed = {k: v for k, v in idx.segment_display.items() if v != k[0]}
+    print("\nseasons a confirmed split renames: {}".format(len(renamed)))
+    for pair in sorted(renamed):
+        print("   {} {} prints as {}".format(pair[0], pair[1], renamed[pair]))
 
 
 def audit_splits(data, idx):

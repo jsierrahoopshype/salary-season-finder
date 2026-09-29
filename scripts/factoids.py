@@ -348,7 +348,9 @@ class FactoidIndex:
         self.final_season = {}
         # identity splits
         self.identity_splits = {}
-        self.split_suppressed = set()   # (player, season) in an unconfirmed earlier segment
+        self.split_suppressed = set()   # (player, season) that must not be named
+        self.segment_of = {}            # (player, season) -> which person, 0-based
+        self.segment_display = {}        # (player, season) -> the name to print, or None
         # awards
         self.all_star_players = set()
         self.all_nba_players = set()
@@ -383,6 +385,21 @@ class FactoidIndex:
 
     def is_contracted(self, season):
         return season_key(season) > self.current_key
+
+    def person_of(self, player, season):
+        """Which man a season belongs to, as an opaque identity.
+
+        For all but the confirmed splits this is just the name. For a confirmed
+        split it is the name plus the segment, so Jaren Jackson Sr's 1997-98 and
+        Jaren Jackson Jr's 2026-27 do not compare as the same man and the engine
+        never writes "breaking his own mark" across the two.
+        """
+        return (player, self.segment_of.get((player, season), 0))
+
+    def display_name(self, player, season):
+        """The name to print for a season. The data key unless a confirmed split
+        says that segment belongs to someone else."""
+        return self.segment_display.get((player, season), player)
 
     def career_complete(self, player):
         """Complete when the player has no record in the current season and none
@@ -488,19 +505,30 @@ def load_identity_splits(path=None):
 
 
 def _index_identity_splits(idx):
-    """Mark the (player, season) pairs an unconfirmed split makes unsafe to name.
+    """Work out, per season, which man a merged name's record belongs to.
 
-    A merged key prints one name over two people, and it is the *earlier*
+    A merged key prints one name over two people, and it is usually the earlier
     segment that gets the wrong one: a 1997-98 record filed under "Jaren Jackson
-    Jr" is Jaren Jackson Sr. Until a split is confirmed by hand, every season in
-    an earlier segment is held back, both as the subject of a factoid and as the
-    previous holder inside someone else's, so no sentence ever carries the wrong
-    person's name.
+    Jr" is Jaren Jackson Sr.
 
-    An entry marked split: false is one person with a gap in his career, a spell
-    abroad rather than a merge, so it suppresses nothing. Confirming such an
-    entry also lifts the career-level gap exclusion, since the premise for it is
-    then gone.
+    Unconfirmed split
+        Nobody has checked which seasons belong to whom, so every season in an
+        earlier segment is held back, as the subject of a factoid and as the
+        previous holder inside someone else's.
+
+    Confirmed split
+        The people block is trusted. Each segment prints its own display_name
+        and counts as its own man, so "his own mark" never reaches across the
+        two. A segment whose display_name is null is a man whose name is not
+        known, and it stays held back: the split being real does not make him
+        nameable. Career-level claims stay closed for the whole key either way,
+        because career_earnings on a merged record sums two men.
+
+    split: false
+        One man with a gap in his career. Nothing is suppressed and nothing is
+        renamed. A long gap under one name is not proof of one person, so the
+        career-level exclusion the gap triggered stays until someone confirms
+        the entry; confirming it lifts that exclusion.
     """
     for key, entry in (idx.identity_splits or {}).items():
         recs = idx.by_player.get(key)
@@ -508,20 +536,35 @@ def _index_identity_splits(idx):
             continue
         people = entry.get("people") or []
         confirmed = bool(entry.get("confirmed"))
+
         if not entry.get("split"):
             if confirmed:
                 idx.identity_suspect.discard(key)
             continue
-        if confirmed or len(people) < 2:
+        if len(people) < 2:
             continue
-        # every segment but the last one
-        for person in people[:-1]:
+
+        for i, person in enumerate(people):
             first = season_key(person.get("first_season") or "")
             last = season_key(person.get("last_season") or "")
+            is_last_segment = i == len(people) - 1
             for rec in recs:
                 k = season_key(rec["season"])
-                if first <= k <= last:
-                    idx.split_suppressed.add((key, rec["season"]))
+                if not (first <= k <= last):
+                    continue
+                pair = (key, rec["season"])
+                idx.segment_of[pair] = i
+                if not confirmed:
+                    # nothing checked yet: hold back every earlier segment
+                    if not is_last_segment:
+                        idx.split_suppressed.add(pair)
+                    continue
+                name = person.get("display_name")
+                if not name:
+                    # a real second man whose name we do not have
+                    idx.split_suppressed.add(pair)
+                    continue
+                idx.segment_display[pair] = name
 
 
 def compute_current_season(data):
@@ -695,15 +738,26 @@ def _cohorts_for(record, idx):
     out = []
     player = record["player"]
 
-    if player not in idx.draft_meta_suspect:
-        draft_year = record.get("draft_year")
-        if draft_year:
-            out.append(("draft_class", str(draft_year), "in the {} draft class".format(draft_year)))
-        pick = record.get("draft_pick")
-        if pick and 1 <= pick <= MAX_DRAFT_SLOT:
-            out.append(("draft_slot", str(pick), "by a No. {} pick".format(pick)))
-        elif pick is None and draft_year is None:
-            out.append(("draft_slot", "undrafted", "by an undrafted player"))
+    # Eleven names carry draft metadata that postdates their own debut, which
+    # means it belongs to a son of the same name: Glen Rice reads draft 2013,
+    # pick 35, Georgia Tech, which is Glen Rice Jr. The draft fields are not the
+    # only ones that travel together. College, nationality and position come off
+    # the same player record, so Glen Rice's college reads Georgia Tech when he
+    # went to Michigan, and Gary Payton's reads Oregon St where Gary Payton II's
+    # is Oregon St too but for a different man. None of the five identity
+    # cohorts can be trusted on these names, so they join none of them, as
+    # subjects or as members of anyone else's comparison set.
+    if player in idx.draft_meta_suspect:
+        return out
+
+    draft_year = record.get("draft_year")
+    if draft_year:
+        out.append(("draft_class", str(draft_year), "in the {} draft class".format(draft_year)))
+    pick = record.get("draft_pick")
+    if pick and 1 <= pick <= MAX_DRAFT_SLOT:
+        out.append(("draft_slot", str(pick), "by a No. {} pick".format(pick)))
+    elif pick is None and draft_year is None:
+        out.append(("draft_slot", "undrafted", "by an undrafted player"))
 
     college = (record.get("college") or "").strip()
     if college:
@@ -752,6 +806,8 @@ def _build_universes(idx):
         # and can never turn up as a previous holder.
         if key in idx.split_suppressed:
             continue
+        display = idx.display_name(player, season)
+        person = idx.person_of(player, season)
 
         # Records to beat are records that have been paid. A contracted season
         # is money on a signed deal, so it never stands as the mark another
@@ -767,13 +823,15 @@ def _build_universes(idx):
             team_season[(season, code)].append((amount, player))
             if paid and not split and code in idx.franchises:
                 franchise_entries[code].append(
-                    {"value": amount, "player": player, "season": season, "key": key}
+                    {"value": amount, "player": player, "season": season, "key": key,
+                 "display": display, "person": person}
                 )
 
         if paid:
             for kind, ckey, _label in _cohorts_for(rec, idx):
                 cohort_season[(kind, ckey)].append(
-                    {"value": salary, "player": player, "season": season, "key": key}
+                    {"value": salary, "player": player, "season": season, "key": key,
+                 "display": display, "person": person}
                 )
 
         pct = rec.get("salary_cap_pct")
@@ -781,18 +839,21 @@ def _build_universes(idx):
             pct = round(pct, CAP_PCT_DECIMALS)
             if paid:
                 cap_all.append(
-                    {"value": pct, "player": player, "season": season, "key": key}
+                    {"value": pct, "player": player, "season": season, "key": key,
+                 "display": display, "person": person}
                 )
             # Within-season ranking still needs every row of that same season,
             # contracted or not: they are all the same kind of money.
             cap_by_season[season].append(
-                {"value": pct, "player": player, "season": season, "key": key}
+                {"value": pct, "player": player, "season": season, "key": key,
+                 "display": display, "person": person}
             )
 
         agent = rec.get("agent")
         if agent and season in idx.agent_seasons_safe:
             agent_entries[(agent, season)].append(
-                {"value": salary, "player": player, "season": season, "key": key}
+                {"value": salary, "player": player, "season": season, "key": key,
+                 "display": display, "person": person}
             )
 
     idx.u_franchise = {k: Universe(v) for k, v in franchise_entries.items()}
@@ -826,6 +887,8 @@ def _build_universes(idx):
             "player": player,
             "season": last["season"],
             "key": (player, None),
+            "display": idx.display_name(player, last["season"]),
+            "person": idx.person_of(player, last["season"]),
         }
         career_entries.append(entry)
         for kind, ckey, _label in _cohorts_for(last, idx):
@@ -862,6 +925,8 @@ def _build_universes(idx):
             "player": player,
             "season": best["season"],
             "key": (player, None),
+            "display": idx.display_name(player, best["season"]),
+            "person": idx.person_of(player, best["season"]),
         }
         complete = idx.career_complete(player)
         # Each award judges its own seasons: a career that touched a season with
@@ -922,23 +987,38 @@ def _make(
     }
 
 
+def _name(entry):
+    """The name to print for a comparison entry: the corrected one where a
+    confirmed split says the data key covers two men."""
+    return entry.get("display") or entry["player"]
+
+
 def _holder(entry):
     if entry is None:
         return None
-    return {
-        "player": entry["player"],
+    holder = {
+        "player": _name(entry),
         "season": entry["season"],
         "value": entry["value"],
     }
+    if holder["player"] != entry["player"]:
+        # the name in data.json, kept so a consumer can still find the record
+        holder["data_key"] = entry["player"]
+    return holder
 
 
 def _behind_clause(entry, money=True, subject=None):
     """"Stephen Curry's $62.6 million (2026-27)", or "his own ..." for the
-    subject himself, which otherwise reads as a comparison with a stranger."""
+    subject himself, which otherwise reads as a comparison with a stranger.
+
+    ``subject`` is the person identity from FactoidIndex.person_of, not a bare
+    name, so a confirmed split never writes "his own mark" across two men filed
+    under one key.
+    """
     value = fmt_money(entry["value"]) if money else "{:.1f}%".format(entry["value"])
-    if subject is not None and entry["player"] == subject:
+    if subject is not None and entry.get("person") == subject:
         return "his own {} ({})".format(value, entry["season"])
-    return "{} {} ({})".format(_possessive(entry["player"]), value, entry["season"])
+    return "{} {} ({})".format(_possessive(_name(entry)), value, entry["season"])
 
 
 class _Log:
@@ -961,6 +1041,10 @@ class _Log:
 def _family_franchise(ctx, out, log):
     idx, player, season = ctx["index"], ctx["player"], ctx["season"]
     record, contracted = ctx["record"], ctx["contracted"]
+    # ``player`` keys the data; ``subject_name`` is what the sentence prints and
+    # ``subject_person`` is who the sentence is about. They differ only where a
+    # confirmed split says one data key covers two men.
+    subject_name, subject_person = ctx["name"], ctx["person"]
 
     if record is None:
         log.drop("franchise", season, "no_record", "no season record to read a team from")
@@ -1019,11 +1103,11 @@ def _family_franchise(ctx, out, log):
             scope += " " + CONTRACTED_NOTE
 
         if kind == "sets":
-            if top["player"] == player:
+            if top.get("person") == subject_person:
                 text = (
                     "{} {} in {}{} {} the highest single-season salary in {} "
                     "history {}, breaking his own mark of {} in {}.".format(
-                        _possessive(player), fmt_money(amount), season, split_note,
+                        _possessive(subject_name), fmt_money(amount), season, split_note,
                         _is_verb(contracted), name, SCOPE_SUFFIX,
                         fmt_money(top["value"]), top["season"],
                     )
@@ -1032,25 +1116,25 @@ def _family_franchise(ctx, out, log):
                 text = (
                     "{} {} in {}{} {} the highest single-season salary in {} "
                     "history {}, passing {}.".format(
-                        _possessive(player), fmt_money(amount), season, split_note,
-                        _is_verb(contracted), name, SCOPE_SUFFIX, _behind_clause(top, subject=player),
+                        _possessive(subject_name), fmt_money(amount), season, split_note,
+                        _is_verb(contracted), name, SCOPE_SUFFIX, _behind_clause(top, subject=subject_person),
                     )
                 )
         elif kind == "ties":
             text = (
                 "{} {} in {}{} {} the highest single-season salary in {} "
                 "history {}, matching {}.".format(
-                    _possessive(player), fmt_money(amount), season, split_note,
-                    _tie_verb(contracted), name, SCOPE_SUFFIX, _behind_clause(top, subject=player),
+                    _possessive(subject_name), fmt_money(amount), season, split_note,
+                    _tie_verb(contracted), name, SCOPE_SUFFIX, _behind_clause(top, subject=subject_person),
                 )
             )
         else:
             text = (
                 "{} {} in {}{} {} the {}-highest single-season salary in {} "
                 "history {}, behind {}.".format(
-                    _possessive(player), fmt_money(amount), season, split_note,
+                    _possessive(subject_name), fmt_money(amount), season, split_note,
                     _is_verb(contracted), ordinal(verdict["rank"]), name,
-                    SCOPE_SUFFIX, _behind_clause(top, subject=player),
+                    SCOPE_SUFFIX, _behind_clause(top, subject=subject_person),
                 )
             )
 
@@ -1071,6 +1155,10 @@ def _family_franchise(ctx, out, log):
 def _family_career(ctx, out, log):
     idx, player, season = ctx["index"], ctx["player"], ctx["season"]
     contracted = ctx["contracted"]
+    # ``player`` keys the data; ``subject_name`` is what the sentence prints and
+    # ``subject_person`` is who the sentence is about. They differ only where a
+    # confirmed split says one data key covers two men.
+    subject_name, subject_person = ctx["name"], ctx["person"]
 
     if not idx.career_eligible(player):
         reason = "truncated_career" if player in idx.truncated else "merged_identity"
@@ -1096,10 +1184,10 @@ def _family_career(ctx, out, log):
         if contracted:
             text = (
                 "{} is on track to pass {} in career earnings in {} "
-                "if his contract is paid in full.".format(player, label, season)
+                "if his contract is paid in full.".format(subject_name, label, season)
             )
         else:
-            text = "{} passed {} in career earnings in {}.".format(player, label, season)
+            text = "{} passed {} in career earnings in {}.".format(subject_name, label, season)
         scope = (
             "Career earnings are nominal dollars {}. Completed careers that "
             "began before 1990-91 are excluded.".format(SCOPE_SUFFIX)
@@ -1165,24 +1253,24 @@ def _family_career(ctx, out, log):
         text = (
             "{} {} in career earnings {} is more than any other completed career "
             "{}, passing {}.".format(
-                _possessive(player), fmt_money(career_total), through,
-                SCOPE_SUFFIX, _behind_clause(top, subject=player),
+                _possessive(subject_name), fmt_money(career_total), through,
+                SCOPE_SUFFIX, _behind_clause(top, subject=subject_person),
             )
         )
     elif kind == "ties":
         text = (
             "{} {} in career earnings {} ties the most by any completed career "
             "{}, matching {}.".format(
-                _possessive(player), fmt_money(career_total), through,
-                SCOPE_SUFFIX, _behind_clause(top, subject=player),
+                _possessive(subject_name), fmt_money(career_total), through,
+                SCOPE_SUFFIX, _behind_clause(top, subject=subject_person),
             )
         )
     else:
         text = (
             "{} {} in career earnings {} ranks {} among completed careers {}, "
             "behind {}.".format(
-                _possessive(player), fmt_money(career_total), through,
-                ordinal(verdict["rank"]), SCOPE_SUFFIX, _behind_clause(top, subject=player),
+                _possessive(subject_name), fmt_money(career_total), through,
+                ordinal(verdict["rank"]), SCOPE_SUFFIX, _behind_clause(top, subject=subject_person),
             )
         )
     out.append(
@@ -1202,9 +1290,22 @@ def _family_career(ctx, out, log):
 def _family_cohorts(ctx, out, log):
     idx, player, season = ctx["index"], ctx["player"], ctx["season"]
     contracted, salary = ctx["contracted"], ctx["salary"]
+    # ``player`` keys the data; ``subject_name`` is what the sentence prints and
+    # ``subject_person`` is who the sentence is about. They differ only where a
+    # confirmed split says one data key covers two men.
+    subject_name, subject_person = ctx["name"], ctx["person"]
     record = ctx.get("identity")
     if record is None:
         log.drop("cohort", season, "no_record")
+        return
+
+    if player in idx.draft_meta_suspect:
+        log.drop(
+            "cohort", player, "draft_metadata_suspect",
+            "draft metadata postdates his debut, so it belongs to a son of the "
+            "same name; college, country and position come off the same record "
+            "and cannot be trusted either",
+        )
         return
 
     for kind_name, ckey, label in _cohorts_for(record, idx):
@@ -1232,26 +1333,26 @@ def _family_cohorts(ctx, out, log):
             if contracted:
                 scope += " " + CONTRACTED_NOTE
             if verdict_kind == "sets":
-                if top["player"] == player:
+                if top.get("person") == subject_person:
                     text = "{} {} in {} {} the highest single-season salary {} {}, breaking his own mark of {} in {}.".format(
-                        _possessive(player), fmt_money(salary), season,
+                        _possessive(subject_name), fmt_money(salary), season,
                         _is_verb(contracted), label, SCOPE_SUFFIX,
                         fmt_money(top["value"]), top["season"],
                     )
                 else:
                     text = "{} {} in {} {} the highest single-season salary {} {}, passing {}.".format(
-                        _possessive(player), fmt_money(salary), season,
-                        _is_verb(contracted), label, SCOPE_SUFFIX, _behind_clause(top, subject=player),
+                        _possessive(subject_name), fmt_money(salary), season,
+                        _is_verb(contracted), label, SCOPE_SUFFIX, _behind_clause(top, subject=subject_person),
                     )
             elif verdict_kind == "ties":
                 text = "{} {} in {} {} the highest single-season salary {} {}, matching {}.".format(
-                    _possessive(player), fmt_money(salary), season,
-                    _tie_verb(contracted), label, SCOPE_SUFFIX, _behind_clause(top, subject=player),
+                    _possessive(subject_name), fmt_money(salary), season,
+                    _tie_verb(contracted), label, SCOPE_SUFFIX, _behind_clause(top, subject=subject_person),
                 )
             else:
                 text = "{} {} in {} {} the {}-highest single-season salary {} {}, behind {}.".format(
-                    _possessive(player), fmt_money(salary), season, _is_verb(contracted),
-                    ordinal(verdict["rank"]), label, SCOPE_SUFFIX, _behind_clause(top, subject=player),
+                    _possessive(subject_name), fmt_money(salary), season, _is_verb(contracted),
+                    ordinal(verdict["rank"]), label, SCOPE_SUFFIX, _behind_clause(top, subject=subject_person),
                 )
             out.append(
                 _make(
@@ -1307,18 +1408,18 @@ def _family_cohorts(ctx, out, log):
         )
         if ckind == "sets":
             text = "{} {} in career earnings through {} is the most {} {}, passing {}.".format(
-                _possessive(player), fmt_money(career_total), season, label,
-                SCOPE_SUFFIX, _behind_clause(ctop, subject=player),
+                _possessive(subject_name), fmt_money(career_total), season, label,
+                SCOPE_SUFFIX, _behind_clause(ctop, subject=subject_person),
             )
         elif ckind == "ties":
             text = "{} {} in career earnings through {} ties the most {} {}, matching {}.".format(
-                _possessive(player), fmt_money(career_total), season, label,
-                SCOPE_SUFFIX, _behind_clause(ctop, subject=player),
+                _possessive(subject_name), fmt_money(career_total), season, label,
+                SCOPE_SUFFIX, _behind_clause(ctop, subject=subject_person),
             )
         else:
             text = "{} {} in career earnings through {} ranks {} {} {}, behind {}.".format(
-                _possessive(player), fmt_money(career_total), season,
-                ordinal(cverdict["rank"]), label, SCOPE_SUFFIX, _behind_clause(ctop, subject=player),
+                _possessive(subject_name), fmt_money(career_total), season,
+                ordinal(cverdict["rank"]), label, SCOPE_SUFFIX, _behind_clause(ctop, subject=subject_person),
             )
         out.append(
             _make(
@@ -1337,6 +1438,10 @@ def _family_cohorts(ctx, out, log):
 def _family_negative_space(ctx, out, log):
     idx, player, season = ctx["index"], ctx["player"], ctx["season"]
     contracted, salary = ctx["contracted"], ctx["salary"]
+    # ``player`` keys the data; ``subject_name`` is what the sentence prints and
+    # ``subject_person`` is who the sentence is about. They differ only where a
+    # confirmed split says one data key covers two men.
+    subject_name, subject_person = ctx["name"], ctx["person"]
     recs = idx.by_player.get(player) or []
 
     if not idx.career_eligible(player):
@@ -1392,11 +1497,11 @@ def _family_negative_space(ctx, out, log):
             scope += (
                 " {} has no {} record and last appears in {}, so whether he is "
                 "finished is unknown and this describes selections to date.".format(
-                    player, idx.current_season, idx.final_season.get(player, "")
+                    subject_name, idx.current_season, idx.final_season.get(player, "")
                 )
             )
         elif active:
-            scope += " {} is still active, so this describes selections to date.".format(player)
+            scope += " {} is still active, so this describes selections to date.".format(subject_name)
         if contracted:
             scope += " " + CONTRACTED_NOTE
 
@@ -1408,18 +1513,18 @@ def _family_negative_space(ctx, out, log):
 
         if kind == "sets":
             text = "{} {} in {} {} the highest single-season salary {} {}, passing {}.".format(
-                _possessive(player), fmt_money(salary), season, _is_verb(contracted),
-                SCOPE_SUFFIX, subject, _behind_clause(top, subject=player),
+                _possessive(subject_name), fmt_money(salary), season, _is_verb(contracted),
+                SCOPE_SUFFIX, subject, _behind_clause(top, subject=subject_person),
             )
         elif kind == "ties":
             text = "{} {} in {} {} the highest single-season salary {} {}, matching {}.".format(
-                _possessive(player), fmt_money(salary), season, _tie_verb(contracted),
-                SCOPE_SUFFIX, subject, _behind_clause(top, subject=player),
+                _possessive(subject_name), fmt_money(salary), season, _tie_verb(contracted),
+                SCOPE_SUFFIX, subject, _behind_clause(top, subject=subject_person),
             )
         else:
             text = "{} {} in {} {} the {}-highest single-season salary {} {}, behind {}.".format(
-                _possessive(player), fmt_money(salary), season, _is_verb(contracted),
-                ordinal(verdict["rank"]), SCOPE_SUFFIX, subject, _behind_clause(top, subject=player),
+                _possessive(subject_name), fmt_money(salary), season, _is_verb(contracted),
+                ordinal(verdict["rank"]), SCOPE_SUFFIX, subject, _behind_clause(top, subject=subject_person),
             )
         out.append(
             _make(
@@ -1438,6 +1543,10 @@ def _family_negative_space(ctx, out, log):
 def _family_cap(ctx, out, log):
     idx, player, season = ctx["index"], ctx["player"], ctx["season"]
     contracted, salary = ctx["contracted"], ctx["salary"]
+    # ``player`` keys the data; ``subject_name`` is what the sentence prints and
+    # ``subject_person`` is who the sentence is about. They differ only where a
+    # confirmed split says one data key covers two men.
+    subject_name, subject_person = ctx["name"], ctx["person"]
 
     cap_entry = idx.cap.get(season) or {}
     cap_value = cap_entry.get("cap") if isinstance(cap_entry, dict) else cap_entry
@@ -1481,18 +1590,18 @@ def _family_cap(ctx, out, log):
         takes = "would take up" if contracted else "takes up"
         if kind == "sets":
             text = "{} {} salary {} {} of the {} cap, {}, passing {}.".format(
-                _possessive(player), fmt_money(salary), takes, share, season, where,
-                _behind_clause(top, money=False, subject=player),
+                _possessive(subject_name), fmt_money(salary), takes, share, season, where,
+                _behind_clause(top, money=False, subject=subject_person),
             )
         elif kind == "ties":
             text = "{} {} salary {} {} of the {} cap, tying {}, matching {}.".format(
-                _possessive(player), fmt_money(salary), takes, share, season, where,
-                _behind_clause(top, money=False, subject=player),
+                _possessive(subject_name), fmt_money(salary), takes, share, season, where,
+                _behind_clause(top, money=False, subject=subject_person),
             )
         else:
             text = "{} {} salary {} {} of the {} cap, {}, behind {}.".format(
-                _possessive(player), fmt_money(salary), takes, share, season, where_n,
-                _behind_clause(top, money=False, subject=player),
+                _possessive(subject_name), fmt_money(salary), takes, share, season, where_n,
+                _behind_clause(top, money=False, subject=subject_person),
             )
         out.append(
             _make(
@@ -1511,6 +1620,10 @@ def _family_cap(ctx, out, log):
 def _family_agent(ctx, out, log):
     idx, player, season = ctx["index"], ctx["player"], ctx["season"]
     contracted, salary, record = ctx["contracted"], ctx["salary"], ctx["record"]
+    # ``player`` keys the data; ``subject_name`` is what the sentence prints and
+    # ``subject_person`` is who the sentence is about. They differ only where a
+    # confirmed split says one data key covers two men.
+    subject_name, subject_person = ctx["name"], ctx["person"]
 
     if not AGENT_FACTOIDS_ENABLED:
         log.drop(
@@ -1552,18 +1665,18 @@ def _family_agent(ctx, out, log):
     )
     if kind == "sets":
         text = "{} {} is the highest {} salary among {} clients, passing {}.".format(
-            _possessive(player), fmt_money(salary), season, _possessive(agent),
-            _behind_clause(top, subject=player),
+            _possessive(subject_name), fmt_money(salary), season, _possessive(agent),
+            _behind_clause(top, subject=subject_person),
         )
     elif kind == "ties":
         text = "{} {} ties the highest {} salary among {} clients, matching {}.".format(
-            _possessive(player), fmt_money(salary), season, _possessive(agent),
-            _behind_clause(top, subject=player),
+            _possessive(subject_name), fmt_money(salary), season, _possessive(agent),
+            _behind_clause(top, subject=subject_person),
         )
     else:
         text = "{} {} is the {}-highest {} salary among {} clients, behind {}.".format(
-            _possessive(player), fmt_money(salary), ordinal(verdict["rank"]), season,
-            _possessive(agent), _behind_clause(top, subject=player),
+            _possessive(subject_name), fmt_money(salary), ordinal(verdict["rank"]), season,
+            _possessive(agent), _behind_clause(top, subject=subject_person),
         )
     out.append(
         _make(
@@ -1601,8 +1714,19 @@ def _team_rank(idx, season, team, player, amount):
 def _family_rank_shift(ctx, out, log):
     idx, player, season = ctx["index"], ctx["player"], ctx["season"]
     contracted, salary, record = ctx["contracted"], ctx["salary"], ctx["record"]
+    # ``player`` keys the data; ``subject_name`` is what the sentence prints and
+    # ``subject_person`` is who the sentence is about. They differ only where a
+    # confirmed split says one data key covers two men.
+    subject_name, subject_person = ctx["name"], ctx["person"]
     recs = idx.by_player.get(player) or []
-    prior = [r for r in recs if season_key(r["season"]) < season_key(season)]
+    # "for the first time in his career" has to mean this man's career. Where a
+    # confirmed split says the key covers two men, only the seasons belonging to
+    # the same one count as prior.
+    prior = [
+        r for r in recs
+        if season_key(r["season"]) < season_key(season)
+        and idx.person_of(player, r["season"]) == subject_person
+    ]
 
     rank, size = _league_rank(idx, season, player, salary)
     if rank is None:
@@ -1617,7 +1741,7 @@ def _family_rank_shift(ctx, out, log):
                 "rank_shift", "rank_shift",
                 "rank_league_first|{}|{}".format(player, season),
                 "{} is the highest-paid player in the league in {} for the first "
-                "time in his career.".format(player, season),
+                "time in his career.".format(subject_name, season),
                 "League salary ranks cover {}. First season at No. 1.".format(SCOPE_SUFFIX),
                 salary, contracted, rank=rank, comparison_size=size,
             )
@@ -1628,7 +1752,7 @@ def _family_rank_shift(ctx, out, log):
                 "rank_shift", "rank_shift",
                 "rank_league_top10|{}|{}".format(player, season),
                 "{} salary in {} puts him in the league's top 10 for the first "
-                "time in his career.".format(_possessive(player), season),
+                "time in his career.".format(_possessive(subject_name), season),
                 "League salary ranks cover {}. First season inside the top 10.".format(SCOPE_SUFFIX),
                 salary, contracted, rank=rank, comparison_size=size,
             )
@@ -1674,7 +1798,7 @@ def _family_rank_shift(ctx, out, log):
                 "rank_shift", "rank_shift",
                 "team_high_becomes|{}|{}".format(player, season),
                 "{} is the {} highest-paid player in {} after ranking {} on the "
-                "roster in {}.".format(player, _possessive(name), season, ordinal(was_rank) if was_rank > 1 else "first", previous["season"]),
+                "roster in {}.".format(subject_name, _possessive(name), season, ordinal(was_rank) if was_rank > 1 else "first", previous["season"]),
                 "Same franchise in consecutive seasons. Roster of {} players with a salary on file.".format(now_size),
                 amount, contracted, rank=now_rank, comparison_size=now_size,
             )
@@ -1685,7 +1809,7 @@ def _family_rank_shift(ctx, out, log):
                 "rank_shift", "rank_shift",
                 "team_high_ceases|{}|{}".format(player, season),
                 "{} is no longer the {} highest-paid player in {} after holding "
-                "that spot in {}.".format(player, _possessive(name), season, previous["season"]),
+                "that spot in {}.".format(subject_name, _possessive(name), season, previous["season"]),
                 "Same franchise in consecutive seasons. Roster of {} players with a salary on file.".format(now_size),
                 amount, contracted, rank=now_rank, comparison_size=now_size,
             )
@@ -1749,11 +1873,15 @@ def factoids_for(data, player, season, salary=None, index=None, debug=False, sup
         return []
 
     if (player, season) in idx.split_suppressed:
+        entry = (idx.identity_splits or {}).get(player) or {}
+        gate = (
+            "identity_split_unnamed" if entry.get("confirmed")
+            else "identity_split_unconfirmed"
+        )
         log.drop(
-            "all", player, "identity_split_unconfirmed",
-            "{} covers more than one player and the split is not confirmed; {} "
-            "belongs to an earlier segment, so the name on it cannot be "
-            "trusted".format(player, season),
+            "all", player, gate,
+            "{} covers more than one player and {} belongs to a segment this "
+            "engine cannot put a name to".format(player, season),
         )
         if suppressed is not None:
             suppressed.extend(log.items)
@@ -1784,6 +1912,8 @@ def factoids_for(data, player, season, salary=None, index=None, debug=False, sup
     ctx = {
         "index": idx,
         "player": player,
+        "name": idx.display_name(player, season),
+        "person": idx.person_of(player, season),
         "season": season,
         "salary": effective_salary,
         "record": record,

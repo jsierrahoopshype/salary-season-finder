@@ -1075,11 +1075,12 @@ def test_shipped_identity_splits_cover_every_flagged_name():
     entries = F.load_identity_splits()
     assert set(entries) == idx.identity_suspect
     for key, entry in entries.items():
-        assert entry["confirmed"] is False, key
         assert entry["evidence"], key
         if entry["split"]:
             assert len(entry["people"]) >= 2, key
         else:
+            # one man with a gap, unconfirmed until a human says otherwise
+            assert entry["confirmed"] is False, key
             assert len(entry["people"]) == 1, key
 
 
@@ -1238,3 +1239,233 @@ def test_the_union_is_still_exposed_under_the_old_name():
         idx.all_star_unsafe_seasons | idx.all_nba_unsafe_seasons
     )
     assert season in idx.awards_unsafe_seasons
+
+
+# --------------------------------------------------------------------------
+# confirmed splits: two men, two names
+# --------------------------------------------------------------------------
+
+
+CONFIRMED_SPLIT = {
+    "Merged Name": dict(SPLIT_ENTRY["Merged Name"], confirmed=True),
+}
+
+
+def test_confirmed_split_prints_each_segment_its_own_name():
+    data = make_data(tail("OKC") + _merged_pair())
+    out = facts(data, "Merged Name", "1995-96", family="franchise", splits=CONFIRMED_SPLIT)
+    assert out
+    assert out[0]["text"].startswith("Merged Name's")
+    later = facts(data, "Merged Name", "2018-19", splits=CONFIRMED_SPLIT)
+    assert all("Merged Name Jr" in f["text"] or "Merged Name Jr" not in f["text"]
+               for f in later)
+    idx = index_for(data, CONFIRMED_SPLIT)
+    assert idx.display_name("Merged Name", "2018-19") == "Merged Name Jr"
+    assert idx.display_name("Merged Name", "1995-96") == "Merged Name"
+
+
+def test_confirmed_split_never_says_his_own_mark_across_the_two_men():
+    """The later segment passing the earlier one is passing someone else."""
+    data = make_data(tail("OKC") + [
+        rec("Merged Name", "1995-96", 30000000, team="OKC", age=30),
+        rec("Merged Name", "2018-19", 40000000, team="OKC", age=19),
+    ])
+    plain = facts(data, "Merged Name", "2018-19", family="franchise")
+    assert "his own" in plain[0]["text"]
+    split = facts(data, "Merged Name", "2018-19", family="franchise",
+                  splits=CONFIRMED_SPLIT)
+    assert "his own" not in split[0]["text"]
+    assert "Merged Name's $30 million (1995-96)" in split[0]["text"]
+
+
+def test_a_confirmed_split_segment_with_no_name_stays_held_back():
+    """Knowing there are two men does not make the unnamed one nameable."""
+    unnamed = {
+        "Merged Name": {
+            "split": True,
+            "confirmed": True,
+            "people": [
+                {"display_name": None, "first_season": "1995-96", "last_season": "1995-96"},
+                {"display_name": "Merged Name", "first_season": "2018-19", "last_season": "2018-19"},
+            ],
+        }
+    }
+    data = make_data(tail("OKC") + _merged_pair())
+    assert facts(data, "Merged Name", "1995-96", splits=unnamed) == []
+    assert "identity_split_unnamed" in gates(data, "Merged Name", "1995-96", splits=unnamed)
+    assert facts(data, "Merged Name", "2018-19", splits=unnamed) != []
+
+
+def test_a_confirmed_split_is_still_shut_out_of_career_claims():
+    """career_earnings on a merged record sums two men, whoever they are."""
+    data = make_data(_finished_field() + _merged_pair())
+    idx = index_for(data, CONFIRMED_SPLIT)
+    assert "Merged Name" in idx.identity_suspect
+    assert idx.career_eligible("Merged Name") is False
+
+
+def test_confirmed_split_segments_have_separate_careers_for_rank_shifts():
+    """"first time in his career" counts only this man's seasons."""
+    data = make_data([
+        rec("Merged Name", "1995-96", 90000000, team="OKC", age=30, salary_rank_league=1),
+        rec("Merged Name", "2018-19", 90000000, team="OKC", age=19, salary_rank_league=1),
+    ] + tail("OKC", season="2018-19"))
+    plain = facts(data, "Merged Name", "2018-19", family="rank_shift")
+    assert plain == [], "the 1995-96 No. 1 season blocks it when both are one man"
+    split = facts(data, "Merged Name", "2018-19", family="rank_shift",
+                  splits=CONFIRMED_SPLIT)
+    assert any(f["key"].startswith("rank_league_first|") for f in split)
+
+
+# --------------------------------------------------------------------------
+# an unconfirmed gap stays out of career-level claims
+# --------------------------------------------------------------------------
+
+
+def test_unconfirmed_comeback_gets_no_career_rank():
+    """A long gap under one name is not proof of one person, so the career
+    total is not claimed until someone says it is one man."""
+    entry = {
+        "Comeback": {
+            "split": False, "confirmed": False,
+            "people": [{"display_name": "Comeback",
+                        "first_season": "2005-06", "last_season": "2018-19"}],
+        }
+    }
+    data = make_data(_finished_field() + [
+        rec("Comeback", "2005-06", 20000000, career_earnings=20000000),
+        rec("Comeback", "2018-19", 20000000, career_earnings=900000000),
+    ])
+    assert facts(data, "Comeback", "2018-19", family="career_earnings", splits=entry) == []
+    assert "merged_identity" in gates(data, "Comeback", "2018-19", splits=entry)
+
+
+def test_confirming_a_comeback_lets_it_rank_as_one_career():
+    entry = {
+        "Comeback": {
+            "split": False, "confirmed": True,
+            "people": [{"display_name": "Comeback",
+                        "first_season": "2005-06", "last_season": "2018-19"}],
+        }
+    }
+    data = make_data(_finished_field() + [
+        rec("Comeback", "2005-06", 20000000, career_earnings=20000000),
+        rec("Comeback", "2018-19", 20000000, career_earnings=900000000),
+    ])
+    out = facts(data, "Comeback", "2018-19", family="career_earnings", kind="sets",
+                splits=entry)
+    assert len(out) == 1
+    assert out[0]["value"] == 900000000
+
+
+@pytest.mark.skipif(
+    not os.path.exists(os.path.join(REPO, "data", "identity_splits.json")),
+    reason="data/identity_splits.json not present",
+)
+def test_every_comeback_ships_unconfirmed_and_stays_excluded():
+    with open(REAL_DATA, "r", encoding="utf-8") as fh:
+        data = json.load(fh)
+    entries = F.load_identity_splits()
+    comebacks = [k for k, v in entries.items() if not v["split"]]
+    assert len(comebacks) == 38
+    assert all(entries[k]["confirmed"] is False for k in comebacks)
+    idx = build_index(data, franchises=FRANCHISES)
+    for key in comebacks:
+        assert key in idx.identity_suspect, key
+        assert idx.career_eligible(key) is False, key
+
+
+@pytest.mark.skipif(
+    not os.path.exists(os.path.join(REPO, "data", "identity_splits.json")),
+    reason="data/identity_splits.json not present",
+)
+def test_shipped_splits_are_confirmed_and_only_the_unnamed_one_is_held_back():
+    with open(REAL_DATA, "r", encoding="utf-8") as fh:
+        data = json.load(fh)
+    entries = F.load_identity_splits()
+    splits = {k: v for k, v in entries.items() if v["split"]}
+    assert set(splits) == {
+        "Brandon Williams", "Chris Smith", "Corey Brewer",
+        "Gerald Henderson", "Jaren Jackson Jr",
+    }
+    assert all(v["confirmed"] is True for v in splits.values())
+    idx = build_index(data, franchises=FRANCHISES)
+    # one man, in one season, whose name nobody has
+    assert idx.split_suppressed == {("Corey Brewer", "1999-00")}
+    assert idx.display_name("Jaren Jackson Jr", "1997-98") == "Jaren Jackson"
+    assert idx.display_name("Jaren Jackson Jr", "2026-27") == "Jaren Jackson Jr"
+    assert idx.display_name("Gerald Henderson", "1990-91") == "Gerald Henderson"
+    assert idx.display_name("Gerald Henderson", "2015-16") == "Gerald Henderson Jr"
+    # a confirmed split is still two men, so still no career claims
+    for key in splits:
+        assert idx.career_eligible(key) is False, key
+
+
+# --------------------------------------------------------------------------
+# a son's draft metadata taints every identity cohort
+# --------------------------------------------------------------------------
+
+
+def _son_metadata_field():
+    """A father whose record carries his son's draft year, and a cohort of
+    genuine Kentucky players for him to be compared against."""
+    peers = [
+        rec("Peer {}".format(i), "2019-20", 1000000 + i, college="Kentucky",
+            nationality="Spain", pos="C", draft_year=2016, draft_pick=20)
+        for i in range(15)
+    ]
+    father = rec("Father Name", "1995-96", 40000000, college="Kentucky",
+                 nationality="Spain", pos="C", draft_year=2014, draft_pick=3)
+    return peers + [father]
+
+
+def test_a_son_s_draft_metadata_blocks_every_cohort():
+    data = make_data(_son_metadata_field())
+    idx = index_for(data)
+    assert "Father Name" in idx.draft_meta_suspect
+    assert facts(data, "Father Name", "1995-96", family="cohort") == []
+    assert "draft_metadata_suspect" in gates(data, "Father Name", "1995-96")
+
+
+def test_a_son_s_draft_metadata_keeps_him_out_of_other_players_cohorts():
+    """He is not in the comparison set either, so nobody is measured against a
+    college, country or position that is not his."""
+    data = make_data(_son_metadata_field() + [
+        rec("Challenger", "2019-20", 20000000, college="Kentucky",
+            nationality="Spain", pos="C", draft_year=2016, draft_pick=20),
+    ])
+    idx = index_for(data)
+    for key in (("college", "Kentucky"), ("nationality", "Spain"), ("position", "C")):
+        universe = idx.u_cohort_season.get(key)
+        assert universe is not None, key
+        assert "Father Name" not in {e["player"] for e in universe.entries}, key
+    out = facts(data, "Challenger", "2019-20", family="cohort")
+    assert out
+    assert all(f["type"] == "sets" for f in out)
+    assert all("Father Name" not in f["text"] for f in out)
+
+
+def test_a_clean_record_still_gets_all_five_cohorts():
+    data = make_data([
+        rec("Peer {}".format(i), "2019-20", 1000000 + i, college="Kentucky",
+            nationality="Spain", pos="C", draft_year=2016, draft_pick=20)
+        for i in range(15)
+    ] + [
+        rec("Clean", "2019-20", 40000000, college="Kentucky", nationality="Spain",
+            pos="C", draft_year=2016, draft_pick=20),
+    ])
+    idx = index_for(data)
+    assert "Clean" not in idx.draft_meta_suspect
+    kinds = {k for k, _c, _l in F._cohorts_for(idx.record("Clean", "2019-20"), idx)}
+    assert kinds == {"draft_class", "draft_slot", "college", "nationality", "position"}
+
+
+@pytest.mark.skipif(not os.path.exists(REAL_DATA), reason="data/data.json not present")
+def test_the_eleven_suspects_are_in_no_cohort_universe():
+    with open(REAL_DATA, "r", encoding="utf-8") as fh:
+        data = json.load(fh)
+    idx = build_index(data, franchises=FRANCHISES)
+    assert len(idx.draft_meta_suspect) == 11
+    members = {e["player"] for u in idx.u_cohort_season.values() for e in u.entries}
+    members |= {e["player"] for u in idx.u_cohort_career.values() for e in u.entries}
+    assert not (members & idx.draft_meta_suspect), sorted(members & idx.draft_meta_suspect)

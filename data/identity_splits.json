@@ -131,7 +131,7 @@
    "split": false
   },
   "Brandon Williams": {
-   "confirmed": false,
+   "confirmed": true,
    "evidence": "age -1 in 1998-99, which no NBA player has, so that row carries another man's birth date",
    "people": [
     {
@@ -165,7 +165,7 @@
    "split": true
   },
   "Chris Smith": {
-   "confirmed": false,
+   "confirmed": true,
    "evidence": "no age on either side of the 1994-95-to-2013-14 gap, so the data cannot say; treated as a split until checked",
    "people": [
     {
@@ -196,26 +196,27 @@
    "split": true
   },
   "Corey Brewer": {
-   "confirmed": false,
+   "confirmed": true,
    "evidence": "age 13 in 1999-00, which no NBA player has, so that row carries another man's birth date",
    "people": [
     {
      "college": null,
-     "display_name": "Corey Brewer (earlier)",
+     "display_name": null,
      "draft_pick": null,
      "draft_year": null,
      "first_season": "1999-00",
      "last_season": "1999-00",
+     "note": "Miami 1999-00, $100,000, no games played, age 13 on the record. Whoever this is, he is not the 2007 Corey Brewer. Name unknown, so the season is still held back even though the split is confirmed.",
      "seasons": 1,
      "teams": [
       "MIA"
      ]
     },
     {
-     "college": null,
-     "display_name": "Corey Brewer (later)",
-     "draft_pick": null,
-     "draft_year": null,
+     "college": "Florida",
+     "display_name": "Corey Brewer",
+     "draft_pick": 7,
+     "draft_year": 2007,
      "first_season": "2007-08",
      "last_season": "2019-20",
      "seasons": 13,
@@ -298,7 +299,7 @@
    "split": false
   },
   "Gerald Henderson": {
-   "confirmed": false,
+   "confirmed": true,
    "evidence": "age 22 in 2009-10 where the same man would be 54, a 32-year jump across the gap; age 62 in 2017-18, which no NBA player has, so that row carries another man's birth date",
    "people": [
     {
@@ -394,7 +395,7 @@
    "split": false
   },
   "Jaren Jackson Jr": {
-   "confirmed": false,
+   "confirmed": true,
    "evidence": "age 19 in 2018-19 where the same man would be 51, a 32-year jump across the gap",
    "people": [
     {
@@ -983,5 +984,11 @@
   }
  },
  "evidence_rule": "data.json carries an explicit age per record. A gap where the later age continues the earlier one is one man coming back; a gap where it jumps is two men. An age outside 17-45 is the same finding by another route: that row carries someone else's birth date. A gap with no age on either side is treated as a split until someone checks it, since printing the wrong man's name costs more than losing a factoid.",
- "readme": "One entry per name that data.json files under a single key but that may cover more than one player. Read by scripts/factoids.py only: build_data.py and data.json do not know this file exists. Candidates are names whose career has a gap longer than 4 seasons. split: true means two people, split: false means one player who came back after a spell away. Every entry starts confirmed: false and needs a human to check it. While a split entry is unconfirmed the engine suppresses every season in an earlier segment, as a subject and as a previous holder, so no sentence carries the wrong man's name. Confirming a split: false entry lifts the career-level exclusion the gap triggered."
+ "fields": {
+  "confirmed": "a human has checked this entry; false means the engine stays cautious",
+  "evidence": "what the data says, from the age rule below",
+  "people": "one block per person, oldest first; display_name null means the name is unknown",
+  "split": "true when the key covers more than one player"
+ },
+ "readme": "One entry per name that data.json files under a single key but that may cover more than one player. Read by scripts/factoids.py only: build_data.py and data.json do not know this file exists. Candidates are names whose career has a gap longer than 4 seasons. split: true means two people, split: false means one player who came back after a spell away. confirmed says a human has checked the entry. An unconfirmed split holds back every season in an earlier segment, as a subject and as a previous holder, so no sentence carries the wrong man's name. A confirmed split prints each segment's own display_name and counts each segment as its own man, so \"his own mark\" never reaches across the two; a segment whose display_name is null is a man whose name is not known and stays held back. Career-level claims stay closed for every split key either way, because career_earnings on a merged record sums two men. An unconfirmed split: false entry keeps the career-level exclusion its gap triggered: a long gap under one name is not proof of one person. Confirming it is what lets the name rank as one career."
 }

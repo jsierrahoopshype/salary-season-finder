@@ -100,9 +100,20 @@ def make_payload(index, factoids, seasons_covered):
                 "agent_seasons": sorted(index.agent_seasons_safe, key=season_key),
                 "truncated_careers": len(index.truncated),
                 "merged_identities": len(index.identity_suspect),
+                "identity_splits_confirmed": sorted(
+                    k for k, v in (index.identity_splits or {}).items()
+                    if v.get("split") and v.get("confirmed")
+                ),
                 "identity_splits_unconfirmed": sorted(
                     k for k, v in (index.identity_splits or {}).items()
                     if v.get("split") and not v.get("confirmed")
+                ),
+                "identity_gaps_unconfirmed": sorted(
+                    k for k, v in (index.identity_splits or {}).items()
+                    if not v.get("split") and not v.get("confirmed")
+                ),
+                "seasons_held_back": sorted(
+                    "{}|{}".format(*pair) for pair in index.split_suppressed
                 ),
                 "split_season_records": sum(
                     1 for r in index.records if is_split_season(r)
