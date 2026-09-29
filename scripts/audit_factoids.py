@@ -112,14 +112,21 @@ def audit_awards(data, idx):
         n_nba = idx.all_nba_counts[season]
         if season_key(season) >= idx.current_key:
             verdict = "unknown (not played yet)"
-        elif season in SEASONS_WITHOUT_ALL_STAR_GAME:
-            verdict = "no game held (lockout) -> zero is correct"
-        elif season in idx.awards_unsafe_seasons:
-            verdict = "UNSAFE -> negative space suppressed"
         else:
-            verdict = "ok"
+            flags = []
+            if season in SEASONS_WITHOUT_ALL_STAR_GAME:
+                flags.append("no game held (lockout), zero is correct")
+            if season in idx.all_star_unsafe_seasons:
+                flags.append("All-Star list UNSAFE")
+            if season in idx.all_nba_unsafe_seasons:
+                flags.append("All-NBA list UNSAFE")
+            verdict = "; ".join(flags) if flags else "ok"
         print("{:9s} {:>9d} {:>9d}   {}".format(season, n_as, n_nba, verdict))
-    print("\nunsafe seasons: {}".format(sorted(idx.awards_unsafe_seasons)))
+    print("\nAll-Star list not trusted: {}".format(sorted(idx.all_star_unsafe_seasons)))
+    print("All-NBA list not trusted : {}".format(sorted(idx.all_nba_unsafe_seasons)))
+    print("Flags are per award, not per season. A season with a sound All-Star")
+    print("list and a short All-NBA one only blocks the All-NBA claim, so a")
+    print("career that touched it can still prove a negative about All-Star.")
     print("awards known through: {}".format(idx.awards_known_through))
     print("\nexempt from the All-Star band: {}".format(sorted(SEASONS_WITHOUT_ALL_STAR_GAME)))
     print("   the 1999 All-Star Game was cancelled by the lockout, so no")

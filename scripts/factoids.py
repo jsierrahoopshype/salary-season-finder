@@ -355,6 +355,8 @@ class FactoidIndex:
         self.all_star_counts = {}
         self.all_nba_counts = {}
         self.awards_unsafe_seasons = set()
+        self.all_star_unsafe_seasons = set()
+        self.all_nba_unsafe_seasons = set()
         self.awards_known_through = ""
         # agent
         self.agent_coverage = {}
@@ -640,18 +642,25 @@ def _index_awards(idx):
         idx.all_nba_counts[season] = len(all_nba.get(season, ()))
         if season_key(season) >= idx.current_key:
             continue  # unknown, not implausible
+        # Flagged per award, not per season. A season can carry a sound
+        # All-Star list and a short All-NBA one: 2025-26 has 27 All-Stars,
+        # which is in band, and 14 All-NBA selections, which is one short.
+        # Condemning the whole season for that would throw away every All-Star
+        # negative-space claim from the newest season in the file, when the
+        # only thing in doubt is All-NBA.
         n_as = idx.all_star_counts[season]
         n_nba = idx.all_nba_counts[season]
         if season in SEASONS_WITHOUT_ALL_STAR_GAME:
             # No game was played, so no selections exist. Zero is the right
-            # answer here and proves nothing about the scrape; the All-NBA
-            # check below still has to pass.
+            # answer here and proves nothing about the scrape.
             pass
         elif not (ALL_STAR_COUNT_MIN <= n_as <= ALL_STAR_COUNT_MAX):
-            idx.awards_unsafe_seasons.add(season)
-            continue
+            idx.all_star_unsafe_seasons.add(season)
         if n_nba != ALL_NBA_COUNT_EXPECTED:
-            idx.awards_unsafe_seasons.add(season)
+            idx.all_nba_unsafe_seasons.add(season)
+    # Kept as the union so anything reading the old name still sees every
+    # season with a problem of either kind.
+    idx.awards_unsafe_seasons = idx.all_star_unsafe_seasons | idx.all_nba_unsafe_seasons
 
 
 def _index_agents(idx):
@@ -840,8 +849,6 @@ def _build_universes(idx):
     for player, recs in idx.by_player.items():
         if not idx.career_eligible(player):
             continue
-        if any(r["season"] in idx.awards_unsafe_seasons for r in recs):
-            continue
         paid_recs = [
             r for r in recs
             if not idx.is_contracted(r["season"])
@@ -857,11 +864,15 @@ def _build_universes(idx):
             "key": (player, None),
         }
         complete = idx.career_complete(player)
-        if player not in idx.all_star_players:
+        # Each award judges its own seasons: a career that touched a season with
+        # a short All-NBA list can still prove a negative about All-Star.
+        as_safe = not any(r["season"] in idx.all_star_unsafe_seasons for r in recs)
+        nba_safe = not any(r["season"] in idx.all_nba_unsafe_seasons for r in recs)
+        if as_safe and player not in idx.all_star_players:
             no_as_todate.append(dict(entry))
             if complete:
                 no_as_retired.append(dict(entry))
-        if player not in idx.all_nba_players:
+        if nba_safe and player not in idx.all_nba_players:
             no_nba_todate.append(dict(entry))
             if complete:
                 no_nba_retired.append(dict(entry))
@@ -1332,14 +1343,6 @@ def _family_negative_space(ctx, out, log):
         reason = "truncated_career" if player in idx.truncated else "merged_identity"
         log.drop("negative_space", player, reason)
         return
-    unsafe = [r["season"] for r in recs if r["season"] in idx.awards_unsafe_seasons]
-    if unsafe:
-        log.drop(
-            "negative_space", player, "awards_season_unsafe",
-            "played in {}, whose selection list failed the audit".format(", ".join(sorted(set(unsafe)))),
-        )
-        return
-
     active = not idx.career_complete(player)
     # An active subject is ranked against everyone's record to date; a finished
     # career is ranked against finished careers. See _build_universes.
@@ -1347,6 +1350,19 @@ def _family_negative_space(ctx, out, log):
         ("All-Star", idx.all_star_players, idx.u_no_all_star, idx.u_no_all_star_todate, "no_all_star"),
         ("All-NBA", idx.all_nba_players, idx.u_no_all_nba, idx.u_no_all_nba_todate, "no_all_nba"),
     ):
+        unsafe_set = (
+            idx.all_star_unsafe_seasons if label == "All-Star"
+            else idx.all_nba_unsafe_seasons
+        )
+        unsafe = sorted({r["season"] for r in recs if r["season"] in unsafe_set})
+        if unsafe:
+            log.drop(
+                "negative_space", player, "awards_season_unsafe",
+                "played in {}, whose {} list failed the audit".format(
+                    ", ".join(unsafe), label
+                ),
+            )
+            continue
         universe = todate_u if active else retired_u
         if player in holders:
             log.drop("negative_space", player, "has_selection", "has an {} selection".format(label))

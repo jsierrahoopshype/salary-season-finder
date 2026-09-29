@@ -23,6 +23,9 @@ FRANCHISES = F.load_franchises(os.path.join(REPO, "data", "franchises.json"))
 CURRENT = "2026-27"
 CONTRACTED = "2027-28"
 
+#: Enough All-NBA rows to satisfy the audit in a fixture.
+ALL_NBA_FILL = F.ALL_NBA_COUNT_EXPECTED
+
 
 # --------------------------------------------------------------------------
 # Fixture construction
@@ -1172,3 +1175,66 @@ def test_hyphenated_positions_share_one_cohort():
     assert len(out) == 1
     assert "by a forward" in out[0]["text"]
     assert "forward-center" not in out[0]["text"]
+
+
+# --------------------------------------------------------------------------
+# awards flags are per award, not per season
+# --------------------------------------------------------------------------
+
+
+def test_a_short_all_nba_list_does_not_block_all_star_claims():
+    """2025-26 carries 27 All-Stars and 14 All-NBA. Only the All-NBA claim is
+    in doubt, so a career that touched that season can still be ranked among
+    players with no All-Star selection."""
+    season = "2024-25"
+    data = make_data(
+        all_star_class(season, n_all_star=26, n_all_nba=14)
+        + unselected_peers(season)
+        + [rec("Unselected", season, 40000000)]
+    )
+    idx = index_for(data)
+    assert season not in idx.all_star_unsafe_seasons
+    assert season in idx.all_nba_unsafe_seasons
+
+    out = facts(data, "Unselected", season, family="negative_space")
+    kinds = {f["key"].split("|")[0] for f in out}
+    assert "no_all_star" in kinds
+    assert "no_all_nba" not in kinds
+    dropped = gates(data, "Unselected", season)
+    assert "awards_season_unsafe" in dropped
+
+
+def test_a_bad_all_star_count_still_blocks_all_star_claims():
+    """The mirror image: too few All-Stars, a sound All-NBA list."""
+    season = "2024-25"
+    all_nba_only = [
+        rec("AllNBA {} {}".format(season, i), season, 2000000 + i, team="BOS",
+            awards=["All-NBA First Team"], salary_cap_pct=0.002,
+            salary_rank_league=180 + i, draft_year=2016, draft_pick=50,
+            college="Filler U", nationality="Fillerland")
+        for i in range(ALL_NBA_FILL)
+    ]
+    data = make_data(
+        all_star_class(season, n_all_star=3, n_all_nba=0)
+        + all_nba_only
+        + unselected_peers(season)
+        + [rec("Unselected", season, 40000000)]
+    )
+    idx = index_for(data)
+    assert season in idx.all_star_unsafe_seasons
+    assert season not in idx.all_nba_unsafe_seasons
+    kinds = {f["key"].split("|")[0]
+             for f in facts(data, "Unselected", season, family="negative_space")}
+    assert "no_all_star" not in kinds
+    assert "no_all_nba" in kinds
+
+
+def test_the_union_is_still_exposed_under_the_old_name():
+    season = "2024-25"
+    data = make_data(all_star_class(season, n_all_star=3, n_all_nba=14)
+                     + [rec("Guy", season, 1000)])
+    idx = index_for(data)
+    assert idx.awards_unsafe_seasons == (
+        idx.all_star_unsafe_seasons | idx.all_nba_unsafe_seasons
+    )
+    assert season in idx.awards_unsafe_seasons

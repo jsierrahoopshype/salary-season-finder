@@ -1206,6 +1206,24 @@
     "value": 41600000
    },
    {
+    "comparison_size": 2181,
+    "contracted": true,
+    "family": "negative_space",
+    "id": "75f9f0674ffea8c8",
+    "key": "no_all_star|Amen Thompson|2029-30",
+    "margin": -900000,
+    "previous_holder": {
+     "player": "OG Anunoby",
+     "season": "2026-27",
+     "value": 42500000
+    },
+    "rank": 3,
+    "scope_note": "Comparison set is every player since 1990-91 with no All-Star selection on record, active or retired, taken at each one's best paid season. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Amen Thompson is still active, so this describes selections to date. This salary is contracted, not money already paid.",
+    "text": "Amen Thompson's $41.6 million in 2029-30 would be the third-highest single-season salary since 1990-91 for a player without an All-Star selection, behind OG Anunoby's $42.5 million (2026-27).",
+    "type": "approaches",
+    "value": 41600000
+   },
+   {
     "comparison_size": 6,
     "contracted": true,
     "family": "rank_shift",
@@ -1340,6 +1358,24 @@
     "rank": 1,
     "scope_note": "Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
     "text": "Amen Thompson's $91.8 million in 2030-31 would be the highest single-season salary in Rockets history since 1990-91, passing Kevin Durant's $54.7 million (2025-26).",
+    "type": "sets",
+    "value": 91806897
+   },
+   {
+    "comparison_size": 2181,
+    "contracted": true,
+    "family": "negative_space",
+    "id": "21459a6526935f5d",
+    "key": "no_all_star|Amen Thompson|2030-31",
+    "margin": 49306897,
+    "previous_holder": {
+     "player": "OG Anunoby",
+     "season": "2026-27",
+     "value": 42500000
+    },
+    "rank": 1,
+    "scope_note": "Comparison set is every player since 1990-91 with no All-Star selection on record, active or retired, taken at each one's best paid season. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Amen Thompson is still active, so this describes selections to date. This salary is contracted, not money already paid.",
+    "text": "Amen Thompson's $91.8 million in 2030-31 would be the highest single-season salary since 1990-91 for a player without an All-Star selection, passing OG Anunoby's $42.5 million (2026-27).",
     "type": "sets",
     "value": 91806897
    },
@@ -2938,6 +2974,24 @@
     "value": 68413793
    },
    {
+    "comparison_size": 2181,
+    "contracted": true,
+    "family": "negative_space",
+    "id": "2e99b89418728f27",
+    "key": "no_all_star|Ausar Thompson|2030-31",
+    "margin": 25913793,
+    "previous_holder": {
+     "player": "OG Anunoby",
+     "season": "2026-27",
+     "value": 42500000
+    },
+    "rank": 1,
+    "scope_note": "Comparison set is every player since 1990-91 with no All-Star selection on record, active or retired, taken at each one's best paid season. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Ausar Thompson is still active, so this describes selections to date. This salary is contracted, not money already paid.",
+    "text": "Ausar Thompson's $68.4 million in 2030-31 would be the highest single-season salary since 1990-91 for a player without an All-Star selection, passing OG Anunoby's $42.5 million (2026-27).",
+    "type": "sets",
+    "value": 68413793
+   },
+   {
     "comparison_size": 18,
     "contracted": true,
     "family": "rank_shift",
@@ -2982,6 +3036,24 @@
     "rank": 4,
     "scope_note": "Cohort of 15 players and 108 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid.",
     "text": "Austin Reaves' $41.2 million in 2026-27 is the fourth-highest single-season salary among players out of Oklahoma since 1990-91, behind Trae Young's $49.5 million (2026-27).",
+    "type": "approaches",
+    "value": 41240250
+   },
+   {
+    "comparison_size": 2181,
+    "contracted": false,
+    "family": "negative_space",
+    "id": "55fc2bce26e9e40d",
+    "key": "no_all_star|Austin Reaves|2026-27",
+    "margin": -1259750,
+    "previous_holder": {
+     "player": "OG Anunoby",
+     "season": "2026-27",
+     "value": 42500000
+    },
+    "rank": 3,
+    "scope_note": "Comparison set is every player since 1990-91 with no All-Star selection on record, active or retired, taken at each one's best paid season. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Austin Reaves is still active, so this describes selections to date.",
+    "text": "Austin Reaves' $41.2 million in 2026-27 is the third-highest single-season salary since 1990-91 for a player without an All-Star selection, behind OG Anunoby's $42.5 million (2026-27).",
     "type": "approaches",
     "value": 41240250
    }
@@ -3035,6 +3107,24 @@
     "scope_note": "Cohort of 97 players and 380 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
     "text": "Austin Reaves' $43 million in 2027-28 would be the fifth-highest single-season salary in the 2021 draft class since 1990-91, behind Cade Cunningham's $50.1 million (2026-27).",
     "type": "approaches",
+    "value": 42954030
+   },
+   {
+    "comparison_size": 2181,
+    "contracted": true,
+    "family": "negative_space",
+    "id": "77c85cc22d07f14f",
+    "key": "no_all_star|Austin Reaves|2027-28",
+    "margin": 454030,
+    "previous_holder": {
+     "player": "OG Anunoby",
+     "season": "2026-27",
+     "value": 42500000
+    },
+    "rank": 1,
+    "scope_note": "Comparison set is every player since 1990-91 with no All-Star selection on record, active or retired, taken at each one's best paid season. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Austin Reaves is still active, so this describes selections to date. This salary is contracted, not money already paid.",
+    "text": "Austin Reaves' $43 million in 2027-28 would be the highest single-season salary since 1990-91 for a player without an All-Star selection, passing OG Anunoby's $42.5 million (2026-27).",
+    "type": "sets",
     "value": 42954030
    }
   ],
@@ -3106,6 +3196,24 @@
     "text": "Austin Reaves' $46.3 million in 2028-29 would be the fourth-highest single-season salary in Lakers history since 1990-91, behind Luka Doncic's $51 million (2026-27).",
     "type": "approaches",
     "value": 46253250
+   },
+   {
+    "comparison_size": 2181,
+    "contracted": true,
+    "family": "negative_space",
+    "id": "61c0b9bd0051495f",
+    "key": "no_all_star|Austin Reaves|2028-29",
+    "margin": 3753250,
+    "previous_holder": {
+     "player": "OG Anunoby",
+     "season": "2026-27",
+     "value": 42500000
+    },
+    "rank": 1,
+    "scope_note": "Comparison set is every player since 1990-91 with no All-Star selection on record, active or retired, taken at each one's best paid season. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Austin Reaves is still active, so this describes selections to date. This salary is contracted, not money already paid.",
+    "text": "Austin Reaves' $46.3 million in 2028-29 would be the highest single-season salary since 1990-91 for a player without an All-Star selection, passing OG Anunoby's $42.5 million (2026-27).",
+    "type": "sets",
+    "value": 46253250
    }
   ],
   "Austin Reaves|2029-30": [
@@ -3175,6 +3283,24 @@
     "scope_note": "Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
     "text": "Austin Reaves' $49.6 million in 2029-30 would be the second-highest single-season salary in Lakers history since 1990-91, behind Luka Doncic's $51 million (2026-27).",
     "type": "approaches",
+    "value": 49552470
+   },
+   {
+    "comparison_size": 2181,
+    "contracted": true,
+    "family": "negative_space",
+    "id": "f835ee4e96212714",
+    "key": "no_all_star|Austin Reaves|2029-30",
+    "margin": 7052470,
+    "previous_holder": {
+     "player": "OG Anunoby",
+     "season": "2026-27",
+     "value": 42500000
+    },
+    "rank": 1,
+    "scope_note": "Comparison set is every player since 1990-91 with no All-Star selection on record, active or retired, taken at each one's best paid season. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Austin Reaves is still active, so this describes selections to date. This salary is contracted, not money already paid.",
+    "text": "Austin Reaves' $49.6 million in 2029-30 would be the highest single-season salary since 1990-91 for a player without an All-Star selection, passing OG Anunoby's $42.5 million (2026-27).",
+    "type": "sets",
     "value": 49552470
    },
    {
@@ -6450,24 +6576,6 @@
     "value": 24107258
    },
    {
-    "comparison_size": 1550,
-    "contracted": false,
-    "family": "negative_space",
-    "id": "cc24278bdcca9cdf",
-    "key": "no_all_nba|Chandler Parsons|2018-19",
-    "margin": -9212139,
-    "previous_holder": {
-     "player": "Gordon Hayward",
-     "season": "2023-24",
-     "value": 33319397
-    },
-    "rank": 5,
-    "scope_note": "Comparison set is completed careers since 1990-91 with no All-NBA selection on record. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid.",
-    "text": "Chandler Parsons' $24.1 million in 2018-19 is the fifth-highest single-season salary since 1990-91 by a player who never made an All-NBA team, behind Gordon Hayward's $33.3 million (2023-24).",
-    "type": "approaches",
-    "value": 24107258
-   },
-   {
     "comparison_size": 1547,
     "contracted": false,
     "family": "negative_space",
@@ -6557,24 +6665,6 @@
     "scope_note": "Cohort of 34 players and 174 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid.",
     "text": "Chandler Parsons' $25.1 million in 2019-20 is the highest single-season salary by a No. 38 pick since 1990-91, breaking his own mark of $24.1 million in 2018-19.",
     "type": "sets",
-    "value": 25102512
-   },
-   {
-    "comparison_size": 1550,
-    "contracted": false,
-    "family": "negative_space",
-    "id": "f8a4153fefca3104",
-    "key": "no_all_nba|Chandler Parsons|2019-20",
-    "margin": -8216885,
-    "previous_holder": {
-     "player": "Gordon Hayward",
-     "season": "2023-24",
-     "value": 33319397
-    },
-    "rank": 5,
-    "scope_note": "Comparison set is completed careers since 1990-91 with no All-NBA selection on record. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid.",
-    "text": "Chandler Parsons' $25.1 million in 2019-20 is the fifth-highest single-season salary since 1990-91 by a player who never made an All-NBA team, behind Gordon Hayward's $33.3 million (2023-24).",
-    "type": "approaches",
     "value": 25102512
    },
    {
@@ -8258,7 +8348,7 @@
   ],
   "D'Angelo Russell|2019-20": [
    {
-    "comparison_size": 1655,
+    "comparison_size": 2285,
     "contracted": false,
     "family": "negative_space",
     "id": "856d63e532c6fb0e",
@@ -8269,16 +8359,16 @@
      "season": "2023-24",
      "value": 33319397
     },
-    "rank": 3,
+    "rank": 4,
     "scope_note": "Comparison set is every player since 1990-91 with no All-NBA selection on record, active or retired, taken at each one's best paid season. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. D'Angelo Russell is still active, so this describes selections to date.",
-    "text": "D'Angelo Russell's $27.3 million in 2019-20 is the third-highest single-season salary since 1990-91 for a player without an All-NBA selection, behind Gordon Hayward's $33.3 million (2023-24).",
+    "text": "D'Angelo Russell's $27.3 million in 2019-20 is the fourth-highest single-season salary since 1990-91 for a player without an All-NBA selection, behind Gordon Hayward's $33.3 million (2023-24).",
     "type": "approaches",
     "value": 27285000
    }
   ],
   "D'Angelo Russell|2020-21": [
    {
-    "comparison_size": 1655,
+    "comparison_size": 2285,
     "contracted": false,
     "family": "negative_space",
     "id": "77978405b09ecdb0",
@@ -8289,9 +8379,9 @@
      "season": "2023-24",
      "value": 33319397
     },
-    "rank": 2,
+    "rank": 3,
     "scope_note": "Comparison set is every player since 1990-91 with no All-NBA selection on record, active or retired, taken at each one's best paid season. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. D'Angelo Russell is still active, so this describes selections to date.",
-    "text": "D'Angelo Russell's $28.6 million in 2020-21 is the second-highest single-season salary since 1990-91 for a player without an All-NBA selection, behind Gordon Hayward's $33.3 million (2023-24).",
+    "text": "D'Angelo Russell's $28.6 million in 2020-21 is the third-highest single-season salary since 1990-91 for a player without an All-NBA selection, behind Gordon Hayward's $33.3 million (2023-24).",
     "type": "approaches",
     "value": 28649250
    },
@@ -8344,7 +8434,7 @@
     "value": 30013500
    },
    {
-    "comparison_size": 1655,
+    "comparison_size": 2285,
     "contracted": false,
     "family": "negative_space",
     "id": "33d4a7c8582d75be",
@@ -8355,9 +8445,9 @@
      "season": "2023-24",
      "value": 33319397
     },
-    "rank": 2,
+    "rank": 3,
     "scope_note": "Comparison set is every player since 1990-91 with no All-NBA selection on record, active or retired, taken at each one's best paid season. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. D'Angelo Russell is still active, so this describes selections to date.",
-    "text": "D'Angelo Russell's $30 million in 2021-22 is the second-highest single-season salary since 1990-91 for a player without an All-NBA selection, behind Gordon Hayward's $33.3 million (2023-24).",
+    "text": "D'Angelo Russell's $30 million in 2021-22 is the third-highest single-season salary since 1990-91 for a player without an All-NBA selection, behind Gordon Hayward's $33.3 million (2023-24).",
     "type": "approaches",
     "value": 30013500
    }
@@ -8382,7 +8472,7 @@
     "value": 31377750
    },
    {
-    "comparison_size": 1655,
+    "comparison_size": 2285,
     "contracted": false,
     "family": "negative_space",
     "id": "ddb949c3bfad9ec4",
@@ -11770,6 +11860,24 @@
     "text": "Desmond Bane's $39.4 million in 2026-27 is the third-highest single-season salary in Magic history since 1990-91, behind Franz Wagner's $41.8 million (2026-27).",
     "type": "approaches",
     "value": 39446090
+   },
+   {
+    "comparison_size": 2181,
+    "contracted": false,
+    "family": "negative_space",
+    "id": "9e9417c571944efd",
+    "key": "no_all_star|Desmond Bane|2026-27",
+    "margin": -3053910,
+    "previous_holder": {
+     "player": "OG Anunoby",
+     "season": "2026-27",
+     "value": 42500000
+    },
+    "rank": 5,
+    "scope_note": "Comparison set is every player since 1990-91 with no All-Star selection on record, active or retired, taken at each one's best paid season. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Desmond Bane is still active, so this describes selections to date.",
+    "text": "Desmond Bane's $39.4 million in 2026-27 is the fifth-highest single-season salary since 1990-91 for a player without an All-Star selection, behind OG Anunoby's $42.5 million (2026-27).",
+    "type": "approaches",
+    "value": 39446090
    }
   ],
   "Desmond Bane|2027-28": [
@@ -11821,6 +11929,24 @@
     "scope_note": "Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
     "text": "Desmond Bane's $42.2 million in 2027-28 would be the highest single-season salary in Magic history since 1990-91, passing Franz Wagner's $41.8 million (2026-27).",
     "type": "sets",
+    "value": 42166510
+   },
+   {
+    "comparison_size": 2181,
+    "contracted": true,
+    "family": "negative_space",
+    "id": "0198f2a397ab9f44",
+    "key": "no_all_star|Desmond Bane|2027-28",
+    "margin": -333490,
+    "previous_holder": {
+     "player": "OG Anunoby",
+     "season": "2026-27",
+     "value": 42500000
+    },
+    "rank": 2,
+    "scope_note": "Comparison set is every player since 1990-91 with no All-Star selection on record, active or retired, taken at each one's best paid season. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Desmond Bane is still active, so this describes selections to date. This salary is contracted, not money already paid.",
+    "text": "Desmond Bane's $42.2 million in 2027-28 would be the second-highest single-season salary since 1990-91 for a player without an All-Star selection, behind OG Anunoby's $42.5 million (2026-27).",
+    "type": "approaches",
     "value": 42166510
    }
   ],
@@ -11890,6 +12016,24 @@
     "rank": 1,
     "scope_note": "Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
     "text": "Desmond Bane's $44.9 million in 2028-29 would be the highest single-season salary in Magic history since 1990-91, passing Franz Wagner's $41.8 million (2026-27).",
+    "type": "sets",
+    "value": 44886930
+   },
+   {
+    "comparison_size": 2181,
+    "contracted": true,
+    "family": "negative_space",
+    "id": "0cf825789e77704e",
+    "key": "no_all_star|Desmond Bane|2028-29",
+    "margin": 2386930,
+    "previous_holder": {
+     "player": "OG Anunoby",
+     "season": "2026-27",
+     "value": 42500000
+    },
+    "rank": 1,
+    "scope_note": "Comparison set is every player since 1990-91 with no All-Star selection on record, active or retired, taken at each one's best paid season. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Desmond Bane is still active, so this describes selections to date. This salary is contracted, not money already paid.",
+    "text": "Desmond Bane's $44.9 million in 2028-29 would be the highest single-season salary since 1990-91 for a player without an All-Star selection, passing OG Anunoby's $42.5 million (2026-27).",
     "type": "sets",
     "value": 44886930
    }
@@ -16464,6 +16608,24 @@
     "text": "Franz Wagner's $41.8 million in 2026-27 is the highest single-season salary in Magic history since 1990-91, passing Paolo Banchero's $41.2 million (2026-27).",
     "type": "sets",
     "value": 41754690
+   },
+   {
+    "comparison_size": 2181,
+    "contracted": false,
+    "family": "negative_space",
+    "id": "e57243613563eb46",
+    "key": "no_all_star|Franz Wagner|2026-27",
+    "margin": -745310,
+    "previous_holder": {
+     "player": "OG Anunoby",
+     "season": "2026-27",
+     "value": 42500000
+    },
+    "rank": 2,
+    "scope_note": "Comparison set is every player since 1990-91 with no All-Star selection on record, active or retired, taken at each one's best paid season. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Franz Wagner is still active, so this describes selections to date.",
+    "text": "Franz Wagner's $41.8 million in 2026-27 is the second-highest single-season salary since 1990-91 for a player without an All-Star selection, behind OG Anunoby's $42.5 million (2026-27).",
+    "type": "approaches",
+    "value": 41754690
    }
   ],
   "Franz Wagner|2027-28": [
@@ -16554,6 +16716,24 @@
     "rank": 1,
     "scope_note": "Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
     "text": "Franz Wagner's $44.8 million in 2027-28 would be the highest single-season salary in Magic history since 1990-91, breaking his own mark of $41.8 million in 2026-27.",
+    "type": "sets",
+    "value": 44847630
+   },
+   {
+    "comparison_size": 2181,
+    "contracted": true,
+    "family": "negative_space",
+    "id": "e7a6a1f881e55176",
+    "key": "no_all_star|Franz Wagner|2027-28",
+    "margin": 2347630,
+    "previous_holder": {
+     "player": "OG Anunoby",
+     "season": "2026-27",
+     "value": 42500000
+    },
+    "rank": 1,
+    "scope_note": "Comparison set is every player since 1990-91 with no All-Star selection on record, active or retired, taken at each one's best paid season. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Franz Wagner is still active, so this describes selections to date. This salary is contracted, not money already paid.",
+    "text": "Franz Wagner's $44.8 million in 2027-28 would be the highest single-season salary since 1990-91 for a player without an All-Star selection, passing OG Anunoby's $42.5 million (2026-27).",
     "type": "sets",
     "value": 44847630
    }
@@ -16662,6 +16842,24 @@
     "text": "Franz Wagner's $47.9 million in 2028-29 would be the highest single-season salary in Magic history since 1990-91, breaking his own mark of $41.8 million in 2026-27.",
     "type": "sets",
     "value": 47940570
+   },
+   {
+    "comparison_size": 2181,
+    "contracted": true,
+    "family": "negative_space",
+    "id": "82cc318bd8e32b5c",
+    "key": "no_all_star|Franz Wagner|2028-29",
+    "margin": 5440570,
+    "previous_holder": {
+     "player": "OG Anunoby",
+     "season": "2026-27",
+     "value": 42500000
+    },
+    "rank": 1,
+    "scope_note": "Comparison set is every player since 1990-91 with no All-Star selection on record, active or retired, taken at each one's best paid season. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Franz Wagner is still active, so this describes selections to date. This salary is contracted, not money already paid.",
+    "text": "Franz Wagner's $47.9 million in 2028-29 would be the highest single-season salary since 1990-91 for a player without an All-Star selection, passing OG Anunoby's $42.5 million (2026-27).",
+    "type": "sets",
+    "value": 47940570
    }
   ],
   "Franz Wagner|2029-30": [
@@ -16766,6 +16964,24 @@
     "rank": 1,
     "scope_note": "Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
     "text": "Franz Wagner's $51 million in 2029-30 would be the highest single-season salary in Magic history since 1990-91, breaking his own mark of $41.8 million in 2026-27.",
+    "type": "sets",
+    "value": 51033510
+   },
+   {
+    "comparison_size": 2181,
+    "contracted": true,
+    "family": "negative_space",
+    "id": "64bdf6e0e8ea6dcc",
+    "key": "no_all_star|Franz Wagner|2029-30",
+    "margin": 8533510,
+    "previous_holder": {
+     "player": "OG Anunoby",
+     "season": "2026-27",
+     "value": 42500000
+    },
+    "rank": 1,
+    "scope_note": "Comparison set is every player since 1990-91 with no All-Star selection on record, active or retired, taken at each one's best paid season. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Franz Wagner is still active, so this describes selections to date. This salary is contracted, not money already paid.",
+    "text": "Franz Wagner's $51 million in 2029-30 would be the highest single-season salary since 1990-91 for a player without an All-Star selection, passing OG Anunoby's $42.5 million (2026-27).",
     "type": "sets",
     "value": 51033510
    },
@@ -18190,21 +18406,21 @@
     "value": 30.0
    },
    {
-    "comparison_size": 1550,
+    "comparison_size": 2180,
     "contracted": false,
     "family": "negative_space",
     "id": "66a94dea2b522087",
     "key": "no_all_nba|Gordon Hayward|2017-18",
-    "margin": 1238661,
+    "margin": -1041331,
     "previous_holder": {
-     "player": "Otto Porter",
-     "season": "2020-21",
-     "value": 28489239
+     "player": "Paul Millsap",
+     "season": "2017-18",
+     "value": 30769231
     },
-    "rank": 1,
+    "rank": 2,
     "scope_note": "Comparison set is completed careers since 1990-91 with no All-NBA selection on record. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid.",
-    "text": "Gordon Hayward's $29.7 million in 2017-18 is the highest single-season salary since 1990-91 by a player who never made an All-NBA team, passing Otto Porter's $28.5 million (2020-21).",
-    "type": "sets",
+    "text": "Gordon Hayward's $29.7 million in 2017-18 is the second-highest single-season salary since 1990-91 by a player who never made an All-NBA team, behind Paul Millsap's $30.8 million (2017-18).",
+    "type": "approaches",
     "value": 29727900
    },
    {
@@ -18238,20 +18454,20 @@
     "value": 118222088
    },
    {
-    "comparison_size": 1550,
+    "comparison_size": 2180,
     "contracted": false,
     "family": "negative_space",
     "id": "a0c4386cb8d6eca2",
     "key": "no_all_nba|Gordon Hayward|2018-19",
-    "margin": 2725056,
+    "margin": 445064,
     "previous_holder": {
-     "player": "Otto Porter",
-     "season": "2020-21",
-     "value": 28489239
+     "player": "Paul Millsap",
+     "season": "2017-18",
+     "value": 30769231
     },
     "rank": 1,
     "scope_note": "Comparison set is completed careers since 1990-91 with no All-NBA selection on record. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid.",
-    "text": "Gordon Hayward's $31.2 million in 2018-19 is the highest single-season salary since 1990-91 by a player who never made an All-NBA team, passing Otto Porter's $28.5 million (2020-21).",
+    "text": "Gordon Hayward's $31.2 million in 2018-19 is the highest single-season salary since 1990-91 by a player who never made an All-NBA team, passing Paul Millsap's $30.8 million (2017-18).",
     "type": "sets",
     "value": 31214295
    }
@@ -18272,20 +18488,20 @@
     "value": 150922778
    },
    {
-    "comparison_size": 1550,
+    "comparison_size": 2180,
     "contracted": false,
     "family": "negative_space",
     "id": "46d854ba623597cf",
     "key": "no_all_nba|Gordon Hayward|2019-20",
-    "margin": 4211451,
+    "margin": 1931459,
     "previous_holder": {
-     "player": "Otto Porter",
-     "season": "2020-21",
-     "value": 28489239
+     "player": "Paul Millsap",
+     "season": "2017-18",
+     "value": 30769231
     },
     "rank": 1,
     "scope_note": "Comparison set is completed careers since 1990-91 with no All-NBA selection on record. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid.",
-    "text": "Gordon Hayward's $32.7 million in 2019-20 is the highest single-season salary since 1990-91 by a player who never made an All-NBA team, passing Otto Porter's $28.5 million (2020-21).",
+    "text": "Gordon Hayward's $32.7 million in 2019-20 is the highest single-season salary since 1990-91 by a player who never made an All-NBA team, passing Paul Millsap's $30.8 million (2017-18).",
     "type": "sets",
     "value": 32700690
    },
@@ -18324,21 +18540,21 @@
     "value": 28500000
    },
    {
-    "comparison_size": 1550,
+    "comparison_size": 2180,
     "contracted": false,
     "family": "negative_space",
     "id": "eb03e6dc75557dd2",
     "key": "no_all_nba|Gordon Hayward|2020-21",
-    "margin": 10761,
+    "margin": -2269231,
     "previous_holder": {
-     "player": "Otto Porter",
-     "season": "2020-21",
-     "value": 28489239
+     "player": "Paul Millsap",
+     "season": "2017-18",
+     "value": 30769231
     },
-    "rank": 1,
+    "rank": 2,
     "scope_note": "Comparison set is completed careers since 1990-91 with no All-NBA selection on record. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid.",
-    "text": "Gordon Hayward's $28.5 million in 2020-21 is the highest single-season salary since 1990-91 by a player who never made an All-NBA team, passing Otto Porter's $28.5 million (2020-21).",
-    "type": "sets",
+    "text": "Gordon Hayward's $28.5 million in 2020-21 is the second-highest single-season salary since 1990-91 by a player who never made an All-NBA team, behind Paul Millsap's $30.8 million (2017-18).",
+    "type": "approaches",
     "value": 28500000
    }
   ],
@@ -18376,21 +18592,21 @@
     "value": 29925000
    },
    {
-    "comparison_size": 1550,
+    "comparison_size": 2180,
     "contracted": false,
     "family": "negative_space",
     "id": "dba744beb8449a8b",
     "key": "no_all_nba|Gordon Hayward|2021-22",
-    "margin": 1435761,
+    "margin": -844231,
     "previous_holder": {
-     "player": "Otto Porter",
-     "season": "2020-21",
-     "value": 28489239
+     "player": "Paul Millsap",
+     "season": "2017-18",
+     "value": 30769231
     },
-    "rank": 1,
+    "rank": 2,
     "scope_note": "Comparison set is completed careers since 1990-91 with no All-NBA selection on record. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid.",
-    "text": "Gordon Hayward's $29.9 million in 2021-22 is the highest single-season salary since 1990-91 by a player who never made an All-NBA team, passing Otto Porter's $28.5 million (2020-21).",
-    "type": "sets",
+    "text": "Gordon Hayward's $29.9 million in 2021-22 is the second-highest single-season salary since 1990-91 by a player who never made an All-NBA team, behind Paul Millsap's $30.8 million (2017-18).",
+    "type": "approaches",
     "value": 29925000
    }
   ],
@@ -18414,21 +18630,21 @@
     "value": 30075000
    },
    {
-    "comparison_size": 1550,
+    "comparison_size": 2180,
     "contracted": false,
     "family": "negative_space",
     "id": "907ffb275c3f0e49",
     "key": "no_all_nba|Gordon Hayward|2022-23",
-    "margin": 1585761,
+    "margin": -694231,
     "previous_holder": {
-     "player": "Otto Porter",
-     "season": "2020-21",
-     "value": 28489239
+     "player": "Paul Millsap",
+     "season": "2017-18",
+     "value": 30769231
     },
-    "rank": 1,
+    "rank": 2,
     "scope_note": "Comparison set is completed careers since 1990-91 with no All-NBA selection on record. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid.",
-    "text": "Gordon Hayward's $30.1 million in 2022-23 is the highest single-season salary since 1990-91 by a player who never made an All-NBA team, passing Otto Porter's $28.5 million (2020-21).",
-    "type": "sets",
+    "text": "Gordon Hayward's $30.1 million in 2022-23 is the second-highest single-season salary since 1990-91 by a player who never made an All-NBA team, behind Paul Millsap's $30.8 million (2017-18).",
+    "type": "approaches",
     "value": 30075000
    }
   ],
@@ -18520,20 +18736,20 @@
     "value": 33319397
    },
    {
-    "comparison_size": 1550,
+    "comparison_size": 2180,
     "contracted": false,
     "family": "negative_space",
     "id": "7f5b4980aee6f9ae",
     "key": "no_all_nba|Gordon Hayward|2023-24",
-    "margin": 4830158,
+    "margin": 2550166,
     "previous_holder": {
-     "player": "Otto Porter",
-     "season": "2020-21",
-     "value": 28489239
+     "player": "Paul Millsap",
+     "season": "2017-18",
+     "value": 30769231
     },
     "rank": 1,
     "scope_note": "Comparison set is completed careers since 1990-91 with no All-NBA selection on record. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid.",
-    "text": "Gordon Hayward's $33.3 million in 2023-24 is the highest single-season salary since 1990-91 by a player who never made an All-NBA team, passing Otto Porter's $28.5 million (2020-21).",
+    "text": "Gordon Hayward's $33.3 million in 2023-24 is the highest single-season salary since 1990-91 by a player who never made an All-NBA team, passing Paul Millsap's $30.8 million (2017-18).",
     "type": "sets",
     "value": 33319397
    }
@@ -18794,24 +19010,6 @@
   ],
   "Hassan Whiteside|2017-18": [
    {
-    "comparison_size": 1550,
-    "contracted": false,
-    "family": "negative_space",
-    "id": "1bb39e2a83d9f464",
-    "key": "no_all_nba|Hassan Whiteside|2017-18",
-    "margin": -9543891,
-    "previous_holder": {
-     "player": "Gordon Hayward",
-     "season": "2023-24",
-     "value": 33319397
-    },
-    "rank": 5,
-    "scope_note": "Comparison set is completed careers since 1990-91 with no All-NBA selection on record. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid.",
-    "text": "Hassan Whiteside's $23.8 million in 2017-18 is the fifth-highest single-season salary since 1990-91 by a player who never made an All-NBA team, behind Gordon Hayward's $33.3 million (2023-24).",
-    "type": "approaches",
-    "value": 23775506
-   },
-   {
     "comparison_size": 1547,
     "contracted": false,
     "family": "negative_space",
@@ -18831,24 +19029,6 @@
    }
   ],
   "Hassan Whiteside|2018-19": [
-   {
-    "comparison_size": 1550,
-    "contracted": false,
-    "family": "negative_space",
-    "id": "c80dedb68ca952f8",
-    "key": "no_all_nba|Hassan Whiteside|2018-19",
-    "margin": -8885135,
-    "previous_holder": {
-     "player": "Gordon Hayward",
-     "season": "2023-24",
-     "value": 33319397
-    },
-    "rank": 5,
-    "scope_note": "Comparison set is completed careers since 1990-91 with no All-NBA selection on record. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid.",
-    "text": "Hassan Whiteside's $24.4 million in 2018-19 is the fifth-highest single-season salary since 1990-91 by a player who never made an All-NBA team, behind Gordon Hayward's $33.3 million (2023-24).",
-    "type": "approaches",
-    "value": 24434262
-   },
    {
     "comparison_size": 1547,
     "contracted": false,
@@ -18902,7 +19082,7 @@
     "value": 27093018
    },
    {
-    "comparison_size": 1550,
+    "comparison_size": 2180,
     "contracted": false,
     "family": "negative_space",
     "id": "a01a4c4225623b72",
@@ -18913,9 +19093,9 @@
      "season": "2023-24",
      "value": 33319397
     },
-    "rank": 3,
+    "rank": 4,
     "scope_note": "Comparison set is completed careers since 1990-91 with no All-NBA selection on record. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid.",
-    "text": "Hassan Whiteside's $27.1 million in 2019-20 is the third-highest single-season salary since 1990-91 by a player who never made an All-NBA team, behind Gordon Hayward's $33.3 million (2023-24).",
+    "text": "Hassan Whiteside's $27.1 million in 2019-20 is the fourth-highest single-season salary since 1990-91 by a player who never made an All-NBA team, behind Gordon Hayward's $33.3 million (2023-24).",
     "type": "approaches",
     "value": 27093018
    },
@@ -31274,6 +31454,24 @@
     "value": 65444444
    },
    {
+    "comparison_size": 2181,
+    "contracted": true,
+    "family": "negative_space",
+    "id": "6e8d1ba724548e50",
+    "key": "no_all_star|Keyonte George|2030-31",
+    "margin": 22944444,
+    "previous_holder": {
+     "player": "OG Anunoby",
+     "season": "2026-27",
+     "value": 42500000
+    },
+    "rank": 1,
+    "scope_note": "Comparison set is every player since 1990-91 with no All-Star selection on record, active or retired, taken at each one's best paid season. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Keyonte George is still active, so this describes selections to date. This salary is contracted, not money already paid.",
+    "text": "Keyonte George's $65.4 million in 2030-31 would be the highest single-season salary since 1990-91 for a player without an All-Star selection, passing OG Anunoby's $42.5 million (2026-27).",
+    "type": "sets",
+    "value": 65444444
+   },
+   {
     "comparison_size": 18,
     "contracted": true,
     "family": "rank_shift",
@@ -35826,6 +36024,24 @@
     "text": "Michael Porter's $40.8 million in 2026-27 is the third-highest single-season salary in Nets history since 1990-91, behind Kevin Durant's $42 million (2021-22).",
     "type": "approaches",
     "value": 40806150
+   },
+   {
+    "comparison_size": 2181,
+    "contracted": false,
+    "family": "negative_space",
+    "id": "b0c3b7753077c399",
+    "key": "no_all_star|Michael Porter|2026-27",
+    "margin": -1693850,
+    "previous_holder": {
+     "player": "OG Anunoby",
+     "season": "2026-27",
+     "value": 42500000
+    },
+    "rank": 4,
+    "scope_note": "Comparison set is every player since 1990-91 with no All-Star selection on record, active or retired, taken at each one's best paid season. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Michael Porter is still active, so this describes selections to date.",
+    "text": "Michael Porter's $40.8 million in 2026-27 is the fourth-highest single-season salary since 1990-91 for a player without an All-Star selection, behind OG Anunoby's $42.5 million (2026-27).",
+    "type": "approaches",
+    "value": 40806150
    }
   ],
   "Mikal Bridges|2025-26": [
@@ -35980,6 +36196,24 @@
     "rank": 5,
     "scope_note": "Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
     "text": "Mikal Bridges' $41.5 million in 2029-30 would be the fifth-highest single-season salary in Knicks history since 1990-91, behind Karl-Anthony Towns' $57.1 million (2026-27).",
+    "type": "approaches",
+    "value": 41517856
+   },
+   {
+    "comparison_size": 2181,
+    "contracted": true,
+    "family": "negative_space",
+    "id": "2282377c7a0a05c9",
+    "key": "no_all_star|Mikal Bridges|2029-30",
+    "margin": -982144,
+    "previous_holder": {
+     "player": "OG Anunoby",
+     "season": "2026-27",
+     "value": 42500000
+    },
+    "rank": 3,
+    "scope_note": "Comparison set is every player since 1990-91 with no All-Star selection on record, active or retired, taken at each one's best paid season. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Mikal Bridges is still active, so this describes selections to date. This salary is contracted, not money already paid.",
+    "text": "Mikal Bridges' $41.5 million in 2029-30 would be the third-highest single-season salary since 1990-91 for a player without an All-Star selection, behind OG Anunoby's $42.5 million (2026-27).",
     "type": "approaches",
     "value": 41517856
    },
@@ -37076,24 +37310,6 @@
     "value": 24000000
    },
    {
-    "comparison_size": 1550,
-    "contracted": false,
-    "family": "negative_space",
-    "id": "9741755a8d34c70d",
-    "key": "no_all_nba|Nicolas Batum|2018-19",
-    "margin": -9319397,
-    "previous_holder": {
-     "player": "Gordon Hayward",
-     "season": "2023-24",
-     "value": 33319397
-    },
-    "rank": 5,
-    "scope_note": "Comparison set is completed careers since 1990-91 with no All-NBA selection on record. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid.",
-    "text": "Nicolas Batum's $24 million in 2018-19 is the fifth-highest single-season salary since 1990-91 by a player who never made an All-NBA team, behind Gordon Hayward's $33.3 million (2023-24).",
-    "type": "approaches",
-    "value": 24000000
-   },
-   {
     "comparison_size": 1547,
     "contracted": false,
     "family": "negative_space",
@@ -37146,7 +37362,7 @@
     "value": 25565217
    },
    {
-    "comparison_size": 1550,
+    "comparison_size": 2180,
     "contracted": false,
     "family": "negative_space",
     "id": "4340319dd677e171",
@@ -37157,9 +37373,9 @@
      "season": "2023-24",
      "value": 33319397
     },
-    "rank": 4,
+    "rank": 5,
     "scope_note": "Comparison set is completed careers since 1990-91 with no All-NBA selection on record. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid.",
-    "text": "Nicolas Batum's $25.6 million in 2019-20 is the fourth-highest single-season salary since 1990-91 by a player who never made an All-NBA team, behind Gordon Hayward's $33.3 million (2023-24).",
+    "text": "Nicolas Batum's $25.6 million in 2019-20 is the fifth-highest single-season salary since 1990-91 by a player who never made an All-NBA team, behind Gordon Hayward's $33.3 million (2023-24).",
     "type": "approaches",
     "value": 25565217
    },
@@ -38720,6 +38936,24 @@
     "text": "OG Anunoby's $39.6 million in 2025-26 is the fifth-highest single-season salary in Knicks history since 1990-91, behind Karl-Anthony Towns' $57.1 million (2026-27).",
     "type": "approaches",
     "value": 39568966
+   },
+   {
+    "comparison_size": 2181,
+    "contracted": false,
+    "family": "negative_space",
+    "id": "ee3a0c001f96c642",
+    "key": "no_all_star|OG Anunoby|2025-26",
+    "margin": -2185724,
+    "previous_holder": {
+     "player": "Franz Wagner",
+     "season": "2026-27",
+     "value": 41754690
+    },
+    "rank": 4,
+    "scope_note": "Comparison set is every player since 1990-91 with no All-Star selection on record, active or retired, taken at each one's best paid season. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. OG Anunoby is still active, so this describes selections to date.",
+    "text": "OG Anunoby's $39.6 million in 2025-26 is the fourth-highest single-season salary since 1990-91 for a player without an All-Star selection, behind Franz Wagner's $41.8 million (2026-27).",
+    "type": "approaches",
+    "value": 39568966
    }
   ],
   "OG Anunoby|2026-27": [
@@ -38808,6 +39042,24 @@
     "text": "OG Anunoby's $42.5 million in 2026-27 is the fourth-highest single-season salary in Knicks history since 1990-91, behind Karl-Anthony Towns' $57.1 million (2026-27).",
     "type": "approaches",
     "value": 42500000
+   },
+   {
+    "comparison_size": 2181,
+    "contracted": false,
+    "family": "negative_space",
+    "id": "a728bb879b7750a9",
+    "key": "no_all_star|OG Anunoby|2026-27",
+    "margin": 745310,
+    "previous_holder": {
+     "player": "Franz Wagner",
+     "season": "2026-27",
+     "value": 41754690
+    },
+    "rank": 1,
+    "scope_note": "Comparison set is every player since 1990-91 with no All-Star selection on record, active or retired, taken at each one's best paid season. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. OG Anunoby is still active, so this describes selections to date.",
+    "text": "OG Anunoby's $42.5 million in 2026-27 is the highest single-season salary since 1990-91 for a player without an All-Star selection, passing Franz Wagner's $41.8 million (2026-27).",
+    "type": "sets",
+    "value": 42500000
    }
   ],
   "OG Anunoby|2027-28": [
@@ -38895,6 +39147,24 @@
     "scope_note": "Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
     "text": "OG Anunoby's $45.4 million in 2027-28 would be the fourth-highest single-season salary in Knicks history since 1990-91, behind Karl-Anthony Towns' $57.1 million (2026-27).",
     "type": "approaches",
+    "value": 45431034
+   },
+   {
+    "comparison_size": 2181,
+    "contracted": true,
+    "family": "negative_space",
+    "id": "1dc08be2ced942e7",
+    "key": "no_all_star|OG Anunoby|2027-28",
+    "margin": 3676344,
+    "previous_holder": {
+     "player": "Franz Wagner",
+     "season": "2026-27",
+     "value": 41754690
+    },
+    "rank": 1,
+    "scope_note": "Comparison set is every player since 1990-91 with no All-Star selection on record, active or retired, taken at each one's best paid season. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. OG Anunoby is still active, so this describes selections to date. This salary is contracted, not money already paid.",
+    "text": "OG Anunoby's $45.4 million in 2027-28 would be the highest single-season salary since 1990-91 for a player without an All-Star selection, passing Franz Wagner's $41.8 million (2026-27).",
+    "type": "sets",
     "value": 45431034
    }
   ],
@@ -38986,6 +39256,24 @@
     "value": 48362068
    },
    {
+    "comparison_size": 2181,
+    "contracted": true,
+    "family": "negative_space",
+    "id": "02613f45914d4252",
+    "key": "no_all_star|OG Anunoby|2028-29",
+    "margin": 6607378,
+    "previous_holder": {
+     "player": "Franz Wagner",
+     "season": "2026-27",
+     "value": 41754690
+    },
+    "rank": 1,
+    "scope_note": "Comparison set is every player since 1990-91 with no All-Star selection on record, active or retired, taken at each one's best paid season. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. OG Anunoby is still active, so this describes selections to date. This salary is contracted, not money already paid.",
+    "text": "OG Anunoby's $48.4 million in 2028-29 would be the highest single-season salary since 1990-91 for a player without an All-Star selection, passing Franz Wagner's $41.8 million (2026-27).",
+    "type": "sets",
+    "value": 48362068
+   },
+   {
     "comparison_size": 6,
     "contracted": true,
     "family": "rank_shift",
@@ -39058,24 +39346,6 @@
     "value": 24773250
    },
    {
-    "comparison_size": 1550,
-    "contracted": false,
-    "family": "negative_space",
-    "id": "5f0e9686a361b596",
-    "key": "no_all_nba|Otto Porter|2017-18",
-    "margin": -8546147,
-    "previous_holder": {
-     "player": "Gordon Hayward",
-     "season": "2023-24",
-     "value": 33319397
-    },
-    "rank": 5,
-    "scope_note": "Comparison set is completed careers since 1990-91 with no All-NBA selection on record. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid.",
-    "text": "Otto Porter's $24.8 million in 2017-18 is the fifth-highest single-season salary since 1990-91 by a player who never made an All-NBA team, behind Gordon Hayward's $33.3 million (2023-24).",
-    "type": "approaches",
-    "value": 24773250
-   },
-   {
     "comparison_size": 1547,
     "contracted": false,
     "family": "negative_space",
@@ -39128,7 +39398,7 @@
     "value": 26011913
    },
    {
-    "comparison_size": 1550,
+    "comparison_size": 2180,
     "contracted": false,
     "family": "negative_space",
     "id": "96b334886b1783f8",
@@ -39139,9 +39409,9 @@
      "season": "2023-24",
      "value": 33319397
     },
-    "rank": 3,
+    "rank": 4,
     "scope_note": "Comparison set is completed careers since 1990-91 with no All-NBA selection on record. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid.",
-    "text": "Otto Porter's $26 million in 2018-19 is the third-highest single-season salary since 1990-91 by a player who never made an All-NBA team, behind Gordon Hayward's $33.3 million (2023-24).",
+    "text": "Otto Porter's $26 million in 2018-19 is the fourth-highest single-season salary since 1990-91 by a player who never made an All-NBA team, behind Gordon Hayward's $33.3 million (2023-24).",
     "type": "approaches",
     "value": 26011913
    },
@@ -39184,7 +39454,7 @@
     "value": 27250576
    },
    {
-    "comparison_size": 1550,
+    "comparison_size": 2180,
     "contracted": false,
     "family": "negative_space",
     "id": "fb2a0676aaa55322",
@@ -39195,9 +39465,9 @@
      "season": "2023-24",
      "value": 33319397
     },
-    "rank": 2,
+    "rank": 3,
     "scope_note": "Comparison set is completed careers since 1990-91 with no All-NBA selection on record. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid.",
-    "text": "Otto Porter's $27.3 million in 2019-20 is the second-highest single-season salary since 1990-91 by a player who never made an All-NBA team, behind Gordon Hayward's $33.3 million (2023-24).",
+    "text": "Otto Porter's $27.3 million in 2019-20 is the third-highest single-season salary since 1990-91 by a player who never made an All-NBA team, behind Gordon Hayward's $33.3 million (2023-24).",
     "type": "approaches",
     "value": 27250576
    },
@@ -39254,7 +39524,7 @@
     "value": 28489239
    },
    {
-    "comparison_size": 1550,
+    "comparison_size": 2180,
     "contracted": false,
     "family": "negative_space",
     "id": "307dc7ce6ec601e3",
@@ -39265,9 +39535,9 @@
      "season": "2023-24",
      "value": 33319397
     },
-    "rank": 2,
+    "rank": 3,
     "scope_note": "Comparison set is completed careers since 1990-91 with no All-NBA selection on record. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid.",
-    "text": "Otto Porter's $28.5 million in 2020-21 is the second-highest single-season salary since 1990-91 by a player who never made an All-NBA team, behind Gordon Hayward's $33.3 million (2023-24).",
+    "text": "Otto Porter's $28.5 million in 2020-21 is the third-highest single-season salary since 1990-91 by a player who never made an All-NBA team, behind Gordon Hayward's $33.3 million (2023-24).",
     "type": "approaches",
     "value": 28489239
    },
@@ -41126,6 +41396,24 @@
     "value": 30769231
    },
    {
+    "comparison_size": 2180,
+    "contracted": false,
+    "family": "negative_space",
+    "id": "8f33f1c391d48c36",
+    "key": "no_all_nba|Paul Millsap|2017-18",
+    "margin": -2550166,
+    "previous_holder": {
+     "player": "Gordon Hayward",
+     "season": "2023-24",
+     "value": 33319397
+    },
+    "rank": 2,
+    "scope_note": "Comparison set is completed careers since 1990-91 with no All-NBA selection on record. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid.",
+    "text": "Paul Millsap's $30.8 million in 2017-18 is the second-highest single-season salary since 1990-91 by a player who never made an All-NBA team, behind Gordon Hayward's $33.3 million (2023-24).",
+    "type": "approaches",
+    "value": 30769231
+   },
+   {
     "comparison_size": 587,
     "contracted": false,
     "family": "rank_shift",
@@ -41172,6 +41460,24 @@
     "text": "Paul Millsap's $29.2 million in 2018-19 is the third-highest single-season salary by a No. 47 pick since 1990-91, behind his own $30.8 million (2017-18).",
     "type": "approaches",
     "value": 29230769
+   },
+   {
+    "comparison_size": 2180,
+    "contracted": false,
+    "family": "negative_space",
+    "id": "9602a3386ecf3213",
+    "key": "no_all_nba|Paul Millsap|2018-19",
+    "margin": -4088628,
+    "previous_holder": {
+     "player": "Gordon Hayward",
+     "season": "2023-24",
+     "value": 33319397
+    },
+    "rank": 2,
+    "scope_note": "Comparison set is completed careers since 1990-91 with no All-NBA selection on record. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid.",
+    "text": "Paul Millsap's $29.2 million in 2018-19 is the second-highest single-season salary since 1990-91 by a player who never made an All-NBA team, behind Gordon Hayward's $33.3 million (2023-24).",
+    "type": "approaches",
+    "value": 29230769
    }
   ],
   "Paul Millsap|2019-20": [
@@ -41208,6 +41514,24 @@
     "rank": 2,
     "scope_note": "Cohort of 28 players and 158 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid.",
     "text": "Paul Millsap's $30.4 million in 2019-20 is the second-highest single-season salary by a No. 47 pick since 1990-91, behind his own $30.8 million (2017-18).",
+    "type": "approaches",
+    "value": 30350000
+   },
+   {
+    "comparison_size": 2180,
+    "contracted": false,
+    "family": "negative_space",
+    "id": "b521e4e2b614c843",
+    "key": "no_all_nba|Paul Millsap|2019-20",
+    "margin": -2969397,
+    "previous_holder": {
+     "player": "Gordon Hayward",
+     "season": "2023-24",
+     "value": 33319397
+    },
+    "rank": 2,
+    "scope_note": "Comparison set is completed careers since 1990-91 with no All-NBA selection on record. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid.",
+    "text": "Paul Millsap's $30.4 million in 2019-20 is the second-highest single-season salary since 1990-91 by a player who never made an All-NBA team, behind Gordon Hayward's $33.3 million (2023-24).",
     "type": "approaches",
     "value": 30350000
    }
@@ -51101,7 +51425,7 @@
  },
  "meta": {
   "current_season": "2026-27",
-  "factoid_count": 2869,
+  "factoid_count": 2887,
   "families": [
    "cap_context",
    "career_earnings",
@@ -51120,13 +51444,15 @@
     "2029-30",
     "2030-31"
    ],
-   "approach_max_rank": 5,
-   "approach_within_pct": 0.05,
-   "awards_unsafe_seasons": [
-    "1996-97",
-    "2006-07",
+   "all_nba_unsafe_seasons": [
     "2025-26"
    ],
+   "all_star_unsafe_seasons": [
+    "1996-97",
+    "2006-07"
+   ],
+   "approach_max_rank": 5,
+   "approach_within_pct": 0.05,
    "career_status_unknown": [
     "Adama Bal",
     "Alondes Williams",
