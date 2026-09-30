@@ -21081,13 +21081,13 @@
     "key": "cohort_career|draft_class|2023|Jalen Hood-Schifino|2024-25",
     "margin": 4268914,
     "previous_holder": {
-     "player": "Ricky Council",
+     "player": "Ricky Council IV",
      "season": "2024-25",
      "value": 3305992
     },
     "rank": 1,
     "scope_note": "Ranked against 19 completed careers in this cohort since 1990-91.",
-    "text": "Jalen Hood-Schifino's $7.6 million in career earnings through 2024-25 is the most in the 2023 draft class since 1990-91, passing Ricky Council's $3.3 million (2024-25).",
+    "text": "Jalen Hood-Schifino's $7.6 million in career earnings through 2024-25 is the most in the 2023 draft class since 1990-91, passing Ricky Council IV's $3.3 million (2024-25).",
     "type": "sets",
     "value": 7574906
    }
@@ -42489,8 +42489,8 @@
     "comparison_size": 18,
     "contracted": false,
     "family": "cohort",
-    "id": "4c0818752ccb2684",
-    "key": "cohort_career|draft_class|2023|Ricky Council|2024-25",
+    "id": "a08d94f83bb48608",
+    "key": "cohort_career|draft_class|2023|Ricky Council IV|2024-25",
     "margin": -4268914,
     "previous_holder": {
      "player": "Jalen Hood-Schifino",
@@ -42499,7 +42499,7 @@
     },
     "rank": 2,
     "scope_note": "Ranked against 19 completed careers in this cohort since 1990-91.",
-    "text": "Ricky Council's $3.3 million in career earnings through 2024-25 ranks second in the 2023 draft class since 1990-91, behind Jalen Hood-Schifino's $7.6 million (2024-25).",
+    "text": "Ricky Council IV's $3.3 million in career earnings through 2024-25 ranks second in the 2023 draft class since 1990-91, behind Jalen Hood-Schifino's $7.6 million (2024-25).",
     "type": "approaches",
     "value": 3305992
    }
@@ -51636,11 +51636,12 @@
    "identity_splits_unconfirmed": [],
    "merged_identities": 42,
    "name_aliases": {
-    "Andre Jackson Jr": "Andre Jackson",
+    "Andre Jackson": "Andre Jackson Jr",
     "Marcus Thornton II": "Marcus Thornton",
-    "Ricky Council IV": "Ricky Council",
-    "Terrence Shannon Jr.": "Terrence Shannon",
-    "Tristan da Silva": "Tristan Da Silva",
+    "Ricky Council": "Ricky Council IV",
+    "Terrence Shannon": "Terrence Shannon Jr",
+    "Terrence Shannon Jr.": "Terrence Shannon Jr",
+    "Tristan Da Silva": "Tristan da Silva",
     "Wendell Carter": "Wendell Carter Jr"
    },
    "seasons_held_back": [

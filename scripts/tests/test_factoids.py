@@ -1931,7 +1931,13 @@ def test_shipped_aliases_merge_the_six_pairs_and_leave_the_fathers_alone():
         data = json.load(fh)
     aliases = F.load_name_aliases()
     assert aliases["Wendell Carter"] == "Wendell Carter Jr"
-    assert len(aliases) == 6
+    # six merged players. Terrence Shannon Jr contributes two alias spellings,
+    # because the canonical is his real name and neither raw spelling is it.
+    canonicals = set(aliases.values())
+    assert len(canonicals) == 6
+    assert len(aliases) == 7
+    assert aliases["Terrence Shannon"] == "Terrence Shannon Jr"
+    assert aliases["Terrence Shannon Jr."] == "Terrence Shannon Jr"
     # a genuine father and son share a name but never a career
     for father_son in ("Gary Payton II", "Glen Rice Jr", "Tim Hardaway Jr",
                        "Larry Nance Jr", "Ron Harper Jr", "Glenn Robinson III",

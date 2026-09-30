@@ -61,6 +61,21 @@
   // Track which columns are visible
   let visibleCols = {};
 
+  /* Link a player name to his pre-rendered salary history page.
+
+     The slugs come from js/player-pages.js, which scripts/prerender_pages.py
+     writes from the same data/slugs.json the pages are built with, so a link
+     here and a file there can never disagree. With that file absent the name
+     renders as plain text and nothing breaks. */
+  function playerPageLink(name, season) {
+    var pages = window.HoopsMaticPlayerPages;
+    if (!pages || typeof pages.slugFor !== "function") return escHtml(String(name));
+    var slug = pages.slugFor(name, season);
+    if (!slug) return escHtml(String(name));
+    return '<a class="player-page-link" href="player/' + escAttr(slug) + '/">' +
+      escHtml(String(name)) + "</a>";
+  }
+
   // ---- Formatting Helpers ----
   function fmtSalary(val) {
     if (val == null) return "-";
@@ -432,6 +447,9 @@
 
     // Clickable table cells (event delegation)
     document.getElementById("tableBody").addEventListener("click", function (e) {
+      // The player name is a link to his own salary history page. Let the
+      // browser have that click; the rest of the cell still filters.
+      if (e.target.closest("a.player-page-link")) return;
       var badge = e.target.closest(".award-badge[data-award]");
       if (badge) {
         handleCellClick("awards", badge.dataset.award);
@@ -2515,7 +2533,10 @@
               if (hasVal && col.key !== "awards") {
                 tdClass += " clickable";
                 var raw = Array.isArray(val) ? val.join(",") : String(val);
-                html += '<td class="' + tdClass + '"' + lblAttr + ' data-col="' + col.key + '" data-val="' + escAttr(raw) + '">' + fmtCell(col, val) + "</td>";
+                var cellHtml = col.key === "player"
+                  ? playerPageLink(val, record.season)
+                  : fmtCell(col, val);
+                html += '<td class="' + tdClass + '"' + lblAttr + ' data-col="' + col.key + '" data-val="' + escAttr(raw) + '">' + cellHtml + "</td>";
               } else {
                 html += '<td class="' + tdClass + '"' + lblAttr + '>' + fmtCell(col, val) + "</td>";
               }
