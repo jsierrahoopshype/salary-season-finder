@@ -1060,3 +1060,65 @@ def test_a_flagged_salary_never_tops_a_table_or_a_sentence():
         head = html[:html.index("Every player")] if "Every player" in html else html
         assert "$112,560,000" not in head, path
         assert "$112.6 million" not in head, path
+
+
+# --------------------------------------------------------------------------
+# what a summary's first sentence has to do
+# --------------------------------------------------------------------------
+
+
+def _cohort_entities():
+    idx = F.build_index(F.load_data())
+    book = S.load(repo(C.SLUGS_PATH))
+    built_pages = E.build_all(idx, book)
+    return idx, {(e.family, e.slug): e for e in built_pages["cohorts"]}
+
+
+@built
+def test_the_first_sentence_names_the_cohort():
+    """A reader landing on a page learns from its first line which list he is
+    reading. "The largest single salary belongs to Jamal Murray" does not say."""
+    from prerender.summary import Names
+    _idx, by_slug = _cohort_entities()
+    for path, _meta in _cohort_pages():
+        family, slug = path.split(os.sep)[0], path.split(os.sep)[1]
+        entity = by_slug.get((family, slug))
+        if entity is None:
+            continue
+        sentences = _summary(path)
+        assert sentences, path
+        names = Names(entity.family, entity.key, entity.name)
+        assert names.mentions(sentences[0]) >= 1, (path, sentences[0])
+
+
+@built
+def test_no_sentence_opens_on_a_pronoun_pointing_at_a_number():
+    for path, _meta in _cohort_pages():
+        for sentence in _summary(path):
+            first = sentence.split(" ", 1)[0]
+            assert first not in ("That", "This"), (path, sentence)
+
+
+@built
+def test_the_cohort_is_not_named_in_two_sentences_running():
+    from prerender.summary import Names
+    _idx, by_slug = _cohort_entities()
+    for path, _meta in _cohort_pages():
+        family, slug = path.split(os.sep)[0], path.split(os.sep)[1]
+        entity = by_slug.get((family, slug))
+        if entity is None:
+            continue
+        names = Names(entity.family, entity.key, entity.name)
+        named = [names.mentions(s) > 0 for s in _summary(path)]
+        for first, second in zip(named, named[1:]):
+            assert not (first and second), (path, _summary(path))
+
+
+@built
+def test_a_repeated_subject_becomes_a_pronoun():
+    """Two sentences about the same man do not print his name twice."""
+    for path in ("college/arkansas", "college/kentucky", "pick/35"):
+        sentences = _summary(os.path.join(*(path.split("/") + ["index.html"])))
+        assert len(sentences) >= 2, path
+        assert sentences[1].startswith(("His ", "He ", "No ", "Nobody ")), (
+            path, sentences[1])

@@ -78,39 +78,48 @@ class Names(object):
             self.many = "{} players".format(name)
             self.label = "the program"
             self.of = "out of {}".format(name)
+            self.for_one = "for a {} player".format(name)
         elif family == "country":
             adjective = COUNTRY_ADJECTIVES.get(name)
             self.one = "{} player".format(adjective) if adjective else "player from {}".format(name)
             self.many = "{} players".format(adjective) if adjective else "players from {}".format(name)
             self.label = "the country"
             self.of = "from {}".format(name)
+            self.for_one = "for {} {}".format(
+                "an" if (adjective or name)[0] in "AEIOU" else "a", self.one)
         elif family == "draft":
             self.one = "player from the {} class".format(name)
             self.many = "the {} class".format(name)
             self.label = "the class"
             self.of = "from the {} draft".format(name)
+            self.for_one = "for anyone from the {} class".format(name)
         elif family == "pick":
             if key == "undrafted":
                 self.one = "undrafted player"
                 self.many = "undrafted players"
                 self.label = "the undrafted"
                 self.of = "who went undrafted"
+                self.for_one = "for an undrafted player"
             else:
                 self.one = "No. {} pick".format(key)
                 self.many = "No. {} picks".format(key)
                 self.label = "the slot"
                 self.of = "taken at No. {}".format(key)
+                self.for_one = "for a No. {} pick".format(key)
         elif family == "position":
             single = lower[:-1] if lower.endswith("s") else lower
             self.one = single
             self.many = lower
             self.label = "the position"
             self.of = "at {}".format(single)
+            self.for_one = "for {} {}".format(
+                "an" if single[0] in "aeiou" else "a", single)
         else:
             self.one = "client of {}".format(name)
             self.many = "clients of {}".format(name)
             self.label = "the agency"
             self.of = "with {}".format(name)
+            self.for_one = "for a client of {}".format(name)
 
     #: The token that names this cohort outright, for the twice-a-summary cap.
     @property
@@ -139,6 +148,7 @@ class Names(object):
         other.many = "this list"
         other.label = self.label
         other.of = "on this list"
+        other.for_one = "for anyone on this list"
         return other
 
 
@@ -201,43 +211,42 @@ CAREER_POOL = (
     "{name} has out-earned every other {one}, {money} through {through}.",
 )
 
-#: Used when the single-season record came first and the same man leads the
-#: career list, so his name does not open two sentences in a row.
+#: Used where the sentence before it was about the same man. He is "he", and
+#: the cohort is not named twice running.
 CAREER_SAME_POOL = (
-    "He has also earned more than any other {one}, {money} through {through}.",
-    "Nobody {of} has been paid more across a career either: {money} through {through}.",
-    "His {money} through {through} leads {many} as well.",
-    "That career is the richest of them too, {money} through {through}.",
+    "His career earnings are the highest of them too, {money} through {through}.",
+    "He has also been paid more across a career than anyone else on the list, "
+    "{money} through {through}.",
+    "His {money} through {through} is the biggest career total on the list as well.",
+    "He leads them in career earnings as well, {money} through {through}.",
 )
 
 SEASON_POOL = (
-    "{name} owns {label}'s biggest single season, {money} in {season}.",
-    "The largest single salary belongs to {name}: {money} in {season}.",
     "No {one} has been paid more in one year than {money}, which {name} drew in {season}.",
     "{money} in {season} is the biggest single season any {one} has drawn, and it is {possessive}.",
-    "Nothing tops {possessive} {money} in {season} for one season's work.",
+    "The biggest single season {for_one} belongs to {name}, {money} in {season}.",
+    "{name} has drawn the biggest salary of any {one}, {money} in {season}.",
+    "Nobody {of} has been paid more for one season than {possessive} {money} in {season}.",
 )
 
-#: Used when the career leader and the record holder are the same man, so the
-#: two slots become one sentence.
 SEASON_SAME_POOL = (
-    "His {money} in {season} is the largest salary any {one} has drawn.",
+    "His {money} in {season} is the biggest single season on the list too.",
     "He also owns the biggest single season, {money} in {season}.",
-    "No single season beats his own {money} in {season}.",
-    "That {money} in {season} is the biggest one year any {one} has had.",
+    "His best year is the list's best as well, {money} in {season}.",
+    "No single season on the list beats his own {money} in {season}.",
 )
 
 CURRENT_POOL = (
     "In {season} the best-paid {one} is {name}, at {money}.",
     "{name} heads the {season} payroll list at {money}.",
     "{money} makes {name} the highest-paid {one} on a roster this season.",
-    "This season it is {name} earning the most of them, {money}.",
+    "Among them {name} earns the most in {season}, {money}.",
 )
 
 CURRENT_SAME_POOL = (
-    "He is still the best-paid {one} in {season}, at {money}.",
+    "He is still the best-paid of them in {season}, at {money}.",
     "He leads them again in {season}, at {money}.",
-    "{money} keeps him at the top of the {season} list.",
+    "His {money} keeps him at the top of the {season} list.",
     "In {season} he is the best paid of them once more, at {money}.",
 )
 
@@ -253,7 +262,7 @@ LAST_ONE_POOL = (
 #: sentence before them is the one that stated it.
 FUTURE_TOPS_AFTER_POOL = (
     "{possessive} contract keeps raising that bar: {list}.",
-    "That mark will not last: {name} is due {list}.",
+    "The bar will not stand long: {name} is due {list}.",
     "The money ahead is bigger still, with {name} signed for {list}.",
     "{name} is signed past it, for {list}.",
 )
@@ -261,7 +270,7 @@ FUTURE_TOPS_AFTER_POOL = (
 FUTURE_TOPS_AFTER_SAME_POOL = (
     "His contract keeps raising that bar: {list}.",
     "He is signed past it, for {list}.",
-    "The deal runs on and climbs: {list}.",
+    "His deal runs on and climbs: {list}.",
     "Ahead of him sit {list}.",
 )
 
@@ -275,7 +284,7 @@ FUTURE_TOPS_POOL = (
 FUTURE_TOPS_SAME_POOL = (
     "His contract goes past all of it: {list}.",
     "He is signed for {list}, more than any {one} has been paid for a season.",
-    "The deal climbs from there: {list}.",
+    "His deal climbs from there: {list}.",
     "Nothing a {one} has been paid matches what he is owed next, {list}.",
 )
 
@@ -290,7 +299,7 @@ FUTURE_POOL = (
 FUTURE_SAME_POOL = (
     "He is due {list} on top of it.",
     "His deal still carries {list}.",
-    "The contract runs on: {list}.",
+    "His contract runs on: {list}.",
     "Ahead of him sit {list}.",
 )
 
@@ -359,18 +368,25 @@ def _first_word(sentence):
     return word.lower().rstrip(".,:")
 
 
-def _choose(pool, slug, salt, avoid_word=None, **kw):
+def _choose(pool, slug, salt, avoid_word=None, require=None, **kw):
     """A phrasing from the pool, never opening on ``avoid_word``.
 
-    The hash picks first; the walk after it is the tie-break, so the result is
-    still the same on every build.
+    ``require`` is a test the rendered sentence has to pass, which is how the
+    first sentence of a summary is made to name its cohort. The hash picks
+    first; the walk after it is the tie-break, so the result is the same on
+    every build.
     """
     start = pick(slug, salt, len(pool))
+    fallback = None
     for step in range(len(pool)):
         text = _fill(pool[(start + step) % len(pool)], **kw)
+        if require is not None and not require(text):
+            continue
+        if fallback is None:
+            fallback = text
         if avoid_word is None or _first_word(text) != avoid_word:
             return text
-    return _fill(pool[start], **kw)
+    return fallback if fallback is not None else _fill(pool[start], **kw)
 
 
 def cohort_summary(idx, family, key, name, career, paid, current, facts,
@@ -441,9 +457,24 @@ def cohort_summary(idx, family, key, name, career, paid, current, facts,
     budget = [2]          # times this summary may name the cohort outright
     previous = [None]     # the identity the last sentence was about
     previous_slot = [None]
+    named_last = [False]  # did the sentence before this one name the cohort?
 
     def names_for():
-        return plain if budget[0] > 0 else plain.generic()
+        """Plain names while the summary may still use them.
+
+        The first sentence always names the cohort: a reader landing on a page
+        should learn from its first line which list he is reading. After that
+        the name is not repeated in the next sentence running, and never more
+        than twice in all.
+        """
+        if not out:
+            return plain
+        if budget[0] <= 0 or named_last[0]:
+            return plain.generic()
+        return plain
+
+    def must_name():
+        return None if out else (lambda text: plain.mentions(text) > 0)
 
     def last_word():
         return _first_word(out[-1]) if out else None
@@ -451,41 +482,51 @@ def cohort_summary(idx, family, key, name, career, paid, current, facts,
     def add(text):
         if out and _first_word(text) == last_word():
             return False
+        mentions = plain.mentions(text)
         out.append(text)
-        budget[0] -= plain.mentions(text)
+        budget[0] -= mentions
+        named_last[0] = mentions > 0
         return True
 
     def career_sentence():
         names = names_for()
-        same = previous[0] is not None and previous[0] is leader["ident"]
+        same = bool(out) and previous[0] is not None and previous[0] is leader["ident"]
         pool = CAREER_SAME_POOL if same else CAREER_POOL
         text = _choose(
-            pool, slug, "career", avoid_word=last_word(),
+            pool, slug, "career", avoid_word=last_word(), require=must_name(),
             name=leader["name"], money=_money(leader["total"]),
             through=leader["through"], one=names.one, many=names.many,
-            label=names.label, of=names.of,
+            label=names.label, of=names.of, for_one=names.for_one,
         )
         ratio = _ratio(leader["total"], leader["rival"])
-        if ratio and budget[0] - plain.mentions(text) > 0:
-            text += " That is {} what any other {} has earned.".format(
-                ratio, names.one)
+        if ratio:
+            # a clause, not a second sentence: "That is ..." would open on a
+            # pronoun pointing at a figure the reader has to hunt for. The
+            # cohort is not named twice inside one sentence either.
+            rival = (
+                "any other {}".format(names.one)
+                if plain.mentions(text) == 0 else "anyone else on the list"
+            )
+            text = "{}, {} what {} has earned.".format(
+                text.rstrip("."), ratio, rival)
         return text, leader["ident"]
 
     def season_sentence():
         names = names_for()
-        same = previous[0] is not None and previous[0] is record["ident"]
+        same = bool(out) and previous[0] is not None and previous[0] is record["ident"]
         pool = SEASON_SAME_POOL if same else SEASON_POOL
         text = _choose(
-            pool, slug, "season", avoid_word=last_word(),
+            pool, slug, "season", avoid_word=last_word(), require=must_name(),
             name=record["name"], possessive=_possessive(record["name"]),
             money=_money(record["salary"]), season=record["season"],
             one=names.one, many=names.many, label=names.label,
+            of=names.of, for_one=names.for_one,
         )
         return text, record["ident"]
 
     def current_sentence():
         names = names_for()
-        same = previous[0] is not None and previous[0] is now["ident"]
+        same = bool(out) and previous[0] is not None and previous[0] is now["ident"]
         if now["only"]:
             pool = LAST_ONE_POOL
         elif same:
@@ -493,10 +534,10 @@ def cohort_summary(idx, family, key, name, career, paid, current, facts,
         else:
             pool = CURRENT_POOL
         text = _choose(
-            pool, slug, "current", avoid_word=last_word(),
+            pool, slug, "current", avoid_word=last_word(), require=must_name(),
             name=now["name"], money=_money(now["salary"]),
             season=idx.current_season, one=names.one, many=names.many,
-            label=names.label,
+            label=names.label, of=names.of, for_one=names.for_one,
         )
         return text, now["ident"]
 
@@ -511,7 +552,7 @@ def cohort_summary(idx, family, key, name, career, paid, current, facts,
         else:
             pool = FUTURE_SAME_POOL if same else FUTURE_POOL
         text = _choose(
-            pool, slug, "future", avoid_word=last_word(),
+            pool, slug, "future", avoid_word=last_word(), require=must_name(),
             name=future["name"], possessive=_possessive(future["name"]),
             one=names.one, list=_merge_seasons(future["rows"]),
         )

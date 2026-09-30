@@ -515,8 +515,11 @@ def test_college_threshold_is_higher_than_nationality():
 
 
 def _agent_roster(season, agent="Super Agent", n=6):
+    """A roster whose top salary leads without towering over it: a contracted
+    salary far clear of every other in its season is what the impossible-salary
+    guard is for, and these fixtures are not testing that."""
     return [
-        rec("Client {}".format(i), season, 5000000 + i * 1000, agent=agent)
+        rec("Client {}".format(i), season, 50000000 + i * 1000, agent=agent)
         for i in range(n)
     ] + [rec("Top Client", season, 60000000, agent=agent)]
 
@@ -2089,69 +2092,92 @@ def test_a_pre_window_career_gets_no_milestone_either():
 # --------------------------------------------------------------------------
 
 
-def _cap(season, cap):
-    return {season: {"cap": cap}}
-
-
-def test_a_salary_over_the_cap_maximum_is_flagged():
+def test_a_contracted_salary_towering_over_its_season_is_flagged():
+    """One salary far clear of every other in its own season is a projection,
+    not a deal anyone signed."""
     data = make_data([
-        rec("Impossible", "2024-25", 80000000, salary_cap_pct=57.0),
-        rec("Fine", "2024-25", 40000000, salary_cap_pct=28.6),
-    ], caps={"2024-25": {"cap": 140000000}, CURRENT: {"cap": 150000000}})
+        rec("Tower", "2027-28", 120000000, team="SAS", salary_cap_pct=70.0),
+    ] + [
+        rec("Peer {}".format(i), "2027-28", 40000000 + i * 1000, team="BOS")
+        for i in range(10)
+    ])
     idx = index_for(data)
-    assert ("Impossible", "2024-25") in idx.impossible
-    assert ("Fine", "2024-25") not in idx.impossible
-    assert factoids_for(data, "Impossible", "2024-25", index=idx) == []
-    assert "impossible_salary" in gates(data, "Impossible", "2024-25")
+    assert ("Tower", "2027-28") in idx.impossible
+    assert "second-biggest salary" in idx.impossible[("Tower", "2027-28")]
+    assert ("Peer 1", "2027-28") not in idx.impossible
 
 
-def test_the_cap_maximum_does_not_apply_before_the_rule_existed():
-    data = make_data([rec("Old", "2009-10", 80000000, salary_cap_pct=57.0)],
-                     caps={"2009-10": {"cap": 140000000}, CURRENT: {"cap": 150000000}})
-    idx = index_for(data)
-    assert ("Old", "2009-10") not in idx.impossible
-
-
-def test_a_contracted_salary_that_leaps_is_flagged():
-    """Victor Wembanyama's $112.6 million in 2030-31 is the case: a projection
-    nobody can be paid, sitting at the top of every list it touched."""
+def test_a_paid_season_is_never_flagged():
+    """Kobe Bryant's 51.9% of the 2013-14 cap is money he was paid. The 35%
+    maximum applies to a contract when it is signed, and raises carry the late
+    years of a real deal past it."""
     data = make_data([
-        rec("Leaper", CURRENT, 16900000, team="SAS", salary_cap_pct=11.0),
-        rec("Leaper", "2027-28", 44000000, team="SAS", salary_cap_pct=28.0),
-    ], caps={CURRENT: {"cap": 155000000}, "2027-28": {"cap": 160000000}})
+        rec("Kobe", "2013-14", 30500000, salary_cap_pct=51.9),
+        rec("Kobe", "2014-15", 23500000, salary_cap_pct=37.3),
+    ] + [rec("Peer {}".format(i), "2013-14", 1000000 + i) for i in range(10)])
     idx = index_for(data)
-    assert ("Leaper", "2027-28") in idx.impossible
-    assert "160%" in idx.impossible[("Leaper", "2027-28")]
+    assert idx.impossible == {}
 
 
-def test_a_signed_raise_inside_the_rules_is_left_alone():
+def test_a_contracted_leap_off_a_big_salary_is_flagged():
+    """Victor Wembanyama's $112.6 million in 2030-31 is the case: $51 million
+    on the same roster the season before, itself a quarter of the cap."""
     data = make_data([
-        rec("Steady", CURRENT, 30000000, team="SAS", salary_cap_pct=19.0),
-        rec("Steady", "2027-28", 32400000, team="SAS", salary_cap_pct=20.0),
-    ], caps={CURRENT: {"cap": 155000000}, "2027-28": {"cap": 160000000}})
+        rec("Leaper", "2029-30", 51000000, team="SAS", salary_cap_pct=26.6),
+        rec("Leaper", "2030-31", 112600000, team="SAS", salary_cap_pct=55.8),
+    ] + [
+        rec("Peer {}".format(i), "2030-31", 95000000 + i * 1000, team="BOS")
+        for i in range(10)
+    ] + [
+        rec("Other {}".format(i), "2029-30", 40000000 + i * 1000, team="BOS")
+        for i in range(10)
+    ], caps={s: {"cap": 192000000} for s in
+             ["2029-30", "2030-31", CURRENT]})
     idx = index_for(data)
-    assert ("Steady", "2027-28") not in idx.impossible
+    assert ("Leaper", "2030-31") in idx.impossible
+    assert "121% jump" in idx.impossible[("Leaper", "2030-31")]
+
+
+def test_a_rookie_scale_leap_into_a_maximum_is_left_alone():
+    """The jump rule only fires off a season that was already a big salary, so
+    a rookie deal turning into a maximum extension stays legal."""
+    data = make_data([
+        rec("Rookie", CURRENT, 12000000, team="SAS", salary_cap_pct=8.0),
+        rec("Rookie", "2027-28", 36000000, team="SAS", salary_cap_pct=23.0),
+    ] + [
+        rec("Peer {}".format(i), "2027-28", 34000000 + i * 1000, team="BOS")
+        for i in range(10)
+    ], caps={s: {"cap": 155000000} for s in [CURRENT, "2027-28"]})
+    idx = index_for(data)
+    assert idx.impossible == {}
 
 
 def test_a_move_between_teams_is_not_a_raise():
-    """A new team can pay whatever it likes; the guard only reads a jump
-    inside one roster."""
+    """A new team can pay whatever it likes; the jump rule reads one roster."""
     data = make_data([
-        rec("Mover", CURRENT, 10000000, team="SAS", salary_cap_pct=6.0),
-        rec("Mover", "2027-28", 40000000, team="BOS", salary_cap_pct=25.0),
-    ], caps={CURRENT: {"cap": 155000000}, "2027-28": {"cap": 160000000}})
+        rec("Mover", CURRENT, 40000000, team="SAS", salary_cap_pct=26.0),
+        rec("Mover", "2027-28", 60000000, team="BOS", salary_cap_pct=38.0),
+    ] + [
+        rec("Peer {}".format(i), "2027-28", 55000000 + i * 1000, team="BOS")
+        for i in range(10)
+    ], caps={s: {"cap": 155000000} for s in [CURRENT, "2027-28"]})
     idx = index_for(data)
     assert ("Mover", "2027-28") not in idx.impossible
 
 
 def test_a_flagged_record_never_enters_a_comparison_set():
     data = make_data(_field() + [
-        rec("Impossible", "2024-25", 80000000, salary_cap_pct=57.0),
-    ], caps={s: {"cap": 140000000} for s in
-             ["2020-21", "2021-22", "2022-23", "2024-25", CURRENT]})
+        rec("Impossible", "2027-28", 120000000, salary_cap_pct=70.0),
+    ] + [
+        rec("Peer {}".format(i), "2027-28", 40000000 + i * 1000, team="BOS")
+        for i in range(10)
+    ])
     idx = index_for(data)
-    for entry in idx.u_cap_pct_all.entries:
-        assert entry["player"] != "Impossible"
+    assert ("Impossible", "2027-28") in idx.impossible
     for universe in idx.u_franchise.values():
         for entry in universe.entries:
             assert entry["player"] != "Impossible"
+    for universe in idx.u_cap_pct_season.values():
+        for entry in universe.entries:
+            assert entry["player"] != "Impossible"
+    assert factoids_for(data, "Impossible", "2027-28", index=idx) == []

@@ -70,21 +70,21 @@ CAP_ALL_TIME_MAX_RANK = 3
 # claim, every ranking and every summary.
 # --------------------------------------------------------------------------
 
-#: Cap share a salary cannot exceed. The second figure is the allowance where
-#: the season's own cap is on file and the share is computed from it rather
-#: than read off the record, which rounds differently.
-IMPOSSIBLE_CAP_PCT = 35.0
-IMPOSSIBLE_CAP_PCT_COMPUTED = 36.0
-
-#: The first season the 35% maximum applies to. The 2011 CBA introduced it;
-#: earlier deals were written under rules this test would misjudge.
-CAP_RULE_FIRST_SEASON = "2011-12"
+#: A contracted salary this many times the second-biggest of its own season is
+#: a projection, not a deal. No real season has one salary towering over the
+#: whole league by that much.
+IMPOSSIBLE_SEASON_LEAD = 1.25
 
 #: A contracted season above this much more than the same player's last season
-#: on the same team is a projection, not a signed raise. No CBA raise comes
-#: near it: 8% a year inside a deal, and a new maximum contract starting after
-#: a rookie deal is the biggest honest jump there is.
+#: on the same team is a projection, not a signed raise. Inside a deal the CBA
+#: allows 8% a year.
 IMPOSSIBLE_RAISE = 0.40
+
+#: ...but only where the season it jumps from was already a big salary. A
+#: rookie-scale season into a maximum extension is a legal leap, and that is
+#: what most of them are: the test is for a big salary becoming an impossible
+#: one, so the season underneath has to be big to begin with.
+IMPOSSIBLE_RAISE_BASE_CAP_PCT = 25.0
 
 #: "approaches" = not the record, and either inside the top N by rank or
 #: within this fraction of the record.
@@ -825,55 +825,80 @@ def build_index(data, franchises=None, identity_splits=None, college_names=None,
 
 
 def _flag_impossible_salaries(idx):
-    """Records carrying a salary the CBA does not allow.
+    """Contracted records carrying a salary no contract can pay.
 
-    Two tests, both cheap and both about the shape of the number rather than
-    the player. A share of the cap above the maximum, and a contracted season
-    that jumps further over the same player's last season on the same team than
-    any raise a signed deal can carry.
+    Only contracted seasons are tested. A salary already paid is a fact
+    whatever it looks like: the 35% maximum applies to a contract when it is
+    signed, and an 8%-a-year raise on a maximum deal outruns the cap, so the
+    late years of real contracts sit well above it. Kobe Bryant's 51.9% of the
+    2013-14 cap was money he was paid.
+
+    What is tested is a projection that cannot be a deal: a salary towering
+    over the whole of its own season, and a jump on one roster that no signed
+    raise can carry, from a season that was already a big salary.
     """
-    limit_key = season_key(CAP_RULE_FIRST_SEASON)
+    second_best = {}
+    for season in idx.seasons:
+        salaries = sorted(
+            (r.get("salary") or 0 for r in idx.records if r["season"] == season),
+            reverse=True,
+        )
+        if len(salaries) > 1:
+            second_best[season] = salaries[1]
+
     for player, recs in idx.by_player.items():
         previous = None
         for record in recs:
             season = record["season"]
+            if not idx.is_contracted(season):
+                previous = record
+                continue
+            salary = record.get("salary") or 0
             reason = None
 
-            if season_key(season) >= limit_key:
-                cap_entry = idx.cap.get(season) or {}
-                cap = cap_entry.get("cap") if isinstance(cap_entry, dict) else cap_entry
-                salary = record.get("salary") or 0
-                if cap:
-                    share = salary / float(cap) * 100.0
-                    limit = IMPOSSIBLE_CAP_PCT_COMPUTED
-                else:
-                    share = record.get("salary_cap_pct")
-                    limit = IMPOSSIBLE_CAP_PCT
-                if share is not None and share > limit:
-                    reason = (
-                        "{} of the {} cap, above the {:.0f}% maximum".format(
-                            "{:.1f}%".format(share), season, limit)
-                    )
+            runner_up = second_best.get(season)
+            if runner_up and salary > runner_up * IMPOSSIBLE_SEASON_LEAD:
+                reason = (
+                    "{} is {:.2f} times the second-biggest salary of {}, "
+                    "{}".format(
+                        fmt_money(salary), salary / float(runner_up), season,
+                        fmt_money(runner_up))
+                )
 
-            if reason is None and idx.is_contracted(season) and previous is not None:
+            if reason is None and previous is not None:
                 teams = [c for c, _a in team_amounts(record)]
                 prev_teams = [c for c, _a in team_amounts(previous)]
                 same_team = (
                     len(teams) == 1 and len(prev_teams) == 1 and teams[0] == prev_teams[0]
                 )
                 was = previous.get("salary") or 0
-                now = record.get("salary") or 0
-                if same_team and was > 0 and now > was * (1 + IMPOSSIBLE_RAISE):
+                base_share = _cap_share(idx, previous)
+                if (
+                    same_team and was > 0
+                    and salary > was * (1 + IMPOSSIBLE_RAISE)
+                    and base_share is not None
+                    and base_share > IMPOSSIBLE_RAISE_BASE_CAP_PCT
+                ):
                     reason = (
                         "a contracted {:.0f}% jump over {} on the same roster, "
-                        "{} to {}".format(
-                            (now / float(was) - 1) * 100.0, previous["season"],
-                            fmt_money(was), fmt_money(now))
+                        "{} to {}, off a season already worth {:.1f}% of the "
+                        "cap".format(
+                            (salary / float(was) - 1) * 100.0, previous["season"],
+                            fmt_money(was), fmt_money(salary), base_share)
                     )
 
             if reason is not None:
                 idx.impossible[(player, season)] = reason
             previous = record
+
+
+def _cap_share(idx, record):
+    """What share of its season's cap a salary is, or None."""
+    entry = idx.cap.get(record["season"]) or {}
+    cap = entry.get("cap") if isinstance(entry, dict) else entry
+    if cap:
+        return (record.get("salary") or 0) / float(cap) * 100.0
+    return record.get("salary_cap_pct")
 
 
 def _flag_players(idx):
