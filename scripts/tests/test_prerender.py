@@ -182,7 +182,16 @@ def test_nothing_links_to_github_io():
     tool root and the script it loads.
     """
     hits = []
-    for path in list(all_pages()) + [C.SITEMAP_PATH, os.path.join("js", "app.js")]:
+    sources = [
+        C.SITEMAP_PATH,
+        os.path.join("js", "app.js"),
+        os.path.join("js", "player-pages.js"),
+        os.path.join("css", "styles.css"),
+        os.path.join("css", "pages.css"),
+        os.path.join("css", "polymarket.css"),
+        "404.html",
+    ]
+    for path in list(all_pages()) + sources:
         full = repo(path)
         if not os.path.exists(full):
             continue
@@ -1225,3 +1234,42 @@ def test_awards_are_visible_from_768px_up():
     for other in re.findall(r"@media \(max-width: 768px\) \{", css):
         pass
     assert "awards" not in css.split("@media (max-width: 768px)")[1].split("\n}")[0]
+
+
+# --------------------------------------------------------------------------
+# the live check
+# --------------------------------------------------------------------------
+
+
+def test_the_live_check_expects_the_title_the_worker_serves():
+    """The Worker rewrites the tool root's title on purpose. What the check
+    asserts is what a reader is served, not what index.html holds."""
+    sys.path.insert(0, os.path.join(REPO, "scripts"))
+    import live_smoke
+
+    root_url, root_title = live_smoke.PAGES[0]
+    assert root_url == C.TOOL_ROOT
+    assert root_title == "NBA Player Salaries by season and position | HoopsMatic"
+    # every other expectation is the title this repository built
+    for url, title in live_smoke.PAGES[1:]:
+        path = url[len(C.TOOL_ROOT) + 1:].strip("/")
+        html = read(os.path.join(*(path.split("/") + ["index.html"])))
+        assert "<title>{}</title>".format(title) in html, url
+
+
+def test_the_live_check_says_where_a_github_io_link_sits():
+    sys.path.insert(0, os.path.join(REPO, "scripts"))
+    import live_smoke
+
+    body = (
+        '<html><head><meta charset="utf-8">'
+        '<link rel="canonical" href="https://jsierrahoopshype.github.io/salary-season-finder/">'
+        "<title>x</title></head><body>hi</body></html>"
+    )
+    found = live_smoke.github_io_links(body)
+    assert len(found) == 1
+    href, tag, snippet = found[0]
+    assert href == "https://jsierrahoopshype.github.io/salary-season-finder/"
+    assert tag.startswith('<link rel="canonical"') and tag.endswith(">")
+    assert "charset" in snippet and "<title>" in snippet
+    assert live_smoke.github_io_links("<a href='/ok/'>fine</a>") == []
