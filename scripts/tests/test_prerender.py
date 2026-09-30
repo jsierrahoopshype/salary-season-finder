@@ -6,6 +6,7 @@ ships. A few build small fixtures to pin a rule down on its own.
 
 from __future__ import annotations
 
+import collections
 import json
 import os
 import re
@@ -538,18 +539,34 @@ def test_cohort_pages_carry_a_short_written_summary():
 
 
 @built
-def test_the_summary_leads_with_career_then_the_single_season():
-    sentences = _summary(os.path.join("college", "duke", "index.html"))
-    assert "has earned more than any other Duke player" in sentences[0]
-    assert "single season" in sentences[1]
+def test_a_summary_covers_the_career_and_the_single_season():
+    """Which comes first varies by page; both are always there."""
+    joined = " ".join(_summary(os.path.join("college", "duke", "index.html")))
+    assert "Kyrie Irving" in joined and "$391.9 million" in joined
+    assert "Jayson Tatum" in joined and "$58.5 million" in joined
+
+
+#: A summary may state money nobody has been paid yet only as a contract.
+CONTRACT_WORDS = (" due", " signed", " owed", " deal", " contract",
+                  " left on", " ahead", " to come", " would ")
 
 
 @built
-def test_contracted_money_in_a_summary_is_conditional():
-    for path in ("college/duke", "country/france"):
-        for sentence in _summary(os.path.join(*(path.split("/") + ["index.html"]))):
-            if "2027-28" in sentence or "2028-29" in sentence:
-                assert " would " in sentence, (path, sentence)
+def test_money_nobody_has_been_paid_is_named_as_a_contract():
+    """"Wembanyama is due $44 million in 2027-28" is a fact about a signed
+    deal. "Wembanyama earned $44 million in 2027-28" would not be."""
+    future = ("2027-28", "2028-29", "2029-30", "2030-31")
+    for path, meta in all_pages().items():
+        if path.split(os.sep)[0] not in ("college", "country", "draft", "pick",
+                                         "position"):
+            continue
+        for sentence in _summary(path):
+            if not any(season in sentence for season in future):
+                continue
+            lowered = " " + sentence.lower()
+            assert any(word in lowered for word in CONTRACT_WORDS), (path, sentence)
+            for verb in ("has earned", "was paid", "earned $"):
+                assert verb not in sentence, (path, sentence)
 
 
 @built
@@ -907,3 +924,139 @@ def test_awards_are_hidden_below_768px():
     assert "display: none" in block
     # the filter itself is untouched
     assert "#awardsFilter" not in block
+
+
+# --------------------------------------------------------------------------
+# the summaries vary, and the same page says the same thing every build
+# --------------------------------------------------------------------------
+
+
+def _cohort_pages():
+    for path, meta in all_pages().items():
+        if path.split(os.sep)[0] in ("college", "country", "draft", "pick",
+                                     "position"):
+            yield path, meta
+
+
+@built
+def test_a_summary_is_two_or_three_sentences():
+    for path, _meta in _cohort_pages():
+        assert 2 <= len(_summary(path)) <= 3, (path, _summary(path))
+
+
+@built
+def test_no_two_sentences_in_a_row_open_on_the_same_word():
+    for path, _meta in _cohort_pages():
+        words = [s.split(" ", 1)[0].lower().strip(".,:") for s in _summary(path)]
+        for first, second in zip(words, words[1:]):
+            assert first != second, (path, first)
+
+
+@built
+def test_a_summary_names_its_cohort_at_most_twice():
+    from prerender.summary import Names
+    idx = F.build_index(F.load_data())
+    book = S.load(repo(C.SLUGS_PATH))
+    built_pages = E.build_all(idx, book)
+    by_slug = {(e.family, e.slug): e for e in built_pages["cohorts"]}
+    for path, _meta in _cohort_pages():
+        family, slug = path.split(os.sep)[0], path.split(os.sep)[1]
+        entity = by_slug.get((family, slug))
+        if entity is None:
+            continue
+        names = Names(entity.family, entity.key, entity.name)
+        joined = " ".join(_summary(path))
+        assert names.mentions(joined) <= 2, (path, names.token, joined)
+
+
+@built
+def test_a_hub_is_not_one_sentence_repeated():
+    """65 college pages opening the same way is a form letter, not a summary."""
+    openings = collections.defaultdict(collections.Counter)
+    for path, _meta in _cohort_pages():
+        sentences = _summary(path)
+        if not sentences:
+            continue
+        openings[path.split(os.sep)[0]][" ".join(sentences[0].split()[:3])] += 1
+    for family, counter in openings.items():
+        total = sum(counter.values())
+        if total < 10:
+            continue
+        assert len(counter) >= 8, (family, counter.most_common(5))
+        top = counter.most_common(1)[0][1]
+        assert top <= total * 0.45, (family, counter.most_common(3))
+
+
+def test_the_wording_of_a_page_is_a_function_of_its_slug():
+    from prerender.summary import pick
+    assert pick("duke", "order", 2) == pick("duke", "order", 2)
+    seen = {pick(slug, "order", 2) for slug in
+            ("duke", "kentucky", "france", "canada", "1", "35")}
+    assert seen == {0, 1}, "the pick should not be constant"
+
+
+@built
+def test_two_builds_produce_the_same_summaries():
+    before = {path: _summary(path) for path, _meta in _cohort_pages()}
+    result = subprocess.run(
+        [sys.executable, os.path.join(REPO, "scripts", "prerender_pages.py")],
+        capture_output=True, text=True, cwd=REPO,
+    )
+    assert result.returncode == 0, result.stderr
+    for path, sentences in before.items():
+        assert _summary(path) == sentences, path
+
+
+# --------------------------------------------------------------------------
+# the current-season slot
+# --------------------------------------------------------------------------
+
+
+@built
+def test_the_last_man_on_a_payroll_is_named_as_such():
+    joined = " ".join(_summary(os.path.join("draft", "2003", "index.html")))
+    assert "LeBron James" in joined
+    assert "still drawing an NBA salary" in joined or \
+        "last player from" in joined or "alone is left" in joined or \
+        "still on an NBA payroll" in joined or "still being paid" in joined
+
+
+@built
+def test_a_thin_current_roster_gets_no_best_paid_sentence():
+    """Two men left is not a list worth topping."""
+    idx = F.build_index(F.load_data())
+    book = S.load(repo(C.SLUGS_PATH))
+    built_pages = E.build_all(idx, book)
+    from prerender import pages as P
+    for entity in built_pages["cohorts"]:
+        if entity.family != "college":
+            continue
+        owners = P._owner_map(built_pages["players"])
+        _html, _n, current = P._current_rows(idx, entity.records, owners, 25)
+        if len(current) != 2:
+            continue
+        path = os.path.join("college", entity.slug, "index.html")
+        for sentence in _summary(path):
+            assert "best-paid" not in sentence, (path, sentence)
+            assert "heads the" not in sentence, (path, sentence)
+
+
+# --------------------------------------------------------------------------
+# salaries the CBA does not allow never reach a page
+# --------------------------------------------------------------------------
+
+
+@built
+def test_a_flagged_salary_never_tops_a_table_or_a_sentence():
+    idx = F.build_index(F.load_data())
+    assert idx.impossible, "the guard should be finding something"
+    wemby = idx.impossible_reason("Victor Wembanyama", "2030-31")
+    assert wemby, "Wembanyama's 2030-31 projection is the case this was for"
+    assert "cap" in wemby
+    # the flagged figure is in no ranked table and no summary on his cohorts
+    for path in ("pick/1/index.html", "country/france/index.html",
+                 "position/center/index.html", "draft/2023/index.html"):
+        html = read(path)
+        head = html[:html.index("Every player")] if "Every player" in html else html
+        assert "$112,560,000" not in head, path
+        assert "$112.6 million" not in head, path

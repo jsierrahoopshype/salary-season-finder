@@ -23,8 +23,22 @@ def _paid(idx, record):
     return not idx.is_contracted(record["season"])
 
 
+def _rankable(idx, record):
+    """A salary that can hold a place in a ranking.
+
+    A record the engine flagged as impossible is a data fault, not a contract,
+    so it never tops a table and never feeds a sentence. It stays on the
+    player's own season table, which lists what the file holds rather than
+    ranking anything.
+    """
+    return not idx.is_impossible(record)
+
+
 def _top_paid(idx, records, limit):
-    rows = [r for r in records if _paid(idx, r) and r.get("salary")]
+    rows = [
+        r for r in records
+        if _paid(idx, r) and r.get("salary") and _rankable(idx, r)
+    ]
     rows.sort(key=lambda r: (-(r.get("salary") or 0), r["player"], r["season"]))
     return rows[:limit]
 
@@ -116,10 +130,10 @@ def _career_rows(idx, entries, limit, media=None):
     rows = []
     for i, (total, ident, last) in enumerate(entries[:limit], start=1):
         active = not idx.career_complete(ident.data_key)
+        # Both ends named, active or not: "to date" leaves a reader guessing
+        # which season the total runs through.
         span = "{} to {}".format(
-            esc(ident.records[0]["season"]),
-            "date" if active else esc(last["season"]),
-        )
+            esc(ident.records[0]["season"]), esc(last["season"]))
         played = sum(
             1 for r in ident.records if not idx.is_contracted(r["season"])
         )
@@ -143,6 +157,8 @@ def _current_rows(idx, records, owners, limit, media=None):
     contracted = collections.defaultdict(list)
     for record in records:
         key = idx.canonical(record["player"])
+        if not _rankable(idx, record):
+            continue
         if record["season"] == idx.current_season:
             current[key] = record
         elif idx.is_contracted(record["season"]):
@@ -236,7 +252,8 @@ def cohort_page(idx, entity, identities, facts_by_cohort, media=None,
     # The summary carries the page's own numbers, so the description's one fact
     # is not repeated in the body as well.
     sentences = cohort_summary(
-        idx, entity.family, entity.key, name, career, paid, current, facts)
+        idx, entity.family, entity.key, name, career, paid, current, facts,
+        slug=entity.slug)
 
     body = [
         "<h1>{}</h1>".format(esc(heading)),
@@ -393,7 +410,8 @@ def team_page(idx, entity, identities):
             "play for it.",
             _season_salary_rows(
                 idx,
-                [r for r in entity.records if not F.is_split_season(r)],
+                [r for r in entity.records
+                 if not F.is_split_season(r) and _rankable(idx, r)],
                 owners, C.TABLE_ROWS,
             ),
         ),
@@ -430,7 +448,10 @@ def season_page(idx, entity, identities):
         description = "Every NBA salary for {}.".format(season)
 
     rows = []
-    ordered = sorted(entity.records, key=lambda r: -(r.get("salary") or 0))
+    ordered = sorted(
+        [r for r in entity.records if _rankable(idx, r)],
+        key=lambda r: -(r.get("salary") or 0),
+    )
     for i, record in enumerate(ordered[:C.TABLE_ROWS], start=1):
         ident = owners.get(id(record))
         if ident is None:

@@ -60,6 +60,32 @@ ALL_TIME = "in NBA history"
 #: could be displaced by a season the data does not have.
 CAP_ALL_TIME_MAX_RANK = 3
 
+# --------------------------------------------------------------------------
+# Salaries the CBA does not allow.
+#
+# A supermax is 35% of the cap. A record above that is a data fault, not a
+# contract, and one of them at the top of a list makes every claim under it
+# wrong: Victor Wembanyama's $112.6 million in 2030-31 is a projection nobody
+# can be paid. Two rules catch them, and a caught record is invisible to every
+# claim, every ranking and every summary.
+# --------------------------------------------------------------------------
+
+#: Cap share a salary cannot exceed. The second figure is the allowance where
+#: the season's own cap is on file and the share is computed from it rather
+#: than read off the record, which rounds differently.
+IMPOSSIBLE_CAP_PCT = 35.0
+IMPOSSIBLE_CAP_PCT_COMPUTED = 36.0
+
+#: The first season the 35% maximum applies to. The 2011 CBA introduced it;
+#: earlier deals were written under rules this test would misjudge.
+CAP_RULE_FIRST_SEASON = "2011-12"
+
+#: A contracted season above this much more than the same player's last season
+#: on the same team is a projection, not a signed raise. No CBA raise comes
+#: near it: 8% a year inside a deal, and a new maximum contract starting after
+#: a rookie deal is the biggest honest jump there is.
+IMPOSSIBLE_RAISE = 0.40
+
 #: "approaches" = not the record, and either inside the top N by rank or
 #: within this fraction of the record.
 APPROACH_MAX_RANK = 5
@@ -382,6 +408,7 @@ class FactoidIndex:
         self.recently_active = set()
         self.final_season = {}
         self.paid_career = {}           # player -> (money already paid, season)
+        self.impossible = {}            # (player, season) -> why it cannot be real
         # display names
         self.college_names = {}
         self.name_aliases = {}
@@ -535,6 +562,15 @@ class FactoidIndex:
     def is_paid_through(self, player, season):
         """This season is where the player's paid-to-date total is measured."""
         return self.paid_career.get(player, (None, None))[1] == season
+
+    def is_impossible(self, record):
+        """This salary cannot be a real contract, so nothing may use it."""
+        if not record:
+            return False
+        return (self.canonical(record["player"]), record["season"]) in self.impossible
+
+    def impossible_reason(self, player, season):
+        return self.impossible.get((self.canonical(player), season))
 
     def pre_window_career(self, player):
         """His career began before the data does, so his total is short."""
@@ -780,11 +816,64 @@ def build_index(data, franchises=None, identity_splits=None, college_names=None,
     idx.seasons = sorted({r["season"] for r in idx.records}, key=season_key)
 
     _flag_players(idx)
+    _flag_impossible_salaries(idx)
     _index_identity_splits(idx)
     _index_awards(idx)
     _index_agents(idx)
     _build_universes(idx)
     return idx
+
+
+def _flag_impossible_salaries(idx):
+    """Records carrying a salary the CBA does not allow.
+
+    Two tests, both cheap and both about the shape of the number rather than
+    the player. A share of the cap above the maximum, and a contracted season
+    that jumps further over the same player's last season on the same team than
+    any raise a signed deal can carry.
+    """
+    limit_key = season_key(CAP_RULE_FIRST_SEASON)
+    for player, recs in idx.by_player.items():
+        previous = None
+        for record in recs:
+            season = record["season"]
+            reason = None
+
+            if season_key(season) >= limit_key:
+                cap_entry = idx.cap.get(season) or {}
+                cap = cap_entry.get("cap") if isinstance(cap_entry, dict) else cap_entry
+                salary = record.get("salary") or 0
+                if cap:
+                    share = salary / float(cap) * 100.0
+                    limit = IMPOSSIBLE_CAP_PCT_COMPUTED
+                else:
+                    share = record.get("salary_cap_pct")
+                    limit = IMPOSSIBLE_CAP_PCT
+                if share is not None and share > limit:
+                    reason = (
+                        "{} of the {} cap, above the {:.0f}% maximum".format(
+                            "{:.1f}%".format(share), season, limit)
+                    )
+
+            if reason is None and idx.is_contracted(season) and previous is not None:
+                teams = [c for c, _a in team_amounts(record)]
+                prev_teams = [c for c, _a in team_amounts(previous)]
+                same_team = (
+                    len(teams) == 1 and len(prev_teams) == 1 and teams[0] == prev_teams[0]
+                )
+                was = previous.get("salary") or 0
+                now = record.get("salary") or 0
+                if same_team and was > 0 and now > was * (1 + IMPOSSIBLE_RAISE):
+                    reason = (
+                        "a contracted {:.0f}% jump over {} on the same roster, "
+                        "{} to {}".format(
+                            (now / float(was) - 1) * 100.0, previous["season"],
+                            fmt_money(was), fmt_money(now))
+                    )
+
+            if reason is not None:
+                idx.impossible[(player, season)] = reason
+            previous = record
 
 
 def _flag_players(idx):
@@ -1001,6 +1090,10 @@ def _build_universes(idx):
         # and can never turn up as a previous holder.
         if key in idx.split_suppressed:
             continue
+        # Neither can a salary the CBA does not allow: it is a data fault, and
+        # one of them in a comparison set makes every claim under it wrong.
+        if key in idx.impossible:
+            continue
         display = idx.display_name(player, season)
         person = idx.person_of(player, season)
 
@@ -1120,6 +1213,7 @@ def _build_universes(idx):
             r for r in recs
             if not idx.is_contracted(r["season"])
             and (player, r["season"]) not in idx.split_suppressed
+            and (player, r["season"]) not in idx.impossible
         ]
         if not paid_recs:
             continue
@@ -1509,7 +1603,7 @@ def _family_career(ctx, out, log):
             "career_rank|{}|{}".format(player, season),
             _career_rank_text(
                 kind, subject_name, subject_person, paid_total, verdict, top,
-                active,
+                active, through=season,
             ),
             scope, paid_total, contracted,
             rank=verdict["rank"], comparison_size=verdict["size"],
@@ -1534,15 +1628,17 @@ def _career_rival(label):
 
 
 def _career_rank_text(kind, subject_name, subject_person, total, verdict, top,
-                      active, label=ALL_TIME):
+                      active, label=ALL_TIME, through=None):
     """One career-earnings sentence, active or finished, all-time or cohort.
 
-    An active man "has earned ... to date"; a finished career "earned ... in
-    his career". Neither says "since 1990-91": the page carries that note once.
+    An active man "has earned ... through 2026-27", naming the last season the
+    total covers rather than leaving "to date" to be guessed at; a finished
+    career "earned ... in his career". Neither says "since 1990-91": the page
+    carries that note once.
     """
     money = fmt_money(total)
     if active:
-        opening = "{} has earned {} to date".format(subject_name, money)
+        opening = "{} has earned {} through {}".format(subject_name, money, through)
     else:
         opening = "{} earned {} in his career".format(subject_name, money)
     if kind == "sets":
@@ -1687,7 +1783,7 @@ def _family_cohorts(ctx, out, log):
                 "cohort_career|{}|{}|{}|{}".format(kind_name, ckey, player, season),
                 _career_rank_text(
                     ckind, subject_name, subject_person, career_total, cverdict,
-                    ctop, cactive, label=label,
+                    ctop, cactive, label=label, through=season,
                 ),
                 scope, career_total, contracted,
                 rank=cverdict["rank"], comparison_size=cverdict["size"],
@@ -2187,6 +2283,18 @@ def factoids_for(data, player, season, salary=None, index=None, debug=False, sup
             "all", player, gate,
             "{} covers more than one player and {} belongs to a segment this "
             "engine cannot put a name to".format(player, season),
+        )
+        if suppressed is not None:
+            suppressed.extend(log.items)
+        return []
+
+    # A salary the CBA does not allow says nothing about the player, only about
+    # the file. Nothing is claimed from it, about him or about anyone measured
+    # against him. A hypothetical salary passed in by hand is exempt: the caller
+    # is asking what such a number would mean, which is a different question.
+    if salary is None and (player, season) in idx.impossible:
+        log.drop(
+            "all", player, "impossible_salary", idx.impossible[(player, season)]
         )
         if suppressed is not None:
             suppressed.extend(log.items)
