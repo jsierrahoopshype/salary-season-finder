@@ -321,3 +321,191 @@ table.hm-rank-table .hm-rank {
     font-size: .84rem;
   }
 }
+
+/* ------------------------------------------------------------------ *
+ * Browse chips on the tool root
+ * ------------------------------------------------------------------ */
+
+.hm-browse > p {
+  font-size: .84rem;
+  color: var(--text-secondary);
+  margin-bottom: .7rem;
+  max-width: 44rem;
+}
+
+.hm-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.hm-chips li {
+  margin: 0;
+}
+
+.hm-chips a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.25rem;
+  font-family: var(--mono);
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .02em;
+  padding: .4rem .8rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.hm-chips a:hover,
+.hm-chips a:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+  text-decoration: none;
+}
+
+/* ------------------------------------------------------------------ *
+ * The written summary at the top of a cohort page
+ * ------------------------------------------------------------------ */
+
+.hm-summary {
+  margin-bottom: .75rem;
+  max-width: 46rem;
+}
+
+.hm-summary p {
+  font-size: .95rem;
+  line-height: 1.55;
+  color: var(--text);
+  margin-bottom: .5rem;
+}
+
+.hm-summary p:first-child {
+  font-size: 1rem;
+}
+
+.hm-summary p:last-child {
+  margin-bottom: 0;
+}
+
+/* ------------------------------------------------------------------ *
+ * Headshots and flags
+ * ------------------------------------------------------------------ */
+
+.hm-face {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--surface-2, var(--surface));
+  border: 1px solid var(--border);
+  flex: 0 0 auto;
+  vertical-align: middle;
+  margin-right: .45rem;
+}
+
+.hm-flag {
+  width: 21px;
+  height: 16px;
+  border-radius: 2px;
+  flex: 0 0 auto;
+  vertical-align: middle;
+  margin-left: .4rem;
+  box-shadow: 0 0 0 1px var(--border);
+}
+
+table.hm-rank-table th.hm-who {
+  white-space: nowrap;
+}
+
+.hm-roll a .hm-flag {
+  margin-left: 0;
+  margin-right: .35rem;
+}
+
+/* ------------------------------------------------------------------ *
+ * A player's claims, grouped by season
+ * ------------------------------------------------------------------ */
+
+.hm-seasons {
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+}
+
+.hm-season {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  padding: .55rem .75rem;
+}
+
+.hm-season > h3,
+.hm-season > summary {
+  font-family: var(--mono);
+  font-size: .74rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: .45rem;
+  min-height: 1.6rem;
+}
+
+.hm-season > summary {
+  cursor: pointer;
+  list-style: none;
+}
+
+.hm-season > summary::-webkit-details-marker {
+  display: none;
+}
+
+.hm-season > summary::after {
+  content: "+";
+  margin-left: auto;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+.hm-season[open] > summary::after {
+  content: "\2212";
+}
+
+.hm-season .hm-count {
+  font-family: var(--mono);
+  font-size: .64rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: .05rem .35rem;
+}
+
+.hm-season .hm-facts {
+  margin-top: .45rem;
+}
+
+.hm-season.is-open {
+  border-color: var(--accent-soft, var(--border));
+}
+
+@media (max-width: 860px) {
+  .hm-summary p {
+    font-size: .88rem;
+  }
+
+  .hm-summary p:first-child {
+    font-size: .92rem;
+  }
+
+  .hm-season > summary {
+    min-height: 2.25rem;
+  }
+}

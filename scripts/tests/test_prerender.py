@@ -12,6 +12,7 @@ import re
 import subprocess
 import sys
 import xml.etree.ElementTree as ET
+from html import escape
 
 import pytest
 
@@ -53,6 +54,11 @@ def path_for(url):
         return "index.html"
     rest = url[len(C.TOOL_ROOT) + 1:].rstrip("/")
     return os.path.join(rest, "index.html")
+
+
+def _factoids():
+    with open(repo("data", "factoids.json"), "r", encoding="utf-8") as fh:
+        return json.load(fh)["factoids"]
 
 
 def all_pages():
@@ -135,7 +141,7 @@ def test_every_indexable_page_is_linked_from_its_hub():
         hub = C.FAMILIES[family]["hub"]
         assert hub, family
         hub_html = read(os.path.join(hub, "index.html"))
-        href = '../{}/{}/'.format(C.FAMILIES[family]["dir"], parts[1])
+        href = "{}/{}/{}/".format(C.TOOL_ROOT, C.FAMILIES[family]["dir"], parts[1])
         assert 'href="{}"'.format(href) in hub_html, (hub, path)
 
 
@@ -161,17 +167,57 @@ def test_every_indexable_page_is_three_clicks_from_the_root():
         assert depth <= 1, path
 
 
+#: The one github.io the pages are allowed to name: the headshot store, whose
+#: images are ours and are asked for by src, never linked to.
+HEADSHOTS = "https://jsierrahoopshype.github.io/nba-headshots/"
+
+
 @built
-def test_no_github_io_anywhere_in_the_output():
+def test_nothing_links_to_github_io():
+    """A reader who lands on the Pages host must still be sent to hoopsmatic.
+
+    This is the bug that shipped: a relative href kept a click on github.io,
+    so every href, canonical and og:url is checked, everywhere, including the
+    tool root and the script it loads.
+    """
     hits = []
-    for path in list(all_pages()) + [C.SITEMAP_PATH]:
+    for path in list(all_pages()) + [C.SITEMAP_PATH, os.path.join("js", "app.js")]:
         full = repo(path)
         if not os.path.exists(full):
             continue
         with open(full, "r", encoding="utf-8") as fh:
-            if "github.io" in fh.read():
-                hits.append(path)
+            text = fh.read()
+        for attr in ('href="', '<loc>', 'content="https'):
+            for value in re.findall(re.escape(attr) + r'([^"<]+)', text):
+                if "github.io" in value:
+                    hits.append((path, value))
+        # anything else naming the host has to be a headshot image
+        for value in re.findall(r'https://[^"\'<> ]*github\.io[^"\'<> ]*', text):
+            if not value.startswith(HEADSHOTS):
+                hits.append((path, value))
     assert hits == []
+
+
+@built
+def test_every_link_to_a_subpage_is_absolute():
+    for path in all_pages():
+        if not path.endswith(".html"):
+            continue
+        html = read(path)
+        for href in re.findall(r'href="([^"]+)"', html):
+            if href.startswith(("mailto:", "#", "https://", "http://")):
+                continue
+            # only the stylesheets are allowed to be relative
+            assert href.endswith(".css"), (path, href)
+
+
+@built
+def test_the_tool_links_player_pages_absolutely():
+    app = read(os.path.join("js", "app.js"))
+    assert 'href="player/' not in app
+    assert "pages.playerUrl(name, season)" in app
+    generated = read(os.path.join("js", "player-pages.js"))
+    assert 'var ROOT = "{}"'.format(C.TOOL_ROOT) in generated
 
 
 @built
@@ -457,3 +503,266 @@ def test_player_pages_link_the_sibling_tools():
     html = read(os.path.join("player", "cade-cunningham", "index.html"))
     assert C.COMPARE_URL in html
     assert C.CAREER_MAP_URL in html
+
+
+# --------------------------------------------------------------------------
+# the written summary on a cohort page
+# --------------------------------------------------------------------------
+
+
+def _summary(path):
+    html = read(path)
+    block = re.search(r'<div class="hm-summary">(.*?)</div>', html, re.S)
+    if not block:
+        return []
+    import html as _html
+    return [
+        _html.unescape(t) for t in re.findall(r"<p>(.*?)</p>", block.group(1), re.S)
+    ]
+
+
+@built
+def test_cohort_pages_carry_a_short_written_summary():
+    for path in ("college/duke", "college/arkansas", "country/france",
+                 "draft/2003", "pick/1", "position/guard"):
+        sentences = _summary(os.path.join(*(path.split("/") + ["index.html"])))
+        assert 2 <= len(sentences) <= C.SUMMARY_SENTENCES, (path, sentences)
+        joined = " ".join(sentences)
+        assert joined.count(F.SCOPE_FIRST_SEASON) == 1, (path, joined)
+        assert "—" not in joined, path
+        assert joined.count(". ") + 1 == len(joined.split(". ")), path
+
+
+@built
+def test_the_summary_leads_with_career_then_the_single_season():
+    sentences = _summary(os.path.join("college", "duke", "index.html"))
+    assert "career earnings" in sentences[0]
+    assert "single season" in sentences[1]
+
+
+@built
+def test_contracted_money_in_a_summary_is_conditional():
+    for path in ("college/duke", "country/france"):
+        for sentence in _summary(os.path.join(*(path.split("/") + ["index.html"]))):
+            if "2027-28" in sentence or "2028-29" in sentence:
+                assert " would " in sentence, (path, sentence)
+
+
+@built
+def test_no_cohort_page_still_lists_raw_factoids():
+    for path, meta in all_pages().items():
+        if path.split(os.sep)[0] not in ("college", "country", "draft", "pick",
+                                         "position"):
+            continue
+        assert "What the numbers say" not in read(path), path
+
+
+@built
+def test_the_career_table_comes_first_on_a_cohort_page():
+    html = read(os.path.join("college", "duke", "index.html"))
+    headings = re.findall(r"<h2>(.*?)</h2>", html)
+    assert headings[:3] == [
+        "Highest career earnings",
+        "Highest single-season salaries",
+        "On a roster in 2026-27",
+    ], headings
+
+
+# --------------------------------------------------------------------------
+# mirrors and comparisons that point the wrong way
+# --------------------------------------------------------------------------
+
+
+def test_one_side_of_a_mirrored_pair_is_dropped():
+    from prerender import phrasing
+    record = {
+        "key": "cohort_season|college|Duke|Big|2026-27", "value": 58,
+        "text": "the record", "type": "sets",
+        "previous_holder": {"player": "Big", "season": "2025-26", "value": 54},
+    }
+    runner = {
+        "key": "cohort_season|college|Duke|Big|2025-26", "value": 54,
+        "text": "second behind the record", "type": "approaches",
+        "previous_holder": {"player": "Big", "season": "2026-27", "value": 58},
+    }
+    kept = phrasing.drop_mirrors([("2026-27", record), ("2025-26", runner)])
+    assert [f["value"] for _season, f in kept] == [58]
+
+
+def test_a_comparison_against_a_later_season_loses_its_verb():
+    from prerender import phrasing
+    fact = {
+        "key": "cohort_season|college|Stanford|Brook Lopez|2023-24",
+        "value": 25, "type": "sets",
+        "text": ("Brook Lopez's $25 million in 2023-24 is the highest single-season "
+                 "salary among players out of Stanford since 1990-91, breaking his "
+                 "own mark of $23 million in 2024-25."),
+        "previous_holder": {"player": "Brook Lopez", "season": "2024-25", "value": 23},
+    }
+    text = phrasing.straighten(fact, "2023-24")
+    assert "breaking" not in text
+    assert "ahead of his own $23 million in 2024-25" in text
+
+
+@built
+def test_no_page_says_it_passed_a_figure_from_a_later_season():
+    backwards = []
+    for record_key, facts in _factoids().items():
+        player, season = record_key.split("|", 1)
+        for fact in facts:
+            holder = fact.get("previous_holder") or {}
+            if not holder.get("season"):
+                continue
+            if F.season_key(holder["season"]) <= F.season_key(season):
+                continue
+            if "passing" in fact["text"] or "breaking" in fact["text"]:
+                backwards.append(fact["text"])
+    assert backwards, "the fixture has to contain at least one to be worth testing"
+    for text in backwards:
+        for path in all_pages():
+            if not path.endswith(".html"):
+                continue
+            assert escape(text) not in read(path), (path, text[:60])
+
+
+# --------------------------------------------------------------------------
+# a player's claims, grouped by season
+# --------------------------------------------------------------------------
+
+
+@built
+def test_a_player_page_groups_its_claims_by_season():
+    html = read(os.path.join("player", "joel-embiid", "index.html"))
+    block = html[html.index("What the numbers say"):]
+    seasons = re.findall(r'<(?:h3|summary)>([\d-]{7})<span class="hm-count">', block)
+    assert seasons == sorted(seasons, key=F.season_key, reverse=True), seasons
+    assert seasons[0] > seasons[-1]
+
+
+@built
+def test_the_current_and_contracted_seasons_are_open_and_older_ones_are_not():
+    html = read(os.path.join("player", "joel-embiid", "index.html"))
+    block = html[html.index("What the numbers say"):]
+    open_seasons = re.findall(r'<section class="hm-season is-open"><h3>([\d-]{7})', block)
+    closed = re.findall(r'<details class="hm-season"><summary>([\d-]{7})', block)
+    assert open_seasons, block[:200]
+    assert min(F.season_key(s) for s in open_seasons) >= F.season_key("2026-27")
+    assert max(F.season_key(s) for s in closed) < F.season_key("2026-27")
+
+
+@built
+def test_an_older_season_keeps_only_what_it_did():
+    """No "fourth-highest four years ago" on a page that shows every season."""
+    html = read(os.path.join("player", "joel-embiid", "index.html"))
+    for season, body in re.findall(
+        r'<details class="hm-season"><summary>([\d-]{7})(.*?)</details>', html, re.S
+    ):
+        assert "-highest" not in body, season
+        assert "-largest" not in body, season
+
+
+# --------------------------------------------------------------------------
+# headshots and flags
+# --------------------------------------------------------------------------
+
+
+@built
+def test_cohort_tables_carry_headshots_and_flags():
+    html = read(os.path.join("college", "duke", "index.html"))
+    assert html.count('class="hm-face"') >= 25
+    assert html.count('class="hm-flag"') >= 25
+    for img in re.findall(r"<img [^>]*>", html):
+        assert 'loading="lazy"' in img, img
+        assert "width=" in img and "height=" in img, img
+        assert "alt=" in img, img
+
+
+@built
+def test_flags_are_served_from_this_repository():
+    for path in (os.path.join("countries", "index.html"),
+                 os.path.join("college", "duke", "index.html")):
+        for src in re.findall(r'<img class="hm-flag" src="([^"]+)"', read(path)):
+            assert src.startswith(C.TOOL_ROOT + "/assets/flags/"), src
+            local = src[len(C.TOOL_ROOT) + 1:]
+            assert os.path.exists(repo(local)), local
+
+
+@built
+def test_the_country_hub_shows_a_flag_for_every_country():
+    html = read(os.path.join("countries", "index.html"))
+    countries = re.findall(r'<a href="[^"]*/country/[^"]+/">(?:<img[^>]*>)?([^<]+)', html)
+    assert html.count('class="hm-flag"') == len(countries), (
+        html.count('class="hm-flag"'), len(countries))
+
+
+# --------------------------------------------------------------------------
+# the tool root
+# --------------------------------------------------------------------------
+
+
+@built
+def test_the_browse_block_is_styled_chips():
+    html = read("index.html")
+    assert 'class="hm-chips"' in html
+    assert 'href="css/pages.css"' in html, "the root needs the sheet that styles it"
+
+
+@built
+def test_the_404_loads_its_stylesheets_absolutely():
+    html = read("404.html")
+    sheets = re.findall(r'<link rel="stylesheet" href="([^"]+)"', html)
+    assert sheets, html[:400]
+    for href in sheets:
+        assert href.startswith(C.TOOL_ROOT + "/css/"), href
+
+
+@built
+def test_the_tool_knows_which_cohorts_have_pages():
+    generated = read(os.path.join("js", "player-pages.js"))
+    blob = re.search(r"var COHORTS = (\{.*?^\});$", generated, re.S | re.M)
+    cohorts = json.loads(blob.group(1))
+    assert set(cohorts) == {"college", "country", "draft", "pick", "position"}
+    assert cohorts["position"] == {"C": "center", "F": "forward", "G": "guard"}
+    for family, group in cohorts.items():
+        for key, slug in group.items():
+            assert os.path.exists(repo(family, slug, "index.html")), (family, key)
+
+
+# --------------------------------------------------------------------------
+# awards, in full
+# --------------------------------------------------------------------------
+
+
+@built
+def test_the_tool_no_longer_truncates_a_career_to_one_award():
+    app = read(os.path.join("js", "app.js"))
+    assert "highestPriorityAward" not in app
+    assert "function summarizeAwards" in app
+    assert "award_counts" in app
+    css = read(os.path.join("css", "styles.css"))
+    awards_cell = css[css.index("td.ps-awards"):]
+    assert "white-space: normal" in awards_cell.split("}")[0]
+
+
+@built
+def test_every_nationality_in_the_data_has_a_flag_on_disk():
+    with open(repo("data", "country_flags.json"), "r", encoding="utf-8") as fh:
+        codes = json.load(fh)["codes"]
+    data = F.load_data()
+    countries = {
+        (r.get("nationality") or "").strip() for r in data["seasons"]
+    } - {""}
+    missing = sorted(c for c in countries if c not in codes)
+    assert missing == [], missing
+    for code in set(codes.values()):
+        assert os.path.exists(repo("assets", "flags", code + ".svg")), code
+
+
+@built
+def test_headshots_are_matched_with_punctuation_and_accents_stripped():
+    from prerender.media import Media, match_key
+    assert match_key("A.J. Price") == match_key("AJ Price")
+    assert match_key("Nikola Jokić") == match_key("Nikola Jokic")
+    media = Media(REPO)
+    assert media.face_src(["LeBron James"]).endswith("2544-lebron-james.webp")
+    assert media.face_src(["Nobody At All"]).endswith("player_silhouette.svg")

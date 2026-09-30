@@ -1899,8 +1899,9 @@ def _family_rank_shift(ctx, out, log):
             _make(
                 "rank_shift", "rank_shift",
                 "rank_league_first|{}|{}".format(player, season),
-                "{} is the highest-paid player in the league in {} for the first "
-                "time in his career.".format(subject_name, season),
+                "{} {} the highest-paid player in the league in {} for the first "
+                "time in his career.".format(
+                    subject_name, _is_verb(contracted), season),
                 "League salary ranks cover {}. First season at No. 1.".format(SCOPE_SUFFIX),
                 salary, contracted, rank=rank, comparison_size=size,
             )
@@ -1910,8 +1911,10 @@ def _family_rank_shift(ctx, out, log):
             _make(
                 "rank_shift", "rank_shift",
                 "rank_league_top10|{}|{}".format(player, season),
-                "{} salary in {} puts him in the league's top 10 for the first "
-                "time in his career.".format(_possessive(subject_name), season),
+                "{} salary in {} {} him in the league's top 10 for the first "
+                "time in his career.".format(
+                    _possessive(subject_name), season,
+                    "would put" if contracted else "puts"),
                 "League salary ranks cover {}. First season inside the top 10.".format(SCOPE_SUFFIX),
                 salary, contracted, rank=rank, comparison_size=size,
             )
@@ -1978,8 +1981,11 @@ def _family_rank_shift(ctx, out, log):
             _make(
                 "rank_shift", "rank_shift",
                 "team_high_becomes|{}|{}".format(player, season),
-                "{} is the {} highest-paid player in {} after ranking {} on the "
-                "roster in {}.".format(subject_name, _possessive(name), season, ordinal(was_rank) if was_rank > 1 else "first", previous["season"]),
+                "{} {} the {} highest-paid player in {} after ranking {} on the "
+                "roster in {}.".format(
+                    subject_name, _is_verb(contracted), _possessive(name), season,
+                    ordinal(was_rank) if was_rank > 1 else "first",
+                    previous["season"]),
                 "Same franchise in consecutive seasons. Roster of {} players with a salary on file.".format(now_size),
                 amount, contracted, rank=now_rank, comparison_size=now_size,
             )
@@ -1989,8 +1995,10 @@ def _family_rank_shift(ctx, out, log):
             _make(
                 "rank_shift", "rank_shift",
                 "team_high_ceases|{}|{}".format(player, season),
-                "{} is no longer the {} highest-paid player in {} after holding "
-                "that spot in {}.".format(subject_name, _possessive(name), season, previous["season"]),
+                "{} {} no longer the {} highest-paid player in {} after holding "
+                "that spot in {}.".format(
+                    subject_name, _is_verb(contracted), _possessive(name), season,
+                    previous["season"]),
                 "Same franchise in consecutive seasons. Roster of {} players with a salary on file.".format(now_size),
                 amount, contracted, rank=now_rank, comparison_size=now_size,
             )

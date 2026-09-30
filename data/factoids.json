@@ -2,7 +2,7 @@
  "factoids": {
   "AJ Dybantsa|2026-27": [
    {
-    "comparison_size": 298,
+    "comparison_size": 300,
     "contracted": false,
     "family": "cohort",
     "id": "3ee402d159e5350b",
@@ -14,7 +14,7 @@
      "value": 13195320
     },
     "rank": 1,
-    "scope_note": "Cohort of 251 players and 299 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid.",
+    "scope_note": "Cohort of 253 players and 301 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid.",
     "text": "AJ Dybantsa's $14.7 million in 2026-27 is the highest single-season salary by an undrafted player since 1990-91, passing Darryn Peterson's $13.2 million (2026-27).",
     "type": "sets",
     "value": 14748000
@@ -22,7 +22,7 @@
   ],
   "AJ Dybantsa|2027-28": [
    {
-    "comparison_size": 299,
+    "comparison_size": 301,
     "contracted": true,
     "family": "cohort",
     "id": "b9c6e0e283bda14d",
@@ -34,7 +34,7 @@
      "value": 14748000
     },
     "rank": 1,
-    "scope_note": "Cohort of 251 players and 299 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 253 players and 301 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
     "text": "AJ Dybantsa's $15.5 million in 2027-28 would be the highest single-season salary by an undrafted player since 1990-91, breaking his own mark of $14.7 million in 2026-27.",
     "type": "sets",
     "value": 15485760
@@ -42,7 +42,7 @@
   ],
   "AJ Dybantsa|2028-29": [
    {
-    "comparison_size": 299,
+    "comparison_size": 301,
     "contracted": true,
     "family": "cohort",
     "id": "958aa46a33c060c9",
@@ -54,7 +54,7 @@
      "value": 14748000
     },
     "rank": 1,
-    "scope_note": "Cohort of 251 players and 299 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 253 players and 301 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
     "text": "AJ Dybantsa's $16.2 million in 2028-29 would be the highest single-season salary by an undrafted player since 1990-91, breaking his own mark of $14.7 million in 2026-27.",
     "type": "sets",
     "value": 16223040
@@ -62,7 +62,7 @@
   ],
   "AJ Dybantsa|2029-30": [
    {
-    "comparison_size": 299,
+    "comparison_size": 301,
     "contracted": true,
     "family": "cohort",
     "id": "c727f5da5b4580ef",
@@ -74,7 +74,7 @@
      "value": 14748000
     },
     "rank": 1,
-    "scope_note": "Cohort of 251 players and 299 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 253 players and 301 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
     "text": "AJ Dybantsa's $20.5 million in 2029-30 would be the highest single-season salary by an undrafted player since 1990-91, breaking his own mark of $14.7 million in 2026-27.",
     "type": "sets",
     "value": 20457253
@@ -1029,7 +1029,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 6 players with a salary on file.",
-    "text": "Alperen Sengun is the Rockets' highest-paid player in 2028-29 after ranking second on the roster in 2027-28.",
+    "text": "Alperen Sengun would be the Rockets' highest-paid player in 2028-29 after ranking second on the roster in 2027-28.",
     "type": "rank_shift",
     "value": 39036697
    }
@@ -1095,7 +1095,7 @@
     "previous_holder": null,
     "rank": 2,
     "scope_note": "Same franchise in consecutive seasons. Roster of 6 players with a salary on file.",
-    "text": "Alperen Sengun is no longer the Rockets' highest-paid player in 2029-30 after holding that spot in 2028-29.",
+    "text": "Alperen Sengun would be no longer the Rockets' highest-paid player in 2029-30 after holding that spot in 2028-29.",
     "type": "rank_shift",
     "value": 39036697
    }
@@ -1206,7 +1206,7 @@
     "value": 41600000
    },
    {
-    "comparison_size": 2165,
+    "comparison_size": 2167,
     "contracted": true,
     "family": "negative_space",
     "id": "75f9f0674ffea8c8",
@@ -1233,7 +1233,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 6 players with a salary on file.",
-    "text": "Amen Thompson is the Rockets' highest-paid player in 2029-30 after ranking second on the roster in 2028-29.",
+    "text": "Amen Thompson would be the Rockets' highest-paid player in 2029-30 after ranking second on the roster in 2028-29.",
     "type": "rank_shift",
     "value": 41600000
    }
@@ -1362,7 +1362,7 @@
     "value": 91806897
    },
    {
-    "comparison_size": 2165,
+    "comparison_size": 2167,
     "contracted": true,
     "family": "negative_space",
     "id": "21459a6526935f5d",
@@ -1389,7 +1389,7 @@
     "previous_holder": null,
     "rank": 2,
     "scope_note": "League salary ranks cover since 1990-91. First season inside the top 10.",
-    "text": "Amen Thompson's salary in 2030-31 puts him in the league's top 10 for the first time in his career.",
+    "text": "Amen Thompson's salary in 2030-31 would put him in the league's top 10 for the first time in his career.",
     "type": "rank_shift",
     "value": 91806897
    }
@@ -2044,7 +2044,7 @@
   ],
   "Anthony Davis|2026-27": [
    {
-    "comparison_size": 639,
+    "comparison_size": 641,
     "contracted": false,
     "family": "cap_context",
     "id": "18d0d2ece0a36426",
@@ -2186,7 +2186,7 @@
   ],
   "Anthony Davis|2027-28": [
    {
-    "comparison_size": 346,
+    "comparison_size": 347,
     "contracted": true,
     "family": "cap_context",
     "id": "13baad1617b123cd",
@@ -2812,7 +2812,7 @@
     "value": 31000000
    },
    {
-    "comparison_size": 587,
+    "comparison_size": 588,
     "contracted": true,
     "family": "franchise",
     "id": "b4d0e4e517e1296a",
@@ -2936,7 +2936,7 @@
     "value": 68413793
    },
    {
-    "comparison_size": 587,
+    "comparison_size": 588,
     "contracted": true,
     "family": "franchise",
     "id": "b0946532fa3c6584",
@@ -2954,7 +2954,7 @@
     "value": 68413793
    },
    {
-    "comparison_size": 2165,
+    "comparison_size": 2167,
     "contracted": true,
     "family": "negative_space",
     "id": "2e99b89418728f27",
@@ -2981,7 +2981,7 @@
     "previous_holder": null,
     "rank": 5,
     "scope_note": "League salary ranks cover since 1990-91. First season inside the top 10.",
-    "text": "Ausar Thompson's salary in 2030-31 puts him in the league's top 10 for the first time in his career.",
+    "text": "Ausar Thompson's salary in 2030-31 would put him in the league's top 10 for the first time in his career.",
     "type": "rank_shift",
     "value": 68413793
    },
@@ -2995,7 +2995,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 1 players with a salary on file.",
-    "text": "Ausar Thompson is the Pistons' highest-paid player in 2030-31 after ranking second on the roster in 2029-30.",
+    "text": "Ausar Thompson would be the Pistons' highest-paid player in 2030-31 after ranking second on the roster in 2029-30.",
     "type": "rank_shift",
     "value": 68413793
    }
@@ -3020,7 +3020,7 @@
     "value": 41240250
    },
    {
-    "comparison_size": 2165,
+    "comparison_size": 2167,
     "contracted": false,
     "family": "negative_space",
     "id": "55fc2bce26e9e40d",
@@ -3090,7 +3090,7 @@
     "value": 42954030
    },
    {
-    "comparison_size": 2165,
+    "comparison_size": 2167,
     "contracted": true,
     "family": "negative_space",
     "id": "77c85cc22d07f14f",
@@ -3178,7 +3178,7 @@
     "value": 46253250
    },
    {
-    "comparison_size": 2165,
+    "comparison_size": 2167,
     "contracted": true,
     "family": "negative_space",
     "id": "61c0b9bd0051495f",
@@ -3266,7 +3266,7 @@
     "value": 49552470
    },
    {
-    "comparison_size": 2165,
+    "comparison_size": 2167,
     "contracted": true,
     "family": "negative_space",
     "id": "f835ee4e96212714",
@@ -3293,7 +3293,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 5 players with a salary on file.",
-    "text": "Austin Reaves is the Lakers' highest-paid player in 2029-30 after ranking second on the roster in 2028-29.",
+    "text": "Austin Reaves would be the Lakers' highest-paid player in 2029-30 after ranking second on the roster in 2028-29.",
     "type": "rank_shift",
     "value": 49552470
    }
@@ -3493,7 +3493,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 2 players with a salary on file.",
-    "text": "Ayo Dosunmu is the Timberwolves' highest-paid player in 2029-30 after ranking fourth on the roster in 2028-29.",
+    "text": "Ayo Dosunmu would be the Timberwolves' highest-paid player in 2029-30 after ranking fourth on the roster in 2028-29.",
     "type": "rank_shift",
     "value": 23944829
    }
@@ -3859,7 +3859,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 5 players with a salary on file.",
-    "text": "Bam Adebayo is the Heat's highest-paid player in 2028-29 after ranking second on the roster in 2027-28.",
+    "text": "Bam Adebayo would be the Heat's highest-paid player in 2028-29 after ranking second on the roster in 2027-28.",
     "type": "rank_shift",
     "value": 57406428
    }
@@ -4262,7 +4262,7 @@
     "value": 125802759
    },
    {
-    "comparison_size": 586,
+    "comparison_size": 587,
     "contracted": false,
     "family": "franchise",
     "id": "358bcfc147bdd4c9",
@@ -4310,7 +4310,7 @@
     "value": 157676691
    },
    {
-    "comparison_size": 586,
+    "comparison_size": 587,
     "contracted": false,
     "family": "franchise",
     "id": "355808ca78c31255",
@@ -4330,7 +4330,7 @@
   ],
   "Blake Griffin|2019-20": [
    {
-    "comparison_size": 586,
+    "comparison_size": 587,
     "contracted": false,
     "family": "franchise",
     "id": "d16cd1102a1293ee",
@@ -5590,7 +5590,7 @@
     "value": 46394100
    },
    {
-    "comparison_size": 586,
+    "comparison_size": 587,
     "contracted": false,
     "family": "franchise",
     "id": "3dfedaac98886fac",
@@ -5674,7 +5674,7 @@
     "value": 50105628
    },
    {
-    "comparison_size": 586,
+    "comparison_size": 587,
     "contracted": false,
     "family": "franchise",
     "id": "421ad310f0d8bda0",
@@ -5762,7 +5762,7 @@
     "value": 53817156
    },
    {
-    "comparison_size": 587,
+    "comparison_size": 588,
     "contracted": true,
     "family": "franchise",
     "id": "3bc2a964151ce7bb",
@@ -5882,7 +5882,7 @@
     "value": 57528684
    },
    {
-    "comparison_size": 587,
+    "comparison_size": 588,
     "contracted": true,
     "family": "franchise",
     "id": "285eb5be9e8303b1",
@@ -5909,7 +5909,7 @@
     "previous_holder": null,
     "rank": 10,
     "scope_note": "League salary ranks cover since 1990-91. First season inside the top 10.",
-    "text": "Cade Cunningham's salary in 2028-29 puts him in the league's top 10 for the first time in his career.",
+    "text": "Cade Cunningham's salary in 2028-29 would put him in the league's top 10 for the first time in his career.",
     "type": "rank_shift",
     "value": 57528684
    }
@@ -6038,7 +6038,7 @@
     "value": 61240212
    },
    {
-    "comparison_size": 587,
+    "comparison_size": 588,
     "contracted": true,
     "family": "franchise",
     "id": "1186cf77142fce18",
@@ -6065,14 +6065,14 @@
     "previous_holder": null,
     "rank": 6,
     "scope_note": "League salary ranks cover since 1990-91. First season inside the top 10.",
-    "text": "Cade Cunningham's salary in 2029-30 puts him in the league's top 10 for the first time in his career.",
+    "text": "Cade Cunningham's salary in 2029-30 would put him in the league's top 10 for the first time in his career.",
     "type": "rank_shift",
     "value": 61240212
    }
   ],
   "Caleb Wilson|2026-27": [
    {
-    "comparison_size": 298,
+    "comparison_size": 300,
     "contracted": false,
     "family": "cohort",
     "id": "df3c56179b4795cb",
@@ -6084,7 +6084,7 @@
      "value": 14748000
     },
     "rank": 4,
-    "scope_note": "Cohort of 251 players and 299 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid.",
+    "scope_note": "Cohort of 253 players and 301 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid.",
     "text": "Caleb Wilson's $10.7 million in 2026-27 is the fourth-highest single-season salary by an undrafted player since 1990-91, behind AJ Dybantsa's $14.7 million (2026-27).",
     "type": "approaches",
     "value": 10683720
@@ -6092,7 +6092,7 @@
   ],
   "Caleb Wilson|2027-28": [
    {
-    "comparison_size": 299,
+    "comparison_size": 301,
     "contracted": true,
     "family": "cohort",
     "id": "a20cb78559f5a702",
@@ -6104,7 +6104,7 @@
      "value": 14748000
     },
     "rank": 4,
-    "scope_note": "Cohort of 251 players and 299 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 253 players and 301 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
     "text": "Caleb Wilson's $11.2 million in 2027-28 would be the fourth-highest single-season salary by an undrafted player since 1990-91, behind AJ Dybantsa's $14.7 million (2026-27).",
     "type": "approaches",
     "value": 11217960
@@ -6112,7 +6112,7 @@
   ],
   "Caleb Wilson|2028-29": [
    {
-    "comparison_size": 299,
+    "comparison_size": 301,
     "contracted": true,
     "family": "cohort",
     "id": "383e32a0d61c1424",
@@ -6124,7 +6124,7 @@
      "value": 14748000
     },
     "rank": 4,
-    "scope_note": "Cohort of 251 players and 299 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 253 players and 301 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
     "text": "Caleb Wilson's $11.8 million in 2028-29 would be the fourth-highest single-season salary by an undrafted player since 1990-91, behind AJ Dybantsa's $14.7 million (2026-27).",
     "type": "approaches",
     "value": 11752320
@@ -6132,7 +6132,7 @@
   ],
   "Caleb Wilson|2029-30": [
    {
-    "comparison_size": 299,
+    "comparison_size": 301,
     "contracted": true,
     "family": "cohort",
     "id": "87d315708b6391f6",
@@ -6144,7 +6144,7 @@
      "value": 14748000
     },
     "rank": 1,
-    "scope_note": "Cohort of 251 players and 299 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 253 players and 301 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
     "text": "Caleb Wilson's $14.9 million in 2029-30 would be the highest single-season salary by an undrafted player since 1990-91, passing AJ Dybantsa's $14.7 million (2026-27).",
     "type": "sets",
     "value": 14866685
@@ -6159,7 +6159,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 2 players with a salary on file.",
-    "text": "Caleb Wilson is the Bulls' highest-paid player in 2029-30 after ranking third on the roster in 2028-29.",
+    "text": "Caleb Wilson would be the Bulls' highest-paid player in 2029-30 after ranking third on the roster in 2028-29.",
     "type": "rank_shift",
     "value": 14866685
    }
@@ -6186,7 +6186,7 @@
   ],
   "Cameron Boozer|2026-27": [
    {
-    "comparison_size": 298,
+    "comparison_size": 300,
     "contracted": false,
     "family": "cohort",
     "id": "7bb102e7ff7e7211",
@@ -6198,7 +6198,7 @@
      "value": 14748000
     },
     "rank": 3,
-    "scope_note": "Cohort of 251 players and 299 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid.",
+    "scope_note": "Cohort of 253 players and 301 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid.",
     "text": "Cameron Boozer's $11.8 million in 2026-27 is the third-highest single-season salary by an undrafted player since 1990-91, behind AJ Dybantsa's $14.7 million (2026-27).",
     "type": "approaches",
     "value": 11849760
@@ -6206,7 +6206,7 @@
   ],
   "Cameron Boozer|2027-28": [
    {
-    "comparison_size": 299,
+    "comparison_size": 301,
     "contracted": true,
     "family": "cohort",
     "id": "6e16282feeb6003f",
@@ -6218,7 +6218,7 @@
      "value": 14748000
     },
     "rank": 3,
-    "scope_note": "Cohort of 251 players and 299 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 253 players and 301 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
     "text": "Cameron Boozer's $12.4 million in 2027-28 would be the third-highest single-season salary by an undrafted player since 1990-91, behind AJ Dybantsa's $14.7 million (2026-27).",
     "type": "approaches",
     "value": 12441840
@@ -6226,7 +6226,7 @@
   ],
   "Cameron Boozer|2028-29": [
    {
-    "comparison_size": 299,
+    "comparison_size": 301,
     "contracted": true,
     "family": "cohort",
     "id": "4d1f7ac67db0e8f7",
@@ -6238,7 +6238,7 @@
      "value": 14748000
     },
     "rank": 3,
-    "scope_note": "Cohort of 251 players and 299 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 253 players and 301 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
     "text": "Cameron Boozer's $13 million in 2028-29 would be the third-highest single-season salary by an undrafted player since 1990-91, behind AJ Dybantsa's $14.7 million (2026-27).",
     "type": "approaches",
     "value": 13034880
@@ -6253,14 +6253,14 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 7 players with a salary on file.",
-    "text": "Cameron Boozer is the Grizzlies' highest-paid player in 2028-29 after ranking third on the roster in 2027-28.",
+    "text": "Cameron Boozer would be the Grizzlies' highest-paid player in 2028-29 after ranking third on the roster in 2027-28.",
     "type": "rank_shift",
     "value": 13034880
    }
   ],
   "Cameron Boozer|2029-30": [
    {
-    "comparison_size": 299,
+    "comparison_size": 301,
     "contracted": true,
     "family": "cohort",
     "id": "66bf01848fd9185c",
@@ -6272,7 +6272,7 @@
      "value": 14748000
     },
     "rank": 1,
-    "scope_note": "Cohort of 251 players and 299 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 253 players and 301 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
     "text": "Cameron Boozer's $16.5 million in 2029-30 would be the highest single-season salary by an undrafted player since 1990-91, passing AJ Dybantsa's $14.7 million (2026-27).",
     "type": "sets",
     "value": 16476088
@@ -6833,7 +6833,7 @@
     "previous_holder": null,
     "rank": 2,
     "scope_note": "Same franchise in consecutive seasons. Roster of 12 players with a salary on file.",
-    "text": "Chet Holmgren is no longer the Thunder's highest-paid player in 2027-28 after holding that spot in 2026-27.",
+    "text": "Chet Holmgren would be no longer the Thunder's highest-paid player in 2027-28 after holding that spot in 2026-27.",
     "type": "rank_shift",
     "value": 44539470
    }
@@ -7023,7 +7023,7 @@
     "previous_holder": null,
     "rank": 10,
     "scope_note": "League salary ranks cover since 1990-91. First season inside the top 10.",
-    "text": "Chet Holmgren's salary in 2029-30 puts him in the league's top 10 for the first time in his career.",
+    "text": "Chet Holmgren's salary in 2029-30 would put him in the league's top 10 for the first time in his career.",
     "type": "rank_shift",
     "value": 51137910
    }
@@ -7787,7 +7787,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 2 players with a salary on file.",
-    "text": "Christian Braun is the Nuggets' highest-paid player in 2029-30 after ranking third on the roster in 2028-29.",
+    "text": "Christian Braun would be the Nuggets' highest-paid player in 2029-30 after ranking third on the roster in 2028-29.",
     "type": "rank_shift",
     "value": 26724137
    }
@@ -7997,7 +7997,7 @@
     "previous_holder": null,
     "rank": 2,
     "scope_note": "Same franchise in consecutive seasons. Roster of 14 players with a salary on file.",
-    "text": "Coby White is no longer the Hornets' highest-paid player in 2027-28 after holding that spot in 2026-27.",
+    "text": "Coby White would be no longer the Hornets' highest-paid player in 2027-28 after holding that spot in 2026-27.",
     "type": "rank_shift",
     "value": 24666667
    }
@@ -8328,7 +8328,7 @@
   ],
   "D'Angelo Russell|2019-20": [
    {
-    "comparison_size": 2276,
+    "comparison_size": 2278,
     "contracted": false,
     "family": "negative_space",
     "id": "856d63e532c6fb0e",
@@ -8348,7 +8348,7 @@
   ],
   "D'Angelo Russell|2020-21": [
    {
-    "comparison_size": 2276,
+    "comparison_size": 2278,
     "contracted": false,
     "family": "negative_space",
     "id": "77978405b09ecdb0",
@@ -8414,7 +8414,7 @@
     "value": 30013500
    },
    {
-    "comparison_size": 2276,
+    "comparison_size": 2278,
     "contracted": false,
     "family": "negative_space",
     "id": "33d4a7c8582d75be",
@@ -8452,7 +8452,7 @@
     "value": 31377750
    },
    {
-    "comparison_size": 2276,
+    "comparison_size": 2278,
     "contracted": false,
     "family": "negative_space",
     "id": "ddb949c3bfad9ec4",
@@ -8837,7 +8837,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 6 players with a salary on file.",
-    "text": "Damian Lillard is the Bucks' highest-paid player in 2029-30 after ranking second on the roster in 2028-29.",
+    "text": "Damian Lillard would be the Bucks' highest-paid player in 2029-30 after ranking second on the roster in 2028-29.",
     "type": "rank_shift",
     "value": 22516603
    }
@@ -9216,7 +9216,7 @@
   ],
   "Darius Acuff|2029-30": [
    {
-    "comparison_size": 299,
+    "comparison_size": 301,
     "contracted": true,
     "family": "cohort",
     "id": "56d118935bf19e84",
@@ -9228,7 +9228,7 @@
      "value": 14748000
     },
     "rank": 4,
-    "scope_note": "Cohort of 251 players and 299 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 253 players and 301 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
     "text": "Darius Acuff's $11.2 million in 2029-30 would be the fourth-highest single-season salary by an undrafted player since 1990-91, behind AJ Dybantsa's $14.7 million (2026-27).",
     "type": "approaches",
     "value": 11205972
@@ -9520,7 +9520,7 @@
   ],
   "Darryn Peterson|2026-27": [
    {
-    "comparison_size": 298,
+    "comparison_size": 300,
     "contracted": false,
     "family": "cohort",
     "id": "7f51ba8c9f542858",
@@ -9532,7 +9532,7 @@
      "value": 14748000
     },
     "rank": 2,
-    "scope_note": "Cohort of 251 players and 299 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid.",
+    "scope_note": "Cohort of 253 players and 301 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid.",
     "text": "Darryn Peterson's $13.2 million in 2026-27 is the second-highest single-season salary by an undrafted player since 1990-91, behind AJ Dybantsa's $14.7 million (2026-27).",
     "type": "approaches",
     "value": 13195320
@@ -9540,7 +9540,7 @@
   ],
   "Darryn Peterson|2027-28": [
    {
-    "comparison_size": 299,
+    "comparison_size": 301,
     "contracted": true,
     "family": "cohort",
     "id": "5813555f07c93369",
@@ -9552,7 +9552,7 @@
      "value": 14748000
     },
     "rank": 2,
-    "scope_note": "Cohort of 251 players and 299 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 253 players and 301 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
     "text": "Darryn Peterson's $13.9 million in 2027-28 would be the second-highest single-season salary by an undrafted player since 1990-91, behind AJ Dybantsa's $14.7 million (2026-27).",
     "type": "approaches",
     "value": 13855320
@@ -9560,7 +9560,7 @@
   ],
   "Darryn Peterson|2028-29": [
    {
-    "comparison_size": 299,
+    "comparison_size": 301,
     "contracted": true,
     "family": "cohort",
     "id": "eb79b281e2a4419a",
@@ -9572,7 +9572,7 @@
      "value": 14748000
     },
     "rank": 2,
-    "scope_note": "Cohort of 251 players and 299 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 253 players and 301 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
     "text": "Darryn Peterson's $14.5 million in 2028-29 would be the second-highest single-season salary by an undrafted player since 1990-91, behind AJ Dybantsa's $14.7 million (2026-27).",
     "type": "approaches",
     "value": 14515320
@@ -9580,7 +9580,7 @@
   ],
   "Darryn Peterson|2029-30": [
    {
-    "comparison_size": 299,
+    "comparison_size": 301,
     "contracted": true,
     "family": "cohort",
     "id": "8b3a2e032929ef7f",
@@ -9592,7 +9592,7 @@
      "value": 14748000
     },
     "rank": 1,
-    "scope_note": "Cohort of 251 players and 299 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 253 players and 301 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
     "text": "Darryn Peterson's $18.3 million in 2029-30 would be the highest single-season salary by an undrafted player since 1990-91, passing AJ Dybantsa's $14.7 million (2026-27).",
     "type": "sets",
     "value": 18318334
@@ -10323,7 +10323,7 @@
     "previous_holder": null,
     "rank": 5,
     "scope_note": "League salary ranks cover since 1990-91. First season inside the top 10.",
-    "text": "De'Aaron Fox's salary in 2029-30 puts him in the league's top 10 for the first time in his career.",
+    "text": "De'Aaron Fox's salary in 2029-30 would put him in the league's top 10 for the first time in his career.",
     "type": "rank_shift",
     "value": 61365492
    }
@@ -10835,7 +10835,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 2 players with a salary on file.",
-    "text": "Dean Wade is the 76ers' highest-paid player in 2029-30 after ranking fifth on the roster in 2028-29.",
+    "text": "Dean Wade would be the 76ers' highest-paid player in 2029-30 after ranking fifth on the roster in 2028-29.",
     "type": "rank_shift",
     "value": 10350000
    }
@@ -11822,7 +11822,7 @@
     "value": 39446090
    },
    {
-    "comparison_size": 2165,
+    "comparison_size": 2167,
     "contracted": false,
     "family": "negative_space",
     "id": "9e9417c571944efd",
@@ -11892,7 +11892,7 @@
     "value": 42166510
    },
    {
-    "comparison_size": 2165,
+    "comparison_size": 2167,
     "contracted": true,
     "family": "negative_space",
     "id": "0198f2a397ab9f44",
@@ -11980,7 +11980,7 @@
     "value": 44886930
    },
    {
-    "comparison_size": 2165,
+    "comparison_size": 2167,
     "contracted": true,
     "family": "negative_space",
     "id": "0cf825789e77704e",
@@ -12386,7 +12386,7 @@
   ],
   "Devin Booker|2027-28": [
    {
-    "comparison_size": 346,
+    "comparison_size": 347,
     "contracted": true,
     "family": "cap_context",
     "id": "844cbfeeb60ff8fb",
@@ -12663,7 +12663,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "League salary ranks cover since 1990-91. First season at No. 1.",
-    "text": "Devin Booker is the highest-paid player in the league in 2028-29 for the first time in his career.",
+    "text": "Devin Booker would be the highest-paid player in the league in 2028-29 for the first time in his career.",
     "type": "rank_shift",
     "value": 69877500
    }
@@ -13514,7 +13514,7 @@
     "value": 40500000
    },
    {
-    "comparison_size": 592,
+    "comparison_size": 593,
     "contracted": false,
     "family": "franchise",
     "id": "28e93b53bd15918e",
@@ -13616,7 +13616,7 @@
     "value": 42336000
    },
    {
-    "comparison_size": 592,
+    "comparison_size": 593,
     "contracted": false,
     "family": "franchise",
     "id": "bd6cf8987a3315f3",
@@ -13718,7 +13718,7 @@
     "value": 45472000
    },
    {
-    "comparison_size": 592,
+    "comparison_size": 593,
     "contracted": false,
     "family": "franchise",
     "id": "5c3fc09f1e9ed907",
@@ -13806,7 +13806,7 @@
     "value": 48608000
    },
    {
-    "comparison_size": 593,
+    "comparison_size": 594,
     "contracted": true,
     "family": "franchise",
     "id": "4012a12d3038090d",
@@ -13833,7 +13833,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 14 players with a salary on file.",
-    "text": "Domantas Sabonis is the Kings' highest-paid player in 2027-28 after ranking second on the roster in 2026-27.",
+    "text": "Domantas Sabonis would be the Kings' highest-paid player in 2027-28 after ranking second on the roster in 2026-27.",
     "type": "rank_shift",
     "value": 48608000
    }
@@ -14082,7 +14082,7 @@
   ],
   "Donovan Mitchell|2027-28": [
    {
-    "comparison_size": 346,
+    "comparison_size": 347,
     "contracted": true,
     "family": "cap_context",
     "id": "0e81d0acc6ef3279",
@@ -14222,7 +14222,7 @@
     "value": 60900000
    },
    {
-    "comparison_size": 347,
+    "comparison_size": 348,
     "contracted": true,
     "family": "rank_shift",
     "id": "5b1d0f5e11e77289",
@@ -14231,7 +14231,7 @@
     "previous_holder": null,
     "rank": 10,
     "scope_note": "League salary ranks cover since 1990-91. First season inside the top 10.",
-    "text": "Donovan Mitchell's salary in 2027-28 puts him in the league's top 10 for the first time in his career.",
+    "text": "Donovan Mitchell's salary in 2027-28 would put him in the league's top 10 for the first time in his career.",
     "type": "rank_shift",
     "value": 60900000
    }
@@ -16195,7 +16195,7 @@
     "previous_holder": null,
     "rank": 10,
     "scope_note": "League salary ranks cover since 1990-91. First season inside the top 10.",
-    "text": "Evan Mobley's salary in 2028-29 puts him in the league's top 10 for the first time in his career.",
+    "text": "Evan Mobley's salary in 2028-29 would put him in the league's top 10 for the first time in his career.",
     "type": "rank_shift",
     "value": 57528684
    }
@@ -16570,7 +16570,7 @@
     "value": 41754690
    },
    {
-    "comparison_size": 2165,
+    "comparison_size": 2167,
     "contracted": false,
     "family": "negative_space",
     "id": "e57243613563eb46",
@@ -16680,7 +16680,7 @@
     "value": 44847630
    },
    {
-    "comparison_size": 2165,
+    "comparison_size": 2167,
     "contracted": true,
     "family": "negative_space",
     "id": "e7a6a1f881e55176",
@@ -16804,7 +16804,7 @@
     "value": 47940570
    },
    {
-    "comparison_size": 2165,
+    "comparison_size": 2167,
     "contracted": true,
     "family": "negative_space",
     "id": "82cc318bd8e32b5c",
@@ -16928,7 +16928,7 @@
     "value": 51033510
    },
    {
-    "comparison_size": 2165,
+    "comparison_size": 2167,
     "contracted": true,
     "family": "negative_space",
     "id": "64bdf6e0e8ea6dcc",
@@ -16955,7 +16955,7 @@
     "previous_holder": null,
     "rank": 2,
     "scope_note": "Same franchise in consecutive seasons. Roster of 3 players with a salary on file.",
-    "text": "Franz Wagner is no longer the Magic's highest-paid player in 2029-30 after holding that spot in 2028-29.",
+    "text": "Franz Wagner would be no longer the Magic's highest-paid player in 2029-30 after holding that spot in 2028-29.",
     "type": "rank_shift",
     "value": 51033510
    }
@@ -17894,7 +17894,7 @@
   ],
   "Giannis Antetokounmpo|2026-27": [
    {
-    "comparison_size": 639,
+    "comparison_size": 641,
     "contracted": false,
     "family": "cap_context",
     "id": "303188806ec615d6",
@@ -18004,7 +18004,7 @@
   ],
   "Giannis Antetokounmpo|2027-28": [
    {
-    "comparison_size": 346,
+    "comparison_size": 347,
     "contracted": true,
     "family": "cap_context",
     "id": "cbefcca4fdeb673a",
@@ -19147,7 +19147,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 2 players with a salary on file.",
-    "text": "Herb Jones is the Pelicans' highest-paid player in 2029-30 after ranking second on the roster in 2028-29.",
+    "text": "Herb Jones would be the Pelicans' highest-paid player in 2029-30 after ranking second on the roster in 2028-29.",
     "type": "rank_shift",
     "value": 24195628
    }
@@ -21703,7 +21703,7 @@
     "previous_holder": null,
     "rank": 10,
     "scope_note": "League salary ranks cover since 1990-91. First season inside the top 10.",
-    "text": "Jalen Williams' salary in 2029-30 puts him in the league's top 10 for the first time in his career.",
+    "text": "Jalen Williams' salary in 2029-30 would put him in the league's top 10 for the first time in his career.",
     "type": "rank_shift",
     "value": 51137910
    }
@@ -21787,7 +21787,7 @@
     "previous_holder": null,
     "rank": 7,
     "scope_note": "League salary ranks cover since 1990-91. First season inside the top 10.",
-    "text": "Jalen Williams' salary in 2030-31 puts him in the league's top 10 for the first time in his career.",
+    "text": "Jalen Williams' salary in 2030-31 would put him in the league's top 10 for the first time in his career.",
     "type": "rank_shift",
     "value": 54437130
    }
@@ -22245,7 +22245,7 @@
     "previous_holder": null,
     "rank": 10,
     "scope_note": "League salary ranks cover since 1990-91. First season inside the top 10.",
-    "text": "Jamal Murray's salary in 2028-29 puts him in the league's top 10 for the first time in his career.",
+    "text": "Jamal Murray's salary in 2028-29 would put him in the league's top 10 for the first time in his career.",
     "type": "rank_shift",
     "value": 57528684
    },
@@ -22259,7 +22259,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 5 players with a salary on file.",
-    "text": "Jamal Murray is the Nuggets' highest-paid player in 2028-29 after ranking second on the roster in 2027-28.",
+    "text": "Jamal Murray would be the Nuggets' highest-paid player in 2028-29 after ranking second on the roster in 2027-28.",
     "type": "rank_shift",
     "value": 57528684
    }
@@ -22983,7 +22983,7 @@
     "previous_holder": null,
     "rank": 2,
     "scope_note": "Same franchise in consecutive seasons. Roster of 5 players with a salary on file.",
-    "text": "Jaren Jackson Jr is no longer the Jazz's highest-paid player in 2028-29 after holding that spot in 2027-28.",
+    "text": "Jaren Jackson Jr would be no longer the Jazz's highest-paid player in 2028-29 after holding that spot in 2027-28.",
     "type": "rank_shift",
     "value": 52000000
    }
@@ -23071,7 +23071,7 @@
     "previous_holder": null,
     "rank": 9,
     "scope_note": "League salary ranks cover since 1990-91. First season inside the top 10.",
-    "text": "Jaren Jackson Jr's salary in 2029-30 puts him in the league's top 10 for the first time in his career.",
+    "text": "Jaren Jackson Jr's salary in 2029-30 would put him in the league's top 10 for the first time in his career.",
     "type": "rank_shift",
     "value": 53500000
    },
@@ -23085,7 +23085,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 3 players with a salary on file.",
-    "text": "Jaren Jackson Jr is the Jazz's highest-paid player in 2029-30 after ranking second on the roster in 2028-29.",
+    "text": "Jaren Jackson Jr would be the Jazz's highest-paid player in 2029-30 after ranking second on the roster in 2028-29.",
     "type": "rank_shift",
     "value": 53500000
    }
@@ -23732,7 +23732,7 @@
   ],
   "Jaylen Brown|2027-28": [
    {
-    "comparison_size": 346,
+    "comparison_size": 347,
     "contracted": true,
     "family": "cap_context",
     "id": "6fd5fceac0976e72",
@@ -23881,7 +23881,7 @@
     "previous_holder": null,
     "rank": 2,
     "scope_note": "Same franchise in consecutive seasons. Roster of 10 players with a salary on file.",
-    "text": "Jaylen Brown is no longer the 76ers' highest-paid player in 2027-28 after holding that spot in 2026-27.",
+    "text": "Jaylen Brown would be no longer the 76ers' highest-paid player in 2027-28 after holding that spot in 2026-27.",
     "type": "rank_shift",
     "value": 61672814
    }
@@ -24226,7 +24226,7 @@
   ],
   "Jayson Tatum|2026-27": [
    {
-    "comparison_size": 639,
+    "comparison_size": 641,
     "contracted": false,
     "family": "cap_context",
     "id": "5819f24d380bbc71",
@@ -24368,7 +24368,7 @@
   ],
   "Jayson Tatum|2027-28": [
    {
-    "comparison_size": 346,
+    "comparison_size": 347,
     "contracted": true,
     "family": "cap_context",
     "id": "09e50a389baf8b78",
@@ -26340,7 +26340,7 @@
   ],
   "Joel Embiid|2027-28": [
    {
-    "comparison_size": 346,
+    "comparison_size": 347,
     "contracted": true,
     "family": "cap_context",
     "id": "5d498253662a0d1c",
@@ -26489,7 +26489,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 10 players with a salary on file.",
-    "text": "Joel Embiid is the 76ers' highest-paid player in 2027-28 after ranking second on the roster in 2026-27.",
+    "text": "Joel Embiid would be the 76ers' highest-paid player in 2027-28 after ranking second on the roster in 2026-27.",
     "type": "rank_shift",
     "value": 62355258
    }
@@ -28021,7 +28021,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 13 players with a salary on file.",
-    "text": "Julius Randle is the Nets' highest-paid player in 2027-28 after ranking second on the roster in 2026-27.",
+    "text": "Julius Randle would be the Nets' highest-paid player in 2027-28 after ranking second on the roster in 2026-27.",
     "type": "rank_shift",
     "value": 35802468
    }
@@ -28692,7 +28692,7 @@
   ],
   "Karl-Anthony Towns|2027-28": [
    {
-    "comparison_size": 346,
+    "comparison_size": 347,
     "contracted": true,
     "family": "cap_context",
     "id": "80f34857e76d03f8",
@@ -29340,7 +29340,7 @@
   ],
   "Keaton Wagler|2026-27": [
    {
-    "comparison_size": 298,
+    "comparison_size": 300,
     "contracted": false,
     "family": "cohort",
     "id": "129b0102d36bb916",
@@ -29352,7 +29352,7 @@
      "value": 14748000
     },
     "rank": 5,
-    "scope_note": "Cohort of 251 players and 299 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid.",
+    "scope_note": "Cohort of 253 players and 301 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid.",
     "text": "Keaton Wagler's $9.7 million in 2026-27 is the fifth-highest single-season salary by an undrafted player since 1990-91, behind AJ Dybantsa's $14.7 million (2026-27).",
     "type": "approaches",
     "value": 9674760
@@ -29360,7 +29360,7 @@
   ],
   "Keaton Wagler|2027-28": [
    {
-    "comparison_size": 299,
+    "comparison_size": 301,
     "contracted": true,
     "family": "cohort",
     "id": "ce65dd784959ec8a",
@@ -29372,7 +29372,7 @@
      "value": 14748000
     },
     "rank": 5,
-    "scope_note": "Cohort of 251 players and 299 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 253 players and 301 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
     "text": "Keaton Wagler's $10.2 million in 2027-28 would be the fifth-highest single-season salary by an undrafted player since 1990-91, behind AJ Dybantsa's $14.7 million (2026-27).",
     "type": "approaches",
     "value": 10158240
@@ -29380,7 +29380,7 @@
   ],
   "Keaton Wagler|2028-29": [
    {
-    "comparison_size": 299,
+    "comparison_size": 301,
     "contracted": true,
     "family": "cohort",
     "id": "8da2e60e2e77cd1a",
@@ -29392,7 +29392,7 @@
      "value": 14748000
     },
     "rank": 5,
-    "scope_note": "Cohort of 251 players and 299 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 253 players and 301 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
     "text": "Keaton Wagler's $10.6 million in 2028-29 would be the fifth-highest single-season salary by an undrafted player since 1990-91, behind AJ Dybantsa's $14.7 million (2026-27).",
     "type": "approaches",
     "value": 10641960
@@ -29407,14 +29407,14 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 5 players with a salary on file.",
-    "text": "Keaton Wagler is the Clippers' highest-paid player in 2028-29 after ranking fourth on the roster in 2027-28.",
+    "text": "Keaton Wagler would be the Clippers' highest-paid player in 2028-29 after ranking fourth on the roster in 2027-28.",
     "type": "rank_shift",
     "value": 10641960
    }
   ],
   "Keaton Wagler|2029-30": [
    {
-    "comparison_size": 299,
+    "comparison_size": 301,
     "contracted": true,
     "family": "cohort",
     "id": "bfa249fbf39f1699",
@@ -29426,7 +29426,7 @@
      "value": 14748000
     },
     "rank": 2,
-    "scope_note": "Cohort of 251 players and 299 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 253 players and 301 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
     "text": "Keaton Wagler's $13.5 million in 2029-30 would be the second-highest single-season salary by an undrafted player since 1990-91, behind AJ Dybantsa's $14.7 million (2026-27).",
     "type": "approaches",
     "value": 13483363
@@ -29631,7 +29631,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 7 players with a salary on file.",
-    "text": "Keegan Murray is the Kings' highest-paid player in 2028-29 after ranking second on the roster in 2027-28.",
+    "text": "Keegan Murray would be the Kings' highest-paid player in 2028-29 after ranking second on the roster in 2027-28.",
     "type": "rank_shift",
     "value": 27999999
    }
@@ -29735,7 +29735,7 @@
     "previous_holder": null,
     "rank": 10,
     "scope_note": "League salary ranks cover since 1990-91. First season inside the top 10.",
-    "text": "Keegan Murray's salary in 2030-31 puts him in the league's top 10 for the first time in his career.",
+    "text": "Keegan Murray's salary in 2030-31 would put him in the league's top 10 for the first time in his career.",
     "type": "rank_shift",
     "value": 31862067
    }
@@ -31502,7 +31502,7 @@
     "value": 65444444
    },
    {
-    "comparison_size": 2165,
+    "comparison_size": 2167,
     "contracted": true,
     "family": "negative_space",
     "id": "6e8d1ba724548e50",
@@ -31529,7 +31529,7 @@
     "previous_holder": null,
     "rank": 6,
     "scope_note": "League salary ranks cover since 1990-91. First season inside the top 10.",
-    "text": "Keyonte George's salary in 2030-31 puts him in the league's top 10 for the first time in his career.",
+    "text": "Keyonte George's salary in 2030-31 would put him in the league's top 10 for the first time in his career.",
     "type": "rank_shift",
     "value": 65444444
    },
@@ -31543,7 +31543,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 1 players with a salary on file.",
-    "text": "Keyonte George is the Jazz's highest-paid player in 2030-31 after ranking second on the roster in 2029-30.",
+    "text": "Keyonte George would be the Jazz's highest-paid player in 2030-31 after ranking second on the roster in 2029-30.",
     "type": "rank_shift",
     "value": 65444444
    }
@@ -31836,7 +31836,7 @@
   ],
   "Kingston Flemings|2029-30": [
    {
-    "comparison_size": 299,
+    "comparison_size": 301,
     "contracted": true,
     "family": "cohort",
     "id": "e0d12da9167991ff",
@@ -31848,7 +31848,7 @@
      "value": 14748000
     },
     "rank": 5,
-    "scope_note": "Cohort of 251 players and 299 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 253 players and 301 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
     "text": "Kingston Flemings' $10.3 million in 2029-30 would be the fifth-highest single-season salary by an undrafted player since 1990-91, behind AJ Dybantsa's $14.7 million (2026-27).",
     "type": "approaches",
     "value": 10282441
@@ -33673,7 +33673,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 5 players with a salary on file.",
-    "text": "Lauri Markkanen is the Jazz's highest-paid player in 2028-29 after ranking second on the roster in 2027-28.",
+    "text": "Lauri Markkanen would be the Jazz's highest-paid player in 2028-29 after ranking second on the roster in 2027-28.",
     "type": "rank_shift",
     "value": 53536209
    }
@@ -34651,7 +34651,7 @@
     "previous_holder": null,
     "rank": 8,
     "scope_note": "League salary ranks cover since 1990-91. First season inside the top 10.",
-    "text": "Luka Doncic's salary in 2028-29 puts him in the league's top 10 for the first time in his career.",
+    "text": "Luka Doncic's salary in 2028-29 would put him in the league's top 10 for the first time in his career.",
     "type": "rank_shift",
     "value": 59198976
    }
@@ -36076,7 +36076,7 @@
     "value": 40806150
    },
    {
-    "comparison_size": 2165,
+    "comparison_size": 2167,
     "contracted": false,
     "family": "negative_space",
     "id": "b0c3b7753077c399",
@@ -36250,7 +36250,7 @@
     "value": 41517856
    },
    {
-    "comparison_size": 2165,
+    "comparison_size": 2167,
     "contracted": true,
     "family": "negative_space",
     "id": "2282377c7a0a05c9",
@@ -36277,7 +36277,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 3 players with a salary on file.",
-    "text": "Mikal Bridges is the Knicks' highest-paid player in 2029-30 after ranking third on the roster in 2028-29.",
+    "text": "Mikal Bridges would be the Knicks' highest-paid player in 2029-30 after ranking third on the roster in 2028-29.",
     "type": "rank_shift",
     "value": 41517856
    }
@@ -36503,14 +36503,14 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 6 players with a salary on file.",
-    "text": "Mikel Brown is the Nets' highest-paid player in 2028-29 after ranking fifth on the roster in 2027-28.",
+    "text": "Mikel Brown would be the Nets' highest-paid player in 2028-29 after ranking fifth on the roster in 2027-28.",
     "type": "rank_shift",
     "value": 9666000
    }
   ],
   "Mikel Brown|2029-30": [
    {
-    "comparison_size": 299,
+    "comparison_size": 301,
     "contracted": true,
     "family": "cohort",
     "id": "aef82e6d79fb2782",
@@ -36522,7 +36522,7 @@
      "value": 14748000
     },
     "rank": 3,
-    "scope_note": "Cohort of 251 players and 299 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 253 players and 301 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
     "text": "Mikel Brown's $12.3 million in 2029-30 would be the third-highest single-season salary by an undrafted player since 1990-91, behind AJ Dybantsa's $14.7 million (2026-27).",
     "type": "approaches",
     "value": 12256488
@@ -36975,7 +36975,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 13 players with a salary on file.",
-    "text": "Myles Turner is the Bucks' highest-paid player in 2027-28 after ranking second on the roster in 2026-27.",
+    "text": "Myles Turner would be the Bucks' highest-paid player in 2027-28 after ranking second on the roster in 2026-27.",
     "type": "rank_shift",
     "value": 27850077
    }
@@ -37051,7 +37051,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 1 players with a salary on file.",
-    "text": "Nassir Little is the Suns' highest-paid player in 2030-31 after ranking sixth on the roster in 2029-30.",
+    "text": "Nassir Little would be the Suns' highest-paid player in 2030-31 after ranking sixth on the roster in 2029-30.",
     "type": "rank_shift",
     "value": 3107143
    }
@@ -37097,7 +37097,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 14 players with a salary on file.",
-    "text": "Naz Reid is the Hornets' highest-paid player in 2027-28 after ranking second on the roster in 2026-27.",
+    "text": "Naz Reid would be the Hornets' highest-paid player in 2027-28 after ranking second on the roster in 2026-27.",
     "type": "rank_shift",
     "value": 25000000
    }
@@ -37147,7 +37147,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 1 players with a salary on file.",
-    "text": "Neemias Queta is the Celtics' highest-paid player in 2030-31 after ranking second on the roster in 2029-30.",
+    "text": "Neemias Queta would be the Celtics' highest-paid player in 2030-31 after ranking second on the roster in 2029-30.",
     "type": "rank_shift",
     "value": 15500000
    }
@@ -38132,7 +38132,7 @@
   ],
   "Nikola Jokic|2026-27": [
    {
-    "comparison_size": 639,
+    "comparison_size": 641,
     "contracted": false,
     "family": "cap_context",
     "id": "239bac848a894b82",
@@ -38242,7 +38242,7 @@
   ],
   "Nikola Jokic|2027-28": [
    {
-    "comparison_size": 346,
+    "comparison_size": 347,
     "contracted": true,
     "family": "cap_context",
     "id": "bb66588c11f56c0a",
@@ -38364,7 +38364,7 @@
     "value": 62841702
    },
    {
-    "comparison_size": 347,
+    "comparison_size": 348,
     "contracted": true,
     "family": "rank_shift",
     "id": "fb833f61c8061484",
@@ -38373,7 +38373,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "League salary ranks cover since 1990-91. First season at No. 1.",
-    "text": "Nikola Jokic is the highest-paid player in the league in 2027-28 for the first time in his career.",
+    "text": "Nikola Jokic would be the highest-paid player in the league in 2027-28 for the first time in his career.",
     "type": "rank_shift",
     "value": 62841702
    }
@@ -38389,7 +38389,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 2 players with a salary on file.",
-    "text": "Nikola Jovic is the Heat's highest-paid player in 2029-30 after ranking third on the roster in 2028-29.",
+    "text": "Nikola Jovic would be the Heat's highest-paid player in 2029-30 after ranking third on the roster in 2028-29.",
     "type": "rank_shift",
     "value": 16200000
    }
@@ -39006,7 +39006,7 @@
     "value": 39568966
    },
    {
-    "comparison_size": 2165,
+    "comparison_size": 2167,
     "contracted": false,
     "family": "negative_space",
     "id": "ee3a0c001f96c642",
@@ -39112,7 +39112,7 @@
     "value": 42500000
    },
    {
-    "comparison_size": 2165,
+    "comparison_size": 2167,
     "contracted": false,
     "family": "negative_space",
     "id": "a728bb879b7750a9",
@@ -39218,7 +39218,7 @@
     "value": 45431034
    },
    {
-    "comparison_size": 2165,
+    "comparison_size": 2167,
     "contracted": true,
     "family": "negative_space",
     "id": "1dc08be2ced942e7",
@@ -39324,7 +39324,7 @@
     "value": 48362068
    },
    {
-    "comparison_size": 2165,
+    "comparison_size": 2167,
     "contracted": true,
     "family": "negative_space",
     "id": "02613f45914d4252",
@@ -39351,7 +39351,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 6 players with a salary on file.",
-    "text": "OG Anunoby is the Knicks' highest-paid player in 2028-29 after ranking second on the roster in 2027-28.",
+    "text": "OG Anunoby would be the Knicks' highest-paid player in 2028-29 after ranking second on the roster in 2027-28.",
     "type": "rank_shift",
     "value": 48362068
    }
@@ -39731,7 +39731,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 6 players with a salary on file.",
-    "text": "PJ Washington is the Mavericks' highest-paid player in 2028-29 after ranking second on the roster in 2027-28.",
+    "text": "PJ Washington would be the Mavericks' highest-paid player in 2028-29 after ranking second on the roster in 2027-28.",
     "type": "rank_shift",
     "value": 22983132
    }
@@ -40027,7 +40027,7 @@
     "previous_holder": null,
     "rank": 10,
     "scope_note": "League salary ranks cover since 1990-91. First season inside the top 10.",
-    "text": "Paolo Banchero's salary in 2029-30 puts him in the league's top 10 for the first time in his career.",
+    "text": "Paolo Banchero's salary in 2029-30 would put him in the league's top 10 for the first time in his career.",
     "type": "rank_shift",
     "value": 51137910
    },
@@ -40041,7 +40041,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 3 players with a salary on file.",
-    "text": "Paolo Banchero is the Magic's highest-paid player in 2029-30 after ranking second on the roster in 2028-29.",
+    "text": "Paolo Banchero would be the Magic's highest-paid player in 2029-30 after ranking second on the roster in 2028-29.",
     "type": "rank_shift",
     "value": 51137910
    }
@@ -40143,7 +40143,7 @@
     "previous_holder": null,
     "rank": 7,
     "scope_note": "League salary ranks cover since 1990-91. First season inside the top 10.",
-    "text": "Paolo Banchero's salary in 2030-31 puts him in the league's top 10 for the first time in his career.",
+    "text": "Paolo Banchero's salary in 2030-31 would put him in the league's top 10 for the first time in his career.",
     "type": "rank_shift",
     "value": 54437130
    }
@@ -42007,7 +42007,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 1 players with a salary on file.",
-    "text": "Pelle Larsson is the Heat's highest-paid player in 2030-31 after ranking second on the roster in 2029-30.",
+    "text": "Pelle Larsson would be the Heat's highest-paid player in 2030-31 after ranking second on the roster in 2029-30.",
     "type": "rank_shift",
     "value": 16260000
    }
@@ -44341,7 +44341,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 4 players with a salary on file.",
-    "text": "Scottie Barnes is the Raptors' highest-paid player in 2029-30 after ranking second on the roster in 2028-29.",
+    "text": "Scottie Barnes would be the Raptors' highest-paid player in 2029-30 after ranking second on the roster in 2028-29.",
     "type": "rank_shift",
     "value": 51033444
    }
@@ -44487,7 +44487,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 5 players with a salary on file.",
-    "text": "Shaedon Sharpe is the Trail Blazers' highest-paid player in 2028-29 after ranking third on the roster in 2027-28.",
+    "text": "Shaedon Sharpe would be the Trail Blazers' highest-paid player in 2028-29 after ranking third on the roster in 2027-28.",
     "type": "rank_shift",
     "value": 23303571
    }
@@ -44664,7 +44664,7 @@
   ],
   "Shai Gilgeous-Alexander|2027-28": [
    {
-    "comparison_size": 346,
+    "comparison_size": 347,
     "contracted": true,
     "family": "cap_context",
     "id": "e51f2b2e894f50ba",
@@ -44818,7 +44818,7 @@
     "value": 61600000
    },
    {
-    "comparison_size": 347,
+    "comparison_size": 348,
     "contracted": true,
     "family": "rank_shift",
     "id": "40f7e4ca57654a70",
@@ -44827,7 +44827,7 @@
     "previous_holder": null,
     "rank": 7,
     "scope_note": "League salary ranks cover since 1990-91. First season inside the top 10.",
-    "text": "Shai Gilgeous-Alexander's salary in 2027-28 puts him in the league's top 10 for the first time in his career.",
+    "text": "Shai Gilgeous-Alexander's salary in 2027-28 would put him in the league's top 10 for the first time in his career.",
     "type": "rank_shift",
     "value": 61600000
    },
@@ -44841,7 +44841,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 12 players with a salary on file.",
-    "text": "Shai Gilgeous-Alexander is the Thunder's highest-paid player in 2027-28 after ranking third on the roster in 2026-27.",
+    "text": "Shai Gilgeous-Alexander would be the Thunder's highest-paid player in 2027-28 after ranking third on the roster in 2026-27.",
     "type": "rank_shift",
     "value": 61600000
    }
@@ -45904,7 +45904,7 @@
   ],
   "Stephen Curry|2026-27": [
    {
-    "comparison_size": 639,
+    "comparison_size": 641,
     "contracted": false,
     "family": "cap_context",
     "id": "858ea700ecf4aec3",
@@ -46089,7 +46089,7 @@
     "family": "cohort",
     "id": "dee641f0a99e76ec",
     "key": "cohort_season|draft_class|2009|Stephen Curry|2028-29",
-    "margin": -2287158,
+    "margin": -2431158,
     "previous_holder": {
      "player": "Stephen Curry",
      "season": "2026-27",
@@ -46097,9 +46097,9 @@
     },
     "rank": 2,
     "scope_note": "Cohort of 73 players and 518 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
-    "text": "Stephen Curry's $60.3 million in 2028-29 would be the second-highest single-season salary in the 2009 draft class since 1990-91, behind his own $62.6 million (2026-27).",
+    "text": "Stephen Curry's $60.2 million in 2028-29 would be the second-highest single-season salary in the 2009 draft class since 1990-91, behind his own $62.6 million (2026-27).",
     "type": "approaches",
-    "value": 60300000
+    "value": 60156000
    },
    {
     "comparison_size": 448,
@@ -46107,7 +46107,7 @@
     "family": "cohort",
     "id": "a0d1f010fbbc1924",
     "key": "cohort_season|draft_slot|7|Stephen Curry|2028-29",
-    "margin": -2287158,
+    "margin": -2431158,
     "previous_holder": {
      "player": "Stephen Curry",
      "season": "2026-27",
@@ -46115,9 +46115,9 @@
     },
     "rank": 2,
     "scope_note": "Cohort of 47 players and 448 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
-    "text": "Stephen Curry's $60.3 million in 2028-29 would be the second-highest single-season salary by a No. 7 pick since 1990-91, behind his own $62.6 million (2026-27).",
+    "text": "Stephen Curry's $60.2 million in 2028-29 would be the second-highest single-season salary by a No. 7 pick since 1990-91, behind his own $62.6 million (2026-27).",
     "type": "approaches",
-    "value": 60300000
+    "value": 60156000
    },
    {
     "comparison_size": 14510,
@@ -46125,7 +46125,7 @@
     "family": "cohort",
     "id": "073fbe0e7a2d4df7",
     "key": "cohort_season|nationality|United States|Stephen Curry|2028-29",
-    "margin": -2287158,
+    "margin": -2431158,
     "previous_holder": {
      "player": "Stephen Curry",
      "season": "2026-27",
@@ -46133,9 +46133,9 @@
     },
     "rank": 2,
     "scope_note": "Cohort of 2452 players and 14510 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
-    "text": "Stephen Curry's $60.3 million in 2028-29 would be the second-highest single-season salary by a player from the United States since 1990-91, behind his own $62.6 million (2026-27).",
+    "text": "Stephen Curry's $60.2 million in 2028-29 would be the second-highest single-season salary by a player from the United States since 1990-91, behind his own $62.6 million (2026-27).",
     "type": "approaches",
-    "value": 60300000
+    "value": 60156000
    },
    {
     "comparison_size": 7570,
@@ -46143,7 +46143,7 @@
     "family": "cohort",
     "id": "b5ccb58a7000349c",
     "key": "cohort_season|position|G|Stephen Curry|2028-29",
-    "margin": -2287158,
+    "margin": -2431158,
     "previous_holder": {
      "player": "Stephen Curry",
      "season": "2026-27",
@@ -46151,9 +46151,9 @@
     },
     "rank": 2,
     "scope_note": "Cohort of 1363 players and 7570 player seasons since 1990-91. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
-    "text": "Stephen Curry's $60.3 million in 2028-29 would be the second-highest single-season salary by a guard since 1990-91, behind his own $62.6 million (2026-27).",
+    "text": "Stephen Curry's $60.2 million in 2028-29 would be the second-highest single-season salary by a guard since 1990-91, behind his own $62.6 million (2026-27).",
     "type": "approaches",
-    "value": 60300000
+    "value": 60156000
    },
    {
     "comparison_size": 578,
@@ -46161,7 +46161,7 @@
     "family": "franchise",
     "id": "8b567a536d6c2e75",
     "key": "franchise|GSW|Stephen Curry|2028-29",
-    "margin": -2287158,
+    "margin": -2431158,
     "previous_holder": {
      "player": "Stephen Curry",
      "season": "2026-27",
@@ -46169,9 +46169,9 @@
     },
     "rank": 2,
     "scope_note": "Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
-    "text": "Stephen Curry's $60.3 million in 2028-29 would be the second-highest single-season salary in Warriors history since 1990-91, behind his own $62.6 million (2026-27).",
+    "text": "Stephen Curry's $60.2 million in 2028-29 would be the second-highest single-season salary in Warriors history since 1990-91, behind his own $62.6 million (2026-27).",
     "type": "approaches",
-    "value": 60300000
+    "value": 60156000
    }
   ],
   "Stephon Castle|2027-28": [
@@ -48171,7 +48171,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 5 players with a salary on file.",
-    "text": "Trae Young is the Wizards' highest-paid player in 2028-29 after ranking second on the roster in 2027-28.",
+    "text": "Trae Young would be the Wizards' highest-paid player in 2028-29 after ranking second on the roster in 2027-28.",
     "type": "rank_shift",
     "value": 54437130
    }
@@ -48309,7 +48309,7 @@
     "previous_holder": null,
     "rank": 8,
     "scope_note": "League salary ranks cover since 1990-91. First season inside the top 10.",
-    "text": "Trae Young's salary in 2029-30 puts him in the league's top 10 for the first time in his career.",
+    "text": "Trae Young's salary in 2029-30 would put him in the league's top 10 for the first time in his career.",
     "type": "rank_shift",
     "value": 58396194
    }
@@ -48509,7 +48509,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 5 players with a salary on file.",
-    "text": "Trey Murphy is the Pelicans' highest-paid player in 2028-29 after ranking third on the roster in 2027-28.",
+    "text": "Trey Murphy would be the Pelicans' highest-paid player in 2028-29 after ranking third on the roster in 2027-28.",
     "type": "rank_shift",
     "value": 31000000
    }
@@ -49031,7 +49031,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 11 players with a salary on file.",
-    "text": "Tyrese Haliburton is the Pacers' highest-paid player in 2027-28 after ranking second on the roster in 2026-27.",
+    "text": "Tyrese Haliburton would be the Pacers' highest-paid player in 2027-28 after ranking second on the roster in 2026-27.",
     "type": "rank_shift",
     "value": 52298736
    }
@@ -49133,7 +49133,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 3 players with a salary on file.",
-    "text": "Tyrese Haliburton is the Pacers' highest-paid player in 2028-29 after ranking second on the roster in 2027-28.",
+    "text": "Tyrese Haliburton would be the Pacers' highest-paid player in 2028-29 after ranking second on the roster in 2027-28.",
     "type": "rank_shift",
     "value": 55672848
    }
@@ -50097,7 +50097,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "League salary ranks cover since 1990-91. First season at No. 1.",
-    "text": "Victor Wembanyama is the highest-paid player in the league in 2030-31 for the first time in his career.",
+    "text": "Victor Wembanyama would be the highest-paid player in the league in 2030-31 for the first time in his career.",
     "type": "rank_shift",
     "value": 112560000
    },
@@ -50111,7 +50111,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 1 players with a salary on file.",
-    "text": "Victor Wembanyama is the Spurs' highest-paid player in 2030-31 after ranking second on the roster in 2029-30.",
+    "text": "Victor Wembanyama would be the Spurs' highest-paid player in 2030-31 after ranking second on the roster in 2029-30.",
     "type": "rank_shift",
     "value": 112560000
    }
@@ -50783,7 +50783,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 1 players with a salary on file.",
-    "text": "Yaxel Lendeborg is the Warriors' highest-paid player in 2029-30 after ranking second on the roster in 2028-29.",
+    "text": "Yaxel Lendeborg would be the Warriors' highest-paid player in 2029-30 after ranking second on the roster in 2028-29.",
     "type": "rank_shift",
     "value": 8899127
    }
@@ -51036,7 +51036,7 @@
     "value": 47499660
    },
    {
-    "comparison_size": 592,
+    "comparison_size": 593,
     "contracted": false,
     "family": "franchise",
     "id": "d31fc3d1a6d8d50b",
@@ -51106,7 +51106,7 @@
     "value": 48967380
    },
    {
-    "comparison_size": 592,
+    "comparison_size": 593,
     "contracted": false,
     "family": "franchise",
     "id": "9c1e400730ad642a",

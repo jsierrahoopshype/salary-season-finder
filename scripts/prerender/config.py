@@ -44,9 +44,9 @@ TITLE_TARGET = 65
 #: still linked from the roll call below the tables, so nothing is unreachable.
 TABLE_ROWS = 25
 
-#: Factoid sentences shown on a cohort page. A cohort collects a lot of
-#: near-identical contracted-season claims; past this many they stop informing.
-FACTS_SHOWN = 8
+#: Sentences in a cohort page's written summary. Past this it stops being a
+#: summary; the tables below it carry the rest.
+SUMMARY_SENTENCES = 4
 
 
 #: The one block that decides what is indexable.
@@ -59,10 +59,12 @@ FAMILIES = {
     "player": {
         "dir": "player", "indexable": False, "cohort": None, "hub": None,
         "label": "Players",
+        "label_one": "Player",
     },
     "team": {
         "dir": "team", "indexable": False, "cohort": None, "hub": None,
         "label": "Teams",
+        "label_one": "Team",
     },
     # Season pages compete with HoopsHype's own season salary pages, so they
     # stay out of the index. Flip this to True to change that; nothing else has
@@ -70,26 +72,32 @@ FAMILIES = {
     "season": {
         "dir": "season", "indexable": False, "cohort": None, "hub": None,
         "label": "Seasons",
+        "label_one": "Season",
     },
     "college": {
         "dir": "college", "indexable": True, "cohort": "college",
         "hub": "colleges", "label": "Colleges",
+        "label_one": "College",
     },
     "country": {
         "dir": "country", "indexable": True, "cohort": "nationality",
         "hub": "countries", "label": "Countries",
+        "label_one": "Country",
     },
     "draft": {
         "dir": "draft", "indexable": True, "cohort": "draft_class",
         "hub": "draft-classes", "label": "Draft classes",
+        "label_one": "Draft class",
     },
     "pick": {
         "dir": "pick", "indexable": True, "cohort": "draft_slot",
         "hub": "picks", "label": "Draft picks",
+        "label_one": "Draft pick",
     },
     "position": {
         "dir": "position", "indexable": True, "cohort": "position",
         "hub": "positions", "label": "Positions",
+        "label_one": "Position",
     },
     # The agent field is unverified, which is why the factoid family is off. The
     # pages are built so the hub links somewhere real, but they are noindex and
@@ -97,6 +105,7 @@ FAMILIES = {
     "agent": {
         "dir": "agent", "indexable": bool(AGENT_FACTOIDS_ENABLED),
         "cohort": None, "hub": "agents", "label": "Agents",
+        "label_one": "Agent",
     },
 }
 

@@ -1828,6 +1828,20 @@ def test_a_split_previous_season_sinks_the_shift():
     assert "franchise_changed" not in dropped
 
 
+def test_a_contracted_rank_shift_is_stated_conditionally():
+    """Nobody has been paid for a future season, so the shift is a would-be."""
+    data = make_data(tail("OKC", season=CURRENT) + [
+        rec("Rich Guy", CURRENT, 30000000, team="OKC", salary_rank_team=1),
+        rec("Climber", CURRENT, 20000000, team="OKC", salary_rank_team=2),
+        rec("Climber", "2027-28", 40000000, team="OKC", salary_rank_team=1),
+    ])
+    out = facts(data, "Climber", "2027-28", family="rank_shift")
+    assert out, "the shift itself should still fire"
+    text = " ".join(f["text"] for f in out)
+    assert " would " in text, text
+    assert "Climber is the" not in text
+
+
 def test_league_rank_shifts_survive_a_split_season():
     """A split season's salary is the whole season's money, so the league rank
     it earns is sound. Only the team rank has no roster to belong to."""
