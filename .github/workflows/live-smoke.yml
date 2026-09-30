@@ -11,7 +11,10 @@ name: Live check
 
 on:
   workflow_run:
-    workflows: ["pages build and deployment"]
+    # the name GitHub gives the Pages deployment workflow in this repository,
+    # as `gh api .../actions/workflows` reports it. A near miss here is silent:
+    # the trigger simply never fires.
+    workflows: ["pages-build-deployment"]
     types: [completed]
     branches: [main]
   workflow_dispatch:
