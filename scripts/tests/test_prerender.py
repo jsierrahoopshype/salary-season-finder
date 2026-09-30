@@ -825,14 +825,13 @@ def test_a_career_table_never_counts_contracted_money():
 
 
 @built
-def test_an_active_career_is_worded_as_a_total_to_date():
-    for path, meta in all_pages().items():
-        if path.split(os.sep)[0] not in ("college", "country", "draft", "pick",
-                                         "position"):
-            continue
+def test_a_career_total_names_the_season_it_runs_through():
+    for path, _meta in _cohort_pages():
         for sentence in _summary(path):
-            if "has earned more than" in sentence:
-                assert "to date" in sentence, (path, sentence)
+            if "career earnings" in sentence or "has earned" in sentence:
+                assert "to date" not in sentence, (path, sentence)
+                assert "through 20" in sentence or "through 19" in sentence, (
+                    path, sentence)
 
 
 # --------------------------------------------------------------------------
@@ -852,8 +851,8 @@ def test_the_window_is_a_note_and_never_a_clause_in_a_claim():
         assert "Since 1990-91" not in html, path
     for path in ("college/duke", "player/joel-embiid", "countries"):
         html = read(os.path.join(*(path.split("/") + ["index.html"])))
-        assert F.DATA_START_NOTE in html, path
-        assert html.count(F.DATA_START_NOTE) == 1, path
+        assert C.SCOPE_NOTE == "Salary data starts in 1990-91."
+        assert html.count(C.SCOPE_NOTE) == 1, path
 
 
 @built
@@ -1016,9 +1015,11 @@ def test_two_builds_produce_the_same_summaries():
 def test_the_last_man_on_a_payroll_is_named_as_such():
     joined = " ".join(_summary(os.path.join("draft", "2003", "index.html")))
     assert "LeBron James" in joined
-    assert "still drawing an NBA salary" in joined or \
-        "last player from" in joined or "alone is left" in joined or \
-        "still on an NBA payroll" in joined or "still being paid" in joined
+    assert any(phrase in joined for phrase in (
+        "still drawing an NBA salary", "only one left on a roster",
+        "still on an NBA payroll", "still being paid",
+        "the only player from", "last of",
+    )), joined
 
 
 @built
@@ -1099,26 +1100,128 @@ def test_no_sentence_opens_on_a_pronoun_pointing_at_a_number():
             assert first not in ("That", "This"), (path, sentence)
 
 
-@built
-def test_the_cohort_is_not_named_in_two_sentences_running():
-    from prerender.summary import Names
-    _idx, by_slug = _cohort_entities()
-    for path, _meta in _cohort_pages():
-        family, slug = path.split(os.sep)[0], path.split(os.sep)[1]
-        entity = by_slug.get((family, slug))
-        if entity is None:
-            continue
-        names = Names(entity.family, entity.key, entity.name)
-        named = [names.mentions(s) > 0 for s in _summary(path)]
-        for first, second in zip(named, named[1:]):
-            assert not (first and second), (path, _summary(path))
-
-
-@built
 def test_a_repeated_subject_becomes_a_pronoun():
-    """Two sentences about the same man do not print his name twice."""
-    for path in ("college/arkansas", "college/kentucky", "pick/35"):
-        sentences = _summary(os.path.join(*(path.split("/") + ["index.html"])))
-        assert len(sentences) >= 2, path
-        assert sentences[1].startswith(("His ", "He ", "No ", "Nobody ")), (
-            path, sentences[1])
+    """A second sentence about the same man opens on "he", never his name."""
+    from prerender import summary as SU
+    pools = (SU.CAREER_SAME, SU.RECORD_SAME, SU.CURRENT_SAME,
+             SU.LAST_ONE_SAME, SU.FUTURE_CLIMB_SAME, SU.FUTURE_CLIMB_AFTER,
+             SU.FUTURE_FLAT_SAME)
+    for pool in pools:
+        for template in pool:
+            assert template.startswith(("He ", "His ")), template
+
+
+@built
+def test_no_summary_repeats_a_name_in_consecutive_sentences():
+    for path, _meta in _cohort_pages():
+        sentences = _summary(path)
+        for first, second in zip(sentences, sentences[1:]):
+            opener = " ".join(second.split()[:2])
+            assert not first.startswith(opener), (path, first, second)
+
+
+# --------------------------------------------------------------------------
+# "More colleges" at the foot of a page
+# --------------------------------------------------------------------------
+
+
+MORE_HEADINGS = {
+    "college": "More colleges",
+    "country": "More countries",
+    "draft": "More draft classes",
+    "pick": "More picks",
+    "position": "More positions",
+}
+
+
+@built
+def test_every_cohort_page_offers_the_rest_of_its_family():
+    _idx, by_slug = _cohort_entities()
+    for path, meta in all_pages().items():
+        family = path.split(os.sep)[0]
+        if family not in MORE_HEADINGS:
+            continue
+        slug = path.split(os.sep)[1]
+        html = read(path)
+        assert "<h2>{}</h2>".format(MORE_HEADINGS[family]) in html, path
+        block = html[html.index(MORE_HEADINGS[family]):]
+        siblings = [
+            e for (fam, s), e in by_slug.items() if fam == family and s != slug
+        ]
+        for entity in siblings:
+            href = "{}/{}/{}/".format(C.TOOL_ROOT, C.FAMILIES[family]["dir"],
+                                      entity.slug)
+            assert 'href="{}"'.format(href) in block, (path, entity.slug)
+        # and never a link back to the page you are on
+        own = "{}/{}/{}/".format(C.TOOL_ROOT, C.FAMILIES[family]["dir"], slug)
+        assert 'href="{}"'.format(own) not in block, path
+
+
+@built
+def test_a_big_family_is_grouped_and_a_small_one_is_not():
+    duke = read(os.path.join("college", "duke", "index.html"))
+    block = duke[duke.index("More colleges"):]
+    heads = re.findall(r'<h3 class="hm-more-head">(.*?)</h3>', block)
+    assert heads == sorted(heads), heads
+    assert len(heads) >= 10, heads
+
+    picks = read(os.path.join("pick", "1", "index.html"))
+    block = picks[picks.index("More picks"):]
+    heads = re.findall(r'<h3 class="hm-more-head">(.*?)</h3>', block)
+    assert heads[0] == "Picks 1 to 10", heads
+    assert heads[-1] == "Undrafted", heads
+
+    classes = read(os.path.join("draft", "2003", "index.html"))
+    block = classes[classes.index("More draft classes"):]
+    heads = re.findall(r'<h3 class="hm-more-head">(.*?)</h3>', block)
+    assert heads[0] == "2020s", heads
+
+    centers = read(os.path.join("position", "center", "index.html"))
+    block = centers[centers.index("More positions"):]
+    assert '<h3 class="hm-more-head">' not in block
+
+
+@built
+def test_the_more_block_never_scrolls_on_its_own():
+    css = read(os.path.join("css", "pages.css"))
+    more = css[css.index(".hm-more"):]
+    assert "overflow" not in more.split("}")[0]
+    assert "max-height" not in more.split("}")[0]
+
+
+@built
+def test_a_hub_groups_its_family_rather_than_listing_it_twice():
+    html = read(os.path.join("colleges", "index.html"))
+    assert html.count("<h2>") == 1, "one list, not two"
+    assert re.findall(r'<h3 class="hm-more-head">(.*?)</h3>', html)
+
+
+# --------------------------------------------------------------------------
+# the career table on a phone, and awards at 768px
+# --------------------------------------------------------------------------
+
+
+@built
+def test_the_career_table_reorders_its_columns_below_768px():
+    html = read(os.path.join("college", "duke", "index.html"))
+    assert 'class="hm-rank-table hm-career-table"' in html
+    for cls in ("hm-num hm-span", "hm-num hm-seasons", "hm-money"):
+        assert 'class="{}"'.format(cls) in html, cls
+    css = read(os.path.join("css", "pages.css"))
+    block = css[css.index("@media (max-width: 767.98px)"):]
+    for selector, order in (("th.hm-who", "1"), (".hm-money", "2"),
+                            (".hm-span", "3"), (".hm-seasons", "4")):
+        rule = block[block.index("table.hm-career-table " + selector):]
+        assert "order: {}".format(order) in rule.split("}")[0], selector
+
+
+@built
+def test_awards_are_visible_from_768px_up():
+    css = read(os.path.join("css", "styles.css"))
+    assert "@media (max-width: 767.98px)" in css
+    block = css[css.rindex("@media (max-width: 767.98px)"):]
+    assert "td.awards-cell" in block and "display: none" in block
+    # the awards rule is the one that stops at 767.98, so 768 keeps them
+    for other in re.findall(r"@media \(max-width: 768px\) \{", css):
+        pass
+    assert "awards" not in css.split("@media (max-width: 768px)")[1].split("\n}")[0]

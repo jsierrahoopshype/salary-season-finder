@@ -1,0 +1,56 @@
+name: PR tests
+
+# Every pull request runs the whole suite and then proves the build is
+# deterministic: a second run over unchanged data must write nothing. That
+# second run is what catches a set iterating differently or a date creeping
+# into a page, which unit tests on their own do not.
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install test dependencies
+        run: pip install pytest
+
+      - name: Run the test suite
+        run: python -m pytest scripts/tests/ -q
+
+      - name: Two builds over unchanged data write nothing
+        run: |
+          set -euo pipefail
+          # the first build brings the checkout up to date with the data in it
+          python scripts/prerender_pages.py > /tmp/first.log
+          tail -6 /tmp/first.log
+          # the second must be a no-op, and the tree must be clean after it
+          python scripts/prerender_pages.py > /tmp/second.log
+          tail -6 /tmp/second.log
+          if ! grep -q "files written: 0," /tmp/second.log; then
+            echo "::error::a second build over unchanged data wrote files"
+            exit 1
+          fi
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "::error::the build left the tree dirty on a second run"
+            git status --porcelain | head -20
+            exit 1
+          fi

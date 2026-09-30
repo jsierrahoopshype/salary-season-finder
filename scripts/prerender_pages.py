@@ -495,6 +495,11 @@ def main(argv=None):
         built["players"] = built["players"][: args.limit_players]
 
     lookup = {(e.family, e.key): e.slug for e in built["all"]}
+    # every page in each family, for the "More colleges" block at the foot of
+    # a cohort page and for the grouped list on its hub
+    family_members = collections.defaultdict(list)
+    for entity in built["cohorts"]:
+        family_members[entity.family].append((entity.name, entity.slug, entity.key))
     media = Media(REPO)
     linker = linkify.build(idx, built["all"], built["cohorts"])
     by_player_facts, by_cohort_facts = group_factoids(load_factoids())
@@ -534,7 +539,8 @@ def main(argv=None):
     # ---- cohort pages ----------------------------------------------------
     for entity in built["cohorts"]:
         title, description, body = P.cohort_page(
-            idx, entity, built["players"], by_cohort_facts, media, linker
+            idx, entity, built["players"], by_cohort_facts, media, linker,
+            family_members.get(entity.family),
         )
         hub = C.FAMILIES[entity.family]["hub"]
         emit(entity, title, description, body, [
@@ -565,7 +571,9 @@ def main(argv=None):
         entries = [(e.name, e.slug, len(e.players)) for e in members]
         # the country hub is a list of countries, so it carries their flags
         lead = media.flag if family == "country" else None
-        title, description, body = P.hub_page(hub_slug, family, entries, lead=lead)
+        title, description, body = P.hub_page(
+            hub_slug, family, entries, lead=lead,
+            family_members=family_members.get(family))
         url = "{}/{}/".format(C.TOOL_ROOT, hub_slug)
         html = R.page(title, description, url, 1, [
             ("Salary Season Finder", C.TOOL_ROOT),

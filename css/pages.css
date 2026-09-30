@@ -533,3 +533,74 @@ table.hm-rank-table th.hm-who {
   color: var(--green, var(--accent));
   margin-left: .35rem;
 }
+
+/* ------------------------------------------------------------------ *
+ * The career table on a phone
+ *
+ * Below 768px the money moves next to the name: it is the column the page
+ * is about, and on a narrow screen the span and the season count push it
+ * off the side. The rows become flex containers only here, so the desktop
+ * table stays a plain table, and every cell has a fixed width so the
+ * header and the body still line up inside the scroll frame.
+ * ------------------------------------------------------------------ */
+
+@media (max-width: 767.98px) {
+  table.hm-career-table thead tr,
+  table.hm-career-table tbody tr {
+    display: flex;
+    align-items: stretch;
+  }
+
+  table.hm-career-table th,
+  table.hm-career-table td {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+  }
+
+  table.hm-career-table th.hm-who {
+    order: 1;
+    flex: 0 0 13.5rem;
+  }
+
+  table.hm-career-table .hm-money {
+    order: 2;
+    flex: 0 0 8.5rem;
+    justify-content: flex-end;
+  }
+
+  table.hm-career-table .hm-span {
+    order: 3;
+    flex: 0 0 8.5rem;
+    justify-content: flex-end;
+  }
+
+  table.hm-career-table .hm-seasons {
+    order: 4;
+    flex: 0 0 5rem;
+    justify-content: flex-end;
+  }
+
+  table.hm-career-table thead th {
+    align-items: flex-end;
+  }
+}
+
+/* the "More colleges" block at the foot of a page */
+.hm-more > h2 {
+  margin-bottom: .5rem;
+}
+
+.hm-more-head {
+  font-family: var(--mono);
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin: .8rem 0 .35rem;
+}
+
+.hm-more-head:first-of-type {
+  margin-top: .2rem;
+}
