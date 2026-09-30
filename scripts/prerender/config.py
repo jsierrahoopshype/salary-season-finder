@@ -15,6 +15,7 @@ from factoids import (  # noqa: E402
     AGENT_FACTOIDS_ENABLED,
     AGENT_MIN_CLIENTS,
     COHORT_MINIMUMS,
+    DATA_START_NOTE,
     SCOPE_FIRST_SEASON,
 )
 
@@ -34,8 +35,10 @@ NOT_FOUND_PATH = "404.html"
 SLUGS_PATH = os.path.join("data", "slugs.json")
 PAGE_HASHES_PATH = os.path.join("data", "page_hashes.json")
 
-#: Every all-time figure on every page is scoped to the data window.
-SCOPE_NOTE = "Since {}, nominal dollars.".format(SCOPE_FIRST_SEASON)
+#: The one line about the data window on every page. No claim carries the
+#: window any more: saying "since 1990-91" in every sentence read as a hedge on
+#: figures that are, for everyone being compared, the whole of what he earned.
+SCOPE_NOTE = DATA_START_NOTE
 
 #: Longest title we aim for. Past this the template drops its scope clause.
 TITLE_TARGET = 65
@@ -132,11 +135,11 @@ TITLES = {
     "team": ("{name} Payroll and Salary History | HoopsMatic", None),
     "season": ("NBA Salaries {name} | HoopsMatic", None),
     "college": (
-        "Highest-Paid {name} Players in the NBA Since " + SCOPE_FIRST_SEASON + " | HoopsMatic",
-        "Highest-Paid {name} Players in the NBA | HoopsMatic",
+        "Highest-Paid {name} Players in NBA History | HoopsMatic",
+        "Highest-Paid {name} Players | HoopsMatic",
     ),
     "country": (
-        "Highest-Paid NBA Players from {name} Since " + SCOPE_FIRST_SEASON + " | HoopsMatic",
+        "Highest-Paid NBA Players from {name} of All Time | HoopsMatic",
         "Highest-Paid NBA Players from {name} | HoopsMatic",
     ),
     "draft": (
@@ -151,7 +154,7 @@ TITLES = {
         "Highest-Paid Undrafted Players in the NBA | HoopsMatic", None,
     ),
     "position": (
-        "Highest-Paid NBA {name} Since " + SCOPE_FIRST_SEASON + " | HoopsMatic",
+        "Highest-Paid NBA {name} of All Time | HoopsMatic",
         "Highest-Paid NBA {name} | HoopsMatic",
     ),
     "agent": ("{name}: NBA Clients and Salaries | HoopsMatic", None),

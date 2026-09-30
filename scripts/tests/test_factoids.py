@@ -779,15 +779,15 @@ def test_money_formatting_follows_ap_style():
     assert F.fmt_money(507336) == "$507,336"
 
 
-def test_comparison_claims_carry_the_scope():
+def test_no_claim_hedges_on_the_data_window():
+    """"since 1990-91" in every sentence read as a hedge on figures that are,
+    for everyone being compared, the whole of what he earned. The caveat is a
+    note on the page now, not a clause in the claim."""
     data = make_data(_field() + [rec("Challenger", "2023-24", 41000000)])
     out = factoids_for(data, "Challenger", "2023-24", index=index_for(data))
-    comparisons = [f for f in out if f["type"] in {"sets", "ties", "approaches"}]
-    assert comparisons
-    for fact in comparisons:
-        if fact["family"] in {"agent", "cap_context"}:
-            continue  # scoped to one season, not to all time
-        assert F.SCOPE_SUFFIX in fact["text"], fact["text"]
+    assert out
+    for fact in out:
+        assert "1990-91" not in fact["text"], fact["text"]
 
 
 # --------------------------------------------------------------------------
@@ -879,7 +879,7 @@ def test_career_rank_does_not_fire_on_a_mid_career_season():
     ])
     mid = facts(data, "Grinder", "2017-18", family="career_earnings", kind="sets")
     assert mid == []
-    assert "not_final_season" in gates(data, "Grinder", "2017-18")
+    assert "not_paid_through_season" in gates(data, "Grinder", "2017-18")
 
 
 def test_career_rank_fires_on_the_final_season():
@@ -892,7 +892,7 @@ def test_career_rank_fires_on_the_final_season():
     out = facts(data, "Grinder", "2018-19", family="career_earnings", kind="sets")
     assert len(out) == 1
     assert out[0]["value"] == 240000000
-    assert "through 2018-19" in out[0]["text"]
+    assert "earned $240 million in his career" in out[0]["text"]
 
 
 def test_cohort_career_rank_also_waits_for_the_final_season():
@@ -946,13 +946,18 @@ def test_two_clear_seasons_of_absence_completes_a_career():
     assert idx.career_status_unknown("Retired") is False
 
 
-def test_status_unknown_player_gets_no_career_rank():
+def test_a_player_who_may_still_be_active_ranks_on_what_he_has_been_paid():
+    """Money paid is money paid. He ranks, worded as a total to date, because
+    leaving him out is what put retired players alone at the top of a list
+    active players lead."""
     data = make_data(_finished_field() + [
         opener("Unsigned", "2024-25", 20000000),
         rec("Unsigned", PREVIOUS, 20000000, career_earnings=900000000),
     ])
-    assert facts(data, "Unsigned", PREVIOUS, family="career_earnings", kind="sets") == []
-    assert "career_status_unknown" in gates(data, "Unsigned", PREVIOUS)
+    out = facts(data, "Unsigned", PREVIOUS, family="career_earnings", kind="sets")
+    assert len(out) == 1
+    assert "has earned $900 million to date" in out[0]["text"]
+    assert "in his career" not in out[0]["text"]
 
 
 def test_status_unknown_player_is_out_of_the_retired_negative_space_universe():
@@ -1616,7 +1621,7 @@ def test_college_display_spells_out_the_truncation():
     out = [f for f in factoids_for(data, "Big", "2019-20", index=idx)
            if f["key"].startswith("cohort_season|college|")]
     assert len(out) == 1
-    assert "out of Michigan State since" in out[0]["text"]
+    assert "out of Michigan State" in out[0]["text"]
     # the key keeps the raw value, so ids and matching do not move
     assert out[0]["key"] == "cohort_season|college|Michigan St|Big|2019-20"
 
@@ -1629,7 +1634,7 @@ def test_a_college_with_no_entry_prints_as_stored():
     idx = build_index(data, franchises=FRANCHISES, identity_splits={}, college_names={})
     out = [f for f in factoids_for(data, "Big", "2019-20", index=idx)
            if f["key"].startswith("cohort_season|college|")]
-    assert "out of Duke since" in out[0]["text"]
+    assert "out of Duke" in out[0]["text"]
 
 
 def test_missing_college_names_file_is_not_an_error():
@@ -1970,3 +1975,103 @@ def test_shipped_aliases_merge_the_six_pairs_and_leave_the_fathers_alone():
     assert idx.career_eligible("Wendell Carter Jr") is True
     assert "Wendell Carter Jr" not in idx.career_total_carried_in
     assert "Wendell Carter" not in idx.by_player
+
+
+# --------------------------------------------------------------------------
+# career earnings now rank money already paid, active players included
+# --------------------------------------------------------------------------
+
+
+def test_an_active_player_leads_the_career_list_over_a_retired_one():
+    """The bug this fixes: a list of completed careers only called Elton Brand
+    the highest-earning Duke player while Kyrie Irving sat above him."""
+    data = make_data(_finished_field() + [
+        opener("Retired Man", "2018-19", 20000000, career_earnings=20000000),
+        rec("Retired Man", "2019-20", 20000000, career_earnings=300000000),
+        opener("Still Playing", "2024-25", 20000000),
+        rec("Still Playing", "2025-26", 20000000, career_earnings=380000000),
+        rec("Still Playing", CURRENT, 20000000, career_earnings=400000000),
+        rec("Still Playing", "2027-28", 50000000, career_earnings=450000000),
+    ])
+    out = facts(data, "Still Playing", CURRENT, family="career_earnings", kind="sets")
+    assert len(out) == 1
+    assert "has earned $400 million to date" in out[0]["text"]
+    assert "more than anyone else in NBA history" in out[0]["text"]
+    # the retired man is now second, not first
+    retired = facts(data, "Retired Man", "2019-20", family="career_earnings")
+    assert [f["type"] for f in retired if f["key"].startswith("career_rank")] == ["approaches"]
+
+
+def test_contracted_money_never_counts_towards_a_career_total():
+    data = make_data(_finished_field() + [
+        opener("Still Playing", "2024-25", 20000000),
+        rec("Still Playing", "2025-26", 20000000, career_earnings=380000000),
+        rec("Still Playing", CURRENT, 20000000, career_earnings=400000000),
+        rec("Still Playing", "2027-28", 50000000, career_earnings=450000000),
+    ])
+    idx = index_for(data)
+    assert idx.paid_through("Still Playing") == (400000000, CURRENT)
+    assert facts(data, "Still Playing", "2027-28", family="career_earnings",
+                 kind="sets") == []
+
+
+def test_a_career_that_began_before_the_window_suppresses_a_claim_beside_it():
+    """His total on file is short of what he earned, so a figure within
+    PRE_WINDOW_MARGIN of it cannot be ranked against him."""
+    data = make_data(_finished_field() + [
+        # drafted before the window opens, so what is on file is only the part
+        # of his career the data covers
+        opener("Old Timer", "1990-91", 20000000, draft_year=1985, draft_pick=3),
+        rec("Old Timer", "1991-92", 20000000, career_earnings=200000000,
+            draft_year=1985, draft_pick=3),
+        opener("Modern Man", "2017-18", 20000000),
+        rec("Modern Man", "2018-19", 20000000, career_earnings=210000000),
+    ])
+    idx = index_for(data)
+    assert idx.pre_window_career("Old Timer") is True
+    ranks = [
+        f for f in facts(data, "Modern Man", "2018-19", family="career_earnings")
+        if f["key"].startswith("career_rank")
+    ]
+    assert ranks == []  # milestones still fire: they compare him to nobody
+    assert "pre_window_career_too_close" in gates(data, "Modern Man", "2018-19")
+
+
+def test_a_figure_far_clear_of_every_pre_window_career_still_ranks():
+    data = make_data(_finished_field() + [
+        opener("Old Timer", "1990-91", 20000000, draft_year=1985, draft_pick=3),
+        rec("Old Timer", "1991-92", 20000000, career_earnings=100000000,
+            draft_year=1985, draft_pick=3),
+        opener("Modern Man", "2017-18", 20000000),
+        rec("Modern Man", "2018-19", 20000000, career_earnings=400000000),
+    ])
+    out = facts(data, "Modern Man", "2018-19", family="career_earnings", kind="sets")
+    assert len(out) == 1
+    assert "$400 million" in out[0]["text"]
+
+
+def test_an_all_time_cap_share_is_only_claimed_for_the_top_three():
+    """A season this data does not hold could displace anything deeper."""
+    field = []
+    for i in range(10):
+        field += [rec("Sharer {}".format(i), "2019-20", 40000000 - i * 1000000,
+                      salary_cap_pct=40 - i, team="BOS")]
+    data = make_data(field + tail("BOS", season="2019-20"))
+    fourth = facts(data, "Sharer 3", "2019-20", family="cap_context")
+    keys = [f["key"].split("|")[0] for f in fourth]
+    assert "cap_pct_all" not in keys, fourth
+    assert "cap_pct_season" in keys
+    top = facts(data, "Sharer 0", "2019-20", family="cap_context")
+    assert "cap_pct_all" in [f["key"].split("|")[0] for f in top]
+
+
+def test_a_pre_window_career_gets_no_milestone_either():
+    """His running total starts partway through, so the season he crosses
+    $100 million in this data is not the season he crossed it."""
+    data = make_data(_finished_field() + [
+        opener("Old Timer", "1990-91", 20000000, draft_year=1985, draft_pick=3),
+        rec("Old Timer", "1991-92", 20000000, career_earnings=150000000,
+            draft_year=1985, draft_pick=3),
+    ])
+    assert facts(data, "Old Timer", "1991-92", family="career_earnings") == []
+    assert "pre_window_career" in gates(data, "Old Timer", "1991-92")

@@ -2572,7 +2572,11 @@
     activeCols.forEach(function (col) {
       var isSorted = col.key === sortCol;
       var arrow = col.sortable ? '<span class="sort-arrow">' + (isSorted ? (sortDir === "asc" ? "\u25B2" : "\u25BC") : "\u25BC") + "</span>" : "";
-      var cls = isSorted ? ' class="sorted"' : "";
+      // the class names the column so the 768px rule can hide the awards one
+      var classes = [];
+      if (isSorted) classes.push("sorted");
+      if (col.key === "awards") classes.push("awards-header");
+      var cls = classes.length ? ' class="' + classes.join(" ") + '"' : "";
       var clickAttr = col.sortable ? ' data-sort="' + col.key + '"' : "";
       headerRow += "<th" + cls + clickAttr + ">" + col.label + arrow + "</th>";
     });

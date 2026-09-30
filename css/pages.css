@@ -509,3 +509,27 @@ table.hm-rank-table th.hm-who {
     min-height: 2.25rem;
   }
 }
+
+/* names inside a sentence that have a page of their own */
+.hm-inline-link {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.hm-inline-link:hover,
+.hm-inline-link:focus-visible {
+  text-decoration: underline;
+  filter: brightness(.9);
+}
+
+/* a career still being earned */
+.hm-active {
+  font-family: var(--mono);
+  font-size: .6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--green, var(--accent));
+  margin-left: .35rem;
+}

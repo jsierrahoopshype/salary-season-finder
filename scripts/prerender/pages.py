@@ -77,39 +77,57 @@ def _flag(media, ident):
 
 
 def _career_entries(idx, identities):
-    """Completed careers only, by the engine's own rule.
+    """Money already paid, biggest first, active players included.
 
-    A career total is claimed for a man whose career is finished, whose whole
-    career is inside the window, whose name covers one player, and whose running
-    total started at his own first salary. Everything else is left out rather
-    than printed with a figure that is not his.
+    A list of finished careers only is wrong on its face: it called Elton
+    Brand the highest-earning Duke player while Kyrie Irving, still playing and
+    $200 million clear of him, was not on it. The figure is the running total
+    through each man's last season that is not contracted, so nothing here
+    counts money that has not been paid.
+
+    What stays out is a total that is not one man's: a name covering two
+    players, a running total that was already running when he arrived, and a
+    page for one segment of a confirmed split, whose key sums two careers.
     """
     entries = []
     for ident in identities:
         data_key = ident.data_key
-        if not ident.extra.get("career_trustworthy"):
+        if ident.extra.get("segment") is not None:
             continue
-        if not idx.career_complete(data_key):
+        if not idx.career_rankable(data_key):
             continue
-        last = ident.records[-1]
-        if not idx.is_final_season(data_key, last["season"]):
-            continue
-        total = last.get("career_earnings")
+        total, season = idx.paid_through(data_key)
         if total is None:
+            continue
+        last = next(
+            (r for r in reversed(ident.records) if r["season"] == season), None
+        )
+        if last is None:
             continue
         entries.append((total, ident, last))
     entries.sort(key=lambda t: (-t[0], t[1].name, t[1].key))
     return entries
 
 
-def _career_rows(entries, limit, media=None):
+ACTIVE_TAG = '<span class="hm-active">active</span>'
+
+
+def _career_rows(idx, entries, limit, media=None):
     rows = []
     for i, (total, ident, last) in enumerate(entries[:limit], start=1):
+        active = not idx.career_complete(ident.data_key)
+        span = "{} to {}".format(
+            esc(ident.records[0]["season"]),
+            "date" if active else esc(last["season"]),
+        )
+        played = sum(
+            1 for r in ident.records if not idx.is_contracted(r["season"])
+        )
         rows.append([
             player_link(ident, rank=i, face=_face(media, ident),
-                        tag=_flag(media, ident)),
-            "{} to {}".format(esc(ident.records[0]["season"]), esc(last["season"])),
-            str(len(ident.records)),
+                        tag=_flag(media, ident) + (ACTIVE_TAG if active else "")),
+            span,
+            str(played),
             money(total),
         ])
     return rank_table(
@@ -182,7 +200,8 @@ COHORT_NOUN = {
 }
 
 
-def cohort_page(idx, entity, identities, facts_by_cohort, media=None):
+def cohort_page(idx, entity, identities, facts_by_cohort, media=None,
+                linker=None):
     owners = _owner_map(identities)
     name = entity.name
     lower = name.lower()
@@ -201,15 +220,14 @@ def cohort_page(idx, entity, identities, facts_by_cohort, media=None):
         leader = owners.get(id(top[0]))
         leader_name = leader.name if leader else top[0]["player"]
         description = (
-            "Every NBA salary for {} since {}. {} tops the list at {} in {}."
-        ).format(noun, F.SCOPE_FIRST_SEASON, leader_name,
-                 money_short(top[0]["salary"]), top[0]["season"])
+            "Every NBA salary for {}. {} tops the list at {} in {}."
+        ).format(noun, leader_name, money_short(top[0]["salary"]), top[0]["season"])
     else:
-        description = "Every NBA salary for {} since {}.".format(noun, F.SCOPE_FIRST_SEASON)
+        description = "Every NBA salary for {}.".format(noun)
 
     paid_seasons = sum(1 for r in entity.records if _paid(idx, r) and r.get("salary"))
     career = _career_entries(idx, entity.players)
-    career_html = _career_rows(career, C.TABLE_ROWS, media)
+    career_html = _career_rows(idx, career, C.TABLE_ROWS, media)
     current_html, current_count, current = _current_rows(
         idx, entity.records, owners, C.TABLE_ROWS, media)
     paid = _paid_entries(idx, entity.records, owners, C.TABLE_ROWS)
@@ -222,14 +240,14 @@ def cohort_page(idx, entity, identities, facts_by_cohort, media=None):
 
     body = [
         "<h1>{}</h1>".format(esc(heading)),
-        summary_block(sentences) or '<p class="hm-lede">{}</p>'.format(esc(description)),
+        summary_block(sentences, linker, entity.url)
+        or '<p class="hm-lede">{}</p>'.format(esc(description)),
         scope_line(),
         section(
             "Highest career earnings",
-            "Completed careers only, {} of them. A career counts once the player "
-            "has been absent two seasons, his whole career is inside the window, "
-            "his name covers one player and his running total starts at his own "
-            "first salary.".format(len(career)),
+            "Money already paid, {} players in all, active men included. "
+            "Contracted seasons are left out, and so is any name the data "
+            "cannot pin to one man.".format(len(career)),
             career_html,
         ),
         section(
@@ -257,7 +275,7 @@ def cohort_page(idx, entity, identities, facts_by_cohort, media=None):
 # player pages
 # --------------------------------------------------------------------------
 
-def player_page(idx, ident, season_table_html, facts, related):
+def player_page(idx, ident, season_table_html, facts, related, linker=None):
     title = C.TITLES["player"][0].format(name=ident.name)
     first, last = ident.records[0], ident.records[-1]
     paid = [r for r in ident.records if _paid(idx, r)]
@@ -285,7 +303,8 @@ def player_page(idx, ident, season_table_html, facts, related):
         body.append(section(
             "What the numbers say",
             "Season by season, newest first. Earlier seasons open on a tap.",
-            facts_by_season(facts, F.season_key(idx.current_season)),
+            facts_by_season(facts, F.season_key(idx.current_season),
+                            linker, ident.url),
         ))
     elif not ident.extra.get("factoids_allowed"):
         body.append(section(
@@ -313,9 +332,9 @@ def team_page(idx, entity, identities):
         amount for r in current for c, amount in F.team_amounts(r) if c == code
     )
     description = (
-        "{} payroll and salary history since {}. The {} roster is on {} for {}."
-    ).format(entity.name, F.SCOPE_FIRST_SEASON, idx.current_season,
-             money_short(payroll), entity.name)
+        "{} payroll and salary history, season by season. The {} roster is on "
+        "{} for {}."
+    ).format(entity.name, idx.current_season, money_short(payroll), entity.name)
 
     # contracted totals per future season
     future = collections.defaultdict(float)
@@ -486,11 +505,9 @@ def hub_page(hub_slug, family, entries, lead=None):
     title = C.HUB_TITLES[hub_slug]
     heading = C.HUB_HEADINGS[hub_slug]
     description = (
-        "Every {} page on HoopsMatic's NBA salary database, {} in all, "
-        "each with the highest single-season salaries and career earnings "
-        "since {}."
-    ).format(C.FAMILIES[family]["label_one"].lower(), len(entries),
-             F.SCOPE_FIRST_SEASON)
+        "Every {} page on HoopsMatic's NBA salary database, {} in all, each "
+        "with the highest single-season salaries and career earnings."
+    ).format(C.FAMILIES[family]["label_one"].lower(), len(entries))
     body = [
         "<h1>{}</h1>".format(esc(heading)),
         '<p class="hm-lede">{}</p>'.format(esc(description)),

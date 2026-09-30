@@ -1798,3 +1798,21 @@ table.nba-table td.awards-cell {
 .filter-page-link:focus-visible {
   text-decoration: underline;
 }
+
+/* ==========================================================================
+   Awards below 768px.
+
+   An awards cell holds a badge per award, which on a phone turns one card
+   into a wall of them and pushes the numbers off the screen. The column and
+   its card line are hidden there; the awards filter, and everything wider,
+   are untouched.
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  table.nba-table td.awards-cell,
+  table.nba-table th.awards-header,
+  table.player-season-table th.ps-awards,
+  table.player-season-table td.ps-awards {
+    display: none;
+  }
+}

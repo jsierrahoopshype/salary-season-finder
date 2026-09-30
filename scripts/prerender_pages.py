@@ -37,6 +37,7 @@ from prerender import entities as E  # noqa: E402
 from prerender import pages as P  # noqa: E402
 from prerender import render as R  # noqa: E402
 from prerender import slugs as S  # noqa: E402
+from prerender import linkify  # noqa: E402
 from prerender.media import Media  # noqa: E402
 from prerender.phrasing import drop_mirrors, straighten  # noqa: E402
 
@@ -495,6 +496,7 @@ def main(argv=None):
 
     lookup = {(e.family, e.key): e.slug for e in built["all"]}
     media = Media(REPO)
+    linker = linkify.build(idx, built["all"], built["cohorts"])
     by_player_facts, by_cohort_facts = group_factoids(load_factoids())
 
     hashes = {}
@@ -523,7 +525,7 @@ def main(argv=None):
         facts = player_facts(by_player_facts, ident, current_key)
         title, description, body = P.player_page(
             idx, ident, tables.get(ident.key, ""), facts,
-            related_links(idx, ident, lookup),
+            related_links(idx, ident, lookup), linker,
         )
         emit(ident, title, description, body, [
             ("Salary Season Finder", C.TOOL_ROOT), (ident.name, None),
@@ -532,7 +534,7 @@ def main(argv=None):
     # ---- cohort pages ----------------------------------------------------
     for entity in built["cohorts"]:
         title, description, body = P.cohort_page(
-            idx, entity, built["players"], by_cohort_facts, media
+            idx, entity, built["players"], by_cohort_facts, media, linker
         )
         hub = C.FAMILIES[entity.family]["hub"]
         emit(entity, title, description, body, [

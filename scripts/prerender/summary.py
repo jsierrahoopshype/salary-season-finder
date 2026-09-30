@@ -37,10 +37,47 @@ SUMMARY_NOUN = {
 RATIO_MIN = 2.0
 
 
+#: The same group in the singular, for "more than any Duke player has earned".
+SUMMARY_NOUN_ONE = {
+    "college": "{name} player",
+    "country": "player from {name}",
+    "draft": "player from the {name} draft class",
+    "pick": "No. {name} pick",
+    "position": "{name_one}",
+    "agent": "client of {name}",
+}
+
+
 def group_noun(family, key, name):
     if family == "pick" and key == "undrafted":
         return "undrafted players"
     return SUMMARY_NOUN[family].format(name=name, name_lower=name.lower())
+
+
+def group_noun_one(family, key, name):
+    if family == "pick" and key == "undrafted":
+        return "undrafted player"
+    lower = name.lower()
+    return SUMMARY_NOUN_ONE[family].format(
+        name=name, name_lower=lower,
+        name_one=lower[:-1] if lower.endswith("s") else lower,
+    )
+
+
+class _CareerField(object):
+    """The career table as a universe, so the engine's own pre-window guard
+    can read it. One attribute is all ``pre_window_shadow`` touches."""
+
+    def __init__(self, entries):
+        self.entries = entries
+
+
+def _as_universe(idx, career):
+    return _CareerField([
+        {"value": total, "pre_window": idx.pre_window_career(ident.data_key),
+         "display": ident.name}
+        for total, ident, _last in career
+    ])
 
 
 def _money(value):
@@ -106,24 +143,39 @@ def cohort_summary(idx, family, key, name, career, paid, current, facts):
     [(season, fact)] for this cohort straight from factoids.json.
     """
     noun = group_noun(family, key, name)
+    one = group_noun_one(family, key, name)
     entries = drop_mirrors(list(facts))
     out = []
     scoped = False
 
     # ---- who has earned the most -----------------------------------------
-    if career:
+    #
+    # Money already paid, active men included. A career that began before the
+    # data did is short of its first seasons, so where one of those sits close
+    # enough to the leader to be wrong, the sentence is not written at all.
+    shadowed = bool(career) and F.pre_window_shadow(
+        _as_universe(idx, career), career[0][0])
+    if career and not shadowed:
         total, ident, last = career[0]
+        active = not idx.career_complete(ident.data_key)
+        played = sum(1 for r in ident.records if not idx.is_contracted(r["season"]))
         clause = ""
         if len(career) > 1:
             clause = _ratio_clause(total, career[1][0])
             if clause:
-                clause += "any other finished career in the group."
-        out.append(
-            "{} leads all {} in career earnings since {}, {} across {} seasons.{}".format(
-                ident.name, noun, F.SCOPE_FIRST_SEASON, _money(total),
-                len(ident.records), clause
+                clause += "what any other {} has earned.".format(one)
+        if active:
+            out.append(
+                "{} has earned more than any other {}, {} across {} seasons to date.{}".format(
+                    ident.name, one, _money(total), played, clause
+                )
             )
-        )
+        else:
+            out.append(
+                "{} leads all {} with {} across {} seasons.{}".format(
+                    ident.name, noun, _money(total), played, clause
+                )
+            )
         scoped = True
 
     # ---- the biggest single season ---------------------------------------
@@ -135,19 +187,18 @@ def cohort_summary(idx, family, key, name, career, paid, current, facts):
         )
         clause = _ratio_clause(record.get("salary"), rival)
         if clause:
-            clause += "any other member has been paid for a season."
-        since = "" if scoped else " since {}".format(F.SCOPE_FIRST_SEASON)
-        if career and record_ident is career[0][1]:
+            clause += "what any other {} has been paid for a season.".format(one)
+        if scoped and career and record_ident is career[0][1]:
             out.append(
-                "His {} in {} is also the biggest single season on the list{}.{}".format(
-                    _money(record.get("salary")), record["season"], since, clause
+                "His {} in {} is also the biggest single season on the list.{}".format(
+                    _money(record.get("salary")), record["season"], clause
                 )
             )
         else:
             out.append(
-                "The biggest single season belongs to {}, {} in {}{}.{}".format(
+                "The biggest single season belongs to {}, {} in {}.{}".format(
                     record_ident.name, _money(record.get("salary")),
-                    record["season"], since, clause
+                    record["season"], clause
                 )
             )
 
@@ -163,14 +214,15 @@ def cohort_summary(idx, family, key, name, career, paid, current, facts):
             if top_ident is record_ident:
                 # already named a sentence ago, so he is "he" here
                 out.append(
-                    "In {} he is still the best-paid member of the group, at {}.".format(
-                        idx.current_season, _money(top.get("salary"))
+                    "In {} he is still the best-paid {} in the league, at {}.".format(
+                        idx.current_season, one, _money(top.get("salary"))
                     )
                 )
             else:
                 out.append(
-                    "In {} the highest-paid member is {} at {}.".format(
-                        idx.current_season, top_ident.name, _money(top.get("salary"))
+                    "In {} the highest-paid {} is {} at {}.".format(
+                        idx.current_season, one, top_ident.name,
+                        _money(top.get("salary"))
                     )
                 )
 
@@ -178,17 +230,23 @@ def cohort_summary(idx, family, key, name, career, paid, current, facts):
     if future:
         tail = ""
         if future["tops"]:
-            tail = (
-                ", each one above anything the group has been paid"
-                if len(future["rows"]) > 1
-                else ", more than anyone in the group has been paid"
-            )
+            tail = ", each more than any {} has earned in a season".format(one)
+            if len(future["rows"]) == 1:
+                tail = ", more than any {} has earned in a season".format(one)
         out.append(
             "{} contract would pay him {}{}.".format(
                 _possessive(future["name"]), _merge_seasons(future["rows"]), tail
             )
         )
 
+    # A cohort whose leader started before the data did gets no career
+    # sentence, so it gets the reason instead: with one sentence left the page
+    # reads as if there were nothing to say.
+    if shadowed and idx.pre_window_career(career[0][1].data_key) and len(out) < 2:
+        out.append(
+            "The biggest careers here began before the salary data does, so no "
+            "career total on this page is the whole of what the man earned."
+        )
     return out[:C.SUMMARY_SENTENCES]
 
 

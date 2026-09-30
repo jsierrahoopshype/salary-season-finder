@@ -193,16 +193,19 @@ def player_link(ident, rank=None, tag="", face=""):
 CONTRACTED_TAG = '<span class="hm-contracted">contracted</span>'
 
 
-def summary_block(sentences):
+def summary_block(sentences, linker=None, url=None):
     """The written summary at the top of a cohort page."""
     if not sentences:
         return ""
+    render = (
+        (lambda t: linker.sentences_html(t, url)) if linker else esc
+    )
     return '<div class="hm-summary">{}</div>'.format(
-        "".join("<p>{}</p>".format(esc(text)) for text in sentences)
+        "".join("<p>{}</p>".format(render(text)) for text in sentences)
     )
 
 
-def facts_by_season(groups, current_key):
+def facts_by_season(groups, current_key, linker=None, url=None):
     """A player's claims under season headings, newest season first.
 
     This season and the seasons already signed for are open, because that is
@@ -211,9 +214,10 @@ def facts_by_season(groups, current_key):
     """
     if not groups:
         return ""
+    render = (lambda t: linker.html(t, url)) if linker else esc
     out = ['<div class="hm-seasons">']
     for season, key, sentences in groups:
-        items = "".join("<li>{}</li>".format(esc(text)) for text in sentences)
+        items = "".join("<li>{}</li>".format(render(text)) for text in sentences)
         count = '<span class="hm-count">{}</span>'.format(len(sentences))
         if key >= current_key:
             out.append(

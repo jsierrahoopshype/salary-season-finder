@@ -510,15 +510,18 @@ def test_player_pages_link_the_sibling_tools():
 # --------------------------------------------------------------------------
 
 
-def _summary(path):
+def _summary(path, strip_links=True):
     html = read(path)
     block = re.search(r'<div class="hm-summary">(.*?)</div>', html, re.S)
     if not block:
         return []
     import html as _html
-    return [
-        _html.unescape(t) for t in re.findall(r"<p>(.*?)</p>", block.group(1), re.S)
-    ]
+    out = []
+    for text in re.findall(r"<p>(.*?)</p>", block.group(1), re.S):
+        if strip_links:
+            text = re.sub(r"<[^>]+>", "", text)
+        out.append(_html.unescape(text))
+    return out
 
 
 @built
@@ -528,15 +531,16 @@ def test_cohort_pages_carry_a_short_written_summary():
         sentences = _summary(os.path.join(*(path.split("/") + ["index.html"])))
         assert 2 <= len(sentences) <= C.SUMMARY_SENTENCES, (path, sentences)
         joined = " ".join(sentences)
-        assert joined.count(F.SCOPE_FIRST_SEASON) == 1, (path, joined)
+        # the window is a note on the page now, never a clause in a claim
+        assert F.SCOPE_FIRST_SEASON not in joined, (path, joined)
         assert "—" not in joined, path
-        assert joined.count(". ") + 1 == len(joined.split(". ")), path
+        assert "the group" not in joined, (path, joined)
 
 
 @built
 def test_the_summary_leads_with_career_then_the_single_season():
     sentences = _summary(os.path.join("college", "duke", "index.html"))
-    assert "career earnings" in sentences[0]
+    assert "has earned more than any other Duke player" in sentences[0]
     assert "single season" in sentences[1]
 
 
@@ -766,3 +770,140 @@ def test_headshots_are_matched_with_punctuation_and_accents_stripped():
     media = Media(REPO)
     assert media.face_src(["LeBron James"]).endswith("2544-lebron-james.webp")
     assert media.face_src(["Nobody At All"]).endswith("player_silhouette.svg")
+
+
+# --------------------------------------------------------------------------
+# career tables rank money already paid, active players included
+# --------------------------------------------------------------------------
+
+
+def _career_table(path):
+    """The rows of a page's 'Highest career earnings' table."""
+    html = read(path)
+    block = html[html.index("Highest career earnings"):]
+    block = block[:block.index("</section>")]
+    return re.findall(r'<tr><th class="hm-who" scope="row">(.*?)</th>(.*?)</tr>', block, re.S)
+
+
+@built
+def test_an_active_player_can_lead_a_career_table():
+    rows = _career_table(os.path.join("college", "duke", "index.html"))
+    assert rows, "Duke should have a career table"
+    first = rows[0][0]
+    assert "Kyrie Irving" in first, first
+    assert "hm-active" in first, first
+
+
+@built
+def test_a_career_table_never_counts_contracted_money():
+    idx = F.build_index(F.load_data())
+    html = read(os.path.join("college", "duke", "index.html"))
+    block = html[html.index("Highest career earnings"):]
+    block = block[:block.index("</section>")]
+    figures = [int(m.replace(",", "")) for m in re.findall(r"\$([\d,]+)", block)]
+    for name in ("Kyrie Irving", "Jayson Tatum"):
+        paid, season = idx.paid_through(name)
+        assert paid in figures, (name, paid)
+        assert not idx.is_contracted(season), (name, season)
+
+
+@built
+def test_an_active_career_is_worded_as_a_total_to_date():
+    for path, meta in all_pages().items():
+        if path.split(os.sep)[0] not in ("college", "country", "draft", "pick",
+                                         "position"):
+            continue
+        for sentence in _summary(path):
+            if "has earned more than" in sentence:
+                assert "to date" in sentence, (path, sentence)
+
+
+# --------------------------------------------------------------------------
+# no page hedges on the data window any more
+# --------------------------------------------------------------------------
+
+
+@built
+def test_the_window_is_a_note_and_never_a_clause_in_a_claim():
+    """1990-91 still appears as a season a man played in. What it no longer
+    does is hedge a claim."""
+    for path in all_pages():
+        if not path.endswith(".html") or path == "index.html":
+            continue
+        html = read(path)
+        assert "since 1990-91" not in html, path
+        assert "Since 1990-91" not in html, path
+    for path in ("college/duke", "player/joel-embiid", "countries"):
+        html = read(os.path.join(*(path.split("/") + ["index.html"])))
+        assert F.DATA_START_NOTE in html, path
+        assert html.count(F.DATA_START_NOTE) == 1, path
+
+
+@built
+def test_no_title_or_description_carries_the_window():
+    for path in all_pages():
+        if not path.endswith(".html") or path == "index.html":
+            continue
+        html = read(path)
+        title = re.search(r"<title>(.*?)</title>", html).group(1)
+        desc = re.search(r'<meta name="description" content="(.*?)">', html).group(1)
+        # the 1990-91 season page is allowed to be called 1990-91
+        assert "Since " + F.SCOPE_FIRST_SEASON not in title, path
+        assert "since " + F.SCOPE_FIRST_SEASON not in desc, path
+    assert "in NBA History" in read(
+        os.path.join("college", "duke", "index.html")).split("</title>")[0]
+
+
+# --------------------------------------------------------------------------
+# names inside a sentence link to their own pages
+# --------------------------------------------------------------------------
+
+
+@built
+def test_a_claim_links_the_things_it_names():
+    html = read(os.path.join("player", "joel-embiid", "index.html"))
+    block = html[html.index("What the numbers say"):]
+    for expect in ("/college/kansas/", "/draft/2014/", "/player/nikola-jokic/",
+                   "/position/center/", "/pick/3/"):
+        assert 'class="hm-inline-link" href="{}{}"'.format(C.TOOL_ROOT, expect) in block, expect
+
+
+@built
+def test_a_page_never_links_to_itself_inside_a_sentence():
+    for path, meta in all_pages().items():
+        if not path.endswith(".html") or path == "index.html":
+            continue
+        url = meta.get("url")
+        if not url:
+            continue
+        html = read(path)
+        assert 'class="hm-inline-link" href="{}"'.format(url) not in html, path
+
+
+@built
+def test_a_target_is_linked_once_per_sentence():
+    for path in (os.path.join("player", "joel-embiid", "index.html"),
+                 os.path.join("college", "duke", "index.html")):
+        html = read(path)
+        for item in re.findall(r"<li>(.*?)</li>", html) + re.findall(r"<p>(.*?)</p>", html):
+            hrefs = re.findall(r'class="hm-inline-link" href="([^"]+)"', item)
+            for sentence_hrefs in [hrefs]:
+                assert len(sentence_hrefs) == len(set(sentence_hrefs)) or \
+                    item.count(". ") >= 1, (path, item[:120])
+
+
+# --------------------------------------------------------------------------
+# awards on a phone
+# --------------------------------------------------------------------------
+
+
+@built
+def test_awards_are_hidden_below_768px():
+    css = read(os.path.join("css", "styles.css"))
+    block = css[css.rindex("@media (max-width: 768px)"):]
+    for selector in ("td.awards-cell", "th.awards-header", "th.ps-awards",
+                     "td.ps-awards"):
+        assert selector in block, selector
+    assert "display: none" in block
+    # the filter itself is untouched
+    assert "#awardsFilter" not in block
