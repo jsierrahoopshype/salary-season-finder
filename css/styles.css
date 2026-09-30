@@ -1808,7 +1808,7 @@ table.nba-table td.awards-cell {
    are untouched.
    ========================================================================== */
 
-@media (max-width: 768px) {
+@media (max-width: 767.98px) {
   table.nba-table td.awards-cell,
   table.nba-table th.awards-header,
   table.player-season-table th.ps-awards,

@@ -1,0 +1,114 @@
+name: Live check
+
+# What the pages look like from the outside. They are built here and served by
+# GitHub Pages behind the hoopsmatic.com Worker, so a green build says nothing
+# about what a reader gets: only a GET of the real URL does. It waits for the
+# Worker's cache to turn over, then asks for each page with a cache-buster.
+#
+# Read-only GETs, one a second. It opens one issue when something is wrong,
+# comments on that issue rather than opening a second, and closes it when the
+# pages come back.
+
+on:
+  workflow_run:
+    workflows: ["pages build and deployment"]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: live-smoke
+  cancel-in-progress: false
+
+env:
+  ISSUE_TITLE: Live check failed
+
+jobs:
+  smoke:
+    # Only after a deployment that actually succeeded, or by hand.
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Wait for the Worker cache to turn over
+        run: sleep 360
+
+      - name: Fetch the live pages
+        id: smoke
+        run: |
+          set +e
+          python scripts/live_smoke.py --out /tmp/live-report.md
+          echo "status=$?" >> "$GITHUB_OUTPUT"
+
+      - name: Open or update the issue
+        if: steps.smoke.outputs.status != '0'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const details = fs.readFileSync('/tmp/live-report.md', 'utf8').trim();
+            const title = process.env.ISSUE_TITLE;
+            const run = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}` +
+              `/actions/runs/${context.runId}`;
+            const body = [
+              `The live pages did not answer as expected.`,
+              ``,
+              details || '- no details were captured',
+              ``,
+              `Run: ${run}`,
+            ].join('\n');
+            const existing = await github.rest.search.issuesAndPullRequests({
+              q: `repo:${context.repo.owner}/${context.repo.repo} is:issue is:open in:title "${title}"`,
+            });
+            const open = existing.data.items.find(i => i.title === title);
+            if (open) {
+              await github.rest.issues.createComment({
+                ...context.repo, issue_number: open.number, body,
+              });
+              core.notice(`commented on #${open.number}`);
+            } else {
+              const made = await github.rest.issues.create({
+                ...context.repo, title, body,
+              });
+              core.notice(`opened #${made.data.number}`);
+            }
+
+      - name: Close the issue when the pages are healthy
+        if: steps.smoke.outputs.status == '0'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = process.env.ISSUE_TITLE;
+            const existing = await github.rest.search.issuesAndPullRequests({
+              q: `repo:${context.repo.owner}/${context.repo.repo} is:issue is:open in:title "${title}"`,
+            });
+            const open = existing.data.items.find(i => i.title === title);
+            if (!open) return;
+            const run = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}` +
+              `/actions/runs/${context.runId}`;
+            await github.rest.issues.createComment({
+              ...context.repo, issue_number: open.number,
+              body: `The live pages answered as expected again. Run: ${run}`,
+            });
+            await github.rest.issues.update({
+              ...context.repo, issue_number: open.number, state: 'closed',
+              state_reason: 'completed',
+            });
+
+      - name: Fail the run when the live pages are wrong
+        if: steps.smoke.outputs.status != '0'
+        run: exit 1

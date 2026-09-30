@@ -13,8 +13,8 @@ import factoids as F  # noqa: E402
 from . import config as C  # noqa: E402
 from .render import (  # noqa: E402
     CONTRACTED_TAG, esc, facts_by_season, links_row, money, money_short,
-    page_url, player_link, rank_table, roll_call, scope_line, section,
-    summary_block,
+    more_block, page_url, player_link, rank_table, roll_call, scope_line,
+    section, summary_block,
 )
 from .summary import cohort_summary  # noqa: E402
 
@@ -144,10 +144,14 @@ def _career_rows(idx, entries, limit, media=None):
             str(played),
             money(total),
         ])
+    # The money is the column a reader came for, so on a phone it sits beside
+    # the name; the span and the season count follow. Ordered in CSS, not in
+    # the markup, so the desktop table is untouched and the header and the
+    # body cannot fall out of step.
     return rank_table(
-        [("Player", "hm-who"), ("Career", "hm-num"), ("Seasons", "hm-num"),
-         ("Career earnings", "hm-money")],
-        rows,
+        [("Player", "hm-who"), ("Career", "hm-num hm-span"),
+         ("Seasons", "hm-num hm-seasons"), ("Career earnings", "hm-money")],
+        rows, table_class="hm-career-table",
     )
 
 
@@ -217,7 +221,7 @@ COHORT_NOUN = {
 
 
 def cohort_page(idx, entity, identities, facts_by_cohort, media=None,
-                linker=None):
+                linker=None, family_members=None):
     owners = _owner_map(identities)
     name = entity.name
     lower = name.lower()
@@ -276,7 +280,7 @@ def cohort_page(idx, entity, identities, facts_by_cohort, media=None,
         ),
         section(
             "On a roster in {}".format(idx.current_season),
-            "{} of them, with what is signed beyond this season.".format(current_count),
+            "{} players, with what is signed beyond this season.".format(current_count),
             current_html,
         ),
         section(
@@ -285,6 +289,8 @@ def cohort_page(idx, entity, identities, facts_by_cohort, media=None,
             roll_call([(p.name, p.slug, None) for p in entity.players], "player"),
         ),
     ]
+    if family_members:
+        body.append(more_block(entity.family, family_members, entity.slug))
     return title, description, "\n".join(body)
 
 
@@ -522,7 +528,7 @@ def _team_slug(code):
 # hubs
 # --------------------------------------------------------------------------
 
-def hub_page(hub_slug, family, entries, lead=None):
+def hub_page(hub_slug, family, entries, lead=None, family_members=None):
     title = C.HUB_TITLES[hub_slug]
     heading = C.HUB_HEADINGS[hub_slug]
     description = (
@@ -533,11 +539,20 @@ def hub_page(hub_slug, family, entries, lead=None):
         "<h1>{}</h1>".format(esc(heading)),
         '<p class="hm-lede">{}</p>'.format(esc(description)),
         scope_line(),
-        section(
+    ]
+    # The hub's own list is the "more" block for this family: printing it
+    # twice would be the same chips under two headings. Past 40 pages it is
+    # grouped, so a reader can find a letter or a decade without scrolling
+    # through the lot.
+    if family_members and len(family_members) > 40:
+        body.append(more_block(
+            family, family_members, None,
+            heading="All {}".format(C.FAMILIES[family]["label"].lower())))
+    else:
+        body.append(section(
             "All {}".format(C.FAMILIES[family]["label"].lower()),
             "{} pages, each one a ranked table of salaries and career "
             "earnings.".format(len(entries)),
             roll_call(entries, family, lead=lead),
-        ),
-    ]
+        ))
     return title, description, "\n".join(body)

@@ -38,7 +38,8 @@ PAGE_HASHES_PATH = os.path.join("data", "page_hashes.json")
 #: The one line about the data window on every page. No claim carries the
 #: window any more: saying "since 1990-91" in every sentence read as a hedge on
 #: figures that are, for everyone being compared, the whole of what he earned.
-SCOPE_NOTE = DATA_START_NOTE
+#: The footnote says the fact and stops.
+SCOPE_NOTE = "Salary data starts in {}.".format(SCOPE_FIRST_SEASON)
 
 #: Longest title we aim for. Past this the template drops its scope clause.
 TITLE_TARGET = 65

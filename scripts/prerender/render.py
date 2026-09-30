@@ -157,11 +157,12 @@ def section(heading, hint, body):
     return "\n".join(out)
 
 
-def rank_table(columns, rows):
+def rank_table(columns, rows, table_class=""):
     """A ranked table inside the season table's scroll frame.
 
     ``columns`` is [(label, css class)], the first of which is the frozen one.
-    ``rows`` is a list of lists of ready-made cell HTML.
+    ``rows`` is a list of lists of ready-made cell HTML. ``table_class`` marks
+    a table whose columns are reordered on a phone.
     """
     if not rows:
         return '<p class="hm-empty">Nothing on file.</p>'
@@ -175,10 +176,11 @@ def rank_table(columns, rows):
         for value, (_label, cls) in zip(row[1:], columns[1:]):
             cells.append('<td class="{}">{}</td>'.format(cls, value))
         body.append("<tr>{}</tr>".format("".join(cells)))
+    classes = "hm-rank-table" + (" " + table_class if table_class else "")
     return (
-        '<div class="ps-scroll"><table class="hm-rank-table">'
+        '<div class="ps-scroll"><table class="{}">'
         "<thead><tr>{}</tr></thead><tbody>{}</tbody></table></div>".format(
-            head, "".join(body)
+            classes, head, "".join(body)
         )
     )
 
@@ -252,6 +254,99 @@ def roll_call(entries, family, lead=None):
         items.append('<li><a href="{}">{}{}{}</a></li>'.format(
             esc(href), mark, esc(name), suffix))
     return '<ul class="hm-roll">{}</ul>'.format("".join(items))
+
+
+# --------------------------------------------------------------------------
+# "More colleges": every other page in the family, at the foot of the page
+# --------------------------------------------------------------------------
+
+#: Past this many pages a flat row of chips is a wall, so they are grouped.
+GROUPED_ABOVE = 40
+
+#: What the block is called, in the words a reader would use.
+MORE_LABELS = {
+    "college": "colleges",
+    "country": "countries",
+    "draft": "draft classes",
+    "pick": "picks",
+    "position": "positions",
+    "agent": "agents",
+}
+
+
+def _group_of(family, key, name):
+    """The subheading an entry belongs under, or None where none is wanted."""
+    if family in ("draft",):
+        try:
+            year = int(key)
+        except ValueError:
+            return "Other"
+        return "{}s".format(year // 10 * 10)
+    if family == "pick":
+        if key == "undrafted":
+            return "Undrafted"
+        try:
+            number = int(key)
+        except ValueError:
+            return "Other"
+        low = (number - 1) // 10 * 10 + 1
+        return "Picks {} to {}".format(low, low + 9)
+    first = (name or "").strip()[:1].upper()
+    return first if first.isalpha() else "#"
+
+
+def _group_sort(family, heading):
+    if family == "draft":
+        return (0, -int(heading[:-1])) if heading[:-1].isdigit() else (1, 0)
+    if family == "pick":
+        if heading == "Undrafted":
+            return (1, 0)
+        parts = heading.split()
+        return (0, int(parts[1])) if len(parts) > 1 and parts[1].isdigit() else (2, 0)
+    return (0, heading)
+
+
+def _entry_sort(family, key, name):
+    if family == "draft":
+        return (0, -int(key)) if key.isdigit() else (1, 0, name)
+    if family == "pick":
+        if key == "undrafted":
+            return (1, 0)
+        return (0, int(key)) if key.isdigit() else (2, 0)
+    return (0, name.lower())
+
+
+def more_block(family, entries, current_slug=None, heading=None):
+    """Chips to every other page in one family, grouped where there are many.
+
+    A reader who has finished one college page is most likely to want
+    another, and until now the only way back was the hub. Everything here is
+    a plain link in the flow of the page: no box that scrolls on its own.
+    """
+    rest = [e for e in entries if e[1] != current_slug]
+    if not rest:
+        return ""
+    rest.sort(key=lambda e: _entry_sort(family, e[2], e[0]))
+    label = heading or "More {}".format(MORE_LABELS.get(
+        family, C.FAMILIES[family]["label"].lower()))
+
+    body = []
+    if len(rest) > GROUPED_ABOVE:
+        groups = {}
+        for name, slug, key in rest:
+            groups.setdefault(_group_of(family, key, name), []).append((name, slug, key))
+        for head in sorted(groups, key=lambda h: _group_sort(family, h)):
+            body.append('<h3 class="hm-more-head">{}</h3>'.format(esc(head)))
+            body.append(roll_call(
+                [(name, slug, None) for name, slug, _key in groups[head]], family))
+    else:
+        body.append(roll_call(
+            [(name, slug, None) for name, slug, _key in rest], family))
+
+    return (
+        '<section class="hm-section hm-more"><h2>{}</h2>{}</section>'.format(
+            esc(label), "".join(body))
+    )
 
 
 def links_row(links):
