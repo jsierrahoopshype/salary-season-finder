@@ -37,6 +37,9 @@ from prerender import entities as E  # noqa: E402
 from prerender import pages as P  # noqa: E402
 from prerender import render as R  # noqa: E402
 from prerender import slugs as S  # noqa: E402
+from prerender import linkify  # noqa: E402
+from prerender.media import Media  # noqa: E402
+from prerender.phrasing import drop_mirrors, straighten  # noqa: E402
 
 
 def repo_path(*parts):
@@ -90,63 +93,60 @@ COHORT_KIND_TO_FAMILY = {
 
 
 def group_factoids(factoids):
-    """Sentences by player and by cohort.
+    """Claims by player and by cohort, as (season, fact) pairs.
 
-    A player's sentences keep their season, because a confirmed split gives a
-    key two pages and each one may only carry the seasons that are its man's.
+    The fact itself travels, not just its sentence: the page writers need the
+    figure, the season it is measured against and whether the money is
+    contracted before they can decide what to print.
     """
     by_player = collections.defaultdict(list)
     by_cohort = collections.defaultdict(list)
     for record_key, facts in sorted(factoids.items()):
         player, season = record_key.split("|", 1)
         for fact in facts:
-            by_player[player].append((season, fact["key"], fact["text"]))
+            by_player[player].append((season, fact))
             parts = fact["key"].split("|")
             if parts[0] in ("cohort_season", "cohort_career") and len(parts) > 2:
                 family = COHORT_KIND_TO_FAMILY.get(parts[1])
                 if family:
-                    by_cohort[(family, parts[2])].append((season, fact["key"], fact["text"]))
-    return (
-        {k: sorted(v) for k, v in by_player.items()},
-        {k: _ordered_texts(v) for k, v in by_cohort.items()},
-    )
+                    by_cohort[(family, parts[2])].append((season, fact))
+    return by_player, by_cohort
 
 
-def _ordered_texts(rows, limit=C.FACTS_SHOWN):
-    """What actually happened first, then what a contract would do.
-
-    A cohort collects a lot of near-identical "would be" sentences about
-    seasons nobody has been paid for yet, and they crowd out the ones about
-    money that has changed hands. Paid seasons lead, newest first; contracted
-    ones follow, nearest first.
-    """
-    paid, future, seen, out = [], [], set(), []
-    for season, key, text in rows:
-        if text in seen:
-            continue
-        seen.add(text)
-        (future if " would " in text else paid).append((season, key, text))
-    paid.sort(key=lambda r: (-F.season_key(r[0]), r[1]))
-    future.sort(key=lambda r: (F.season_key(r[0]), r[1]))
-    for _season, _key, text in paid + future:
-        out.append(text)
-        if len(out) >= limit:
-            break
-    return out
+#: What an older season is still worth saying. A claim that he was fourth on a
+#: list four years ago is noise once the page groups every season together;
+#: what he set, tied, passed or became is not.
+PAST_SEASON_TYPES = frozenset({"sets", "ties", "milestone", "rank_shift"})
 
 
-def player_facts(by_player_facts, ident):
-    """The sentences that belong to this man, in season order.
+def player_facts(by_player_facts, ident, current_key):
+    """This man's claims, grouped by season, newest season first.
 
     A page for one segment of a split key carries only that segment's seasons.
     An unconfirmed split carries none: the name on it cannot be trusted.
+    Mirrored pairs lose a side and forward-pointing comparisons lose their
+    verb, both by the rules in prerender.phrasing.
     """
     if not ident.extra.get("factoids_allowed"):
         return []
     seasons = {r["season"] for r in ident.records}
-    rows = by_player_facts.get(ident.data_key) or []
+    rows = [
+        (season, fact) for season, fact in (by_player_facts.get(ident.data_key) or [])
+        if season in seasons
+    ]
+    rows = drop_mirrors(rows)
+
+    groups = collections.defaultdict(list)
+    for season, fact in rows:
+        key = F.season_key(season)
+        if key < current_key and fact["type"] not in PAST_SEASON_TYPES:
+            continue
+        text = straighten(fact, season)
+        if text not in groups[season]:
+            groups[season].append(text)
     return [
-        text for season, _key, text in rows if season in seasons
+        (season, F.season_key(season), groups[season])
+        for season in sorted(groups, key=F.season_key, reverse=True)
     ]
 
 
@@ -154,7 +154,7 @@ def player_facts(by_player_facts, ident):
 # related links on a player page
 # --------------------------------------------------------------------------
 
-def related_links(idx, ident, lookup, depth=2):
+def related_links(idx, ident, lookup):
     """Teams, cohorts and the sibling tools, where those pages exist."""
     out = []
     seen = set()
@@ -167,7 +167,7 @@ def related_links(idx, ident, lookup, depth=2):
     for code in codes:
         slug = lookup.get(("team", code))
         if slug:
-            out.append((idx.franchises[code]["name"], "{}team/{}/".format(R.up(depth), slug)))
+            out.append((idx.franchises[code]["name"], R.page_url("team", slug)))
 
     last = ident.records[-1]
     candidates = [
@@ -197,7 +197,7 @@ def related_links(idx, ident, lookup, depth=2):
         slug = lookup.get((family, key))
         if slug and (family, slug) not in seen:
             seen.add((family, slug))
-            out.append((label, "{}{}/{}/".format(R.up(depth), C.FAMILIES[family]["dir"], slug)))
+            out.append((label, R.page_url(family, slug)))
 
     out.append(("Compare players", C.COMPARE_URL))
     out.append(("Career map", C.CAREER_MAP_URL))
@@ -305,7 +305,9 @@ def not_found_html(hub_entries):
         robots="noindex,follow",
         url=C.TOOL_ROOT + "/404.html",
         og_title="Page not found | HoopsMatic",
-        root="",
+        # 404.html answers for any missing URL at any depth, so its
+        # stylesheets cannot be relative to where the reader thought he was
+        root=C.TOOL_ROOT + "/",
         breadcrumb_ld=R.breadcrumb_ld([("Salary Season Finder", C.TOOL_ROOT)]),
         crumbs="",
     )
@@ -330,6 +332,11 @@ PLAYER_PAGES_JS = """/* Player page slugs for the tool's results table.
 
   // slugs that are not what slugify would produce, from a collision
   var OVERRIDES = %(overrides)s;
+
+  // the cohort pages that exist, by the value the tool filters on
+  var COHORTS = %(cohorts)s;
+
+  var ROOT = "%(root)s";
 
   function slugify(value) {
     return String(value)
@@ -358,13 +365,32 @@ PLAYER_PAGES_JS = """/* Player page slugs for the tool's results table.
     return OVERRIDES[canonical] || slugify(canonical);
   }
 
-  window.HoopsMaticPlayerPages = { slugFor: slugFor, slugify: slugify };
+  function playerUrl(name, season) {
+    var slug = slugFor(name, season);
+    return slug ? ROOT + "/player/" + slug + "/" : null;
+  }
+
+  /** The page for a filter value, or null where that cohort has no page. */
+  function cohortUrl(family, value) {
+    var group = COHORTS[family];
+    if (!group) return null;
+    var slug = group[String(value)];
+    return slug ? ROOT + "/" + family + "/" + slug + "/" : null;
+  }
+
+  window.HoopsMaticPlayerPages = {
+    root: ROOT,
+    slugFor: slugFor,
+    slugify: slugify,
+    playerUrl: playerUrl,
+    cohortUrl: cohortUrl
+  };
 })();
 """
 
 
-def player_pages_js(idx, identities, book):
-    """The three maps the tool needs to link a name to its page."""
+def player_pages_js(idx, identities, book, cohorts):
+    """The maps the tool needs to link a name, or a filter, to its page."""
     splits = collections.defaultdict(list)
     overrides = {}
     for ident in identities:
@@ -379,10 +405,16 @@ def player_pages_js(idx, identities, book):
     for segments in splits.values():
         segments.sort(key=lambda seg: seg["from"])
     dump = lambda obj: json.dumps(obj, sort_keys=True, ensure_ascii=False, indent=2)
+    by_family = collections.defaultdict(dict)
+    for entity in cohorts:
+        if C.FAMILIES[entity.family]["indexable"]:
+            by_family[C.FAMILIES[entity.family]["dir"]][entity.key] = entity.slug
     return PLAYER_PAGES_JS % {
         "aliases": dump(dict(sorted(idx.name_aliases.items()))),
         "splits": dump({k: v for k, v in sorted(splits.items())}),
         "overrides": dump(dict(sorted(overrides.items()))),
+        "cohorts": dump({k: dict(sorted(v.items())) for k, v in sorted(by_family.items())}),
+        "root": C.TOOL_ROOT,
     }
 
 
@@ -391,6 +423,12 @@ BROWSE_END = "<!-- prerender:browse:end -->"
 
 
 def browse_block(hub_entries):
+    """The hub links on the tool root, as chips rather than a bare list.
+
+    Real HTML, always visible: it is how a reader and a crawler reach every
+    hub from the tool itself. Absolute URLs, because GitHub Pages serves this
+    same file on a host we do not link.
+    """
     links = "".join(
         '<li><a href="{}/{}/">{}</a></li>'.format(C.TOOL_ROOT, slug, R.esc(label))
         for slug, label in hub_entries
@@ -399,7 +437,9 @@ def browse_block(hub_entries):
         "{}\n"
         '      <section class="hm-browse">\n'
         "        <h2>Browse every NBA salary</h2>\n"
-        '        <ul class="hm-roll">{}</ul>\n'
+        '        <p>Every college, country, draft class, pick and position has '
+        "its own page of salaries and career earnings.</p>\n"
+        '        <ul class="hm-chips">{}</ul>\n'
         "      </section>\n"
         "      {}".format(BROWSE_START, links, BROWSE_END)
     )
@@ -455,6 +495,8 @@ def main(argv=None):
         built["players"] = built["players"][: args.limit_players]
 
     lookup = {(e.family, e.key): e.slug for e in built["all"]}
+    media = Media(REPO)
+    linker = linkify.build(idx, built["all"], built["cohorts"])
     by_player_facts, by_cohort_facts = group_factoids(load_factoids())
 
     hashes = {}
@@ -478,11 +520,12 @@ def main(argv=None):
 
     # ---- player pages ----------------------------------------------------
     tables = render_season_tables(idx, built["players"])
+    current_key = F.season_key(idx.current_season)
     for ident in built["players"]:
-        facts = player_facts(by_player_facts, ident)
+        facts = player_facts(by_player_facts, ident, current_key)
         title, description, body = P.player_page(
             idx, ident, tables.get(ident.key, ""), facts,
-            related_links(idx, ident, lookup),
+            related_links(idx, ident, lookup), linker,
         )
         emit(ident, title, description, body, [
             ("Salary Season Finder", C.TOOL_ROOT), (ident.name, None),
@@ -491,12 +534,12 @@ def main(argv=None):
     # ---- cohort pages ----------------------------------------------------
     for entity in built["cohorts"]:
         title, description, body = P.cohort_page(
-            idx, entity, built["players"], by_cohort_facts
+            idx, entity, built["players"], by_cohort_facts, media, linker
         )
         hub = C.FAMILIES[entity.family]["hub"]
         emit(entity, title, description, body, [
             ("Salary Season Finder", C.TOOL_ROOT),
-            (C.FAMILIES[entity.family]["label"], "../../{}/".format(hub)),
+            (C.FAMILIES[entity.family]["label"], R.hub_url(hub)),
             (entity.name, None),
         ])
 
@@ -520,7 +563,9 @@ def main(argv=None):
             key=lambda e: _hub_sort(e),
         )
         entries = [(e.name, e.slug, len(e.players)) for e in members]
-        title, description, body = P.hub_page(hub_slug, family, entries)
+        # the country hub is a list of countries, so it carries their flags
+        lead = media.flag if family == "country" else None
+        title, description, body = P.hub_page(hub_slug, family, entries, lead=lead)
         url = "{}/{}/".format(C.TOOL_ROOT, hub_slug)
         html = R.page(title, description, url, 1, [
             ("Salary Season Finder", C.TOOL_ROOT),
@@ -537,7 +582,7 @@ def main(argv=None):
     writer.write(C.NOT_FOUND_PATH, not_found_html(hub_entries), today=today)
     writer.write(
         os.path.join("js", "player-pages.js"),
-        player_pages_js(idx, built["players"], book), today=today,
+        player_pages_js(idx, built["players"], book, built["cohorts"]), today=today,
     )
 
     # The tool root is recorded before anything is retired, so it is never

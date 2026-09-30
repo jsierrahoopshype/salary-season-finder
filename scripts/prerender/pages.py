@@ -12,17 +12,33 @@ import factoids as F  # noqa: E402
 
 from . import config as C  # noqa: E402
 from .render import (  # noqa: E402
-    CONTRACTED_TAG, esc, facts_list, links_row, money, money_short, player_link,
-    rank_table, roll_call, scope_line, section, up,
+    CONTRACTED_TAG, esc, facts_by_season, links_row, money, money_short,
+    page_url, player_link, rank_table, roll_call, scope_line, section,
+    summary_block,
 )
+from .summary import cohort_summary  # noqa: E402
 
 
 def _paid(idx, record):
     return not idx.is_contracted(record["season"])
 
 
+def _rankable(idx, record):
+    """A salary that can hold a place in a ranking.
+
+    A record the engine flagged as impossible is a data fault, not a contract,
+    so it never tops a table and never feeds a sentence. It stays on the
+    player's own season table, which lists what the file holds rather than
+    ranking anything.
+    """
+    return not idx.is_impossible(record)
+
+
 def _top_paid(idx, records, limit):
-    rows = [r for r in records if _paid(idx, r) and r.get("salary")]
+    rows = [
+        r for r in records
+        if _paid(idx, r) and r.get("salary") and _rankable(idx, r)
+    ]
     rows.sort(key=lambda r: (-(r.get("salary") or 0), r["player"], r["season"]))
     return rows[:limit]
 
@@ -36,14 +52,24 @@ def _owner_map(identities):
     return out
 
 
-def _season_salary_rows(idx, records, owners, depth, limit):
-    rows = []
-    for i, record in enumerate(_top_paid(idx, records, limit), start=1):
+def _paid_entries(idx, records, owners, limit):
+    """(record, identity) for the biggest paid seasons, biggest first."""
+    out = []
+    for record in _top_paid(idx, records, limit):
         ident = owners.get(id(record))
-        if ident is None:
-            continue
+        if ident is not None:
+            out.append((record, ident))
+    return out
+
+
+def _season_salary_rows(idx, records, owners, limit, media=None):
+    rows = []
+    for i, (record, ident) in enumerate(
+        _paid_entries(idx, records, owners, limit), start=1
+    ):
         rows.append([
-            player_link(ident, depth, rank=i),
+            player_link(ident, rank=i, face=_face(media, ident),
+                        tag=_flag(media, ident)),
             esc(record["season"]),
             esc(record.get("team") or "-"),
             money(record.get("salary")),
@@ -56,50 +82,83 @@ def _season_salary_rows(idx, records, owners, depth, limit):
     )
 
 
-def _career_rows(idx, identities, depth, limit):
-    """Completed careers only, by the engine's own rule.
+def _face(media, ident):
+    return media.face(ident) if media else ""
 
-    A career total is claimed for a man whose career is finished, whose whole
-    career is inside the window, whose name covers one player, and whose running
-    total started at his own first salary. Everything else is left out rather
-    than printed with a figure that is not his.
+
+def _flag(media, ident):
+    return media.player_flag(ident) if media else ""
+
+
+def _career_entries(idx, identities):
+    """Money already paid, biggest first, active players included.
+
+    A list of finished careers only is wrong on its face: it called Elton
+    Brand the highest-earning Duke player while Kyrie Irving, still playing and
+    $200 million clear of him, was not on it. The figure is the running total
+    through each man's last season that is not contracted, so nothing here
+    counts money that has not been paid.
+
+    What stays out is a total that is not one man's: a name covering two
+    players, a running total that was already running when he arrived, and a
+    page for one segment of a confirmed split, whose key sums two careers.
     """
     entries = []
     for ident in identities:
         data_key = ident.data_key
-        if not ident.extra.get("career_trustworthy"):
+        if ident.extra.get("segment") is not None:
             continue
-        if not idx.career_complete(data_key):
+        if not idx.career_rankable(data_key):
             continue
-        last = ident.records[-1]
-        if not idx.is_final_season(data_key, last["season"]):
-            continue
-        total = last.get("career_earnings")
+        total, season = idx.paid_through(data_key)
         if total is None:
+            continue
+        last = next(
+            (r for r in reversed(ident.records) if r["season"] == season), None
+        )
+        if last is None:
             continue
         entries.append((total, ident, last))
     entries.sort(key=lambda t: (-t[0], t[1].name, t[1].key))
+    return entries
+
+
+ACTIVE_TAG = '<span class="hm-active">active</span>'
+
+
+def _career_rows(idx, entries, limit, media=None):
     rows = []
     for i, (total, ident, last) in enumerate(entries[:limit], start=1):
+        active = not idx.career_complete(ident.data_key)
+        # Both ends named, active or not: "to date" leaves a reader guessing
+        # which season the total runs through.
+        span = "{} to {}".format(
+            esc(ident.records[0]["season"]), esc(last["season"]))
+        played = sum(
+            1 for r in ident.records if not idx.is_contracted(r["season"])
+        )
         rows.append([
-            player_link(ident, depth, rank=i),
-            "{} to {}".format(esc(ident.records[0]["season"]), esc(last["season"])),
-            str(len(ident.records)),
+            player_link(ident, rank=i, face=_face(media, ident),
+                        tag=_flag(media, ident) + (ACTIVE_TAG if active else "")),
+            span,
+            str(played),
             money(total),
         ])
     return rank_table(
         [("Player", "hm-who"), ("Career", "hm-num"), ("Seasons", "hm-num"),
          ("Career earnings", "hm-money")],
         rows,
-    ), len(entries)
+    )
 
 
-def _current_rows(idx, records, owners, depth, limit):
+def _current_rows(idx, records, owners, limit, media=None):
     """On a roster now, and what is signed beyond it."""
     current = {}
     contracted = collections.defaultdict(list)
     for record in records:
         key = idx.canonical(record["player"])
+        if not _rankable(idx, record):
+            continue
         if record["season"] == idx.current_season:
             current[key] = record
         elif idx.is_contracted(record["season"]):
@@ -108,17 +167,19 @@ def _current_rows(idx, records, owners, depth, limit):
     ordered = sorted(
         current.values(), key=lambda r: (-(r.get("salary") or 0), r["player"])
     )
+    entries = []
     for record in ordered[:limit]:
         ident = owners.get(id(record))
         if ident is None:
             continue
+        entries.append((record, ident))
         future = sorted(
             contracted.get(idx.canonical(record["player"]), []),
             key=lambda r: F.season_key(r["season"]),
         )
         through = future[-1]["season"] if future else "-"
         rows.append([
-            player_link(ident, depth),
+            player_link(ident, face=_face(media, ident), tag=_flag(media, ident)),
             esc(record.get("team") or "-"),
             money(record.get("salary")),
             esc(through),
@@ -129,7 +190,7 @@ def _current_rows(idx, records, owners, depth, limit):
          ("{} salary".format(idx.current_season), "hm-money"),
          ("Signed through", "hm-num"), ("Contracted after", "hm-money")],
         rows,
-    ), len(ordered)
+    ), len(ordered), entries
 
 
 # --------------------------------------------------------------------------
@@ -155,7 +216,8 @@ COHORT_NOUN = {
 }
 
 
-def cohort_page(idx, entity, identities, facts_by_cohort, depth=2):
+def cohort_page(idx, entity, identities, facts_by_cohort, media=None,
+                linker=None):
     owners = _owner_map(identities)
     name = entity.name
     lower = name.lower()
@@ -174,49 +236,55 @@ def cohort_page(idx, entity, identities, facts_by_cohort, depth=2):
         leader = owners.get(id(top[0]))
         leader_name = leader.name if leader else top[0]["player"]
         description = (
-            "Every NBA salary for {} since {}. {} tops the list at {} in {}."
-        ).format(noun, F.SCOPE_FIRST_SEASON, leader_name,
-                 money_short(top[0]["salary"]), top[0]["season"])
+            "Every NBA salary for {}. {} tops the list at {} in {}."
+        ).format(noun, leader_name, money_short(top[0]["salary"]), top[0]["season"])
     else:
-        description = "Every NBA salary for {} since {}.".format(noun, F.SCOPE_FIRST_SEASON)
+        description = "Every NBA salary for {}.".format(noun)
 
     paid_seasons = sum(1 for r in entity.records if _paid(idx, r) and r.get("salary"))
-    career_html, career_count = _career_rows(idx, entity.players, depth, C.TABLE_ROWS)
-    current_html, current_count = _current_rows(idx, entity.records, owners, depth, C.TABLE_ROWS)
+    career = _career_entries(idx, entity.players)
+    career_html = _career_rows(idx, career, C.TABLE_ROWS, media)
+    current_html, current_count, current = _current_rows(
+        idx, entity.records, owners, C.TABLE_ROWS, media)
+    paid = _paid_entries(idx, entity.records, owners, C.TABLE_ROWS)
     facts = facts_by_cohort.get((entity.family, entity.key), [])
+
+    # The summary carries the page's own numbers, so the description's one fact
+    # is not repeated in the body as well.
+    sentences = cohort_summary(
+        idx, entity.family, entity.key, name, career, paid, current, facts,
+        slug=entity.slug)
 
     body = [
         "<h1>{}</h1>".format(esc(heading)),
-        '<p class="hm-lede">{}</p>'.format(esc(description)),
+        summary_block(sentences, linker, entity.url)
+        or '<p class="hm-lede">{}</p>'.format(esc(description)),
         scope_line(),
+        section(
+            "Highest career earnings",
+            "Money already paid, {} players in all, active men included. "
+            "Contracted seasons are left out, and so is any name the data "
+            "cannot pin to one man.".format(len(career)),
+            career_html,
+        ),
         section(
             "Highest single-season salaries",
             "Top {} of {} paid seasons on file. Contracted future seasons are "
             "left out because that money has not been paid.".format(
                 min(C.TABLE_ROWS, paid_seasons), paid_seasons),
-            _season_salary_rows(idx, entity.records, owners, depth, C.TABLE_ROWS),
-        ),
-        section(
-            "Highest career earnings",
-            "Completed careers only, {} of them. A career counts once the player "
-            "has been absent two seasons, his whole career is inside the window, "
-            "his name covers one player and his running total starts at his own "
-            "first salary.".format(career_count),
-            career_html,
+            _season_salary_rows(idx, entity.records, owners, C.TABLE_ROWS, media),
         ),
         section(
             "On a roster in {}".format(idx.current_season),
             "{} of them, with what is signed beyond this season.".format(current_count),
             current_html,
         ),
+        section(
+            "Every player",
+            "{} in all.".format(len(entity.players)),
+            roll_call([(p.name, p.slug, None) for p in entity.players], "player"),
+        ),
     ]
-    if facts:
-        body.append(section("What the numbers say", None, facts_list(facts)))
-    body.append(section(
-        "Every player",
-        "{} in all.".format(len(entity.players)),
-        roll_call([(p.name, p.slug, None) for p in entity.players], depth, "player"),
-    ))
     return title, description, "\n".join(body)
 
 
@@ -224,7 +292,7 @@ def cohort_page(idx, entity, identities, facts_by_cohort, depth=2):
 # player pages
 # --------------------------------------------------------------------------
 
-def player_page(idx, ident, season_table_html, facts, related, depth=2):
+def player_page(idx, ident, season_table_html, facts, related, linker=None):
     title = C.TITLES["player"][0].format(name=ident.name)
     first, last = ident.records[0], ident.records[-1]
     paid = [r for r in ident.records if _paid(idx, r)]
@@ -249,7 +317,12 @@ def player_page(idx, ident, season_table_html, facts, related, depth=2):
         ),
     ]
     if facts:
-        body.append(section("What the numbers say", None, facts_list(facts)))
+        body.append(section(
+            "What the numbers say",
+            "Season by season, newest first. Earlier seasons open on a tap.",
+            facts_by_season(facts, F.season_key(idx.current_season),
+                            linker, ident.url),
+        ))
     elif not ident.extra.get("factoids_allowed"):
         body.append(section(
             "What the numbers say",
@@ -266,7 +339,7 @@ def player_page(idx, ident, season_table_html, facts, related, depth=2):
 # team pages
 # --------------------------------------------------------------------------
 
-def team_page(idx, entity, identities, depth=2):
+def team_page(idx, entity, identities):
     owners = _owner_map(identities)
     title = C.TITLES["team"][0].format(name=entity.name)
     code = entity.extra["code"]
@@ -276,9 +349,9 @@ def team_page(idx, entity, identities, depth=2):
         amount for r in current for c, amount in F.team_amounts(r) if c == code
     )
     description = (
-        "{} payroll and salary history since {}. The {} roster is on {} for {}."
-    ).format(entity.name, F.SCOPE_FIRST_SEASON, idx.current_season,
-             money_short(payroll), entity.name)
+        "{} payroll and salary history, season by season. The {} roster is on "
+        "{} for {}."
+    ).format(entity.name, idx.current_season, money_short(payroll), entity.name)
 
     # contracted totals per future season
     future = collections.defaultdict(float)
@@ -302,7 +375,7 @@ def team_page(idx, entity, identities, depth=2):
             continue
         share = next((a for c, a in F.team_amounts(record) if c == code), None)
         current_rows.append([
-            player_link(ident, depth),
+            player_link(ident),
             money(share),
             "{:.1f}%".format(record["salary_cap_pct"]) if record.get("salary_cap_pct") is not None else "-",
             str(record.get("age") or "-"),
@@ -337,14 +410,15 @@ def team_page(idx, entity, identities, depth=2):
             "play for it.",
             _season_salary_rows(
                 idx,
-                [r for r in entity.records if not F.is_split_season(r)],
-                owners, depth, C.TABLE_ROWS,
+                [r for r in entity.records
+                 if not F.is_split_season(r) and _rankable(idx, r)],
+                owners, C.TABLE_ROWS,
             ),
         ),
         section(
             "Every player",
             "{} have appeared on a {} payroll.".format(len(entity.players), entity.name),
-            roll_call([(p.name, p.slug, None) for p in entity.players], depth, "player"),
+            roll_call([(p.name, p.slug, None) for p in entity.players], "player"),
         ),
     ]
     return title, description, "\n".join(body)
@@ -354,7 +428,7 @@ def team_page(idx, entity, identities, depth=2):
 # season pages
 # --------------------------------------------------------------------------
 
-def season_page(idx, entity, identities, depth=2):
+def season_page(idx, entity, identities):
     owners = _owner_map(identities)
     season = entity.key
     title = C.TITLES["season"][0].format(name=season)
@@ -374,13 +448,16 @@ def season_page(idx, entity, identities, depth=2):
         description = "Every NBA salary for {}.".format(season)
 
     rows = []
-    ordered = sorted(entity.records, key=lambda r: -(r.get("salary") or 0))
+    ordered = sorted(
+        [r for r in entity.records if _rankable(idx, r)],
+        key=lambda r: -(r.get("salary") or 0),
+    )
     for i, record in enumerate(ordered[:C.TABLE_ROWS], start=1):
         ident = owners.get(id(record))
         if ident is None:
             continue
         rows.append([
-            player_link(ident, depth, rank=i,
+            player_link(ident, rank=i,
                         tag=CONTRACTED_TAG if contracted else ""),
             esc(record.get("team") or "-"),
             money(record.get("salary")),
@@ -394,7 +471,8 @@ def season_page(idx, entity, identities, depth=2):
             if code in idx.franchises:
                 payrolls[code] += amount or 0
     payroll_rows = [
-        ['<a href="{}team/{}/">{}</a>'.format(up(depth), esc(_team_slug(code)), esc(idx.franchises[code]["name"])),
+        ['<a href="{}">{}</a>'.format(
+            esc(page_url("team", _team_slug(code))), esc(idx.franchises[code]["name"])),
          money(amount)]
         for code, amount in sorted(payrolls.items(), key=lambda kv: -kv[1])
     ]
@@ -421,7 +499,7 @@ def season_page(idx, entity, identities, depth=2):
         section(
             "Every player",
             "{} on file for {}.".format(len(entity.players), season),
-            roll_call([(p.name, p.slug, None) for p in entity.players], depth, "player"),
+            roll_call([(p.name, p.slug, None) for p in entity.players], "player"),
         ),
     ]
     return title, description, "\n".join(body)
@@ -444,15 +522,13 @@ def _team_slug(code):
 # hubs
 # --------------------------------------------------------------------------
 
-def hub_page(hub_slug, family, entries, depth=1):
+def hub_page(hub_slug, family, entries, lead=None):
     title = C.HUB_TITLES[hub_slug]
     heading = C.HUB_HEADINGS[hub_slug]
     description = (
-        "Every {} page on HoopsMatic's NBA salary database, {} in all, "
-        "each with the highest single-season salaries and career earnings "
-        "since {}."
-    ).format(C.FAMILIES[family]["label"].lower().rstrip("s"), len(entries),
-             F.SCOPE_FIRST_SEASON)
+        "Every {} page on HoopsMatic's NBA salary database, {} in all, each "
+        "with the highest single-season salaries and career earnings."
+    ).format(C.FAMILIES[family]["label_one"].lower(), len(entries))
     body = [
         "<h1>{}</h1>".format(esc(heading)),
         '<p class="hm-lede">{}</p>'.format(esc(description)),
@@ -461,7 +537,7 @@ def hub_page(hub_slug, family, entries, depth=1):
             "All {}".format(C.FAMILIES[family]["label"].lower()),
             "{} pages, each one a ranked table of salaries and career "
             "earnings.".format(len(entries)),
-            roll_call(entries, depth, family),
+            roll_call(entries, family, lead=lead),
         ),
     ]
     return title, description, "\n".join(body)

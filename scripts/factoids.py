@@ -35,9 +35,56 @@ from collections import defaultdict
 # Constants. Every gate and threshold is named here.
 # --------------------------------------------------------------------------
 
-#: Every all-time claim is scoped to the data window and says so in its text.
+#: The first season on file. No claim says so any more: "since 1990-91" in
+#: every sentence read as a hedge on figures that are, for every player anyone
+#: is comparing, the whole of his earnings. The caveat lives in the note below,
+#: printed once per page, and in the two safeguards that go with it: a career
+#: claim is dropped when a pre-window career sits close enough to it to be
+#: wrong (PRE_WINDOW_MARGIN), and an all-time cap share is only claimed for the
+#: top few, where the missing seasons cannot reach.
 SCOPE_FIRST_SEASON = "1990-91"
-SCOPE_SUFFIX = "since " + SCOPE_FIRST_SEASON
+DATA_START_NOTE = (
+    "Salary data starts in 1990-91; earlier salaries were far smaller in "
+    "dollar terms."
+)
+
+#: A career that began before the window is short by its first seasons. Any
+#: career-earnings claim landing within this of one of those totals is dropped
+#: rather than printed with a comparison the missing money could overturn.
+PRE_WINDOW_MARGIN = 25000000
+
+#: How an all-time claim names its field now that it names no window.
+ALL_TIME = "in NBA history"
+
+#: All-time cap share is only claimed this far down. A rank deeper than this
+#: could be displaced by a season the data does not have.
+CAP_ALL_TIME_MAX_RANK = 3
+
+# --------------------------------------------------------------------------
+# Salaries the CBA does not allow.
+#
+# A supermax is 35% of the cap. A record above that is a data fault, not a
+# contract, and one of them at the top of a list makes every claim under it
+# wrong: Victor Wembanyama's $112.6 million in 2030-31 is a projection nobody
+# can be paid. Two rules catch them, and a caught record is invisible to every
+# claim, every ranking and every summary.
+# --------------------------------------------------------------------------
+
+#: A contracted salary this many times the second-biggest of its own season is
+#: a projection, not a deal. No real season has one salary towering over the
+#: whole league by that much.
+IMPOSSIBLE_SEASON_LEAD = 1.25
+
+#: A contracted season above this much more than the same player's last season
+#: on the same team is a projection, not a signed raise. Inside a deal the CBA
+#: allows 8% a year.
+IMPOSSIBLE_RAISE = 0.40
+
+#: ...but only where the season it jumps from was already a big salary. A
+#: rookie-scale season into a maximum extension is a legal leap, and that is
+#: what most of them are: the test is for a big salary becoming an impossible
+#: one, so the season underneath has to be big to begin with.
+IMPOSSIBLE_RAISE_BASE_CAP_PCT = 25.0
 
 #: "approaches" = not the record, and either inside the top N by rank or
 #: within this fraction of the record.
@@ -360,6 +407,8 @@ class FactoidIndex:
         self.active_players = set()
         self.recently_active = set()
         self.final_season = {}
+        self.paid_career = {}           # player -> (money already paid, season)
+        self.impossible = {}            # (player, season) -> why it cannot be real
         # display names
         self.college_names = {}
         self.name_aliases = {}
@@ -475,13 +524,57 @@ class FactoidIndex:
         return self.final_season.get(player) == season
 
     def career_eligible(self, player):
-        """Eligible for career-level rankings: a career that starts inside the
-        window, under one name, with a running total that starts at zero."""
+        """Eligible for claims about a finished career: a career that starts
+        inside the window, under one name, with a running total that starts at
+        zero."""
         return (
             player not in self.truncated
             and player not in self.identity_suspect
             and player not in self.career_total_carried_in
         )
+
+    def career_rankable(self, player):
+        """Eligible for a career-earnings ranking.
+
+        Money already paid is money already paid whether or not the man has
+        retired, so an active player belongs in the list: leaving him out is
+        what made Elton Brand read as the highest-earning Duke player while
+        Kyrie Irving was above him. A career that began before 1990-91 belongs
+        in it too, at the total this data holds, with PRE_WINDOW_MARGIN
+        guarding the claims its missing seasons could overturn.
+
+        What stays out is a total that is not one man's: a name covering two
+        players, and a running total that was already running when he arrived.
+        """
+        return (
+            player not in self.identity_suspect
+            and player not in self.career_total_carried_in
+        )
+
+    def paid_through(self, player):
+        """(money already paid, the season it runs through), or (None, None).
+
+        The last season that is not contracted: a signed season nobody has been
+        paid for cannot be part of what a man has earned.
+        """
+        return self.paid_career.get(player) or (None, None)
+
+    def is_paid_through(self, player, season):
+        """This season is where the player's paid-to-date total is measured."""
+        return self.paid_career.get(player, (None, None))[1] == season
+
+    def is_impossible(self, record):
+        """This salary cannot be a real contract, so nothing may use it."""
+        if not record:
+            return False
+        return (self.canonical(record["player"]), record["season"]) in self.impossible
+
+    def impossible_reason(self, player, season):
+        return self.impossible.get((self.canonical(player), season))
+
+    def pre_window_career(self, player):
+        """His career began before the data does, so his total is short."""
+        return player in self.truncated
 
 
 def position_group(pos):
@@ -723,11 +816,89 @@ def build_index(data, franchises=None, identity_splits=None, college_names=None,
     idx.seasons = sorted({r["season"] for r in idx.records}, key=season_key)
 
     _flag_players(idx)
+    _flag_impossible_salaries(idx)
     _index_identity_splits(idx)
     _index_awards(idx)
     _index_agents(idx)
     _build_universes(idx)
     return idx
+
+
+def _flag_impossible_salaries(idx):
+    """Contracted records carrying a salary no contract can pay.
+
+    Only contracted seasons are tested. A salary already paid is a fact
+    whatever it looks like: the 35% maximum applies to a contract when it is
+    signed, and an 8%-a-year raise on a maximum deal outruns the cap, so the
+    late years of real contracts sit well above it. Kobe Bryant's 51.9% of the
+    2013-14 cap was money he was paid.
+
+    What is tested is a projection that cannot be a deal: a salary towering
+    over the whole of its own season, and a jump on one roster that no signed
+    raise can carry, from a season that was already a big salary.
+    """
+    second_best = {}
+    for season in idx.seasons:
+        salaries = sorted(
+            (r.get("salary") or 0 for r in idx.records if r["season"] == season),
+            reverse=True,
+        )
+        if len(salaries) > 1:
+            second_best[season] = salaries[1]
+
+    for player, recs in idx.by_player.items():
+        previous = None
+        for record in recs:
+            season = record["season"]
+            if not idx.is_contracted(season):
+                previous = record
+                continue
+            salary = record.get("salary") or 0
+            reason = None
+
+            runner_up = second_best.get(season)
+            if runner_up and salary > runner_up * IMPOSSIBLE_SEASON_LEAD:
+                reason = (
+                    "{} is {:.2f} times the second-biggest salary of {}, "
+                    "{}".format(
+                        fmt_money(salary), salary / float(runner_up), season,
+                        fmt_money(runner_up))
+                )
+
+            if reason is None and previous is not None:
+                teams = [c for c, _a in team_amounts(record)]
+                prev_teams = [c for c, _a in team_amounts(previous)]
+                same_team = (
+                    len(teams) == 1 and len(prev_teams) == 1 and teams[0] == prev_teams[0]
+                )
+                was = previous.get("salary") or 0
+                base_share = _cap_share(idx, previous)
+                if (
+                    same_team and was > 0
+                    and salary > was * (1 + IMPOSSIBLE_RAISE)
+                    and base_share is not None
+                    and base_share > IMPOSSIBLE_RAISE_BASE_CAP_PCT
+                ):
+                    reason = (
+                        "a contracted {:.0f}% jump over {} on the same roster, "
+                        "{} to {}, off a season already worth {:.1f}% of the "
+                        "cap".format(
+                            (salary / float(was) - 1) * 100.0, previous["season"],
+                            fmt_money(was), fmt_money(salary), base_share)
+                    )
+
+            if reason is not None:
+                idx.impossible[(player, season)] = reason
+            previous = record
+
+
+def _cap_share(idx, record):
+    """What share of its season's cap a salary is, or None."""
+    entry = idx.cap.get(record["season"]) or {}
+    cap = entry.get("cap") if isinstance(entry, dict) else entry
+    if cap:
+        return (record.get("salary") or 0) / float(cap) * 100.0
+    return record.get("salary_cap_pct")
 
 
 def _flag_players(idx):
@@ -944,6 +1115,10 @@ def _build_universes(idx):
         # and can never turn up as a previous holder.
         if key in idx.split_suppressed:
             continue
+        # Neither can a salary the CBA does not allow: it is a data fault, and
+        # one of them in a comparison set makes every claim under it wrong.
+        if key in idx.impossible:
+            continue
         display = idx.display_name(player, season)
         person = idx.person_of(player, season)
 
@@ -1006,27 +1181,36 @@ def _build_universes(idx):
         k: sorted(v, key=lambda t: -t[0]) for k, v in team_season.items()
     }
 
-    # Career earnings: one entry per eligible player, at his final season.
+    # Career earnings: one entry per player, at the money already paid.
+    #
+    # Everyone who has been paid is in here, active or retired. The figure is
+    # the running total through his last season that is not contracted, so a
+    # signed deal nobody has been paid for never counts, and an active player
+    # is compared on the same footing as a finished one.
     career_entries = []
     cohort_career = defaultdict(list)
     for player, recs in idx.by_player.items():
-        if not idx.career_eligible(player):
+        paid = [
+            r for r in recs
+            if not idx.is_contracted(r["season"])
+            and (player, r["season"]) not in idx.split_suppressed
+            and r.get("career_earnings") is not None
+        ]
+        if not paid:
             continue
-        if not idx.career_complete(player):
-            continue
-        last = recs[-1]
-        total = last.get("career_earnings")
-        if total is None:
-            continue
-        if (player, last["season"]) in idx.split_suppressed:
+        last = paid[-1]
+        idx.paid_career[player] = (last["career_earnings"], last["season"])
+        if not idx.career_rankable(player):
             continue
         entry = {
-            "value": total,
+            "value": last["career_earnings"],
             "player": player,
             "season": last["season"],
             "key": (player, None),
             "display": idx.display_name(player, last["season"]),
             "person": idx.person_of(player, last["season"]),
+            "complete": idx.career_complete(player),
+            "pre_window": idx.pre_window_career(player),
         }
         career_entries.append(entry)
         for kind, ckey, _label in _cohorts_for(last, idx):
@@ -1054,6 +1238,7 @@ def _build_universes(idx):
             r for r in recs
             if not idx.is_contracted(r["season"])
             and (player, r["season"]) not in idx.split_suppressed
+            and (player, r["season"]) not in idx.impossible
         ]
         if not paid_recs:
             continue
@@ -1159,6 +1344,24 @@ def _behind_clause(entry, money=True, subject=None):
     return "{} {} ({})".format(_possessive(_name(entry)), value, entry["season"])
 
 
+def pre_window_shadow(universe, value, margin=PRE_WINDOW_MARGIN):
+    """The pre-window career that makes this figure unsafe to rank, if any.
+
+    A career that began before 1990-91 is on file short of its first seasons.
+    Where one of those totals lands within ``margin`` of the figure being
+    claimed, the missing money could put it on the other side, so the claim is
+    not made. A subject whose own career began before the window fails this on
+    his own entry, at a distance of zero, which is the answer we want: his
+    total is the one that is short.
+    """
+    for entry in universe.entries:
+        if not entry.get("pre_window"):
+            continue
+        if abs((entry.get("value") or 0) - value) <= margin:
+            return entry
+    return None
+
+
 def _career_gate(idx, player):
     """Which of the career-level gates a player fails, for the debug log."""
     if player in idx.truncated:
@@ -1255,35 +1458,35 @@ def _family_franchise(ctx, out, log):
             if top.get("person") == subject_person:
                 text = (
                     "{} {} in {}{} {} the highest single-season salary in {} "
-                    "history {}, breaking his own mark of {} in {}.".format(
+                    "history, breaking his own mark of {} in {}.".format(
                         _possessive(subject_name), fmt_money(amount), season, split_note,
-                        _is_verb(contracted), name, SCOPE_SUFFIX,
+                        _is_verb(contracted), name,
                         fmt_money(top["value"]), top["season"],
                     )
                 )
             else:
                 text = (
                     "{} {} in {}{} {} the highest single-season salary in {} "
-                    "history {}, passing {}.".format(
+                    "history, passing {}.".format(
                         _possessive(subject_name), fmt_money(amount), season, split_note,
-                        _is_verb(contracted), name, SCOPE_SUFFIX, _behind_clause(top, subject=subject_person),
+                        _is_verb(contracted), name, _behind_clause(top, subject=subject_person),
                     )
                 )
         elif kind == "ties":
             text = (
                 "{} {} in {}{} {} the highest single-season salary in {} "
-                "history {}, matching {}.".format(
+                "history, matching {}.".format(
                     _possessive(subject_name), fmt_money(amount), season, split_note,
-                    _tie_verb(contracted), name, SCOPE_SUFFIX, _behind_clause(top, subject=subject_person),
+                    _tie_verb(contracted), name, _behind_clause(top, subject=subject_person),
                 )
             )
         else:
             text = (
                 "{} {} in {}{} {} the {}-highest single-season salary in {} "
-                "history {}, behind {}.".format(
+                "history, behind {}.".format(
                     _possessive(subject_name), fmt_money(amount), season, split_note,
                     _is_verb(contracted), ordinal(verdict["rank"]), name,
-                    SCOPE_SUFFIX, _behind_clause(top, subject=subject_person),
+                    _behind_clause(top, subject=subject_person),
                 )
             )
 
@@ -1309,8 +1512,17 @@ def _family_career(ctx, out, log):
     # confirmed split says one data key covers two men.
     subject_name, subject_person = ctx["name"], ctx["person"]
 
-    if not idx.career_eligible(player):
+    if not idx.career_rankable(player):
         log.drop("career_earnings", player, _career_gate(idx, player))
+        return
+    if idx.pre_window_career(player):
+        # His running total starts partway through his career, so the season
+        # he crosses a milestone in this data is not the season he crossed it.
+        log.drop(
+            "career_earnings", player, "pre_window_career",
+            "career began before {}, so the running total is short of what he "
+            "had earned".format(SCOPE_FIRST_SEASON),
+        )
         return
 
     career_total = ctx["career_total"]
@@ -1343,17 +1555,14 @@ def _family_career(ctx, out, log):
             )
         else:
             text = "{} passed {} in career earnings in {}.".format(subject_name, label, season)
-        scope = (
-            "Career earnings are nominal dollars {}. Completed careers that "
-            "began before 1990-91 are excluded.".format(SCOPE_SUFFIX)
-        )
+        scope = "Career earnings are nominal dollars. {}".format(DATA_START_NOTE)
         if in_progress:
             scope += (
                 " {} is being played: no selections are on record for it yet, "
                 "so this salary is not earned in full.".format(season)
             )
         if reached:
-            scope += " {} completed career{} had reached it.".format(
+            scope += " {} other player{} had reached it.".format(
                 reached, "s" if reached != 1 else ""
             )
         out.append(
@@ -1366,82 +1575,106 @@ def _family_career(ctx, out, log):
             )
         )
 
-    # Rank against completed careers, for a completed career only.
+    # Rank on money already paid, active players included.
     #
-    # An active player's running total ranked against a retired-only field
-    # produces claims that read as false even when the scope note is correct:
-    # "Jokic's $364 million is the most in the 2014 draft class" is true against
-    # completed careers and obviously wrong to a reader who knows Embiid is
-    # still playing. Milestones above stay open to active players, because
-    # "passed $300 million in career earnings" carries no comparison at all.
-    if not idx.career_complete(player):
-        reason = (
-            "career_status_unknown"
-            if idx.career_status_unknown(player)
-            else "career_incomplete"
-        )
+    # A career-earnings list that holds only finished careers reads as false to
+    # anyone who follows the league: it called Elton Brand the highest-earning
+    # Duke player while Kyrie Irving and Jayson Tatum, both above him, were left
+    # out for still playing. The figure is the running total through the last
+    # season that is not contracted, so nothing here counts money that has not
+    # been paid, and an active man's total is worded as a total to date.
+    if not idx.career_rankable(player):
+        log.drop("career_earnings", player, _career_gate(idx, player))
+        return
+    if not idx.is_paid_through(player, season):
         log.drop(
-            "career_earnings", player, reason,
-            "career-earnings rank is only claimed once a career is complete",
+            "career_earnings", player, "not_paid_through_season",
+            "career_earnings through {} is not the money-already-paid total".format(season),
         )
         return
-    # career_earnings on a record is the running total through that season, so
-    # only the final season's figure is a career total. Ranking a mid-career
-    # running total against other players' finished careers is what produced
-    # "Westbrook's $338.8 million through 2022-23 ... passing Kevin Love's
-    # $280.4 million (2025-26)": a 2022-23 number measured against a 2025-26 one.
-    if not idx.is_final_season(player, season):
+    paid_total, _paid_season = idx.paid_through(player)
+    if paid_total is None:
+        return
+
+    shadow = pre_window_shadow(idx.u_career, paid_total)
+    if shadow is not None:
         log.drop(
-            "career_earnings", player, "not_final_season",
-            "career_earnings through {} is a running total, not a career total".format(season),
+            "career_earnings", player, "pre_window_career_too_close",
+            "{}'s career began before {}, so his {} on file is short of what he "
+            "earned, and it sits within {} of this figure".format(
+                shadow["display"], SCOPE_FIRST_SEASON, fmt_money(shadow["value"]),
+                fmt_money(PRE_WINDOW_MARGIN),
+            ),
         )
         return
 
-    verdict = idx.u_career.evaluate(career_total, (player, None))
-    kind = classify(career_total, verdict)
+    verdict = idx.u_career.evaluate(paid_total, (player, None))
+    kind = classify(paid_total, verdict)
     if kind is None:
         log.drop("career_earnings", player, "not_notable", "outside the career-earnings top {}".format(APPROACH_MAX_RANK))
         return
     top = verdict["top"]
+    active = not idx.career_complete(player)
     scope = (
-        "Ranked against completed careers {}, in nominal dollars. Careers that "
-        "began before 1990-91, names that merge two players and players who are "
-        "still active are all excluded.".format(SCOPE_SUFFIX)
+        "Ranked on money already paid, active players included, in nominal "
+        "dollars. Contracted seasons are excluded, and so are names that merge "
+        "two players. {}".format(DATA_START_NOTE)
     )
-    through = "through {}".format(season)
-    if kind == "sets":
-        text = (
-            "{} {} in career earnings {} is more than any other completed career "
-            "{}, passing {}.".format(
-                _possessive(subject_name), fmt_money(career_total), through,
-                SCOPE_SUFFIX, _behind_clause(top, subject=subject_person),
-            )
-        )
-    elif kind == "ties":
-        text = (
-            "{} {} in career earnings {} ties the most by any completed career "
-            "{}, matching {}.".format(
-                _possessive(subject_name), fmt_money(career_total), through,
-                SCOPE_SUFFIX, _behind_clause(top, subject=subject_person),
-            )
-        )
-    else:
-        text = (
-            "{} {} in career earnings {} ranks {} among completed careers {}, "
-            "behind {}.".format(
-                _possessive(subject_name), fmt_money(career_total), through,
-                ordinal(verdict["rank"]), SCOPE_SUFFIX, _behind_clause(top, subject=subject_person),
-            )
-        )
+    if active:
+        scope += " {} is still playing, so this is his total to date.".format(subject_name)
     out.append(
         _make(
             "career_earnings", kind,
             "career_rank|{}|{}".format(player, season),
-            text, scope, career_total, contracted,
+            _career_rank_text(
+                kind, subject_name, subject_person, paid_total, verdict, top,
+                active, through=season,
+            ),
+            scope, paid_total, contracted,
             rank=verdict["rank"], comparison_size=verdict["size"],
-            previous_holder=_holder(top), margin=career_total - top["value"],
+            previous_holder=_holder(top), margin=paid_total - top["value"],
         )
     )
+
+
+#: "more than X" needs the cohort as a rival, not as a place. The season
+#: sentences say "the highest single-season salary among players out of Duke";
+#: a career sentence has to say "more than any other Duke player".
+def _career_rival(label):
+    if label.startswith("among players out of "):
+        return "any other player out of " + label[len("among players out of "):]
+    if label.startswith("by an "):
+        return "any other " + label[len("by an "):]
+    if label.startswith("by a "):
+        return "any other " + label[len("by a "):]
+    if label.startswith("in the "):
+        return "anyone else " + label
+    return "anyone else " + label
+
+
+def _career_rank_text(kind, subject_name, subject_person, total, verdict, top,
+                      active, label=ALL_TIME, through=None):
+    """One career-earnings sentence, active or finished, all-time or cohort.
+
+    An active man "has earned ... through 2026-27", naming the last season the
+    total covers rather than leaving "to date" to be guessed at; a finished
+    career "earned ... in his career". Neither says "since 1990-91": the page
+    carries that note once.
+    """
+    money = fmt_money(total)
+    if active:
+        opening = "{} has earned {} through {}".format(subject_name, money, through)
+    else:
+        opening = "{} earned {} in his career".format(subject_name, money)
+    if kind == "sets":
+        return "{}, more than {}, passing {}.".format(
+            opening, _career_rival(label), _behind_clause(top, subject=subject_person))
+    if kind == "ties":
+        return "{}, level with the most {}, matching {}.".format(
+            opening, label, _behind_clause(top, subject=subject_person))
+    return "{}, the {}-most {}, behind {}.".format(
+        opening, ordinal(verdict["rank"]), label,
+        _behind_clause(top, subject=subject_person))
 
 
 # -- family 3: cohorts -----------------------------------------------------
@@ -1486,33 +1719,33 @@ def _family_cohorts(ctx, out, log):
         verdict_kind = classify(salary, verdict)
         if verdict_kind is not None:
             top = verdict["top"]
-            scope = "Cohort of {} players and {} player seasons {}. {}".format(
-                universe.distinct_players(), len(universe), SCOPE_SUFFIX,
-                PAID_ONLY_NOTE.format(idx.current_season),
+            scope = "Cohort of {} players and {} player seasons. {} {}".format(
+                universe.distinct_players(), len(universe),
+                PAID_ONLY_NOTE.format(idx.current_season), DATA_START_NOTE,
             )
             if contracted:
                 scope += " " + CONTRACTED_NOTE
             if verdict_kind == "sets":
                 if top.get("person") == subject_person:
-                    text = "{} {} in {} {} the highest single-season salary {} {}, breaking his own mark of {} in {}.".format(
+                    text = "{} {} in {} {} the highest single-season salary {}, breaking his own mark of {} in {}.".format(
                         _possessive(subject_name), fmt_money(salary), season,
-                        _is_verb(contracted), label, SCOPE_SUFFIX,
+                        _is_verb(contracted), label,
                         fmt_money(top["value"]), top["season"],
                     )
                 else:
-                    text = "{} {} in {} {} the highest single-season salary {} {}, passing {}.".format(
+                    text = "{} {} in {} {} the highest single-season salary {}, passing {}.".format(
                         _possessive(subject_name), fmt_money(salary), season,
-                        _is_verb(contracted), label, SCOPE_SUFFIX, _behind_clause(top, subject=subject_person),
+                        _is_verb(contracted), label, _behind_clause(top, subject=subject_person),
                     )
             elif verdict_kind == "ties":
-                text = "{} {} in {} {} the highest single-season salary {} {}, matching {}.".format(
+                text = "{} {} in {} {} the highest single-season salary {}, matching {}.".format(
                     _possessive(subject_name), fmt_money(salary), season,
-                    _tie_verb(contracted), label, SCOPE_SUFFIX, _behind_clause(top, subject=subject_person),
+                    _tie_verb(contracted), label, _behind_clause(top, subject=subject_person),
                 )
             else:
-                text = "{} {} in {} {} the {}-highest single-season salary {} {}, behind {}.".format(
+                text = "{} {} in {} {} the {}-highest single-season salary {}, behind {}.".format(
                     _possessive(subject_name), fmt_money(salary), season, _is_verb(contracted),
-                    ordinal(verdict["rank"]), label, SCOPE_SUFFIX, _behind_clause(top, subject=subject_person),
+                    ordinal(verdict["rank"]), label, _behind_clause(top, subject=subject_person),
                 )
             out.append(
                 _make(
@@ -1524,38 +1757,37 @@ def _family_cohorts(ctx, out, log):
                 )
             )
 
-        # Career earnings inside the same cohort, completed careers only, for
-        # the same reason the all-time career rank is gated that way.
-        if not idx.career_eligible(player):
+        # Career earnings inside the same cohort, on money already paid.
+        if not idx.career_rankable(player):
             continue
-        if not idx.career_complete(player):
-            reason = (
-                "career_status_unknown"
-                if idx.career_status_unknown(player)
-                else "career_incomplete"
-            )
+        if not idx.is_paid_through(player, season):
             log.drop(
-                "cohort", "{}:{}".format(kind_name, ckey), reason,
-                "cohort career earnings are only claimed once a career is complete",
+                "cohort", "{}:{}".format(kind_name, ckey), "not_paid_through_season",
+                "career_earnings through {} is not the money-already-paid total".format(season),
             )
             continue
-        if not idx.is_final_season(player, season):
-            log.drop(
-                "cohort", "{}:{}".format(kind_name, ckey), "not_final_season",
-                "career_earnings through {} is a running total, not a career total".format(season),
-            )
-            continue
-        career_total = ctx["career_total"]
+        career_total, _paid_season = idx.paid_through(player)
         if career_total is None:
             continue
         cu = idx.u_cohort_career.get((kind_name, ckey))
         if cu is None or len(cu) == 0:
-            log.drop("cohort", "{}:{}".format(kind_name, ckey), "no_completed_careers")
+            log.drop("cohort", "{}:{}".format(kind_name, ckey), "no_careers")
             continue
         if cu.distinct_players() < minimum:
             log.drop(
                 "cohort", "{}:{}".format(kind_name, ckey), "cohort_below_threshold",
-                "{} completed careers, needs {}".format(cu.distinct_players(), minimum),
+                "{} careers, needs {}".format(cu.distinct_players(), minimum),
+            )
+            continue
+        shadow = pre_window_shadow(cu, career_total)
+        if shadow is not None:
+            log.drop(
+                "cohort", "{}:{}".format(kind_name, ckey), "pre_window_career_too_close",
+                "{}'s career began before {}, so his {} on file is short, and it "
+                "sits within {} of this figure".format(
+                    shadow["display"], SCOPE_FIRST_SEASON, fmt_money(shadow["value"]),
+                    fmt_money(PRE_WINDOW_MARGIN),
+                ),
             )
             continue
         cverdict = cu.evaluate(career_total, (player, None))
@@ -1563,29 +1795,22 @@ def _family_cohorts(ctx, out, log):
         if ckind is None:
             continue
         ctop = cverdict["top"]
-        scope = "Ranked against {} completed careers in this cohort {}.".format(
-            cu.distinct_players(), SCOPE_SUFFIX
+        cactive = not idx.career_complete(player)
+        scope = (
+            "Ranked on money already paid against {} careers in this cohort, "
+            "active players included. {}".format(cu.distinct_players(), DATA_START_NOTE)
         )
-        if ckind == "sets":
-            text = "{} {} in career earnings through {} is the most {} {}, passing {}.".format(
-                _possessive(subject_name), fmt_money(career_total), season, label,
-                SCOPE_SUFFIX, _behind_clause(ctop, subject=subject_person),
-            )
-        elif ckind == "ties":
-            text = "{} {} in career earnings through {} ties the most {} {}, matching {}.".format(
-                _possessive(subject_name), fmt_money(career_total), season, label,
-                SCOPE_SUFFIX, _behind_clause(ctop, subject=subject_person),
-            )
-        else:
-            text = "{} {} in career earnings through {} ranks {} {} {}, behind {}.".format(
-                _possessive(subject_name), fmt_money(career_total), season,
-                ordinal(cverdict["rank"]), label, SCOPE_SUFFIX, _behind_clause(ctop, subject=subject_person),
-            )
+        if cactive:
+            scope += " {} is still playing, so this is his total to date.".format(subject_name)
         out.append(
             _make(
                 "cohort", ckind,
                 "cohort_career|{}|{}|{}|{}".format(kind_name, ckey, player, season),
-                text, scope, career_total, contracted,
+                _career_rank_text(
+                    ckind, subject_name, subject_person, career_total, cverdict,
+                    ctop, cactive, label=label, through=season,
+                ),
+                scope, career_total, contracted,
                 rank=cverdict["rank"], comparison_size=cverdict["size"],
                 previous_holder=_holder(ctop), margin=career_total - ctop["value"],
             )
@@ -1638,14 +1863,14 @@ def _family_negative_space(ctx, out, log):
         top = verdict["top"]
         if active:
             scope = (
-                "Comparison set is every player {} with no {} selection on "
+                "Comparison set is every player with no {} selection on "
                 "record, active or retired, taken at each one's best paid "
-                "season.".format(SCOPE_SUFFIX, label)
+                "season.".format(label)
             )
         else:
             scope = (
-                "Comparison set is completed careers {} with no {} selection on "
-                "record.".format(SCOPE_SUFFIX, label)
+                "Comparison set is completed careers with no {} selection on "
+                "record.".format(label)
             )
         scope += (
             " Careers that began before 1990-91, names that merge two players "
@@ -1671,19 +1896,19 @@ def _family_negative_space(ctx, out, log):
             subject = "by a player who never made an {}".format(team_noun)
 
         if kind == "sets":
-            text = "{} {} in {} {} the highest single-season salary {} {}, passing {}.".format(
+            text = "{} {} in {} {} the highest single-season salary {}, passing {}.".format(
                 _possessive(subject_name), fmt_money(salary), season, _is_verb(contracted),
-                SCOPE_SUFFIX, subject, _behind_clause(top, subject=subject_person),
+                subject, _behind_clause(top, subject=subject_person),
             )
         elif kind == "ties":
-            text = "{} {} in {} {} the highest single-season salary {} {}, matching {}.".format(
+            text = "{} {} in {} {} the highest single-season salary {}, matching {}.".format(
                 _possessive(subject_name), fmt_money(salary), season, _tie_verb(contracted),
-                SCOPE_SUFFIX, subject, _behind_clause(top, subject=subject_person),
+                subject, _behind_clause(top, subject=subject_person),
             )
         else:
-            text = "{} {} in {} {} the {}-highest single-season salary {} {}, behind {}.".format(
+            text = "{} {} in {} {} the {}-highest single-season salary {}, behind {}.".format(
                 _possessive(subject_name), fmt_money(salary), season, _is_verb(contracted),
-                ordinal(verdict["rank"]), SCOPE_SUFFIX, subject, _behind_clause(top, subject=subject_person),
+                ordinal(verdict["rank"]), subject, _behind_clause(top, subject=subject_person),
             )
         out.append(
             _make(
@@ -1731,14 +1956,24 @@ def _family_cap(ctx, out, log):
         kind = classify(pct, verdict)
         if kind is None:
             continue
+        # An all-time cap share is only claimed for the top few. Deeper than
+        # that, a season this data does not hold could displace it, and the
+        # claim no longer says anything the missing seasons cannot overturn.
+        if scope_name == "all" and verdict["rank"] > CAP_ALL_TIME_MAX_RANK:
+            log.drop(
+                "cap", season, "outside_all_time_top_{}".format(CAP_ALL_TIME_MAX_RANK),
+                "all-time cap share is claimed for the top {} only".format(
+                    CAP_ALL_TIME_MAX_RANK),
+            )
+            continue
         top = verdict["top"]
         share = "{:.1f}%".format(pct)
         if scope_name == "all":
-            scope = "Share of that season's salary cap, ranked across every season {}. {}".format(
-                SCOPE_SUFFIX, PAID_ONLY_NOTE.format(idx.current_season)
+            scope = "Share of that season's salary cap, ranked across every season on file. {} {}".format(
+                PAID_ONLY_NOTE.format(idx.current_season), DATA_START_NOTE
             )
-            where = "the largest share of a salary cap {}".format(SCOPE_SUFFIX)
-            where_n = "the {}-largest share of a salary cap {}".format(ordinal(verdict["rank"]), SCOPE_SUFFIX)
+            where = "the largest share of a salary cap in NBA history"
+            where_n = "the {}-largest share of a salary cap in NBA history".format(ordinal(verdict["rank"]))
         else:
             scope = "Share of the {} salary cap, ranked within that season.".format(season)
             where = "the largest share of the cap in {}".format(season)
@@ -1899,9 +2134,10 @@ def _family_rank_shift(ctx, out, log):
             _make(
                 "rank_shift", "rank_shift",
                 "rank_league_first|{}|{}".format(player, season),
-                "{} is the highest-paid player in the league in {} for the first "
-                "time in his career.".format(subject_name, season),
-                "League salary ranks cover {}. First season at No. 1.".format(SCOPE_SUFFIX),
+                "{} {} the highest-paid player in the league in {} for the first "
+                "time in his career.".format(
+                    subject_name, _is_verb(contracted), season),
+                "First season at No. 1. {}".format(DATA_START_NOTE),
                 salary, contracted, rank=rank, comparison_size=size,
             )
         )
@@ -1910,9 +2146,11 @@ def _family_rank_shift(ctx, out, log):
             _make(
                 "rank_shift", "rank_shift",
                 "rank_league_top10|{}|{}".format(player, season),
-                "{} salary in {} puts him in the league's top 10 for the first "
-                "time in his career.".format(_possessive(subject_name), season),
-                "League salary ranks cover {}. First season inside the top 10.".format(SCOPE_SUFFIX),
+                "{} salary in {} {} him in the league's top 10 for the first "
+                "time in his career.".format(
+                    _possessive(subject_name), season,
+                    "would put" if contracted else "puts"),
+                "First season inside the top 10. {}".format(DATA_START_NOTE),
                 salary, contracted, rank=rank, comparison_size=size,
             )
         )
@@ -1978,8 +2216,11 @@ def _family_rank_shift(ctx, out, log):
             _make(
                 "rank_shift", "rank_shift",
                 "team_high_becomes|{}|{}".format(player, season),
-                "{} is the {} highest-paid player in {} after ranking {} on the "
-                "roster in {}.".format(subject_name, _possessive(name), season, ordinal(was_rank) if was_rank > 1 else "first", previous["season"]),
+                "{} {} the {} highest-paid player in {} after ranking {} on the "
+                "roster in {}.".format(
+                    subject_name, _is_verb(contracted), _possessive(name), season,
+                    ordinal(was_rank) if was_rank > 1 else "first",
+                    previous["season"]),
                 "Same franchise in consecutive seasons. Roster of {} players with a salary on file.".format(now_size),
                 amount, contracted, rank=now_rank, comparison_size=now_size,
             )
@@ -1989,8 +2230,10 @@ def _family_rank_shift(ctx, out, log):
             _make(
                 "rank_shift", "rank_shift",
                 "team_high_ceases|{}|{}".format(player, season),
-                "{} is no longer the {} highest-paid player in {} after holding "
-                "that spot in {}.".format(subject_name, _possessive(name), season, previous["season"]),
+                "{} {} no longer the {} highest-paid player in {} after holding "
+                "that spot in {}.".format(
+                    subject_name, _is_verb(contracted), _possessive(name), season,
+                    previous["season"]),
                 "Same franchise in consecutive seasons. Roster of {} players with a salary on file.".format(now_size),
                 amount, contracted, rank=now_rank, comparison_size=now_size,
             )
@@ -2065,6 +2308,18 @@ def factoids_for(data, player, season, salary=None, index=None, debug=False, sup
             "all", player, gate,
             "{} covers more than one player and {} belongs to a segment this "
             "engine cannot put a name to".format(player, season),
+        )
+        if suppressed is not None:
+            suppressed.extend(log.items)
+        return []
+
+    # A salary the CBA does not allow says nothing about the player, only about
+    # the file. Nothing is claimed from it, about him or about anyone measured
+    # against him. A hypothetical salary passed in by hand is exempt: the caller
+    # is asking what such a number would mean, which is a different question.
+    if salary is None and (player, season) in idx.impossible:
+        log.drop(
+            "all", player, "impossible_salary", idx.impossible[(player, season)]
         )
         if suppressed is not None:
             suppressed.extend(log.items)

@@ -6,12 +6,14 @@ ships. A few build small fixtures to pin a rule down on its own.
 
 from __future__ import annotations
 
+import collections
 import json
 import os
 import re
 import subprocess
 import sys
 import xml.etree.ElementTree as ET
+from html import escape
 
 import pytest
 
@@ -53,6 +55,11 @@ def path_for(url):
         return "index.html"
     rest = url[len(C.TOOL_ROOT) + 1:].rstrip("/")
     return os.path.join(rest, "index.html")
+
+
+def _factoids():
+    with open(repo("data", "factoids.json"), "r", encoding="utf-8") as fh:
+        return json.load(fh)["factoids"]
 
 
 def all_pages():
@@ -135,7 +142,7 @@ def test_every_indexable_page_is_linked_from_its_hub():
         hub = C.FAMILIES[family]["hub"]
         assert hub, family
         hub_html = read(os.path.join(hub, "index.html"))
-        href = '../{}/{}/'.format(C.FAMILIES[family]["dir"], parts[1])
+        href = "{}/{}/{}/".format(C.TOOL_ROOT, C.FAMILIES[family]["dir"], parts[1])
         assert 'href="{}"'.format(href) in hub_html, (hub, path)
 
 
@@ -161,17 +168,57 @@ def test_every_indexable_page_is_three_clicks_from_the_root():
         assert depth <= 1, path
 
 
+#: The one github.io the pages are allowed to name: the headshot store, whose
+#: images are ours and are asked for by src, never linked to.
+HEADSHOTS = "https://jsierrahoopshype.github.io/nba-headshots/"
+
+
 @built
-def test_no_github_io_anywhere_in_the_output():
+def test_nothing_links_to_github_io():
+    """A reader who lands on the Pages host must still be sent to hoopsmatic.
+
+    This is the bug that shipped: a relative href kept a click on github.io,
+    so every href, canonical and og:url is checked, everywhere, including the
+    tool root and the script it loads.
+    """
     hits = []
-    for path in list(all_pages()) + [C.SITEMAP_PATH]:
+    for path in list(all_pages()) + [C.SITEMAP_PATH, os.path.join("js", "app.js")]:
         full = repo(path)
         if not os.path.exists(full):
             continue
         with open(full, "r", encoding="utf-8") as fh:
-            if "github.io" in fh.read():
-                hits.append(path)
+            text = fh.read()
+        for attr in ('href="', '<loc>', 'content="https'):
+            for value in re.findall(re.escape(attr) + r'([^"<]+)', text):
+                if "github.io" in value:
+                    hits.append((path, value))
+        # anything else naming the host has to be a headshot image
+        for value in re.findall(r'https://[^"\'<> ]*github\.io[^"\'<> ]*', text):
+            if not value.startswith(HEADSHOTS):
+                hits.append((path, value))
     assert hits == []
+
+
+@built
+def test_every_link_to_a_subpage_is_absolute():
+    for path in all_pages():
+        if not path.endswith(".html"):
+            continue
+        html = read(path)
+        for href in re.findall(r'href="([^"]+)"', html):
+            if href.startswith(("mailto:", "#", "https://", "http://")):
+                continue
+            # only the stylesheets are allowed to be relative
+            assert href.endswith(".css"), (path, href)
+
+
+@built
+def test_the_tool_links_player_pages_absolutely():
+    app = read(os.path.join("js", "app.js"))
+    assert 'href="player/' not in app
+    assert "pages.playerUrl(name, season)" in app
+    generated = read(os.path.join("js", "player-pages.js"))
+    assert 'var ROOT = "{}"'.format(C.TOOL_ROOT) in generated
 
 
 @built
@@ -457,3 +504,621 @@ def test_player_pages_link_the_sibling_tools():
     html = read(os.path.join("player", "cade-cunningham", "index.html"))
     assert C.COMPARE_URL in html
     assert C.CAREER_MAP_URL in html
+
+
+# --------------------------------------------------------------------------
+# the written summary on a cohort page
+# --------------------------------------------------------------------------
+
+
+def _summary(path, strip_links=True):
+    html = read(path)
+    block = re.search(r'<div class="hm-summary">(.*?)</div>', html, re.S)
+    if not block:
+        return []
+    import html as _html
+    out = []
+    for text in re.findall(r"<p>(.*?)</p>", block.group(1), re.S):
+        if strip_links:
+            text = re.sub(r"<[^>]+>", "", text)
+        out.append(_html.unescape(text))
+    return out
+
+
+@built
+def test_cohort_pages_carry_a_short_written_summary():
+    for path in ("college/duke", "college/arkansas", "country/france",
+                 "draft/2003", "pick/1", "position/guard"):
+        sentences = _summary(os.path.join(*(path.split("/") + ["index.html"])))
+        assert 2 <= len(sentences) <= C.SUMMARY_SENTENCES, (path, sentences)
+        joined = " ".join(sentences)
+        # the window is a note on the page now, never a clause in a claim
+        assert F.SCOPE_FIRST_SEASON not in joined, (path, joined)
+        assert "—" not in joined, path
+        assert "the group" not in joined, (path, joined)
+
+
+@built
+def test_a_summary_covers_the_career_and_the_single_season():
+    """Which comes first varies by page; both are always there."""
+    joined = " ".join(_summary(os.path.join("college", "duke", "index.html")))
+    assert "Kyrie Irving" in joined and "$391.9 million" in joined
+    assert "Jayson Tatum" in joined and "$58.5 million" in joined
+
+
+#: A summary may state money nobody has been paid yet only as a contract.
+CONTRACT_WORDS = (" due", " signed", " owed", " deal", " contract",
+                  " left on", " ahead", " to come", " would ")
+
+
+@built
+def test_money_nobody_has_been_paid_is_named_as_a_contract():
+    """"Wembanyama is due $44 million in 2027-28" is a fact about a signed
+    deal. "Wembanyama earned $44 million in 2027-28" would not be."""
+    future = ("2027-28", "2028-29", "2029-30", "2030-31")
+    for path, meta in all_pages().items():
+        if path.split(os.sep)[0] not in ("college", "country", "draft", "pick",
+                                         "position"):
+            continue
+        for sentence in _summary(path):
+            if not any(season in sentence for season in future):
+                continue
+            lowered = " " + sentence.lower()
+            assert any(word in lowered for word in CONTRACT_WORDS), (path, sentence)
+            for verb in ("has earned", "was paid", "earned $"):
+                assert verb not in sentence, (path, sentence)
+
+
+@built
+def test_no_cohort_page_still_lists_raw_factoids():
+    for path, meta in all_pages().items():
+        if path.split(os.sep)[0] not in ("college", "country", "draft", "pick",
+                                         "position"):
+            continue
+        assert "What the numbers say" not in read(path), path
+
+
+@built
+def test_the_career_table_comes_first_on_a_cohort_page():
+    html = read(os.path.join("college", "duke", "index.html"))
+    headings = re.findall(r"<h2>(.*?)</h2>", html)
+    assert headings[:3] == [
+        "Highest career earnings",
+        "Highest single-season salaries",
+        "On a roster in 2026-27",
+    ], headings
+
+
+# --------------------------------------------------------------------------
+# mirrors and comparisons that point the wrong way
+# --------------------------------------------------------------------------
+
+
+def test_one_side_of_a_mirrored_pair_is_dropped():
+    from prerender import phrasing
+    record = {
+        "key": "cohort_season|college|Duke|Big|2026-27", "value": 58,
+        "text": "the record", "type": "sets",
+        "previous_holder": {"player": "Big", "season": "2025-26", "value": 54},
+    }
+    runner = {
+        "key": "cohort_season|college|Duke|Big|2025-26", "value": 54,
+        "text": "second behind the record", "type": "approaches",
+        "previous_holder": {"player": "Big", "season": "2026-27", "value": 58},
+    }
+    kept = phrasing.drop_mirrors([("2026-27", record), ("2025-26", runner)])
+    assert [f["value"] for _season, f in kept] == [58]
+
+
+def test_a_comparison_against_a_later_season_loses_its_verb():
+    from prerender import phrasing
+    fact = {
+        "key": "cohort_season|college|Stanford|Brook Lopez|2023-24",
+        "value": 25, "type": "sets",
+        "text": ("Brook Lopez's $25 million in 2023-24 is the highest single-season "
+                 "salary among players out of Stanford since 1990-91, breaking his "
+                 "own mark of $23 million in 2024-25."),
+        "previous_holder": {"player": "Brook Lopez", "season": "2024-25", "value": 23},
+    }
+    text = phrasing.straighten(fact, "2023-24")
+    assert "breaking" not in text
+    assert "ahead of his own $23 million in 2024-25" in text
+
+
+@built
+def test_no_page_says_it_passed_a_figure_from_a_later_season():
+    backwards = []
+    for record_key, facts in _factoids().items():
+        player, season = record_key.split("|", 1)
+        for fact in facts:
+            holder = fact.get("previous_holder") or {}
+            if not holder.get("season"):
+                continue
+            if F.season_key(holder["season"]) <= F.season_key(season):
+                continue
+            if "passing" in fact["text"] or "breaking" in fact["text"]:
+                backwards.append(fact["text"])
+    assert backwards, "the fixture has to contain at least one to be worth testing"
+    for text in backwards:
+        for path in all_pages():
+            if not path.endswith(".html"):
+                continue
+            assert escape(text) not in read(path), (path, text[:60])
+
+
+# --------------------------------------------------------------------------
+# a player's claims, grouped by season
+# --------------------------------------------------------------------------
+
+
+@built
+def test_a_player_page_groups_its_claims_by_season():
+    html = read(os.path.join("player", "joel-embiid", "index.html"))
+    block = html[html.index("What the numbers say"):]
+    seasons = re.findall(r'<(?:h3|summary)>([\d-]{7})<span class="hm-count">', block)
+    assert seasons == sorted(seasons, key=F.season_key, reverse=True), seasons
+    assert seasons[0] > seasons[-1]
+
+
+@built
+def test_the_current_and_contracted_seasons_are_open_and_older_ones_are_not():
+    html = read(os.path.join("player", "joel-embiid", "index.html"))
+    block = html[html.index("What the numbers say"):]
+    open_seasons = re.findall(r'<section class="hm-season is-open"><h3>([\d-]{7})', block)
+    closed = re.findall(r'<details class="hm-season"><summary>([\d-]{7})', block)
+    assert open_seasons, block[:200]
+    assert min(F.season_key(s) for s in open_seasons) >= F.season_key("2026-27")
+    assert max(F.season_key(s) for s in closed) < F.season_key("2026-27")
+
+
+@built
+def test_an_older_season_keeps_only_what_it_did():
+    """No "fourth-highest four years ago" on a page that shows every season."""
+    html = read(os.path.join("player", "joel-embiid", "index.html"))
+    for season, body in re.findall(
+        r'<details class="hm-season"><summary>([\d-]{7})(.*?)</details>', html, re.S
+    ):
+        assert "-highest" not in body, season
+        assert "-largest" not in body, season
+
+
+# --------------------------------------------------------------------------
+# headshots and flags
+# --------------------------------------------------------------------------
+
+
+@built
+def test_cohort_tables_carry_headshots_and_flags():
+    html = read(os.path.join("college", "duke", "index.html"))
+    assert html.count('class="hm-face"') >= 25
+    assert html.count('class="hm-flag"') >= 25
+    for img in re.findall(r"<img [^>]*>", html):
+        assert 'loading="lazy"' in img, img
+        assert "width=" in img and "height=" in img, img
+        assert "alt=" in img, img
+
+
+@built
+def test_flags_are_served_from_this_repository():
+    for path in (os.path.join("countries", "index.html"),
+                 os.path.join("college", "duke", "index.html")):
+        for src in re.findall(r'<img class="hm-flag" src="([^"]+)"', read(path)):
+            assert src.startswith(C.TOOL_ROOT + "/assets/flags/"), src
+            local = src[len(C.TOOL_ROOT) + 1:]
+            assert os.path.exists(repo(local)), local
+
+
+@built
+def test_the_country_hub_shows_a_flag_for_every_country():
+    html = read(os.path.join("countries", "index.html"))
+    countries = re.findall(r'<a href="[^"]*/country/[^"]+/">(?:<img[^>]*>)?([^<]+)', html)
+    assert html.count('class="hm-flag"') == len(countries), (
+        html.count('class="hm-flag"'), len(countries))
+
+
+# --------------------------------------------------------------------------
+# the tool root
+# --------------------------------------------------------------------------
+
+
+@built
+def test_the_browse_block_is_styled_chips():
+    html = read("index.html")
+    assert 'class="hm-chips"' in html
+    assert 'href="css/pages.css"' in html, "the root needs the sheet that styles it"
+
+
+@built
+def test_the_404_loads_its_stylesheets_absolutely():
+    html = read("404.html")
+    sheets = re.findall(r'<link rel="stylesheet" href="([^"]+)"', html)
+    assert sheets, html[:400]
+    for href in sheets:
+        assert href.startswith(C.TOOL_ROOT + "/css/"), href
+
+
+@built
+def test_the_tool_knows_which_cohorts_have_pages():
+    generated = read(os.path.join("js", "player-pages.js"))
+    blob = re.search(r"var COHORTS = (\{.*?^\});$", generated, re.S | re.M)
+    cohorts = json.loads(blob.group(1))
+    assert set(cohorts) == {"college", "country", "draft", "pick", "position"}
+    assert cohorts["position"] == {"C": "center", "F": "forward", "G": "guard"}
+    for family, group in cohorts.items():
+        for key, slug in group.items():
+            assert os.path.exists(repo(family, slug, "index.html")), (family, key)
+
+
+# --------------------------------------------------------------------------
+# awards, in full
+# --------------------------------------------------------------------------
+
+
+@built
+def test_the_tool_no_longer_truncates_a_career_to_one_award():
+    app = read(os.path.join("js", "app.js"))
+    assert "highestPriorityAward" not in app
+    assert "function summarizeAwards" in app
+    assert "award_counts" in app
+    css = read(os.path.join("css", "styles.css"))
+    awards_cell = css[css.index("td.ps-awards"):]
+    assert "white-space: normal" in awards_cell.split("}")[0]
+
+
+@built
+def test_every_nationality_in_the_data_has_a_flag_on_disk():
+    with open(repo("data", "country_flags.json"), "r", encoding="utf-8") as fh:
+        codes = json.load(fh)["codes"]
+    data = F.load_data()
+    countries = {
+        (r.get("nationality") or "").strip() for r in data["seasons"]
+    } - {""}
+    missing = sorted(c for c in countries if c not in codes)
+    assert missing == [], missing
+    for code in set(codes.values()):
+        assert os.path.exists(repo("assets", "flags", code + ".svg")), code
+
+
+@built
+def test_headshots_are_matched_with_punctuation_and_accents_stripped():
+    from prerender.media import Media, match_key
+    assert match_key("A.J. Price") == match_key("AJ Price")
+    assert match_key("Nikola Jokić") == match_key("Nikola Jokic")
+    media = Media(REPO)
+    assert media.face_src(["LeBron James"]).endswith("2544-lebron-james.webp")
+    assert media.face_src(["Nobody At All"]).endswith("player_silhouette.svg")
+
+
+# --------------------------------------------------------------------------
+# career tables rank money already paid, active players included
+# --------------------------------------------------------------------------
+
+
+def _career_table(path):
+    """The rows of a page's 'Highest career earnings' table."""
+    html = read(path)
+    block = html[html.index("Highest career earnings"):]
+    block = block[:block.index("</section>")]
+    return re.findall(r'<tr><th class="hm-who" scope="row">(.*?)</th>(.*?)</tr>', block, re.S)
+
+
+@built
+def test_an_active_player_can_lead_a_career_table():
+    rows = _career_table(os.path.join("college", "duke", "index.html"))
+    assert rows, "Duke should have a career table"
+    first = rows[0][0]
+    assert "Kyrie Irving" in first, first
+    assert "hm-active" in first, first
+
+
+@built
+def test_a_career_table_never_counts_contracted_money():
+    idx = F.build_index(F.load_data())
+    html = read(os.path.join("college", "duke", "index.html"))
+    block = html[html.index("Highest career earnings"):]
+    block = block[:block.index("</section>")]
+    figures = [int(m.replace(",", "")) for m in re.findall(r"\$([\d,]+)", block)]
+    for name in ("Kyrie Irving", "Jayson Tatum"):
+        paid, season = idx.paid_through(name)
+        assert paid in figures, (name, paid)
+        assert not idx.is_contracted(season), (name, season)
+
+
+@built
+def test_an_active_career_is_worded_as_a_total_to_date():
+    for path, meta in all_pages().items():
+        if path.split(os.sep)[0] not in ("college", "country", "draft", "pick",
+                                         "position"):
+            continue
+        for sentence in _summary(path):
+            if "has earned more than" in sentence:
+                assert "to date" in sentence, (path, sentence)
+
+
+# --------------------------------------------------------------------------
+# no page hedges on the data window any more
+# --------------------------------------------------------------------------
+
+
+@built
+def test_the_window_is_a_note_and_never_a_clause_in_a_claim():
+    """1990-91 still appears as a season a man played in. What it no longer
+    does is hedge a claim."""
+    for path in all_pages():
+        if not path.endswith(".html") or path == "index.html":
+            continue
+        html = read(path)
+        assert "since 1990-91" not in html, path
+        assert "Since 1990-91" not in html, path
+    for path in ("college/duke", "player/joel-embiid", "countries"):
+        html = read(os.path.join(*(path.split("/") + ["index.html"])))
+        assert F.DATA_START_NOTE in html, path
+        assert html.count(F.DATA_START_NOTE) == 1, path
+
+
+@built
+def test_no_title_or_description_carries_the_window():
+    for path in all_pages():
+        if not path.endswith(".html") or path == "index.html":
+            continue
+        html = read(path)
+        title = re.search(r"<title>(.*?)</title>", html).group(1)
+        desc = re.search(r'<meta name="description" content="(.*?)">', html).group(1)
+        # the 1990-91 season page is allowed to be called 1990-91
+        assert "Since " + F.SCOPE_FIRST_SEASON not in title, path
+        assert "since " + F.SCOPE_FIRST_SEASON not in desc, path
+    assert "in NBA History" in read(
+        os.path.join("college", "duke", "index.html")).split("</title>")[0]
+
+
+# --------------------------------------------------------------------------
+# names inside a sentence link to their own pages
+# --------------------------------------------------------------------------
+
+
+@built
+def test_a_claim_links_the_things_it_names():
+    html = read(os.path.join("player", "joel-embiid", "index.html"))
+    block = html[html.index("What the numbers say"):]
+    for expect in ("/college/kansas/", "/draft/2014/", "/player/nikola-jokic/",
+                   "/position/center/", "/pick/3/"):
+        assert 'class="hm-inline-link" href="{}{}"'.format(C.TOOL_ROOT, expect) in block, expect
+
+
+@built
+def test_a_page_never_links_to_itself_inside_a_sentence():
+    for path, meta in all_pages().items():
+        if not path.endswith(".html") or path == "index.html":
+            continue
+        url = meta.get("url")
+        if not url:
+            continue
+        html = read(path)
+        assert 'class="hm-inline-link" href="{}"'.format(url) not in html, path
+
+
+@built
+def test_a_target_is_linked_once_per_sentence():
+    for path in (os.path.join("player", "joel-embiid", "index.html"),
+                 os.path.join("college", "duke", "index.html")):
+        html = read(path)
+        for item in re.findall(r"<li>(.*?)</li>", html) + re.findall(r"<p>(.*?)</p>", html):
+            hrefs = re.findall(r'class="hm-inline-link" href="([^"]+)"', item)
+            for sentence_hrefs in [hrefs]:
+                assert len(sentence_hrefs) == len(set(sentence_hrefs)) or \
+                    item.count(". ") >= 1, (path, item[:120])
+
+
+# --------------------------------------------------------------------------
+# awards on a phone
+# --------------------------------------------------------------------------
+
+
+@built
+def test_awards_are_hidden_below_768px():
+    css = read(os.path.join("css", "styles.css"))
+    block = css[css.rindex("@media (max-width: 768px)"):]
+    for selector in ("td.awards-cell", "th.awards-header", "th.ps-awards",
+                     "td.ps-awards"):
+        assert selector in block, selector
+    assert "display: none" in block
+    # the filter itself is untouched
+    assert "#awardsFilter" not in block
+
+
+# --------------------------------------------------------------------------
+# the summaries vary, and the same page says the same thing every build
+# --------------------------------------------------------------------------
+
+
+def _cohort_pages():
+    for path, meta in all_pages().items():
+        if path.split(os.sep)[0] in ("college", "country", "draft", "pick",
+                                     "position"):
+            yield path, meta
+
+
+@built
+def test_a_summary_is_two_or_three_sentences():
+    for path, _meta in _cohort_pages():
+        assert 2 <= len(_summary(path)) <= 3, (path, _summary(path))
+
+
+@built
+def test_no_two_sentences_in_a_row_open_on_the_same_word():
+    for path, _meta in _cohort_pages():
+        words = [s.split(" ", 1)[0].lower().strip(".,:") for s in _summary(path)]
+        for first, second in zip(words, words[1:]):
+            assert first != second, (path, first)
+
+
+@built
+def test_a_summary_names_its_cohort_at_most_twice():
+    from prerender.summary import Names
+    idx = F.build_index(F.load_data())
+    book = S.load(repo(C.SLUGS_PATH))
+    built_pages = E.build_all(idx, book)
+    by_slug = {(e.family, e.slug): e for e in built_pages["cohorts"]}
+    for path, _meta in _cohort_pages():
+        family, slug = path.split(os.sep)[0], path.split(os.sep)[1]
+        entity = by_slug.get((family, slug))
+        if entity is None:
+            continue
+        names = Names(entity.family, entity.key, entity.name)
+        joined = " ".join(_summary(path))
+        assert names.mentions(joined) <= 2, (path, names.token, joined)
+
+
+@built
+def test_a_hub_is_not_one_sentence_repeated():
+    """65 college pages opening the same way is a form letter, not a summary."""
+    openings = collections.defaultdict(collections.Counter)
+    for path, _meta in _cohort_pages():
+        sentences = _summary(path)
+        if not sentences:
+            continue
+        openings[path.split(os.sep)[0]][" ".join(sentences[0].split()[:3])] += 1
+    for family, counter in openings.items():
+        total = sum(counter.values())
+        if total < 10:
+            continue
+        assert len(counter) >= 8, (family, counter.most_common(5))
+        top = counter.most_common(1)[0][1]
+        assert top <= total * 0.45, (family, counter.most_common(3))
+
+
+def test_the_wording_of_a_page_is_a_function_of_its_slug():
+    from prerender.summary import pick
+    assert pick("duke", "order", 2) == pick("duke", "order", 2)
+    seen = {pick(slug, "order", 2) for slug in
+            ("duke", "kentucky", "france", "canada", "1", "35")}
+    assert seen == {0, 1}, "the pick should not be constant"
+
+
+@built
+def test_two_builds_produce_the_same_summaries():
+    before = {path: _summary(path) for path, _meta in _cohort_pages()}
+    result = subprocess.run(
+        [sys.executable, os.path.join(REPO, "scripts", "prerender_pages.py")],
+        capture_output=True, text=True, cwd=REPO,
+    )
+    assert result.returncode == 0, result.stderr
+    for path, sentences in before.items():
+        assert _summary(path) == sentences, path
+
+
+# --------------------------------------------------------------------------
+# the current-season slot
+# --------------------------------------------------------------------------
+
+
+@built
+def test_the_last_man_on_a_payroll_is_named_as_such():
+    joined = " ".join(_summary(os.path.join("draft", "2003", "index.html")))
+    assert "LeBron James" in joined
+    assert "still drawing an NBA salary" in joined or \
+        "last player from" in joined or "alone is left" in joined or \
+        "still on an NBA payroll" in joined or "still being paid" in joined
+
+
+@built
+def test_a_thin_current_roster_gets_no_best_paid_sentence():
+    """Two men left is not a list worth topping."""
+    idx = F.build_index(F.load_data())
+    book = S.load(repo(C.SLUGS_PATH))
+    built_pages = E.build_all(idx, book)
+    from prerender import pages as P
+    for entity in built_pages["cohorts"]:
+        if entity.family != "college":
+            continue
+        owners = P._owner_map(built_pages["players"])
+        _html, _n, current = P._current_rows(idx, entity.records, owners, 25)
+        if len(current) != 2:
+            continue
+        path = os.path.join("college", entity.slug, "index.html")
+        for sentence in _summary(path):
+            assert "best-paid" not in sentence, (path, sentence)
+            assert "heads the" not in sentence, (path, sentence)
+
+
+# --------------------------------------------------------------------------
+# salaries the CBA does not allow never reach a page
+# --------------------------------------------------------------------------
+
+
+@built
+def test_a_flagged_salary_never_tops_a_table_or_a_sentence():
+    idx = F.build_index(F.load_data())
+    assert idx.impossible, "the guard should be finding something"
+    wemby = idx.impossible_reason("Victor Wembanyama", "2030-31")
+    assert wemby, "Wembanyama's 2030-31 projection is the case this was for"
+    assert "cap" in wemby
+    # the flagged figure is in no ranked table and no summary on his cohorts
+    for path in ("pick/1/index.html", "country/france/index.html",
+                 "position/center/index.html", "draft/2023/index.html"):
+        html = read(path)
+        head = html[:html.index("Every player")] if "Every player" in html else html
+        assert "$112,560,000" not in head, path
+        assert "$112.6 million" not in head, path
+
+
+# --------------------------------------------------------------------------
+# what a summary's first sentence has to do
+# --------------------------------------------------------------------------
+
+
+def _cohort_entities():
+    idx = F.build_index(F.load_data())
+    book = S.load(repo(C.SLUGS_PATH))
+    built_pages = E.build_all(idx, book)
+    return idx, {(e.family, e.slug): e for e in built_pages["cohorts"]}
+
+
+@built
+def test_the_first_sentence_names_the_cohort():
+    """A reader landing on a page learns from its first line which list he is
+    reading. "The largest single salary belongs to Jamal Murray" does not say."""
+    from prerender.summary import Names
+    _idx, by_slug = _cohort_entities()
+    for path, _meta in _cohort_pages():
+        family, slug = path.split(os.sep)[0], path.split(os.sep)[1]
+        entity = by_slug.get((family, slug))
+        if entity is None:
+            continue
+        sentences = _summary(path)
+        assert sentences, path
+        names = Names(entity.family, entity.key, entity.name)
+        assert names.mentions(sentences[0]) >= 1, (path, sentences[0])
+
+
+@built
+def test_no_sentence_opens_on_a_pronoun_pointing_at_a_number():
+    for path, _meta in _cohort_pages():
+        for sentence in _summary(path):
+            first = sentence.split(" ", 1)[0]
+            assert first not in ("That", "This"), (path, sentence)
+
+
+@built
+def test_the_cohort_is_not_named_in_two_sentences_running():
+    from prerender.summary import Names
+    _idx, by_slug = _cohort_entities()
+    for path, _meta in _cohort_pages():
+        family, slug = path.split(os.sep)[0], path.split(os.sep)[1]
+        entity = by_slug.get((family, slug))
+        if entity is None:
+            continue
+        names = Names(entity.family, entity.key, entity.name)
+        named = [names.mentions(s) > 0 for s in _summary(path)]
+        for first, second in zip(named, named[1:]):
+            assert not (first and second), (path, _summary(path))
+
+
+@built
+def test_a_repeated_subject_becomes_a_pronoun():
+    """Two sentences about the same man do not print his name twice."""
+    for path in ("college/arkansas", "college/kentucky", "pick/35"):
+        sentences = _summary(os.path.join(*(path.split("/") + ["index.html"])))
+        assert len(sentences) >= 2, path
+        assert sentences[1].startswith(("His ", "He ", "No ", "Nobody ")), (
+            path, sentences[1])

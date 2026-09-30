@@ -13,6 +13,9 @@
   <!-- shared HoopsMatic design system (verbatim copy of nba-polymarket/docs/styles.css) -->
   <link rel="stylesheet" href="css/polymarket.css">
   <link rel="stylesheet" href="css/styles.css">
+  <!-- the .hm-* blocks the pre-rendered pages use; the Browse section below
+       is one of them, so the tool root needs the same sheet -->
+  <link rel="stylesheet" href="css/pages.css">
 </head>
 <body>
 
@@ -92,6 +95,7 @@
               <button class="filter-chip" data-value="F">F</button>
               <button class="filter-chip" data-value="C">C</button>
             </div>
+            <a class="filter-page-link" id="positionPageLink" hidden></a>
           </div>
           <div class="filter-row">
             <label class="filter-label">College/Club</label>
@@ -99,6 +103,7 @@
               <input class="filter-input" type="text" id="collegeFilter" placeholder="Type to search..." autocomplete="off" aria-label="College or club filter">
               <div class="autocomplete-dropdown" id="collegeDropdown"></div>
             </div>
+            <a class="filter-page-link" id="collegePageLink" hidden></a>
           </div>
           <div class="filter-row">
             <label class="filter-label">Age</label>
@@ -123,6 +128,7 @@
               <span class="range-sep">-</span>
               <input class="filter-input" type="number" id="draftMax" placeholder="Max" aria-label="Max draft pick">
             </div>
+            <a class="filter-page-link" id="pickPageLink" hidden></a>
           </div>
           <div class="filter-row">
             <label class="filter-label">Draft Class (Year)</label>
@@ -131,12 +137,14 @@
               <span class="range-sep">-</span>
               <input class="filter-input" type="number" id="draftYearMax" placeholder="Max" aria-label="Max draft year">
             </div>
+            <a class="filter-page-link" id="draftPageLink" hidden></a>
           </div>
           <div class="filter-row">
             <label class="filter-label">Nationality</label>
             <select class="filter-input" id="nationality" aria-label="Nationality">
               <option value="">Any</option>
             </select>
+            <a class="filter-page-link" id="countryPageLink" hidden></a>
           </div>
         </div>
       </div>
@@ -371,7 +379,8 @@
 <!-- prerender:browse:start -->
       <section class="hm-browse">
         <h2>Browse every NBA salary</h2>
-        <ul class="hm-roll"><li><a href="https://hoopsmatic.com/salary-season-finder/agents/">Agents</a></li><li><a href="https://hoopsmatic.com/salary-season-finder/colleges/">Colleges</a></li><li><a href="https://hoopsmatic.com/salary-season-finder/countries/">Countries</a></li><li><a href="https://hoopsmatic.com/salary-season-finder/draft-classes/">Draft classes</a></li><li><a href="https://hoopsmatic.com/salary-season-finder/picks/">Draft picks</a></li><li><a href="https://hoopsmatic.com/salary-season-finder/positions/">Positions</a></li></ul>
+        <p>Every college, country, draft class, pick and position has its own page of salaries and career earnings.</p>
+        <ul class="hm-chips"><li><a href="https://hoopsmatic.com/salary-season-finder/agents/">Agents</a></li><li><a href="https://hoopsmatic.com/salary-season-finder/colleges/">Colleges</a></li><li><a href="https://hoopsmatic.com/salary-season-finder/countries/">Countries</a></li><li><a href="https://hoopsmatic.com/salary-season-finder/draft-classes/">Draft classes</a></li><li><a href="https://hoopsmatic.com/salary-season-finder/picks/">Draft picks</a></li><li><a href="https://hoopsmatic.com/salary-season-finder/positions/">Positions</a></li></ul>
       </section>
       <!-- prerender:browse:end -->
 

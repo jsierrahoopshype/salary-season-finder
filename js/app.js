@@ -67,12 +67,14 @@
      writes from the same data/slugs.json the pages are built with, so a link
      here and a file there can never disagree. With that file absent the name
      renders as plain text and nothing breaks. */
+  // Absolute, always. GitHub Pages serves this same file on github.io, and a
+  // relative href would keep a reader on that host instead of hoopsmatic.com.
   function playerPageLink(name, season) {
     var pages = window.HoopsMaticPlayerPages;
-    if (!pages || typeof pages.slugFor !== "function") return escHtml(String(name));
-    var slug = pages.slugFor(name, season);
-    if (!slug) return escHtml(String(name));
-    return '<a class="player-page-link" href="player/' + escAttr(slug) + '/">' +
+    if (!pages || typeof pages.playerUrl !== "function") return escHtml(String(name));
+    var url = pages.playerUrl(name, season);
+    if (!url) return escHtml(String(name));
+    return '<a class="player-page-link" href="' + escAttr(url) + '">' +
       escHtml(String(name)) + "</a>";
   }
 
@@ -104,7 +106,55 @@
     return String(val);
   }
 
-  function fmtCell(col, val) {
+  // Badge text only. The full award name stays in data-award (so a click still
+  // filters by it) and in the title, so nothing is lost by shortening.
+  var AWARD_LABELS = {
+    "Most Valuable Player": "MVP",
+    "Finals MVP": "Finals MVP",
+    "All-Star MVP": "All-Star MVP",
+    "All-NBA First Team": "All-NBA 1st",
+    "All-NBA Second Team": "All-NBA 2nd",
+    "All-NBA Third Team": "All-NBA 3rd",
+    "All-Defensive First Team": "All-Def 1st",
+    "All-Defensive Second Team": "All-Def 2nd",
+    "All-Rookie First Team": "All-Rookie 1st",
+    "All-Rookie Second Team": "All-Rookie 2nd",
+    "Defensive Player of the Year": "DPOY",
+    "Defensive Player of the Month": "DPOM",
+    "Most Improved Player": "MIP",
+    "Rookie of the Year": "ROY",
+    "Sixth Man of the Year": "6th Man",
+    "Clutch Player of the Year": "Clutch POY",
+    "NBA Champion": "Champion",
+    "NBA Cup Champion": "Cup Champion"
+  };
+
+  function awardLabel(name) {
+    return AWARD_LABELS[name] || name;
+  }
+
+  /**
+   * Every award as its own badge, never truncated.
+   *
+   * @param {Array}  list       award names, already in the order to print
+   * @param {Object} [counts]   name -> how many times it was won
+   * @param {boolean} clickable wire the badge for click-to-filter
+   */
+  function awardBadges(list, counts, clickable) {
+    if (!list || list.length === 0) return "-";
+    return list.map(function (a) {
+      var cls = "award-badge";
+      if (clickable) cls += " clickable";
+      if (a.indexOf("All-Star") >= 0) cls += " all-star";
+      if (a.indexOf("Most Valuable Player") >= 0 || a === "Finals MVP") cls += " mvp";
+      var n = counts && counts[a] ? counts[a] : 1;
+      var text = escHtml(awardLabel(a)) + (n > 1 ? ' <span class="award-count">\u00d7' + n + "</span>" : "");
+      var dataAttr = clickable ? ' data-award="' + escAttr(a) + '"' : "";
+      return '<span class="' + cls + '"' + dataAttr + ' title="' + escAttr(a + (n > 1 ? " (" + n + ")" : "")) + '">' + text + "</span>";
+    }).join(" ");
+  }
+
+  function fmtCell(col, val, record) {
     switch (col.type) {
       case "salary": return fmtSalary(val);
       case "pct":    return fmtPct(val);
@@ -112,13 +162,7 @@
       case "stat":   return fmtStat(val);
       case "num":    return fmtNum(val);
       case "awards":
-        if (!val || val.length === 0) return "-";
-        return val.map(function(a) {
-          var cls = "award-badge clickable";
-          if (a.indexOf("All-Star") >= 0) cls += " all-star";
-          if (a.indexOf("Most Valuable Player") >= 0) cls += " mvp";
-          return '<span class="' + cls + '" data-award="' + escAttr(a) + '">' + escHtml(a) + "</span>";
-        }).join(" ");
+        return awardBadges(val, record && record.award_counts, true);
       default: return val || "-";
     }
   }
@@ -1507,14 +1551,28 @@
     "NBA Champion"
   ];
 
-  function highestPriorityAward(awards) {
-    if (!awards || awards.length === 0) return [];
-    for (var i = 0; i < AWARD_PRIORITY.length; i++) {
-      for (var j = 0; j < awards.length; j++) {
-        if (awards[j] === AWARD_PRIORITY[i]) return [awards[j]];
-      }
-    }
-    return [awards[0]];
+  /**
+   * Career totals used to print one award and drop the rest. Now every award
+   * is kept, deduplicated, with how many times it was won.
+   *
+   * Order: the priority list above first, then whatever is left by how often
+   * it was won, then alphabetically, so two runs of the same data agree.
+   *
+   * @returns {{names: Array, counts: Object}}
+   */
+  function summarizeAwards(awards) {
+    if (!awards || awards.length === 0) return { names: [], counts: {} };
+    var counts = {};
+    awards.forEach(function (a) { counts[a] = (counts[a] || 0) + 1; });
+    var names = Object.keys(counts).sort(function (a, b) {
+      var pa = AWARD_PRIORITY.indexOf(a), pb = AWARD_PRIORITY.indexOf(b);
+      if (pa < 0) pa = 999;
+      if (pb < 0) pb = 999;
+      if (pa !== pb) return pa - pb;
+      if (counts[b] !== counts[a]) return counts[b] - counts[a];
+      return a < b ? -1 : (a > b ? 1 : 0);
+    });
+    return { names: names, counts: counts };
   }
 
   // Format season list: consecutive runs use "to", gaps use commas
@@ -1563,7 +1621,7 @@
       var totalPTS = 0, totalREB = 0, totalAST = 0, totalSTL = 0, totalBLK = 0;
       var wFG = 0, wTP = 0, wFT = 0;
       var capSum = 0, capCount = 0;
-      var awardsSet = {};
+      // every occurrence, not a deduplicated set: the badges carry a count
       var allAwards = [];
 
       recs.forEach(function (r) {
@@ -1583,11 +1641,11 @@
         }
         if (r.salary_cap_pct != null) { capSum += r.salary_cap_pct; capCount++; }
         if (r.awards) {
-          r.awards.forEach(function (a) {
-            if (!awardsSet[a]) { awardsSet[a] = true; allAwards.push(a); }
-          });
+          r.awards.forEach(function (a) { allAwards.push(a); });
         }
       });
+
+      var awardSummary = summarizeAwards(allAwards);
 
       // Age range: earliest age to latest age
       var ageDisplay = latest.age;
@@ -1624,7 +1682,8 @@
         cost_per_point: totalPTS > 0 ? Math.round(totalSalary / totalPTS) : null,
         cost_per_game: totalGP > 0 ? Math.round(totalSalary / totalGP) : null,
         career_earnings: latest.career_earnings,
-        awards: highestPriorityAward(allAwards),
+        awards: awardSummary.names,
+        award_counts: awardSummary.counts,
         pos: latest.pos,
         nationality: latest.nationality,
         college: latest.college,
@@ -1636,10 +1695,66 @@
     return combined;
   }
 
+  // ---- filter -> its own page ----
+  //
+  // A filter that names one college, country, draft class, pick or position
+  // has a page of its own. The chip keeps filtering; the link beside it goes
+  // to the page. Anything with no page, or a range covering more than one
+  // value, shows nothing.
+  var FILTER_PAGE_LINKS = [
+    { id: "collegePageLink", family: "college" },
+    { id: "countryPageLink", family: "country" },
+    { id: "pickPageLink", family: "pick" },
+    { id: "draftPageLink", family: "draft" },
+    { id: "positionPageLink", family: "position" },
+  ];
+
+  function filterPageValues(f) {
+    var picked = {
+      college: f.college || null,
+      country: f.nationality || null,
+      pick: null,
+      draft: null,
+      position: f.positions.length === 1 ? f.positions[0] : null,
+    };
+    if (f.draftMin != null && f.draftMin === f.draftMax) picked.pick = String(f.draftMin);
+    if (f.draftYearMin != null && f.draftYearMin === f.draftYearMax) {
+      picked.draft = String(f.draftYearMin);
+    }
+    return picked;
+  }
+
+  var POSITION_PAGE_LABELS = { G: "Guards", F: "Forwards", C: "Centers" };
+
+  function syncFilterPageLinks(f) {
+    var pages = window.HoopsMaticPlayerPages;
+    var picked = filterPageValues(f);
+    FILTER_PAGE_LINKS.forEach(function (spec) {
+      var el = document.getElementById(spec.id);
+      if (!el) return;
+      var value = picked[spec.family];
+      var url = (pages && typeof pages.cohortUrl === "function" && value)
+        ? pages.cohortUrl(spec.family, value) : null;
+      if (!url) {
+        el.hidden = true;
+        el.removeAttribute("href");
+        return;
+      }
+      var label = value;
+      if (spec.family === "position") label = POSITION_PAGE_LABELS[value] || value;
+      else if (spec.family === "pick") label = "No. " + value + " picks";
+      else if (spec.family === "draft") label = value + " draft";
+      el.href = url;
+      el.textContent = label + " page \u2192";
+      el.hidden = false;
+    });
+  }
+
   function applyFilters() {
     if (!DATA || !DATA.seasons) return;
 
     var f = getFilterState();
+    syncFilterPageLinks(f);
     filtered = DATA.seasons.filter(function (r) {
       return matchesFilter(r, f);
     });
@@ -2308,14 +2423,7 @@
 
   function playerSeasonAwardsCell(awards, clickable) {
     if (!awards || awards.length === 0) return '<span class="ps-empty">-</span>';
-    return awards.map(function (a) {
-      var cls = "award-badge";
-      if (clickable) cls += " clickable";
-      if (a.indexOf("All-Star") >= 0) cls += " all-star";
-      if (a.indexOf("Most Valuable Player") >= 0) cls += " mvp";
-      var dataAttr = clickable ? ' data-award="' + escAttr(a) + '"' : "";
-      return '<span class="' + cls + '"' + dataAttr + ">" + escHtml(a) + "</span>";
-    }).join(" ");
+    return awardBadges(awards, null, clickable);
   }
 
   /**
@@ -2464,7 +2572,11 @@
     activeCols.forEach(function (col) {
       var isSorted = col.key === sortCol;
       var arrow = col.sortable ? '<span class="sort-arrow">' + (isSorted ? (sortDir === "asc" ? "\u25B2" : "\u25BC") : "\u25BC") + "</span>" : "";
-      var cls = isSorted ? ' class="sorted"' : "";
+      // the class names the column so the 768px rule can hide the awards one
+      var classes = [];
+      if (isSorted) classes.push("sorted");
+      if (col.key === "awards") classes.push("awards-header");
+      var cls = classes.length ? ' class="' + classes.join(" ") + '"' : "";
       var clickAttr = col.sortable ? ' data-sort="' + col.key + '"' : "";
       headerRow += "<th" + cls + clickAttr + ">" + col.label + arrow + "</th>";
     });
@@ -2538,7 +2650,7 @@
                   : fmtCell(col, val);
                 html += '<td class="' + tdClass + '"' + lblAttr + ' data-col="' + col.key + '" data-val="' + escAttr(raw) + '">' + cellHtml + "</td>";
               } else {
-                html += '<td class="' + tdClass + '"' + lblAttr + '>' + fmtCell(col, val) + "</td>";
+                html += '<td class="' + tdClass + '"' + lblAttr + '>' + fmtCell(col, val, record) + "</td>";
               }
             }
           }

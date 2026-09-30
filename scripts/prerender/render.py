@@ -34,8 +34,23 @@ def money_short(value):
 
 
 def up(depth):
-    """Relative prefix back to the tool root from a page ``depth`` deep."""
+    """Relative prefix back to the tool root, for the stylesheets only.
+
+    Every link in a page body is absolute instead. The Worker serves these
+    pages on hoopsmatic.com while GitHub Pages serves the same files on
+    github.io, and a relative href would keep a reader on whichever host he
+    landed on. The canonical host is the only one we link.
+    """
     return "../" * depth
+
+
+def page_url(family, slug):
+    """The public URL of an entity page."""
+    return "{}/{}/{}/".format(C.TOOL_ROOT, C.FAMILIES[family]["dir"], slug)
+
+
+def hub_url(hub_slug):
+    return "{}/{}/".format(C.TOOL_ROOT, hub_slug)
 
 
 # --------------------------------------------------------------------------
@@ -114,14 +129,8 @@ def breadcrumb_ld(trail_absolute):
 
 def page(title, description, url, depth, trail, body, indexable, og_title=None):
     root = up(depth)
-    absolute = []
-    for label, href in trail:
-        if href is None:
-            absolute.append((label, url))
-        elif href == C.TOOL_ROOT:
-            absolute.append((label, C.TOOL_ROOT))
-        else:
-            absolute.append((label, C.TOOL_ROOT + "/" + href.replace(root, "", 1)))
+    # every crumb href is already absolute, so the JSON-LD is the same list
+    absolute = [(label, href if href else url) for label, href in trail]
     head = HEAD.format(
         title=esc(title),
         description=esc(description),
@@ -174,33 +183,74 @@ def rank_table(columns, rows):
     )
 
 
-def player_link(ident, depth, rank=None, tag=""):
-    href = "{}player/{}/".format(up(depth), ident.slug)
+def player_link(ident, rank=None, tag="", face=""):
+    href = page_url("player", ident.slug)
     prefix = '<span class="hm-rank">{}</span>'.format(rank) if rank else ""
-    return '{}<a href="{}">{}</a>{}'.format(prefix, esc(href), esc(ident.name), tag)
+    return '{}{}<a href="{}">{}</a>{}'.format(
+        prefix, face, esc(href), esc(ident.name), tag)
 
 
 CONTRACTED_TAG = '<span class="hm-contracted">contracted</span>'
 
 
-def facts_list(sentences):
+def summary_block(sentences, linker=None, url=None):
+    """The written summary at the top of a cohort page."""
     if not sentences:
         return ""
-    items = "".join("<li>{}</li>".format(esc(s)) for s in sentences)
-    return '<ul class="hm-facts">{}</ul>'.format(items)
+    render = (
+        (lambda t: linker.sentences_html(t, url)) if linker else esc
+    )
+    return '<div class="hm-summary">{}</div>'.format(
+        "".join("<p>{}</p>".format(render(text)) for text in sentences)
+    )
 
 
-def roll_call(entries, depth, family):
-    """Every member of a cohort or family, linked."""
+def facts_by_season(groups, current_key, linker=None, url=None):
+    """A player's claims under season headings, newest season first.
+
+    This season and the seasons already signed for are open, because that is
+    what a reader came for. Everything older is behind a details element, with
+    its sentences still in the HTML for anyone who opens it or reads the source.
+    """
+    if not groups:
+        return ""
+    render = (lambda t: linker.html(t, url)) if linker else esc
+    out = ['<div class="hm-seasons">']
+    for season, key, sentences in groups:
+        items = "".join("<li>{}</li>".format(render(text)) for text in sentences)
+        count = '<span class="hm-count">{}</span>'.format(len(sentences))
+        if key >= current_key:
+            out.append(
+                '<section class="hm-season is-open"><h3>{}{}</h3>'
+                '<ul class="hm-facts">{}</ul></section>'.format(
+                    esc(season), count, items)
+            )
+        else:
+            out.append(
+                '<details class="hm-season"><summary>{}{}</summary>'
+                '<ul class="hm-facts">{}</ul></details>'.format(
+                    esc(season), count, items)
+            )
+    out.append("</div>")
+    return "".join(out)
+
+
+def roll_call(entries, family, lead=None):
+    """Every member of a cohort or family, linked.
+
+    ``lead`` optionally returns a small image (a flag, say) for an entry.
+    """
     if not entries:
         return '<p class="hm-empty">Nothing on file.</p>'
     items = []
     for name, slug, count in entries:
-        href = "{}{}/{}/".format(up(depth), C.FAMILIES[family]["dir"], slug)
+        href = page_url(family, slug)
         suffix = (
             '<span class="hm-roll-count">{}</span>'.format(count) if count else ""
         )
-        items.append('<li><a href="{}">{}{}</a></li>'.format(esc(href), esc(name), suffix))
+        mark = (lead(name) if lead else "") or ""
+        items.append('<li><a href="{}">{}{}{}</a></li>'.format(
+            esc(href), mark, esc(name), suffix))
     return '<ul class="hm-roll">{}</ul>'.format("".join(items))
 
 
