@@ -20,9 +20,14 @@ import xml.etree.ElementTree as ET
 
 ROOT = "https://hoopsmatic.com/salary-season-finder"
 
-#: url -> the title it must carry. The root's title is the tool's own.
+#: url -> the title it must carry.
+#:
+#: The root's title is not the one in index.html: the hoopsmatic.com Worker
+#: rewrites it on the way through, on purpose. What this file checks is what a
+#: reader is served, so the expectation is the Worker's title. Every subpage
+#: passes through untouched and carries the title this repository built.
 PAGES = (
-    (ROOT, "NBA Salary Season Finder"),
+    (ROOT, "NBA Player Salaries by season and position | HoopsMatic"),
     (ROOT + "/colleges/", "NBA Salaries by College | HoopsMatic"),
     (ROOT + "/college/duke/", "Highest-Paid Duke Players in NBA History | HoopsMatic"),
     (ROOT + "/country/canada/",
@@ -74,11 +79,36 @@ def check_page(url, expected_title, buster):
         problems.append("{} canonical is {}, expected {}".format(
             url, canonical.group(1), url))
 
-    bad = [href for href in re.findall(r'href="([^"]+)"', body)
-           if "github.io" in href]
-    if bad:
-        problems.append("{} links to github.io: {}".format(url, ", ".join(bad[:3])))
+    for href, tag, snippet in github_io_links(body):
+        problems.append(
+            "{} links to github.io: {}\n    tag: {}\n    around: {}".format(
+                url, href, tag, snippet)
+        )
     return problems
+
+
+#: How much of the page around a bad link to quote, either side.
+CONTEXT_CHARS = 140
+
+
+def github_io_links(body):
+    """Every href pointing at github.io, with the tag it sits in.
+
+    A bare URL in a failure report says nothing about where it came from. The
+    tag and the few lines around it say whether it is a canonical, a nav link
+    or something injected downstream, which is the difference between a fix
+    here and a fix in the Worker.
+    """
+    out = []
+    for match in re.finditer(r'href="([^"]*github\.io[^"]*)"', body):
+        start = body.rfind("<", 0, match.start())
+        end = body.find(">", match.end())
+        tag = body[start:end + 1] if start != -1 and end != -1 else match.group(0)
+        left = max(0, (start if start != -1 else match.start()) - CONTEXT_CHARS)
+        right = min(len(body), (end if end != -1 else match.end()) + CONTEXT_CHARS)
+        snippet = " ".join(body[left:right].split())
+        out.append((match.group(1), " ".join(tag.split()), snippet))
+    return out
 
 
 def check_sitemap(buster):
