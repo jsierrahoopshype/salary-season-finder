@@ -1363,3 +1363,144 @@ def test_the_bare_url_keeps_any_query_string():
     bare = app[app.index("function saveStateToURL"):]
     bare = bare[:bare.index("\n  }")]
     assert "window.location.pathname + window.location.search" in bare
+
+
+# --------------------------------------------------------------------------
+# the three cuts across the families: region, pick range, college position
+# --------------------------------------------------------------------------
+
+
+def _related(path):
+    """The labels in a page's Related pages block."""
+    html = read(path)
+    found = re.search(
+        r"<h2>Related pages</h2>.*?<ul class=\"hm-chips\">(.*?)</ul>", html, re.S)
+    if not found:
+        return []
+    return re.findall(r">([^<>]+)</a>", found.group(1))
+
+
+def test_the_region_map_covers_every_nationality_in_the_data():
+    countries, with_pages = F.load_continents()
+    data = F.load_data()
+    seen = {(r.get("nationality") or "").strip() for r in data["seasons"]}
+    seen.discard("")
+    assert seen <= set(countries), sorted(seen - set(countries))
+    assert set(with_pages) == {"europe", "africa", "latin-america", "oceania", "asia"}
+    # every region a page is promised for is one the engine can phrase
+    for region in with_pages:
+        assert region in F.REGION_PHRASES
+    assert set(countries.values()) >= set(with_pages)
+
+
+def test_everyone_who_is_not_american_is_an_international_player():
+    data = F.load_data()
+    idx = F.build_index(data)
+    for record in idx.records:
+        nationality = (record.get("nationality") or "").strip()
+        if not nationality or not idx.cohorts_allowed(
+                idx.canonical(record["player"]), record["season"]):
+            continue
+        keys = {(k, c) for k, c, _l in F._cohorts_for(record, idx)}
+        expected = nationality != F.DOMESTIC_NATIONALITY
+        assert (("region", "international") in keys) is expected, record["player"]
+
+
+@built
+def test_the_region_pages_are_the_five_continents_and_the_international_one():
+    slugs = sorted(
+        name for name in os.listdir(repo("region"))
+        if os.path.isdir(repo("region", name))
+    )
+    assert slugs == ["africa", "asia", "europe", "international",
+                     "latin-america", "oceania"]
+    for slug in slugs:
+        html = read(os.path.join("region", slug, "index.html"))
+        assert "noindex" not in html
+        assert "Highest-Paid" in html
+        assert C.SCOPE_NOTE in html
+
+
+@built
+def test_the_pick_ranges_are_the_three_the_engine_defines():
+    slugs = sorted(
+        name for name in os.listdir(repo("pick-range"))
+        if os.path.isdir(repo("pick-range", name))
+    )
+    assert slugs == ["lottery", "second-round", "top-10"]
+    assert "<title>Highest-Paid Lottery Picks in NBA History | HoopsMatic</title>" \
+        in read(os.path.join("pick-range", "lottery", "index.html"))
+
+
+@built
+def test_a_pick_page_points_at_the_ranges_it_falls_in():
+    assert _related(os.path.join("pick", "1", "index.html")) == [
+        "Lottery Picks", "Top-10 Picks"]
+    assert _related(os.path.join("pick", "14", "index.html")) == ["Lottery Picks"]
+    # 15 to 30 is a first-round pick outside the lottery, which is no range here
+    assert _related(os.path.join("pick", "20", "index.html")) == []
+    assert _related(os.path.join("pick", "45", "index.html")) == ["Second-Round Picks"]
+
+
+@built
+def test_a_country_page_points_at_its_region_and_at_the_international_page():
+    assert _related(os.path.join("country", "france", "index.html")) == [
+        "European Players", "International Players"]
+    assert _related(os.path.join("country", "nigeria", "index.html")) == [
+        "African Players", "International Players"]
+    # The United States is nobody's international page and no region has it
+    assert _related(os.path.join("country", "united-states", "index.html")) == []
+
+
+@built
+def test_a_college_and_its_positions_point_at_each_other():
+    assert _related(os.path.join("college", "duke", "index.html")) == [
+        "Duke Forwards", "Duke Guards"]
+    assert _related(
+        os.path.join("college-position", "duke-guards", "index.html")) == [
+        "All Duke players"]
+
+
+@built
+def test_a_college_position_page_exists_only_where_the_cohort_is_big_enough():
+    data = F.load_data()
+    idx = F.build_index(data)
+    players = collections.defaultdict(set)
+    for record in idx.records:
+        for kind, key, _label in F._cohorts_for(record, idx):
+            if kind == "college_position":
+                players[key].add(idx.canonical(record["player"]))
+    qualify = {k for k, v in players.items()
+               if len(v) >= F.COLLEGE_POSITION_MIN_PLAYERS}
+    built_pages = {
+        name for name in os.listdir(repo("college-position"))
+        if os.path.isdir(repo("college-position", name))
+    }
+    assert len(built_pages) == len(qualify), (len(built_pages), len(qualify))
+    assert F.COLLEGE_POSITION_MIN_PLAYERS == 15
+
+
+@built
+def test_the_new_families_are_in_the_sitemap_and_on_the_hubs():
+    urls = {row[0] if isinstance(row, tuple) else row for row in sitemap_urls()}
+    for path in ("region/europe", "region/international", "pick-range/lottery",
+                 "college-position/duke-guards", "regions", "pick-ranges",
+                 "college-positions"):
+        assert "{}/{}/".format(C.TOOL_ROOT, path) in urls, path
+    root = read("index.html")
+    for hub in ("regions", "pick-ranges", "college-positions"):
+        assert "{}/{}/".format(C.TOOL_ROOT, hub) in root, hub
+        assert "{}/{}/".format(C.TOOL_ROOT, hub) in read(C.NOT_FOUND_PATH), hub
+
+
+@built
+def test_a_new_family_page_reads_like_every_other_cohort_page():
+    for path in ("region/europe", "pick-range/second-round",
+                 "college-position/kentucky-guards"):
+        html = read(os.path.join(path, "index.html"))
+        assert "<h2>Highest career earnings</h2>" in html
+        assert "<h2>Highest single-season salaries</h2>" in html
+        assert "<h2>Every player</h2>" in html
+        assert 'class="hm-summary"' in html
+        # headshots come from the github.io host on purpose; no link may
+        assert 'href="https://jsierrahoopshype.github.io' not in html

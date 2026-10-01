@@ -72,10 +72,12 @@ class Names(object):
     it at all rather than reaching for "on this list".
     """
 
-    def __init__(self, family, key, name):
+    def __init__(self, family, key, name, noun=None, noun_one=None,
+                 noun_record=None):
         self.family = family
         self.key = key
         self.name = name
+        self.noun = noun
         lower = name.lower()
         if family == "college":
             self.one = "{} player".format(name)
@@ -119,6 +121,15 @@ class Names(object):
             self.many = lower
             self.record = "the single-season record for a {}".format(single)
             self.rival = "any other {}".format(single)
+        elif family in ("region", "pick_range", "college_position"):
+            # The name already carries the noun: "European Players", "Lottery
+            # Picks", "Duke Guards". Every form a sentence needs arrives with
+            # the entity, because lowercasing a title takes Duke with it and
+            # "players from Oceania" has no singular a rule could reach.
+            self.many = noun or lower
+            self.one = noun_one or self.many
+            self.record = noun_record or "the single-season record"
+            self.rival = "any other {}".format(self.one)
         else:
             self.one = "client of {}".format(name)
             self.many = "clients of {}".format(name)
@@ -132,6 +143,8 @@ class Names(object):
             return "No. {}".format(self.key) if self.key != "undrafted" else "undrafted"
         if self.family == "position":
             return self.one
+        if self.family in ("region", "pick_range", "college_position"):
+            return self.many
         return self.name
 
     @property
@@ -415,7 +428,7 @@ def _choose(pool, slug, salt, avoid_word=None, **kw):
 # --------------------------------------------------------------------------
 
 def cohort_summary(idx, family, key, name, career, paid, current, facts,
-                   slug=None):
+                   slug=None, noun=None, noun_one=None, noun_record=None):
     """Two or three sentences about one cohort.
 
     ``career`` is [(total, identity, last record)], ``paid`` and ``current``
@@ -423,7 +436,8 @@ def cohort_summary(idx, family, key, name, career, paid, current, facts,
     [(season, fact)] for this cohort straight from factoids.json.
     """
     slug = slug or "{}/{}".format(family, key)
-    names = Names(family, key, name)
+    names = Names(family, key, name, noun=noun, noun_one=noun_one,
+                  noun_record=noun_record)
     entries = drop_mirrors(list(facts))
 
     # ---- what there is to say --------------------------------------------

@@ -59,6 +59,8 @@ SUMMARY_SENTENCES = 4
 #: ``cohort``     the factoid engine's cohort kind, so the minimum player count
 #:                for a page is the same constant the engine ranks by.
 #: ``hub``        the family's index page, or None where the family has no hub.
+#: ``filterable`` the family is a filter in the tool itself, so the tool links
+#:                from that filter to the page. A region is not a filter.
 FAMILIES = {
     "player": {
         "dir": "player", "indexable": False, "cohort": None, "hub": None,
@@ -81,27 +83,47 @@ FAMILIES = {
     "college": {
         "dir": "college", "indexable": True, "cohort": "college",
         "hub": "colleges", "label": "Colleges",
-        "label_one": "College",
+        "label_one": "College", "filterable": True,
     },
     "country": {
         "dir": "country", "indexable": True, "cohort": "nationality",
         "hub": "countries", "label": "Countries",
-        "label_one": "Country",
+        "label_one": "Country", "filterable": True,
     },
     "draft": {
         "dir": "draft", "indexable": True, "cohort": "draft_class",
         "hub": "draft-classes", "label": "Draft classes",
-        "label_one": "Draft class",
+        "label_one": "Draft class", "filterable": True,
     },
     "pick": {
         "dir": "pick", "indexable": True, "cohort": "draft_slot",
         "hub": "picks", "label": "Draft picks",
-        "label_one": "Draft pick",
+        "label_one": "Draft pick", "filterable": True,
     },
     "position": {
         "dir": "position", "indexable": True, "cohort": "position",
         "hub": "positions", "label": "Positions",
-        "label_one": "Position",
+        "label_one": "Position", "filterable": True,
+    },
+    # Three cuts across the families above, each one a comparison a reader asks
+    # for by name: where a player is from rather than which country, where he
+    # was taken rather than at which exact slot, and one position inside one
+    # college. Each is a cohort kind in the engine, so the ranking inside these
+    # pages is the engine's own and a page can never disagree with a factoid.
+    "region": {
+        "dir": "region", "indexable": True, "cohort": "region",
+        "hub": "regions", "label": "Regions",
+        "label_one": "Region",
+    },
+    "pick_range": {
+        "dir": "pick-range", "indexable": True, "cohort": "pick_range",
+        "hub": "pick-ranges", "label": "Pick ranges",
+        "label_one": "Pick range",
+    },
+    "college_position": {
+        "dir": "college-position", "indexable": True, "cohort": "college_position",
+        "hub": "college-positions", "label": "Colleges by position",
+        "label_one": "College position",
     },
     # The agent field is unverified, which is why the factoid family is off. The
     # pages are built so the hub links somewhere real, but they are noindex and
@@ -158,10 +180,27 @@ TITLES = {
         "Highest-Paid NBA {name} of All Time | HoopsMatic",
         "Highest-Paid NBA {name} | HoopsMatic",
     ),
+    # These three carry their own noun in the name, so one template serves all
+    # of "European Players", "Lottery Picks" and "Duke Guards".
+    "region": (
+        "Highest-Paid {name} in NBA History | HoopsMatic",
+        "Highest-Paid {name} | HoopsMatic",
+    ),
+    "pick_range": (
+        "Highest-Paid {name} in NBA History | HoopsMatic",
+        "Highest-Paid {name} | HoopsMatic",
+    ),
+    "college_position": (
+        "Highest-Paid {name} in NBA History | HoopsMatic",
+        "Highest-Paid {name} | HoopsMatic",
+    ),
     "agent": ("{name}: NBA Clients and Salaries | HoopsMatic", None),
 }
 
 HUB_TITLES = {
+    "regions": "NBA Salaries by Region | HoopsMatic",
+    "pick-ranges": "NBA Salaries by Draft Pick Range | HoopsMatic",
+    "college-positions": "NBA Salaries by College and Position | HoopsMatic",
     "colleges": "NBA Salaries by College | HoopsMatic",
     "countries": "NBA Salaries by Country | HoopsMatic",
     "draft-classes": "NBA Salaries by Draft Class | HoopsMatic",
@@ -171,6 +210,9 @@ HUB_TITLES = {
 }
 
 HUB_HEADINGS = {
+    "regions": "NBA salaries by region",
+    "pick-ranges": "NBA salaries by draft pick range",
+    "college-positions": "NBA salaries by college and position",
     "colleges": "NBA salaries by college",
     "countries": "NBA salaries by country",
     "draft-classes": "NBA salaries by draft class",

@@ -105,6 +105,16 @@ DRAFT_CLASS_MIN_PLAYERS = 10
 DRAFT_SLOT_MIN_PLAYERS = 10
 POSITION_MIN_PLAYERS = 10
 
+#: A region is a nationality cohort with more countries in it, so it ranks on
+#: the same minimum. A pick range is the same for draft slots.
+REGION_MIN_PLAYERS = NATIONALITY_MIN_PLAYERS
+PICK_RANGE_MIN_PLAYERS = DRAFT_SLOT_MIN_PLAYERS
+
+#: One position inside one college is a narrower cut than either on its own, so
+#: it takes the college minimum at that position rather than overall: fifteen
+#: guards out of Kentucky, not fifteen players.
+COLLEGE_POSITION_MIN_PLAYERS = COLLEGE_MIN_PLAYERS
+
 #: Agent factoids need enough clients for "highest-paid client" to mean anything.
 AGENT_MIN_CLIENTS = 5
 
@@ -169,6 +179,72 @@ FIRST_DRAFT_YEAR_IN_WINDOW = 1990
 #: Draft slots that can form a cohort. Old drafts ran past 60 rounds deep and
 #: those players are pre-window anyway.
 MAX_DRAFT_SLOT = 60
+
+#: Where data/continents.json lives: nationality -> the region that counts the
+#: player. Read by this engine and by the prerender; build_data.py never sees it.
+CONTINENTS_PATH = os.path.join("data", "continents.json")
+
+#: The pick ranges that get their own cohort, as (key, first, last, phrase).
+#: A top-10 pick is in the lottery too, which is the point of having both.
+PICK_RANGES = (
+    ("top-10", 1, 10, "by a top-10 pick"),
+    ("lottery", 1, 14, "by a lottery pick"),
+    ("second-round", 31, 60, "by a second-round pick"),
+)
+
+#: Per region: how a factoid says it, what a page title calls it, and the nouns
+#: a sentence needs. Spelled out rather than derived, because lowercasing a
+#: title takes the proper adjectives with it and "players from Oceania" has no
+#: singular a rule could reach.
+REGION_PHRASES = {
+    "international": {
+        "phrase": "by an international player",
+        "title": "International Players",
+        "many": "international players",
+        "one": "international player",
+        "record": "the international single-season record",
+    },
+    "europe": {
+        "phrase": "by a European player",
+        "title": "European Players",
+        "many": "European players",
+        "one": "European player",
+        "record": "the European single-season record",
+    },
+    "africa": {
+        "phrase": "by an African player",
+        "title": "African Players",
+        "many": "African players",
+        "one": "African player",
+        "record": "the African single-season record",
+    },
+    "latin-america": {
+        "phrase": "by a Latin American player",
+        "title": "Latin American Players",
+        "many": "Latin American players",
+        "one": "Latin American player",
+        "record": "the Latin American single-season record",
+    },
+    "oceania": {
+        "phrase": "by a player from Oceania",
+        "title": "Players from Oceania",
+        "many": "players from Oceania",
+        "one": "player from Oceania",
+        "record": "the single-season record for Oceania",
+    },
+    "asia": {
+        "phrase": "by an Asian player",
+        "title": "Asian Players",
+        "many": "Asian players",
+        "one": "Asian player",
+        "record": "the Asian single-season record",
+    },
+}
+
+#: The nationality every other one is measured against. A player from anywhere
+#: else is an international player, which is the one region that is defined by
+#: what it is not.
+DOMESTIC_NATIONALITY = "United States"
 
 #: Nationality strings that read with a definite article: "a player from the
 #: United States". Exact strings from data.json's nationality field, listed out
@@ -413,6 +489,9 @@ class FactoidIndex:
         # display names
         self.college_names = {}
         self.name_aliases = {}
+        # nationality -> region, and which regions get a page
+        self.continents = {}
+        self.regions_with_pages = []
         # identity splits
         self.identity_splits = {}
         self.split_suppressed = set()   # (player, season) that must not be named
@@ -650,6 +729,23 @@ def load_college_names(path=None):
         return json.load(fh).get("mapping") or {}
 
 
+def load_continents(path=None):
+    """Load data/continents.json as {nationality: region key}.
+
+    Missing file is not an error: no record then joins a region cohort, and the
+    international one carries on, since that is nationality against one string.
+    """
+    if path is None:
+        here = os.path.dirname(os.path.abspath(__file__))
+        path = os.path.join(os.path.dirname(here), CONTINENTS_PATH)
+    if not os.path.exists(path):
+        return {}, []
+    with open(path, "r", encoding="utf-8") as fh:
+        payload = json.load(fh)
+    return (payload.get("countries") or {},
+            list(payload.get("regions_with_pages") or []))
+
+
 def load_name_aliases(path=None):
     """Load data/name_aliases.json as {alias spelling: canonical spelling}.
     Missing file is not an error: every spelling is then its own player."""
@@ -800,7 +896,7 @@ def compute_current_season(data):
 
 
 def build_index(data, franchises=None, identity_splits=None, college_names=None,
-                name_aliases=None):
+                name_aliases=None, continents=None):
     """Build the whole comparison structure once. This is the expensive call."""
     idx = FactoidIndex()
     idx.records = list(data.get("seasons") or [])
@@ -815,6 +911,11 @@ def build_index(data, franchises=None, identity_splits=None, college_names=None,
     idx.name_aliases = (
         name_aliases if name_aliases is not None else load_name_aliases()
     )
+    if continents is None:
+        idx.continents, idx.regions_with_pages = load_continents()
+    else:
+        idx.continents = dict(continents)
+        idx.regions_with_pages = sorted(set(continents.values()))
     idx.current_season = compute_current_season(data)
     idx.current_key = season_key(idx.current_season)
 
@@ -1090,11 +1191,30 @@ def _cohorts_for(record, idx):
     if nationality:
         article = "the " if nationality in NATIONALITY_TAKES_THE else ""
         out.append(("nationality", nationality, "by a player from " + article + nationality))
+        # Everyone who is not American is an international player, whether or
+        # not the region map has heard of his country.
+        if nationality != DOMESTIC_NATIONALITY:
+            out.append(("region", "international",
+                        REGION_PHRASES["international"]["phrase"]))
+        region = (idx.continents or {}).get(nationality)
+        if region and region in (idx.regions_with_pages or ()):
+            out.append(("region", region, REGION_PHRASES[region]["phrase"]))
+
+    if pick and 1 <= pick <= MAX_DRAFT_SLOT:
+        for key, first, last, phrase in PICK_RANGES:
+            if first <= pick <= last:
+                out.append(("pick_range", key, phrase))
 
     group, noun = position_group(record.get("pos"))
     if group:
         article = "an" if noun[0] in "aeiou" else "a"
         out.append(("position", group, "by {} {}".format(article, noun)))
+        if college:
+            # One position inside one college: "among Duke guards".
+            out.append((
+                "college_position", "{}|{}".format(college, group),
+                "among {} {}s".format(idx.college_display(college), noun),
+            ))
 
     return out
 
@@ -1105,6 +1225,9 @@ COHORT_MINIMUMS = {
     "college": COLLEGE_MIN_PLAYERS,
     "nationality": NATIONALITY_MIN_PLAYERS,
     "position": POSITION_MIN_PLAYERS,
+    "region": REGION_MIN_PLAYERS,
+    "pick_range": PICK_RANGE_MIN_PLAYERS,
+    "college_position": COLLEGE_POSITION_MIN_PLAYERS,
 }
 
 

@@ -405,10 +405,13 @@ def player_pages_js(idx, identities, book, cohorts):
     for segments in splits.values():
         segments.sort(key=lambda seg: seg["from"])
     dump = lambda obj: json.dumps(obj, sort_keys=True, ensure_ascii=False, indent=2)
+    # Only the families the tool can filter by: a region or a pick range is not
+    # a filter in the tool, so a map from one to its page would never be read.
     by_family = collections.defaultdict(dict)
     for entity in cohorts:
-        if C.FAMILIES[entity.family]["indexable"]:
-            by_family[C.FAMILIES[entity.family]["dir"]][entity.key] = entity.slug
+        spec = C.FAMILIES[entity.family]
+        if spec["indexable"] and spec.get("filterable"):
+            by_family[spec["dir"]][entity.key] = entity.slug
     return PLAYER_PAGES_JS % {
         "aliases": dump(dict(sorted(idx.name_aliases.items()))),
         "splits": dump({k: v for k, v in sorted(splits.items())}),
@@ -537,10 +540,12 @@ def main(argv=None):
         ])
 
     # ---- cohort pages ----------------------------------------------------
+    relatives = cohort_relatives(idx, built["cohorts"])
     for entity in built["cohorts"]:
         title, description, body = P.cohort_page(
             idx, entity, built["players"], by_cohort_facts, media, linker,
             family_members.get(entity.family),
+            relatives.get((entity.family, entity.key)),
         )
         hub = C.FAMILIES[entity.family]["hub"]
         emit(entity, title, description, body, [
@@ -563,7 +568,8 @@ def main(argv=None):
 
     # ---- hubs ------------------------------------------------------------
     hub_entries = []
-    for hub_slug, family in sorted(C.HUBS.items()):
+    for hub_slug, family in sorted(
+            C.HUBS.items(), key=lambda kv: C.FAMILIES[kv[1]]["label"]):
         members = sorted(
             (e for e in built["cohorts"] if e.family == family),
             key=lambda e: _hub_sort(e),
@@ -652,6 +658,61 @@ def main(argv=None):
         writer.total_bytes, writer.total_bytes / 1048576.0))
     print("tool root updated: {}".format(root_changed))
     return 0
+
+
+def cohort_relatives(idx, cohorts):
+    """Links from a cohort page to the pages that cut the same players another
+    way: a country to its region, a pick to the ranges it falls in, a college to
+    its positions and back.
+
+    Only to pages that exist, so a cohort below its family's minimum is never
+    linked to.
+    """
+    have = {(e.family, e.key): e for e in cohorts}
+
+    def url(family, key):
+        entity = have.get((family, key))
+        return entity.url if entity else None
+
+    out = collections.defaultdict(list)
+
+    for entity in cohorts:
+        if entity.family == "country":
+            keys = [(idx.continents or {}).get(entity.key)]
+            if entity.key != F.DOMESTIC_NATIONALITY:
+                keys.append("international")
+            for key in keys:
+                href = url("region", key) if key else None
+                if href:
+                    out[("country", entity.key)].append(
+                        (have[("region", key)].name, href))
+
+        elif entity.family == "pick" and entity.key != "undrafted":
+            pick = int(entity.key)
+            for key, first, last, _phrase in F.PICK_RANGES:
+                if first <= pick <= last:
+                    href = url("pick_range", key)
+                    if href:
+                        out[("pick", entity.key)].append(
+                            (have[("pick_range", key)].name, href))
+
+        elif entity.family == "college_position":
+            college = entity.key.split("|", 1)[0]
+            href = url("college", college)
+            if href:
+                out[("college_position", entity.key)].append(
+                    ("All {} players".format(have[("college", college)].name), href))
+            out[("college", college)].append((entity.name, entity.url))
+
+        elif entity.family == "region" and entity.key != "international":
+            href = url("region", "international")
+            if href:
+                out[("region", entity.key)].append(
+                    (have[("region", "international")].name, href))
+
+    for links in out.values():
+        links.sort()
+    return out
 
 
 def _hub_sort(entity):

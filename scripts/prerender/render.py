@@ -237,6 +237,20 @@ def facts_by_season(groups, current_key, linker=None, url=None):
     return "".join(out)
 
 
+def related_chips(links):
+    """Links to pages in other families, as the chips the tool root uses.
+
+    ``links`` is [(label, url)], already absolute, in the order to print.
+    """
+    if not links:
+        return ""
+    items = "".join(
+        '<li><a href="{}">{}</a></li>'.format(esc(url), esc(label))
+        for label, url in links
+    )
+    return '<ul class="hm-chips">{}</ul>'.format(items)
+
+
 def roll_call(entries, family, lead=None):
     """Every member of a cohort or family, linked.
 

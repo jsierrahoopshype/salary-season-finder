@@ -1548,19 +1548,36 @@ def test_a_son_s_draft_metadata_keeps_him_out_of_other_players_cohorts():
     assert all("Father Name" not in f["text"] for f in out)
 
 
-def test_a_clean_record_still_gets_all_five_cohorts():
+#: Every cohort kind a record with a full set of identity fields joins. The last
+#: three cut across the first five: a Spaniard is an international player and a
+#: European one, a No. 20 pick is a lottery pick, and a Kentucky centre is one of
+#: the Kentucky centres.
+ALL_COHORT_KINDS = {
+    "draft_class", "draft_slot", "college", "nationality", "position",
+    "region", "pick_range", "college_position",
+}
+
+
+def test_a_clean_record_gets_every_cohort_kind():
     data = make_data([
         rec("Peer {}".format(i), "2019-20", 1000000 + i, college="Kentucky",
-            nationality="Spain", pos="C", draft_year=2016, draft_pick=20)
+            nationality="Spain", pos="C", draft_year=2016, draft_pick=7)
         for i in range(15)
     ] + [
         rec("Clean", "2019-20", 40000000, college="Kentucky", nationality="Spain",
-            pos="C", draft_year=2016, draft_pick=20),
+            pos="C", draft_year=2016, draft_pick=7),
     ])
     idx = index_for(data)
     assert "Clean" not in idx.draft_meta_suspect
     kinds = {k for k, _c, _l in F._cohorts_for(idx.record("Clean", "2019-20"), idx)}
-    assert kinds == {"draft_class", "draft_slot", "college", "nationality", "position"}
+    assert kinds == ALL_COHORT_KINDS
+    keys = {(k, c) for k, c, _l in F._cohorts_for(idx.record("Clean", "2019-20"), idx)}
+    assert ("region", "international") in keys
+    assert ("region", "europe") in keys
+    assert ("pick_range", "lottery") in keys
+    assert ("pick_range", "top-10") in keys
+    assert ("pick_range", "second-round") not in keys
+    assert ("college_position", "Kentucky|C") in keys
 
 
 @pytest.mark.skipif(not os.path.exists(REAL_DATA), reason="data/data.json not present")
@@ -1628,7 +1645,7 @@ def test_confirmed_split_gives_the_matching_segment_its_cohorts_back():
     assert "Merged Name" in idx.draft_meta_suspect
     assert idx.cohorts_allowed("Merged Name", "2018-19") is True
     kinds = {k for k, _c, _l in F._cohorts_for(idx.record("Merged Name", "2018-19"), idx)}
-    assert kinds == {"draft_class", "draft_slot", "college", "nationality", "position"}
+    assert kinds == ALL_COHORT_KINDS
     out = facts(data, "Merged Name", "2018-19", family="cohort", splits=METADATA_SPLIT)
     assert out
 
