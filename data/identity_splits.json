@@ -1,8 +1,8 @@
 {
  "entries": {
   "Alan Anderson": {
-   "confirmed": false,
-   "evidence": "age 30 in 2012-13 continues age 24 in 2006-07",
+   "confirmed": true,
+   "evidence": "age 30 in 2012-13 continues age 24 in 2006-07; confirmed by hand: one man, away from this league for 5 seasons between 2006-07 and 2012-13",
    "people": [
     {
      "college": "Michigan St",
@@ -24,8 +24,8 @@
    "split": false
   },
   "Andre Emmett": {
-   "confirmed": false,
-   "evidence": "age 29 in 2011-12 continues age 23 in 2005-06",
+   "confirmed": true,
+   "evidence": "age 29 in 2011-12 continues age 23 in 2005-06; confirmed by hand: one man, away from this league for 5 seasons between 2005-06 and 2011-12",
    "people": [
     {
      "college": "Texas Tech",
@@ -45,8 +45,8 @@
    "split": false
   },
   "Anthony Barber": {
-   "confirmed": false,
-   "evidence": "age 27 in 2021-22 continues age 22 in 2016-17",
+   "confirmed": true,
+   "evidence": "age 27 in 2021-22 continues age 22 in 2016-17; confirmed by hand: one man, away from this league for 4 seasons between 2016-17 and 2021-22",
    "people": [
     {
      "college": "North Carolina St",
@@ -65,8 +65,8 @@
    "split": false
   },
   "Anthony Goldwire": {
-   "confirmed": false,
-   "evidence": "age 31 in 2002-03 continues age 26 in 1997-98",
+   "confirmed": true,
+   "evidence": "age 31 in 2002-03 continues age 26 in 1997-98; confirmed by hand: one man, away from this league for 4 seasons between 1997-98 and 2002-03, and for 1 season between 2002-03 and 2004-05",
    "people": [
     {
      "college": "Houston",
@@ -88,8 +88,8 @@
    "split": false
   },
   "Anthony Parker": {
-   "confirmed": false,
-   "evidence": "age 31 in 2006-07 continues age 24 in 1999-00",
+   "confirmed": true,
+   "evidence": "age 31 in 2006-07 continues age 24 in 1999-00; confirmed by hand: one man, away from this league for 6 seasons between 1999-00 and 2006-07",
    "people": [
     {
      "college": "Bradley",
@@ -110,8 +110,8 @@
    "split": false
   },
   "Bobby Brown": {
-   "confirmed": false,
-   "evidence": "age 32 in 2016-17 continues age 25 in 2009-10",
+   "confirmed": true,
+   "evidence": "age 32 in 2016-17 continues age 25 in 2009-10; confirmed by hand: one man, away from this league for 6 seasons between 2009-10 and 2016-17",
    "people": [
     {
      "college": "UC-Fullerton",
@@ -235,8 +235,8 @@
    "split": true
   },
   "DJ Stephens": {
-   "confirmed": false,
-   "evidence": "age 28 in 2018-19 continues age 23 in 2013-14",
+   "confirmed": true,
+   "evidence": "age 28 in 2018-19 continues age 23 in 2013-14; confirmed by hand: one man, away from this league for 4 seasons between 2013-14 and 2018-19",
    "people": [
     {
      "college": "Memphis",
@@ -255,8 +255,8 @@
    "split": false
   },
   "Damien Wilkins": {
-   "confirmed": false,
-   "evidence": "age 38 in 2017-18 continues age 33 in 2012-13",
+   "confirmed": true,
+   "evidence": "age 38 in 2017-18 continues age 33 in 2012-13; confirmed by hand: one man, away from this league for 4 seasons between 2012-13 and 2017-18",
    "people": [
     {
      "college": "Georgia",
@@ -279,8 +279,8 @@
    "split": false
   },
   "Fred Vinson": {
-   "confirmed": false,
-   "evidence": "age 29 in 1999-00 continues age 24 in 1994-95",
+   "confirmed": true,
+   "evidence": "age 29 in 1999-00 continues age 24 in 1994-95; confirmed by hand: one man, away from this league for 4 seasons between 1994-95 and 1999-00",
    "people": [
     {
      "college": "Georgia Tech",
@@ -332,8 +332,9 @@
    "split": true
   },
   "Hot Rod Williams": {
-   "confirmed": false,
-   "evidence": "age 37 in 1999-00 continues age 30 in 1992-93",
+   "career_incomplete": true,
+   "confirmed": true,
+   "evidence": "age 37 in 1999-00 continues age 30 in 1992-93; confirmed by hand: one man, Cleveland to 1994-95 and Phoenix from 1995-96, but the salary data holds only 1990-91 to 1992-93 and 1999-00, so the total under his name is four seasons of a 13-season career",
    "people": [
     {
      "college": "Tulane",
@@ -352,8 +353,8 @@
    "split": false
   },
   "James Nunnally": {
-   "confirmed": false,
-   "evidence": "age 28 in 2018-19 continues age 23 in 2013-14",
+   "confirmed": true,
+   "evidence": "age 28 in 2018-19 continues age 23 in 2013-14; confirmed by hand: one man, away from this league for 4 seasons between 2013-14 and 2018-19, and for 1 season between 2018-19 and 2020-21",
    "people": [
     {
      "college": "UC Santa Barbara",
@@ -374,8 +375,8 @@
    "split": false
   },
   "James White": {
-   "confirmed": false,
-   "evidence": "age 30 in 2012-13 continues age 24 in 2006-07",
+   "confirmed": true,
+   "evidence": "age 30 in 2012-13 continues age 24 in 2006-07; confirmed by hand: one man, away from this league for 5 seasons between 2006-07 and 2012-13",
    "people": [
     {
      "college": "Cincinnati",
@@ -430,8 +431,8 @@
    "split": true
   },
   "Jeff Sanders": {
-   "confirmed": false,
-   "evidence": "age 33 in 1998-99 continues age 27 in 1992-93",
+   "confirmed": true,
+   "evidence": "age 33 in 1998-99 continues age 27 in 1992-93; confirmed by hand: one man, away from this league for 5 seasons between 1992-93 and 1998-99",
    "people": [
     {
      "college": "Georgia Southern",
@@ -451,8 +452,8 @@
    "split": false
   },
   "Jimmy Oliver": {
-   "confirmed": false,
-   "evidence": "age 28 in 1997-98 continues age 22 in 1991-92",
+   "confirmed": true,
+   "evidence": "age 28 in 1997-98 continues age 22 in 1991-92; confirmed by hand: one man, away from this league for 5 seasons between 1991-92 and 1997-98, and for 1 season between 1997-98 and 1999-00",
    "people": [
     {
      "college": "Purdue",
@@ -472,8 +473,8 @@
    "split": false
   },
   "John Long": {
-   "confirmed": false,
-   "evidence": "age 40 in 1996-97 continues age 34 in 1990-91",
+   "confirmed": true,
+   "evidence": "age 40 in 1996-97 continues age 34 in 1990-91; confirmed by hand: one man, away from this league for 5 seasons between 1990-91 and 1996-97",
    "people": [
     {
      "college": "Detroit",
@@ -492,8 +493,8 @@
    "split": false
   },
   "John Morton": {
-   "confirmed": false,
-   "evidence": "age 32 in 1999-00 continues age 24 in 1991-92",
+   "confirmed": true,
+   "evidence": "age 32 in 1999-00 continues age 24 in 1991-92; confirmed by hand: one man, away from this league for 7 seasons between 1991-92 and 1999-00",
    "people": [
     {
      "college": "Seton Hall",
@@ -512,8 +513,8 @@
    "split": false
   },
   "John Thomas": {
-   "confirmed": false,
-   "evidence": "age 30 in 2005-06 continues age 24 in 1999-00",
+   "confirmed": true,
+   "evidence": "age 30 in 2005-06 continues age 24 in 1999-00; confirmed by hand: one man, away from this league for 5 seasons between 1999-00 and 2005-06",
    "people": [
     {
      "college": "Minnesota",
@@ -558,8 +559,8 @@
    "split": false
   },
   "Larry Robinson": {
-   "confirmed": false,
-   "evidence": "age 33 in 2000-01 continues age 27 in 1994-95",
+   "confirmed": true,
+   "evidence": "age 33 in 2000-01 continues age 27 in 1994-95; confirmed by hand: one man, away from this league for 5 seasons between 1994-95 and 2000-01",
    "people": [
     {
      "college": "Centenary-Louisiana",
@@ -579,8 +580,8 @@
    "split": false
   },
   "Maceo Baston": {
-   "confirmed": false,
-   "evidence": "age 30 in 2006-07 continues age 24 in 2000-01",
+   "confirmed": true,
+   "evidence": "age 30 in 2006-07 continues age 24 in 2000-01; confirmed by hand: one man, away from this league for 5 seasons between 2000-01 and 2006-07",
    "people": [
     {
      "college": "Michigan",
@@ -601,8 +602,8 @@
    "split": false
   },
   "Marcus Haislip": {
-   "confirmed": false,
-   "evidence": "age 29 in 2009-10 continues age 24 in 2004-05",
+   "confirmed": true,
+   "evidence": "age 29 in 2009-10 continues age 24 in 2004-05; confirmed by hand: one man, away from this league for 4 seasons between 2004-05 and 2009-10",
    "people": [
     {
      "college": "Tennessee",
@@ -622,8 +623,8 @@
    "split": false
   },
   "Mario Hezonja": {
-   "confirmed": false,
-   "evidence": "age 30 in 2025-26 continues age 25 in 2020-21",
+   "confirmed": true,
+   "evidence": "age 30 in 2025-26 continues age 25 in 2020-21; confirmed by hand: one man, away from this league for 4 seasons between 2020-21 and 2025-26",
    "people": [
     {
      "college": "Barcelona",
@@ -645,8 +646,8 @@
    "split": false
   },
   "Mickael Gelabale": {
-   "confirmed": false,
-   "evidence": "age 29 in 2012-13 continues age 24 in 2007-08",
+   "confirmed": true,
+   "evidence": "age 29 in 2012-13 continues age 24 in 2007-08; confirmed by hand: one man, away from this league for 4 seasons between 2007-08 and 2012-13",
    "people": [
     {
      "college": "Real Madrid",
@@ -665,8 +666,8 @@
    "split": false
   },
   "Mike Brown (1963)": {
-   "confirmed": false,
-   "evidence": "age 36 in 1999-00 continues age 31 in 1994-95",
+   "confirmed": true,
+   "evidence": "age 36 in 1999-00 continues age 31 in 1994-95; confirmed by hand: one man, away from this league for 4 seasons between 1994-95 and 1999-00",
    "people": [
     {
      "college": "George Washington",
@@ -686,8 +687,8 @@
    "split": false
   },
   "Nate Huffman": {
-   "confirmed": false,
-   "evidence": "age 27 in 2002-03 continues age 22 in 1997-98",
+   "confirmed": true,
+   "evidence": "age 27 in 2002-03 continues age 22 in 1997-98; confirmed by hand: one man, away from this league for 4 seasons between 1997-98 and 2002-03",
    "people": [
     {
      "college": "Central Michigan",
@@ -706,8 +707,8 @@
    "split": false
   },
   "Nigel Hayes": {
-   "confirmed": false,
-   "evidence": "age 31 in 2025-26 continues age 23 in 2017-18",
+   "confirmed": true,
+   "evidence": "age 31 in 2025-26 continues age 23 in 2017-18; confirmed by hand: one man, away from this league for 7 seasons between 2017-18 and 2025-26",
    "people": [
     {
      "college": "Wisconsin",
@@ -753,8 +754,8 @@
    "split": false
   },
   "Randolph Keys": {
-   "confirmed": false,
-   "evidence": "age 29 in 1995-96 continues age 24 in 1990-91",
+   "confirmed": true,
+   "evidence": "age 29 in 1995-96 continues age 24 in 1990-91; confirmed by hand: one man, away from this league for 4 seasons between 1990-91 and 1995-96",
    "people": [
     {
      "college": "Southern Mississippi",
@@ -773,8 +774,8 @@
    "split": false
   },
   "Scott Machado": {
-   "confirmed": false,
-   "evidence": "age 28 in 2018-19 continues age 22 in 2012-13",
+   "confirmed": true,
+   "evidence": "age 28 in 2018-19 continues age 22 in 2012-13; confirmed by hand: one man, away from this league for 5 seasons between 2012-13 and 2018-19",
    "people": [
     {
      "college": "Iona",
@@ -794,8 +795,8 @@
    "split": false
   },
   "Sergio Rodriguez": {
-   "confirmed": false,
-   "evidence": "age 30 in 2016-17 continues age 23 in 2009-10",
+   "confirmed": true,
+   "evidence": "age 30 in 2016-17 continues age 23 in 2009-10; confirmed by hand: one man, away from this league for 6 seasons between 2009-10 and 2016-17",
    "people": [
     {
      "college": "Estudiantes",
@@ -815,8 +816,8 @@
    "split": false
   },
   "Shane Heal": {
-   "confirmed": false,
-   "evidence": "age 33 in 2003-04 continues age 27 in 1997-98",
+   "confirmed": true,
+   "evidence": "age 33 in 2003-04 continues age 27 in 1997-98; confirmed by hand: one man, away from this league for 5 seasons between 1997-98 and 2003-04",
    "people": [
     {
      "college": "Brisbane Bullets",
@@ -835,8 +836,8 @@
    "split": false
   },
   "Skal Labissiere": {
-   "confirmed": false,
-   "evidence": "age 29 in 2025-26 continues age 23 in 2019-20",
+   "confirmed": true,
+   "evidence": "age 29 in 2025-26 continues age 23 in 2019-20; confirmed by hand: one man, away from this league for 5 seasons between 2019-20 and 2025-26",
    "people": [
     {
      "college": "Kentucky",
@@ -857,8 +858,8 @@
    "split": false
   },
   "Sonny Weems": {
-   "confirmed": false,
-   "evidence": "age 29 in 2015-16 continues age 24 in 2010-11",
+   "confirmed": true,
+   "evidence": "age 29 in 2015-16 continues age 24 in 2010-11; confirmed by hand: one man, away from this league for 4 seasons between 2010-11 and 2015-16",
    "people": [
     {
      "college": "Arkansas",
@@ -878,8 +879,8 @@
    "split": false
   },
   "Tacko Fall": {
-   "confirmed": false,
-   "evidence": "age 31 in 2026-27 continues age 26 in 2021-22",
+   "confirmed": true,
+   "evidence": "age 31 in 2026-27 continues age 26 in 2021-22; confirmed by hand: one man, away from this league for 4 seasons between 2021-22 and 2026-27",
    "people": [
     {
      "college": "UCF",
@@ -899,8 +900,8 @@
    "split": false
   },
   "Thurl Bailey": {
-   "confirmed": false,
-   "evidence": "age 37 in 1998-99 continues age 32 in 1993-94",
+   "confirmed": true,
+   "evidence": "age 37 in 1998-99 continues age 32 in 1993-94; confirmed by hand: one man, away from this league for 4 seasons between 1993-94 and 1998-99",
    "people": [
     {
      "college": "North Carolina St",
@@ -919,8 +920,8 @@
    "split": false
   },
   "Victor Alexander": {
-   "confirmed": false,
-   "evidence": "age 32 in 2001-02 continues age 26 in 1995-96",
+   "confirmed": true,
+   "evidence": "age 32 in 2001-02 continues age 26 in 1995-96; confirmed by hand: one man, away from this league for 5 seasons between 1995-96 and 2001-02",
    "people": [
     {
      "college": "Iowa St",
@@ -940,8 +941,8 @@
    "split": false
   },
   "Willie Solomon": {
-   "confirmed": false,
-   "evidence": "age 30 in 2008-09 continues age 23 in 2001-02",
+   "confirmed": true,
+   "evidence": "age 30 in 2008-09 continues age 23 in 2001-02; confirmed by hand: one man, away from this league for 6 seasons between 2001-02 and 2008-09",
    "people": [
     {
      "college": "Clemson",
@@ -960,8 +961,8 @@
    "split": false
   },
   "Yi Jianlian": {
-   "confirmed": false,
-   "evidence": "age 29 in 2016-17 continues age 24 in 2011-12",
+   "confirmed": true,
+   "evidence": "age 29 in 2016-17 continues age 24 in 2011-12; confirmed by hand: one man, away from this league for 4 seasons between 2011-12 and 2016-17",
    "people": [
     {
      "college": "Guangdong",
@@ -985,10 +986,11 @@
  },
  "evidence_rule": "data.json carries an explicit age per record. A gap where the later age continues the earlier one is one man coming back; a gap where it jumps is two men. An age outside 17-45 is the same finding by another route: that row carries someone else's birth date. A gap with no age on either side is treated as a split until someone checks it, since printing the wrong man's name costs more than losing a factoid.",
  "fields": {
+  "career_incomplete": "one man, confirmed, whose seasons this data does not all hold: his seasons rank and his gap is not a second man, but the running total under his name is not his career, so no career-level claim may use it",
   "confirmed": "a human has checked this entry; false means the engine stays cautious",
   "evidence": "what the data says, from the age rule below",
   "people": "one block per person, oldest first; display_name null means the name is unknown",
   "split": "true when the key covers more than one player"
  },
- "readme": "One entry per name that data.json files under a single key but that may cover more than one player. Read by scripts/factoids.py only: build_data.py and data.json do not know this file exists. Candidates are names whose career has a gap longer than 4 seasons. split: true means two people, split: false means one player who came back after a spell away. confirmed says a human has checked the entry. An unconfirmed split holds back every season in an earlier segment, as a subject and as a previous holder, so no sentence carries the wrong man's name. A confirmed split prints each segment's own display_name and counts each segment as its own man, so \"his own mark\" never reaches across the two; a segment whose display_name is null is a man whose name is not known and stays held back. Career-level claims stay closed for every split key either way, because career_earnings on a merged record sums two men. An unconfirmed split: false entry keeps the career-level exclusion its gap triggered: a long gap under one name is not proof of one person. Confirming it is what lets the name rank as one career."
+ "readme": "One entry per name that data.json files under a single key but that may cover more than one player. Read by scripts/factoids.py only: build_data.py and data.json do not know this file exists. Candidates are names whose career has a gap longer than 4 seasons. split: true means two people, split: false means one player who came back after a spell away. confirmed says a human has checked the entry. An unconfirmed split holds back every season in an earlier segment, as a subject and as a previous holder, so no sentence carries the wrong man's name. A confirmed split prints each segment's own display_name and counts each segment as its own man, so \"his own mark\" never reaches across the two; a segment whose display_name is null is a man whose name is not known and stays held back. Career-level claims stay closed for every split key either way, because career_earnings on a merged record sums two men. An unconfirmed split: false entry keeps the career-level exclusion its gap triggered: a long gap under one name is not proof of one person. Confirming it is what lets the name rank as one career. career_incomplete is the one case where confirming does not open career claims: one man, checked, whose seasons this data does not all hold, so the running total under his name is a part of a career rather than a career."
 }

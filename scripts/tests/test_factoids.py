@@ -1389,22 +1389,83 @@ def test_confirming_a_comeback_lets_it_rank_as_one_career():
     not os.path.exists(os.path.join(REPO, "data", "identity_splits.json")),
     reason="data/identity_splits.json not present",
 )
+def test_an_incomplete_career_is_the_gate_a_comeback_fails():
+    """A confirmed comeback ranks; one the file says is missing seasons does
+    not, and the log says which gate stopped it."""
+    data = make_data(_field() + [
+        rec("Returner", "2008-09", 2000000, draft_year=2008),
+        rec("Returner", "2015-16", 4000000, draft_year=2008),
+    ])
+    splits = {
+        "Returner": {
+            "confirmed": True,
+            "split": False,
+            "evidence": "checked by hand",
+            "people": [{"display_name": "Returner", "first_season": "2008-09",
+                        "last_season": "2015-16"}],
+        },
+    }
+    idx = index_for(data, splits=splits)
+    assert idx.career_rankable("Returner") is True
+
+    splits["Returner"]["career_incomplete"] = True
+    idx = index_for(data, splits=splits)
+    assert idx.career_incomplete == {"Returner"}
+    assert idx.career_rankable("Returner") is False
+    assert idx.career_eligible("Returner") is False
+    assert F._career_gate(idx, "Returner") == "career_incomplete"
+
+
 def test_only_the_confirmed_comeback_ranks_as_one_career():
     """A gap stays a career-level exclusion until a human confirms the entry.
-    PJ Tucker is the one that has been confirmed."""
+    Thirty-seven of the thirty-eight have been checked by hand; Josh Davis is
+    the one still open."""
     with open(REAL_DATA, "r", encoding="utf-8") as fh:
         data = json.load(fh)
     entries = F.load_identity_splits()
     comebacks = [k for k, v in entries.items() if not v["split"]]
     assert len(comebacks) == 38
-    confirmed = {k for k in comebacks if entries[k]["confirmed"]}
-    assert confirmed == {"PJ Tucker"}
+    open_still = {k for k in comebacks if not entries[k]["confirmed"]}
+    assert open_still == {"Josh Davis"}
     idx = build_index(data, franchises=FRANCHISES)
-    assert "PJ Tucker" not in idx.identity_suspect
-    assert idx.career_eligible("PJ Tucker") is True
-    for key in set(comebacks) - confirmed:
+    for key in open_still:
         assert key in idx.identity_suspect, key
         assert idx.career_eligible(key) is False, key
+        assert idx.career_rankable(key) is False, key
+    for key in set(comebacks) - open_still:
+        assert key not in idx.identity_suspect, key
+        # Hot Rod Williams is one man, and his career is not all here, so
+        # confirming him opens his seasons and not his career.
+        expected = key != "Hot Rod Williams"
+        assert idx.career_rankable(key) is expected, key
+    assert idx.career_eligible("PJ Tucker") is True
+    assert idx.career_rankable("Tacko Fall") is True
+
+
+@pytest.mark.skipif(
+    not os.path.exists(os.path.join(REPO, "data", "identity_splits.json")),
+    reason="data/identity_splits.json not present",
+)
+def test_the_one_incomplete_career_is_ranked_nowhere():
+    with open(REAL_DATA, "r", encoding="utf-8") as fh:
+        data = json.load(fh)
+    entries = F.load_identity_splits()
+    flagged = {k for k, v in entries.items() if v.get("career_incomplete")}
+    assert flagged == {"Hot Rod Williams"}
+    idx = build_index(data, franchises=FRANCHISES)
+    assert idx.career_incomplete == flagged
+    assert idx.career_rankable("Hot Rod Williams") is False
+    assert idx.career_eligible("Hot Rod Williams") is False
+    # his career also began before the window, which is the gate the log names
+    # first; either way no career claim reaches him
+    assert F._career_gate(idx, "Hot Rod Williams") in (
+        "truncated_career", "career_incomplete")
+    # out of every career universe, and his seasons still in the season ones
+    career = {e["player"] for e in idx.u_career.entries}
+    career |= {e["player"] for u in idx.u_cohort_career.values() for e in u.entries}
+    assert "Hot Rod Williams" not in career
+    season = {e["player"] for u in idx.u_cohort_season.values() for e in u.entries}
+    assert "Hot Rod Williams" in season
 
 
 @pytest.mark.skipif(
