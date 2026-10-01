@@ -11,7 +11,6 @@
   // data.json spelling -> the one man he is
   var ALIASES = {
   "Andre Jackson": "Andre Jackson Jr",
-  "Marcus Thornton II": "Marcus Thornton",
   "Ricky Council": "Ricky Council IV",
   "Terrence Shannon": "Terrence Shannon Jr",
   "Terrence Shannon Jr.": "Terrence Shannon Jr",
@@ -21,32 +20,11 @@
 
   // one name covering two men, by season
   var SPLITS = {
-  "Brandon Williams": [
-    {
-      "from": 2022,
-      "slug": "brandon-williams-2021",
-      "to": 2027
-    }
-  ],
   "Corey Brewer": [
     {
       "from": 2008,
       "slug": "corey-brewer",
       "to": 2020
-    }
-  ],
-  "Gerald Henderson": [
-    {
-      "from": 2010,
-      "slug": "gerald-henderson-jr",
-      "to": 2018
-    }
-  ],
-  "Jaren Jackson Jr": [
-    {
-      "from": 2019,
-      "slug": "jaren-jackson-jr",
-      "to": 2030
     }
   ]
 };
@@ -54,9 +32,11 @@
   // slugs that are not what slugify would produce, from a collision
   var OVERRIDES = {
   "Bobby Jones (1984)": "bobby-jones",
+  "Brandon Williams": "brandon-williams-2021",
   "Brandon Williams (1975)": "brandon-williams",
   "Chris Smith (1970)": "chris-smith",
   "Chris Smith (1987)": "chris-smith-2013-14",
+  "Gerald Henderson": "gerald-henderson-jr",
   "Gerald Henderson Sr": "gerald-henderson",
   "John Lucas III": "john-lucas",
   "Ken Johnson (1978)": "ken-johnson",

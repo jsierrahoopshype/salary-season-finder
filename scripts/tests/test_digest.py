@@ -42,6 +42,7 @@ def rec(player, season, salary, team="ATL", years=3):
 SCALE = {
     "2026-27": {"0": 1366314, "3": 2553508, "10": 3900945},
     "2027-28": {"0": 1434000, "3": 2680000, "10": 4094000},
+    "2028-29": {"0": 1506000, "3": 2814000, "10": 4299000},
 }
 TOLERANCE = 0.03
 
@@ -362,3 +363,128 @@ def test_a_rerun_from_the_same_build_has_nothing_to_say(tmp_path, capsys):
     printed = capsys.readouterr().out
     assert "0 change(s)" in printed
     assert "none today." in printed
+
+
+# --------------------------------------------------------------------------
+# several seasons of one player are one piece of news
+# --------------------------------------------------------------------------
+
+
+def test_a_contract_that_adds_three_seasons_is_one_sentence():
+    old = payload([rec("Jamal Shead", CURRENT, 5000000, team="ATL")])
+    new = payload([rec("Jamal Shead", CURRENT, 5000000, team="ATL")] + [
+        rec("Jamal Shead", season, 8000000, team="MEM")
+        for season in ("2027-28", "2028-29", "2029-30")
+    ])
+    items, posts = digest(old, new)
+    assert [i["kind"] for i in items] == ["extension_run"]
+    assert ("Jamal Shead's deal now runs through 2029-30 with Memphis, "
+            "$8 million a year.") in posts[0]
+    assert posts[0].count("Jamal Shead") == 1
+
+
+def test_a_rising_run_gives_the_first_and_the_last():
+    old = payload([rec("Climber", CURRENT, 5000000, team="MEM")])
+    new = payload([rec("Climber", CURRENT, 5000000, team="MEM"),
+                   rec("Climber", "2027-28", 8000000, team="MEM"),
+                   rec("Climber", "2028-29", 8600000, team="MEM"),
+                   rec("Climber", "2029-30", 9200000, team="MEM")])
+    _items, posts = digest(old, new)
+    assert ("Climber's deal now runs through 2029-30 with Memphis, rising from "
+            "$8 million to $9.2 million.") in posts[0]
+
+
+def test_a_run_across_two_teams_names_neither():
+    old = payload([rec("Split Deal", CURRENT, 5000000, team="ATL")])
+    new = payload([rec("Split Deal", CURRENT, 5000000, team="ATL"),
+                   rec("Split Deal", "2027-28", 8000000, team="ATL"),
+                   rec("Split Deal", "2028-29", 8000000, team="MEM")])
+    _items, posts = digest(old, new)
+    assert "Split Deal's deal now runs through 2028-29, $8 million a year." \
+        in posts[0]
+
+
+def test_several_salary_changes_to_one_player_are_one_sentence():
+    old = payload([rec("Redrawn", "2027-28", 25800000),
+                   rec("Redrawn", "2028-29", 28500000),
+                   rec("Redrawn", "2029-30", 30000000)])
+    new = payload([rec("Redrawn", "2027-28", 26700000),
+                   rec("Redrawn", "2028-29", 28900000),
+                   rec("Redrawn", "2029-30", 68400000)])
+    items, posts = digest(old, new)
+    assert [i["kind"] for i in items] == ["salary_run"]
+    assert ("Redrawn's salary moved in 3 seasons, 2027-28 through 2029-30, now "
+            "rising from $26.7 million to $68.4 million.") in posts[0]
+
+
+def test_one_season_on_its_own_keeps_its_own_sentence():
+    old = payload([rec("Single", CURRENT, 10000000)])
+    new = payload([rec("Single", CURRENT, 11000000)])
+    _items, posts = digest(old, new)
+    assert "Single's 2026-27 salary moved from $10 million to $11 million." \
+        in posts[0]
+
+
+def test_a_run_of_minimum_seasons_collapses_with_the_single_ones():
+    old = payload([rec("Min Run", CURRENT, 2553508),
+                   rec("Min One", CURRENT, 2553508),
+                   rec("Min Two", CURRENT, 2553508)])
+    new = payload([
+        rec("Min Run", CURRENT, 2553508),
+        rec("Min Run", "2027-28", 2680000),
+        rec("Min Run", "2028-29", 2814000),
+        rec("Min One", CURRENT, 2553508),
+        rec("Min One", "2027-28", 2680000),
+        rec("Min Two", CURRENT, 2553508),
+        rec("Min Two", "2027-28", 2680000),
+    ])
+    _items, posts = digest(old, new)
+    assert ("Also: 3 players on minimum salaries added for a later season: "
+            "Min One, Min Run, Min Two.") in posts[0]
+    assert "Min Run's deal" not in posts[0]
+
+
+def test_a_run_is_not_a_minimum_run_when_one_season_is_above_it():
+    old = payload([rec("Mixed", CURRENT, 2553508)])
+    new = payload([rec("Mixed", CURRENT, 2553508),
+                   rec("Mixed", "2027-28", 2680000),
+                   rec("Mixed", "2028-29", 20000000)])
+    _items, posts = digest(old, new)
+    assert "Mixed's deal now runs through 2028-29" in posts[0]
+    assert "Also:" not in posts[0]
+
+
+def test_a_run_takes_its_factoids_from_the_seasons_it_covers():
+    old = payload([rec("Famous", CURRENT, 40000000)])
+    new = payload([rec("Famous", CURRENT, 40000000),
+                   rec("Famous", "2027-28", 42000000),
+                   rec("Famous", "2028-29", 44000000)])
+    factoids = {
+        "Famous|2027-28": [{"text": "A 2027-28 thing."}],
+        "Famous|2028-29": [{"text": "A 2028-29 thing."}, {"text": "A third thing."}],
+    }
+    _items, posts = digest(old, new, factoids=factoids)
+    assert "A 2027-28 thing." in posts[0]
+    assert "A 2028-29 thing." in posts[0]
+    assert "A third thing." not in posts[0]
+
+
+def test_a_signing_that_arrives_as_four_seasons_is_one_sentence():
+    old = payload([])
+    new = payload([rec("Rookie", CURRENT, 4200000, team="MEM"),
+                   rec("Rookie", "2027-28", 4400000, team="MEM"),
+                   rec("Rookie", "2028-29", 6800000, team="MEM")])
+    items, posts = digest(old, new)
+    assert [i["kind"] for i in items] == ["new_run"]
+    assert ("Rookie is on Memphis' books through 2028-29, rising from "
+            "$4.2 million to $6.8 million.") in posts[0]
+
+
+def test_a_team_change_is_never_grouped():
+    """Two seasons moving to two different teams are two things to say."""
+    old = payload([rec("Moved", CURRENT, 10000000, team="ATL"),
+                   rec("Moved", "2027-28", 11000000, team="ATL")])
+    new = payload([rec("Moved", CURRENT, 10000000, team="MEM"),
+                   rec("Moved", "2027-28", 11000000, team="DEN")])
+    items, _posts = digest(old, new)
+    assert [i["kind"] for i in items] == ["team", "team"]

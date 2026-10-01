@@ -1,0 +1,30 @@
+{
+ "readme": "Award rows the awards sheet files under the wrong spelling. The awards join runs on the person now, so a row spelled with the son's name counts for the son, which is right almost everywhere and wrong where the sheet put the father's name on the son's award. One entry per row that has to move, checked by hand. Read by build_data.py only: the awards sheet itself is untouched.",
+ "fields": {
+  "awards": "the award strings to move, exactly as the sheet spells them; the rest of the row stays where it is",
+  "belongs_to": "the display name the award counts for, as data.json prints it",
+  "evidence": "why the row is the other man's",
+  "filed_as": "the name the awards sheet spells on that row",
+  "season": "the season the row is for, as data.json writes it"
+ },
+ "overrides": [
+  {
+   "awards": [
+    "Blocks Leader"
+   ],
+   "belongs_to": "Jaren Jackson Jr",
+   "evidence": "Jaren Jackson Jr led the league in blocks in 2021-22. His father's last NBA season was 2001-02, and the row carries no suffix.",
+   "filed_as": "Jaren Jackson",
+   "season": "2021-22"
+  },
+  {
+   "awards": [
+    "Blocks Leader"
+   ],
+   "belongs_to": "Jaren Jackson Jr",
+   "evidence": "Jaren Jackson Jr led the league in blocks in 2022-23 as well, the season he was Defensive Player of the Year, which the sheet files under the suffix correctly.",
+   "filed_as": "Jaren Jackson",
+   "season": "2022-23"
+  }
+ ]
+}

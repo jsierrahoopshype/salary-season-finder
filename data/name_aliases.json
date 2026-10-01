@@ -1,14 +1,13 @@
 {
  "alias_to_canonical": {
   "Andre Jackson": "Andre Jackson Jr",
-  "Marcus Thornton II": "Marcus Thornton",
   "Ricky Council": "Ricky Council IV",
   "Terrence Shannon": "Terrence Shannon Jr",
   "Terrence Shannon Jr.": "Terrence Shannon Jr",
   "Tristan Da Silva": "Tristan da Silva",
   "Wendell Carter": "Wendell Carter Jr"
  },
- "canonical_names": "The canonical spelling is the name printed and the name a page is titled with, so it is the player's real name rather than whichever spelling the data happens to use most. Suffixes are written the way the rest of the data writes them, with no full stop. The alias keys are the raw spellings in data.json and never change: they are what matches.",
+ "canonical_names": "The canonical spelling is the name printed and the name a page is titled with, so it is the player's real name rather than whichever spelling the data happens to use most. Suffixes are written the way the rest of the data writes them, with no full stop. The alias keys are the raw spellings in data.json and never change: they are what matches. Marcus Thornton II was in here until the build began joining on a person: bio.csv has one Marcus Thornton, the 2009 LSU guard, and no row for the man paid in 2017-18, so the two are not one career and the II is not a fuller spelling of the I.",
  "groups": [
   {
    "aliases": [
@@ -34,33 +33,6 @@
      "last_season": "2026-27",
      "name": "Andre Jackson",
      "seasons": 2
-    }
-   ]
-  },
-  {
-   "aliases": [
-    "Marcus Thornton II"
-   ],
-   "canonical": "Marcus Thornton",
-   "college": "LSU",
-   "draft_year": 2009,
-   "evidence": "same name once the suffix, full stops and apostrophes are stripped; draft year 2009; no season in common; Marcus Thornton and Marcus Thornton II run continuously together from 2009-10 to 2017-18",
-   "spellings": [
-    {
-     "college": "LSU",
-     "draft_year": 2009,
-     "first_season": "2009-10",
-     "last_season": "2016-17",
-     "name": "Marcus Thornton",
-     "seasons": 8
-    },
-    {
-     "college": "LSU",
-     "draft_year": 2009,
-     "first_season": "2017-18",
-     "last_season": "2017-18",
-     "name": "Marcus Thornton II",
-     "seasons": 1
     }
    ]
   },

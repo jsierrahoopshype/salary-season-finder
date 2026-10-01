@@ -301,3 +301,114 @@ def test_one_person_never_appears_under_two_spellings_of_the_same_name():
                 others |= seasons.get(other, set())
             overlap = seasons.get(name, set()) & others
             assert not overlap, (base, name, sorted(overlap))
+
+
+# --------------------------------------------------------------------------
+# awards
+# --------------------------------------------------------------------------
+
+AWARD_HEADER = ",,AWARD,YEAR,RG CODE,PLAYER / COACH,TEAM,CAREER AWARDS,SEASON AWARDS"
+
+
+def awards_csv(*rows):
+    """The awards sheet, with only the three columns the build reads."""
+    lines = [AWARD_HEADER]
+    for player, year, awards in rows:
+        lines.append(',,,{},,{},,,"{}"'.format(year, player, awards))
+    return "\n".join(lines) + "\n"
+
+
+def test_an_award_counts_for_the_man_the_row_names():
+    index = register(
+        person("Gary Payton", draft=1990, pick=2),
+        person("Gary Payton II", draft=2016),
+    )
+    lookup, kinds = B.process_awards(awards_csv(
+        ("Gary Payton", "1996", "All-Defensive First Team"),
+        ("Gary Payton", "2021", "NBA Top-75"),
+        ("Gary Payton II", "2022", "NBA Champion"),
+    ), index)
+    father = index.resolve("Gary Payton", "1995-96", note=False, span=False)
+    son = index.resolve("Gary Payton II", "2021-22", note=False, span=False)
+    assert lookup[(father, "1995-96")] == ["All-Defensive First Team"]
+    # a retrospective honour is his too, thirty years after his draft
+    assert lookup[(father, "2020-21")] == ["NBA Top-75"]
+    assert (son, "2020-21") not in lookup
+    assert lookup[(son, "2021-22")] == ["NBA Champion"]
+    assert kinds == {"All-Defensive First Team", "NBA Top-75", "NBA Champion"}
+
+
+def test_an_honour_decades_after_a_draft_is_still_his():
+    """The career-span ceiling is for salaries. A salary is never paid 30 years
+    after a draft; an honour can be handed to a man twenty years retired."""
+    index = register(person("Old Timer", draft=1985))
+    paid = index.resolve("Old Timer", "2021-22")
+    honoured = index.resolve("Old Timer", "2021-22", span=False)
+    assert index.bio(paid) == {}
+    assert index.bio(honoured)["draft_year"] == 1985
+
+
+def test_the_award_list_keeps_the_sheet_order_and_drops_repeats():
+    index = register(person("Busy Man", draft=2016))
+    lookup, _kinds = B.process_awards(awards_csv(
+        ("Busy Man", "2020", "All-Star, Player of the Week"),
+        ("Busy Man", "2020", "Player of the Week, Blocks Leader"),
+    ), index)
+    who = index.resolve("Busy Man", "2019-20", note=False, span=False)
+    assert lookup[(who, "2019-20")] == [
+        "All-Star", "Player of the Week", "Blocks Leader"]
+
+
+def test_an_override_moves_a_row_the_sheet_files_under_the_wrong_name(tmp_path,
+                                                                     monkeypatch):
+    index = register(
+        person("Jaren Jackson", draft=1989),
+        person("Jaren Jackson Jr", draft=2018),
+    )
+    overrides = {
+        "overrides": [{
+            "season": "2021-22",
+            "awards": ["Blocks Leader"],
+            "filed_as": "Jaren Jackson",
+            "belongs_to": "Jaren Jackson Jr",
+            "evidence": "he led the league in blocks that season",
+        }],
+    }
+    path = tmp_path / "data"
+    path.mkdir()
+    (path / "award_overrides.json").write_text(json.dumps(overrides), encoding="utf-8")
+    monkeypatch.setattr(B, "BASE_DIR", str(tmp_path))
+
+    lookup, _kinds = B.process_awards(awards_csv(
+        ("Jaren Jackson", "2022", "Blocks Leader"),
+        ("Jaren Jackson Jr", "2022", "All-Defensive First Team"),
+    ), index)
+    father = index.resolve("Jaren Jackson", "2021-22", note=False, span=False)
+    son = index.resolve("Jaren Jackson Jr", "2021-22", note=False, span=False)
+    assert (father, "2021-22") not in lookup
+    assert lookup[(son, "2021-22")] == ["All-Defensive First Team", "Blocks Leader"]
+
+
+def test_the_shipped_overrides_name_a_season_an_award_and_two_people():
+    overrides = B.load_award_overrides()
+    assert overrides, "data/award_overrides.json has no entries"
+    for entry in overrides:
+        assert entry["awards"], entry
+        assert entry["filed_as"] and entry["belongs_to"], entry
+        assert entry["filed_as"] != entry["belongs_to"], entry
+        assert entry["evidence"], entry
+        assert B.normalize_season(entry["season"]) == entry["season"], entry
+
+
+@pytest.mark.skipif(not os.path.exists(REAL_DATA), reason="data/data.json not present")
+def test_the_real_awards_sit_on_the_right_man():
+    with open(REAL_DATA, "r", encoding="utf-8") as fh:
+        data = json.load(fh)
+    awards = {(r["player"], r["season"]): set(r.get("awards") or [])
+              for r in data["seasons"]}
+    # the override holds these two in place
+    assert "Blocks Leader" in awards[("Jaren Jackson Jr", "2021-22")]
+    assert "Blocks Leader" in awards[("Jaren Jackson Jr", "2022-23")]
+    # and the join keeps his father's honours off the son
+    assert "NBA Top-75" not in awards.get(("Gary Payton II", "2020-21"), set())
+    assert "HoopsHype Top-78" not in awards.get(("Gary Payton II", "2022-23"), set())

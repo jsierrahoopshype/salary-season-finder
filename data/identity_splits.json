@@ -130,71 +130,6 @@
    ],
    "split": false
   },
-  "Brandon Williams": {
-   "confirmed": true,
-   "evidence": "age -1 in 1998-99, which no NBA player has, so that row carries another man's birth date",
-   "people": [
-    {
-     "college": "Davidson",
-     "display_name": "Brandon Williams",
-     "draft_pick": null,
-     "draft_year": null,
-     "first_season": "1998-99",
-     "last_season": "1999-00",
-     "seasons": 2,
-     "teams": [
-      "ATL",
-      "SAS"
-     ]
-    },
-    {
-     "college": "Arizona",
-     "display_name": "Brandon Williams",
-     "draft_pick": null,
-     "draft_year": 2021,
-     "first_season": "2021-22",
-     "last_season": "2026-27",
-     "seasons": 5,
-     "teams": [
-      "DAL",
-      "GSW",
-      "POR"
-     ]
-    }
-   ],
-   "split": true
-  },
-  "Chris Smith": {
-   "confirmed": true,
-   "evidence": "no age on either side of the 1994-95-to-2013-14 gap, so the data cannot say; treated as a split until checked",
-   "people": [
-    {
-     "college": "Connecticut",
-     "display_name": "Chris Smith",
-     "draft_pick": 34,
-     "draft_year": 1992,
-     "first_season": "1992-93",
-     "last_season": "1994-95",
-     "seasons": 3,
-     "teams": [
-      "MIN"
-     ]
-    },
-    {
-     "college": "Louisville",
-     "display_name": "Chris Smith",
-     "draft_pick": null,
-     "draft_year": null,
-     "first_season": "2013-14",
-     "last_season": "2013-14",
-     "seasons": 1,
-     "teams": [
-      "NYK"
-     ]
-    }
-   ],
-   "split": true
-  },
   "Corey Brewer": {
    "confirmed": true,
    "evidence": "age 13 in 1999-00, which no NBA player has, so that row carries another man's birth date",
@@ -298,39 +233,6 @@
    ],
    "split": false
   },
-  "Gerald Henderson": {
-   "confirmed": true,
-   "evidence": "age 22 in 2009-10 where the same man would be 54, a 32-year jump across the gap; age 62 in 2017-18, which no NBA player has, so that row carries another man's birth date",
-   "people": [
-    {
-     "college": "VCU",
-     "display_name": "Gerald Henderson",
-     "draft_pick": 64,
-     "draft_year": 1978,
-     "first_season": "1990-91",
-     "last_season": "1990-91",
-     "seasons": 1,
-     "teams": [
-      "DET"
-     ]
-    },
-    {
-     "college": "Duke",
-     "display_name": "Gerald Henderson Jr",
-     "draft_pick": 12,
-     "draft_year": 2009,
-     "first_season": "2009-10",
-     "last_season": "2017-18",
-     "seasons": 9,
-     "teams": [
-      "CHA",
-      "PHI",
-      "POR"
-     ]
-    }
-   ],
-   "split": true
-  },
   "Hot Rod Williams": {
    "career_incomplete": true,
    "confirmed": true,
@@ -394,41 +296,6 @@
     }
    ],
    "split": false
-  },
-  "Jaren Jackson Jr": {
-   "confirmed": true,
-   "evidence": "age 19 in 2018-19 where the same man would be 51, a 32-year jump across the gap",
-   "people": [
-    {
-     "college": "Georgetown",
-     "display_name": "Jaren Jackson",
-     "draft_pick": null,
-     "draft_year": null,
-     "first_season": "1992-93",
-     "last_season": "2001-02",
-     "seasons": 7,
-     "teams": [
-      "LAC",
-      "PHI",
-      "SAS",
-      "WAS"
-     ]
-    },
-    {
-     "college": "Michigan St",
-     "display_name": "Jaren Jackson Jr",
-     "draft_pick": 4,
-     "draft_year": 2018,
-     "first_season": "2018-19",
-     "last_season": "2029-30",
-     "seasons": 12,
-     "teams": [
-      "MEM",
-      "UTA"
-     ]
-    }
-   ],
-   "split": true
   },
   "Jeff Sanders": {
    "confirmed": true,
@@ -992,5 +859,5 @@
   "people": "one block per person, oldest first; display_name null means the name is unknown",
   "split": "true when the key covers more than one player"
  },
- "readme": "One entry per name that data.json files under a single key but that may cover more than one player. Read by scripts/factoids.py only: build_data.py and data.json do not know this file exists. Candidates are names whose career has a gap longer than 4 seasons. split: true means two people, split: false means one player who came back after a spell away. confirmed says a human has checked the entry. An unconfirmed split holds back every season in an earlier segment, as a subject and as a previous holder, so no sentence carries the wrong man's name. A confirmed split prints each segment's own display_name and counts each segment as its own man, so \"his own mark\" never reaches across the two; a segment whose display_name is null is a man whose name is not known and stays held back. Career-level claims stay closed for every split key either way, because career_earnings on a merged record sums two men. An unconfirmed split: false entry keeps the career-level exclusion its gap triggered: a long gap under one name is not proof of one person. Confirming it is what lets the name rank as one career. career_incomplete is the one case where confirming does not open career claims: one man, checked, whose seasons this data does not all hold, so the running total under his name is a part of a career rather than a career."
+ "readme": "One entry per name that data.json files under a single key but that may cover more than one player. Read by scripts/factoids.py only: build_data.py and data.json do not know this file exists. Candidates are names whose career has a gap longer than 4 seasons. split: true means two people, split: false means one player who came back after a spell away. confirmed says a human has checked the entry. An unconfirmed split holds back every season in an earlier segment, as a subject and as a previous holder, so no sentence carries the wrong man's name. A confirmed split prints each segment's own display_name and counts each segment as its own man, so \"his own mark\" never reaches across the two; a segment whose display_name is null is a man whose name is not known and stays held back. Career-level claims stay closed for every split key either way, because career_earnings on a merged record sums two men. An unconfirmed split: false entry keeps the career-level exclusion its gap triggered: a long gap under one name is not proof of one person. Confirming it is what lets the name rank as one career. career_incomplete is the one case where confirming does not open career claims: one man, checked, whose seasons this data does not all hold, so the running total under his name is a part of a career rather than a career. Four entries were removed once the build began joining on a person: Brandon Williams, Chris Smith, Gerald Henderson and Jaren Jackson Jr each covered two men under one key, and each father now has his own name and his own records, so there is nothing left for an entry to split. Corey Brewer is the one key still covering two men, because bio.csv has a row for only one of them."
 }

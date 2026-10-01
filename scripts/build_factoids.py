@@ -36,8 +36,13 @@ from factoids import (  # noqa: E402
     season_key,
 )
 
-#: Roughly 2 MB, the ceiling the brief sets for the committed file.
-DEFAULT_MAX_BYTES = 2 * 1024 * 1024
+#: Roughly 3 MB, the ceiling the brief sets for the committed file. It was 2 MB
+#: until the region, pick-range and college-position cohorts made every record's
+#: factoid list longer: at 2 MB the back-fill paid for them by stopping three
+#: seasons short of where it used to reach. The file is read by these build
+#: scripts and never by a browser, so the ceiling buys back-fill with repo size
+#: and nothing else.
+DEFAULT_MAX_BYTES = 3 * 1024 * 1024
 
 OUT_PATH = os.path.join("data", "factoids.json")
 
