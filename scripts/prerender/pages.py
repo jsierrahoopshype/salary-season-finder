@@ -13,8 +13,8 @@ import factoids as F  # noqa: E402
 from . import config as C  # noqa: E402
 from .render import (  # noqa: E402
     CONTRACTED_TAG, esc, facts_by_season, links_row, money, money_short,
-    more_block, page_url, player_link, rank_table, roll_call, scope_line,
-    section, summary_block,
+    more_block, page_url, player_link, rank_table, related_chips, roll_call,
+    scope_line, section, summary_block,
 )
 from .summary import cohort_summary  # noqa: E402
 
@@ -202,6 +202,11 @@ def _current_rows(idx, records, owners, limit, media=None):
 # --------------------------------------------------------------------------
 
 COHORT_HEADINGS = {
+    # These three carry their own noun, which arrives on the entity because
+    # lowercasing "Duke Guards" would take Duke with it.
+    "region": "Highest-paid {noun} in the NBA",
+    "pick_range": "Highest-paid {noun} in the NBA",
+    "college_position": "Highest-paid {noun} in the NBA",
     "college": "Highest-paid {name} players in the NBA",
     "country": "Highest-paid NBA players from {name}",
     "draft": "Highest-paid players of the {name} NBA draft",
@@ -211,6 +216,9 @@ COHORT_HEADINGS = {
 }
 
 COHORT_NOUN = {
+    "region": "{noun}",
+    "pick_range": "{noun}",
+    "college_position": "{noun}",
     "college": "players out of {name}",
     "country": "players from {name}",
     "draft": "players from the {name} draft class",
@@ -221,18 +229,21 @@ COHORT_NOUN = {
 
 
 def cohort_page(idx, entity, identities, facts_by_cohort, media=None,
-                linker=None, family_members=None):
+                linker=None, family_members=None, relatives=None):
     owners = _owner_map(identities)
     name = entity.name
     lower = name.lower()
+    own_noun = entity.extra.get("noun") or lower
 
     if entity.family == "pick" and entity.key == "undrafted":
         heading = "Highest-paid undrafted players in the NBA"
         noun = "undrafted players"
         title = C.TITLES["pick_undrafted"][0]
     else:
-        heading = COHORT_HEADINGS[entity.family].format(name=name, name_lower=lower)
-        noun = COHORT_NOUN[entity.family].format(name=name, name_lower=lower)
+        heading = COHORT_HEADINGS[entity.family].format(
+            name=name, name_lower=lower, noun=own_noun)
+        noun = COHORT_NOUN[entity.family].format(
+            name=name, name_lower=lower, noun=own_noun)
         title = C.title_for(entity.family, name)
 
     top = _top_paid(idx, entity.records, 1)
@@ -257,7 +268,9 @@ def cohort_page(idx, entity, identities, facts_by_cohort, media=None,
     # is not repeated in the body as well.
     sentences = cohort_summary(
         idx, entity.family, entity.key, name, career, paid, current, facts,
-        slug=entity.slug)
+        slug=entity.slug, noun=entity.extra.get("noun"),
+        noun_one=entity.extra.get("noun_one"),
+        noun_record=entity.extra.get("noun_record"))
 
     body = [
         "<h1>{}</h1>".format(esc(heading)),
@@ -289,6 +302,12 @@ def cohort_page(idx, entity, identities, facts_by_cohort, media=None,
             roll_call([(p.name, p.slug, None) for p in entity.players], "player"),
         ),
     ]
+    if relatives:
+        body.append(section(
+            "Related pages",
+            "The same players, cut another way.",
+            related_chips(relatives),
+        ))
     if family_members:
         body.append(more_block(entity.family, family_members, entity.slug))
     return title, description, "\n".join(body)

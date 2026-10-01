@@ -118,14 +118,54 @@ def _display_college(idx, value):
     return idx.college_display(value)
 
 
+#: The sentence form of a position inside a college, and of a position on its
+#: own, so a page can say "Duke guards" as well as "Duke Guards".
+POSITION_PLURAL = {"G": "Guards", "F": "Forwards", "C": "Centers"}
+POSITION_NOUN = {"G": "guards", "F": "forwards", "C": "centers"}
+
+PICK_RANGE_LABEL = {
+    "top-10": "Top-10 Picks",
+    "lottery": "Lottery Picks",
+    "second-round": "Second-Round Picks",
+}
+
+
 def _cohort_label(idx, family, key):
     if family == "college":
         return _display_college(idx, key)
     if family == "position":
-        return {"G": "Guards", "F": "Forwards", "C": "Centers"}[key]
+        return POSITION_PLURAL[key]
     if family == "pick":
         return "Undrafted" if key == "undrafted" else key
+    if family == "region":
+        return F.REGION_PHRASES[key]["title"]
+    if family == "pick_range":
+        return PICK_RANGE_LABEL[key]
+    if family == "college_position":
+        college, group = key.split("|", 1)
+        return "{} {}".format(_display_college(idx, college), POSITION_PLURAL[group])
     return key
+
+
+def _cohort_nouns(idx, family, key, name):
+    """What a sentence calls this cohort: (plural, singular, its record).
+
+    "European Players" is a page title; "European players" is what a heading
+    wants, and lowercasing the name would take Duke with it. None for a family
+    whose wording summary.py already knows.
+    """
+    if family == "region":
+        spec = F.REGION_PHRASES[key]
+        return spec["many"], spec["one"], spec["record"]
+    if family == "pick_range":
+        many = name.lower()
+    elif family == "college_position":
+        college, group = key.split("|", 1)
+        many = "{} {}".format(_display_college(idx, college), POSITION_NOUN[group])
+    else:
+        return None, None, None
+    one = many[:-1] if many.endswith("s") else many
+    return many, one, "the {} single-season record".format(one)
 
 
 def build_cohorts(idx, identities):
@@ -186,9 +226,12 @@ def build_cohorts(idx, identities):
         players = sorted(
             (by_key[k] for k in bucket["players"]), key=lambda p: (p.name, p.key)
         )
+        label = _cohort_label(idx, family, ckey)
+        many, one, record = _cohort_nouns(idx, family, ckey, label)
         out.append(Entity(
-            family, ckey, _cohort_label(idx, family, ckey),
+            family, ckey, label,
             records=bucket["records"], players=players,
+            noun=many, noun_one=one, noun_record=record,
         ))
     out.sort(key=lambda e: (e.family, e.key))
     return out
@@ -275,6 +318,9 @@ def assign_slugs(book, entities, idx):
             entity.slug = str(entity.key)
         elif entity.family == "position":
             entity.slug = {"G": "guard", "F": "forward", "C": "center"}[entity.key]
+        elif entity.family in ("region", "pick_range"):
+            # the key is already the slug: europe, lottery, second-round
+            entity.slug = entity.key
         else:
             # the slug reads the printed name, so a college page says
             # michigan-state rather than the michigan-st the data stores
