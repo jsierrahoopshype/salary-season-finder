@@ -37,6 +37,7 @@ import collections
 import datetime
 import json
 import os
+import re
 import subprocess
 import sys
 import urllib.error
@@ -47,6 +48,7 @@ REPO = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 
 import factoids as F  # noqa: E402
+import digest_nuggets as N  # noqa: E402
 
 DATA_PATH = os.path.join("data", "data.json")
 STATE_PATH = os.path.join(REPO, "data", "digest_state.json")
@@ -60,8 +62,22 @@ TOOL_ROOT = "https://hoopsmatic.com/salary-season-finder"
 #: Slack renders a post this long comfortably; past it the thread is better.
 POST_LIMIT = 3500
 
-#: At most this many engine factoids ride along with one change.
-FACTOIDS_PER_CHANGE = 2
+#: At most this many nuggets ride along with one change.
+NUGGETS_PER_CHANGE = 2
+
+#: Cohort kind -> the directory its page lives in. Slugs for the first three
+#: are derived rather than stored, the same way the prerender derives them.
+COHORT_DIRS = {
+    "draft_class": "draft", "draft_slot": "pick", "position": "position",
+    "region": "region", "pick_range": "pick-range",
+    "college": "college", "nationality": "country",
+    "college_position": "college-position",
+}
+
+POSITION_SLUGS = {"G": "guard", "F": "forward", "C": "center"}
+
+#: The second sentence runs to this at most; past it the second nugget goes.
+SENTENCE_LIMIT = 260
 
 #: How near a scale amount a salary has to be to be read as that amount. The
 #: rungs of a season's scale are 4% apart at the narrowest, so this cannot reach
@@ -127,17 +143,28 @@ def load_state(path=STATE_PATH):
         return json.load(fh)
 
 
-def save_state(commit, path=STATE_PATH, posted=0):
+def save_state(commit, path=STATE_PATH, posted=0, raises=None, opened=None):
+    stamp = datetime.datetime.now(datetime.timezone.utc)
+    kept = []
+    for entry in raises or []:
+        entry = dict(entry)
+        entry.setdefault("date", stamp.date().isoformat())
+        if opened is None or entry["date"] >= opened.isoformat():
+            kept.append(entry)
+    kept.sort(key=lambda entry: (-(entry.get("amount") or 0), entry["player"]))
     payload = {
         "readme": (
             "The build scripts/salary_digest.py last read. Committed so that a "
             "rerun of the workflow compares against the same place and never "
-            "posts a day's changes twice."
+            "posts a day's changes twice. raises holds every raise the digest "
+            "has seen since the league year opened on July 1, which is what a "
+            "raise is ranked against; entries before that date are dropped."
         ),
         "last_commit": commit,
-        "last_run": datetime.datetime.now(datetime.timezone.utc).strftime(
-            "%Y-%m-%dT%H:%M:%SZ"),
+        "last_run": stamp.strftime("%Y-%m-%dT%H:%M:%SZ"),
         "changes_posted": posted,
+        "league_year_opened": opened.isoformat() if opened else "",
+        "raises": kept,
     }
     with open(path, "w", encoding="utf-8") as fh:
         json.dump(payload, fh, indent=1, sort_keys=True)
@@ -159,10 +186,24 @@ def load_factoids(path=FACTOIDS_PATH):
         return (json.load(fh) or {}).get("factoids") or {}
 
 
-def load_team_names(path=FRANCHISES_PATH):
-    """Team code -> the city a sentence names, from data/franchises.json."""
+def load_cohort_slugs(path=SLUGS_PATH):
+    """Every family's slug map except the players', for the link pass."""
     if not os.path.exists(path):
         return {}
+    with open(path, "r", encoding="utf-8") as fh:
+        families = (json.load(fh) or {}).get("slugs") or {}
+    return {name: table for name, table in families.items() if name != "player"}
+
+
+def load_team_names(path=FRANCHISES_PATH, codes=False):
+    """Team code -> the city a sentence names, from data/franchises.json.
+
+    With codes, the map the link pass wants instead: code -> page slug.
+    """
+    if not os.path.exists(path):
+        return {}
+    if codes:
+        return (load_cohort_slugs(SLUGS_PATH).get("team") or {})
     with open(path, "r", encoding="utf-8") as fh:
         payload = (json.load(fh) or {}).get("franchises") or {}
     out = {}
@@ -183,18 +224,104 @@ def load_player_slugs(path=SLUGS_PATH):
         return ((json.load(fh) or {}).get("slugs") or {}).get("player") or {}
 
 
+def link(text, url):
+    """Slack mrkdwn. A link is the only place the digest spends a URL."""
+    if not url:
+        return text
+    return "<{}|{}>".format(url, text)
+
+
+def apply_links(text, links):
+    """Turn each named entity in a sentence into a link, once.
+
+    Longest surface first, so linking a player never cuts a team name in half,
+    and on a word boundary, so "Arizona St" cannot swallow the first half of
+    "Arizona State". A surface already inside a link is left alone.
+    """
+    done = []
+    for surface, url in sorted(links, key=lambda pair: -len(pair[0])):
+        if not surface or not url:
+            continue
+        if any(surface in seen for seen in done):
+            continue
+        pattern = r"(?<![\w<|/-]){}(?![\w-])".format(re.escape(surface))
+        found = re.search(pattern, text)
+        if not found:
+            continue
+        text = text[:found.start()] + link(surface, url) + text[found.end():]
+        done.append(surface)
+    return text
+
+
+def team_url(teams, code):
+    slug = (teams or {}).get((code or "").strip())
+    return "{}/team/{}/".format(TOOL_ROOT, slug) if slug else ""
+
+
+def cohort_label(idx, kind, key):
+    """What a sentence calls this cohort, which is what a link has to cover."""
+    if kind == "college":
+        return idx.college_display(key) if idx else key
+    if kind == "draft_slot":
+        return "No. {}".format(key) if key != "undrafted" else "undrafted"
+    if kind == "draft_class":
+        return "{} draft class".format(key)
+    if kind == "position":
+        return {"G": "guard", "F": "forward", "C": "center"}.get(key, key)
+    if kind == "region":
+        return (F.REGION_PHRASES.get(key) or {}).get("one", key)
+    return key
+
+
+def cohort_url(slugs, kind, key):
+    """The page for one cohort, or nothing where that cohort has none."""
+    directory = COHORT_DIRS.get(kind)
+    if not directory:
+        return ""
+    if kind == "position":
+        slug = POSITION_SLUGS.get(key)
+    elif kind in ("draft_class", "draft_slot", "region", "pick_range"):
+        slug = str(key)
+    else:
+        slug = ((slugs or {}).get(kind.replace("nationality", "country")) or {}).get(key)
+    return "{}/{}/{}/".format(TOOL_ROOT, directory, slug) if slug else ""
+
+
+def peer_url(spec):
+    """The tool, filtered to exactly the peer group a nugget counted.
+
+    Every one of these is a filter the tool already has; the games floor only
+    needed carrying in the hash, which js/app.js now does.
+    """
+    low_p, high_p = spec["ppg"]
+    second = spec["second_stat"]
+    low_o, high_o = spec[second]
+    params = [
+        ("from", spec["season"]), ("to", spec["season"]),
+        ("pos", spec["pos"]),
+        ("gp_min", spec["gp_min"]),
+        ("ppg_min", low_p), ("ppg_max", high_p),
+        ("{}_min".format(second[:3]), low_o),
+        ("{}_max".format(second[:3]), high_o),
+    ]
+    return "{}#{}".format(TOOL_ROOT, "&".join(
+        "{}={}".format(key, value) for key, value in params))
+
+
 def player_url(slugs, name):
     """The page for this man, or nothing if he has none yet.
 
-    A split key files its segments as "Name#0" and "Name#1"; the later segment
-    is the man playing now, which is the one a digest is ever about.
+    ``slugs`` is either the player table or the whole families map. A split key
+    files its segments as "Name#0" and "Name#1"; the later segment is the man
+    playing now, which is the one a digest is ever about.
     """
-    slug = slugs.get(name)
+    table = slugs.get("player") if isinstance(slugs.get("player"), dict) else slugs
+    slug = table.get(name)
     if not slug:
-        parts = sorted(k for k in slugs if k.rsplit("#", 1)[0] == name)
+        parts = sorted(k for k in table if k.rsplit("#", 1)[0] == name)
         if not parts:
             return ""
-        slug = slugs[parts[-1]]
+        slug = table[parts[-1]]
     return "{}/player/{}/".format(TOOL_ROOT, slug)
 
 
@@ -347,6 +474,23 @@ def possessive(name):
     return name + ("'" if name.endswith("s") else "'s")
 
 
+def lead(item, names=None, teams=None, slugs=None):
+    """The first sentence, with every entity it names linked."""
+    text = sentence(item, names)
+    links = [(item["player"], player_url(slugs or {}, item["player"]))]
+    for code in (item.get("team") or "").split(","):
+        code = code.strip()
+        if code:
+            spelled = (names or {}).get(code, code)
+            links.append((spelled, team_url(teams, code)))
+    for code in (item.get("was_team") or "").split(","):
+        code = code.strip()
+        if code:
+            spelled = (names or {}).get(code, code)
+            links.append((spelled, team_url(teams, code)))
+    return apply_links(text, links)
+
+
 def sentence(item, names=None):
     """One publishable sentence about what the data did."""
     player, season = item["player"], item["season"]
@@ -387,6 +531,39 @@ def sentence(item, names=None):
     return "{}'s {} salary of {} is off the books.".format(player, season, money)
 
 
+def nugget_sentence(nuggets, item, names=None, teams=None, slugs=None,
+                    context_idx=None):
+    """The second sentence: at most two nuggets, linked, inside the limit."""
+    if not nuggets:
+        return ""
+    text = nuggets[0]["opener"]
+    used = nuggets[:1]
+    # A nugget that already carries an "and" of its own takes no second one:
+    # three clauses joined by two ands is not a sentence anybody reads.
+    follower = nuggets[1].get("tail") if len(nuggets) > 1 else ""
+    compound = ", and " in text or ", and " in (follower or "")
+    if follower and not compound \
+            and len(text) + len(follower) + 7 <= SENTENCE_LIMIT:
+        text = "{}, and {}".format(text, follower)
+        used = nuggets[:2]
+    text = text.rstrip(".") + "."
+
+    links = []
+    for nugget in used:
+        for kind, key in nugget.get("entities") or []:
+            if kind == "player":
+                links.append((key, player_url(slugs or {}, key)))
+            else:
+                links.append((cohort_label(context_idx, kind, key),
+                              cohort_url(slugs or {}, kind, key)))
+        spec = nugget.get("peer_link")
+        if spec:
+            phrase = nugget["opener"].split("among the ", 1)
+            if len(phrase) == 2:
+                links.append((phrase[1], peer_url(spec)))
+    return apply_links(text, links)
+
+
 def _money_shape(item):
     """What a run of seasons is worth: one figure, or the two ends of a climb."""
     first, last = item.get("first_salary"), item.get("last_salary")
@@ -395,28 +572,61 @@ def _money_shape(item):
     return "rising from {} to {}".format(F.fmt_money(first), F.fmt_money(last))
 
 
-def facts_for(item, factoids):
-    """Up to two factoids, from the seasons this change is about."""
-    seasons = [m["season"] for m in item.get("members") or []] or [item["season"]]
-    out = []
-    for season in seasons:
-        for fact in factoids.get("{}|{}".format(item["player"], season)) or []:
-            text = fact.get("text")
-            if text and text not in out:
-                out.append(text)
-                if len(out) >= FACTOIDS_PER_CHANGE:
-                    return out
-    return out
+#: Kinds where new money arrives, which is the only place a raise can be.
+RAISE_KINDS = ("new", "new_run", "extension", "extension_run", "salary",
+               "salary_run")
 
 
-def block(item, factoids, slugs, names=None):
-    """One change, as the lines it takes up."""
-    lines = [sentence(item, names)]
-    lines.extend(facts_for(item, factoids))
-    url = player_url(slugs, item["player"])
-    if url:
-        lines.append(url)
-    return "\n".join(lines)
+def raise_amount(idx, item):
+    """New money against what he is paid now, which is what a raise is here.
+
+    Not the difference between two future figures: a reader measures a raise
+    against the salary on this season's books. A salary coming off the books is
+    not a raise, and nor is the same money moving to another team.
+    """
+    if item["kind"] not in RAISE_KINDS:
+        return 0
+    now = idx.record(item["player"], idx.current_season) or {}
+    current = now.get("salary") or 0
+    biggest = max(
+        [(m.get("salary") or 0) for m in item.get("members") or []]
+        or [item.get("salary") or 0])
+    return max(0, biggest - current)
+
+
+def attach_nuggets(items, idx, data, factoids, raises, opened):
+    """Give every item the two nuggets it prints, and its raise."""
+    for item in items:
+        item["raise_amount"] = raise_amount(idx, item)
+    pool = list(raises) + [
+        {"player": item["player"], "season": item["season"],
+         "amount": item["raise_amount"]}
+        for item in items if item["raise_amount"] > 0
+    ]
+    for item in items:
+        item["nuggets"] = N.nuggets_for(
+            item, idx, data, factoids, pool, F.fmt_money, fmt_pct, opened,
+            limit=NUGGETS_PER_CHANGE)
+    return pool
+
+
+def fmt_pct(value):
+    text = "{:.1f}".format(value or 0.0)
+    if text.endswith(".0"):
+        text = text[:-2]
+    return text + "%"
+
+
+def block(item, context):
+    """One change, as at most two sentences with their links inside them."""
+    names, teams, slugs = context["names"], context["teams"], context["slugs"]
+    out = [lead(item, names, teams, slugs)]
+    second = nugget_sentence(
+        item.get("nuggets") or [], item, names, teams, slugs,
+        context_idx=context.get("idx"))
+    if second:
+        out.append(second)
+    return " ".join(out)
 
 
 def collapsed_line(kind, players):
@@ -427,7 +637,7 @@ def collapsed_line(kind, players):
         COLLAPSE_LABEL[kind], ", ".join(who))
 
 
-def render(items, when, scale, tolerance, factoids, slugs, names=None):
+def render(items, when, scale, tolerance, context):
     """The digest, as the posts it takes."""
     header = "Salary data changes, {}".format(ap_date(when))
     if not items:
@@ -436,12 +646,15 @@ def render(items, when, scale, tolerance, factoids, slugs, names=None):
     blocks = []
     collapsed = collections.defaultdict(set)
     for item in items:
-        facts = facts_for(item, factoids)
-        # a run of seasons collapses on the same line as a single one of its kind
+        # A run of seasons collapses on the same line as a single one of its
+        # kind. A record is what rescues a minimum deal from that line: every
+        # other nugget has something to say about every deal, so letting any of
+        # them rescue one would collapse nothing.
         base = item["kind"].replace("_run", "")
-        if facts or base not in COLLAPSE_LABEL \
+        rescued = any(n["kind"] == "record" for n in item.get("nuggets") or [])
+        if rescued or base not in COLLAPSE_LABEL \
                 or not is_minimum(item, scale, tolerance):
-            blocks.append(block(item, factoids, slugs, names))
+            blocks.append(block(item, context))
         else:
             collapsed[base].add(item["player"])
     for kind in KIND_ORDER:
@@ -470,7 +683,12 @@ def render(items, when, scale, tolerance, factoids, slugs, names=None):
 
 # ── posting it ─────────────────────────────────────────────────────────
 def post(url, text):
-    body = json.dumps({"text": text}).encode("utf-8")
+    # Slack unfurls every link in a post by default, which on a digest of ten
+    # items is ten preview cards nobody asked for.
+    body = json.dumps({
+        "text": text, "mrkdwn": True,
+        "unfurl_links": False, "unfurl_media": False,
+    }).encode("utf-8")
     request = urllib.request.Request(
         url, data=body, headers={"Content-Type": "application/json"})
     with urllib.request.urlopen(request, timeout=30) as response:
@@ -514,9 +732,26 @@ def main(argv=None):
     print("comparing {}..{} from {} onward: {} change(s)".format(
         since[:8], head[:8] or "working tree", from_season, len(items)))
 
+    today = datetime.date.today()
+    opened = N.league_year_start(today)
+    state = load_state(args.state)
+    raises = [
+        entry for entry in (state.get("raises") or [])
+        if (entry.get("date") or "") >= opened.isoformat()
+    ]
+    idx = F.build_index(new)
+    pool = attach_nuggets(items, idx, new, load_factoids(), raises, opened)
+
     scale, tolerance = load_min_scale()
-    posts = render(items, datetime.date.today(), scale, tolerance,
-                   load_factoids(), load_player_slugs(), load_team_names())
+    context = {
+        "names": load_team_names(),
+        "teams": load_team_names(codes=True),
+        "slugs": load_player_slugs(),
+        "idx": idx,
+    }
+    context["slugs"] = {"player": context["slugs"]}
+    context["slugs"].update(load_cohort_slugs())
+    posts = render(items, today, scale, tolerance, context)
 
     for text in posts:
         print("\n" + "-" * 60)
@@ -534,7 +769,8 @@ def main(argv=None):
     if not webhook:
         print("\n{} is not set: the digest is in the job summary only".format(
             args.webhook_env))
-        save_state(head, path=args.state, posted=len(items))
+        save_state(head, path=args.state, posted=len(items), raises=pool,
+                   opened=opened)
         return 0
 
     for text in posts:
@@ -544,7 +780,8 @@ def main(argv=None):
             print("could not post to Slack: {}".format(problem))
             return 1
     print("\nposted {} message(s)".format(len(posts)))
-    save_state(head, path=args.state, posted=len(items))
+    save_state(head, path=args.state, posted=len(items), raises=pool,
+               opened=opened)
     return 0
 
 

@@ -12,6 +12,8 @@ import os
 
 import pytest
 
+import digest_nuggets as N
+import factoids as F
 import salary_digest as D
 
 REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -49,10 +51,23 @@ TOLERANCE = 0.03
 NAMES = {"ATL": "Atlanta", "MEM": "Memphis", "DAL": "Dallas", "DEN": "Denver"}
 
 
-def digest(old, new, factoids=None, slugs=None):
+OPENED = datetime.date(2026, 7, 1)
+
+
+def context_for(new, slugs=None, teams=None):
+    """The bundle render() reads, built the way main() builds it."""
+    families = {"player": dict(slugs or {})}
+    families.update(teams or {})
+    return {"names": NAMES, "teams": (teams or {}).get("team") or {},
+            "slugs": families, "idx": F.build_index(new)}
+
+
+def digest(old, new, factoids=None, slugs=None, raises=None, teams=None):
     items = D.changes(old, new, CURRENT)
-    return items, D.render(items, WHEN, SCALE, TOLERANCE,
-                           factoids or {}, slugs or {}, NAMES)
+    context = context_for(new, slugs, teams)
+    D.attach_nuggets(items, context["idx"], new, factoids or {},
+                     raises or [], OPENED)
+    return items, D.render(items, WHEN, SCALE, TOLERANCE, context)
 
 
 # --------------------------------------------------------------------------
@@ -189,21 +204,39 @@ def test_the_header_carries_the_date():
     assert posts[0].startswith("Salary data changes, Oct. 1, 2026\n")
 
 
-def test_a_factoid_and_a_link_ride_with_the_change():
+def test_a_record_and_a_link_ride_with_the_change():
+    """One record per change, and the man's name is the link to his page."""
     old, new = payload([]), payload([rec("Famous Man", CURRENT, 40000000)])
     factoids = {
         "Famous Man|2026-27": [
-            {"text": "First thing."}, {"text": "Second thing."},
-            {"text": "Third thing."},
+            {"text": "First thing.", "rank": 1},
+            {"text": "Second thing.", "rank": 1},
         ],
     }
     slugs = {"Famous Man": "famous-man"}
     _items, posts = digest(old, new, factoids=factoids, slugs=slugs)
     assert "First thing." in posts[0]
-    assert "Second thing." in posts[0]
-    assert "Third thing." not in posts[0]
-    assert ("https://hoopsmatic.com/salary-season-finder/player/famous-man/"
-            in posts[0])
+    assert "Second thing." not in posts[0]
+    assert ("<https://hoopsmatic.com/salary-season-finder/player/famous-man/"
+            "|Famous Man>") in posts[0]
+
+
+def test_a_factoid_outside_the_top_three_is_not_a_record():
+    old, new = payload([]), payload([rec("Ordinary Man", CURRENT, 40000000)])
+    factoids = {"Ordinary Man|2026-27": [{"text": "Eleventh best.", "rank": 11}]}
+    items, posts = digest(old, new, factoids=factoids)
+    assert "Eleventh best." not in posts[0]
+    assert [n["kind"] for n in items[0]["nuggets"]] == []
+
+
+def test_a_contracted_season_carries_no_record():
+    """Nobody has been paid a future salary, so it ranks against nothing."""
+    old = payload([rec("Future Man", CURRENT, 40000000)])
+    new = payload([rec("Future Man", CURRENT, 40000000),
+                   rec("Future Man", "2028-29", 50000000)])
+    factoids = {"Future Man|2028-29": [{"text": "A future record.", "rank": 1}]}
+    _items, posts = digest(old, new, factoids=factoids)
+    assert "A future record." not in posts[0]
 
 
 def test_a_split_name_links_to_the_man_playing_now():
@@ -232,7 +265,7 @@ def test_minimum_deals_come_to_one_line():
 def test_a_minimum_deal_with_a_factoid_is_printed_in_full():
     old = payload([])
     new = payload([rec("Min Man", CURRENT, 2553508)])
-    factoids = {"Min Man|2026-27": [{"text": "Worth saying."}]}
+    factoids = {"Min Man|2026-27": [{"text": "Worth saying.", "rank": 1}]}
     _items, posts = digest(old, new, factoids=factoids)
     assert "Min Man is on Atlanta's books for $2.6 million" in posts[0]
     assert "Worth saying." in posts[0]
@@ -287,7 +320,8 @@ def test_a_change_is_never_split_across_two_posts():
     new = payload([rec("Player Number {:02d}".format(i), CURRENT,
                        20000000 + i, team="ATL") for i in range(60)])
     factoids = {
-        "Player Number {:02d}|2026-27".format(i): [{"text": "A fact about him."}]
+        "Player Number {:02d}|2026-27".format(i): [
+            {"text": "A fact about him.", "rank": 1}]
         for i in range(60)
     }
     slugs = {"Player Number {:02d}".format(i): "p{:02d}".format(i) for i in range(60)}
@@ -454,19 +488,20 @@ def test_a_run_is_not_a_minimum_run_when_one_season_is_above_it():
     assert "Also:" not in posts[0]
 
 
-def test_a_run_takes_its_factoids_from_the_seasons_it_covers():
-    old = payload([rec("Famous", CURRENT, 40000000)])
-    new = payload([rec("Famous", CURRENT, 40000000),
-                   rec("Famous", "2027-28", 42000000),
-                   rec("Famous", "2028-29", 44000000)])
+def test_a_run_takes_its_record_from_the_paid_season_it_covers():
+    """A run of changed numbers reaches every season it covers, but only the
+    one already played out has a rank in it."""
+    old = payload([rec("Famous", CURRENT, 40000000),
+                   rec("Famous", "2027-28", 42000000)])
+    new = payload([rec("Famous", CURRENT, 41000000),
+                   rec("Famous", "2027-28", 43000000)])
     factoids = {
-        "Famous|2027-28": [{"text": "A 2027-28 thing."}],
-        "Famous|2028-29": [{"text": "A 2028-29 thing."}, {"text": "A third thing."}],
+        "Famous|2026-27": [{"text": "A 2026-27 thing.", "rank": 1}],
+        "Famous|2027-28": [{"text": "A 2027-28 thing.", "rank": 1}],
     }
     _items, posts = digest(old, new, factoids=factoids)
-    assert "A 2027-28 thing." in posts[0]
-    assert "A 2028-29 thing." in posts[0]
-    assert "A third thing." not in posts[0]
+    assert "A 2026-27 thing." in posts[0]
+    assert "A 2027-28 thing." not in posts[0]
 
 
 def test_a_signing_that_arrives_as_four_seasons_is_one_sentence():
@@ -488,3 +523,523 @@ def test_a_team_change_is_never_grouped():
                    rec("Moved", "2027-28", 11000000, team="DEN")])
     items, _posts = digest(old, new)
     assert [i["kind"] for i in items] == ["team", "team"]
+
+
+# --------------------------------------------------------------------------
+# peers: the band, the widening, and the link that has to return the group
+# --------------------------------------------------------------------------
+
+PAST = "2025-26"
+
+
+def peer_payload(mine, others, salary=25000000, cap_pct=20.0):
+    """A finished season full of guards, plus the current season he is paid in.
+
+    ``mine`` and ``others`` are (ppg, apg) pairs; everyone played 60 games, so
+    the games floor is clear and only the bands decide the group.
+    """
+    records = []
+    for i, (ppg, apg) in enumerate([mine] + list(others)):
+        name = "Peer Man" if i == 0 else "Guard {:02d}".format(i)
+        records.append({
+            "player": name, "season": PAST, "team": "ATL", "salary": 5000000,
+            "years_exp": 4, "pos": "G", "gp": 60, "ppg": ppg, "apg": apg,
+            "rpg": 3.0, "age": 26,
+            "salary_cap_pct": cap_pct if i == 0 else 1.0 + i * 0.5,
+        })
+    out = payload(records)
+    out["seasons"].append({
+        "player": "Peer Man", "season": CURRENT, "team": "ATL",
+        "salary": salary, "years_exp": 5, "pos": "G", "gp": 0, "age": 27,
+        "salary_cap_pct": cap_pct,
+    })
+    out["seasons_list"] = [PAST, CURRENT]
+    out["players"] = sorted({r["player"] for r in out["seasons"]})
+    return out
+
+
+def peer_nugget_for(mine, others, **kwargs):
+    data = peer_payload(mine, others, **kwargs)
+    idx = F.build_index(data)
+    item = {"player": "Peer Man", "season": CURRENT, "kind": "salary",
+            "salary": kwargs.get("salary", 25000000),
+            "record": idx.record("Peer Man", CURRENT), "members": []}
+    return N.peer_nugget(idx, item, data, D.fmt_pct), data
+
+
+def test_a_band_is_the_whole_numbers_around_each_figure():
+    assert N._band(7.4, 0) == (7, 8)
+    assert N._band(5.2, 0) == (5, 6)
+    assert N._band(0.4, 0) == (0, 1)
+
+
+def test_a_band_widens_by_one_on_each_side():
+    assert N._band(7.4, 1) == (6, 9)
+    assert N._band(7.4, 2) == (5, 10)
+    assert N._band(0.4, 2) == (0, 3)
+
+
+def test_the_peer_sentence_states_the_bands_it_used():
+    nugget, _data = peer_nugget_for(
+        (7.4, 5.2), [(7.1, 5.0), (7.9, 5.9), (7.2, 5.5), (7.6, 5.1)])
+    assert nugget is not None
+    assert "7 to 8 points and 5 to 6 assists" in nugget["opener"]
+    assert nugget["detail"]["widened"] == 0
+    assert nugget["peer_link"]["count"] == 5
+
+
+def test_too_few_players_widens_the_bands():
+    """Three men inside the tight band, two more one point out."""
+    nugget, _data = peer_nugget_for(
+        (7.4, 5.2), [(7.1, 5.0), (7.9, 5.9), (6.5, 4.5), (8.5, 6.5)])
+    assert nugget is not None
+    assert nugget["detail"]["widened"] == 1
+    assert "6 to 9 points and 4 to 7 assists" in nugget["opener"]
+
+
+def test_a_group_that_stays_too_small_after_two_widenings_is_skipped():
+    nugget, _data = peer_nugget_for((7.4, 5.2), [(20.0, 1.0), (21.0, 1.5)])
+    assert nugget is None
+
+
+def test_the_games_floor_keeps_a_short_season_out_of_the_group():
+    data = peer_payload((7.4, 5.2),
+                        [(7.1, 5.0), (7.9, 5.9), (7.2, 5.5), (7.6, 5.1)])
+    for record in data["seasons"]:
+        if record["player"] == "Guard 01":
+            record["gp"] = 12
+    idx = F.build_index(data)
+    item = {"player": "Peer Man", "season": CURRENT, "kind": "salary",
+            "salary": 25000000, "record": idx.record("Peer Man", CURRENT),
+            "members": []}
+    nugget = N.peer_nugget(idx, item, data, D.fmt_pct)
+    # Four left inside the tight band, so the bands widen rather than print four.
+    assert nugget is None or nugget["detail"]["widened"] > 0
+
+
+def test_a_forward_is_read_by_rebounds():
+    data = peer_payload((7.4, 5.2),
+                        [(7.1, 5.0), (7.9, 5.9), (7.2, 5.5), (7.6, 5.1)])
+    for record in data["seasons"]:
+        record["pos"] = "F"
+        record["rpg"] = 6.3
+    idx = F.build_index(data)
+    item = {"player": "Peer Man", "season": CURRENT, "kind": "salary",
+            "salary": 25000000, "record": idx.record("Peer Man", CURRENT),
+            "members": []}
+    nugget = N.peer_nugget(idx, item, data, D.fmt_pct)
+    assert nugget is not None
+    assert "6 to 7 rebounds" in nugget["opener"]
+    assert "forwards" in nugget["opener"]
+
+
+def test_the_peer_comparison_is_a_cap_share():
+    nugget, _data = peer_nugget_for(
+        (7.4, 5.2), [(7.1, 5.0), (7.9, 5.9), (7.2, 5.5), (7.6, 5.1)],
+        cap_pct=20.0)
+    assert "20% of the cap" in nugget["opener"]
+    assert "more than any of them" in nugget["opener"]
+    assert nugget["detail"]["mine"] == 20.0
+
+
+def test_a_middling_share_is_given_against_the_median():
+    nugget, _data = peer_nugget_for(
+        (7.4, 5.2), [(7.1, 5.0), (7.9, 5.9), (7.2, 5.5), (7.6, 5.1)],
+        cap_pct=2.0)
+    assert "against a median" in nugget["opener"]
+
+
+def test_the_peer_link_returns_exactly_the_group_the_nugget_counted():
+    """The link is the tool's own filters, so the same rule can be run here."""
+    nugget, data = peer_nugget_for(
+        (7.4, 5.2), [(7.1, 5.0), (7.9, 5.9), (7.2, 5.5), (7.6, 5.1)])
+    spec = nugget["peer_link"]
+    url = D.peer_url(spec)
+    params = dict(part.split("=", 1) for part in url.split("#", 1)[1].split("&"))
+    assert params["from"] == params["to"] == PAST
+    assert params["pos"] == "G"
+    assert int(params["gp_min"]) == N.PEER_MIN_GAMES
+    found = [
+        record for record in data["seasons"]
+        if record["season"] == params["from"]
+        and (record.get("pos") or "").startswith(params["pos"])
+        and (record.get("gp") or 0) >= int(params["gp_min"])
+        and float(params["ppg_min"]) <= (record.get("ppg") or -1) <= float(params["ppg_max"])
+        and float(params["apg_min"]) <= (record.get("apg") or -1) <= float(params["apg_max"])
+    ]
+    assert len(found) == spec["count"]
+
+
+def test_the_peer_phrase_is_the_link_in_the_sentence():
+    nugget, _data = peer_nugget_for(
+        (7.4, 5.2), [(7.1, 5.0), (7.9, 5.9), (7.2, 5.5), (7.6, 5.1)])
+    item = {"player": "Peer Man", "season": CURRENT, "kind": "salary"}
+    text = D.nugget_sentence([nugget], item, NAMES, {}, {"player": {}})
+    assert "<https://hoopsmatic.com/salary-season-finder#from=2025-26" in text
+    assert "|5 guards who played 40 games or more last season" in text
+
+
+def test_the_season_compared_is_the_one_already_played_out():
+    data = peer_payload((7.4, 5.2), [(7.1, 5.0)])
+    assert N._last_completed(F.build_index(data)) == PAST
+
+
+# --------------------------------------------------------------------------
+# the career nugget
+# --------------------------------------------------------------------------
+
+
+def career_payload(paid_seasons, future, player="Rich Man", legends=()):
+    """A career already paid, a season still to come, and retired men between.
+
+    ``legends`` are (name, total, awards) for careers that finished inside the
+    window, which is what makes them passable.
+    """
+    records, running = [], 0
+    for season, salary in paid_seasons:
+        running += salary
+        records.append({"player": player, "season": season, "team": "ATL",
+                        "salary": salary, "years_exp": 4, "age": 26,
+                        "career_earnings": running})
+    for season, salary in future:
+        records.append({"player": player, "season": season, "team": "ATL",
+                        "salary": salary, "years_exp": 8, "age": 30})
+    for name, total, awards in legends:
+        records.append({"player": name, "season": "2015-16", "team": "MEM",
+                        "salary": total, "years_exp": 4, "awards": list(awards),
+                        "career_earnings": total})
+    out = payload(records)
+    out["seasons_list"] = sorted(
+        {r["season"] for r in out["seasons"]}, key=F.season_key)
+    out["players"] = sorted({r["player"] for r in out["seasons"]})
+    return out
+
+
+def career_nugget_for(**kwargs):
+    data = career_payload(**kwargs)
+    idx = F.build_index(data)
+    player = kwargs.get("player", "Rich Man")
+    season = kwargs["future"][-1][0]
+    item = {"player": player, "season": season, "kind": "extension",
+            "salary": kwargs["future"][-1][1], "members": []}
+    return N.career_nugget(idx, item, F.fmt_money), idx
+
+
+def test_the_career_nugget_names_the_milestone_and_the_season():
+    nugget, _idx = career_nugget_for(
+        paid_seasons=[(CURRENT, 45000000)], future=[("2027-28", 48000000)])
+    assert nugget is not None
+    assert "past $50 million by 2027-28" in nugget["opener"]
+    assert nugget["detail"]["milestone"] == 50000000
+    assert nugget["detail"]["crosses_in"] == "2027-28"
+
+
+def test_the_career_nugget_never_says_guaranteed():
+    nugget, _idx = career_nugget_for(
+        paid_seasons=[(CURRENT, 45000000)], future=[("2027-28", 48000000)])
+    assert "guarantee" not in nugget["opener"]
+
+
+def test_the_most_decorated_retired_men_passed_are_named():
+    nugget, _idx = career_nugget_for(
+        paid_seasons=[(CURRENT, 45000000)],
+        future=[("2027-28", 48000000)],
+        legends=[
+            ("Mvp Man", 48000000, ["Most Valuable Player"]),
+            ("All Nba Man", 47000000, ["All-NBA First Team"]),
+            ("All Star Man", 46000000, ["All-Star"]),
+            ("Plain Man", 49000000, []),
+        ])
+    names = [entry["name"] for entry in nugget["detail"]["legends"]]
+    assert names == ["Mvp Man", "All Nba Man"]
+    assert "Plain Man" not in nugget["opener"]
+    assert "past Mvp Man and All Nba Man on the way" in nugget["opener"]
+
+
+def test_a_career_short_of_the_next_milestone_has_no_career_nugget():
+    nugget, _idx = career_nugget_for(
+        paid_seasons=[(CURRENT, 1000000)], future=[("2027-28", 1200000)])
+    assert nugget is None
+
+
+def test_a_standing_past_the_hundredth_name_is_not_printed():
+    assert N._standing(461, 300) == ""
+    assert N._standing(5, None) == "5th in career salary"
+    assert "among players still on a roster" in N._standing(400, 52)
+
+
+# --------------------------------------------------------------------------
+# the raise nugget
+# --------------------------------------------------------------------------
+
+
+def test_a_raise_is_measured_against_what_he_is_paid_now():
+    data = payload([rec("Raised Man", CURRENT, 5000000),
+                    rec("Raised Man", "2027-28", 40000000)])
+    idx = F.build_index(data)
+    item = {"player": "Raised Man", "season": "2027-28", "kind": "extension",
+            "salary": 40000000, "members": []}
+    assert D.raise_amount(idx, item) == 35000000
+
+
+def test_money_leaving_the_books_is_not_a_raise():
+    data = payload([rec("Gone Man", CURRENT, 5000000)])
+    idx = F.build_index(data)
+    for kind in ("gone", "team"):
+        item = {"player": "Gone Man", "season": CURRENT, "kind": kind,
+                "salary": 40000000, "members": []}
+        assert D.raise_amount(idx, item) == 0
+
+
+def test_the_biggest_raise_of_the_league_year_says_so():
+    item = {"raise_amount": 50000000}
+    raises = [{"amount": 10000000}, {"amount": 20000000}, {"amount": 50000000}]
+    nugget = N.raise_nugget(item, raises, F.fmt_money, OPENED)
+    assert nugget["opener"] == \
+        "That is the biggest raise added to any team's books since July 1"
+    assert nugget["detail"]["rank"] == 1
+
+
+def test_a_raise_outside_the_ten_biggest_is_not_news():
+    item = {"raise_amount": 1000000}
+    raises = [{"amount": 10000000 + i} for i in range(20)]
+    assert N.raise_nugget(item, raises, F.fmt_money, OPENED) is None
+
+
+def test_the_raise_rank_is_spelled_as_an_ordinal():
+    item = {"raise_amount": 10000000}
+    raises = [{"amount": 30000000}, {"amount": 20000000}, {"amount": 10000000}]
+    nugget = N.raise_nugget(item, raises, F.fmt_money, OPENED)
+    assert "the 3rd biggest raise" in nugget["opener"]
+
+
+def test_a_raise_on_its_own_has_nothing_to_rank_against():
+    assert N.raise_nugget({"raise_amount": 500}, [], F.fmt_money, OPENED) is None
+
+
+# --------------------------------------------------------------------------
+# where the money ends
+# --------------------------------------------------------------------------
+
+
+def test_the_horizon_is_the_age_the_money_runs_to():
+    data = payload([
+        {"player": "Long Man", "season": CURRENT, "team": "ATL",
+         "salary": 30000000, "years_exp": 5, "age": 27},
+    ] + [rec("Long Man", s, 30000000) for s in ("2027-28", "2028-29", "2029-30")])
+    idx = F.build_index(data)
+    item = {"player": "Long Man", "season": "2029-30", "kind": "extension_run",
+            "salary": 30000000,
+            "members": [{"season": s} for s in ("2027-28", "2028-29", "2029-30")]}
+    nugget = N.horizon_nugget(idx, item)
+    assert nugget["opener"] == "The money runs through his age-30 season"
+    assert nugget["detail"]["age"] == 30
+
+
+def test_a_run_shorter_than_three_seasons_has_no_horizon():
+    data = payload([rec("Short Man", CURRENT, 30000000)])
+    idx = F.build_index(data)
+    item = {"player": "Short Man", "season": "2027-28", "kind": "extension_run",
+            "salary": 30000000,
+            "members": [{"season": "2027-28"}, {"season": "2028-29"}]}
+    assert N.horizon_nugget(idx, item) is None
+
+
+# --------------------------------------------------------------------------
+# choosing and joining
+# --------------------------------------------------------------------------
+
+
+def test_at_most_two_nuggets_ride_with_one_change():
+    found = N.nuggets_for(
+        {"player": "Nobody", "season": CURRENT, "kind": "new", "salary": 1,
+         "members": [], "raise_amount": 0},
+        F.build_index(payload([])), payload([]), {}, [], F.fmt_money,
+        D.fmt_pct, OPENED, limit=2)
+    assert len(found) <= 2
+
+
+def test_the_record_comes_before_the_career_total():
+    data = payload([rec("Both Man", CURRENT, 45000000),
+                    rec("Both Man", "2027-28", 48000000)])
+    idx = F.build_index(data)
+    item = {"player": "Both Man", "season": "2027-28", "kind": "extension",
+            "salary": 48000000, "members": [{"season": CURRENT}],
+            "raise_amount": 3000000}
+    factoids = {"Both Man|2026-27": [{"text": "A record.", "rank": 1}]}
+    found = N.nuggets_for(item, idx, data, factoids, [], F.fmt_money,
+                          D.fmt_pct, OPENED)
+    assert [n["kind"] for n in found][0] == "record"
+
+
+def test_two_nuggets_are_joined_with_one_and():
+    item = {"player": "Joined Man", "season": CURRENT, "kind": "new"}
+    nuggets = [
+        {"kind": "raise", "opener": "That is the biggest raise",
+         "tail": "it is the biggest raise", "entities": []},
+        {"kind": "horizon", "opener": "The money runs through his age-30 season",
+         "tail": "the money runs through his age-30 season", "entities": []},
+    ]
+    text = D.nugget_sentence(nuggets, item)
+    assert text == ("That is the biggest raise, and the money runs through "
+                    "his age-30 season.")
+    assert text.count(", and ") == 1
+
+
+def test_a_nugget_that_already_has_an_and_takes_no_second_one():
+    item = {"player": "Busy Man", "season": CURRENT, "kind": "new"}
+    nuggets = [
+        {"kind": "career",
+         "opener": "That would push his career salary past $100 million by "
+                   "2028-29, and he is 12th in career salary today",
+         "tail": "it would", "entities": []},
+        {"kind": "horizon", "opener": "The money runs through his age-30 season",
+         "tail": "the money runs through his age-30 season", "entities": []},
+    ]
+    text = D.nugget_sentence(nuggets, item)
+    assert text.count(", and ") == 1
+    assert "age-30" not in text
+
+
+def test_a_second_nugget_past_the_sentence_limit_is_dropped():
+    item = {"player": "Wordy Man", "season": CURRENT, "kind": "new"}
+    nuggets = [
+        {"kind": "peers", "opener": "That is " + "x" * D.SENTENCE_LIMIT,
+         "tail": "", "entities": []},
+        {"kind": "horizon", "opener": "The money runs through his age-30 season",
+         "tail": "the money runs through his age-30 season", "entities": []},
+    ]
+    assert "age-30" not in D.nugget_sentence(nuggets, item)
+
+
+# --------------------------------------------------------------------------
+# links
+# --------------------------------------------------------------------------
+
+
+def test_a_link_is_slack_mrkdwn():
+    assert D.link("Atlanta", "https://x/") == "<https://x/|Atlanta>"
+    assert D.link("Atlanta", "") == "Atlanta"
+
+
+def test_a_surface_is_linked_once():
+    text = D.apply_links("Atlanta beat Atlanta.", [("Atlanta", "https://x/")])
+    assert text == "<https://x/|Atlanta> beat Atlanta."
+
+
+def test_a_link_stops_at_a_word_boundary():
+    """"Arizona St" must not swallow the first half of "Arizona State"."""
+    text = D.apply_links(
+        "the most of any Arizona State player",
+        [("Arizona St", "https://x/"), ("Arizona State", "https://y/")])
+    assert text == "the most of any <https://y/|Arizona State> player"
+
+
+def test_the_longer_surface_wins():
+    text = D.apply_links(
+        "Jaren Jackson Jr is paid.",
+        [("Jaren Jackson", "https://x/"), ("Jaren Jackson Jr", "https://y/")])
+    assert text == "<https://y/|Jaren Jackson Jr> is paid."
+
+
+def test_every_team_the_first_sentence_names_is_linked():
+    item = {"player": "Moved Man", "season": CURRENT, "kind": "team",
+            "salary": 20000000, "team": "MEM", "was_team": "DAL",
+            "members": []}
+    teams = {"MEM": "memphis-grizzlies", "DAL": "dallas-mavericks"}
+    text = D.lead(item, NAMES, teams, {"player": {"Moved Man": "moved-man"}})
+    assert "<https://hoopsmatic.com/salary-season-finder/player/moved-man/" \
+        "|Moved Man>" in text
+    assert "/team/memphis-grizzlies/|Memphis>" in text
+    assert "/team/dallas-mavericks/|Dallas>" in text
+
+
+def test_a_cohort_a_record_names_is_linked_to_its_page():
+    item = {"player": "College Man", "season": CURRENT, "kind": "new"}
+    nuggets = [{
+        "kind": "record",
+        "opener": "the most any Arizona State player has been paid in a season",
+        "tail": "", "entities": [("college", "Arizona State")],
+    }]
+    slugs = {"player": {}, "college": {"Arizona State": "arizona-state"}}
+    text = D.nugget_sentence(nuggets, item, NAMES, {}, slugs)
+    assert "/college/arizona-state/|Arizona State>" in text
+
+
+def test_a_legend_named_in_a_career_nugget_is_linked():
+    item = {"player": "Rich Man", "season": CURRENT, "kind": "new"}
+    nuggets = [{
+        "kind": "career",
+        "opener": "That would push his career salary past $100 million by "
+                  "2028-29, past Ben Wallace on the way",
+        "tail": "", "entities": [("player", "Ben Wallace")],
+    }]
+    slugs = {"player": {"Ben Wallace": "ben-wallace"}}
+    text = D.nugget_sentence(nuggets, item, NAMES, {}, slugs)
+    assert "/player/ben-wallace/|Ben Wallace>" in text
+
+
+def test_each_cohort_kind_knows_its_directory():
+    slugs = {"college": {"Duke": "duke"}, "country": {"France": "france"},
+             "college_position": {"Duke|G": "duke-guards"}}
+    assert D.cohort_url(slugs, "draft_class", 2024).endswith("/draft/2024/")
+    assert D.cohort_url(slugs, "draft_slot", 1).endswith("/pick/1/")
+    assert D.cohort_url(slugs, "position", "G").endswith("/position/guard/")
+    assert D.cohort_url(slugs, "region", "europe").endswith("/region/europe/")
+    assert D.cohort_url(slugs, "pick_range", "lottery").endswith(
+        "/pick-range/lottery/")
+    assert D.cohort_url(slugs, "college", "Duke").endswith("/college/duke/")
+    assert D.cohort_url(slugs, "nationality", "France").endswith(
+        "/country/france/")
+    assert D.cohort_url(slugs, "college_position", "Duke|G").endswith(
+        "/college-position/duke-guards/")
+    assert D.cohort_url(slugs, "nothing", "x") == ""
+
+
+def test_a_cohort_with_no_page_gets_no_link():
+    assert D.cohort_url({"college": {}}, "college", "Nowhere State") == ""
+
+
+def test_the_digest_spends_no_bare_urls():
+    old, new = payload([]), payload([rec("Linked Man", CURRENT, 40000000)])
+    slugs = {"Linked Man": "linked-man"}
+    _items, posts = digest(old, new, slugs=slugs)
+    for post in posts:
+        for word in post.split():
+            if word.startswith("http"):
+                assert word.startswith("<http"), word
+
+
+def test_slack_is_told_not_to_unfurl(monkeypatch):
+    sent = {}
+
+    class Response:
+        status = 200
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            return False
+
+    def fake_open(request, timeout=None):
+        sent["body"] = json.loads(request.data.decode("utf-8"))
+        return Response()
+
+    monkeypatch.setattr(D.urllib.request, "urlopen", fake_open)
+    D.post("https://hooks.example/x", "a digest")
+    assert sent["body"]["unfurl_links"] is False
+    assert sent["body"]["unfurl_media"] is False
+    assert sent["body"]["mrkdwn"] is True
+
+
+# --------------------------------------------------------------------------
+# the hash the peer link relies on
+# --------------------------------------------------------------------------
+
+
+def test_the_tool_carries_the_games_filter_in_its_hash():
+    """peer_url writes gp_min, so js/app.js has to read and write it."""
+    app = open(os.path.join(REPO, "js", "app.js"), encoding="utf-8").read()
+    assert "params.gp_min = f.gpMin" in app
+    assert 'params.gp_min' in app and 'getElementById("gpMin").value = params.gp_min' in app
