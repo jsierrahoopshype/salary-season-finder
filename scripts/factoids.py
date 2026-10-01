@@ -404,6 +404,7 @@ class FactoidIndex:
         self.identity_suspect = set()
         self.draft_meta_suspect = set()
         self.career_total_carried_in = set()
+        self.career_incomplete = set()
         self.active_players = set()
         self.recently_active = set()
         self.final_season = {}
@@ -531,6 +532,7 @@ class FactoidIndex:
             player not in self.truncated
             and player not in self.identity_suspect
             and player not in self.career_total_carried_in
+            and player not in self.career_incomplete
         )
 
     def career_rankable(self, player):
@@ -549,6 +551,7 @@ class FactoidIndex:
         return (
             player not in self.identity_suspect
             and player not in self.career_total_carried_in
+            and player not in self.career_incomplete
         )
 
     def paid_through(self, player):
@@ -719,6 +722,14 @@ def _index_identity_splits(idx):
         renamed. A long gap under one name is not proof of one person, so the
         career-level exclusion the gap triggered stays until someone confirms
         the entry; confirming it lifts that exclusion.
+
+    career_incomplete
+        One man, confirmed, whose seasons this data does not all hold: Hot Rod
+        Williams has his four Cleveland and Phoenix seasons on file and not the
+        four Phoenix ones between them. The name is his alone, so his seasons
+        rank and his gap is not a second man, but the total under it is not his
+        career and no career-level claim may use it, his own or anyone else's
+        measured against it. Independent of confirmed and of split.
     """
     for key, entry in (idx.identity_splits or {}).items():
         recs = idx.by_player.get(key)
@@ -726,6 +737,9 @@ def _index_identity_splits(idx):
             continue
         people = entry.get("people") or []
         confirmed = bool(entry.get("confirmed"))
+
+        if entry.get("career_incomplete"):
+            idx.career_incomplete.add(key)
 
         if not entry.get("split"):
             if confirmed:
@@ -1370,6 +1384,8 @@ def _career_gate(idx, player):
         return "merged_identity"
     if player in idx.career_total_carried_in:
         return "career_total_carried_in"
+    if player in idx.career_incomplete:
+        return "career_incomplete"
     return "career_ineligible"
 
 
