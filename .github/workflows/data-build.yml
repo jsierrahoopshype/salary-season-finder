@@ -1,0 +1,166 @@
+name: Data build
+
+# Runs the whole daily pipeline against the live Google Sheets on a branch, and
+# prints what the new build_data.py changes against what the branch's base
+# would have produced from the very same download. A change to the join has to
+# be read record by record before it is merged, and the sheets move every day,
+# so comparing two builds of one download is the only comparison that means
+# anything.
+#
+# With commit: true it leaves data.json, factoids.json and the pages on the
+# branch, the same three commits the daily workflow makes to main.
+
+on:
+  pull_request:
+    paths:
+      - build_data.py
+      - scripts/identity_diff.py
+      - .github/workflows/data-build.yml
+  workflow_dispatch:
+    inputs:
+      baseline:
+        description: "Ref whose build_data.py to compare against"
+        required: false
+        default: "origin/main"
+      commit:
+        description: "Commit the rebuilt data, factoids and pages to this branch"
+        type: boolean
+        required: false
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          # the whole history, so the baseline's build_data.py is readable
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.ref || github.ref_name }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt pytest
+
+      - name: Download Google Sheets CSVs
+        run: |
+          mkdir -p data_sources
+          UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+          CURL_OPTS="-sL --retry 3 --retry-delay 5 --max-time 60 -H \"User-Agent: $UA\""
+          sheet=1ZrDfzqiC31Hu3YCtxT4aZbZF4QVCVyGe6wBytR2LF30
+          cyro=14TQPdQ9mDhHMMMQa5vcs0coL98ZloHORtYElDikKoWY
+          fetch () {  # fetch <file> <sheet id> <gid>
+            eval curl $CURL_OPTS -o "data_sources/$1" \
+              "\"https://docs.google.com/spreadsheets/d/$2/export?format=csv&gid=$3\""
+            sleep 2
+          }
+          fetch stats.csv                $sheet 0
+          fetch salaries_historical.csv  $sheet 1151460858
+          fetch salaries_future.csv      $sheet 1555460703
+          fetch salaries_2526_current.csv $cyro 1402642613
+          fetch salaries_2526_dead.csv   $cyro 1668033956
+          fetch awards.csv               $sheet 1456513900
+          fetch bio.csv                  $sheet 1488063724
+          wc -c data_sources/*.csv
+
+      - name: Validate downloads
+        run: |
+          for f in data_sources/stats.csv data_sources/salaries_historical.csv \
+                   data_sources/salaries_2526_current.csv \
+                   data_sources/salaries_2526_dead.csv data_sources/awards.csv \
+                   data_sources/bio.csv; do
+            if [ ! -s "$f" ] || [ "$(wc -l < "$f")" -lt 10 ]; then
+              echo "ERROR: $f is empty, missing or far too short"
+              exit 1
+            fi
+          done
+
+      - name: Build data.json the way the baseline would have
+        env:
+          BASELINE: ${{ github.event.inputs.baseline || 'origin/main' }}
+        run: |
+          set -euo pipefail
+          # The copy lands in the repository root so that it reads the same
+          # data_sources/ and salary_cap_info.csv as the real script.
+          git show "$BASELINE:build_data.py" > build_data_baseline.py
+          PYTHONHASHSEED=0 python build_data_baseline.py --local > /tmp/baseline.log
+          tail -12 /tmp/baseline.log
+          mv data/data.json /tmp/baseline.json
+          rm build_data_baseline.py
+
+      - name: Build data.json
+        run: |
+          set -euo pipefail
+          PYTHONHASHSEED=0 python build_data.py --local > /tmp/new.log
+          tail -12 /tmp/new.log
+          cp data/data.json /tmp/new.json
+
+      - name: Report every record that moved
+        run: |
+          python scripts/identity_diff.py /tmp/baseline.json /tmp/new.json \
+            | tee /tmp/diff.md
+          {
+            echo "# Data build"
+            echo ""
+            cat /tmp/diff.md
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Build factoids and pages
+        run: |
+          set -euo pipefail
+          python scripts/build_factoids.py | tail -6
+          python scripts/prerender_pages.py > /tmp/pages.log
+          tail -8 /tmp/pages.log
+
+      - name: Run the test suite over the rebuilt data
+        run: python -m pytest scripts/tests/ -q
+
+      - name: A second build over the rebuilt data writes nothing
+        run: |
+          set -euo pipefail
+          python scripts/prerender_pages.py > /tmp/second.log
+          tail -6 /tmp/second.log
+          if ! grep -q "files written: 0," /tmp/second.log; then
+            echo "::error::a second build over unchanged data wrote files"
+            exit 1
+          fi
+
+      # A pull request run reports and stops there. A push to the branch that
+      # changed the join, or a dispatch asking for it, leaves the rebuilt data on
+      # the branch: the same three things the daily workflow commits to main.
+      - name: Commit the rebuilt data
+        if: ${{ github.event_name == 'push' || github.event.inputs.commit == 'true' }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A agent agents college colleges countries country draft \
+            draft-classes pick picks player position positions season team \
+            404.html sitemap.xml index.html js/player-pages.js \
+            data/data.json data/factoids.json data/slugs.json data/page_hashes.json
+          if git diff --cached --quiet; then
+            echo "Nothing to commit"
+            exit 0
+          fi
+          git commit -m "Rebuild the data on the fixed identity join [$(date -u +%Y-%m-%d)]"
+          for attempt in 1 2 3; do
+            git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            echo "push attempt $attempt failed, retrying"
+            git pull --rebase origin "${GITHUB_REF_NAME}"
+            sleep $((attempt * 5))
+          done
+          exit 1
