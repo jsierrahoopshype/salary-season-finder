@@ -128,6 +128,256 @@ def normalize_name(name):
     return n
 
 
+# ── Player identity ────────────────────────────────────────────────────
+# The salary sheets carry no player id, so a person has to be recognised by
+# name. A name alone is not enough: this league has had a Gary Payton and a
+# Gary Payton II, a Tim Hardaway and a Tim Hardaway Jr, two Chris Smiths and
+# three Charles Joneses. bio.csv is the one source with a row per person,
+# carrying a birth date, a draft year and the suffix or birth-year marker that
+# tells two men of the same name apart, so it is the register this build joins
+# against. Every other sheet's spelling is resolved to one of its people, or,
+# when the register has never heard the name, to a person of its own.
+#
+# What the register settles, per person: the bio block (position, college,
+# nationality, draft, height, weight, birth date), the agent, the display name
+# printed in data.json, and career_earnings, which is a running total of one
+# man's salaries and nothing else.
+
+NAME_SUFFIXES = ("jr", "sr", "ii", "iii", "iv", "v")
+
+# Longest career on record is 22 seasons, so a salary paid 25 years after a
+# draft belongs to a younger man of the same name. The father's own seasons are
+# what this rules out: John Lucas III's rows read 'John Lucas', and his father,
+# drafted in 1976, cannot be the man paid in 2005-06.
+MAX_CAREER_SPAN = 25
+
+SUFFIX_DISPLAY = {
+    "jr": "Jr", "sr": "Sr", "ii": "II", "iii": "III", "iv": "IV", "v": "V",
+}
+
+
+def split_player_name(name):
+    """Pull a name apart into the three things that identify a person.
+
+    ``('Larry Nance, Jr.')`` -> ``('larry nance', 'jr', '')`` and
+    ``('Charles Smith (1965)')`` -> ``('charles smith', '', '1965')``. The base
+    is what normalize_name already produced, so a lookup that wants the old
+    loose behaviour still gets it; the suffix and the marker are what the loose
+    key threw away.
+    """
+    if not name:
+        return "", "", ""
+    text = strip_accents(str(name).strip()).lower()
+    marker = ""
+    found = re.search(r"\(([^)]*)\)", text)
+    if found:
+        marker = " ".join(found.group(1).split())
+    text = re.sub(r"\([^)]*\)", " ", text)
+    text = text.replace(".", "").replace("'", "").replace("-", " ")
+    text = text.replace(",", " ")
+    tokens = text.split()
+    suffix = []
+    while len(tokens) > 1 and tokens[-1] in NAME_SUFFIXES:
+        suffix.insert(0, tokens.pop())
+    base = " ".join(tokens)
+    base = NAME_ALIASES.get(base, base)
+    return base, " ".join(suffix), marker
+
+
+class PersonIndex:
+    """Who each name in the sheets is.
+
+    One person per bio.csv row, plus one for every name the salary sheets carry
+    that bio.csv has never heard of. ``resolve`` turns a spelling and a season
+    into the person it belongs to; everything keyed on a person rather than on a
+    name follows from there.
+    """
+
+    def __init__(self):
+        self.people = {}                       # pid -> person
+        self.by_base = defaultdict(list)       # base name -> [pid] in file order
+        self.suffix_hints = defaultdict(set)   # base name -> suffixes a stable id spells
+        self.spellings = defaultdict(lambda: defaultdict(int))
+        self.adopted = {}                      # pid -> a suffix bio.csv left off
+        self.unknown = set()
+
+    # ── building ──
+    def add_person(self, row):
+        name = (row.get("PLAYER") or "").strip()
+        if not name:
+            return
+        base, suffix, marker = split_player_name(name)
+        if not base:
+            return
+        pid = ("bio", base, suffix, marker)
+        if pid in self.people:
+            return
+        self.people[pid] = {
+            "display": name,
+            "base": base,
+            "suffix": suffix,
+            "marker": marker,
+            "draft_year": parse_int(row.get("DRAFT")),
+            "bio": {
+                "pos": (row.get("POS") or "").strip(),
+                "height": (row.get("HEIGHT") or "").strip(),
+                "weight": parse_int(row.get("WEIGHT")),
+                "nationality": (row.get("NATIONALITY") or "").strip(),
+                "college": (row.get("COLLEGE / TEAM") or "").strip(),
+                "draft_year": parse_int(row.get("DRAFT")),
+                "draft_pick": parse_int(row.get("PICK")),
+                "birthday": (row.get("BIRTHDAY") or "").strip(),
+            },
+        }
+        self.by_base[base].append(pid)
+
+    def add_suffix_hint(self, spelling, stable_id):
+        """A stable id that spells a suffix the loose spelling leaves off.
+
+        stats.csv carries two id columns next to the name it prints. Where the
+        printed name is 'Terrence Shannon' and the id says 'Terrence Shannon
+        Jr.', the suffix is that same man's, not a second man's, and a salary
+        sheet that writes the suffix is writing about him.
+        """
+        base, suffix, marker = split_player_name(spelling)
+        if not base or suffix or marker:
+            return
+        id_base, id_suffix, id_marker = split_player_name(stable_id)
+        if id_base != base or not id_suffix or id_marker:
+            return
+        self.suffix_hints[base].add(id_suffix)
+
+    # ── resolving ──
+    def resolve(self, name, season=None, note=True):
+        """The person a sheet's spelling and season belong to.
+
+        ``note`` is False for a sheet that does not become a record, so that the
+        name data.json prints for a man the register has never heard of is the
+        one the salary sheets spell.
+        """
+        base, suffix, marker = split_player_name(name)
+        if not base:
+            return None
+        pid = self._resolve(base, suffix, marker, season)
+        if note:
+            self.spellings[pid][str(name).strip()] += 1
+        return pid
+
+    def _resolve(self, base, suffix, marker, season):
+        group = self.by_base.get(base) or []
+        if not group:
+            # A name the register has never heard of, so there is no father and
+            # son here to keep apart and a suffix is only a fuller spelling.
+            return self._unknown(base, "", "")
+
+        start = None
+        if season:
+            try:
+                start = int(str(season).split("-")[0])
+            except (ValueError, TypeError):
+                start = None
+
+        def possible(pid):
+            """Whether this man could have been paid for that season."""
+            if start is None:
+                return True
+            drafted = self.people[pid]["draft_year"]
+            if drafted is None:
+                return True
+            return drafted <= start <= drafted + MAX_CAREER_SPAN
+
+        exact = [
+            pid for pid in group
+            if self.people[pid]["suffix"] == suffix
+            and self.people[pid]["marker"] == marker
+        ]
+        if len(exact) == 1 and possible(exact[0]):
+            return exact[0]
+
+        if start is None:
+            # Nothing to place him by, so answer only where one man is possible.
+            if suffix or marker:
+                return self._marked(base, suffix, marker, group)
+            if len(group) == 1:
+                return group[0]
+            return self._unknown(base, suffix, marker)
+
+        # Either the spelling names nobody in the register exactly, or it names
+        # a man who had not been drafted yet when that salary was paid. Both
+        # mean the season decides.
+        candidates = [pid for pid in group if possible(pid)]
+
+        if suffix or marker:
+            marked = [pid for pid in candidates if pid in exact]
+            if marked:
+                return self._latest(marked)
+            if exact:
+                # The register does know a man of this suffix, and he is not the
+                # one who was paid, so the sheet has put the son's suffix on the
+                # father's row: Jaren Jackson's seasons are all filed under
+                # Jaren Jackson Jr. The season says which man it was.
+                if candidates:
+                    return self._latest(candidates)
+                return self._unknown(base, suffix, marker)
+            return self._marked(base, suffix, marker, candidates)
+
+        if candidates:
+            return self._latest(candidates)
+        return self._unknown(base, suffix, marker)
+
+    def _marked(self, base, suffix, marker, candidates):
+        """A spelling carrying a suffix the register does not give this name.
+
+        Either the register left the suffix off one man, which a stable id in
+        stats.csv proves, or the suffix belongs to a man the register has never
+        heard of. Jameer Nelson Jr is not Jameer Nelson.
+        """
+        if suffix and not marker and suffix in self.suffix_hints.get(base, ()):
+            plain = [
+                pid for pid in candidates
+                if not self.people[pid]["suffix"] and not self.people[pid]["marker"]
+            ]
+            if len(plain) == 1:
+                self.adopted[plain[0]] = suffix
+                return plain[0]
+        return self._unknown(base, suffix, marker)
+
+    def _latest(self, pids):
+        """The last of these men to be drafted, who is the one still playing."""
+        best = pids[0]
+        for pid in pids[1:]:
+            mine = self.people[pid]["draft_year"] or 0
+            if mine > (self.people[best]["draft_year"] or 0):
+                best = pid
+        return best
+
+    def _unknown(self, base, suffix, marker):
+        pid = ("new", base, suffix, marker)
+        self.unknown.add(pid)
+        return pid
+
+    # ── reading ──
+    def display(self, pid):
+        """The name data.json prints for this person."""
+        person = self.people.get(pid)
+        if person:
+            name = person["display"]
+            adopted = self.adopted.get(pid)
+            if adopted:
+                name = "{} {}".format(
+                    name, " ".join(SUFFIX_DISPLAY[s] for s in adopted.split()))
+            return name
+        seen = self.spellings.get(pid) or {}
+        if seen:
+            return sorted(
+                seen.items(), key=lambda kv: (-kv[1], len(kv[0]), kv[0]))[0][0]
+        return ""
+
+    def bio(self, pid):
+        person = self.people.get(pid)
+        return dict(person["bio"]) if person else {}
+
+
 def year_to_season(year_val):
     """2025 -> '2024-25',  1999 -> '1998-99',  2000 -> '1999-00'."""
     try:
@@ -286,13 +536,16 @@ def load_agent_data():
     return ps, ce, ad
 
 
-def build_agent_lookup(agent_records):
+def build_agent_lookup(agent_records, persons):
     lookup = defaultdict(list)
     for rec in agent_records:
         player = rec.get("player", "").strip()
         if not player:
             continue
-        lookup[normalize_name(player)].append({
+        # No season: an agent signs a player before his first salary, so the
+        # dates on these rows cannot place him. Without one the resolver only
+        # answers where the answer is unambiguous.
+        lookup[persons.resolve(player, note=False)].append({
             "agent": rec.get("agent", ""),
             "start": rec.get("start", ""),
             "end": rec.get("end", ""),
@@ -302,8 +555,8 @@ def build_agent_lookup(agent_records):
     return lookup
 
 
-def find_agent_for_season(agent_lookup, player_name, season):
-    records = agent_lookup.get(normalize_name(player_name), [])
+def find_agent_for_season(agent_lookup, pid, season):
+    records = agent_lookup.get(pid, [])
     if not records:
         return None
     end_year = season_to_year(season)
@@ -629,27 +882,37 @@ def process_awards(csv_data):
     return lookup, all_awards
 
 
-def process_bio(csv_data):
-    rows = parse_csv_string(csv_data)
-    if not rows:
-        return {}
-    lookup = {}
-    for row in rows:
-        player = row.get("PLAYER", "").strip()
-        if not player:
-            continue
-        lookup[normalize_name(player)] = {
-            "pos": row.get("POS", "").strip(),
-            "height": row.get("HEIGHT", "").strip(),
-            "weight": parse_int(row.get("WEIGHT")),
-            "nationality": row.get("NATIONALITY", "").strip(),
-            "college": row.get("COLLEGE / TEAM", "").strip(),
-            "draft_year": parse_int(row.get("DRAFT")),
-            "draft_pick": parse_int(row.get("PICK")),
-            "birthday": row.get("BIRTHDAY", "").strip(),
-        }
-    print(f"    Parsed {len(lookup)} player bios")
-    return lookup
+def build_person_index(bio_csv, stats_csv):
+    """The register of people every other sheet is joined against."""
+    persons = PersonIndex()
+    for row in parse_csv_string(bio_csv):
+        persons.add_person(row)
+    print(f"    Registered {len(persons.people)} people from bio.csv")
+    # stats.csv prints a name and, beside it, the stable ids two other
+    # databases use for the same man. Where an id carries a suffix the printed
+    # name leaves off, that suffix belongs to him.
+    hinted = 0
+    if stats_csv:
+        reader = csv.reader(io.StringIO(stats_csv))
+        header = next(reader, None) or []
+        head = [c.strip().upper() for c in header]
+        name_col = head.index("PLAYER") if "PLAYER" in head else None
+        id_cols = [i for i, c in enumerate(head) if c in ("RG CODE", "NB CODE")]
+        if name_col is not None:
+            for cols in reader:
+                if len(cols) <= name_col:
+                    continue
+                printed = cols[name_col].strip()
+                if not printed:
+                    continue
+                for i in id_cols:
+                    if len(cols) > i and cols[i].strip():
+                        before = len(persons.suffix_hints)
+                        persons.add_suffix_hint(printed, cols[i].strip())
+                        hinted += len(persons.suffix_hints) - before
+
+    print(f"    {hinted} names carry a suffix only their stable id spells")
+    return persons
 
 
 # ── Main build ─────────────────────────────────────────────────────────
@@ -684,7 +947,6 @@ def build_data():
 
     print("\n[3/7] Loading agent tracker data...")
     agent_salaries, career_earnings_map, agent_records = load_agent_data()
-    agent_lookup = build_agent_lookup(agent_records)
 
     # Step 3: Load CSVs from data_sources/
     print("\n[4/7] Loading CSV data from data_sources/...")
@@ -703,7 +965,8 @@ def build_data():
     future_sal_lookup = process_future_salaries(future_sal_csv) if future_sal_csv else {}
     cyro_lookup, cyro_seasons = process_cyro_salaries(sal_2526_current_csv, sal_2526_dead_csv)
     awards_lookup, all_awards_set = process_awards(awards_csv) if awards_csv else ({}, set())
-    bio_lookup = process_bio(bio_csv) if bio_csv else {}
+    persons = build_person_index(bio_csv, stats_csv)
+    agent_lookup = build_agent_lookup(agent_records, persons)
 
     # Merge historical + future salary lookups
     # For seasons covered by Cyro's sheets: use Cyro's data exclusively
@@ -725,6 +988,16 @@ def build_data():
             salary_csv_lookup[k].extend(v)
         else:
             salary_csv_lookup[k] = v
+
+    # Re-key every salary row on the person it belongs to. Two spellings of one
+    # man (Wendell Carter and Wendell Carter Jr) land together; a father and a
+    # son who share a loose name (Gary Payton and Gary Payton II) come apart.
+    salary_by_person = {}
+    for (nk, season), recs in salary_csv_lookup.items():
+        for rec in recs:
+            pid = persons.resolve(rec["player_original"], season)
+            salary_by_person.setdefault((pid, season), []).append(rec)
+    salary_csv_lookup = salary_by_person
 
     # Combine multi-team records in salary_csv_lookup
     # e.g. Griffin 2020-21: [{team:DET, salary:32M}, {team:BKN, salary:1.2M}]
@@ -775,10 +1048,11 @@ def build_data():
             end_year = season_to_year(season)
             if not end_year or end_year < 1991:
                 continue
-            key = (normalize_name(player_name), season)
+            pid = persons.resolve(player_name, season)
+            key = (pid, season)
             if key not in ps_map or salary > ps_map[key]["salary"]:
                 ps_map[key] = {
-                    "player": player_name,
+                    "pid": pid,
                     "season": season,
                     "salary": salary,
                     "end_year": end_year,
@@ -786,12 +1060,12 @@ def build_data():
                 }
 
     # Merge CSV salaries: add missing, update team info
-    for (nk, season), recs in salary_csv_lookup.items():
+    for (pid, season), recs in salary_csv_lookup.items():
         for rec in recs:
             end_year = season_to_year(season)
             if not end_year or end_year < 1991:
                 continue
-            key = (nk, season)
+            key = (pid, season)
             if key in ps_map:
                 # Update team from CSV if we don't have one
                 if rec.get("team") and not ps_map[key]["team"]:
@@ -803,7 +1077,7 @@ def build_data():
                     ps_map[key]["team"] = rec["team"]
             else:
                 ps_map[key] = {
-                    "player": rec["player_original"],
+                    "pid": pid,
                     "season": season,
                     "salary": rec["salary"],
                     "end_year": end_year,
@@ -814,6 +1088,10 @@ def build_data():
 
     player_season_list = list(ps_map.values())
     print(f"    Total player-season records: {len(player_season_list)}")
+    print(f"    {len(persons.unknown)} names bio.csv has no row for")
+    if persons.adopted:
+        for pid, suffix in sorted(persons.adopted.items()):
+            print(f"      suffix from a stable id: {persons.display(pid)}")
 
     # Compute league-wide salary ranks per season
     by_season = defaultdict(list)
@@ -828,9 +1106,9 @@ def build_data():
     player_years = defaultdict(set)
     player_yearly_salary = defaultdict(lambda: defaultdict(int))
     for ps in player_season_list:
-        nk = normalize_name(ps["player"])
-        player_years[nk].add(ps["end_year"])
-        player_yearly_salary[nk][ps["end_year"]] += ps["salary"]
+        pid = ps["pid"]
+        player_years[pid].add(ps["end_year"])
+        player_yearly_salary[pid][ps["end_year"]] += ps["salary"]
 
     # Build final records
     print("    Building final records...")
@@ -841,7 +1119,8 @@ def build_data():
     final_records = []
 
     for ps in player_season_list:
-        player = ps["player"]
+        pid = ps["pid"]
+        player = persons.display(pid)
         season = ps["season"]
         salary = ps["salary"]
         end_year = ps["end_year"]
@@ -866,7 +1145,7 @@ def build_data():
                     team = s["team"]
                     break
         if not team:
-            csv_recs = salary_csv_lookup.get(sk, [])
+            csv_recs = salary_csv_lookup.get((pid, season), [])
             if csv_recs:
                 team = csv_recs[0].get("team", "")
 
@@ -874,10 +1153,10 @@ def build_data():
         awards = awards_lookup.get(sk, [])
 
         # Bio
-        bio = bio_lookup.get(nk, {})
+        bio = persons.bio(pid)
 
         # Agent
-        agent = find_agent_for_season(agent_lookup, player, season)
+        agent = find_agent_for_season(agent_lookup, pid, season)
 
         # Cap %
         cap_info = salary_cap.get(season, {})
@@ -887,11 +1166,11 @@ def build_data():
         tax_pct = round(salary / tax * 100, 2) if tax and salary else None
 
         # Years of experience (completed seasons only; current season doesn't count)
-        years_exp = sum(1 for y in player_years.get(nk, set()) if y < end_year)
+        years_exp = sum(1 for y in player_years.get(pid, set()) if y < end_year)
 
         # Career earnings to date
         career_earnings = sum(
-            v for y, v in player_yearly_salary.get(nk, {}).items() if y <= end_year
+            v for y, v in player_yearly_salary.get(pid, {}).items() if y <= end_year
         )
 
         # Cost metrics
@@ -1013,7 +1292,7 @@ def build_data():
             "season_range": f"{seasons_sorted[-1] if seasons_sorted else 'N/A'} to {seasons_sorted[0] if seasons_sorted else 'N/A'}",
             "has_stats": bool(stats_lookup),
             "has_awards": bool(awards_lookup),
-            "has_bio": bool(bio_lookup),
+            "has_bio": bool(persons.people),
         },
     }
 
@@ -1035,7 +1314,7 @@ def build_data():
     print(f"    Seasons: {seasons_sorted[-1] if seasons_sorted else 'N/A'} to {seasons_sorted[0] if seasons_sorted else 'N/A'}")
     print(f"    Has stats: {bool(stats_lookup)}")
     print(f"    Has awards: {bool(awards_lookup)}")
-    print(f"    Has bio: {bool(bio_lookup)}")
+    print(f"    Has bio: {bool(persons.people)}")
     print("\n" + "=" * 60)
     print("Build complete!")
     print("=" * 60)

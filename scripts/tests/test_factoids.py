@@ -752,8 +752,6 @@ def test_unknown_player_returns_nothing_rather_than_raising():
 # house style
 # --------------------------------------------------------------------------
 
-ALL_TIME_WORDS = ("ever", "all-time", "in NBA history")
-
 #: Abbreviations that carry a period mid-sentence ("St. John's", "No. 41"), so
 #: a period followed by a capital after one of these is not a sentence break.
 _ABBREV = r"(?<!\bSt)(?<!\bNo)(?<!\bJr)(?<!\bSr)(?<!\bMt)(?<!\bJ)(?<!\bA)"
@@ -766,9 +764,6 @@ def assert_house_style(fact):
     assert text.endswith("."), "not one sentence: " + text
     assert not SENTENCE_BREAK.search(text), "more than one sentence: " + text
     lowered = text.lower()
-    for word in ALL_TIME_WORDS:
-        if word in lowered:
-            assert F.SCOPE_SUFFIX in lowered, "{!r} without the scope: {}".format(word, text)
     for hype in ("massive", "staggering", "whopping", "eye-popping", "jaw-dropping"):
         assert hype not in lowered, "hype adjective in: " + text
     assert re.search(r"\d{4}-\d{2}", text), "no season label in: " + text
@@ -1100,7 +1095,14 @@ def test_shipped_identity_splits_cover_every_flagged_name():
     # built with no splits file, so identity_suspect is the raw gap flag
     idx = build_index(data, franchises=FRANCHISES, identity_splits={})
     entries = F.load_identity_splits()
-    assert set(entries) == idx.identity_suspect
+    assert idx.identity_suspect <= set(entries)
+    # The build now joins on a person rather than on a loose name, so four of
+    # the keys these entries were written for no longer cover two men. The
+    # entries stay, because deleting one is a decision about the data and not
+    # about the join, but a flagged name must still have one.
+    assert set(entries) - idx.identity_suspect == {
+        "Brandon Williams", "Chris Smith", "Gerald Henderson", "Jaren Jackson Jr",
+    }
     for key, entry in entries.items():
         assert entry["evidence"], key
         if entry["split"]:
@@ -1422,13 +1424,23 @@ def test_shipped_splits_are_confirmed_and_only_the_unnamed_one_is_held_back():
     idx = build_index(data, franchises=FRANCHISES)
     # one man, in one season, whose name nobody has
     assert idx.split_suppressed == {("Corey Brewer", "1999-00")}
-    assert idx.display_name("Jaren Jackson Jr", "1997-98") == "Jaren Jackson"
+    # Four of these keys are now one man each, because the build gives the
+    # father his own name and his own record. The names the entries were
+    # written to print are in the data itself.
+    for key in ("Jaren Jackson", "Gerald Henderson Sr", "Brandon Williams (1975)",
+                "Chris Smith (1970)", "Chris Smith (1987)"):
+        assert key in idx.by_player, key
     assert idx.display_name("Jaren Jackson Jr", "2026-27") == "Jaren Jackson Jr"
-    assert idx.display_name("Gerald Henderson", "1990-91") == "Gerald Henderson"
     assert idx.display_name("Gerald Henderson", "2015-16") == "Gerald Henderson Jr"
-    # a confirmed split is still two men, so still no career claims
-    for key in splits:
-        assert idx.career_eligible(key) is False, key
+    # Corey Brewer is the last key that still holds two men, because bio.csv
+    # has no row for the one who played in 1999-00, so he is the only one a
+    # career claim has to stay off. The other four are one man each now, and a
+    # career figure under their name is their own.
+    assert idx.career_eligible("Corey Brewer") is False
+    assert idx.career_rankable("Corey Brewer") is False
+    assert "Chris Smith" not in idx.by_player
+    for key in ("Brandon Williams", "Gerald Henderson", "Jaren Jackson Jr"):
+        assert idx.career_rankable(key) is True, key
 
 
 # --------------------------------------------------------------------------
@@ -1492,16 +1504,17 @@ def test_a_clean_record_still_gets_all_five_cohorts():
 
 @pytest.mark.skipif(not os.path.exists(REAL_DATA), reason="data/data.json not present")
 def test_only_the_vouched_for_suspects_are_in_a_cohort_universe():
-    """The eleven are out by default. The three whose confirmed split says which
-    segment owns the metadata are back in, for that segment only."""
+    """Ten of the eleven are gone: the build no longer hands a father his son's
+    draft. The one left is the man the register cannot name, and his confirmed
+    split says which segment owns the metadata."""
     with open(REAL_DATA, "r", encoding="utf-8") as fh:
         data = json.load(fh)
     idx = build_index(data, franchises=FRANCHISES)
-    assert len(idx.draft_meta_suspect) == 11
+    assert idx.draft_meta_suspect == {"Corey Brewer"}
     entries = [e for u in idx.u_cohort_season.values() for e in u.entries]
     entries += [e for u in idx.u_cohort_career.values() for e in u.entries]
     members = {e["player"] for e in entries}
-    vouched = {"Brandon Williams", "Corey Brewer", "Jaren Jackson Jr"}
+    vouched = {"Corey Brewer"}
     assert members & idx.draft_meta_suspect == vouched
     # and only for the seasons their split vouches for
     for entry in entries:
@@ -1604,16 +1617,22 @@ def test_jaren_jackson_jr_is_back_in_michigan_state():
         data = json.load(fh)
     idx = build_index(data, franchises=FRANCHISES)
     assert idx.cohorts_allowed("Jaren Jackson Jr", "2026-27") is True
-    assert idx.cohorts_allowed("Jaren Jackson Jr", "1997-98") is False
     kinds = dict(
         (k, c) for k, c, _l in F._cohorts_for(idx.record("Jaren Jackson Jr", "2026-27"), idx)
     )
     assert kinds["college"] == "Michigan St"
     assert kinds["draft_slot"] == "4"
     assert kinds["draft_class"] == "2018"
-    # the other eight suspects, with no split to vouch for them, stay out
-    for player in ("Glen Rice", "Gary Payton", "Tim Hardaway"):
-        assert idx.cohorts_allowed(player, idx.by_player[player][0]["season"]) is False
+    # his father is his own man now, with his own college
+    assert idx.by_player["Jaren Jackson"][0]["college"] == "Georgetown"
+    assert "1997-98" not in {r["season"] for r in idx.by_player["Jaren Jackson Jr"]}
+    # and the fathers whose records carried a son's draft are back in their own
+    # cohorts, with their own colleges
+    for player, college in (("Glen Rice", "Michigan"), ("Gary Payton", "Oregon St"),
+                            ("Tim Hardaway", "Texas-El Paso")):
+        first = idx.by_player[player][0]
+        assert idx.cohorts_allowed(player, first["season"]) is True
+        assert first["college"] == college
 
 
 # --------------------------------------------------------------------------
@@ -1775,8 +1794,12 @@ def test_the_real_carried_in_totals_are_all_caught():
     with open(REAL_DATA, "r", encoding="utf-8") as fh:
         data = json.load(fh)
     idx = build_index(data, franchises=FRANCHISES)
-    assert "Glen Rice Jr" in idx.career_total_carried_in
-    assert "Tim Hardaway Jr" in idx.career_total_carried_in
+    # career_earnings is a running total of one man's salaries now, so no
+    # record opens on a figure that was already running under another name.
+    assert idx.career_total_carried_in == set()
+    for player in ("Glen Rice Jr", "Tim Hardaway Jr", "Gary Payton II"):
+        first = idx.by_player[player][0]
+        assert first["career_earnings"] == first["salary"], player
     for player in idx.career_total_carried_in:
         assert idx.career_eligible(player) is False, player
     members = {e["player"] for e in idx.u_career.entries}

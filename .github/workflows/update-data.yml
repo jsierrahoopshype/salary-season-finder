@@ -112,8 +112,12 @@ jobs:
     continue-on-error: true
 
     steps:
-      - name: Checkout repository
+      - name: Checkout the branch as update-data left it
         uses: actions/checkout@v4
+        with:
+          # Not the SHA that triggered the run: update-data pushed the new
+          # data.json after that, and this job has to build from it.
+          ref: ${{ github.ref_name }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -160,8 +164,12 @@ jobs:
     continue-on-error: true
 
     steps:
-      - name: Checkout repository
+      - name: Checkout the branch as the two jobs before left it
         uses: actions/checkout@v4
+        with:
+          # Same reason as build-factoids: the data and the factoids this job
+          # renders were pushed after the run started.
+          ref: ${{ github.ref_name }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
