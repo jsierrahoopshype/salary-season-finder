@@ -2723,12 +2723,36 @@
   }
 
   // ---- URL State ----
-  function saveStateToURL() {
-    var f = getFilterState();
+  /**
+   * The hash for one piece of tool state, or "" when it is the default state.
+   *
+   * Every filter below writes a parameter only when it is set, so the whole
+   * question is the season range: the two selects always hold a value, and
+   * writing them unconditionally meant the address kept a hash even with
+   * nothing filtered. At the default season, on the default sort, with no
+   * filters, this returns "" and the caller leaves the address bare.
+   *
+   * Pure on purpose: it takes the state rather than reading it, so the test
+   * suite can ask it questions without a browser.
+   *
+   * @param {Object} f            getFilterState()'s object
+   * @param {string} defaultSeason the season the tool opens on
+   * @param {string} sort         the sorted column
+   * @param {string} dir          "asc" or "desc"
+   * @param {?string} exactPlayer the exact-player lock, if one is set
+   * @returns {string} the hash without its "#", or ""
+   */
+  function hashFor(f, defaultSeason, sort, dir, exactPlayer) {
     var params = {};
 
-    if (f.seasonFrom) params.from = f.seasonFrom;
-    if (f.seasonTo) params.to = f.seasonTo;
+    // The season range is the tool's default when both ends are the default
+    // season; then it says nothing a bare URL does not already say.
+    var seasonIsDefault = !!defaultSeason &&
+      f.seasonFrom === defaultSeason && f.seasonTo === defaultSeason;
+    if (!seasonIsDefault) {
+      if (f.seasonFrom) params.from = f.seasonFrom;
+      if (f.seasonTo) params.to = f.seasonTo;
+    }
     if (f.salaryMin != null) params.salary_min = f.salaryMin;
     if (f.salaryMax != null) params.salary_max = f.salaryMax;
     if (f.capPctMin != null) params.cap_min = f.capPctMin;
@@ -2741,7 +2765,7 @@
     if (f.earningsMin != null) params.earn_min = f.earningsMin;
     if (f.earningsMax != null) params.earn_max = f.earningsMax;
     if (f.playerSearch) params.player = f.playerSearch;
-    if (_exactPlayer) params.player_exact = 1;
+    if (exactPlayer) params.player_exact = 1;
     if (f.positions.length > 0) params.pos = f.positions.join(",");
     if (f.ageMin != null) params.age_min = f.ageMin;
     if (f.ageMax != null) params.age_max = f.ageMax;
@@ -2757,17 +2781,22 @@
     if (f.college) params.college = f.college;
     if (f.awards.length > 0) params.awards = f.awards.join(",");
     if (f.hasAnyAward) params.has_award = "1";
-    if (sortCol !== "salary") params.sort = sortCol;
-    if (sortDir !== "desc") params.dir = sortDir;
+    if (sort !== "salary") params.sort = sort;
+    if (dir !== "desc") params.dir = dir;
 
-    var hash = Object.keys(params).map(function (k) {
+    return Object.keys(params).map(function (k) {
       return encodeURIComponent(k) + "=" + encodeURIComponent(params[k]);
     }).join("&");
+  }
 
+  function saveStateToURL() {
+    var hash = hashFor(getFilterState(), DEFAULT_SEASON, sortCol, sortDir,
+                       _exactPlayer);
     if (hash) {
       history.replaceState(null, "", "#" + hash);
     } else {
-      history.replaceState(null, "", window.location.pathname);
+      // Nothing to say, so say nothing: Clear All leaves the bare URL.
+      history.replaceState(null, "", window.location.pathname + window.location.search);
     }
   }
 
@@ -2854,6 +2883,12 @@
   window.HoopsMaticPlayerSeasonTable = {
     build: buildPlayerSeasonTable,
     columns: PLAYER_SEASON_COLUMNS,
+  };
+
+  // The one rule that decides whether the address carries a hash, exposed so
+  // the test suite can ask it directly rather than driving a browser.
+  window.HoopsMaticToolState = {
+    hashFor: hashFor,
   };
 
   // ---- Start ----
