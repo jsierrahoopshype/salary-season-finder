@@ -1273,3 +1273,93 @@ def test_the_live_check_says_where_a_github_io_link_sits():
     assert tag.startswith('<link rel="canonical"') and tag.endswith(">")
     assert "charset" in snippet and "<title>" in snippet
     assert live_smoke.github_io_links("<a href='/ok/'>fine</a>") == []
+
+
+# --------------------------------------------------------------------------
+# the tool's address bar
+# --------------------------------------------------------------------------
+
+
+DEFAULT_FILTER_STATE = {
+    "seasonFrom": "2026-27", "seasonTo": "2026-27",
+    "salaryMin": None, "salaryMax": None, "capPctMin": None, "capPctMax": None,
+    "leagueRank": None, "cppMin": None, "cppMax": None, "cpgMin": None,
+    "cpgMax": None, "earningsMin": None, "earningsMax": None,
+    "playerSearch": "", "positions": [], "ageMin": None, "ageMax": None,
+    "expMin": None, "expMax": None, "draftMin": None, "draftMax": None,
+    "draftYearMin": None, "draftYearMax": None, "nationality": "",
+    "college": "", "team": "", "ppgMin": None, "ppgMax": None,
+    "rpgMin": None, "rpgMax": None, "apgMin": None, "apgMax": None,
+    "fgPctMin": None, "fgPctMax": None, "tpPctMin": None, "tpPctMax": None,
+    "ftPctMin": None, "ftPctMax": None, "gpMin": None, "gpMax": None,
+    "awards": [], "hasAnyAward": False,
+}
+
+
+def _hash_for(*calls):
+    """Ask js/app.js what hash each piece of state deserves."""
+    payload = json.dumps([
+        {
+            "filters": dict(DEFAULT_FILTER_STATE, **call.get("filters", {})),
+            "defaultSeason": call.get("defaultSeason", "2026-27"),
+            "sort": call.get("sort", "salary"),
+            "dir": call.get("dir", "desc"),
+            "exactPlayer": call.get("exactPlayer"),
+        }
+        for call in calls
+    ])
+    result = subprocess.run(
+        ["node", os.path.join(REPO, "scripts", "tests", "tool_state.js")],
+        input=payload, capture_output=True, text=True, cwd=REPO,
+    )
+    assert result.returncode == 0, result.stderr
+    return json.loads(result.stdout)
+
+
+def test_the_default_state_writes_no_hash_at_all():
+    """Clear All has to leave the bare URL. The season selects always hold a
+    value, and writing them unconditionally kept a hash on a page with nothing
+    filtered."""
+    assert _hash_for({})[0] == ""
+
+
+def test_every_other_state_still_writes_its_hash():
+    cases = _hash_for(
+        {"filters": {"seasonFrom": "1996-97"}},
+        {"filters": {"salaryMin": 40000000}},
+        {"filters": {"positions": ["G"]}},
+        {"filters": {"college": "Duke"}},
+        {"filters": {"playerSearch": "lebron james"}, "exactPlayer": "lebron james"},
+        {"filters": {"awards": ["All-Star"]}},
+        {"filters": {"hasAnyAward": True}},
+        {"sort": "age"},
+        {"dir": "asc"},
+    )
+    assert cases[0].startswith("from=1996-97&to=2026-27"), cases[0]
+    assert cases[1] == "salary_min=40000000"
+    assert cases[2] == "pos=G"
+    assert cases[3] == "college=Duke"
+    assert "player=lebron%20james" in cases[4] and "player_exact=1" in cases[4]
+    assert cases[5] == "awards=All-Star"
+    assert cases[6] == "has_award=1"
+    assert cases[7] == "sort=age"
+    assert cases[8] == "dir=asc"
+    for case in cases:
+        assert case, "a non-default state must keep writing its hash"
+
+
+def test_a_season_range_that_is_not_the_default_is_written_in_full():
+    both = _hash_for(
+        {"filters": {"seasonFrom": "2024-25", "seasonTo": "2026-27"}},
+        {"filters": {"seasonFrom": "2026-27", "seasonTo": "2026-27"},
+         "defaultSeason": "2025-26"},
+    )
+    assert both[0] == "from=2024-25&to=2026-27"
+    assert both[1] == "from=2026-27&to=2026-27"
+
+
+def test_the_bare_url_keeps_any_query_string():
+    app = read(os.path.join("js", "app.js"))
+    bare = app[app.index("function saveStateToURL"):]
+    bare = bare[:bare.index("\n  }")]
+    assert "window.location.pathname + window.location.search" in bare
