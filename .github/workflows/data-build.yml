@@ -11,12 +11,6 @@ name: Data build
 # branch, the same three commits the daily workflow makes to main.
 
 on:
-  # Temporary, for the branch that changed the join: a dispatch cannot reach a
-  # workflow that is not on the default branch yet, and this branch has to carry
-  # the rebuilt data for the tests on it to mean anything. Removed before merge.
-  push:
-    branches:
-      - claude/adoring-newton-at45va
   pull_request:
     paths:
       - build_data.py
