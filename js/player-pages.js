@@ -23,26 +23,9 @@
   var SPLITS = {
   "Brandon Williams": [
     {
-      "from": 1999,
-      "slug": "brandon-williams",
-      "to": 2000
-    },
-    {
       "from": 2022,
       "slug": "brandon-williams-2021",
       "to": 2027
-    }
-  ],
-  "Chris Smith": [
-    {
-      "from": 1993,
-      "slug": "chris-smith",
-      "to": 1995
-    },
-    {
-      "from": 2014,
-      "slug": "chris-smith-2013-14",
-      "to": 2014
     }
   ],
   "Corey Brewer": [
@@ -54,22 +37,12 @@
   ],
   "Gerald Henderson": [
     {
-      "from": 1991,
-      "slug": "gerald-henderson",
-      "to": 1991
-    },
-    {
       "from": 2010,
       "slug": "gerald-henderson-jr",
       "to": 2018
     }
   ],
   "Jaren Jackson Jr": [
-    {
-      "from": 1993,
-      "slug": "jaren-jackson",
-      "to": 2002
-    },
     {
       "from": 2019,
       "slug": "jaren-jackson-jr",
@@ -79,7 +52,16 @@
 };
 
   // slugs that are not what slugify would produce, from a collision
-  var OVERRIDES = {};
+  var OVERRIDES = {
+  "Bobby Jones (1984)": "bobby-jones",
+  "Brandon Williams (1975)": "brandon-williams",
+  "Chris Smith (1970)": "chris-smith",
+  "Chris Smith (1987)": "chris-smith-2013-14",
+  "Gerald Henderson Sr": "gerald-henderson",
+  "John Lucas III": "john-lucas",
+  "Ken Johnson (1978)": "ken-johnson",
+  "Walter Clayton Jr": "walter-clayton"
+};
 
   // the cohort pages that exist, by the value the tool filters on
   var COHORTS = {
