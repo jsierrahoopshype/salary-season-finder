@@ -248,22 +248,27 @@ class PersonIndex:
         self.suffix_hints[base].add(id_suffix)
 
     # ── resolving ──
-    def resolve(self, name, season=None, note=True):
+    def resolve(self, name, season=None, note=True, span=True):
         """The person a sheet's spelling and season belong to.
 
         ``note`` is False for a sheet that does not become a record, so that the
         name data.json prints for a man the register has never heard of is the
         one the salary sheets spell.
+
+        ``span`` is False for a sheet whose rows are not salaries. A salary is
+        never paid 30 years after a draft, which is what says the John Lucas
+        paid in 2005-06 is John Lucas III; an honour can be handed to a man
+        twenty years retired, and Gary Payton's NBA Top-75 is dated 2020-21.
         """
         base, suffix, marker = split_player_name(name)
         if not base:
             return None
-        pid = self._resolve(base, suffix, marker, season)
+        pid = self._resolve(base, suffix, marker, season, span=span)
         if note:
             self.spellings[pid][str(name).strip()] += 1
         return pid
 
-    def _resolve(self, base, suffix, marker, season):
+    def _resolve(self, base, suffix, marker, season, span=True):
         group = self.by_base.get(base) or []
         if not group:
             # A name the register has never heard of, so there is no father and
@@ -284,6 +289,8 @@ class PersonIndex:
             drafted = self.people[pid]["draft_year"]
             if drafted is None:
                 return True
+            if not span:
+                return drafted <= start
             return drafted <= start <= drafted + MAX_CAREER_SPAN
 
         exact = [
@@ -854,7 +861,30 @@ def process_cyro_salaries(current_csv, dead_csv):
     return lookup, seasons_found
 
 
-def process_awards(csv_data):
+def load_award_overrides():
+    """Award rows the awards sheet files under the wrong spelling.
+
+    The join runs on the person, which is right almost everywhere and wrong
+    where the sheet puts the father's name on the son's award: both of Jaren
+    Jackson Jr's Blocks Leader seasons read "Jaren Jackson". One entry per row
+    that has to move, checked by hand.
+    """
+    path = os.path.join(BASE_DIR, "data", "award_overrides.json")
+    if not os.path.exists(path):
+        return []
+    with open(path, "r", encoding="utf-8") as fh:
+        return (json.load(fh) or {}).get("overrides") or []
+
+
+def process_awards(csv_data, persons):
+    """Awards per person-season, not per loose name.
+
+    Every award on the sheet counts for the man the row names, so Gary Payton's
+    NBA Top-75 stops landing on Gary Payton II's 2020-21 season. The award list
+    keeps the order the sheet gives it, deduplicated: a set here made the order
+    a function of the hash seed, which put the same data.json through a diff
+    differently on every run.
+    """
     rows = parse_csv_string(csv_data)
     if not rows:
         return {}, set()
@@ -869,16 +899,40 @@ def process_awards(csv_data):
         season = normalize_season(year_raw)
         if not season:
             continue
-        key = (normalize_name(player), season)
+        key = (persons.resolve(player, season, note=False, span=False), season)
         awards = [a.strip() for a in awards_str.split(",") if a.strip()] if awards_str else []
         all_awards.update(awards)
-        if key not in lookup:
-            lookup[key] = awards
-        else:
-            existing = set(lookup[key])
-            existing.update(awards)
-            lookup[key] = list(existing)
+        held = lookup.setdefault(key, [])
+        for award in awards:
+            if award not in held:
+                held.append(award)
+
+    moved = 0
+    for entry in load_award_overrides():
+        season = normalize_season(entry.get("season"))
+        awards = entry.get("awards") or []
+        if not season or not awards:
+            continue
+        source = (persons.resolve(
+            entry.get("filed_as") or "", season, note=False, span=False), season)
+        target = (persons.resolve(
+            entry.get("belongs_to") or "", season, note=False, span=False), season)
+        if source[0] is None or target[0] is None or source == target:
+            continue
+        held = lookup.get(source) or []
+        taken = [a for a in awards if a in held]
+        if not taken:
+            continue
+        lookup[source] = [a for a in held if a not in awards]
+        if not lookup[source]:
+            del lookup[source]
+        destination = lookup.setdefault(target, [])
+        for award in taken:
+            if award not in destination:
+                destination.append(award)
+        moved += len(taken)
     print(f"    Parsed {len(lookup)} player-seasons with awards, {len(all_awards)} award types")
+    print(f"    {moved} award(s) moved by data/award_overrides.json")
     return lookup, all_awards
 
 
@@ -964,8 +1018,10 @@ def build_data():
     hist_sal_lookup = process_salaries_csv(hist_sal_csv) if hist_sal_csv else {}
     future_sal_lookup = process_future_salaries(future_sal_csv) if future_sal_csv else {}
     cyro_lookup, cyro_seasons = process_cyro_salaries(sal_2526_current_csv, sal_2526_dead_csv)
-    awards_lookup, all_awards_set = process_awards(awards_csv) if awards_csv else ({}, set())
     persons = build_person_index(bio_csv, stats_csv)
+    awards_lookup, all_awards_set = (
+        process_awards(awards_csv, persons) if awards_csv else ({}, set())
+    )
     agent_lookup = build_agent_lookup(agent_records, persons)
 
     # Merge historical + future salary lookups
@@ -1150,7 +1206,7 @@ def build_data():
                 team = csv_recs[0].get("team", "")
 
         # Awards
-        awards = awards_lookup.get(sk, [])
+        awards = awards_lookup.get((pid, season), [])
 
         # Bio
         bio = persons.bio(pid)

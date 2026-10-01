@@ -1095,14 +1095,9 @@ def test_shipped_identity_splits_cover_every_flagged_name():
     # built with no splits file, so identity_suspect is the raw gap flag
     idx = build_index(data, franchises=FRANCHISES, identity_splits={})
     entries = F.load_identity_splits()
-    assert idx.identity_suspect <= set(entries)
-    # The build now joins on a person rather than on a loose name, so four of
-    # the keys these entries were written for no longer cover two men. The
-    # entries stay, because deleting one is a decision about the data and not
-    # about the join, but a flagged name must still have one.
-    assert set(entries) - idx.identity_suspect == {
-        "Brandon Williams", "Chris Smith", "Gerald Henderson", "Jaren Jackson Jr",
-    }
+    # Every flagged name has an entry, and every entry is for a flagged name:
+    # the four the person join made inert have been deleted.
+    assert set(entries) == idx.identity_suspect
     for key, entry in entries.items():
         assert entry["evidence"], key
         if entry["split"]:
@@ -1477,31 +1472,25 @@ def test_shipped_splits_are_confirmed_and_only_the_unnamed_one_is_held_back():
         data = json.load(fh)
     entries = F.load_identity_splits()
     splits = {k: v for k, v in entries.items() if v["split"]}
-    assert set(splits) == {
-        "Brandon Williams", "Chris Smith", "Corey Brewer",
-        "Gerald Henderson", "Jaren Jackson Jr",
-    }
+    # Corey Brewer is the one key left that covers two men: bio.csv has a row
+    # for the 2007 one and none for the man paid in 1999-00. The other four
+    # entries were deleted once the person join gave each father his own name.
+    assert set(splits) == {"Corey Brewer"}
     assert all(v["confirmed"] is True for v in splits.values())
     idx = build_index(data, franchises=FRANCHISES)
     # one man, in one season, whose name nobody has
     assert idx.split_suppressed == {("Corey Brewer", "1999-00")}
-    # Four of these keys are now one man each, because the build gives the
-    # father his own name and his own record. The names the entries were
-    # written to print are in the data itself.
+    assert idx.career_eligible("Corey Brewer") is False
+    assert idx.career_rankable("Corey Brewer") is False
+    # each father is his own player, under the name bio.csv gives him
     for key in ("Jaren Jackson", "Gerald Henderson Sr", "Brandon Williams (1975)",
                 "Chris Smith (1970)", "Chris Smith (1987)"):
         assert key in idx.by_player, key
-    assert idx.display_name("Jaren Jackson Jr", "2026-27") == "Jaren Jackson Jr"
-    assert idx.display_name("Gerald Henderson", "2015-16") == "Gerald Henderson Jr"
-    # Corey Brewer is the last key that still holds two men, because bio.csv
-    # has no row for the one who played in 1999-00, so he is the only one a
-    # career claim has to stay off. The other four are one man each now, and a
-    # career figure under their name is their own.
-    assert idx.career_eligible("Corey Brewer") is False
-    assert idx.career_rankable("Corey Brewer") is False
     assert "Chris Smith" not in idx.by_player
+    # and the sons are one career each, with no segment renaming them
     for key in ("Brandon Williams", "Gerald Henderson", "Jaren Jackson Jr"):
         assert idx.career_rankable(key) is True, key
+        assert idx.display_name(key, idx.by_player[key][-1]["season"]) == key
 
 
 # --------------------------------------------------------------------------
@@ -2056,16 +2045,21 @@ def test_missing_name_aliases_file_is_not_an_error():
     not os.path.exists(os.path.join(REPO, "data", "name_aliases.json")),
     reason="data/name_aliases.json not present",
 )
-def test_shipped_aliases_merge_the_six_pairs_and_leave_the_fathers_alone():
+def test_shipped_aliases_merge_the_five_pairs_and_leave_the_fathers_alone():
     with open(REAL_DATA, "r", encoding="utf-8") as fh:
         data = json.load(fh)
     aliases = F.load_name_aliases()
     assert aliases["Wendell Carter"] == "Wendell Carter Jr"
-    # six merged players. Terrence Shannon Jr contributes two alias spellings,
+    # Five merged players. Terrence Shannon Jr contributes two alias spellings,
     # because the canonical is his real name and neither raw spelling is it.
+    # Marcus Thornton II was a sixth until the build began joining on a person:
+    # bio.csv has one Marcus Thornton and no row for the man paid in 2017-18,
+    # so the two are not one career.
     canonicals = set(aliases.values())
-    assert len(canonicals) == 6
-    assert len(aliases) == 7
+    assert len(canonicals) == 5
+    assert len(aliases) == 6
+    assert "Marcus Thornton II" not in aliases
+    assert "Marcus Thornton" not in aliases.values()
     assert aliases["Terrence Shannon"] == "Terrence Shannon Jr"
     assert aliases["Terrence Shannon Jr."] == "Terrence Shannon Jr"
     # a genuine father and son share a name but never a career

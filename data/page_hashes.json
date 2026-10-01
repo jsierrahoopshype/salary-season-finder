@@ -151,9 +151,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/agent/max-lipsett/"
   },
   "agent/maxwell-saidman/index.html": {
-   "hash": "ffd0d3f905cc648d",
+   "hash": "43085edb053263fd",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/agent/maxwell-saidman/"
   },
   "agent/michael-tellem/index.html": {
@@ -229,7 +229,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/college-position/arizona-forwards/"
   },
   "college-position/arizona-guards/index.html": {
-   "hash": "c9899d7ef137246c",
+   "hash": "8afd08d7ce3fa69b",
    "indexable": true,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/college-position/arizona-guards/"
@@ -253,7 +253,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/college-position/duke-forwards/"
   },
   "college-position/duke-guards/index.html": {
-   "hash": "6662a8e06ac64571",
+   "hash": "773cb67cfc67211a",
    "indexable": true,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/college-position/duke-guards/"
@@ -325,7 +325,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/college-position/louisville-guards/"
   },
   "college-position/lsu-forwards/index.html": {
-   "hash": "6272e211a0dbaa5b",
+   "hash": "da77bbdd523e8308",
    "indexable": true,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/college-position/lsu-forwards/"
@@ -433,7 +433,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/college/arizona-state/"
   },
   "college/arizona/index.html": {
-   "hash": "dabb561b4ad9eed5",
+   "hash": "03f7cf2e7ae5a45c",
    "indexable": true,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/college/arizona/"
@@ -493,7 +493,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/college/depaul/"
   },
   "college/duke/index.html": {
-   "hash": "9b121cb6129a7b53",
+   "hash": "3687aac6b2e22a81",
    "indexable": true,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/college/duke/"
@@ -595,7 +595,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/college/louisville/"
   },
   "college/lsu/index.html": {
-   "hash": "cf75ef036c17c8c1",
+   "hash": "a7538f08b29d0c16",
    "indexable": true,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/college/lsu/"
@@ -625,7 +625,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/college/miami/"
   },
   "college/michigan-state/index.html": {
-   "hash": "0442a09599bc5189",
+   "hash": "7d76bc5f68d4d461",
    "indexable": true,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/college/michigan-state/"
@@ -1033,7 +1033,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/country/ukraine/"
   },
   "country/united-states/index.html": {
-   "hash": "b919b3b81269cc12",
+   "hash": "5d6e10897cbc2373",
    "indexable": true,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/country/united-states/"
@@ -1231,7 +1231,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/draft/2008/"
   },
   "draft/2009/index.html": {
-   "hash": "9c34472bfe5879b2",
+   "hash": "07a48bc7fe45d8a2",
    "indexable": true,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/draft/2009/"
@@ -1285,7 +1285,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/draft/2017/"
   },
   "draft/2018/index.html": {
-   "hash": "a26a619ed98fabfc",
+   "hash": "4fa3effb8a5155c1",
    "indexable": true,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/draft/2018/"
@@ -1303,9 +1303,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/draft/2020/"
   },
   "draft/2021/index.html": {
-   "hash": "af27cc23fda13688",
+   "hash": "2c5325a4863a6d78",
    "indexable": true,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/draft/2021/"
   },
   "draft/2022/index.html": {
@@ -1339,13 +1339,13 @@
    "url": "https://hoopsmatic.com/salary-season-finder"
   },
   "js/player-pages.js": {
-   "hash": "957bc19ac6eea34f",
+   "hash": "919ac5cacf860ca8",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": null
   },
   "pick-range/lottery/index.html": {
-   "hash": "b9f181005fa2a887",
+   "hash": "1dfb4bdf771dc9e1",
    "indexable": true,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/pick-range/lottery/"
@@ -1357,7 +1357,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/pick-range/second-round/"
   },
   "pick-range/top-10/index.html": {
-   "hash": "e248a3d5174c4b58",
+   "hash": "e15fd3adced0e91d",
    "indexable": true,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/pick-range/top-10/"
@@ -1387,7 +1387,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/pick/11/"
   },
   "pick/12/index.html": {
-   "hash": "0c792f21f36734e9",
+   "hash": "08898cac52e51443",
    "indexable": true,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/pick/12/"
@@ -1567,7 +1567,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/pick/39/"
   },
   "pick/4/index.html": {
-   "hash": "6fbe7cf72795e234",
+   "hash": "3dfea76397178e23",
    "indexable": true,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/pick/4/"
@@ -1591,7 +1591,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/pick/42/"
   },
   "pick/43/index.html": {
-   "hash": "88a96b8c5090adca",
+   "hash": "297f2fec09ab76ea",
    "indexable": true,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/pick/43/"
@@ -1723,7 +1723,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/pick/9/"
   },
   "pick/undrafted/index.html": {
-   "hash": "6b336fbb807056c5",
+   "hash": "e32b41c771f6caf5",
    "indexable": true,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/pick/undrafted/"
@@ -1765,7 +1765,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/aaron-brooks/"
   },
   "player/aaron-gordon/index.html": {
-   "hash": "2e7df066d9d029bb",
+   "hash": "5e41b6caa2c5c235",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/aaron-gordon/"
@@ -1801,7 +1801,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/aaron-jackson/"
   },
   "player/aaron-mckie/index.html": {
-   "hash": "924b68f92d11eaee",
+   "hash": "34249793e823a331",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/aaron-mckie/"
@@ -1891,9 +1891,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/adam-mokoka/"
   },
   "player/adam-morrison/index.html": {
-   "hash": "edfcc081870d7216",
+   "hash": "4481ebec60f795dd",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/adam-morrison/"
   },
   "player/adama-bal/index.html": {
@@ -2053,7 +2053,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/ak-okereke/"
   },
   "player/al-farouq-aminu/index.html": {
-   "hash": "49e3ebb1c899e50f",
+   "hash": "648a4a0ddc354243",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/al-farouq-aminu/"
@@ -2065,13 +2065,13 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/al-harrington/"
   },
   "player/al-horford/index.html": {
-   "hash": "014951e6f043042a",
+   "hash": "5bf96c0b5f79eec4",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/al-horford/"
   },
   "player/al-jefferson/index.html": {
-   "hash": "d385861f73409e63",
+   "hash": "8ba697dba554ef61",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/al-jefferson/"
@@ -2257,9 +2257,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/alex-reese/"
   },
   "player/alex-sarr/index.html": {
-   "hash": "ffa86c561a0e769b",
+   "hash": "bd0ee2165b18c27e",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/alex-sarr/"
   },
   "player/alex-scales/index.html": {
@@ -2329,9 +2329,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/alize-johnson/"
   },
   "player/allan-houston/index.html": {
-   "hash": "c7585c4f8f4ec3e7",
+   "hash": "fbe27445ba708b77",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/allan-houston/"
   },
   "player/allan-ray/index.html": {
@@ -2353,7 +2353,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/allen-graves/"
   },
   "player/allen-iverson/index.html": {
-   "hash": "a4c77996658f9e24",
+   "hash": "87fcad1e4d6ccaf9",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/allen-iverson/"
@@ -2377,13 +2377,13 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/alonzo-gee/"
   },
   "player/alonzo-mourning/index.html": {
-   "hash": "7e115eb5136a4ac8",
+   "hash": "afa173888fd451d9",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/alonzo-mourning/"
   },
   "player/alperen-sengun/index.html": {
-   "hash": "7af3ad09cb6ed4b4",
+   "hash": "db3c586e9a5749dd",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/alperen-sengun/"
@@ -2419,7 +2419,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/alvin-jones/"
   },
   "player/alvin-robertson/index.html": {
-   "hash": "0a6e88df15f69187",
+   "hash": "d6d9a922ce4db7e5",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/alvin-robertson/"
@@ -2437,7 +2437,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/amal-mccaskill/"
   },
   "player/amare-stoudemire/index.html": {
-   "hash": "f8388dcee4dcc814",
+   "hash": "6bfe806f8bab99db",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/amare-stoudemire/"
@@ -2479,9 +2479,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/amir-coffey/"
   },
   "player/amir-johnson/index.html": {
-   "hash": "f1895e080c19649a",
+   "hash": "290202f45105f444",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/amir-johnson/"
   },
   "player/anderson-varejao/index.html": {
@@ -2527,7 +2527,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/andre-dawkins/"
   },
   "player/andre-drummond/index.html": {
-   "hash": "88383e2ce1b729fd",
+   "hash": "fe8a48076352a485",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/andre-drummond/"
@@ -2539,9 +2539,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/andre-emmett/"
   },
   "player/andre-iguodala/index.html": {
-   "hash": "c4c22c1e06483839",
+   "hash": "c6bc98eb9ca34d67",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/andre-iguodala/"
   },
   "player/andre-ingram/index.html": {
@@ -2557,7 +2557,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/andre-jackson-jr/"
   },
   "player/andre-miller/index.html": {
-   "hash": "eb6b0d518dddd670",
+   "hash": "5d350d4f909aff3c",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/andre-miller/"
@@ -2587,9 +2587,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/andre-turner/"
   },
   "player/andrea-bargnani/index.html": {
-   "hash": "67946abe7073d192",
+   "hash": "04a097133c983fd3",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/andrea-bargnani/"
   },
   "player/andreas-glyniadakis/index.html": {
@@ -2599,7 +2599,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/andreas-glyniadakis/"
   },
   "player/andrei-kirilenko/index.html": {
-   "hash": "e66c6aca4b3fa111",
+   "hash": "f741d332b24e3bb3",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/andrei-kirilenko/"
@@ -2617,13 +2617,13 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/andres-nocioni/"
   },
   "player/andrew-bogut/index.html": {
-   "hash": "b3905817c95e8781",
+   "hash": "f33d3f3e456a2949",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/andrew-bogut/"
   },
   "player/andrew-bynum/index.html": {
-   "hash": "21593c4fb4937fef",
+   "hash": "6289ac97f5ebec58",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/andrew-bynum/"
@@ -2695,7 +2695,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/andrew-white/"
   },
   "player/andrew-wiggins/index.html": {
-   "hash": "77d44349c97bf4d6",
+   "hash": "798a77b9fa9ef690",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/andrew-wiggins/"
@@ -2725,7 +2725,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/andy-toolson/"
   },
   "player/anfernee-hardaway/index.html": {
-   "hash": "9adb6c91437dfdc5",
+   "hash": "0f14c486da4197ea",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/anfernee-hardaway/"
@@ -2749,7 +2749,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/ansu-sesay/"
   },
   "player/antawn-jamison/index.html": {
-   "hash": "2ebfdb1d3f55bb58",
+   "hash": "bbc811e4afbe1035",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/antawn-jamison/"
@@ -2815,13 +2815,13 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/anthony-cook/"
   },
   "player/anthony-davis/index.html": {
-   "hash": "0de31b9053b303cf",
+   "hash": "d54eb070efcb55a3",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/anthony-davis/"
   },
   "player/anthony-edwards/index.html": {
-   "hash": "c865390839c9ae0e",
+   "hash": "02934022a7009293",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/anthony-edwards/"
@@ -2923,7 +2923,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/antoine-carr/"
   },
   "player/antoine-walker/index.html": {
-   "hash": "d183c55519eb18d2",
+   "hash": "dff8f9d0ce60a428",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/antoine-walker/"
@@ -2983,7 +2983,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/antonio-lang/"
   },
   "player/antonio-mcdyess/index.html": {
-   "hash": "42c7da8895bfdbfe",
+   "hash": "8f25dbc5a7d65ebb",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/antonio-mcdyess/"
@@ -3109,7 +3109,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/arvydas-macijauskas/"
   },
   "player/arvydas-sabonis/index.html": {
-   "hash": "fb975e70a35cdb58",
+   "hash": "5a11c8f035dac07c",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/arvydas-sabonis/"
@@ -3145,7 +3145,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/augustas-marciulionis/"
   },
   "player/ausar-thompson/index.html": {
-   "hash": "dfb3aeb07ab93870",
+   "hash": "084e76f2e23fd2f7",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/ausar-thompson/"
@@ -3223,13 +3223,13 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/bakari-hendrix/"
   },
   "player/bam-adebayo/index.html": {
-   "hash": "edfca52373069837",
+   "hash": "647e093438a2387e",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/bam-adebayo/"
   },
   "player/baron-davis/index.html": {
-   "hash": "bd6b266e09e4ec3f",
+   "hash": "b344aec781b6f753",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/baron-davis/"
@@ -3265,7 +3265,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/ben-davis/"
   },
   "player/ben-gordon/index.html": {
-   "hash": "eeea299736faeff0",
+   "hash": "d71d314d79b99eb7",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/ben-gordon/"
@@ -3313,7 +3313,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/ben-sheppard/"
   },
   "player/ben-simmons/index.html": {
-   "hash": "49597f43e5bd1c26",
+   "hash": "541b8810fc68d9ce",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/ben-simmons/"
@@ -3325,13 +3325,13 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/ben-uzoh/"
   },
   "player/ben-wallace/index.html": {
-   "hash": "a546a0b932dcf1f8",
+   "hash": "6b723267e61d070d",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/ben-wallace/"
   },
   "player/bennedict-mathurin/index.html": {
-   "hash": "14fba08c8353003a",
+   "hash": "020ced999094847b",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/bennedict-mathurin/"
@@ -3343,9 +3343,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/bennett-stirtz/"
   },
   "player/beno-udrih/index.html": {
-   "hash": "cdf4a401e7da9bcf",
+   "hash": "6b447df58acebd87",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/beno-udrih/"
   },
   "player/benoit-benjamin/index.html": {
@@ -3361,7 +3361,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/bernard-james/"
   },
   "player/bernard-king/index.html": {
-   "hash": "622c5211ff11113a",
+   "hash": "5c70460e173abf18",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/bernard-king/"
@@ -3499,7 +3499,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/blake-ahearn/"
   },
   "player/blake-griffin/index.html": {
-   "hash": "d2440b1bc10440f8",
+   "hash": "78533e0331a36acb",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/blake-griffin/"
@@ -3607,9 +3607,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/bobby-portis/"
   },
   "player/bobby-simmons/index.html": {
-   "hash": "bdde6de0ae002c72",
+   "hash": "51fed2f972e4c958",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/bobby-simmons/"
   },
   "player/bobi-klintman/index.html": {
@@ -3631,7 +3631,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/bogoljub-markovic/"
   },
   "player/bojan-bogdanovic/index.html": {
-   "hash": "22310b7e78377213",
+   "hash": "fe7e2e78828568e8",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/bojan-bogdanovic/"
@@ -3673,7 +3673,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/boo-buie/"
   },
   "player/boris-diaw/index.html": {
-   "hash": "742a846fc3a6360b",
+   "hash": "4847f47040db272a",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/boris-diaw/"
@@ -3691,7 +3691,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/bracey-wright/"
   },
   "player/brad-daugherty/index.html": {
-   "hash": "a1d33ce02b81be61",
+   "hash": "97dac0467454f4b4",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/brad-daugherty/"
@@ -3709,9 +3709,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/brad-lohaus/"
   },
   "player/brad-miller/index.html": {
-   "hash": "b5af50eb105a2d3c",
+   "hash": "dd440d9b215b37d4",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/brad-miller/"
   },
   "player/brad-sellers/index.html": {
@@ -3733,7 +3733,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/braden-smith/"
   },
   "player/bradley-beal/index.html": {
-   "hash": "bc22842deac80077",
+   "hash": "ad44396f8bde131d",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/bradley-beal/"
@@ -3805,25 +3805,25 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/brandon-hunter/"
   },
   "player/brandon-ingram/index.html": {
-   "hash": "77eefe2e403d5289",
+   "hash": "43ff62aff0fb94d5",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/brandon-ingram/"
   },
   "player/brandon-jennings/index.html": {
-   "hash": "ef96fbfd9cc390ca",
+   "hash": "9cc58a6b234b0a79",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/brandon-jennings/"
   },
   "player/brandon-knight/index.html": {
-   "hash": "9b233a4b1248d43d",
+   "hash": "03bd46b0dfa93109",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/brandon-knight/"
   },
   "player/brandon-miller/index.html": {
-   "hash": "017bc3424ce4aac5",
+   "hash": "fd7b686cc41d0045",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/brandon-miller/"
@@ -3835,7 +3835,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/brandon-paul/"
   },
   "player/brandon-roy/index.html": {
-   "hash": "998cbb44ed3f6159",
+   "hash": "1233edef1c420c57",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/brandon-roy/"
@@ -3961,9 +3961,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/brian-evans/"
   },
   "player/brian-grant/index.html": {
-   "hash": "62a530b46ad8e1a0",
+   "hash": "f5e79a781b01ca2d",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/brian-grant/"
   },
   "player/brian-howard/index.html": {
@@ -4057,7 +4057,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/bronson-koenig/"
   },
   "player/brook-lopez/index.html": {
-   "hash": "dc6bc06025a6d4a6",
+   "hash": "c17d3e8d3e380b82",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/brook-lopez/"
@@ -4075,7 +4075,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/brooks-thompson/"
   },
   "player/bruce-bowen/index.html": {
-   "hash": "cc3ca0b81c962eb3",
+   "hash": "353f7b08137f11db",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/bruce-bowen/"
@@ -4189,7 +4189,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/buddy-boeheim/"
   },
   "player/buddy-hield/index.html": {
-   "hash": "843a40980b198a3e",
+   "hash": "30391f9be1276278",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/buddy-hield/"
@@ -4213,7 +4213,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/byron-scott/"
   },
   "player/cade-cunningham/index.html": {
-   "hash": "8dbd7d117f7f51e8",
+   "hash": "2fb774342b30c4f0",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/cade-cunningham/"
@@ -4405,7 +4405,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/carlos-arroyo/"
   },
   "player/carlos-boozer/index.html": {
-   "hash": "093622ccb3f5bc6d",
+   "hash": "c34338c785a9028d",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/carlos-boozer/"
@@ -4435,13 +4435,13 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/carlton-carrington/"
   },
   "player/carmelo-anthony/index.html": {
-   "hash": "9106c5ceae2ec4a7",
+   "hash": "839c6847ab48a5c6",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/carmelo-anthony/"
   },
   "player/caron-butler/index.html": {
-   "hash": "99ed64ecbf33d165",
+   "hash": "2ccebb47bd063d7a",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/caron-butler/"
@@ -4489,7 +4489,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/casey-shaw/"
   },
   "player/cason-wallace/index.html": {
-   "hash": "4ec7499fb2a6a29a",
+   "hash": "b00cda6faa6bdac4",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/cason-wallace/"
@@ -4525,7 +4525,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/cedric-bozeman/"
   },
   "player/cedric-ceballos/index.html": {
-   "hash": "51a098cdb7965be1",
+   "hash": "7afeb4bc22672492",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/cedric-ceballos/"
@@ -4573,9 +4573,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/chandler-hutchison/"
   },
   "player/chandler-parsons/index.html": {
-   "hash": "d70e2487c3e0888e",
+   "hash": "f15b42cfff9f3bb3",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/chandler-parsons/"
   },
   "player/chaney-johnson/index.html": {
@@ -4585,13 +4585,13 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/chaney-johnson/"
   },
   "player/channing-frye/index.html": {
-   "hash": "bcbe21ccf082913a",
+   "hash": "fa787abc6eef5182",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/channing-frye/"
   },
   "player/charles-barkley/index.html": {
-   "hash": "bfb1f00895449673",
+   "hash": "45023e0c488364b7",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/charles-barkley/"
@@ -4693,9 +4693,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/charlie-brown/"
   },
   "player/charlie-villanueva/index.html": {
-   "hash": "54c9ce67699bebb1",
+   "hash": "24f99061aa535c57",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/charlie-villanueva/"
   },
   "player/charlie-ward/index.html": {
@@ -4717,7 +4717,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/chasson-randle/"
   },
   "player/chauncey-billups/index.html": {
-   "hash": "3eeaaff8d12762cf",
+   "hash": "845089d962024968",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/chauncey-billups/"
@@ -4753,7 +4753,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/cherokee-parks/"
   },
   "player/chet-holmgren/index.html": {
-   "hash": "b27adfcfdc99486f",
+   "hash": "565d40a5ed4e01b7",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/chet-holmgren/"
@@ -4795,7 +4795,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/chris-babb/"
   },
   "player/chris-bosh/index.html": {
-   "hash": "1f8407943e34a31e",
+   "hash": "fe8d7700550b412e",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/chris-bosh/"
@@ -4927,7 +4927,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/chris-johnson/"
   },
   "player/chris-kaman/index.html": {
-   "hash": "c40f5e15be96aeaa",
+   "hash": "1d8c9dd851baea3b",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/chris-kaman/"
@@ -4981,7 +4981,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/chris-morris/"
   },
   "player/chris-mullin/index.html": {
-   "hash": "16798d8e416bdde0",
+   "hash": "8550dbeac42b789a",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/chris-mullin/"
@@ -4993,7 +4993,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/chris-owens/"
   },
   "player/chris-paul/index.html": {
-   "hash": "d4da721c8fd5f88f",
+   "hash": "3a0a9ef8e1b78ca7",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/chris-paul/"
@@ -5053,7 +5053,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/chris-taft/"
   },
   "player/chris-webber/index.html": {
-   "hash": "350326adaecdf461",
+   "hash": "8a07fb7a3fcf5de6",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/chris-webber/"
@@ -5197,7 +5197,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/cj-huntley/"
   },
   "player/cj-mccollum/index.html": {
-   "hash": "a42a757ccf0b64d6",
+   "hash": "33898978aae40894",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/cj-mccollum/"
@@ -5281,7 +5281,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/clint-mcdaniel/"
   },
   "player/clyde-drexler/index.html": {
-   "hash": "b32d5dc264ba288f",
+   "hash": "fe9fba956de6ecbb",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/clyde-drexler/"
@@ -5293,7 +5293,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/coby-karl/"
   },
   "player/coby-white/index.html": {
-   "hash": "9e95e6a294bbfce7",
+   "hash": "8dfcd688af678a5c",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/coby-white/"
@@ -5485,7 +5485,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/cory-jefferson/"
   },
   "player/cory-joseph/index.html": {
-   "hash": "fa125d523b1c3ac9",
+   "hash": "fa9e698dd4d8cbcc",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/cory-joseph/"
@@ -5497,9 +5497,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/coty-clarke/"
   },
   "player/courtney-alexander/index.html": {
-   "hash": "5791db5ff1ef7296",
+   "hash": "b94964672df0fd63",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/courtney-alexander/"
   },
   "player/courtney-fortson/index.html": {
@@ -5593,7 +5593,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/cuttino-mobley/"
   },
   "player/d-angelo-russell/index.html": {
-   "hash": "c4177b92fe48b76e",
+   "hash": "5f51af0eb548a61d",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/d-angelo-russell/"
@@ -5725,7 +5725,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/damian-jones/"
   },
   "player/damian-lillard/index.html": {
-   "hash": "4293b840e13e0337",
+   "hash": "b3144a80e6b77380",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/damian-lillard/"
@@ -5779,9 +5779,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/damon-jones/"
   },
   "player/damon-stoudamire/index.html": {
-   "hash": "ca9deaf6637f13d8",
+   "hash": "a15eb60fe0365f81",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/damon-stoudamire/"
   },
   "player/damone-brown/index.html": {
@@ -5833,7 +5833,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/dan-o-sullivan/"
   },
   "player/dana-barros/index.html": {
-   "hash": "270b71edb79f87a9",
+   "hash": "97d154845ea91951",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/dana-barros/"
@@ -5905,7 +5905,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/daniel-theis/"
   },
   "player/danilo-gallinari/index.html": {
-   "hash": "6101a526c0cfd753",
+   "hash": "b4a0bb0af9e76f88",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/danilo-gallinari/"
@@ -5935,13 +5935,13 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/danny-fortson/"
   },
   "player/danny-granger/index.html": {
-   "hash": "bb2ef9137777053e",
+   "hash": "2408090fda3d5360",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/danny-granger/"
   },
   "player/danny-green/index.html": {
-   "hash": "49b7c29cc07b6526",
+   "hash": "d68df844d9c99e8c",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/danny-green/"
@@ -6001,7 +6001,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/darington-hobson/"
   },
   "player/dario-saric/index.html": {
-   "hash": "8a1c6303a5dc6c34",
+   "hash": "74de9f6e812b15ef",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/dario-saric/"
@@ -6037,7 +6037,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/darius-days/"
   },
   "player/darius-garland/index.html": {
-   "hash": "30f38f2db1c62859",
+   "hash": "70830b2845a708bf",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/darius-garland/"
@@ -6109,7 +6109,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/daron-holmes/"
   },
   "player/darrell-armstrong/index.html": {
-   "hash": "c88fcfe61d42738d",
+   "hash": "b18ddf9d5f4d347e",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/darrell-armstrong/"
@@ -6133,9 +6133,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/darrell-walker/"
   },
   "player/darren-collison/index.html": {
-   "hash": "0e5bd69ec560a98e",
+   "hash": "0e3cf7d7a9886e1d",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/darren-collison/"
   },
   "player/darren-morningstar/index.html": {
@@ -6271,7 +6271,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/david-jones/"
   },
   "player/david-lee/index.html": {
-   "hash": "d41510b70c95a46a",
+   "hash": "44d27581de479e46",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/david-lee/"
@@ -6295,7 +6295,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/david-nwaba/"
   },
   "player/david-robinson/index.html": {
-   "hash": "30dfad63cb1a1ba0",
+   "hash": "687661df3d83676c",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/david-robinson/"
@@ -6331,7 +6331,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/david-wesley/"
   },
   "player/david-west/index.html": {
-   "hash": "a436b9c83e1cb9fb",
+   "hash": "df7d556c2a512237",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/david-west/"
@@ -6373,7 +6373,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/day-ron-sharpe/"
   },
   "player/de-aaron-fox/index.html": {
-   "hash": "daef614ec2020117",
+   "hash": "14eff4d31ababedd",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/de-aaron-fox/"
@@ -6427,7 +6427,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/deandre-bembry/"
   },
   "player/deandre-jordan/index.html": {
-   "hash": "583e04efb918f749",
+   "hash": "03e1804de5d4225e",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/deandre-jordan/"
@@ -6469,7 +6469,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/dejon-jarreau/"
   },
   "player/dejounte-murray/index.html": {
-   "hash": "5f768e72993411fa",
+   "hash": "c1041aa347edaf19",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/dejounte-murray/"
@@ -6517,7 +6517,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/delonte-west/"
   },
   "player/demar-derozan/index.html": {
-   "hash": "9efdf7f97c277cb1",
+   "hash": "4b9643841ca2f48c",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/demar-derozan/"
@@ -6529,7 +6529,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/demarco-johnson/"
   },
   "player/demarcus-cousins/index.html": {
-   "hash": "a3f178105cc4ba1a",
+   "hash": "93b24189f8faa75f",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/demarcus-cousins/"
@@ -6541,9 +6541,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/demarcus-nelson/"
   },
   "player/demarre-carroll/index.html": {
-   "hash": "880f6308c7ff59de",
+   "hash": "7b9d012a1636a66d",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/demarre-carroll/"
   },
   "player/demetris-nichols/index.html": {
@@ -6571,7 +6571,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/deng-gai/"
   },
   "player/deni-avdija/index.html": {
-   "hash": "8f709ac80abe8d7a",
+   "hash": "3cb7014e45974861",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/deni-avdija/"
@@ -6589,7 +6589,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/dennis-horner/"
   },
   "player/dennis-rodman/index.html": {
-   "hash": "59f4162db9343857",
+   "hash": "0519d834b9139700",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/dennis-rodman/"
@@ -6601,7 +6601,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/dennis-schroeder/"
   },
   "player/dennis-scott/index.html": {
-   "hash": "836f1eeb8a332d29",
+   "hash": "3bc2ca5a267b7171",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/dennis-scott/"
@@ -6697,7 +6697,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/dermarr-johnson/"
   },
   "player/deron-williams/index.html": {
-   "hash": "0ac0e0e72e53f8ac",
+   "hash": "d267cc061b2eaba8",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/deron-williams/"
@@ -6727,7 +6727,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/derrick-chievous/"
   },
   "player/derrick-coleman/index.html": {
-   "hash": "8654a6bfef914ae7",
+   "hash": "af8ca67722c6d699",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/derrick-coleman/"
@@ -6739,9 +6739,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/derrick-dial/"
   },
   "player/derrick-favors/index.html": {
-   "hash": "ab80e3c16bc32700",
+   "hash": "e5ab742735b62bd1",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/derrick-favors/"
   },
   "player/derrick-gervin/index.html": {
@@ -6769,7 +6769,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/derrick-phelps/"
   },
   "player/derrick-rose/index.html": {
-   "hash": "df22d04425d8bb22",
+   "hash": "63024c6c391274bd",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/derrick-rose/"
@@ -6781,7 +6781,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/derrick-walton/"
   },
   "player/derrick-white/index.html": {
-   "hash": "8af936e27688f2dd",
+   "hash": "e19a2b6fa88ff553",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/derrick-white/"
@@ -6823,7 +6823,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/desmond-mason/"
   },
   "player/detlef-schrempf/index.html": {
-   "hash": "324440b5c976cf1a",
+   "hash": "dd3fdf9136051d61",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/detlef-schrempf/"
@@ -6841,7 +6841,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/devean-george/"
   },
   "player/devin-booker/index.html": {
-   "hash": "dbf74036d9a7a2e7",
+   "hash": "032618cc6948a591",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/devin-booker/"
@@ -6883,7 +6883,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/devin-green/"
   },
   "player/devin-harris/index.html": {
-   "hash": "4ae2ed4c92b6461a",
+   "hash": "06e891d625e534cb",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/devin-harris/"
@@ -6997,7 +6997,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/dijon-thompson/"
   },
   "player/dikembe-mutombo/index.html": {
-   "hash": "432f8b3b2d786930",
+   "hash": "320dc8811d45d7d9",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/dikembe-mutombo/"
@@ -7021,7 +7021,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/dillon-mitchell/"
   },
   "player/dino-radja/index.html": {
-   "hash": "40435b46e9962199",
+   "hash": "9b942b95e4ff9cf2",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/dino-radja/"
@@ -7033,9 +7033,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/dion-glover/"
   },
   "player/dion-waiters/index.html": {
-   "hash": "c8abcf549f5729e0",
+   "hash": "46e10f4f2decceff",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/dion-waiters/"
   },
   "player/dionte-christmas/index.html": {
@@ -7045,7 +7045,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/dionte-christmas/"
   },
   "player/dirk-nowitzki/index.html": {
-   "hash": "9581731ef912a57e",
+   "hash": "c9a9bda1ecc46968",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/dirk-nowitzki/"
@@ -7111,7 +7111,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/doc-rivers/"
   },
   "player/domantas-sabonis/index.html": {
-   "hash": "478d14cbe85a95a6",
+   "hash": "bbb5263b6a59c555",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/domantas-sabonis/"
@@ -7141,7 +7141,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/dominique-jones/"
   },
   "player/dominique-wilkins/index.html": {
-   "hash": "b188b1fa065e70ea",
+   "hash": "ec93d988cf4581cf",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/dominique-wilkins/"
@@ -7219,7 +7219,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/donovan-clingan/"
   },
   "player/donovan-mitchell/index.html": {
-   "hash": "f6ebc25feaf3f553",
+   "hash": "2b111cedd60ba6ca",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/donovan-mitchell/"
@@ -7315,7 +7315,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/doug-lee/"
   },
   "player/doug-mcdermott/index.html": {
-   "hash": "35260d2c20dc265b",
+   "hash": "9332f259294316e0",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/doug-mcdermott/"
@@ -7357,13 +7357,13 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/drake-powell/"
   },
   "player/draymond-green/index.html": {
-   "hash": "4b745987f30ebd9b",
+   "hash": "04aa172969698b39",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/draymond-green/"
   },
   "player/drazen-petrovic/index.html": {
-   "hash": "1bd0db4f3f013ecf",
+   "hash": "fa18f2544f070eb3",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/drazen-petrovic/"
@@ -7381,9 +7381,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/drew-eubanks/"
   },
   "player/drew-gooden/index.html": {
-   "hash": "fb91687fbc381a7b",
+   "hash": "bce1a7c403bc30fc",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/drew-gooden/"
   },
   "player/drew-gordon/index.html": {
@@ -7495,7 +7495,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/dwight-buycks/"
   },
   "player/dwight-howard/index.html": {
-   "hash": "1374afe503019c3d",
+   "hash": "82dc957ecd5389d9",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/dwight-howard/"
@@ -7507,7 +7507,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/dwight-powell/"
   },
   "player/dwyane-wade/index.html": {
-   "hash": "a384e9eb8f91e5b2",
+   "hash": "636494454a941a12",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/dwyane-wade/"
@@ -7531,7 +7531,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/dylan-windler/"
   },
   "player/dyson-daniels/index.html": {
-   "hash": "62333ecce147359a",
+   "hash": "ccd86c1772e0a323",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/dyson-daniels/"
@@ -7651,7 +7651,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/eddie-johnson/"
   },
   "player/eddie-jones/index.html": {
-   "hash": "9e06a458d2ce3b4d",
+   "hash": "608df574f0361cff",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/eddie-jones/"
@@ -7681,9 +7681,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/edmond-sumner/"
   },
   "player/eduardo-najera/index.html": {
-   "hash": "146f0ad229ccb49c",
+   "hash": "24b0288ddce01a2d",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/eduardo-najera/"
   },
   "player/efthimios-rentzias/index.html": {
@@ -7735,7 +7735,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/eldridge-recasner/"
   },
   "player/elfrid-payton/index.html": {
-   "hash": "1619ea5e92725165",
+   "hash": "478793fe6cb0e2cc",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/elfrid-payton/"
@@ -7813,7 +7813,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/elmore-spencer/"
   },
   "player/elton-brand/index.html": {
-   "hash": "d0e88c3713f27a83",
+   "hash": "aee93be500c9b44e",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/elton-brand/"
@@ -7843,9 +7843,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/emanuel-terry/"
   },
   "player/emeka-okafor/index.html": {
-   "hash": "6071a111b2f8043d",
+   "hash": "6d7f8c87bc240aa4",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/emeka-okafor/"
   },
   "player/emmanuel-mudiay/index.html": {
@@ -7861,7 +7861,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/emoni-bates/"
   },
   "player/enes-kanter/index.html": {
-   "hash": "d5eec0ef869da653",
+   "hash": "6e99f56440c5cdf1",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/enes-kanter/"
@@ -7885,7 +7885,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/eric-anderson/"
   },
   "player/eric-bledsoe/index.html": {
-   "hash": "99421c88c906548a",
+   "hash": "a0a9b3349e2d2f3f",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/eric-bledsoe/"
@@ -7897,7 +7897,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/eric-dawson/"
   },
   "player/eric-gordon/index.html": {
-   "hash": "009443b8f2405d12",
+   "hash": "2c4363b4bedd633e",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/eric-gordon/"
@@ -8083,13 +8083,13 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/evan-eschmeyer/"
   },
   "player/evan-fournier/index.html": {
-   "hash": "13ab7cbae699d44d",
+   "hash": "cf69f9082dbde88c",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/evan-fournier/"
   },
   "player/evan-mobley/index.html": {
-   "hash": "b557b52eb09594cc",
+   "hash": "f0de29d8e49f562e",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/evan-mobley/"
@@ -8179,9 +8179,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/francisco-elson/"
   },
   "player/francisco-garcia/index.html": {
-   "hash": "d4aee4a675db5f42",
+   "hash": "2421758eff5e2212",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/francisco-garcia/"
   },
   "player/frank-brickowski/index.html": {
@@ -8239,7 +8239,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/frankie-king/"
   },
   "player/franz-wagner/index.html": {
-   "hash": "40f57120fc1cbc70",
+   "hash": "1c6c35469a3c50af",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/franz-wagner/"
@@ -8263,7 +8263,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/fred-roberts/"
   },
   "player/fred-vanvleet/index.html": {
-   "hash": "f88f8d8d83c415d9",
+   "hash": "dbc304c3715d45f4",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/fred-vanvleet/"
@@ -8395,7 +8395,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/gary-grant/"
   },
   "player/gary-harris/index.html": {
-   "hash": "92bc38259b8706ab",
+   "hash": "2321c343981626e7",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/gary-harris/"
@@ -8413,13 +8413,13 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/gary-neal/"
   },
   "player/gary-payton-ii/index.html": {
-   "hash": "be6222c886621534",
+   "hash": "3452f1923ffb16ee",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/gary-payton-ii/"
   },
   "player/gary-payton/index.html": {
-   "hash": "a41b7e1e8280ae87",
+   "hash": "c49e3abbc667de45",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/gary-payton/"
@@ -8461,7 +8461,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/geno-carlisle/"
   },
   "player/george-hill/index.html": {
-   "hash": "9f517023ca8e5a94",
+   "hash": "70f649e5d9c4b5ad",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/george-hill/"
@@ -8533,7 +8533,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/gerald-green/"
   },
   "player/gerald-henderson-jr/index.html": {
-   "hash": "e04f4c8ced7dfcec",
+   "hash": "110febba30468791",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/gerald-henderson-jr/"
@@ -8557,7 +8557,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/gerald-paddio/"
   },
   "player/gerald-wallace/index.html": {
-   "hash": "d2270e89a14a7c5b",
+   "hash": "8f33dac0772f6863",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/gerald-wallace/"
@@ -8593,7 +8593,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/gian-clavell/"
   },
   "player/giannis-antetokounmpo/index.html": {
-   "hash": "a1c0f6f3a0ceb1f1",
+   "hash": "9e3194430f16f2b1",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/giannis-antetokounmpo/"
@@ -8605,7 +8605,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/gigi-datome/"
   },
   "player/gilbert-arenas/index.html": {
-   "hash": "29f055dcaf61e0b2",
+   "hash": "8af2e67792b351ae",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/gilbert-arenas/"
@@ -8623,7 +8623,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/glen-rice-jr/"
   },
   "player/glen-rice/index.html": {
-   "hash": "7bcc5cd44ebc231b",
+   "hash": "5b59287768b5cde0",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/glen-rice/"
@@ -8635,7 +8635,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/glenn-robinson-iii/"
   },
   "player/glenn-robinson/index.html": {
-   "hash": "41cd3cf07383785d",
+   "hash": "dd97d4868e6e96a3",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/glenn-robinson/"
@@ -8653,7 +8653,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/goga-bitadze/"
   },
   "player/goran-dragic/index.html": {
-   "hash": "2eeb7e83ba58ebde",
+   "hash": "8a55f2566bfc59b5",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/goran-dragic/"
@@ -8665,13 +8665,13 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/gordan-giricek/"
   },
   "player/gordon-hayward/index.html": {
-   "hash": "3099351024551018",
+   "hash": "e54980a6488cc976",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/gordon-hayward/"
   },
   "player/gorgui-dieng/index.html": {
-   "hash": "63f4c6bb4d13a3c7",
+   "hash": "85e5db26e37ed544",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/gorgui-dieng/"
@@ -8695,7 +8695,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/graham-ike/"
   },
   "player/grant-hill/index.html": {
-   "hash": "6879721fb531e7be",
+   "hash": "ed61449d8392a3fd",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/grant-hill/"
@@ -8839,9 +8839,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/greg-whittington/"
   },
   "player/greivis-vasquez/index.html": {
-   "hash": "f935a36ff1c491ed",
+   "hash": "e499f9bbf82a21de",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/greivis-vasquez/"
   },
   "player/guerschon-yabusele/index.html": {
@@ -8887,7 +8887,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/ha-seung-jin/"
   },
   "player/hakeem-olajuwon/index.html": {
-   "hash": "fbfe5ee456b85d49",
+   "hash": "7d701d51a38a7e32",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/hakeem-olajuwon/"
@@ -8947,7 +8947,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/harold-miner/"
   },
   "player/harrison-barnes/index.html": {
-   "hash": "46a717c79d50c9ab",
+   "hash": "ac718805d75af7f1",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/harrison-barnes/"
@@ -8983,7 +8983,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/hassan-adams/"
   },
   "player/hassan-whiteside/index.html": {
-   "hash": "13cbeea5f67a8e9a",
+   "hash": "155e2c72ceda36b9",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/hassan-whiteside/"
@@ -9416,7 +9416,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/isaiah-taylor/"
   },
   "player/isaiah-thomas/index.html": {
-   "hash": "ec076f862b990170",
+   "hash": "b2d142aefe8fb32d",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/isaiah-thomas/"
@@ -9530,7 +9530,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/ja-kobi-gillespie/"
   },
   "player/ja-morant/index.html": {
-   "hash": "1a57b4225943ab59",
+   "hash": "2b26f52edf7407e5",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/ja-morant/"
@@ -9759,7 +9759,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/jaime-echenique/"
   },
   "player/jaime-jaquez/index.html": {
-   "hash": "8c5b282baf94bc81",
+   "hash": "bf1a9129b4540f91",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/jaime-jaquez/"
@@ -9813,7 +9813,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/jalen-bridges/"
   },
   "player/jalen-brunson/index.html": {
-   "hash": "7ece67734bacaab4",
+   "hash": "3042dbb1a10201b9",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/jalen-brunson/"
@@ -9831,9 +9831,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/jalen-duren/"
   },
   "player/jalen-green/index.html": {
-   "hash": "f2c74241e0ee8d67",
+   "hash": "d3c6963a71f0d3fd",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/jalen-green/"
   },
   "player/jalen-harris/index.html": {
@@ -9849,7 +9849,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/jalen-hood-schifino/"
   },
   "player/jalen-johnson/index.html": {
-   "hash": "96d7671cf632d8e1",
+   "hash": "4c6444cc05ab262c",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/jalen-johnson/"
@@ -9903,7 +9903,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/jalen-suggs/"
   },
   "player/jalen-williams/index.html": {
-   "hash": "457e2a5301ad9578",
+   "hash": "ae4af80b27e35bbf",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/jalen-williams/"
@@ -9921,15 +9921,15 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/jamaal-franklin/"
   },
   "player/jamaal-magloire/index.html": {
-   "hash": "a6e52b49368ab03b",
+   "hash": "fb997589f389ebd5",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/jamaal-magloire/"
   },
   "player/jamaal-tinsley/index.html": {
-   "hash": "5e20915c8c132d67",
+   "hash": "a5ee4dcc02254b4e",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/jamaal-tinsley/"
   },
   "player/jamal-cain/index.html": {
@@ -9939,19 +9939,19 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/jamal-cain/"
   },
   "player/jamal-crawford/index.html": {
-   "hash": "3ee34d0a71549dee",
+   "hash": "193016ca58170d57",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/jamal-crawford/"
   },
   "player/jamal-mashburn/index.html": {
-   "hash": "bf5c14802f4dd347",
+   "hash": "92074f2b4c66c1d0",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/jamal-mashburn/"
   },
   "player/jamal-murray/index.html": {
-   "hash": "9ede5a36d1aebaa7",
+   "hash": "743fd3554116c630",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/jamal-murray/"
@@ -9981,9 +9981,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/jamaree-bouyea/"
   },
   "player/jamario-moon/index.html": {
-   "hash": "5398d47f3b08eeb6",
+   "hash": "3d7ff6670f1d6a0e",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/jamario-moon/"
   },
   "player/jamarion-sharp/index.html": {
@@ -10005,7 +10005,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/jameer-nelson-jr/"
   },
   "player/jameer-nelson/index.html": {
-   "hash": "3e987ea7639f4cfb",
+   "hash": "538c7a589a2d779a",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/jameer-nelson/"
@@ -10071,7 +10071,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/james-ennis/"
   },
   "player/james-harden/index.html": {
-   "hash": "8275004a5a231ee7",
+   "hash": "f588d16dd219cfa1",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/james-harden/"
@@ -10323,7 +10323,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/jarell-martin/"
   },
   "player/jaren-jackson-jr/index.html": {
-   "hash": "3db779d76051915f",
+   "hash": "3a1363dddfbb4e55",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/jaren-jackson-jr/"
@@ -10371,7 +10371,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/jarrell-brantley/"
   },
   "player/jarrett-allen/index.html": {
-   "hash": "c16d538d69e0e7aa",
+   "hash": "8ebc3c5b1e2e637c",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/jarrett-allen/"
@@ -10455,7 +10455,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/jason-kapono/"
   },
   "player/jason-kidd/index.html": {
-   "hash": "b2780170114243dc",
+   "hash": "2111dcff4ec66509",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/jason-kidd/"
@@ -10485,9 +10485,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/jason-preston/"
   },
   "player/jason-richardson/index.html": {
-   "hash": "1af4b2e4f871653d",
+   "hash": "af2e053bda058600",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/jason-richardson/"
   },
   "player/jason-sasser/index.html": {
@@ -10503,9 +10503,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/jason-smith/"
   },
   "player/jason-terry/index.html": {
-   "hash": "808165136c3987fa",
+   "hash": "02e50248621b3762",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/jason-terry/"
   },
   "player/jason-thompson/index.html": {
@@ -10521,7 +10521,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/jason-williams/"
   },
   "player/javale-mcgee/index.html": {
-   "hash": "7e0e92c087457a35",
+   "hash": "2be88810d3781c11",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/javale-mcgee/"
@@ -10617,9 +10617,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/jay-scrubb/"
   },
   "player/jay-williams/index.html": {
-   "hash": "f417e5d849bcf7c6",
+   "hash": "f74f3261baf67bff",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/jay-williams/"
   },
   "player/jayden-quaintance/index.html": {
@@ -10635,7 +10635,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/jaylen-adams/"
   },
   "player/jaylen-brown/index.html": {
-   "hash": "02bd6fb20359839a",
+   "hash": "269ebd4415c52bbf",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/jaylen-brown/"
@@ -10677,7 +10677,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/jaylen-nowell/"
   },
   "player/jaylen-wells/index.html": {
-   "hash": "d4c7cbe97968e61c",
+   "hash": "c9436a2b33de4132",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/jaylen-wells/"
@@ -10719,13 +10719,13 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/jayson-kent/"
   },
   "player/jayson-tatum/index.html": {
-   "hash": "87c27f3141555389",
+   "hash": "b14452bb1c525898",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/jayson-tatum/"
   },
   "player/jayson-williams/index.html": {
-   "hash": "1ef35330d0bf1e82",
+   "hash": "dfcb76ffe9f7acd4",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/jayson-williams/"
@@ -10791,7 +10791,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/jeff-green/"
   },
   "player/jeff-hornacek/index.html": {
-   "hash": "c96fb24a5eec33f3",
+   "hash": "cbfba50546c5e7a7",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/jeff-hornacek/"
@@ -10827,7 +10827,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/jeff-sanders/"
   },
   "player/jeff-teague/index.html": {
-   "hash": "64b94c7d6274e454",
+   "hash": "a29e01d754bbb67e",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/jeff-teague/"
@@ -10893,7 +10893,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/jerald-honeycutt/"
   },
   "player/jerami-grant/index.html": {
-   "hash": "15a7b4b0da467927",
+   "hash": "e3d0395e251cb9b8",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/jerami-grant/"
@@ -10983,7 +10983,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/jermaine-jackson/"
   },
   "player/jermaine-o-neal/index.html": {
-   "hash": "26212d6544c69b36",
+   "hash": "72be896f37688889",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/jermaine-o-neal/"
@@ -11079,15 +11079,15 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/jerry-reynolds/"
   },
   "player/jerry-stackhouse/index.html": {
-   "hash": "421102b2fc4d415c",
+   "hash": "f4d646b03654eebb",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/jerry-stackhouse/"
   },
   "player/jerryd-bayless/index.html": {
-   "hash": "de1f1f3f7d570408",
+   "hash": "8bc343c05c1c5fd0",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/jerryd-bayless/"
   },
   "player/jeryl-sasser/index.html": {
@@ -11163,7 +11163,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/jimmie-hunter/"
   },
   "player/jimmy-butler/index.html": {
-   "hash": "0b24bee84721ffc2",
+   "hash": "5611a1bb4e1c56f2",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/jimmy-butler/"
@@ -11199,9 +11199,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/jj-o-brien/"
   },
   "player/jj-redick/index.html": {
-   "hash": "2a89da76f757b57c",
+   "hash": "696a535e663315fc",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/jj-redick/"
   },
   "player/jo-jo-english/index.html": {
@@ -11211,7 +11211,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/jo-jo-english/"
   },
   "player/joakim-noah/index.html": {
-   "hash": "108fc4520ca5cba8",
+   "hash": "aa79a052f88d6392",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/joakim-noah/"
@@ -11265,7 +11265,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/joe-crispin/"
   },
   "player/joe-dumars/index.html": {
-   "hash": "6e5e7fb2d7894b71",
+   "hash": "a824259c30778893",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/joe-dumars/"
@@ -11283,7 +11283,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/joe-ingles/"
   },
   "player/joe-johnson/index.html": {
-   "hash": "06bcb58355dd26f4",
+   "hash": "e77a180ad362414e",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/joe-johnson/"
@@ -11295,9 +11295,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/joe-kleine/"
   },
   "player/joe-smith/index.html": {
-   "hash": "41736f661e59bc84",
+   "hash": "b67312fceb1021a4",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/joe-smith/"
   },
   "player/joe-stephens/index.html": {
@@ -11337,7 +11337,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/joel-bolomboy/"
   },
   "player/joel-embiid/index.html": {
-   "hash": "42ed255a07bc8321",
+   "hash": "6f52e409a873162c",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/joel-embiid/"
@@ -11415,7 +11415,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/john-coker/"
   },
   "player/john-collins/index.html": {
-   "hash": "62a13598ee779a63",
+   "hash": "904ea8186681009b",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/john-collins/"
@@ -11511,7 +11511,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/john-starks/"
   },
   "player/john-stockton/index.html": {
-   "hash": "cc4813307082fbf0",
+   "hash": "7fc1b1391d8898f0",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/john-stockton/"
@@ -11541,7 +11541,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/john-ukomadu/"
   },
   "player/john-wall/index.html": {
-   "hash": "0b224360fd846355",
+   "hash": "ed9fc1373388f993",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/john-wall/"
@@ -11679,13 +11679,13 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/jonas-aidoo/"
   },
   "player/jonas-jerebko/index.html": {
-   "hash": "adc6aa882e868709",
+   "hash": "9a9113d709023482",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/jonas-jerebko/"
   },
   "player/jonas-valanciunas/index.html": {
-   "hash": "aeed4af23fa99b92",
+   "hash": "a505a3a29e654467",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/jonas-valanciunas/"
@@ -11709,7 +11709,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/jonathan-holmes/"
   },
   "player/jonathan-isaac/index.html": {
-   "hash": "5a7fb3e5bf15d39a",
+   "hash": "10b6f0fc2de35681",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/jonathan-isaac/"
@@ -11769,7 +11769,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/jordan-bone/"
   },
   "player/jordan-clarkson/index.html": {
-   "hash": "5547384047b89915",
+   "hash": "1aac378aa6e749e8",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/jordan-clarkson/"
@@ -11889,9 +11889,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/jordan-williams/"
   },
   "player/jorge-garbajosa/index.html": {
-   "hash": "3b5239d16b052efd",
+   "hash": "5f8de3af931ff397",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/jorge-garbajosa/"
   },
   "player/jorge-gutierrez/index.html": {
@@ -11967,9 +11967,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/josh-dix/"
   },
   "player/josh-giddey/index.html": {
-   "hash": "0d315fd3cd753198",
+   "hash": "43e11b40b1c4e3f9",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/josh-giddey/"
   },
   "player/josh-grant/index.html": {
@@ -12009,7 +12009,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/josh-hart/"
   },
   "player/josh-howard/index.html": {
-   "hash": "30480e9c7badb81d",
+   "hash": "445adf821045e66b",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/josh-howard/"
@@ -12087,9 +12087,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/josh-selby/"
   },
   "player/josh-smith/index.html": {
-   "hash": "f91ba53bedc206dc",
+   "hash": "b6e47caa8f021d64",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/josh-smith/"
   },
   "player/joshua-jefferson/index.html": {
@@ -12123,13 +12123,13 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/jr-giddens/"
   },
   "player/jr-smith/index.html": {
-   "hash": "d5756463c8cb0690",
+   "hash": "630adc12f6aa41ba",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/jr-smith/"
   },
   "player/jrue-holiday/index.html": {
-   "hash": "72e5f079d861fbf3",
+   "hash": "6f05faa8c3861351",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/jrue-holiday/"
@@ -12141,7 +12141,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/jt-thor/"
   },
   "player/juan-carlos-navarro/index.html": {
-   "hash": "e8531deace5e1342",
+   "hash": "9131c474b0ddfdcc",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/juan-carlos-navarro/"
@@ -12231,7 +12231,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/julius-nwosu/"
   },
   "player/julius-randle/index.html": {
-   "hash": "46bc36787aa07d7f",
+   "hash": "f7b17bafd788ce47",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/julius-randle/"
@@ -12381,7 +12381,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/jusuf-nurkic/"
   },
   "player/juwan-howard/index.html": {
-   "hash": "1ff783105c06309d",
+   "hash": "577e5671397185cd",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/juwan-howard/"
@@ -12465,13 +12465,13 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/karim-mane/"
   },
   "player/karl-anthony-towns/index.html": {
-   "hash": "6daa791a54e7ba23",
+   "hash": "018c3d1a2f75be2d",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/karl-anthony-towns/"
   },
   "player/karl-malone/index.html": {
-   "hash": "6ab0914a94bd6fcc",
+   "hash": "c0624cf510ed7d35",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/karl-malone/"
@@ -12489,7 +12489,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/kasparas-jakucionis/"
   },
   "player/kawhi-leonard/index.html": {
-   "hash": "bb686ec4bdb474c8",
+   "hash": "982df84c8a0d9f3b",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/kawhi-leonard/"
@@ -12531,7 +12531,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/kedrick-brown/"
   },
   "player/keegan-murray/index.html": {
-   "hash": "f8abc1cd38d34c53",
+   "hash": "efa529a4e7e45e49",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/keegan-murray/"
@@ -12627,7 +12627,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/keith-van-horn/"
   },
   "player/kel-el-ware/index.html": {
-   "hash": "5ebd6e1b215a211d",
+   "hash": "ad1fe86f97047441",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/kel-el-ware/"
@@ -12693,7 +12693,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/kelvin-upshaw/"
   },
   "player/kemba-walker/index.html": {
-   "hash": "2d2be41260e6406e",
+   "hash": "393b5cea74098f7d",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/kemba-walker/"
@@ -12735,9 +12735,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/kendall-marshall/"
   },
   "player/kendrick-nunn/index.html": {
-   "hash": "ad5ab2196df3bc98",
+   "hash": "c4ed53b17ed3f542",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/kendrick-nunn/"
   },
   "player/kendrick-perkins/index.html": {
@@ -12759,7 +12759,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/kennedy-chandler/"
   },
   "player/kenneth-faried/index.html": {
-   "hash": "09f4e7f4e8da6de8",
+   "hash": "02fe1d8e6e37c78e",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/kenneth-faried/"
@@ -12771,7 +12771,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/kenneth-lofton/"
   },
   "player/kenny-anderson/index.html": {
-   "hash": "5013aee2a7044b46",
+   "hash": "3f3c28b650ee28bb",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/kenny-anderson/"
@@ -12843,9 +12843,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/kenrich-williams/"
   },
   "player/kent-bazemore/index.html": {
-   "hash": "af0ec405cb96f266",
+   "hash": "fcd2b8be5595de35",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/kent-bazemore/"
   },
   "player/kentavious-caldwell-pope/index.html": {
@@ -12855,7 +12855,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/kentavious-caldwell-pope/"
   },
   "player/kenyon-martin/index.html": {
-   "hash": "80f0fe4dd42c1228",
+   "hash": "181c05b2418f0307",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/kenyon-martin/"
@@ -12879,9 +12879,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/keon-johnson/"
   },
   "player/kerry-kittles/index.html": {
-   "hash": "564ff66873e6f293",
+   "hash": "d84fb3ecc4685f06",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/kerry-kittles/"
   },
   "player/keshad-johnson/index.html": {
@@ -12921,7 +12921,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/kevin-duckworth/"
   },
   "player/kevin-durant/index.html": {
-   "hash": "c0853665fe804be6",
+   "hash": "96ab205d47df95f7",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/kevin-durant/"
@@ -12939,7 +12939,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/kevin-gamble/"
   },
   "player/kevin-garnett/index.html": {
-   "hash": "eaa422f45854ea35",
+   "hash": "33ba32a6f2ec7564",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/kevin-garnett/"
@@ -12957,7 +12957,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/kevin-huerter/"
   },
   "player/kevin-johnson/index.html": {
-   "hash": "58279ccf93bf48d6",
+   "hash": "ab7e381542aa31c1",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/kevin-johnson/"
@@ -12975,7 +12975,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/kevin-knox/"
   },
   "player/kevin-love/index.html": {
-   "hash": "c8f118b66c524997",
+   "hash": "5f553ad4e4ace412",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/kevin-love/"
@@ -12987,9 +12987,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/kevin-lynch/"
   },
   "player/kevin-martin/index.html": {
-   "hash": "eda00c4a199e8177",
+   "hash": "30c7627b3cd3d483",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/kevin-martin/"
   },
   "player/kevin-mccullar/index.html": {
@@ -13065,7 +13065,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/kevin-thompson/"
   },
   "player/kevin-willis/index.html": {
-   "hash": "6e7bd96512ea21f4",
+   "hash": "bef67741400d8c9b",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/kevin-willis/"
@@ -13131,7 +13131,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/khem-birch/"
   },
   "player/khris-middleton/index.html": {
-   "hash": "6e5f936fd4d33c0f",
+   "hash": "7e2193de375e48e7",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/khris-middleton/"
@@ -13185,9 +13185,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/kirk-haston/"
   },
   "player/kirk-hinrich/index.html": {
-   "hash": "afb25849f7d0d143",
+   "hash": "0742369b4a22446d",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/kirk-hinrich/"
   },
   "player/kirk-penney/index.html": {
@@ -13233,7 +13233,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/kj-simpson/"
   },
   "player/klay-thompson/index.html": {
-   "hash": "7d8c028845369641",
+   "hash": "732c9c30376d871b",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/klay-thompson/"
@@ -13251,7 +13251,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/kobe-brown/"
   },
   "player/kobe-bryant/index.html": {
-   "hash": "c5da8a5a75d6ef42",
+   "hash": "e6634fc0b31a95b9",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/kobe-bryant/"
@@ -13335,9 +13335,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/kris-dunn/"
   },
   "player/kris-humphries/index.html": {
-   "hash": "621fc1baa2544dd4",
+   "hash": "82c3e0f08f245102",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/kris-humphries/"
   },
   "player/kris-joseph/index.html": {
@@ -13353,7 +13353,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/kris-murray/"
   },
   "player/kristaps-porzingis/index.html": {
-   "hash": "a73c4479902d97f8",
+   "hash": "98faa020446db214",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/kristaps-porzingis/"
@@ -13425,19 +13425,19 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/kyle-guy/"
   },
   "player/kyle-korver/index.html": {
-   "hash": "46b2c3007608c2fa",
+   "hash": "5fa94d5372a91b53",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/kyle-korver/"
   },
   "player/kyle-kuzma/index.html": {
-   "hash": "4d8c7837833fb7f2",
+   "hash": "7108fa88fe11a579",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/kyle-kuzma/"
   },
   "player/kyle-lowry/index.html": {
-   "hash": "40bcf5012572c567",
+   "hash": "bf5a9a8cea4cd722",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/kyle-lowry/"
@@ -13473,7 +13473,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/kyle-wiltjer/"
   },
   "player/kyrie-irving/index.html": {
-   "hash": "53ba9e8b700000ae",
+   "hash": "7237753ae2d08aee",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/kyrie-irving/"
@@ -13509,7 +13509,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/labradford-smith/"
   },
   "player/lamar-odom/index.html": {
-   "hash": "790f536b9146c72a",
+   "hash": "7cd73977c98c73a2",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/lamar-odom/"
@@ -13527,7 +13527,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/lamar-stevens/"
   },
   "player/lamarcus-aldridge/index.html": {
-   "hash": "a95b9fc3bd6b52ea",
+   "hash": "624dd27334263914",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/lamarcus-aldridge/"
@@ -13539,9 +13539,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/lamarcus-golden/"
   },
   "player/lamelo-ball/index.html": {
-   "hash": "f4d59a9e6059f0d6",
+   "hash": "3fca34880d91a4d6",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/lamelo-ball/"
   },
   "player/lamond-murray/index.html": {
@@ -13581,9 +13581,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/lance-thomas/"
   },
   "player/landry-fields/index.html": {
-   "hash": "6cba35b3819fbe3f",
+   "hash": "da81aa83dffa0f21",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/landry-fields/"
   },
   "player/landry-nnoko/index.html": {
@@ -13623,9 +13623,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/laron-profit/"
   },
   "player/larry-bird/index.html": {
-   "hash": "55907d0da15e8a90",
+   "hash": "34878539cd639179",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/larry-bird/"
   },
   "player/larry-drew-ii/index.html": {
@@ -13647,7 +13647,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/larry-hughes/"
   },
   "player/larry-johnson-1969/index.html": {
-   "hash": "d2e8054891c92944",
+   "hash": "f12b4509f7887cda",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/larry-johnson-1969/"
@@ -13683,9 +13683,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/larry-robinson/"
   },
   "player/larry-sanders/index.html": {
-   "hash": "0784b874f29e0993",
+   "hash": "e91d11ed15dabe9d",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/larry-sanders/"
   },
   "player/larry-smith/index.html": {
@@ -13719,7 +13719,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/latrell-sprewell/"
   },
   "player/lauri-markkanen/index.html": {
-   "hash": "d06adfe4988e2dac",
+   "hash": "1cb368e3dbf3e7ee",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/lauri-markkanen/"
@@ -13791,7 +13791,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/leandro-bolmaro/"
   },
   "player/lebron-james/index.html": {
-   "hash": "ebc9c600dfd4f0cf",
+   "hash": "950b472aca60bcef",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/lebron-james/"
@@ -13911,7 +13911,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/lionel-chalmers/"
   },
   "player/lionel-simmons/index.html": {
-   "hash": "e64a19b3936bf446",
+   "hash": "0d633f600da82958",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/lionel-simmons/"
@@ -14025,7 +14025,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/louis-king/"
   },
   "player/louis-williams/index.html": {
-   "hash": "e9b0b3c998b3ece7",
+   "hash": "d5a80059be5aa8e7",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/louis-williams/"
@@ -14097,13 +14097,13 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/luis-montero/"
   },
   "player/luis-scola/index.html": {
-   "hash": "2ef580ea9bad532d",
+   "hash": "efa9f64af46401db",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/luis-scola/"
   },
   "player/luka-doncic/index.html": {
-   "hash": "104fc6c221389139",
+   "hash": "7aa5be7a977baa2f",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/luka-doncic/"
@@ -14181,7 +14181,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/luke-zeller/"
   },
   "player/luol-deng/index.html": {
-   "hash": "fabd2093b6897bbb",
+   "hash": "81e1b9a27bc3a307",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/luol-deng/"
@@ -14229,7 +14229,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/maciej-lampe/"
   },
   "player/magic-johnson/index.html": {
-   "hash": "c46dcec65d5704a0",
+   "hash": "4935af9987e6e59b",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/magic-johnson/"
@@ -14271,7 +14271,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/malaki-branham/"
   },
   "player/malcolm-brogdon/index.html": {
-   "hash": "d4105cd9cfbd5718",
+   "hash": "9776e04a178a92f0",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/malcolm-brogdon/"
@@ -14427,7 +14427,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/manny-harris/"
   },
   "player/manu-ginobili/index.html": {
-   "hash": "b14e2b8835ce49f9",
+   "hash": "49f505906b62520c",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/manu-ginobili/"
@@ -14445,15 +14445,15 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/maozinha-pereira/"
   },
   "player/marc-gasol/index.html": {
-   "hash": "4083d5a27a79612b",
+   "hash": "2c49828110693618",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/marc-gasol/"
   },
   "player/marc-jackson/index.html": {
-   "hash": "d6747f0074d1492f",
+   "hash": "ddcd631a9a1c3c0e",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/marc-jackson/"
   },
   "player/marcelo-huertas/index.html": {
@@ -14487,7 +14487,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/marcus-brown/"
   },
   "player/marcus-camby/index.html": {
-   "hash": "fa46d7937d5c46c0",
+   "hash": "34485140153d918b",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/marcus-camby/"
@@ -14571,13 +14571,19 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/marcus-sasser/"
   },
   "player/marcus-smart/index.html": {
-   "hash": "2bb5eedb03dcfc8f",
+   "hash": "2a3b6f5f4b2028d8",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/marcus-smart/"
   },
+  "player/marcus-thornton-ii/index.html": {
+   "hash": "227859bd207fcef0",
+   "indexable": false,
+   "lastmod": "2026-10-01",
+   "url": "https://hoopsmatic.com/salary-season-finder/player/marcus-thornton-ii/"
+  },
   "player/marcus-thornton/index.html": {
-   "hash": "45c22c1edcb501d6",
+   "hash": "f6ac59a8164e66e2",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/marcus-thornton/"
@@ -14739,7 +14745,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/mark-pope/"
   },
   "player/mark-price/index.html": {
-   "hash": "454d118e3df50b9d",
+   "hash": "8617700836afab07",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/mark-price/"
@@ -14860,9 +14866,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/marques-bragg/"
   },
   "player/marquese-chriss/index.html": {
-   "hash": "3753a46014efdd2e",
+   "hash": "b9bcbf663d34f71c",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/marquese-chriss/"
   },
   "player/marquis-daniels/index.html": {
@@ -14932,9 +14938,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/marvin-bagley/"
   },
   "player/marvin-williams/index.html": {
-   "hash": "f504b6aea16e39bd",
+   "hash": "5d1a6dbf52e4e207",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/marvin-williams/"
   },
   "player/mason-jones/index.html": {
@@ -14944,7 +14950,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/mason-jones/"
   },
   "player/mason-plumlee/index.html": {
-   "hash": "f554b13e240ef4c6",
+   "hash": "32fa87c0dc4fed1f",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/mason-plumlee/"
@@ -15166,7 +15172,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/mckinley-wright/"
   },
   "player/mehmet-okur/index.html": {
-   "hash": "1488a24b2683d491",
+   "hash": "e3979de29e11ae49",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/mehmet-okur/"
@@ -15208,7 +15214,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/mengke-bateer/"
   },
   "player/metta-world-peace/index.html": {
-   "hash": "099b6a2c51dd62d9",
+   "hash": "fb9efc02870c05be",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/metta-world-peace/"
@@ -15256,9 +15262,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/michael-ansley/"
   },
   "player/michael-beasley/index.html": {
-   "hash": "aa7bd4a888e1af32",
+   "hash": "c6a09cb136b77109",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/michael-beasley/"
   },
   "player/michael-bradley/index.html": {
@@ -15274,7 +15280,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/michael-cage/"
   },
   "player/michael-carter-williams/index.html": {
-   "hash": "27dd8c0216371860",
+   "hash": "2ec06636d660b599",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/michael-carter-williams/"
@@ -15298,7 +15304,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/michael-doleac/"
   },
   "player/michael-finley/index.html": {
-   "hash": "287509ee4eeecd62",
+   "hash": "8203efee67a9d9b4",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/michael-finley/"
@@ -15328,15 +15334,15 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/michael-hawkins/"
   },
   "player/michael-jordan/index.html": {
-   "hash": "cc6b0468376a477b",
+   "hash": "7680b9dd08be26fd",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/michael-jordan/"
   },
   "player/michael-kidd-gilchrist/index.html": {
-   "hash": "01bd45b2309ad7ee",
+   "hash": "c41165139fbefcd6",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/michael-kidd-gilchrist/"
   },
   "player/michael-olowokandi/index.html": {
@@ -15352,7 +15358,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/michael-porter/"
   },
   "player/michael-redd/index.html": {
-   "hash": "3d01e45c30a63a56",
+   "hash": "558f6f6ac5c40fc8",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/michael-redd/"
@@ -15430,9 +15436,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/mike-batiste/"
   },
   "player/mike-bibby/index.html": {
-   "hash": "a1d840c6c4c6b349",
+   "hash": "05cc27eff1f7f54d",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/mike-bibby/"
   },
   "player/mike-brown-1963/index.html": {
@@ -15442,7 +15448,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/mike-brown-1963/"
   },
   "player/mike-conley/index.html": {
-   "hash": "c49dcb1500c8fc83",
+   "hash": "bbdb9dac3dbbf338",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/mike-conley/"
@@ -15502,9 +15508,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/mike-james-1990/"
   },
   "player/mike-miller/index.html": {
-   "hash": "433d5fe01d5f2658",
+   "hash": "1c3464f5a59c2808",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/mike-miller/"
   },
   "player/mike-muscala/index.html": {
@@ -15700,7 +15706,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/mitch-mcgary/"
   },
   "player/mitch-richmond/index.html": {
-   "hash": "07dd3e87dd734418",
+   "hash": "982a9126ad29d4d1",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/mitch-richmond/"
@@ -15748,7 +15754,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/mo-bamba/"
   },
   "player/moe-harkless/index.html": {
-   "hash": "708ed30d2fa0f92d",
+   "hash": "e3fc979ce990ad8b",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/moe-harkless/"
@@ -15760,7 +15766,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/mohamed-diawara/"
   },
   "player/monta-ellis/index.html": {
-   "hash": "17eab92c0fa40d76",
+   "hash": "8ceddfd13521e9ee",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/monta-ellis/"
@@ -15772,9 +15778,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/monte-morris/"
   },
   "player/montrezl-harrell/index.html": {
-   "hash": "4474f1760c29f9ca",
+   "hash": "ba680d34639cfcc5",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/montrezl-harrell/"
   },
   "player/monty-williams/index.html": {
@@ -15916,7 +15922,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/myles-powell/"
   },
   "player/myles-turner/index.html": {
-   "hash": "a5d36d3f8e5efee5",
+   "hash": "c355f069cce2a0c5",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/myles-turner/"
@@ -16096,9 +16102,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/nenad-krstic/"
   },
   "player/nene/index.html": {
-   "hash": "ca746597bdb34040",
+   "hash": "d9a4b1e0e06f3b42",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/nene/"
   },
   "player/nerlens-noel/index.html": {
@@ -16120,9 +16126,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/nick-calathes/"
   },
   "player/nick-collison/index.html": {
-   "hash": "8d5cdc7fbb151ee0",
+   "hash": "61181ec7cae30791",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/nick-collison/"
   },
   "player/nick-fazekas/index.html": {
@@ -16186,7 +16192,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/nico-mannion/"
   },
   "player/nicolas-batum/index.html": {
-   "hash": "20235bcbef1616d5",
+   "hash": "226f6ae029875691",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/nicolas-batum/"
@@ -16246,7 +16252,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/nikola-djurisic/"
   },
   "player/nikola-jokic/index.html": {
-   "hash": "600e5716beb8e4a1",
+   "hash": "2bfe54779a493168",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/nikola-jokic/"
@@ -16264,15 +16270,15 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/nikola-jovic/"
   },
   "player/nikola-mirotic/index.html": {
-   "hash": "1a7aea8ecd5098b6",
+   "hash": "0a9b433afccbe37a",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/nikola-mirotic/"
   },
   "player/nikola-pekovic/index.html": {
-   "hash": "dfe267fd3b2a071a",
+   "hash": "dcd56d7e0903890b",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/nikola-pekovic/"
   },
   "player/nikola-topic/index.html": {
@@ -16282,7 +16288,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/nikola-topic/"
   },
   "player/nikola-vucevic/index.html": {
-   "hash": "f051cd3268d77fd3",
+   "hash": "fa8e67f9e282369f",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/nikola-vucevic/"
@@ -16396,7 +16402,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/ochai-agbaji/"
   },
   "player/og-anunoby/index.html": {
-   "hash": "3bb43a0eeeee1c0d",
+   "hash": "808717ed207e6189",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/og-anunoby/"
@@ -16408,9 +16414,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/ognjen-kuzmic/"
   },
   "player/oj-mayo/index.html": {
-   "hash": "1d46a4d2e853cab5",
+   "hash": "47ffe2d795a6e7ba",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/oj-mayo/"
   },
   "player/okaro-white/index.html": {
@@ -16480,9 +16486,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/omari-spellman/"
   },
   "player/omer-asik/index.html": {
-   "hash": "5427ef2095800305",
+   "hash": "ef1720472c9566b1",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/omer-asik/"
   },
   "player/omer-yurtseven/index.html": {
@@ -16594,7 +16600,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/otis-thorpe/"
   },
   "player/otto-porter/index.html": {
-   "hash": "4d8a7cd34402bd63",
+   "hash": "30af68fcb19c1c82",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/otto-porter/"
@@ -16618,7 +16624,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/pacome-dadiet/"
   },
   "player/paolo-banchero/index.html": {
-   "hash": "a7940eda861de35b",
+   "hash": "3a6a10fc58075d46",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/paolo-banchero/"
@@ -16642,7 +16648,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/paris-bass/"
   },
   "player/pascal-siakam/index.html": {
-   "hash": "230791c05a644d33",
+   "hash": "adea3e324fe120d4",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/pascal-siakam/"
@@ -16714,7 +16720,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/patrick-eddie/"
   },
   "player/patrick-ewing/index.html": {
-   "hash": "ce155bdfd63952dc",
+   "hash": "520cc99f8d9a66e9",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/patrick-ewing/"
@@ -16726,7 +16732,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/patrick-mccaw/"
   },
   "player/patrick-mills/index.html": {
-   "hash": "f701e699ad11174c",
+   "hash": "79a2c1bdaf1d76ba",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/patrick-mills/"
@@ -16756,7 +16762,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/patrick-williams/"
   },
   "player/pau-gasol/index.html": {
-   "hash": "4feeca90e8b9eb2b",
+   "hash": "bd005dba132ff224",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/pau-gasol/"
@@ -16768,7 +16774,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/paul-davis/"
   },
   "player/paul-george/index.html": {
-   "hash": "574e3f72836aa5b8",
+   "hash": "80bacdda75b1deda",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/paul-george/"
@@ -16798,7 +16804,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/paul-miller/"
   },
   "player/paul-millsap/index.html": {
-   "hash": "e116e46dbf9434f2",
+   "hash": "1bd51f4285ff39b5",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/paul-millsap/"
@@ -16810,7 +16816,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/paul-mokeski/"
   },
   "player/paul-pierce/index.html": {
-   "hash": "a771e4652c475995",
+   "hash": "fd6f206706bd094c",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/paul-pierce/"
@@ -17050,7 +17056,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/predrag-savovic/"
   },
   "player/predrag-stojakovic/index.html": {
-   "hash": "8b34234bf96bd035",
+   "hash": "60c230799f690f56",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/predrag-stojakovic/"
@@ -17236,7 +17242,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/raja-bell/"
   },
   "player/rajon-rondo/index.html": {
-   "hash": "35cc5e9b2ea167c5",
+   "hash": "abbc83cd58c92630",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/rajon-rondo/"
@@ -17296,9 +17302,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/randy-brown/"
   },
   "player/randy-foye/index.html": {
-   "hash": "927b7bf64263a02b",
+   "hash": "851944366971406c",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/randy-foye/"
   },
   "player/randy-holcomb/index.html": {
@@ -17344,9 +17350,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/rashad-vaughn/"
   },
   "player/rashard-lewis/index.html": {
-   "hash": "aa4566202291b171",
+   "hash": "bbe4e74d7f21e37c",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/rashard-lewis/"
   },
   "player/rashaun-agee/index.html": {
@@ -17356,9 +17362,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/rashaun-agee/"
   },
   "player/rasheed-wallace/index.html": {
-   "hash": "173bff97aae9a140",
+   "hash": "46de05c0e3111f6c",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/rasheed-wallace/"
   },
   "player/rasheer-fleming/index.html": {
@@ -17410,7 +17416,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/rawle-marshall/"
   },
   "player/ray-allen/index.html": {
-   "hash": "7c7c3979effe8ca8",
+   "hash": "b4602c611cb43a66",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/ray-allen/"
@@ -17446,9 +17452,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/rayjon-tucker/"
   },
   "player/raymond-felton/index.html": {
-   "hash": "9ba62ad537093ef4",
+   "hash": "ea0b473c46e8905b",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/raymond-felton/"
   },
   "player/raymond-spalding/index.html": {
@@ -17518,13 +17524,13 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/reggie-jordan/"
   },
   "player/reggie-lewis/index.html": {
-   "hash": "533b50e4d5fab86f",
+   "hash": "a5a14bf3c813dc26",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/reggie-lewis/"
   },
   "player/reggie-miller/index.html": {
-   "hash": "89d53c72c2cd5d45",
+   "hash": "7815f970926551ef",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/reggie-miller/"
@@ -17614,7 +17620,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/richard-dumas/"
   },
   "player/richard-hamilton/index.html": {
-   "hash": "e87ac7224a228423",
+   "hash": "367895c49df9de70",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/richard-hamilton/"
@@ -17626,7 +17632,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/richard-hendrix/"
   },
   "player/richard-jefferson/index.html": {
-   "hash": "58d8d0f3966e957f",
+   "hash": "b2b05efc969b7a78",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/richard-jefferson/"
@@ -17716,13 +17722,13 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/ricky-ledo/"
   },
   "player/ricky-pierce/index.html": {
-   "hash": "99615b99051ba5f8",
+   "hash": "89d0d6a95ea8e8d2",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/ricky-pierce/"
   },
   "player/ricky-rubio/index.html": {
-   "hash": "9d4a75d45420d6b7",
+   "hash": "5e74dc9911ea5496",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/ricky-rubio/"
@@ -17734,7 +17740,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/rienk-mast/"
   },
   "player/rik-smits/index.html": {
-   "hash": "aa2320b714cc3140",
+   "hash": "02ac3db346dcaf96",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/rik-smits/"
@@ -17890,9 +17896,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/robert-woodard/"
   },
   "player/robin-lopez/index.html": {
-   "hash": "bfb8217fbed026af",
+   "hash": "53d26048d90b8c72",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/robin-lopez/"
   },
   "player/rocco-zikarsky/index.html": {
@@ -18148,7 +18154,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/roshown-mcleod/"
   },
   "player/roy-hibbert/index.html": {
-   "hash": "8af2974391ad428c",
+   "hash": "d183ff251628eb12",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/roy-hibbert/"
@@ -18226,13 +18232,13 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/rudy-fernandez/"
   },
   "player/rudy-gay/index.html": {
-   "hash": "57d1139089f6c68f",
+   "hash": "ec5ca06163e56b56",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/rudy-gay/"
   },
   "player/rudy-gobert/index.html": {
-   "hash": "0ff680e263274107",
+   "hash": "1dca770830b79ff2",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/rudy-gobert/"
@@ -18256,7 +18262,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/russ-smith/"
   },
   "player/russell-westbrook/index.html": {
-   "hash": "4018ac931e0ffc49",
+   "hash": "36175c3906945a7d",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/russell-westbrook/"
@@ -18268,7 +18274,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/rusty-larue/"
   },
   "player/ryan-anderson/index.html": {
-   "hash": "e6bf4f2cb0078f31",
+   "hash": "9bc6b8edbc9e9a83",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/ryan-anderson/"
@@ -18376,7 +18382,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/saben-lee/"
   },
   "player/saddiq-bey/index.html": {
-   "hash": "50bb18dcd9e256d6",
+   "hash": "2489e3dc736d5ceb",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/saddiq-bey/"
@@ -18412,7 +18418,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/sam-bowie/"
   },
   "player/sam-cassell/index.html": {
-   "hash": "088fa1f42fe44a90",
+   "hash": "0dc3a744dd3e813c",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/sam-cassell/"
@@ -18490,9 +18496,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/samardo-samuels/"
   },
   "player/samuel-dalembert/index.html": {
-   "hash": "788f9528d15062ad",
+   "hash": "9e9e1884aca52ec7",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/samuel-dalembert/"
   },
   "player/sandro-mamukelashvili/index.html": {
@@ -18622,7 +18628,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/scott-wood/"
   },
   "player/scottie-barnes/index.html": {
-   "hash": "b261d9b25c8e3898",
+   "hash": "b09df61ee1c8977f",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/scottie-barnes/"
@@ -18634,7 +18640,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/scottie-lewis/"
   },
   "player/scottie-pippen/index.html": {
-   "hash": "72230bef51f7a435",
+   "hash": "340854c282901ce7",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/scottie-pippen/"
@@ -18676,7 +18682,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/sean-east/"
   },
   "player/sean-elliott/index.html": {
-   "hash": "00e3f349e083a539",
+   "hash": "c7e17a9dcc7e5df8",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/sean-elliott/"
@@ -18790,7 +18796,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/semih-erden/"
   },
   "player/serge-ibaka/index.html": {
-   "hash": "b64828d759f74ee7",
+   "hash": "ff82407990e2b586",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/serge-ibaka/"
@@ -18862,7 +18868,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/shaedon-sharpe/"
   },
   "player/shai-gilgeous-alexander/index.html": {
-   "hash": "317987e7ca476c22",
+   "hash": "4c7da0283e3fbbde",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/shai-gilgeous-alexander/"
@@ -18886,9 +18892,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/shandon-anderson/"
   },
   "player/shane-battier/index.html": {
-   "hash": "49b00b44a79693e0",
+   "hash": "775fb3f923aeed78",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/shane-battier/"
   },
   "player/shane-edwards/index.html": {
@@ -18934,13 +18940,13 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/shaquille-harrison/"
   },
   "player/shaquille-o-neal/index.html": {
-   "hash": "e3b5b66df8bfafd5",
+   "hash": "b91032ac1138476c",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/shaquille-o-neal/"
   },
   "player/shareef-abdur-rahim/index.html": {
-   "hash": "f3d77e940c012623",
+   "hash": "0139d9c73a57729b",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/shareef-abdur-rahim/"
@@ -18982,7 +18988,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/shawn-bradley/"
   },
   "player/shawn-kemp/index.html": {
-   "hash": "e3aecc8400f2719f",
+   "hash": "8d52d182a187f37e",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/shawn-kemp/"
@@ -18994,7 +19000,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/shawn-long/"
   },
   "player/shawn-marion/index.html": {
-   "hash": "efb7794ded28389b",
+   "hash": "095310ca4131e5fa",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/shawn-marion/"
@@ -19216,9 +19222,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/spud-webb/"
   },
   "player/stacey-augmon/index.html": {
-   "hash": "eb92cc2cb07b9ef6",
+   "hash": "6af689025adc661f",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/stacey-augmon/"
   },
   "player/stacey-king/index.html": {
@@ -19288,7 +19294,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/stephane-lasme/"
   },
   "player/stephen-curry/index.html": {
-   "hash": "61ba6461c3796006",
+   "hash": "ccac80cea756ba07",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/stephen-curry/"
@@ -19318,13 +19324,13 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/stephen-zimmerman/"
   },
   "player/stephon-castle/index.html": {
-   "hash": "17b4fa9ebff44c17",
+   "hash": "f5ea84dcb57e5782",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/stephon-castle/"
   },
   "player/stephon-marbury/index.html": {
-   "hash": "62018ace9b66f6e9",
+   "hash": "b72ad3bfd1089106",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/stephon-marbury/"
@@ -19360,7 +19366,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/steve-colter/"
   },
   "player/steve-francis/index.html": {
-   "hash": "119c3d1af0dc7c85",
+   "hash": "25601222028e2444",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/steve-francis/"
@@ -19390,7 +19396,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/steve-kerr/"
   },
   "player/steve-nash/index.html": {
-   "hash": "d83c3882ac79dc85",
+   "hash": "136d77f285ca62d9",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/steve-nash/"
@@ -19414,13 +19420,13 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/steve-settle/"
   },
   "player/steve-smith/index.html": {
-   "hash": "b30a1b67816044ab",
+   "hash": "a1a21efed7c13cbf",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/steve-smith/"
   },
   "player/steven-adams/index.html": {
-   "hash": "285f9ab80d4eb7c2",
+   "hash": "7bf78a01cdeb1500",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/steven-adams/"
@@ -19594,7 +19600,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/taurean-green/"
   },
   "player/taurean-prince/index.html": {
-   "hash": "5112de2683867f82",
+   "hash": "a537139c957e1e14",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/taurean-prince/"
@@ -19672,7 +19678,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/terrel-harris/"
   },
   "player/terrell-brandon/index.html": {
-   "hash": "5707f63b1a7ac415",
+   "hash": "ece4b4abb86b30f0",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/terrell-brandon/"
@@ -19750,7 +19756,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/terry-mills/"
   },
   "player/terry-porter/index.html": {
-   "hash": "b36cb3b00f59e271",
+   "hash": "ee6fcc3b5b8c5560",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/terry-porter/"
@@ -19786,9 +19792,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/thabo-sefolosha/"
   },
   "player/thaddeus-young/index.html": {
-   "hash": "9781744ed888651f",
+   "hash": "dbfbbf675c1fa1a2",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/thaddeus-young/"
   },
   "player/thanasis-antetokounmpo/index.html": {
@@ -19816,7 +19822,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/theo-pinson/"
   },
   "player/theo-ratliff/index.html": {
-   "hash": "fdf0b6843d874545",
+   "hash": "72090a584c14f2bf",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/theo-ratliff/"
@@ -19912,7 +19918,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/tim-breaux/"
   },
   "player/tim-duncan/index.html": {
-   "hash": "478e657c806d89c8",
+   "hash": "cccbe05158f454da",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/tim-duncan/"
@@ -19924,13 +19930,13 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/tim-frazier/"
   },
   "player/tim-hardaway-jr/index.html": {
-   "hash": "34cb37766ba0b109",
+   "hash": "db0d6be5c9dd2709",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/tim-hardaway-jr/"
   },
   "player/tim-hardaway/index.html": {
-   "hash": "8e268b66e3373756",
+   "hash": "d9871c5f70aa6fa9",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/tim-hardaway/"
@@ -20044,7 +20050,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/tj-mcconnell/"
   },
   "player/tj-warren/index.html": {
-   "hash": "a11a75db6dfdd29f",
+   "hash": "f9e61fe8e82099f8",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/tj-warren/"
@@ -20062,7 +20068,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/tobi-lawal/"
   },
   "player/tobias-harris/index.html": {
-   "hash": "02c274d7dde62e82",
+   "hash": "bd10da300f19f794",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/tobias-harris/"
@@ -20164,7 +20170,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/tom-tolbert/"
   },
   "player/tomas-satoransky/index.html": {
-   "hash": "fc634f0679239f4f",
+   "hash": "a9b55cb03ed57568",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/tomas-satoransky/"
@@ -20182,7 +20188,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/toney-douglas/"
   },
   "player/toni-kukoc/index.html": {
-   "hash": "6bf4d3ff3d974bef",
+   "hash": "61b9b1ad70550cc0",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/toni-kukoc/"
@@ -20272,7 +20278,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/tony-mitchell-1992/"
   },
   "player/tony-parker/index.html": {
-   "hash": "d5fca9ff08aae566",
+   "hash": "bac3b0efa4d9ba07",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/tony-parker/"
@@ -20332,7 +20338,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/toure-murry/"
   },
   "player/tracy-mcgrady/index.html": {
-   "hash": "ca204f6d072ebed5",
+   "hash": "5b49cb8ce62e4ed1",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/tracy-mcgrady/"
@@ -20350,7 +20356,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/tracy-murray/"
   },
   "player/trae-young/index.html": {
-   "hash": "57d4985e244dd406",
+   "hash": "0213a24ac008febd",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/trae-young/"
@@ -20536,7 +20542,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/trevon-duval/"
   },
   "player/trevor-ariza/index.html": {
-   "hash": "1814b22b258d9315",
+   "hash": "b16ea851a4b80b6d",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/trevor-ariza/"
@@ -20584,9 +20590,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/trey-alexander/"
   },
   "player/trey-burke/index.html": {
-   "hash": "bb160c2c6999d9bf",
+   "hash": "47be2e62f8a17333",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/trey-burke/"
   },
   "player/trey-gilder/index.html": {
@@ -20644,7 +20650,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/tristan-enaruna/"
   },
   "player/tristan-thompson/index.html": {
-   "hash": "807ddde3a4a067ce",
+   "hash": "ab81a519c5febd12",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/tristan-thompson/"
@@ -20692,9 +20698,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/troy-hudson/"
   },
   "player/troy-murphy/index.html": {
-   "hash": "9eaae5a9c2db586b",
+   "hash": "744a804f953104b1",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/troy-murphy/"
   },
   "player/troy-williams/index.html": {
@@ -20716,9 +20722,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/ty-jerome/"
   },
   "player/ty-lawson/index.html": {
-   "hash": "de2eee7189aa6e9b",
+   "hash": "b5abd59a8d40dd7b",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/ty-lawson/"
   },
   "player/ty-shon-alexander/index.html": {
@@ -20788,7 +20794,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/tyler-hansbrough/"
   },
   "player/tyler-herro/index.html": {
-   "hash": "04cb066a1fb93868",
+   "hash": "4b5191567132e8aa",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/tyler-herro/"
@@ -20842,9 +20848,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/tyler-zeller/"
   },
   "player/tyreke-evans/index.html": {
-   "hash": "2fdfa262be87ba15",
+   "hash": "83e6606d16c8f827",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/tyreke-evans/"
   },
   "player/tyreke-key/index.html": {
@@ -20860,7 +20866,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/tyrell-terry/"
   },
   "player/tyrese-haliburton/index.html": {
-   "hash": "b9f2def0a4ffa5a4",
+   "hash": "003efd6c086b21de",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/tyrese-haliburton/"
@@ -20878,7 +20884,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/tyrese-martin/"
   },
   "player/tyrese-maxey/index.html": {
-   "hash": "e3c9a3369922d1b1",
+   "hash": "42904f6227bf6ea2",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/tyrese-maxey/"
@@ -20926,9 +20932,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/tyronn-lue/"
   },
   "player/tyrus-thomas/index.html": {
-   "hash": "bce424966b4fa368",
+   "hash": "26712dc2b0cb8a7b",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/tyrus-thomas/"
   },
   "player/tyshawn-taylor/index.html": {
@@ -20938,7 +20944,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/tyshawn-taylor/"
   },
   "player/tyson-chandler/index.html": {
-   "hash": "7c820978440d89c4",
+   "hash": "5bff342d3c0a59cc",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/tyson-chandler/"
@@ -21058,13 +21064,13 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/victor-claver/"
   },
   "player/victor-oladipo/index.html": {
-   "hash": "d9608d23cb475caf",
+   "hash": "036232cf0af05b19",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/victor-oladipo/"
   },
   "player/victor-wembanyama/index.html": {
-   "hash": "7e690fb56607bc3c",
+   "hash": "9ea59108e01da4aa",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/victor-wembanyama/"
@@ -21082,13 +21088,13 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/viktor-lakhin/"
   },
   "player/vin-baker/index.html": {
-   "hash": "f97d61b8a4b47de1",
+   "hash": "f6c1b0920319a100",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/vin-baker/"
   },
   "player/vince-carter/index.html": {
-   "hash": "237c899de00f4367",
+   "hash": "e42a3826b68b90a3",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/vince-carter/"
@@ -21250,7 +21256,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/wade-baldwin/"
   },
   "player/walker-kessler/index.html": {
-   "hash": "6c5955ee58d48a02",
+   "hash": "7ed04c789c7337e5",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/walker-kessler/"
@@ -21292,9 +21298,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/walter-davis/"
   },
   "player/walter-herrmann/index.html": {
-   "hash": "9714a914e0a4a34b",
+   "hash": "3e58028a2fb85681",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/walter-herrmann/"
   },
   "player/walter-lemon-jr/index.html": {
@@ -21400,9 +21406,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/wesley-johnson/"
   },
   "player/wesley-matthews/index.html": {
-   "hash": "f6514bce5ee16588",
+   "hash": "7dee177621d57a92",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/wesley-matthews/"
   },
   "player/wesley-person/index.html": {
@@ -21412,7 +21418,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/wesley-person/"
   },
   "player/will-barton/index.html": {
-   "hash": "a347754aaa3a1ea9",
+   "hash": "a1346b4d0d4ac84e",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/will-barton/"
@@ -21538,15 +21544,15 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/willie-warren/"
   },
   "player/willy-hernangomez/index.html": {
-   "hash": "a0709c900c58e13a",
+   "hash": "8264e9eb2ecd8b65",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/willy-hernangomez/"
   },
   "player/wilson-chandler/index.html": {
-   "hash": "5782d75752b368aa",
+   "hash": "af9f0c7473a257e4",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/wilson-chandler/"
   },
   "player/winston-bennett/index.html": {
@@ -21652,7 +21658,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/yante-maten/"
   },
   "player/yao-ming/index.html": {
-   "hash": "b26af5def82673e6",
+   "hash": "8c6ad9330b27d339",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/yao-ming/"
@@ -21682,9 +21688,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/yinka-dare/"
   },
   "player/yogi-ferrell/index.html": {
-   "hash": "17dd145f4067af1b",
+   "hash": "e58d0bfb4181040a",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/yogi-ferrell/"
   },
   "player/yuki-kawamura/index.html": {
@@ -21712,7 +21718,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/yuta-watanabe/"
   },
   "player/yves-missi/index.html": {
-   "hash": "55dc7163b381af82",
+   "hash": "119a91e0d13a3943",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/yves-missi/"
@@ -21730,9 +21736,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/zabian-dowdell/"
   },
   "player/zaccharie-risacher/index.html": {
-   "hash": "412410c32d968e43",
+   "hash": "9243dcd278c02b13",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/zaccharie-risacher/"
   },
   "player/zach-auguste/index.html": {
@@ -21754,7 +21760,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/zach-edey/"
   },
   "player/zach-lavine/index.html": {
-   "hash": "056f1856c1ef0c63",
+   "hash": "d6e12ccf3549e4c7",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/zach-lavine/"
@@ -21766,7 +21772,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/zach-lofton/"
   },
   "player/zach-randolph/index.html": {
-   "hash": "6d5927e4173ebfcb",
+   "hash": "99fec0655c0082ba",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/zach-randolph/"
@@ -21796,9 +21802,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/zavier-simpson/"
   },
   "player/zaza-pachulia/index.html": {
-   "hash": "c9bd986d913c53aa",
+   "hash": "f027ff061746dbbd",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/zaza-pachulia/"
   },
   "player/zeke-nnaji/index.html": {
@@ -21808,9 +21814,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/zeke-nnaji/"
   },
   "player/zeljko-rebraca/index.html": {
-   "hash": "fe0dd0e7b8e8c8cb",
+   "hash": "413dc14b3ed1f07f",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/zeljko-rebraca/"
   },
   "player/zendon-hamilton/index.html": {
@@ -21838,7 +21844,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/player/ziaire-williams/"
   },
   "player/zion-williamson/index.html": {
-   "hash": "a4b8e9c454900f7a",
+   "hash": "8c641e3b85c40fdc",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/player/zion-williamson/"
@@ -21886,13 +21892,13 @@
    "url": "https://hoopsmatic.com/salary-season-finder/position/center/"
   },
   "position/forward/index.html": {
-   "hash": "e36521699c32867e",
+   "hash": "bca9ab82ce499c6a",
    "indexable": true,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/position/forward/"
   },
   "position/guard/index.html": {
-   "hash": "ec7a188b64d9a35e",
+   "hash": "5dca80ffba2b976d",
    "indexable": true,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/position/guard/"
@@ -22060,57 +22066,57 @@
    "url": "https://hoopsmatic.com/salary-season-finder/season/2008-09/"
   },
   "season/2009-10/index.html": {
-   "hash": "62714602c2bb06ef",
+   "hash": "67c2b795bbd533cf",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/season/2009-10/"
   },
   "season/2010-11/index.html": {
-   "hash": "5c8ae46e9f100087",
+   "hash": "11cd3a7f0498110f",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/season/2010-11/"
   },
   "season/2011-12/index.html": {
-   "hash": "0fa1e17b86f50acd",
+   "hash": "57c5d10e6eaecdd0",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/season/2011-12/"
   },
   "season/2012-13/index.html": {
-   "hash": "efe9e39d18bf0be7",
+   "hash": "18f970840f9aca2c",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/season/2012-13/"
   },
   "season/2013-14/index.html": {
-   "hash": "7bb108e2cb93d85a",
+   "hash": "80451a8c01861487",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/season/2013-14/"
   },
   "season/2014-15/index.html": {
-   "hash": "27a82f783cfb3102",
+   "hash": "c1cd6496e3216e50",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/season/2014-15/"
   },
   "season/2015-16/index.html": {
-   "hash": "c1902c1d1b3fda40",
+   "hash": "62866a6090936205",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/season/2015-16/"
   },
   "season/2016-17/index.html": {
-   "hash": "86b5ee10863c1bf7",
+   "hash": "fdc2bfeeb1960c07",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/season/2016-17/"
   },
   "season/2017-18/index.html": {
-   "hash": "05447673522577f9",
+   "hash": "42848fbb0989448f",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/season/2017-18/"
   },
   "season/2018-19/index.html": {
@@ -22192,7 +22198,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/season/2030-31/"
   },
   "team/76ers/index.html": {
-   "hash": "0e5792a8a2346bf7",
+   "hash": "d7fae01187636fc5",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/team/76ers/"
@@ -22210,9 +22216,9 @@
    "url": "https://hoopsmatic.com/salary-season-finder/team/bulls/"
   },
   "team/cavaliers/index.html": {
-   "hash": "5f82b3b849d5150d",
+   "hash": "7b849a023ff0c8c5",
    "indexable": false,
-   "lastmod": "2026-09-30",
+   "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/team/cavaliers/"
   },
   "team/celtics/index.html": {
@@ -22246,7 +22252,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/team/heat/"
   },
   "team/hornets/index.html": {
-   "hash": "3c71a82136530c0d",
+   "hash": "3a269aaa825aa7e2",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/team/hornets/"
@@ -22354,7 +22360,7 @@
    "url": "https://hoopsmatic.com/salary-season-finder/team/timberwolves/"
   },
   "team/trail-blazers/index.html": {
-   "hash": "1aca5f9b16bfc0fd",
+   "hash": "545866608d5f8e98",
    "indexable": false,
    "lastmod": "2026-10-01",
    "url": "https://hoopsmatic.com/salary-season-finder/team/trail-blazers/"
