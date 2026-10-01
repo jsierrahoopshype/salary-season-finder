@@ -3,7 +3,13 @@ name: Update Salary Data
 on:
   schedule:
     - cron: '0 6 * * *'  # Daily at 6:00 AM UTC
-  workflow_dispatch:       # Manual trigger
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Build the salary digest and print it without posting"
+        type: boolean
+        required: false
+        default: false
 
 permissions:
   contents: write
@@ -210,4 +216,66 @@ jobs:
             sleep $((attempt * 5))
           done
           echo "could not push the pages; data.json is unaffected"
+          exit 1
+
+  # The digest reads the data.json update-data pushed, the factoids
+  # build-factoids pushed and the slugs prerender-pages pushed, so it runs last
+  # of the four and never races any of them for the branch. Same guarantee as the two jobs
+  # before it: the data commit is already on the branch, this job only ever
+  # writes data/digest_state.json, and continue-on-error keeps a Slack problem
+  # from reding the workflow. The state file is what stops a rerun posting the
+  # same day twice: it names the build the last digest read, and a rerun that
+  # finds nothing new posts "none today" instead.
+  salary-digest:
+    needs: [update-data, build-factoids, prerender-pages]
+    if: always() && needs.update-data.result == 'success'
+    runs-on: ubuntu-latest
+    continue-on-error: true
+
+    steps:
+      - name: Checkout the branch as the jobs before left it
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          # the digest reads yesterday's data.json out of the history
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Build the digest
+        env:
+          SLACK_SIGNINGS_WEBHOOK: ${{ secrets.SLACK_SIGNINGS_WEBHOOK }}
+        run: |
+          set -euo pipefail
+          dry=""
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+            dry="--dry-run"
+          fi
+          {
+            echo "# Salary digest"
+            echo ""
+          } >> "$GITHUB_STEP_SUMMARY"
+          python scripts/salary_digest.py $dry --summary "$GITHUB_STEP_SUMMARY"
+
+      - name: Commit the state file
+        if: ${{ github.event.inputs.dry_run != 'true' }}
+        run: |
+          if git diff --quiet data/digest_state.json 2>/dev/null; then
+            echo "No change in data/digest_state.json"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/digest_state.json
+          git commit -m "Record the build the salary digest read [$(date -u +%Y-%m-%d)]"
+          # three jobs pushed before this one; rebase rather than race them
+          for attempt in 1 2 3; do
+            git pull --rebase origin "${GITHUB_REF_NAME}" && git push && exit 0
+            echo "push attempt $attempt failed, retrying"
+            sleep $((attempt * 5))
+          done
+          echo "could not push the state file; the next run will compare from the same place"
           exit 1
