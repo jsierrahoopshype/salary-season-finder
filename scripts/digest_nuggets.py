@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import collections
 import datetime
+import re
 import os
 import sys
 
@@ -58,8 +59,17 @@ PEER_MIN_GAMES = 40
 PEER_MIN_PLAYERS = 5
 PEER_WIDENINGS = 2
 
-#: Decorations that rank one retired career above another, in this order.
-DECORATIONS = ("Most Valuable Player", "All-NBA First Team",
+#: Who is worth naming as a career passed on the way to a milestone. A man has
+#: to carry one of these, which is a short list on purpose: "past Josh Howard on
+#: the way" is a name that means nothing to the reader of a salary line. An
+#: all-time team first; an All-NBA First Team season if none of those applies;
+#: nobody at all if neither.
+MARQUEE = ("Hall of Fame", "NBA Top-75", "NBA Top-50", "HoopsHype Top-78")
+MARQUEE_FALLBACK = ("All-NBA First Team",)
+
+#: Decorations that rank one qualifying career above another, in this order.
+DECORATIONS = ("Hall of Fame", "NBA Top-75", "NBA Top-50", "HoopsHype Top-78",
+               "Most Valuable Player", "All-NBA First Team",
                "All-NBA Second Team", "All-NBA Third Team", "All-Star")
 
 #: The league year the raise ranking is measured from.
@@ -77,6 +87,12 @@ def league_year_start(today=None):
 
 
 # ── (a) a record the engine already found ─────────────────────────────
+#: A claim about where a future salary sits inside a season's own books. Nobody
+#: has been paid any of it, the books for that season are not closed, and a
+#: ranking inside them says only what has been signed so far.
+FUTURE_RANK_KEYS = ("rank_league", "rank_team", "team_high", "cap_pct_season")
+
+
 def record_nugget(idx, item, factoids):
     """A record or near-record for one of the seasons this change is about.
 
@@ -89,7 +105,10 @@ def record_nugget(idx, item, factoids):
         for fact in factoids.get("{}|{}".format(item["player"], season)) or []:
             if (fact.get("rank") or 99) > NEAR_RECORD_RANK:
                 continue
-            text = (fact.get("text") or "").strip()
+            if _ranks_a_future_season(idx, fact):
+                continue
+            text = _trim_rival(
+                _his_own(fact.get("text") or "", item["player"])).strip()
             if text:
                 return {
                     "kind": "record",
@@ -101,6 +120,61 @@ def record_nugget(idx, item, factoids):
                                "previous_holder": fact.get("previous_holder")},
                 }
     return None
+
+
+#: How the engine ends a comparison. A page has room for the other man's figure
+#: and the season he set it in; a digest line does not, and the name alone
+#: carries the comparison.
+RIVAL_CLAUSES = (", ahead of ", ", passing ", ", behind ", ", matching ",
+                 ", breaking ", ", level with ")
+
+
+def _trim_rival(text):
+    """Keep the man a record is measured against, drop his figure and season.
+
+    "behind Brook Lopez's $238.7 million (2026-27)" becomes "behind Brook
+    Lopez", which is two fewer numbers in a sentence allowed two.
+    """
+    for clause in RIVAL_CLAUSES:
+        at = text.find(clause)
+        if at < 0:
+            continue
+        rest = text[at + len(clause):]
+        name = re.split(r"'s |' |\s+\$", rest, maxsplit=1)[0].strip().rstrip(".")
+        if not name or name.startswith("his own"):
+            return text[:at].rstrip(".") + "."
+        return "{}{}{}.".format(text[:at], clause, name)
+    return text
+
+
+def _ranks_a_future_season(idx, fact):
+    """A claim that places a season's money inside that season's own books.
+
+    Safe for a season already paid; never for one still to come, where the
+    books are open and the standing is only the standing so far.
+    """
+    key = (fact.get("key") or "")
+    if not any(key.startswith(prefix) for prefix in FUTURE_RANK_KEYS):
+        return False
+    holder = (fact.get("previous_holder") or {}).get("season") or ""
+    return bool(holder) and idx.is_contracted(holder)
+
+
+def _his_own(text, player):
+    """The engine names the man; the digest's first sentence already did.
+
+    The lead opens with his name and links it, so a second sentence repeating
+    it reads like two items stapled together.
+    """
+    if not player or not text:
+        return text
+    if text.startswith(player + "'s "):
+        return "His " + text[len(player) + 3:]
+    if text.startswith(player + "' "):
+        return "His " + text[len(player) + 2:]
+    if text.startswith(player + " "):
+        return "He " + text[len(player) + 1:]
+    return text
 
 
 def _fact_entities(fact):
@@ -142,17 +216,21 @@ def career_nugget(idx, item, money):
     passed = _legends_between(idx, paid, milestone)
     rank_all, rank_active = _career_ranks(idx, player, paid)
 
-    text = "would push his career salary past {} by {}".format(
+    text = "He would reach {} in career earnings by {}".format(
         money(milestone), season)
-    if passed:
-        text += ", past {} on the way".format(_join([p["name"] for p in passed]))
     standing = _standing(rank_all, rank_active)
-    if standing:
-        text += ", and he is {} today".format(standing)
+    # One or the other, never both: a name the reader knows is worth more than
+    # a rank, and a sentence carrying the milestone, the season, two names and
+    # a standing is a stat list rather than a line.
+    if passed:
+        text += ", going past {} on the way".format(
+            _join([p["name"] for p in passed]))
+    elif standing:
+        text += ", where he already stands {}".format(standing)
     return {
         "kind": "career",
-        "opener": "That " + text,
-        "tail": "it " + text,
+        "opener": text,
+        "tail": text[0].lower() + text[1:],
         "entities": [("player", p["name"]) for p in passed],
         "detail": {
             "paid": paid, "through": through, "milestone": milestone,
@@ -189,8 +267,16 @@ def _legends_between(idx, paid, milestone):
         })
     found.sort(key=lambda entry: (
         [-n for n in entry["rank_key"]], -entry["total"], entry["name"]))
-    best = [entry for entry in found if any(entry["rank_key"])][:2]
+    # An all-time-team man first; only if there is none does an All-NBA First
+    # Team season qualify. Neither and the clause is left off altogether.
+    best = [e for e in found if _carries(e, MARQUEE)][:2]
+    if not best:
+        best = [e for e in found if _carries(e, MARQUEE_FALLBACK)][:2]
     return best
+
+
+def _carries(entry, awards):
+    return any(entry["decorations"].get(name) for name in awards)
 
 
 def _career_ranks(idx, player, paid):
@@ -218,9 +304,8 @@ def _standing(rank_all, rank_active):
     if not best or best > STANDING_MAX_RANK:
         return ""
     if rank_active is not None and (rank_all is None or rank_active < rank_all):
-        return "{} among players still on a roster in career salary".format(
-            _ordinal(rank_active))
-    return "{} in career salary".format(_ordinal(rank_all))
+        return "{} among players on a roster".format(_ordinal(rank_active))
+    return "{} of all time".format(_ordinal(rank_all))
 
 
 # ── (c) the raise, against the league year's raises ───────────────────
@@ -234,15 +319,18 @@ def raise_nugget(item, raises, money, opened):
     if len(raises) < 2 or rank > RAISE_MAX_RANK:
         return None
     if rank == 1:
-        text = "the biggest raise added to any team's books since {}".format(
+        text = "No team has taken on a bigger raise since {}".format(
             _ap_date(opened))
+    elif rank == 2:
+        text = "Only one raise since {} is bigger".format(_ap_date(opened))
     else:
-        text = "the {} biggest raise added to any team's books since {}".format(
-            _ordinal(rank), _ap_date(opened))
+        text = "Only {} raises since {} are bigger".format(
+            _spell(rank - 1), _ap_date(opened))
+    tail = text[0].lower() + text[1:]
     return {
         "kind": "raise",
-        "opener": "That is " + text,
-        "tail": "it is " + text,
+        "opener": text,
+        "tail": tail,
         "entities": [],
         "detail": {"amount": amount, "rank": rank, "pool": len(raises),
                    "money": money(amount)},
@@ -297,24 +385,27 @@ def peer_nugget(idx, item, data, pct):
     mine_share = _cap_share(idx, item)
     if mine_share is None:
         return None
-    comparison = (
-        "more than any of them" if mine_share > shares[-1][0]
-        else "against a median {}".format(pct(median))
-    )
     phrase = (
-        "{} {} who played {} games or more last season at {} to {} points and "
-        "{} to {} {}".format(
-            len(group), _plural(position), PEER_MIN_GAMES,
+        "{} {} who averaged {} to {} points and {} to {} {} last season".format(
+            len(group), _plural(position),
             _num(low_p), _num(high_p), _num(low_o), _num(high_o),
             STAT_WORD[second])
     )
-    body = "{} of the cap, {}, among the {}".format(
-        pct(mine_share), comparison, phrase)
+    if mine_share > shares[-1][0]:
+        body = "He takes {} of the cap, more than any of the {}".format(
+            pct(mine_share), phrase)
+    else:
+        body = "He takes {} of the cap against a median {} for the {}".format(
+            pct(mine_share), pct(median), phrase)
     return {
         "kind": "peers",
-        "opener": "That is " + body,
-        "tail": "it is " + body,
+        "opener": body,
+        "tail": body[0].lower() + body[1:],
         "entities": [],
+        # the exact words the link has to sit on, carried rather than found
+        # again by the sentence writer, which is what broke the last time the
+        # wording changed
+        "link_phrase": phrase,
         "peer_link": {
             "season": season, "pos": position, "gp_min": PEER_MIN_GAMES,
             "ppg": (low_p, high_p), second: (low_o, high_o),
@@ -390,6 +481,16 @@ def horizon_nugget(idx, item):
         "tail": "the money runs through his age-{} season".format(age),
         "detail": {"season": season, "age": age},
     }
+
+
+#: Small numbers read better spelled out, which is AP style and also what keeps
+#: a sentence to the one or two figures it is allowed.
+NUMBER_WORDS = ("zero", "one", "two", "three", "four", "five", "six", "seven",
+                "eight", "nine")
+
+
+def _spell(n):
+    return NUMBER_WORDS[n] if 0 <= n < len(NUMBER_WORDS) else str(n)
 
 
 def _age_in(idx, player, season):

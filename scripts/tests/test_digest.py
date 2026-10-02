@@ -13,6 +13,7 @@ import os
 import pytest
 
 import digest_nuggets as N
+import digest_teams as T
 import factoids as F
 import salary_digest as D
 
@@ -155,10 +156,11 @@ def test_each_kind_has_its_own_sentence():
                    rec("Signed Man", CURRENT, 9000000, team="DAL")])
     items, posts = digest(old, new)
     text = posts[0]
-    assert "Signed Man is on Dallas' books for $9 million in 2026-27." in text
-    assert ("Traded Man's 2026-27 salary of $10 million is now on Memphis' "
-            "books, not Atlanta's.") in text
-    assert "Waived Man's 2026-27 salary of $8 million is off the books." in text
+    assert "Signed Man is on Dallas' books at $9 million for 2026-27." in text
+    assert ("Traded Man's $10 million for 2026-27 moves to Memphis' books "
+            "from Atlanta's.") in text
+    assert ("Waived Man is no longer on Atlanta's 2026-27 books, a $8 million "
+            "salary.") in text
 
 
 def test_money_follows_ap_style():
@@ -170,7 +172,7 @@ def test_money_follows_ap_style():
     assert "$47.6 million" in posts[0]
     assert "$50 million" in posts[0]
     # a changed number is never collapsed, so a small one is printed in full
-    assert "from $600,000 to $507,336" in posts[0]
+    assert "to $507,336, from $600,000" in posts[0]
 
 
 def test_a_two_team_season_names_both():
@@ -185,8 +187,8 @@ def test_an_extension_names_the_season_it_adds():
     new = payload([rec("Extended Man", CURRENT, 30000000, team="MEM"),
                    rec("Extended Man", "2027-28", 32000000, team="MEM")])
     _items, posts = digest(old, new)
-    assert ("Extended Man now has 2027-28 on his deal, $32 million with "
-            "Memphis.") in posts[0]
+    assert "Extended Man is on Memphis' books at $32 million for 2027-28." \
+        in posts[0]
 
 
 def test_no_em_dash_reaches_the_digest():
@@ -256,7 +258,7 @@ def test_minimum_deals_come_to_one_line():
                    rec("Min Two", CURRENT, 2553508),
                    rec("Paid Man", CURRENT, 20000000)])
     _items, posts = digest(old, new)
-    assert "Paid Man is on Atlanta's books for $20 million" in posts[0]
+    assert "Paid Man is on Atlanta's books at $20 million" in posts[0]
     assert ("Also: 2 players on minimum deals new on the books: Min One, "
             "Min Two.") in posts[0]
     assert "Min One is on" not in posts[0]
@@ -267,7 +269,7 @@ def test_a_minimum_deal_with_a_factoid_is_printed_in_full():
     new = payload([rec("Min Man", CURRENT, 2553508)])
     factoids = {"Min Man|2026-27": [{"text": "Worth saying.", "rank": 1}]}
     _items, posts = digest(old, new, factoids=factoids)
-    assert "Min Man is on Atlanta's books for $2.6 million" in posts[0]
+    assert "Min Man is on Atlanta's books at $2.6 million" in posts[0]
     assert "Worth saying." in posts[0]
     assert "Also:" not in posts[0]
 
@@ -286,7 +288,7 @@ def test_a_salary_change_is_never_collapsed():
     old = payload([rec("Min Man", CURRENT, 2553508)])
     new = payload([rec("Min Man", CURRENT, 2500000)])
     _items, posts = digest(old, new)
-    assert "Min Man's 2026-27 salary moved from $2.6 million to $2.5 million." \
+    assert "Min Man's 2026-27 salary is rewritten to $2.5 million, from $2.6 million." \
         in posts[0]
     assert "Also:" not in posts[0]
 
@@ -412,8 +414,8 @@ def test_a_contract_that_adds_three_seasons_is_one_sentence():
     ])
     items, posts = digest(old, new)
     assert [i["kind"] for i in items] == ["extension_run"]
-    assert ("Jamal Shead's deal now runs through 2029-30 with Memphis, "
-            "$8 million a year.") in posts[0]
+    assert ("Jamal Shead's salary rises 60% in 2027-28: Memphis has him at "
+            "$8 million a year through 2029-30, up from $5 million now.") in posts[0]
     assert posts[0].count("Jamal Shead") == 1
 
 
@@ -424,8 +426,9 @@ def test_a_rising_run_gives_the_first_and_the_last():
                    rec("Climber", "2028-29", 8600000, team="MEM"),
                    rec("Climber", "2029-30", 9200000, team="MEM")])
     _items, posts = digest(old, new)
-    assert ("Climber's deal now runs through 2029-30 with Memphis, rising from "
-            "$8 million to $9.2 million.") in posts[0]
+    assert ("Climber's salary rises 84% in 2027-28: Memphis has him at "
+            "$8 million, rising to $9.2 million through 2029-30, up from "
+            "$5 million now.") in posts[0]
 
 
 def test_a_run_across_two_teams_names_neither():
@@ -434,7 +437,8 @@ def test_a_run_across_two_teams_names_neither():
                    rec("Split Deal", "2027-28", 8000000, team="ATL"),
                    rec("Split Deal", "2028-29", 8000000, team="MEM")])
     _items, posts = digest(old, new)
-    assert "Split Deal's deal now runs through 2028-29, $8 million a year." \
+    assert ("Split Deal's salary rises 60% in 2027-28: he is due $8 million a year "
+            "through 2028-29, up from $5 million now.") \
         in posts[0]
 
 
@@ -447,15 +451,15 @@ def test_several_salary_changes_to_one_player_are_one_sentence():
                    rec("Redrawn", "2029-30", 68400000)])
     items, posts = digest(old, new)
     assert [i["kind"] for i in items] == ["salary_run"]
-    assert ("Redrawn's salary moved in 3 seasons, 2027-28 through 2029-30, now "
-            "rising from $26.7 million to $68.4 million.") in posts[0]
+    assert ("Redrawn's 2027-28 through 2029-30 salaries are redrawn, now "
+            "$26.7 million, rising to $68.4 million.") in posts[0]
 
 
 def test_one_season_on_its_own_keeps_its_own_sentence():
     old = payload([rec("Single", CURRENT, 10000000)])
     new = payload([rec("Single", CURRENT, 11000000)])
     _items, posts = digest(old, new)
-    assert "Single's 2026-27 salary moved from $10 million to $11 million." \
+    assert "Single's 2026-27 salary is rewritten to $11 million, from $10 million." \
         in posts[0]
 
 
@@ -484,7 +488,7 @@ def test_a_run_is_not_a_minimum_run_when_one_season_is_above_it():
                    rec("Mixed", "2027-28", 2680000),
                    rec("Mixed", "2028-29", 20000000)])
     _items, posts = digest(old, new)
-    assert "Mixed's deal now runs through 2028-29" in posts[0]
+    assert "Mixed's salary quintuples in 2027-28" in posts[0]
     assert "Also:" not in posts[0]
 
 
@@ -511,8 +515,8 @@ def test_a_signing_that_arrives_as_four_seasons_is_one_sentence():
                    rec("Rookie", "2028-29", 6800000, team="MEM")])
     items, posts = digest(old, new)
     assert [i["kind"] for i in items] == ["new_run"]
-    assert ("Rookie is on Memphis' books through 2028-29, rising from "
-            "$4.2 million to $6.8 million.") in posts[0]
+    assert ("Rookie's salary rises 62% in 2026-27: Memphis has him at "
+            "$4.2 million, rising to $6.8 million through 2028-29.") in posts[0]
 
 
 def test_a_team_change_is_never_grouped():
@@ -638,7 +642,7 @@ def test_the_peer_comparison_is_a_cap_share():
         (7.4, 5.2), [(7.1, 5.0), (7.9, 5.9), (7.2, 5.5), (7.6, 5.1)],
         cap_pct=20.0)
     assert "20% of the cap" in nugget["opener"]
-    assert "more than any of them" in nugget["opener"]
+    assert "more than any of the" in nugget["opener"]
     assert nugget["detail"]["mine"] == 20.0
 
 
@@ -676,7 +680,7 @@ def test_the_peer_phrase_is_the_link_in_the_sentence():
     item = {"player": "Peer Man", "season": CURRENT, "kind": "salary"}
     text = D.nugget_sentence([nugget], item, NAMES, {}, {"player": {}})
     assert "<https://hoopsmatic.com/salary-season-finder#from=2025-26" in text
-    assert "|5 guards who played 40 games or more last season" in text
+    assert "|5 guards who averaged 7 to 8 points and 5 to 6 assists last season>" in text
 
 
 def test_the_season_compared_is_the_one_already_played_out():
@@ -729,7 +733,7 @@ def test_the_career_nugget_names_the_milestone_and_the_season():
     nugget, _idx = career_nugget_for(
         paid_seasons=[(CURRENT, 45000000)], future=[("2027-28", 48000000)])
     assert nugget is not None
-    assert "past $50 million by 2027-28" in nugget["opener"]
+    assert "He would reach $50 million in career earnings by 2027-28" in nugget["opener"]
     assert nugget["detail"]["milestone"] == 50000000
     assert nugget["detail"]["crosses_in"] == "2027-28"
 
@@ -750,10 +754,13 @@ def test_the_most_decorated_retired_men_passed_are_named():
             ("All Star Man", 46000000, ["All-Star"]),
             ("Plain Man", 49000000, []),
         ])
+    # Only an all-time-team man qualifies, and with none here the All-NBA First
+    # Team season is what the fallback takes. An MVP alone is not on the list.
     names = [entry["name"] for entry in nugget["detail"]["legends"]]
-    assert names == ["Mvp Man", "All Nba Man"]
+    assert names == ["All Nba Man"]
     assert "Plain Man" not in nugget["opener"]
-    assert "past Mvp Man and All Nba Man on the way" in nugget["opener"]
+    assert "Mvp Man" not in nugget["opener"]
+    assert "going past All Nba Man on the way" in nugget["opener"]
 
 
 def test_a_career_short_of_the_next_milestone_has_no_career_nugget():
@@ -764,8 +771,8 @@ def test_a_career_short_of_the_next_milestone_has_no_career_nugget():
 
 def test_a_standing_past_the_hundredth_name_is_not_printed():
     assert N._standing(461, 300) == ""
-    assert N._standing(5, None) == "5th in career salary"
-    assert "among players still on a roster" in N._standing(400, 52)
+    assert N._standing(5, None) == "5th of all time"
+    assert "among players on a roster" in N._standing(400, 52)
 
 
 # --------------------------------------------------------------------------
@@ -796,7 +803,7 @@ def test_the_biggest_raise_of_the_league_year_says_so():
     raises = [{"amount": 10000000}, {"amount": 20000000}, {"amount": 50000000}]
     nugget = N.raise_nugget(item, raises, F.fmt_money, OPENED)
     assert nugget["opener"] == \
-        "That is the biggest raise added to any team's books since July 1"
+        "No team has taken on a bigger raise since July 1"
     assert nugget["detail"]["rank"] == 1
 
 
@@ -810,7 +817,7 @@ def test_the_raise_rank_is_spelled_as_an_ordinal():
     item = {"raise_amount": 10000000}
     raises = [{"amount": 30000000}, {"amount": 20000000}, {"amount": 10000000}]
     nugget = N.raise_nugget(item, raises, F.fmt_money, OPENED)
-    assert "the 3rd biggest raise" in nugget["opener"]
+    assert "Only two raises since July 1 are bigger" in nugget["opener"]
 
 
 def test_a_raise_on_its_own_has_nothing_to_rank_against():
@@ -1043,3 +1050,283 @@ def test_the_tool_carries_the_games_filter_in_its_hash():
     app = open(os.path.join(REPO, "js", "app.js"), encoding="utf-8").read()
     assert "params.gp_min = f.gpMin" in app
     assert 'params.gp_min' in app and 'getElementById("gpMin").value = params.gp_min' in app
+
+
+# --------------------------------------------------------------------------
+# A1/A2: how a line reads
+# --------------------------------------------------------------------------
+
+
+def test_no_contract_word_reaches_the_digest():
+    """The data holds a salary against a season, not the deal behind it."""
+    old = payload([rec("Kept Man", CURRENT, 2300000, team="MEM")])
+    new = payload([rec("Kept Man", CURRENT, 2300000, team="MEM")] + [
+        rec("Kept Man", s, 8000000, team="MEM")
+        for s in ("2027-28", "2028-29", "2029-30")
+    ] + [rec("Moved Man", CURRENT, 9000000, team="DAL"),
+         rec("Cut Man", "2027-28", 4000000, team="ATL")])
+    _items, posts = digest(old, new)
+    for banned in ("contract", "deal", "extension", "signed", "guarantee"):
+        for post in posts:
+            assert banned not in post.lower(), (banned, post)
+
+
+def test_the_verb_carries_the_news():
+    old = payload([rec("Shead", CURRENT, 2000000, team="MEM")])
+    new = payload([rec("Shead", CURRENT, 2000000, team="MEM"),
+                   rec("Shead", "2027-28", 8000000, team="MEM")])
+    _items, posts = digest(old, new)
+    assert "Shead's salary quadruples in 2027-28" in posts[0]
+
+
+def test_a_multiple_beats_a_percentage():
+    assert D.movement(8000000, 2000000) == "quadruples"
+    assert D.movement(7800000, 2000000) == "nearly quadruples"
+    assert D.movement(6000000, 2000000) == "triples"
+    assert D.movement(4000000, 2000000) == "doubles"
+    assert D.movement(2600000, 2000000) == "rises 30%"
+    assert D.movement(1400000, 2000000) == "falls 30%"
+
+
+def test_a_move_too_small_to_be_news_gets_no_verb():
+    assert D.movement(2100000, 2000000) == ""
+    assert D.movement(1950000, 2000000) == ""
+
+
+def test_no_second_sentence_opens_with_that_is():
+    item = {"player": "Man", "season": CURRENT, "kind": "new"}
+    nuggets = [
+        {"kind": "raise", "opener": "No team has taken on a bigger raise",
+         "tail": "no team has", "entities": []},
+    ]
+    text = D.nugget_sentence(nuggets, item)
+    assert not text.startswith("That is")
+    assert not text.startswith("That ")
+
+
+def test_a_run_of_seasons_gives_its_total_over_the_seasons():
+    item = {"members": [{"salary": 8000000}, {"salary": 8000000},
+                        {"salary": 8000000}]}
+    assert D.over_seasons(item) == "$24 million over three seasons"
+
+
+# --------------------------------------------------------------------------
+# A3: a future season is never ranked inside its own books
+# --------------------------------------------------------------------------
+
+
+def test_a_rank_inside_a_future_season_is_not_a_nugget():
+    old = payload([rec("Future Man", CURRENT, 10000000)])
+    new = payload([rec("Future Man", CURRENT, 10000000),
+                   rec("Future Man", "2028-29", 60000000)])
+    factoids = {"Future Man|2028-29": [{
+        "text": "His $60 million would take up 33% of the 2028-29 cap, the "
+                "largest share of the cap in 2028-29.",
+        "rank": 1, "key": "cap_pct_season|Future Man|2028-29",
+        "previous_holder": {"player": "Other", "season": "2028-29", "value": 32},
+    }]}
+    _items, posts = digest(old, new, factoids=factoids)
+    assert "largest share of the cap in 2028-29" not in posts[0]
+
+
+def test_a_rank_inside_a_season_already_paid_is_fine():
+    old = payload([])
+    new = payload([rec("Paid Man", CURRENT, 60000000)])
+    factoids = {"Paid Man|2026-27": [{
+        "text": "His $60 million is the largest share of the cap in 2026-27.",
+        "rank": 1, "key": "cap_pct_season|Paid Man|2026-27",
+        "previous_holder": {"player": "Other", "season": "2025-26", "value": 32},
+    }]}
+    _items, posts = digest(old, new, factoids=factoids)
+    assert "largest share of the cap in 2026-27" in posts[0]
+
+
+# --------------------------------------------------------------------------
+# A5: who is worth naming
+# --------------------------------------------------------------------------
+
+
+def test_an_all_time_team_man_is_named_over_an_all_nba_one():
+    nugget, _idx = career_nugget_for(
+        paid_seasons=[(CURRENT, 45000000)],
+        future=[("2027-28", 48000000)],
+        legends=[("Top 75 Man", 48000000, ["NBA Top-75"]),
+                 ("All Nba Man", 47000000, ["All-NBA First Team"])])
+    assert [e["name"] for e in nugget["detail"]["legends"]] == ["Top 75 Man"]
+
+
+def test_nobody_decorated_enough_means_no_names():
+    nugget, _idx = career_nugget_for(
+        paid_seasons=[(CURRENT, 45000000)],
+        future=[("2027-28", 48000000)],
+        legends=[("All Star Man", 48000000, ["All-Star"]),
+                 ("Plain Man", 47000000, [])])
+    assert nugget["detail"]["legends"] == []
+    assert "on the way" not in nugget["opener"]
+
+
+def test_a_career_nugget_gives_the_standing_or_the_names_not_both():
+    nugget, _idx = career_nugget_for(
+        paid_seasons=[(CURRENT, 45000000)],
+        future=[("2027-28", 48000000)],
+        legends=[("Top 75 Man", 48000000, ["NBA Top-75"])])
+    assert "going past" in nugget["opener"]
+    assert "already stands" not in nugget["opener"]
+
+
+# --------------------------------------------------------------------------
+# A7: a record about him opens with "He"
+# --------------------------------------------------------------------------
+
+
+def test_a_record_about_the_item_player_says_he():
+    old, new = payload([]), payload([rec("Famous Man", CURRENT, 40000000)])
+    factoids = {"Famous Man|2026-27": [
+        {"text": "Famous Man has earned the most of any Duke player.",
+         "rank": 1}]}
+    _items, posts = digest(old, new, factoids=factoids)
+    assert "He has earned the most of any Duke player." in posts[0]
+    assert posts[0].count("Famous Man") == 1
+
+
+def test_a_possessive_record_becomes_his():
+    assert N._his_own("Famous Man's $40 million is a record.", "Famous Man") == \
+        "His $40 million is a record."
+
+
+def test_a_rivals_figure_is_dropped_but_his_name_stays():
+    trimmed = N._trim_rival(
+        "He has earned $87.7 million, the third-most among players out of "
+        "Stanford, behind Brook Lopez's $238.7 million (2026-27).")
+    assert trimmed.endswith("behind Brook Lopez.")
+    assert "$238.7 million" not in trimmed
+
+
+# --------------------------------------------------------------------------
+# A8/A9: what never becomes an item
+# --------------------------------------------------------------------------
+
+
+def test_a_salary_the_guard_flagged_is_not_a_change():
+    data = payload([rec("Leaper", CURRENT, 40000000),
+                    rec("Leaper", "2027-28", 70000000)])
+    data["salary_cap"] = {s: {"cap": 200000000}
+                          for s in (CURRENT, "2027-28", "2028-29")}
+    idx = F.build_index(data)
+    assert ("Leaper", "2027-28") in idx.impossible
+    items = [{"kind": "extension", "player": "Leaper", "season": "2027-28",
+              "salary": 70000000, "team": "ATL", "members": []}]
+    assert D.drop_impossible(items, idx) == []
+
+
+def test_a_run_keeps_the_seasons_the_guard_left_alone():
+    data = payload([rec("Leaper", CURRENT, 40000000),
+                    rec("Leaper", "2027-28", 44000000),
+                    rec("Leaper", "2028-29", 70000000)])
+    data["salary_cap"] = {s: {"cap": 200000000}
+                          for s in (CURRENT, "2027-28", "2028-29")}
+    idx = F.build_index(data)
+    item = {"kind": "extension_run", "player": "Leaper", "season": "2028-29",
+            "first_season": "2027-28", "salary": 70000000, "team": "ATL",
+            "members": [{"season": "2027-28", "salary": 44000000},
+                        {"season": "2028-29", "salary": 70000000}]}
+    kept = D.drop_impossible([item], idx)
+    assert len(kept) == 1
+    # one season left, so it stops being a run and becomes a single change
+    assert kept[0]["season"] == "2027-28"
+    assert kept[0]["salary"] == 44000000
+    assert kept[0]["kind"] == "extension"
+
+
+def test_one_ratio_moving_the_whole_sheet_is_not_news():
+    """A new cap projection moves every future salary by the same factor."""
+    old = payload([rec("Man {:02d}".format(i), "2027-28", 10000000 + i * 1000)
+                   for i in range(20)])
+    new = payload([rec("Man {:02d}".format(i), "2027-28",
+                       int((10000000 + i * 1000) * 1.05)) for i in range(20)])
+    items = D.changes(old, new, CURRENT)
+    assert items == []
+
+
+def test_a_handful_of_moves_sharing_a_ratio_is_still_news():
+    old = payload([rec("Man {:02d}".format(i), "2027-28", 10000000)
+                   for i in range(3)])
+    new = payload([rec("Man {:02d}".format(i), "2027-28", 10500000)
+                   for i in range(3)])
+    assert len(D.changes(old, new, CURRENT)) == 3
+
+
+# --------------------------------------------------------------------------
+# A6: what a team has committed
+# --------------------------------------------------------------------------
+
+
+def team_payload(rows, season="2027-28"):
+    records = [
+        {"player": player, "season": season, "team": code, "salary": salary,
+         "years_exp": 4}
+        for code, player, salary in rows
+    ]
+    out = payload(records)
+    out["salary_cap"] = {CURRENT: {"cap": 166000000},
+                         season: {"cap": 100000000}}
+    out["seasons_list"] = [CURRENT, season]
+    return out
+
+
+def test_a_team_is_measured_on_its_three_biggest_salaries():
+    # No salary towers over the rest, so the guard leaves all four alone.
+    data = team_payload([("ATL", "One", 40000000), ("ATL", "Two", 35000000),
+                         ("ATL", "Three", 30000000), ("ATL", "Four", 25000000)])
+    idx = F.build_index(data)
+    total, top = T.commitments(data, idx)[("ATL", "2027-28")]
+    assert total == 105000000
+    assert [player for player, _amount in top] == ["One", "Two", "Three"]
+
+
+def test_crossing_half_the_cap_earns_a_line():
+    before = {("ATL", "2027-28"): (40000000, [])}
+    after = {("ATL", "2027-28"): (60000000, [("One", 60000000)])}
+    idx = F.build_index(team_payload([("ATL", "One", 60000000)]))
+    out = T.crossings(before, after, idx, {("ATL", "2027-28")})
+    assert len(out) == 1
+    assert out[0]["reason"] == "cap_share"
+    assert out[0]["detail"]["share"] == 0.5
+
+
+def test_a_team_already_past_the_line_earns_nothing():
+    before = {("ATL", "2027-28"): (60000000, [])}
+    after = {("ATL", "2027-28"): (70000000, [("One", 70000000)])}
+    idx = F.build_index(team_payload([("ATL", "One", 70000000)]))
+    assert T.crossings(before, after, idx, {("ATL", "2027-28")}) == []
+
+
+def test_becoming_the_league_high_earns_a_line():
+    before = {("ATL", "2027-28"): (10000000, []),
+              ("MEM", "2027-28"): (20000000, [])}
+    after = {("ATL", "2027-28"): (30000000, [("One", 30000000)]),
+             ("MEM", "2027-28"): (20000000, [])}
+    idx = F.build_index(team_payload([("ATL", "One", 30000000)]))
+    out = T.crossings(before, after, idx, {("ATL", "2027-28")})
+    assert out[0]["reason"] == "league_high"
+
+
+def test_the_team_line_says_so_far():
+    entry = {"team": "ATL", "season": "2027-28", "total": 142000000,
+             "was": 90000000, "cap": 174300000, "reason": "league_high",
+             "detail": {}, "top": [("A", 1), ("B", 1), ("C", 1)]}
+    text = T.line(entry, "Detroit", F.fmt_money)
+    assert text == ("Detroit now has $142 million committed to A, B and C for "
+                    "2027-28, the most any team has tied up in three players "
+                    "for that season so far.")
+
+
+def test_a_team_line_never_counts_a_flagged_salary():
+    data = team_payload([("ATL", "Leaper", 70000000)])
+    data["seasons"].append({"player": "Leaper", "season": CURRENT,
+                            "team": "ATL", "salary": 40000000, "years_exp": 4})
+    data["salary_cap"][CURRENT] = {"cap": 200000000}
+    data["salary_cap"]["2027-28"] = {"cap": 200000000}
+    idx = F.build_index(data)
+    assert ("Leaper", "2027-28") in idx.impossible
+    assert ("ATL", "2027-28") not in T.commitments(data, idx)
