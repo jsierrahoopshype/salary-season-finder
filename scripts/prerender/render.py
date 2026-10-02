@@ -208,31 +208,22 @@ def summary_block(sentences, linker=None, url=None):
 
 
 def facts_by_season(groups, current_key, linker=None, url=None):
-    """A player's claims under season headings, newest season first.
+    """A player's seasons as paragraphs under season headings, newest first.
 
-    This season and the seasons already signed for are open, because that is
-    what a reader came for. Everything older is behind a details element, with
-    its sentences still in the HTML for anyone who opens it or reads the source.
+    Every season is open. An older season used to sit behind a details element,
+    which hid the part of the page a reader scrolls for and made the whole
+    section a row of closed drawers.
     """
     if not groups:
         return ""
     render = (lambda t: linker.html(t, url)) if linker else esc
     out = ['<div class="hm-seasons">']
-    for season, key, sentences in groups:
-        items = "".join("<li>{}</li>".format(render(text)) for text in sentences)
-        count = '<span class="hm-count">{}</span>'.format(len(sentences))
-        if key >= current_key:
-            out.append(
-                '<section class="hm-season is-open"><h3>{}{}</h3>'
-                '<ul class="hm-facts">{}</ul></section>'.format(
-                    esc(season), count, items)
-            )
-        else:
-            out.append(
-                '<details class="hm-season"><summary>{}{}</summary>'
-                '<ul class="hm-facts">{}</ul></details>'.format(
-                    esc(season), count, items)
-            )
+    for season, _key, sentences in groups:
+        body = " ".join(render(text) for text in sentences)
+        out.append(
+            '<section class="hm-season is-open"><h3>{}</h3>'
+            '<p class="hm-facts">{}</p></section>'.format(esc(season), body)
+        )
     out.append("</div>")
     return "".join(out)
 

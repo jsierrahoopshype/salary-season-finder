@@ -169,12 +169,17 @@ def agents_on(monkeypatch):
 
 def _field():
     """Record Holder at $40m, Runner Up at $30m, then a tail of small deals so
-    the comparison set clears APPROACH_MIN_COMPARISON_SIZE."""
+    the comparison set clears APPROACH_MIN_COMPARISON_SIZE.
+
+    The tail sits in 2019-20, before the record: a past season is ranked
+    against the seasons that had been played by then, so a field filed after it
+    is a field it was never measured against.
+    """
     return [
         rec("Record Holder", "2020-21", 40000000),
-        rec("Runner Up", "2021-22", 30000000),
+        rec("Runner Up", "2019-20", 30000000),
     ] + [
-        rec("Tail {}".format(i), "2022-23", 1000000 + i * 1000) for i in range(10)
+        rec("Tail {}".format(i), "2019-20", 1000000 + i * 1000) for i in range(10)
     ]
 
 
@@ -194,7 +199,7 @@ def test_ties_when_equal_and_says_so():
     out = facts(data, "Challenger", "2023-24", family="franchise")
     assert out[0]["type"] == "ties"
     assert out[0]["margin"] == 0
-    assert "ties" in out[0]["text"]
+    assert "tied" in out[0]["text"]
     assert "Record Holder" in out[0]["text"]
 
 
@@ -247,7 +252,7 @@ def test_a_record_never_competes_with_itself():
     assert out[0]["type"] == "sets"
     assert out[0]["rank"] == 1
     assert out[0]["previous_holder"]["player"] == "Runner Up"
-    assert "Record Holder" not in out[0]["text"].split(" is ")[-1]
+    assert "Record Holder" not in out[0]["text"].split(" was ")[-1]
 
 
 def test_comparison_size_excludes_the_subject():
@@ -589,7 +594,7 @@ def test_contracted_career_milestone_uses_the_briefed_wording():
     assert len(out) == 1
     assert out[0]["text"] == (
         "Future is on track to pass $100 million in career earnings in "
-        "2027-28 if his contract is paid in full."
+        "2027-28 if his salaries are paid in full."
     )
 
 
@@ -609,7 +614,7 @@ def test_past_seasons_are_not_contracted():
     data = make_data(_field() + [rec("Past", "2022-24".replace("2022-24", "2023-24"), 41000000)])
     out = facts(data, "Past", "2023-24", family="franchise")
     assert out[0]["contracted"] is False
-    assert " is the highest single-season salary" in out[0]["text"]
+    assert " was the highest single-season salary" in out[0]["text"]
 
 
 # --------------------------------------------------------------------------
@@ -961,7 +966,7 @@ def test_a_player_who_may_still_be_active_ranks_on_what_he_has_been_paid():
     ])
     out = facts(data, "Unsigned", PREVIOUS, family="career_earnings", kind="sets")
     assert len(out) == 1
-    assert "has earned $900 million through {}".format(PREVIOUS) in out[0]["text"]
+    assert "had earned $900 million through {}".format(PREVIOUS) in out[0]["text"]
     assert "in his career" not in out[0]["text"]
 
 
@@ -1013,7 +1018,7 @@ SPLIT_ENTRY = {
 
 
 def test_unconfirmed_split_suppresses_the_earlier_segment():
-    data = make_data(tail("OKC") + _merged_pair())
+    data = make_data(tail("OKC", season="1994-95") + _merged_pair())
     assert facts(data, "Merged Name", "1995-96", splits=SPLIT_ENTRY) == []
     assert "identity_split_unconfirmed" in gates(
         data, "Merged Name", "1995-96", splits=SPLIT_ENTRY
@@ -1021,7 +1026,7 @@ def test_unconfirmed_split_suppresses_the_earlier_segment():
 
 
 def test_unconfirmed_split_leaves_the_last_segment_alone():
-    data = make_data(tail("OKC") + _merged_pair())
+    data = make_data(tail("OKC", season="1994-95") + _merged_pair())
     idx = index_for(data, SPLIT_ENTRY)
     assert ("Merged Name", "2018-19") not in idx.split_suppressed
     assert ("Merged Name", "1995-96") in idx.split_suppressed
@@ -1045,7 +1050,7 @@ def test_unconfirmed_split_is_never_a_previous_holder():
 
 def test_confirming_a_split_restores_the_earlier_segment():
     confirmed = {"Merged Name": dict(SPLIT_ENTRY["Merged Name"], confirmed=True)}
-    data = make_data(tail("OKC") + _merged_pair())
+    data = make_data(tail("OKC", season="1994-95") + _merged_pair())
     idx = index_for(data, confirmed)
     assert idx.split_suppressed == set()
 
@@ -1061,7 +1066,7 @@ def test_a_confirmed_comeback_lifts_the_career_level_exclusion():
                         "first_season": "1995-96", "last_season": "2018-19"}],
         }
     }
-    data = make_data(tail("OKC") + _merged_pair())
+    data = make_data(tail("OKC", season="1994-95") + _merged_pair())
     assert "Merged Name" in index_for(data).identity_suspect
     assert "Merged Name" not in index_for(data, entry).identity_suspect
 
@@ -1075,7 +1080,7 @@ def test_an_unconfirmed_comeback_suppresses_nothing():
                         "first_season": "1995-96", "last_season": "2018-19"}],
         }
     }
-    data = make_data(tail("OKC") + _merged_pair())
+    data = make_data(tail("OKC", season="1994-95") + _merged_pair())
     idx = index_for(data, entry)
     assert idx.split_suppressed == set()
     assert "Merged Name" in idx.identity_suspect
@@ -1274,7 +1279,7 @@ CONFIRMED_SPLIT = {
 
 
 def test_confirmed_split_prints_each_segment_its_own_name():
-    data = make_data(tail("OKC") + _merged_pair())
+    data = make_data(tail("OKC", season="1994-95") + _merged_pair())
     out = facts(data, "Merged Name", "1995-96", family="franchise", splits=CONFIRMED_SPLIT)
     assert out
     assert out[0]["text"].startswith("Merged Name's")
@@ -1288,7 +1293,7 @@ def test_confirmed_split_prints_each_segment_its_own_name():
 
 def test_confirmed_split_never_says_his_own_mark_across_the_two_men():
     """The later segment passing the earlier one is passing someone else."""
-    data = make_data(tail("OKC") + [
+    data = make_data(tail("OKC", season="1994-95") + [
         rec("Merged Name", "1995-96", 30000000, team="OKC", age=30),
         rec("Merged Name", "2018-19", 40000000, team="OKC", age=19),
     ])
@@ -1312,7 +1317,7 @@ def test_a_confirmed_split_segment_with_no_name_stays_held_back():
             ],
         }
     }
-    data = make_data(tail("OKC") + _merged_pair())
+    data = make_data(tail("OKC", season="1994-95") + _merged_pair())
     assert facts(data, "Merged Name", "1995-96", splits=unnamed) == []
     assert "identity_split_unnamed" in gates(data, "Merged Name", "1995-96", splits=unnamed)
     assert facts(data, "Merged Name", "2018-19", splits=unnamed) != []
@@ -1598,7 +1603,7 @@ def _merged_with_metadata():
     """One key covering a 1990s player and a 2010s one, where the key's draft
     fields and college belong to the younger man."""
     peers = [
-        rec("Peer {}".format(i), "2019-20", 1000000 + i, college="Kentucky",
+        rec("Peer {}".format(i), "2018-19", 1000000 + i, college="Kentucky",
             draft_year=2018, draft_pick=4, pos="C", nationality="Spain")
         for i in range(15)
     ]
@@ -1805,7 +1810,7 @@ def test_a_contracted_milestone_keeps_its_own_wording():
     ])
     out = facts(data, "Earner", CONTRACTED, family="career_earnings", kind="milestone")
     assert "is on track to pass $100 million" in out[0]["text"]
-    assert "if his contract is paid in full" in out[0]["text"]
+    assert "if his salaries are paid in full" in out[0]["text"]
 
 
 # --------------------------------------------------------------------------
@@ -2100,11 +2105,18 @@ def test_an_active_player_leads_the_career_list_over_a_retired_one():
     ])
     out = facts(data, "Still Playing", CURRENT, family="career_earnings", kind="sets")
     assert len(out) == 1
-    assert "has earned $400 million through {}".format(CURRENT) in out[0]["text"]
+    assert "will have earned $400 million by the end of {}".format(CURRENT) \
+        in out[0]["text"]
     assert "more than anyone else in NBA history" in out[0]["text"]
-    # the retired man is now second, not first
+    # In 2019-20 the retired man did lead, and a line about that season says
+    # so; what the bug got wrong is the list as it stands now, where the active
+    # man is above him.
     retired = facts(data, "Retired Man", "2019-20", family="career_earnings")
-    assert [f["type"] for f in retired if f["key"].startswith("career_rank")] == ["approaches"]
+    assert [f["type"] for f in retired if f["key"].startswith("career_rank")] == ["sets"]
+    idx = index_for(data)
+    standing = [e["player"] for e in idx.u_career.entries[:2]]
+    assert standing[0] == "Still Playing"
+    assert "Retired Man" in standing
 
 
 def test_contracted_money_never_counts_towards_a_career_total():
@@ -2276,3 +2288,145 @@ def test_a_flagged_record_never_enters_a_comparison_set():
         for entry in universe.entries:
             assert entry["player"] != "Impossible"
     assert factoids_for(data, "Impossible", "2027-28", index=idx) == []
+
+
+# --------------------------------------------------------------------------
+# B1: a contracted leap no raise can carry
+# --------------------------------------------------------------------------
+
+
+#: A cap the fixture salaries are a real share of, so the leap guard has a
+#: share to measure against. make_data's default cap is far above any fixture
+#: salary precisely so the guard never fires by accident.
+LEAP_CAPS = {s: {"cap": 200000000} for s in
+             ("2025-26", CURRENT, CONTRACTED)}
+
+
+def _leap_data(previous, jump, team_a="OKC", team_b="OKC"):
+    return make_data(
+        tail("OKC", season="2025-26") + [
+            rec("Leaper", CURRENT, previous, team=team_a),
+            rec("Leaper", CONTRACTED, jump, team=team_b),
+        ],
+        caps=LEAP_CAPS,
+    )
+
+
+def test_a_contracted_season_half_again_above_a_big_one_is_flagged():
+    idx = index_for(_leap_data(40000000, 62000000))
+    assert ("Leaper", CONTRACTED) in idx.impossible
+    assert "off a season already worth 20.0% of the cap" in \
+        idx.impossible[("Leaper", CONTRACTED)]
+
+
+def test_the_leap_is_flagged_across_a_move_as_well_as_on_one_roster():
+    """A trade cannot rewrite the number, so whose books it sits on is no
+    defence."""
+    idx = index_for(_leap_data(40000000, 62000000, team_b="BOS"))
+    assert ("Leaper", CONTRACTED) in idx.impossible
+
+
+def test_a_leap_off_a_small_season_is_a_rookie_growing_into_a_maximum():
+    idx = index_for(_leap_data(3000000, 40000000))
+    assert ("Leaper", CONTRACTED) not in idx.impossible
+
+
+def test_a_raise_inside_half_again_is_left_alone():
+    idx = index_for(_leap_data(40000000, 55000000))
+    assert ("Leaper", CONTRACTED) not in idx.impossible
+
+
+def test_a_flagged_salary_stays_out_of_every_comparison():
+    data = _leap_data(40000000, 62000000)
+    idx = index_for(data)
+    for universe in idx.u_franchise.values():
+        assert all(e["key"] != ("Leaper", CONTRACTED) for e in universe.entries)
+
+
+# --------------------------------------------------------------------------
+# B2: passing, or merely ahead of
+# --------------------------------------------------------------------------
+
+
+def test_passing_is_for_a_mark_that_was_above_him():
+    data = make_data(tail("OKC", season="2019-20") + [
+        rec("Holder", "2020-21", 30000000),
+        rec("Climber", "2019-20", 10000000),
+        rec("Climber", "2021-22", 31000000),
+    ])
+    out = facts(data, "Climber", "2021-22", family="franchise")
+    assert "passing Holder's" in out[0]["text"]
+
+
+def test_a_mark_he_already_stood_above_is_one_he_is_ahead_of():
+    """He passed this man years ago; today he is simply ahead of him."""
+    data = make_data(tail("OKC", season="2018-19") + [
+        rec("Holder", "2019-20", 10000000, team="OKC"),
+        # his big season was elsewhere, so the Thunder list never held it
+        rec("Climber", "2020-21", 30000000, team="BOS", career_earnings=30000000),
+        rec("Climber", "2021-22", 31000000, team="OKC", career_earnings=61000000),
+    ])
+    out = facts(data, "Climber", "2021-22", family="franchise")
+    assert "ahead of Holder's" in out[0]["text"]
+    assert "passing" not in out[0]["text"]
+
+
+# --------------------------------------------------------------------------
+# B3: what was true then, said in the tense it happened in
+# --------------------------------------------------------------------------
+
+
+def test_a_season_already_played_reads_in_the_past_tense():
+    data = make_data(tail("OKC", season="2019-20") + [
+        rec("Past Man", "2020-21", 40000000),
+    ])
+    out = facts(data, "Past Man", "2020-21", family="franchise")
+    assert " was the highest single-season salary" in out[0]["text"]
+
+
+def test_the_season_under_way_reads_in_the_present():
+    data = make_data(tail("OKC", season="2019-20") + [
+        rec("Now Man", CURRENT, 40000000),
+    ])
+    out = facts(data, "Now Man", CURRENT, family="franchise")
+    assert " is the highest single-season salary" in out[0]["text"]
+
+
+def test_a_contracted_season_stays_conditional():
+    data = make_data(tail("OKC", season="2019-20") + [
+        rec("Future Man", CURRENT, 10000000),
+        rec("Future Man", CONTRACTED, 40000000),
+    ])
+    out = facts(data, "Future Man", CONTRACTED, family="franchise")
+    assert " would be the highest single-season salary" in out[0]["text"]
+
+
+def test_a_career_total_that_includes_the_season_under_way_is_not_earned_yet():
+    data = make_data(_finished_field() + [
+        opener("Running", "2024-25", 20000000),
+        rec("Running", "2025-26", 20000000, career_earnings=380000000),
+        rec("Running", CURRENT, 20000000, career_earnings=400000000),
+    ])
+    out = facts(data, "Running", CURRENT, family="career_earnings", kind="sets")
+    assert "will have earned $400 million by the end of {}".format(CURRENT) \
+        in out[0]["text"]
+
+
+def test_a_past_season_is_ranked_against_what_had_happened_by_then():
+    """His 2020-21 cannot be measured against a salary paid in 2023-24."""
+    data = make_data(tail("OKC", season="2019-20") + [
+        rec("Climber", "2020-21", 30000000),
+        rec("Climber", "2023-24", 50000000),
+    ])
+    out = facts(data, "Climber", "2020-21", family="franchise")
+    assert out
+    assert "2023-24" not in out[0]["text"]
+
+
+def test_the_season_under_way_still_sees_every_season_already_paid():
+    data = make_data(tail("OKC", season="2019-20") + [
+        rec("Holder", "2020-21", 50000000),
+        rec("Now Man", CURRENT, 40000000),
+    ])
+    out = facts(data, "Now Man", CURRENT, family="franchise")
+    assert "Holder's $50 million (2020-21)" in out[0]["text"]

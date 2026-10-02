@@ -38,6 +38,7 @@ from prerender import pages as P  # noqa: E402
 from prerender import render as R  # noqa: E402
 from prerender import slugs as S  # noqa: E402
 from prerender import linkify  # noqa: E402
+from prerender import seasons  # noqa: E402
 from prerender.media import Media  # noqa: E402
 from prerender.phrasing import drop_mirrors, straighten  # noqa: E402
 
@@ -50,14 +51,19 @@ def repo_path(*parts):
 # season tables, rendered by the tool's own component
 # --------------------------------------------------------------------------
 
-def render_season_tables(idx, identities):
+def render_season_tables(idx, identities, links=None):
     """Call js/app.js's exported builder so a page's table is the app's table.
 
     One subprocess for every player, not one each: the harness loads app.js
     once and answers the whole batch.
+
+    ``links`` turns the team, season and award cells into links rather than the
+    filter triggers the live tool wires them as: the page is read without the
+    app's JavaScript, so a cell that only answers a click answers nothing.
     """
     payload = {
         "currentSeason": idx.current_season,
+        "links": links or {},
         "players": [
             {"name": ident.key, "records": ident.records} for ident in identities
         ],
@@ -119,7 +125,7 @@ def group_factoids(factoids):
 PAST_SEASON_TYPES = frozenset({"sets", "ties", "milestone", "rank_shift"})
 
 
-def player_facts(by_player_facts, ident, current_key):
+def player_facts(idx, by_player_facts, ident, current_key):
     """This man's claims, grouped by season, newest season first.
 
     A page for one segment of a split key carries only that segment's seasons.
@@ -129,25 +135,22 @@ def player_facts(by_player_facts, ident, current_key):
     """
     if not ident.extra.get("factoids_allowed"):
         return []
-    seasons = {r["season"] for r in ident.records}
+    his = {r["season"] for r in ident.records}
     rows = [
         (season, fact) for season, fact in (by_player_facts.get(ident.data_key) or [])
-        if season in seasons
+        if season in his
     ]
     rows = drop_mirrors(rows)
-
-    groups = collections.defaultdict(list)
-    for season, fact in rows:
-        key = F.season_key(season)
-        if key < current_key and fact["type"] not in PAST_SEASON_TYPES:
-            continue
-        text = straighten(fact, season)
-        if text not in groups[season]:
-            groups[season].append(text)
-    return [
-        (season, F.season_key(season), groups[season])
-        for season in sorted(groups, key=F.season_key, reverse=True)
+    rows = [
+        (season, fact) for season, fact in rows
+        if F.season_key(season) >= current_key
+        or fact["type"] in PAST_SEASON_TYPES
     ]
+    # The engine's sentence is kept on each claim, straightened, for the cases
+    # the paragraph writer cannot phrase and falls back to.
+    rows = [(season, dict(fact, text=straighten(fact, season)))
+            for season, fact in rows]
+    return seasons.paragraphs(idx, ident.name, rows)
 
 
 # --------------------------------------------------------------------------
@@ -527,10 +530,14 @@ def main(argv=None):
             sitemap_rows.append((entity.url, lastmod))
 
     # ---- player pages ----------------------------------------------------
-    tables = render_season_tables(idx, built["players"])
+    tables = render_season_tables(idx, built["players"], links={
+        "team": {e.extra["code"]: e.url for e in built["teams"] if e.slug},
+        "season": {e.key: e.url for e in built["seasons"] if e.slug},
+        "awards": C.TOOL_ROOT,
+    })
     current_key = F.season_key(idx.current_season)
     for ident in built["players"]:
-        facts = player_facts(by_player_facts, ident, current_key)
+        facts = player_facts(idx, by_player_facts, ident, current_key)
         title, description, body = P.player_page(
             idx, ident, tables.get(ident.key, ""), facts,
             related_links(idx, ident, lookup), linker,

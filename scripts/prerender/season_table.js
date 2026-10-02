@@ -8,7 +8,8 @@
  * calls back, and the stub XHR never does, so the file loads, defines the
  * component and stops.
  *
- * stdin  {"currentSeason": "2026-27", "players": [{"name": ..., "records": [...]}]}
+ * stdin  {"currentSeason": "2026-27", "links": {...},
+ *          "players": [{"name": ..., "records": [...]}]}
  * stdout {"<name>": "<html>"}
  */
 'use strict';
@@ -72,6 +73,8 @@ function main() {
       currentSeason: input.currentSeason,
       // the heading and the clicks belong to the page, not the component
       clickable: false,
+      // a static page links the cells the app would have filtered on
+      links: input.links || {},
     });
   }
   process.stdout.write(JSON.stringify(out));

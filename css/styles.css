@@ -1035,14 +1035,29 @@ table.player-season-table td.ps-team {
 /* one line per season is the whole point of this table, so the award badges
    run along the row and ride the container's sideways scroll rather than
    wrapping and stretching the row to four or five lines */
+table.player-season-table th.ps-awards,
 table.player-season-table td.ps-awards {
   text-align: left;
-  /* every award shows, so the badges wrap inside the cell rather than
-     stretching the row off the side of the table */
+  /* Every award shows, and the column is held to a width the rest of the table
+     leaves room for, so the badges wrap down the cell instead of pushing the
+     last column past the right edge of the scroller and cutting it in half. A
+     definite width is what an auto-layout table honours; max-width alone it
+     treats as a suggestion and overruns. */
   white-space: normal;
-  min-width: 11rem;
-  max-width: 18rem;
-  line-height: 1.5;
+  width: 7.5rem;
+  min-width: 7.5rem;
+  max-width: 7.5rem;
+  padding-left: .4rem;
+  padding-right: .4rem;
+  line-height: 1.45;
+}
+
+/* A badge whose own label is wider than the column breaks rather than
+   hanging out of it. Badges elsewhere keep their one line. */
+table.player-season-table td.ps-awards .award-badge {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  margin: .05rem 0 .05rem .05rem;
 }
 
 .ps-empty {

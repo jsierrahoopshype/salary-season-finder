@@ -86,6 +86,13 @@ IMPOSSIBLE_RAISE = 0.40
 #: one, so the season underneath has to be big to begin with.
 IMPOSSIBLE_RAISE_BASE_CAP_PCT = 25.0
 
+#: A looser pair of the same test, with no roster condition. Half again as much
+#: as the season before it is past any legal raise, wherever the money is
+#: filed, and a season already worth this much of its cap is a real salary
+#: rather than a rookie-scale year growing into a maximum one.
+IMPOSSIBLE_LEAP = 0.50
+IMPOSSIBLE_LEAP_BASE_CAP_PCT = 15.0
+
 #: "approaches" = not the record, and either inside the top N by rank or
 #: within this fraction of the record.
 APPROACH_MAX_RANK = 5
@@ -347,15 +354,44 @@ def _possessive(name):
     return name + "'" if name.endswith("s") else name + "'s"
 
 
-# Verb forms for a contracted subject. Money that has not been paid cannot
-# "be" the record, so the claim is stated conditionally and the scope note says
-# why. The comparison set never contains contracted seasons at all.
-def _is_verb(contracted):
-    return "would be" if contracted else "is"
+#: Where a season sits against the calendar. A season already played out is
+#: history and reads in the past tense; the season under way is the present; a
+#: contracted season has not happened and stays conditional.
+PAST, CURRENT, FUTURE = "past", "current", "future"
 
 
-def _tie_verb(contracted):
-    return "would tie" if contracted else "ties"
+def season_tense(idx, season):
+    key = season_key(season)
+    if key > idx.current_key:
+        return FUTURE
+    if key == idx.current_key:
+        return CURRENT
+    return PAST
+
+
+# Verb forms by tense. Money that has not been paid cannot "be" the record, so a
+# contracted claim is conditional and the scope note says why; a season that is
+# over "was" the record, whatever has happened since.
+def _is_verb(tense):
+    return {FUTURE: "would be", CURRENT: "is", PAST: "was"}[_tense(tense)]
+
+
+def _tie_verb(tense):
+    return {FUTURE: "would tie", CURRENT: "ties", PAST: "tied"}[_tense(tense)]
+
+
+def _was_verb(tense):
+    """"is"/"was" for a sentence whose subject is the player, not the salary."""
+    return {FUTURE: "would be", CURRENT: "is", PAST: "was"}[_tense(tense)]
+
+
+def _tense(value):
+    """Accept a tense, or the old contracted boolean, which means future."""
+    if value is True:
+        return FUTURE
+    if value is False:
+        return CURRENT
+    return value
 
 
 CONTRACTED_NOTE = "This salary is contracted, not money already paid."
@@ -378,7 +414,7 @@ class Universe:
     hypothetical salary safe to evaluate: the record never competes with itself.
     """
 
-    __slots__ = ("entries", "_neg", "_pos", "_players")
+    __slots__ = ("entries", "_neg", "_pos", "_players", "_cuts", "_players_as_of")
 
     def __init__(self, entries):
         self.entries = sorted(
@@ -389,20 +425,39 @@ class Universe:
         for i, e in enumerate(self.entries):
             self._pos.setdefault(e["key"], i)
         self._players = None
+        # Season keys in order, so "how many of these had happened by season S"
+        # is a bisect rather than a pass.
+        self._cuts = sorted(season_key(e["season"]) for e in self.entries)
+        self._players_as_of = {}
 
     def __len__(self):
         return len(self.entries)
 
-    def distinct_players(self):
-        if self._players is None:
-            self._players = len({e["player"] for e in self.entries})
-        return self._players
+    def distinct_players(self, as_of=None):
+        if as_of is None:
+            if self._players is None:
+                self._players = len({e["player"] for e in self.entries})
+            return self._players
+        count = self._players_as_of.get(as_of)
+        if count is None:
+            count = len({
+                e["player"] for e in self.entries
+                if season_key(e["season"]) <= as_of
+            })
+            self._players_as_of[as_of] = count
+        return count
 
-    def evaluate(self, value, exclude_key):
+    def evaluate(self, value, exclude_key, as_of=None):
         """Rank ``value`` against this universe with ``exclude_key`` held out.
 
-        Returns None when the universe is empty once the subject is removed.
+        ``as_of`` is a season key: entries from later seasons are left out, so a
+        past season is ranked against what had happened by then rather than
+        against money paid after it. Returns None when the universe is empty
+        once the subject is removed.
         """
+        if as_of is not None:
+            return self._evaluate_as_of(value, exclude_key, as_of)
+
         held_out = self._pos.get(exclude_key)
         size = len(self.entries) - (1 if held_out is not None else 0)
         if size <= 0:
@@ -427,6 +482,41 @@ class Universe:
             for e in leaders
             if e["value"] == value
         ]
+        return {
+            "rank": above + 1,
+            "size": size,
+            "top": top,
+            "ties": ties,
+            "leaders": leaders[:5],
+        }
+
+    def _evaluate_as_of(self, value, exclude_key, cut):
+        """The same verdict over the seasons that had been played by ``cut``.
+
+        The entries are already sorted by value, so the leaders are found by
+        walking from the top and skipping what had not happened yet; the size is
+        a bisect over the season keys.
+        """
+        size = bisect.bisect_right(self._cuts, cut)
+        held_out = self._pos.get(exclude_key)
+        if held_out is not None and season_key(self.entries[held_out]["season"]) <= cut:
+            size -= 1
+        if size <= 0:
+            return None
+
+        above, top, leaders = 0, None, []
+        for entry in self.entries:
+            if entry["key"] == exclude_key or season_key(entry["season"]) > cut:
+                continue
+            if top is None:
+                top = entry
+            if entry["value"] > value:
+                above += 1
+            if len(leaders) < 6:
+                leaders.append(entry)
+            elif entry["value"] <= value:
+                break
+        ties = [e for e in leaders if e["value"] == value]
         return {
             "rank": above + 1,
             "size": size,
@@ -522,6 +612,14 @@ class FactoidIndex:
         self.u_no_all_nba_todate = None
         self.u_cap_pct_all = None
         self.u_cap_pct_season = {}
+        # Lazily built views of the career and negative-space universes as they
+        # stood at the end of an earlier season, keyed by that season's key. A
+        # career total is a running figure, so a past season cannot be ranked by
+        # dropping later entries: each one has to be recomputed at the cut.
+        self.u_career_as_of = {}
+        self.u_cohort_career_as_of = {}
+        self.u_negative_as_of = {}
+        self.first_selection = {}       # (player, award group) -> first season
         self.u_agent = {}
         self.season_salaries = {}
         self.team_season_salaries = {}
@@ -632,6 +730,49 @@ class FactoidIndex:
             and player not in self.career_total_carried_in
             and player not in self.career_incomplete
         )
+
+    # -- as-of views -------------------------------------------------------
+
+    def career_universe(self, as_of=None):
+        """Career totals as they stood at the end of season key ``as_of``."""
+        if as_of is None:
+            return self.u_career
+        view = self.u_career_as_of.get(as_of)
+        if view is None:
+            view = Universe(_career_entries_as_of(self, self.u_career, as_of))
+            self.u_career_as_of[as_of] = view
+        return view
+
+    def cohort_career_universe(self, key, as_of=None):
+        """The same, for one cohort's careers. ``key`` is (kind, cohort key)."""
+        whole = self.u_cohort_career.get(key)
+        if as_of is None or whole is None:
+            return whole
+        view = self.u_cohort_career_as_of.get((key, as_of))
+        if view is None:
+            view = Universe(_career_entries_as_of(self, whole, as_of))
+            self.u_cohort_career_as_of[(key, as_of)] = view
+        return view
+
+    def negative_universe(self, name, as_of=None):
+        """Best paid season by a man with no selection, as of ``as_of``.
+
+        ``name`` is one of all_star / all_nba / all_star_todate / all_nba_todate.
+        """
+        whole = {
+            "all_star": self.u_no_all_star,
+            "all_nba": self.u_no_all_nba,
+            "all_star_todate": self.u_no_all_star_todate,
+            "all_nba_todate": self.u_no_all_nba_todate,
+        }[name]
+        if as_of is None or whole is None:
+            return whole
+        view = self.u_negative_as_of.get((name, as_of))
+        if view is None:
+            group = "all_nba" if "all_nba" in name else "all_star"
+            view = Universe(_negative_entries_as_of(self, whole, group, as_of))
+            self.u_negative_as_of[(name, as_of)] = view
+        return view
 
     def paid_through(self, player):
         """(money already paid, the season it runs through), or (None, None).
@@ -1001,6 +1142,22 @@ def _flag_impossible_salaries(idx):
                             (salary / float(was) - 1) * 100.0, previous["season"],
                             fmt_money(was), fmt_money(salary), base_share)
                     )
+                elif (
+                    was > 0
+                    and salary > was * (1 + IMPOSSIBLE_LEAP)
+                    and base_share is not None
+                    and base_share > IMPOSSIBLE_LEAP_BASE_CAP_PCT
+                ):
+                    # Half again as much as a salary that was already big is
+                    # past any raise a contract can carry, and it does not
+                    # matter whose books it sits on: a trade cannot rewrite the
+                    # number, so a jump this size is a projection either way.
+                    reason = (
+                        "a contracted {:.0f}% jump over {}, {} to {}, off a "
+                        "season already worth {:.1f}% of the cap".format(
+                            (salary / float(was) - 1) * 100.0, previous["season"],
+                            fmt_money(was), fmt_money(salary), base_share)
+                    )
 
             if reason is not None:
                 idx.impossible[(player, season)] = reason
@@ -1069,6 +1226,15 @@ def _flag_players(idx):
             idx.recently_active.add(player)
 
 
+def _note_first(idx, player, group, season):
+    """The earliest season a man was selected, which is when he stopped being
+    a player with no selection."""
+    key = (player, group)
+    current = idx.first_selection.get(key)
+    if current is None or season_key(season) < season_key(current):
+        idx.first_selection[key] = season
+
+
 def _index_awards(idx):
     """Audit (b): selection counts per season, and which seasons are unsafe.
 
@@ -1085,9 +1251,11 @@ def _index_awards(idx):
         if awards & ALL_STAR_AWARDS:
             all_star[rec["season"]].add(name)
             idx.all_star_players.add(name)
+            _note_first(idx, name, "all_star", rec["season"])
         if awards & ALL_NBA_AWARDS:
             all_nba[rec["season"]].add(name)
             idx.all_nba_players.add(name)
+            _note_first(idx, name, "all_nba", rec["season"])
 
     played = [s for s in idx.seasons if season_key(s) < idx.current_key]
     idx.awards_known_through = played[-1] if played else ""
@@ -1229,6 +1397,70 @@ COHORT_MINIMUMS = {
     "pick_range": PICK_RANGE_MIN_PLAYERS,
     "college_position": COLLEGE_POSITION_MIN_PLAYERS,
 }
+
+
+def _career_entries_as_of(idx, whole, cut):
+    """Each career in ``whole``, at the total it had reached by ``cut``."""
+    out = []
+    for entry in whole.entries:
+        record = _paid_record_as_of(idx, entry["player"], cut)
+        if record is None or record.get("career_earnings") is None:
+            continue
+        out.append(dict(
+            entry,
+            value=record["career_earnings"],
+            season=record["season"],
+            display=idx.display_name(entry["player"], record["season"]),
+            person=idx.person_of(entry["player"], record["season"]),
+        ))
+    return out
+
+
+def _paid_record_as_of(idx, player, cut):
+    """His last season on or before ``cut`` that was money actually paid."""
+    found = None
+    for record in idx.by_player.get(player) or ():
+        if season_key(record["season"]) > cut:
+            break
+        if idx.is_contracted(record["season"]):
+            continue
+        if (player, record["season"]) in idx.split_suppressed:
+            continue
+        if (player, record["season"]) in idx.impossible:
+            continue
+        found = record
+    return found
+
+
+def _negative_entries_as_of(idx, whole, group, cut):
+    """Best paid season by ``cut``, for men with no selection by ``cut``.
+
+    A man who made his first team later than the cut had not made one then, so
+    he belongs in the comparison as it stood; a man who had already made one
+    stays out of it whatever happened afterwards.
+    """
+    out = []
+    for entry in whole.entries:
+        player = entry["player"]
+        first = idx.first_selection.get((player, group))
+        if first is not None and season_key(first) <= cut:
+            continue
+        best = None
+        for record in idx.by_player.get(player) or ():
+            if season_key(record["season"]) > cut:
+                break
+            if idx.is_contracted(record["season"]):
+                continue
+            if (player, record["season"]) in idx.split_suppressed:
+                continue
+            if (player, record["season"]) in idx.impossible:
+                continue
+            if best is None or (record.get("salary") or 0) > (best.get("salary") or 0):
+                best = record
+        if best is None:
+            continue
+        out.append(dict(entry, value=best.get("salary") or 0, season=best["season"]))
+    return out
 
 
 def _build_universes(idx):
@@ -1481,6 +1713,19 @@ def _behind_clause(entry, money=True, subject=None):
     return "{} {} ({})".format(_possessive(_name(entry)), value, entry["season"])
 
 
+def _overtake(top, prior_best):
+    """"passing" or "ahead of", by whether the holder was ever ahead of him.
+
+    A man only passes a mark that was above his own. Where he already stood
+    higher before this season, he passed that holder in some earlier season and
+    today he is merely ahead of him: the line is about where he stands, not
+    about something that happened here.
+    """
+    if top is None or prior_best is None:
+        return "passing"
+    return "passing" if top["value"] > prior_best else "ahead of"
+
+
 def pre_window_shadow(universe, value, margin=PRE_WINDOW_MARGIN):
     """The pre-window career that makes this figure unsafe to rank, if any.
 
@@ -1532,6 +1777,7 @@ class _Log:
 def _family_franchise(ctx, out, log):
     idx, player, season = ctx["index"], ctx["player"], ctx["season"]
     record, contracted = ctx["record"], ctx["contracted"]
+    tense = ctx["tense"]
     # ``player`` keys the data; ``subject_name`` is what the sentence prints and
     # ``subject_person`` is who the sentence is about. They differ only where a
     # confirmed split says one data key covers two men.
@@ -1574,7 +1820,7 @@ def _family_franchise(ctx, out, log):
         if universe is None:
             log.drop("franchise", code, "empty_universe")
             continue
-        verdict = universe.evaluate(amount, (player, season))
+        verdict = universe.evaluate(amount, (player, season), as_of=ctx["as_of"])
         kind = classify(amount, verdict)
         if kind is None:
             log.drop("franchise", code, "not_notable", "outside the top {}".format(APPROACH_MAX_RANK))
@@ -1599,16 +1845,18 @@ def _family_franchise(ctx, out, log):
                     "{} {} in {}{} {} the highest single-season salary in {} "
                     "history, breaking his own mark of {} in {}.".format(
                         _possessive(subject_name), fmt_money(amount), season, split_note,
-                        _is_verb(contracted), name,
+                        _is_verb(tense), name,
                         fmt_money(top["value"]), top["season"],
                     )
                 )
             else:
                 text = (
                     "{} {} in {}{} {} the highest single-season salary in {} "
-                    "history, passing {}.".format(
+                    "history, {} {}.".format(
                         _possessive(subject_name), fmt_money(amount), season, split_note,
-                        _is_verb(contracted), name, _behind_clause(top, subject=subject_person),
+                        _is_verb(tense), name,
+                        _overtake(top, ctx["prior_best_salary"]),
+                        _behind_clause(top, subject=subject_person),
                     )
                 )
         elif kind == "ties":
@@ -1616,7 +1864,7 @@ def _family_franchise(ctx, out, log):
                 "{} {} in {}{} {} the highest single-season salary in {} "
                 "history, matching {}.".format(
                     _possessive(subject_name), fmt_money(amount), season, split_note,
-                    _tie_verb(contracted), name, _behind_clause(top, subject=subject_person),
+                    _tie_verb(tense), name, _behind_clause(top, subject=subject_person),
                 )
             )
         else:
@@ -1624,7 +1872,7 @@ def _family_franchise(ctx, out, log):
                 "{} {} in {}{} {} the {}-highest single-season salary in {} "
                 "history, behind {}.".format(
                     _possessive(subject_name), fmt_money(amount), season, split_note,
-                    _is_verb(contracted), ordinal(verdict["rank"]), name,
+                    _is_verb(tense), ordinal(verdict["rank"]), name,
                     _behind_clause(top, subject=subject_person),
                 )
             )
@@ -1646,6 +1894,7 @@ def _family_franchise(ctx, out, log):
 def _family_career(ctx, out, log):
     idx, player, season = ctx["index"], ctx["player"], ctx["season"]
     contracted = ctx["contracted"]
+    tense = ctx["tense"]
     # ``player`` keys the data; ``subject_name`` is what the sentence prints and
     # ``subject_person`` is who the sentence is about. They differ only where a
     # confirmed split says one data key covers two men.
@@ -1677,19 +1926,19 @@ def _family_career(ctx, out, log):
         if prior_total is not None and prior_total >= milestone:
             continue
         label = fmt_money(milestone)
-        universe = idx.u_career
+        universe = idx.career_universe(ctx["as_of"])
         verdict = universe.evaluate(milestone, (player, None))
         reached = sum(1 for e in universe.entries if e["value"] >= milestone and e["player"] != player)
-        in_progress = season == idx.current_season and idx.current_season_in_progress
+        in_progress = tense == CURRENT and idx.current_season_in_progress
         if contracted:
             text = (
                 "{} is on track to pass {} in career earnings in {} "
-                "if his contract is paid in full.".format(subject_name, label, season)
+                "if his salaries are paid in full.".format(subject_name, label, season)
             )
         elif in_progress:
             # The season is being played, so the salary is not earned yet.
             # "Passed" would be wrong until it ends.
-            text = "{} will pass {} in career earnings in {}.".format(
+            text = "{} will pass {} in career earnings by the end of {}.".format(
                 subject_name, label, season
             )
         else:
@@ -1747,7 +1996,7 @@ def _family_career(ctx, out, log):
         )
         return
 
-    verdict = idx.u_career.evaluate(paid_total, (player, None))
+    verdict = idx.career_universe(ctx["as_of"]).evaluate(paid_total, (player, None))
     kind = classify(paid_total, verdict)
     if kind is None:
         log.drop("career_earnings", player, "not_notable", "outside the career-earnings top {}".format(APPROACH_MAX_RANK))
@@ -1767,7 +2016,8 @@ def _family_career(ctx, out, log):
             "career_rank|{}|{}".format(player, season),
             _career_rank_text(
                 kind, subject_name, subject_person, paid_total, verdict, top,
-                active, through=season,
+                active, through=season, prior_total=ctx["prior_career_total"],
+                tense=tense, in_progress=idx.current_season_in_progress,
             ),
             scope, paid_total, contracted,
             rank=verdict["rank"], comparison_size=verdict["size"],
@@ -1791,23 +2041,39 @@ def _career_rival(label):
     return "anyone else " + label
 
 
+def _career_opening(subject_name, money, active, through, tense, in_progress):
+    """How a career total is introduced, which depends on when it was reached.
+
+    A finished career "earned ... in his career". An active man's total is
+    stated at the season it runs through: for a season already played out
+    "had earned ... through 2024-25", because that is what it was then and the
+    figure has grown since; for the season under way "will have earned ... by
+    the end of 2026-27", because the last of that money has not been paid yet.
+    """
+    tense = _tense(tense)
+    if not active:
+        return "{} earned {} in his career".format(subject_name, money)
+    if tense == PAST:
+        return "{} had earned {} through {}".format(subject_name, money, through)
+    if tense == CURRENT and in_progress:
+        return "{} will have earned {} by the end of {}".format(
+            subject_name, money, through)
+    return "{} has earned {} through {}".format(subject_name, money, through)
+
+
 def _career_rank_text(kind, subject_name, subject_person, total, verdict, top,
-                      active, label=ALL_TIME, through=None):
+                      active, label=ALL_TIME, through=None, prior_total=None,
+                      tense=CURRENT, in_progress=False):
     """One career-earnings sentence, active or finished, all-time or cohort.
 
-    An active man "has earned ... through 2026-27", naming the last season the
-    total covers rather than leaving "to date" to be guessed at; a finished
-    career "earned ... in his career". Neither says "since 1990-91": the page
-    carries that note once.
+    Neither form says "since 1990-91": the page carries that note once.
     """
-    money = fmt_money(total)
-    if active:
-        opening = "{} has earned {} through {}".format(subject_name, money, through)
-    else:
-        opening = "{} earned {} in his career".format(subject_name, money)
+    opening = _career_opening(
+        subject_name, fmt_money(total), active, through, tense, in_progress)
     if kind == "sets":
-        return "{}, more than {}, passing {}.".format(
-            opening, _career_rival(label), _behind_clause(top, subject=subject_person))
+        return "{}, more than {}, {} {}.".format(
+            opening, _career_rival(label), _overtake(top, prior_total),
+            _behind_clause(top, subject=subject_person))
     if kind == "ties":
         return "{}, level with the most {}, matching {}.".format(
             opening, label, _behind_clause(top, subject=subject_person))
@@ -1822,6 +2088,7 @@ def _career_rank_text(kind, subject_name, subject_person, total, verdict, top,
 def _family_cohorts(ctx, out, log):
     idx, player, season = ctx["index"], ctx["player"], ctx["season"]
     contracted, salary = ctx["contracted"], ctx["salary"]
+    tense = ctx["tense"]
     # ``player`` keys the data; ``subject_name`` is what the sentence prints and
     # ``subject_person`` is who the sentence is about. They differ only where a
     # confirmed split says one data key covers two men.
@@ -1847,19 +2114,20 @@ def _family_cohorts(ctx, out, log):
         if universe is None:
             log.drop("cohort", "{}:{}".format(kind_name, ckey), "empty_universe")
             continue
-        if universe.distinct_players() < minimum:
+        cohort_size = universe.distinct_players(as_of=ctx["as_of"])
+        if cohort_size < minimum:
             log.drop(
                 "cohort", "{}:{}".format(kind_name, ckey), "cohort_below_threshold",
-                "{} distinct players, needs {}".format(universe.distinct_players(), minimum),
+                "{} distinct players, needs {}".format(cohort_size, minimum),
             )
             continue
 
-        verdict = universe.evaluate(salary, (player, season))
+        verdict = universe.evaluate(salary, (player, season), as_of=ctx["as_of"])
         verdict_kind = classify(salary, verdict)
         if verdict_kind is not None:
             top = verdict["top"]
             scope = "Cohort of {} players and {} player seasons. {} {}".format(
-                universe.distinct_players(), len(universe),
+                cohort_size, len(universe),
                 PAID_ONLY_NOTE.format(idx.current_season), DATA_START_NOTE,
             )
             if contracted:
@@ -1868,22 +2136,24 @@ def _family_cohorts(ctx, out, log):
                 if top.get("person") == subject_person:
                     text = "{} {} in {} {} the highest single-season salary {}, breaking his own mark of {} in {}.".format(
                         _possessive(subject_name), fmt_money(salary), season,
-                        _is_verb(contracted), label,
+                        _is_verb(tense), label,
                         fmt_money(top["value"]), top["season"],
                     )
                 else:
-                    text = "{} {} in {} {} the highest single-season salary {}, passing {}.".format(
+                    text = "{} {} in {} {} the highest single-season salary {}, {} {}.".format(
                         _possessive(subject_name), fmt_money(salary), season,
-                        _is_verb(contracted), label, _behind_clause(top, subject=subject_person),
+                        _is_verb(tense), label,
+                        _overtake(top, ctx["prior_best_salary"]),
+                        _behind_clause(top, subject=subject_person),
                     )
             elif verdict_kind == "ties":
                 text = "{} {} in {} {} the highest single-season salary {}, matching {}.".format(
                     _possessive(subject_name), fmt_money(salary), season,
-                    _tie_verb(contracted), label, _behind_clause(top, subject=subject_person),
+                    _tie_verb(tense), label, _behind_clause(top, subject=subject_person),
                 )
             else:
                 text = "{} {} in {} {} the {}-highest single-season salary {}, behind {}.".format(
-                    _possessive(subject_name), fmt_money(salary), season, _is_verb(contracted),
+                    _possessive(subject_name), fmt_money(salary), season, _is_verb(tense),
                     ordinal(verdict["rank"]), label, _behind_clause(top, subject=subject_person),
                 )
             out.append(
@@ -1908,7 +2178,7 @@ def _family_cohorts(ctx, out, log):
         career_total, _paid_season = idx.paid_through(player)
         if career_total is None:
             continue
-        cu = idx.u_cohort_career.get((kind_name, ckey))
+        cu = idx.cohort_career_universe((kind_name, ckey), ctx["as_of"])
         if cu is None or len(cu) == 0:
             log.drop("cohort", "{}:{}".format(kind_name, ckey), "no_careers")
             continue
@@ -1948,6 +2218,8 @@ def _family_cohorts(ctx, out, log):
                 _career_rank_text(
                     ckind, subject_name, subject_person, career_total, cverdict,
                     ctop, cactive, label=label, through=season,
+                    prior_total=ctx["prior_career_total"],
+                    tense=tense, in_progress=idx.current_season_in_progress,
                 ),
                 scope, career_total, contracted,
                 rank=cverdict["rank"], comparison_size=cverdict["size"],
@@ -1962,6 +2234,7 @@ def _family_cohorts(ctx, out, log):
 def _family_negative_space(ctx, out, log):
     idx, player, season = ctx["index"], ctx["player"], ctx["season"]
     contracted, salary = ctx["contracted"], ctx["salary"]
+    tense = ctx["tense"]
     # ``player`` keys the data; ``subject_name`` is what the sentence prints and
     # ``subject_person`` is who the sentence is about. They differ only where a
     # confirmed split says one data key covers two men.
@@ -1975,8 +2248,12 @@ def _family_negative_space(ctx, out, log):
     # An active subject is ranked against everyone's record to date; a finished
     # career is ranked against finished careers. See _build_universes.
     for label, holders, retired_u, todate_u, family_key in (
-        ("All-Star", idx.all_star_players, idx.u_no_all_star, idx.u_no_all_star_todate, "no_all_star"),
-        ("All-NBA", idx.all_nba_players, idx.u_no_all_nba, idx.u_no_all_nba_todate, "no_all_nba"),
+        ("All-Star", idx.all_star_players,
+         idx.negative_universe("all_star", ctx["as_of"]),
+         idx.negative_universe("all_star_todate", ctx["as_of"]), "no_all_star"),
+        ("All-NBA", idx.all_nba_players,
+         idx.negative_universe("all_nba", ctx["as_of"]),
+         idx.negative_universe("all_nba_todate", ctx["as_of"]), "no_all_nba"),
     ):
         unsafe_set = (
             idx.all_star_unsafe_seasons if label == "All-Star"
@@ -2035,18 +2312,19 @@ def _family_negative_space(ctx, out, log):
             subject = "by a player who never made an {}".format(team_noun)
 
         if kind == "sets":
-            text = "{} {} in {} {} the highest single-season salary {}, passing {}.".format(
-                _possessive(subject_name), fmt_money(salary), season, _is_verb(contracted),
-                subject, _behind_clause(top, subject=subject_person),
+            text = "{} {} in {} {} the highest single-season salary {}, {} {}.".format(
+                _possessive(subject_name), fmt_money(salary), season, _is_verb(tense),
+                subject, _overtake(top, ctx["prior_best_salary"]),
+                _behind_clause(top, subject=subject_person),
             )
         elif kind == "ties":
             text = "{} {} in {} {} the highest single-season salary {}, matching {}.".format(
-                _possessive(subject_name), fmt_money(salary), season, _tie_verb(contracted),
+                _possessive(subject_name), fmt_money(salary), season, _tie_verb(tense),
                 subject, _behind_clause(top, subject=subject_person),
             )
         else:
             text = "{} {} in {} {} the {}-highest single-season salary {}, behind {}.".format(
-                _possessive(subject_name), fmt_money(salary), season, _is_verb(contracted),
+                _possessive(subject_name), fmt_money(salary), season, _is_verb(tense),
                 ordinal(verdict["rank"]), subject, _behind_clause(top, subject=subject_person),
             )
         out.append(
@@ -2066,6 +2344,7 @@ def _family_negative_space(ctx, out, log):
 def _family_cap(ctx, out, log):
     idx, player, season = ctx["index"], ctx["player"], ctx["season"]
     contracted, salary = ctx["contracted"], ctx["salary"]
+    tense = ctx["tense"]
     # ``player`` keys the data; ``subject_name`` is what the sentence prints and
     # ``subject_person`` is who the sentence is about. They differ only where a
     # confirmed split says one data key covers two men.
@@ -2091,7 +2370,10 @@ def _family_cap(ctx, out, log):
     ):
         if universe is None:
             continue
-        verdict = universe.evaluate(pct, (player, season))
+        # A within-season universe holds that season alone, so there is nothing
+        # later in it to leave out.
+        cut = ctx["as_of"] if scope_name == "all" else None
+        verdict = universe.evaluate(pct, (player, season), as_of=cut)
         kind = classify(pct, verdict)
         if kind is None:
             continue
@@ -2120,10 +2402,12 @@ def _family_cap(ctx, out, log):
         if contracted:
             scope += " Contracted salary against a projected cap. " + CONTRACTED_NOTE
 
-        takes = "would take up" if contracted else "takes up"
+        takes = {FUTURE: "would take up", CURRENT: "takes up",
+                 PAST: "took up"}[tense]
         if kind == "sets":
-            text = "{} {} salary {} {} of the {} cap, {}, passing {}.".format(
+            text = "{} {} salary {} {} of the {} cap, {}, {} {}.".format(
                 _possessive(subject_name), fmt_money(salary), takes, share, season, where,
+                _overtake(top, ctx["prior_best_cap_pct"]),
                 _behind_clause(top, money=False, subject=subject_person),
             )
         elif kind == "ties":
@@ -2153,6 +2437,7 @@ def _family_cap(ctx, out, log):
 def _family_agent(ctx, out, log):
     idx, player, season = ctx["index"], ctx["player"], ctx["season"]
     contracted, salary, record = ctx["contracted"], ctx["salary"], ctx["record"]
+    tense = ctx["tense"]
     # ``player`` keys the data; ``subject_name`` is what the sentence prints and
     # ``subject_person`` is who the sentence is about. They differ only where a
     # confirmed split says one data key covers two men.
@@ -2197,8 +2482,9 @@ def _family_agent(ctx, out, log):
         "history. Cohort of {} clients with a {} salary on file, including him.".format(clients, season)
     )
     if kind == "sets":
-        text = "{} {} is the highest {} salary among {} clients, passing {}.".format(
+        text = "{} {} is the highest {} salary among {} clients, {} {}.".format(
             _possessive(subject_name), fmt_money(salary), season, _possessive(agent),
+            _overtake(top, ctx["prior_best_salary"]),
             _behind_clause(top, subject=subject_person),
         )
     elif kind == "ties":
@@ -2247,6 +2533,7 @@ def _team_rank(idx, season, team, player, amount):
 def _family_rank_shift(ctx, out, log):
     idx, player, season = ctx["index"], ctx["player"], ctx["season"]
     contracted, salary, record = ctx["contracted"], ctx["salary"], ctx["record"]
+    tense = ctx["tense"]
     # ``player`` keys the data; ``subject_name`` is what the sentence prints and
     # ``subject_person`` is who the sentence is about. They differ only where a
     # confirmed split says one data key covers two men.
@@ -2275,7 +2562,7 @@ def _family_rank_shift(ctx, out, log):
                 "rank_league_first|{}|{}".format(player, season),
                 "{} {} the highest-paid player in the league in {} for the first "
                 "time in his career.".format(
-                    subject_name, _is_verb(contracted), season),
+                    subject_name, _is_verb(tense), season),
                 "First season at No. 1. {}".format(DATA_START_NOTE),
                 salary, contracted, rank=rank, comparison_size=size,
             )
@@ -2357,7 +2644,7 @@ def _family_rank_shift(ctx, out, log):
                 "team_high_becomes|{}|{}".format(player, season),
                 "{} {} the {} highest-paid player in {} after ranking {} on the "
                 "roster in {}.".format(
-                    subject_name, _is_verb(contracted), _possessive(name), season,
+                    subject_name, _is_verb(tense), _possessive(name), season,
                     ordinal(was_rank) if was_rank > 1 else "first",
                     previous["season"]),
                 "Same franchise in consecutive seasons. Roster of {} players with a salary on file.".format(now_size),
@@ -2371,7 +2658,7 @@ def _family_rank_shift(ctx, out, log):
                 "team_high_ceases|{}|{}".format(player, season),
                 "{} {} no longer the {} highest-paid player in {} after holding "
                 "that spot in {}.".format(
-                    subject_name, _is_verb(contracted), _possessive(name), season,
+                    subject_name, _is_verb(tense), _possessive(name), season,
                     previous["season"]),
                 "Same franchise in consecutive seasons. Roster of {} players with a salary on file.".format(now_size),
                 amount, contracted, rank=now_rank, comparison_size=now_size,
@@ -2486,6 +2773,14 @@ def factoids_for(data, player, season, salary=None, index=None, debug=False, sup
     if identity is None and recs:
         identity = prior[-1] if prior else recs[0]
 
+    # His own high-water marks before this season, which decide whether a
+    # record he sets here was ever above him. Paid seasons only, because that is
+    # what the comparison sets hold.
+    paid_prior = [r for r in prior if not idx.is_contracted(r["season"])]
+    prior_best_salary = max([(r.get("salary") or 0) for r in paid_prior] or [0])
+    prior_best_cap_pct = max(
+        [(r.get("salary_cap_pct") or 0.0) for r in paid_prior] or [0.0])
+
     ctx = {
         "index": idx,
         "player": player,
@@ -2499,6 +2794,15 @@ def factoids_for(data, player, season, salary=None, index=None, debug=False, sup
         "contracted": idx.is_contracted(season),
         "career_total": career_total,
         "prior_career_total": prior_total,
+        "prior_best_salary": prior_best_salary,
+        "prior_best_cap_pct": prior_best_cap_pct,
+        # For a season already played out, every comparison is taken as it
+        # stood at the end of it: a 2024-25 line cannot be measured against
+        # money paid in 2026-27. The current and contracted seasons compare
+        # against everything paid, which is everything there is.
+        "tense": season_tense(idx, season),
+        "as_of": (season_key(season)
+                  if season_key(season) < idx.current_key else None),
     }
 
     out = []

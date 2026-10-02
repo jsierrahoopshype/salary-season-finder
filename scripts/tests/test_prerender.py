@@ -647,7 +647,10 @@ def test_no_page_says_it_passed_a_figure_from_a_later_season():
                 continue
             if "passing" in fact["text"] or "breaking" in fact["text"]:
                 backwards.append(fact["text"])
-    assert backwards, "the fixture has to contain at least one to be worth testing"
+    # The engine ranks a season already played out against the seasons that had
+    # been played by then, so a holder from a later season cannot turn up at
+    # all. The page check stays below for anything that slips past that.
+    assert not backwards, backwards[:3]
     for text in backwards:
         for path in all_pages():
             if not path.endswith(".html"):
@@ -660,33 +663,53 @@ def test_no_page_says_it_passed_a_figure_from_a_later_season():
 # --------------------------------------------------------------------------
 
 
+def _paragraphs(who):
+    """[(season, paragraph html)] from a player page, newest season first."""
+    html = read(os.path.join("player", who, "index.html"))
+    block = html[html.index("What the numbers say"):]
+    block = block[:block.index("</div>", block.index("hm-seasons"))]
+    return re.findall(r'<h3>([\d-]{7})</h3><p class="hm-facts">(.*?)</p>',
+                      block, re.S)
+
+
 @built
 def test_a_player_page_groups_its_claims_by_season():
-    html = read(os.path.join("player", "joel-embiid", "index.html"))
-    block = html[html.index("What the numbers say"):]
-    seasons = re.findall(r'<(?:h3|summary)>([\d-]{7})<span class="hm-count">', block)
+    seasons = [s for s, _body in _paragraphs("joel-embiid")]
     assert seasons == sorted(seasons, key=F.season_key, reverse=True), seasons
     assert seasons[0] > seasons[-1]
 
 
 @built
-def test_the_current_and_contracted_seasons_are_open_and_older_ones_are_not():
+def test_every_season_is_open():
+    """The part of the page a reader scrolls for is not behind a drawer."""
     html = read(os.path.join("player", "joel-embiid", "index.html"))
     block = html[html.index("What the numbers say"):]
-    open_seasons = re.findall(r'<section class="hm-season is-open"><h3>([\d-]{7})', block)
-    closed = re.findall(r'<details class="hm-season"><summary>([\d-]{7})', block)
-    assert open_seasons, block[:200]
-    assert min(F.season_key(s) for s in open_seasons) >= F.season_key("2026-27")
-    assert max(F.season_key(s) for s in closed) < F.season_key("2026-27")
+    assert "<details" not in block
+    assert block.count('<section class="hm-season is-open">') == \
+        len(_paragraphs("joel-embiid"))
+
+
+@built
+def test_a_season_is_one_paragraph_of_at_most_three_claims():
+    for season, body in _paragraphs("joel-embiid"):
+        sentences = [s for s in re.split(r"(?<=\.)\s+", body) if s.strip()]
+        assert len(sentences) <= 3, (season, sentences)
+
+
+@built
+def test_a_paragraph_names_him_once_and_then_says_he():
+    for season, body in _paragraphs("joel-embiid"):
+        plain = re.sub(r"<[^>]+>", "", body)
+        assert plain.count("Joel Embiid") <= 1, (season, plain)
 
 
 @built
 def test_an_older_season_keeps_only_what_it_did():
     """No "fourth-highest four years ago" on a page that shows every season."""
-    html = read(os.path.join("player", "joel-embiid", "index.html"))
-    for season, body in re.findall(
-        r'<details class="hm-season"><summary>([\d-]{7})(.*?)</details>', html, re.S
-    ):
+    current = F.season_key("2026-27")
+    for season, body in _paragraphs("joel-embiid"):
+        if F.season_key(season) >= current:
+            continue
         assert "-highest" not in body, season
         assert "-largest" not in body, season
 
@@ -888,9 +911,17 @@ def test_no_title_or_description_carries_the_window():
 def test_a_claim_links_the_things_it_names():
     html = read(os.path.join("player", "joel-embiid", "index.html"))
     block = html[html.index("What the numbers say"):]
-    for expect in ("/college/kansas/", "/draft/2014/", "/player/nikola-jokic/",
+    for expect in ("/college/kansas/", "/draft/2014/", "/team/76ers/",
                    "/position/center/", "/pick/3/"):
         assert 'class="hm-inline-link" href="{}{}"'.format(C.TOOL_ROOT, expect) in block, expect
+
+
+@built
+def test_a_rival_named_in_a_claim_links_to_his_page():
+    html = read(os.path.join("player", "kyrie-irving", "index.html"))
+    block = html[html.index("What the numbers say"):]
+    assert 'class="hm-inline-link" href="{}/player/luka-doncic/"'.format(
+        C.TOOL_ROOT) in block
 
 
 @built
@@ -1504,3 +1535,65 @@ def test_a_new_family_page_reads_like_every_other_cohort_page():
         assert 'class="hm-summary"' in html
         # headshots come from the github.io host on purpose; no link may
         assert 'href="https://jsierrahoopshype.github.io' not in html
+
+
+# --------------------------------------------------------------------------
+# B5/B6: the season table's links, and the awards column
+# --------------------------------------------------------------------------
+
+
+@built
+def test_the_season_table_links_each_team_to_its_page():
+    html = read(os.path.join("player", "kyrie-irving", "index.html"))
+    table = html[html.index("player-season-table"):]
+    table = table[:table.index("</table>")]
+    assert '<a class="team-link" href="{}/team/cavaliers/">CLE</a>'.format(
+        C.TOOL_ROOT) in table
+
+
+@built
+def test_the_season_table_links_each_season_to_its_page():
+    html = read(os.path.join("player", "kyrie-irving", "index.html"))
+    table = html[html.index("player-season-table"):]
+    table = table[:table.index("</table>")]
+    assert '<a href="{}/season/2026-27/">2026-27</a>'.format(C.TOOL_ROOT) in table
+
+
+@built
+def test_an_award_badge_links_to_the_tool_filtered_to_that_award():
+    html = read(os.path.join("player", "kyrie-irving", "index.html"))
+    table = html[html.index("player-season-table"):]
+    table = table[:table.index("</table>")]
+    assert '{}#awards=All-Star'.format(C.TOOL_ROOT) in table
+
+
+@built
+def test_an_award_with_no_chip_falls_back_to_having_any_award():
+    """The same resolution a click uses, so a link lands where a click would."""
+    html = read(os.path.join("player", "kyrie-irving", "index.html"))
+    assert '{}#has_award=1'.format(C.TOOL_ROOT) in html
+
+
+def test_the_award_chip_list_matches_the_markup():
+    """app.js carries the chip values so a page with no DOM can resolve a badge;
+    index.html is where a reader clicks them. They have to be the same list."""
+    app = read(os.path.join("js", "app.js"))
+    block = app[app.index("var AWARD_FILTER_CHIPS = ["):]
+    block = block[:block.index("];")]
+    in_js = re.findall(r'"([^"]+)"', block)
+    markup = read("index.html")
+    panel = markup[markup.index('id="awardsFilter"'):]
+    panel = panel[:panel.index("</div>")]
+    in_html = re.findall(r'data-value="([^"]+)"', panel)
+    assert in_js == in_html
+
+
+def test_the_awards_column_is_held_to_a_width_so_its_badges_wrap():
+    css = read(os.path.join("css", "styles.css"))
+    block = css[css.index("table.player-season-table th.ps-awards,"):]
+    block = block[:block.index("}")]
+    assert "white-space: normal;" in block
+    assert "width: 7.5rem;" in block
+    badge = css[css.index("table.player-season-table td.ps-awards .award-badge"):]
+    badge = badge[:badge.index("}")]
+    assert "overflow-wrap: anywhere;" in badge
