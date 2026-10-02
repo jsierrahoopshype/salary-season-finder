@@ -63,6 +63,15 @@ def _round_floats(obj):
     return obj
 
 
+#: What a season already played out is stored for. A player page prints what he
+#: set, tied, passed or became in an older season and drops the rest (see
+#: PAST_SEASON_TYPES in prerender_pages), a cohort summary reads only contracted
+#: claims, and the digest only ever looks at the seasons a change touched, which
+#: are never older than the current one. So an "approaches" claim about 2019-20
+#: is read by nobody, and storing it costs the back-fill seasons of reach.
+PAST_SEASON_TYPES = frozenset({"sets", "ties", "milestone", "rank_shift"})
+
+
 def build_for_seasons(data, index, seasons):
     """Evaluate every record in ``seasons``. Returns {"player|season": [...]}. """
     wanted = set(seasons)
@@ -73,6 +82,8 @@ def build_for_seasons(data, index, seasons):
         facts = factoids_for(
             data, record["player"], record["season"], index=index
         )
+        if season_key(record["season"]) < index.current_key:
+            facts = [f for f in facts if f["type"] in PAST_SEASON_TYPES]
         if facts:
             out["{}|{}".format(record["player"], record["season"])] = _round_floats(facts)
     return out

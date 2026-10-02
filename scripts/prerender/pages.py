@@ -344,7 +344,7 @@ def player_page(idx, ident, season_table_html, facts, related, linker=None):
     if facts:
         body.append(section(
             "What the numbers say",
-            "Season by season, newest first. Earlier seasons open on a tap.",
+            "Season by season, newest first.",
             facts_by_season(facts, F.season_key(idx.current_season),
                             linker, ident.url),
         ))

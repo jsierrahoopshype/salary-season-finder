@@ -134,13 +134,48 @@
   }
 
   /**
+   * The award chips the filter panel offers, in the order index.html lists
+   * them. Kept here as well as in the markup because a pre-rendered page has
+   * to resolve a badge to a filter with no DOM to read; a test holds the two
+   * copies to the same list.
+   */
+  var AWARD_FILTER_CHIPS = [
+    "All-Star", "Most Valuable Player", "All-NBA", "All-Defensive",
+    "Defensive Player of the Year", "Most Improved Player",
+    "Rookie of the Year", "Sixth Man of the Year", "NBA Champion",
+    "Player of the Week", "Player of the Month",
+    "Defensive Player of the Month",
+  ];
+
+  /**
+   * The hash that reproduces a click on one award badge.
+   *
+   * Same resolution the click handler uses: case-insensitive substring against
+   * each chip, falling back to "has any award" for an award with no chip of
+   * its own, so a link and a click land on the same result set.
+   *
+   * @param {string} award the award name as the data carries it
+   * @returns {string} the hash body, with no leading "#"
+   */
+  function awardFilterHash(award) {
+    var lower = String(award || "").toLowerCase();
+    var hit = AWARD_FILTER_CHIPS.filter(function (chip) {
+      return lower.indexOf(chip.toLowerCase()) >= 0;
+    });
+    if (hit.length === 0) return "has_award=1";
+    return "awards=" + encodeURIComponent(hit.join(","));
+  }
+
+  /**
    * Every award as its own badge, never truncated.
    *
    * @param {Array}  list       award names, already in the order to print
    * @param {Object} [counts]   name -> how many times it was won
    * @param {boolean} clickable wire the badge for click-to-filter
+   * @param {string}  [href]    tool root; each badge becomes a link to the
+   *                            tool filtered to that award
    */
-  function awardBadges(list, counts, clickable) {
+  function awardBadges(list, counts, clickable, href) {
     if (!list || list.length === 0) return "-";
     return list.map(function (a) {
       var cls = "award-badge";
@@ -149,8 +184,13 @@
       if (a.indexOf("Most Valuable Player") >= 0 || a === "Finals MVP") cls += " mvp";
       var n = counts && counts[a] ? counts[a] : 1;
       var text = escHtml(awardLabel(a)) + (n > 1 ? ' <span class="award-count">\u00d7' + n + "</span>" : "");
+      var title = escAttr(a + (n > 1 ? " (" + n + ")" : ""));
+      if (href) {
+        return '<a class="' + cls + '" href="' + escAttr(href + "#" + awardFilterHash(a)) +
+          '" title="' + title + '">' + text + "</a>";
+      }
       var dataAttr = clickable ? ' data-award="' + escAttr(a) + '"' : "";
-      return '<span class="' + cls + '"' + dataAttr + ' title="' + escAttr(a + (n > 1 ? " (" + n + ")" : "")) + '">' + text + "</span>";
+      return '<span class="' + cls + '"' + dataAttr + ' title="' + title + '">' + text + "</span>";
     }).join(" ");
   }
 
@@ -2399,9 +2439,14 @@
     return "$" + n;
   }
 
-  function playerSeasonTeamCell(record, clickable) {
+  function playerSeasonTeamCell(record, clickable, links) {
     var ts = record.team_salaries;
+    var teamUrls = (links && links.team) || null;
     var wrap = function (abbr) {
+      var href = teamUrls && teamUrls[abbr];
+      if (href) {
+        return '<a class="team-link" href="' + escAttr(href) + '">' + escHtml(abbr) + "</a>";
+      }
       if (!clickable) return escHtml(abbr);
       return '<span class="team-link clickable" data-col="team" data-val="' + escAttr(abbr) + '">' + escHtml(abbr) + "</span>";
     };
@@ -2421,9 +2466,9 @@
     return teams.map(wrap).join('<span class="ps-team-sep">/</span>');
   }
 
-  function playerSeasonAwardsCell(awards, clickable) {
+  function playerSeasonAwardsCell(awards, clickable, links) {
     if (!awards || awards.length === 0) return '<span class="ps-empty">-</span>';
-    return awardBadges(awards, null, clickable);
+    return awardBadges(awards, null, clickable, links && links.awards);
   }
 
   /**
@@ -2438,6 +2483,11 @@
    *   opts.clickable      wire team / award cells for click-to-filter
    *                       (default true in the app, pass false when
    *                       pre-rendering a static page).
+   *   opts.links          turn the cells into links instead of filter
+   *                       triggers, for a pre-rendered page:
+   *                       {team: {ATL: url}, season: {"2026-27": url},
+   *                        awards: "<tool root>"}. A cell with no URL in the
+   *                       map is left as plain text.
    * @returns {string} HTML for the scroll container plus the table
    */
   function buildPlayerSeasonTable(records, opts) {
@@ -2445,6 +2495,7 @@
     var currentSeason = opts.currentSeason || DEFAULT_SEASON || "";
     var currentYear = seasonYear(currentSeason);
     var clickable = opts.clickable !== false;
+    var links = opts.links || null;
 
     var rows = (records || []).slice().sort(function (a, b) {
       return seasonYear(a.season) - seasonYear(b.season);
@@ -2471,12 +2522,17 @@
         var cell;
         switch (col.key) {
           case "season":
-            cell = '<th class="' + col.cls + '" scope="row"><span class="ps-season-label">' + escHtml(r.season || "-") + "</span>" +
+            var label = escHtml(r.season || "-");
+            var seasonHref = links && links.season && links.season[r.season];
+            if (seasonHref) {
+              label = '<a href="' + escAttr(seasonHref) + '">' + label + "</a>";
+            }
+            cell = '<th class="' + col.cls + '" scope="row"><span class="ps-season-label">' + label + "</span>" +
               (isFuture ? '<span class="ps-tag">contracted</span>' : "") + "</th>";
             html += cell;
             return;
           case "team":
-            cell = playerSeasonTeamCell(r, clickable);
+            cell = playerSeasonTeamCell(r, clickable, links);
             break;
           case "salary":
           case "career_earnings":
@@ -2491,7 +2547,7 @@
             cell = v == null ? '<span class="ps-empty">-</span>' : fmtStat(v);
             break;
           case "awards":
-            cell = playerSeasonAwardsCell(v, clickable);
+            cell = playerSeasonAwardsCell(v, clickable, links);
             break;
           default:
             cell = v == null || v === "" ? '<span class="ps-empty">-</span>' : escHtml(String(v));
@@ -2883,6 +2939,8 @@
   window.HoopsMaticPlayerSeasonTable = {
     build: buildPlayerSeasonTable,
     columns: PLAYER_SEASON_COLUMNS,
+    awardChips: AWARD_FILTER_CHIPS,
+    awardHash: awardFilterHash,
   };
 
   // The one rule that decides whether the address carries a hash, exposed so
