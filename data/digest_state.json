@@ -1,6 +1,6 @@
 {
- "changes_posted": 0,
- "last_commit": "050dfdeeb609b28e4fbd2ac91a028d59307b6497",
- "last_run": "",
- "readme": "The build scripts/salary_digest.py last read. Committed so that a rerun of the workflow compares against the same place and never posts a day's changes twice. Seeded by hand at the commit the digest was added, so its first run reports a day's changes rather than a baseline; delete this file to go back to a silent first run."
+ "changes_posted": 10,
+ "last_commit": "52c39fd48177670098420f229adab01db60d17b0",
+ "last_run": "2026-10-02T11:44:07Z",
+ "readme": "The build scripts/salary_digest.py last read. Committed so that a rerun of the workflow compares against the same place and never posts a day's changes twice."
 }
