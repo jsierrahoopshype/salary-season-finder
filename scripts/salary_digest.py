@@ -705,17 +705,14 @@ def sentence(item, names=None):
             if code.strip())
     if not clauses:
         return ""
-    # A clause that could not say it all leaves the rest as its own sentence.
-    after = " ".join(said.get("after") or ())
-    after = " " + after if after else ""
     if len(clauses) == 1:
-        return clauses[0] + "." + after
+        return clauses[0] + "."
     # A clause carrying an "and" of its own, or two clauses of its own, cannot
     # take another: the semicolon keeps the day to one sentence without three
     # ands inside it, and without an "and" a reader has to re-read.
     if any(_crowded(text) for text in clauses):
-        return "; ".join(clauses) + "." + after
-    return "{}, and {}.".format(", ".join(clauses[:-1]), clauses[-1]) + after
+        return "; ".join(clauses) + "."
+    return "{}, and {}.".format(", ".join(clauses[:-1]), clauses[-1])
 
 
 def _crowded(text):
@@ -771,7 +768,7 @@ def _clause(item, names, who, whose, said=None):
         return "{} is due {} in {}".format(who, money, season)
 
     if kind in ("salary", "salary_run"):
-        return changed_salary(item, whose, said)
+        return changed_salary(item, whose)
 
     if kind in ("team", "team_run"):
         # Where the money used to sit is not the news and dates the line: what
@@ -844,45 +841,65 @@ def step_verb(now, before):
 
 
 def changed_salary(item, whose=None, said=None):
-    """A number that moved: the first season it moved in, old to new.
+    """A number that moved: the season it moved most in, old to new.
 
-    One number a reader can hold, in the season nearest to now, and then what
-    the whole move is worth: the money added to or taken off what he is owed,
-    and the season it runs to. "His next four seasons move with it" said that
-    they moved and never said by how much, which is the only part worth a line.
+    One number a reader can hold, and then what the whole move is worth: the
+    money added to or taken off what he is owed, and the season it runs to.
+    "His next four seasons move with it" said that they moved and never said by
+    how much, which is the only part worth a line.
 
     Where the money only moved about inside the deal, the shape is the story
-    and the clause says so instead.
+    and the clause says so instead, with what is still owed folded into it so
+    the item stays at two sentences.
     """
     if whose is None:
         whose = possessive(item["player"])
-    first = item.get("first_season") or item["season"]
-    was = item.get("first_was")
-    if was is None:
-        was = item.get("was")
-    now = item.get("first_salary")
-    if now is None:
-        now = item.get("salary")
+    lead, leads = _lead_season(item)
+    season = lead["season"]
+    was, now = lead.get("was") or 0, lead.get("salary") or 0
 
-    reshaped = _reshaped(item)
+    reshaped = _reshaped(item) if leads else None
     if reshaped:
-        if said is not None:
-            owed = _owed_sentence(item)
-            if owed:
-                said.setdefault("after", []).append(owed)
         return "{} salary is {}: {} in {}, {} from {}, with his later seasons " \
-            "{} by {}".format(
-                whose, reshaped["shape"], F.fmt_money(now), first,
-                "up" if (now or 0) > (was or 0) else "down", F.fmt_money(was),
-                reshaped["way"], reshaped["much"])
+            "{} by {}{}".format(
+                whose, reshaped["shape"], F.fmt_money(now), season,
+                "up" if now > was else "down", F.fmt_money(was),
+                reshaped["way"], reshaped["much"], _owed_clause(item))
 
-    verb = step_verb(now or 0, was or 0)
-    tail = _rest_of_run(item)
+    verb = step_verb(now, was)
+    tail = _rest_of_run(item, leads)
     if not verb:
         return "{} {} salary is {}{}".format(
-            whose, first, F.fmt_money(now), tail)
+            whose, season, F.fmt_money(now), tail)
     return "{} {} salary {} to {} from {}{}".format(
-        whose, first, verb, F.fmt_money(now), F.fmt_money(was), tail)
+        whose, season, verb, F.fmt_money(now), F.fmt_money(was), tail)
+
+
+def _lead_season(item):
+    """(the season the line leads on, whether it is the first one that changed).
+
+    The first changed season, which is the one nearest to now, unless it barely
+    moved while a season behind it moved properly: a line that opens on a
+    number that did not really change buries the one that did. The biggest move
+    is the biggest in money, which is what every other figure in the digest is.
+    """
+    members = item.get("members") or []
+    if not members:
+        return item, True
+    first = members[0]
+    if _clears_floor(first) or not any(_clears_floor(m) for m in members[1:]):
+        return first, True
+    biggest = max(members, key=lambda m: (
+        abs((m.get("salary") or 0) - (m.get("was") or 0)),
+        -F.season_key(m["season"])))
+    return biggest, biggest is first
+
+
+def _clears_floor(member):
+    """Whether one season moved enough to be worth leading a line with."""
+    was = member.get("was") or 0
+    now = member.get("salary") or 0
+    return bool(was) and abs(now - was) >= was * TINY_CHANGE
 
 
 def _reshaped(item):
@@ -919,12 +936,16 @@ def _reshaped(item):
     }
 
 
-def _owed_sentence(item):
-    """"He's still owed $200 million through 2030-31." """
+def _owed_clause(item):
+    """"and $200 million still owed through 2030-31", inside the same sentence.
+
+    A reshaped deal is two facts, the shape and the total, and a sentence each
+    would make the item three with its nugget. Folded together it stays at two.
+    """
     total, through = item.get("owed") or (0, "")
     if not total or not through:
         return ""
-    return "He's still owed {} through {}.".format(F.fmt_money(total), through)
+    return " and {} still owed through {}".format(F.fmt_money(total), through)
 
 
 #: A net move smaller than this is not worth a figure of its own: the seasons
@@ -932,7 +953,7 @@ def _owed_sentence(item):
 NET_FLOOR = 0.05
 
 
-def _rest_of_run(item):
+def _rest_of_run(item, leads=True):
     """What the seasons behind the first one are worth, as a clause.
 
     The money the day put on or took off what he is owed, and the season it
@@ -941,8 +962,7 @@ def _rest_of_run(item):
     for a figure the clause says only that the later seasons moved.
     """
     members = item.get("members") or []
-    rest = members[1:]
-    if not rest:
+    if len(members) < 2:
         return ""
     now = sum((m.get("salary") or 0) for m in members)
     was = sum((m.get("was") or 0) for m in members)
@@ -950,8 +970,11 @@ def _rest_of_run(item):
     if not net or not was or abs(net) < was * NET_FLOOR:
         # Nothing was added or taken off worth a figure, and the shape is not
         # one _reshaped would claim either: all a line can say is that the
-        # seasons behind the first one moved.
-        return ", and his later seasons change too"
+        # other seasons moved. "Later" only where the line led on the first of
+        # them; where it led on a season further out, some of the rest are
+        # earlier than it.
+        return ", and his {} seasons change too".format(
+            "later" if leads else "other")
     moved = "adding {} to".format(F.fmt_money(net)) if net > 0 \
         else "cutting {} from".format(F.fmt_money(-net))
     return ", {} what he's owed through {}".format(moved, members[-1]["season"])
@@ -1046,8 +1069,14 @@ def owed_over(idx, item):
     return total, last
 
 
-def attach_nuggets(items, idx, data, factoids, raises, opened):
-    """Give every item the two nuggets it prints, its raise and its context."""
+def attach_nuggets(items, idx, data, factoids, raises, opened, before=None):
+    """Give every item the nugget it prints, its raise and its context.
+
+    ``before`` is {"old", "old_idx"} for the build this day is measured against,
+    which is what says whether a record the item could print is one the day
+    made. That decision is taken once and kept on the item: the nugget order
+    reads it, and so does the rule on whether a day of nudges is posted at all.
+    """
     for item in items:
         # What he is paid this season is what every movement is measured
         # against: a reader hears a raise against today's money, not against
@@ -1063,9 +1092,21 @@ def attach_nuggets(items, idx, data, factoids, raises, opened):
         for item in items if item["raise_amount"] > 0
     ]
     for item in items:
-        item["nuggets"] = N.nuggets_for(
+        record = N.record_nugget(idx, item, factoids)
+        item["has_record"] = record is not None
+        item["record_news"] = record is not None and record_is_news(
+            item["player"], record, before)
+        # Every nugget it has, not only the one it prints: which of them wins
+        # the slot is a question about wording, and whether the day had a
+        # record or a comparison in it is a question about whether the item is
+        # worth an entry at all. Reading the second off the first is what put
+        # a day with a record on the closing line once the career milestone
+        # started outranking it.
+        found = N.nuggets_for(
             item, idx, data, factoids, pool, F.fmt_money, opened,
-            limit=NUGGETS_PER_CHANGE)
+            limit=len(N.NUGGET_ORDER), record_news=item["record_news"])
+        item["has_peers"] = any(n["kind"] == "peers" for n in found)
+        item["nuggets"] = found[:NUGGETS_PER_CHANGE]
     return pool
 
 
@@ -1127,31 +1168,28 @@ STORY_MOVE = 0.25
 ALSO_KINDS = ("new", "extension", "salary", "team")
 
 
-def record_is_news(item, context):
-    """Whether the day made the record the item would print, or moved him in it.
+def record_is_news(player, record, before):
+    """Whether the day made this record, or moved him inside it.
 
     A record he already held, at the rank he already held it at, is not what
     today did: the number behind it moved a little, and the sentence about it
-    would have read the same yesterday. So the fact the item would print is
-    looked up in the world before the change, and only one that was not there,
-    or was there at another rank, is news.
+    would have read the same yesterday. So the fact is looked up in the world
+    before the change, and only one that was not there, or was there at another
+    rank, is news.
     """
-    record = next((n for n in item.get("nuggets") or []
-                   if n["kind"] == "record"), None)
-    if record is None:
-        return False
-    detail = record.get("detail") or {}
+    detail = (record or {}).get("detail") or {}
     key, rank, season = (detail.get("key"), detail.get("rank"),
                          detail.get("season"))
-    old, old_idx = context.get("old"), context.get("old_idx")
+    old = (before or {}).get("old")
+    old_idx = (before or {}).get("old_idx")
     if not key or not season or old is None or old_idx is None:
         # Nothing to compare against, so nothing can be shown to be new.
         return False
     try:
-        before = F.factoids_for(old, item["player"], season, index=old_idx)
+        was = F.factoids_for(old, player, season, index=old_idx)
     except (KeyError, TypeError, ValueError, IndexError):
         return False
-    for fact in before or ():
+    for fact in was or ():
         if fact.get("key") == key:
             return fact.get("rank") != rank
     return True
@@ -1187,7 +1225,10 @@ def has_story(item):
 
     A raise or a cut a reader would repeat, a record, or the company he keeps.
     Everything else is a figure on a sheet, which the closing line carries.
+    A record counts whether or not it is the nugget that prints.
     """
+    if item.get("has_record") or item.get("has_peers"):
+        return True
     for nugget in item.get("nuggets") or []:
         if nugget["kind"] in ("record", "peers"):
             return True
@@ -1295,9 +1336,12 @@ def render(items, when, scale, tolerance, context):
         # rescue one would collapse nothing. A day that only nudged his numbers
         # has to have made that record, or moved him inside it, to be posted at
         # all: holding one he already held is not what today did.
-        rescued = any(n["kind"] == "record" for n in item.get("nuggets") or [])
+        # A record rescues a deal whether or not it is the nugget that prints:
+        # the career milestone can outrank it and the deal is still a record.
+        rescued = item.get("has_record") or any(
+            n["kind"] == "record" for n in item.get("nuggets") or [])
         if tiny_change(item):
-            if not record_is_news(item, context):
+            if not item.get("record_news"):
                 continue
         elif not rescued and is_minimum(item, scale, tolerance):
             bucket = collapse_bucket(item, idx)
@@ -1426,13 +1470,15 @@ def main(argv=None):
         entry for entry in (state.get("raises") or [])
         if (entry.get("date") or "") >= opened.isoformat()
     ]
-    pool = attach_nuggets(items, idx, new, load_factoids(), raises, opened)
+    # The build this day is measured against, which the record test reads. It
+    # is built before the nuggets now, because the nugget order depends on it.
+    old_idx = F.build_index(old)
+    pool = attach_nuggets(items, idx, new, load_factoids(), raises, opened,
+                          before={"old": old, "old_idx": old_idx})
 
     # What the day did to what the teams it touched have committed. The old
     # build is measured on its own index, because a salary the guard flags in
-    # one build may not be flagged in the other. The same index answers whether
-    # a record a nudge would print was already his yesterday.
-    old_idx = F.build_index(old)
+    # one build may not be flagged in the other.
     commitments = T.crossings(
         T.commitments(old, old_idx), T.commitments(new, idx), idx,
         T.touched_teams(items, idx))

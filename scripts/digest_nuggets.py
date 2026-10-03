@@ -576,31 +576,50 @@ def _age_in(idx, player, season):
 
 
 # ── choosing ──────────────────────────────────────────────────────────
-#: The five, strongest first. An item prints one of them, so this is the order
-#: that decides which: a record, then the career milestone, then where the raise
-#: ranks, then the company he keeps, then where the money ends.
-NUGGET_ORDER = ("record", "career", "raise", "peers", "horizon")
+#: The order that decides which one an item prints. A record splits in two by
+#: whether the day made it: one the day set, or moved him inside, is what
+#: happened today and leads; one he already held the day before is true but old
+#: news, and the career milestone is worth more than a repeat of it.
+NUGGET_ORDER = ("record", "career", "record_held", "raise", "peers", "horizon")
 
 
-def nuggets_for(item, idx, data, factoids, raises, money, opened, limit=1):
-    """The strongest of the five that have something to say, in NUGGET_ORDER."""
-    found = []
-    for build in (
-        lambda: record_nugget(idx, item, factoids),
-        lambda: career_nugget(idx, item, money),
+def nuggets_for(item, idx, data, factoids, raises, money, opened, limit=1,
+                record_news=True):
+    """The strongest of the five that have something to say, in NUGGET_ORDER.
+
+    ``record_news`` is whether the day made the record this item would print.
+    Where it did not, the record falls in behind the career milestone, so an
+    item does not open on a record he has held for weeks while the thing that
+    happened today goes unsaid.
+    """
+    record = _safely(lambda: record_nugget(idx, item, factoids))
+    builders = [lambda: career_nugget(idx, item, money)]
+    if record is not None and record_news:
+        builders.insert(0, lambda: record)
+    else:
+        builders.append(lambda: record)
+    builders.extend([
         lambda: raise_nugget(item, raises, money, opened),
         lambda: peer_nugget(idx, item, data, money),
         lambda: horizon_nugget(idx, item),
-    ):
-        try:
-            nugget = build()
-        except (KeyError, TypeError, ValueError, IndexError):
-            nugget = None
+    ])
+
+    found = []
+    for build in builders:
+        nugget = _safely(build)
         if nugget:
             found.append(nugget)
         if len(found) >= limit:
             break
     return found
+
+
+def _safely(build):
+    """One nugget, or None where the data it wanted was not there."""
+    try:
+        return build()
+    except (KeyError, TypeError, ValueError, IndexError):
+        return None
 
 
 def _seasons(item):
