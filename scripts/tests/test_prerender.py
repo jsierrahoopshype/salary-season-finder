@@ -7,6 +7,7 @@ ships. A few build small fixtures to pin a rule down on its own.
 from __future__ import annotations
 
 import collections
+import inspect
 import json
 import os
 import re
@@ -1331,14 +1332,61 @@ def test_the_live_check_expects_the_title_the_worker_serves():
     sys.path.insert(0, os.path.join(REPO, "scripts"))
     import live_smoke
 
-    root_url, root_title = live_smoke.PAGES[0]
+    root_url, root_title, root_wants = live_smoke.PAGES[0]
     assert root_url == C.TOOL_ROOT
     assert root_title == "NBA Player Salaries by season and position | HoopsMatic"
+    assert root_wants == ()
     # every other expectation is the title this repository built
-    for url, title in live_smoke.PAGES[1:]:
+    for url, title, _ in live_smoke.PAGES[1:]:
         path = url[len(C.TOOL_ROOT) + 1:].strip("/")
         html = read(os.path.join(*(path.split("/") + ["index.html"])))
         assert "<title>{}</title>".format(title) in html, url
+
+
+def test_the_live_check_asserts_a_heading_the_built_page_really_carries():
+    """A string typed here from memory would pass the live check forever on a
+    page that never had it. Every expectation is read back off the page this
+    repository built."""
+    sys.path.insert(0, os.path.join(REPO, "scripts"))
+    import live_smoke
+
+    for url, _, must_contain in live_smoke.PAGES:
+        if url == C.TOOL_ROOT:
+            continue
+        path = url[len(C.TOOL_ROOT) + 1:].strip("/")
+        html = read(os.path.join(*(path.split("/") + ["index.html"])))
+        for wanted in must_contain:
+            assert wanted in html, (url, wanted)
+
+
+def test_the_live_check_covers_every_page_family_with_a_section():
+    """One content assertion per family. A new family that renders sections
+    and is not listed here is a family whose pages can go empty unnoticed."""
+    sys.path.insert(0, os.path.join(REPO, "scripts"))
+    import live_smoke
+
+    #: season pages are not checked yet, and hubs have no section to lose.
+    uncovered = {"season", "pick_range", "college_position", "agent"}
+    families = {
+        "player": "/player/", "team": "/team/", "college": "/college/",
+        "country": "/country/", "draft": "/draft/", "pick": "/pick/",
+        "position": "/position/", "region": "/region/",
+    }
+    assert set(families) | uncovered == set(C.FAMILIES)
+    for family, mark in families.items():
+        covered = [p for p in live_smoke.PAGES if mark in p[0] and p[2]]
+        assert len(covered) == 1, family
+
+
+def test_the_live_check_busts_the_workers_own_cache():
+    """The Worker skips its per-path entry only on a `nocache` parameter, and
+    its cache key drops the query, so any other buster reads the stale entry."""
+    sys.path.insert(0, os.path.join(REPO, "scripts"))
+    import live_smoke
+
+    source = inspect.getsource(live_smoke.fetch)
+    assert '"nocache=" + buster' in source
+    assert "cb=" not in source
 
 
 def test_the_live_check_says_where_a_github_io_link_sits():
