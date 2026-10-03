@@ -12,9 +12,19 @@ position wins, so "Jaren Jackson Jr" is never split into "Jaren Jackson".
 
 from __future__ import annotations
 
+import os
 import re
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+import factoids as F  # noqa: E402
 
 from .render import esc, page_url
+
+#: What a sentence calls a pick range, singular.
+PICK_RANGE_WORDS = {"top-10": "top-10 pick", "lottery": "lottery pick",
+                    "second-round": "second-round pick"}
 
 
 class Linker(object):
@@ -136,4 +146,20 @@ def build(idx, entities, cohorts):
         elif family == "position":
             for word in POSITION_WORDS.get(entity.key, ()):
                 linker.add(word, url, target)
+        elif family == "region":
+            phrases = F.REGION_PHRASES.get(entity.key) or {}
+            for word in (phrases.get("one"), phrases.get("many")):
+                linker.add(word, url, target)
+        elif family == "pick_range":
+            label = PICK_RANGE_WORDS.get(entity.key)
+            if label:
+                linker.add(label, url, target)
+                linker.add(label + "s", url, target)
+        elif family == "college_position":
+            # "Duke guard" is one page. Without it the linker finds "Duke" and
+            # "guard" separately and prints two links side by side; the longest
+            # phrase wins, so registering it is enough to stop that.
+            noun = entity.extra.get("noun_one") or entity.name
+            linker.add(noun, url, target)
+            linker.add(entity.extra.get("noun") or entity.name, url, target)
     return linker.compile()

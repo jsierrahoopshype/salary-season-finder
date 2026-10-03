@@ -126,7 +126,7 @@ PAST_SEASON_TYPES = frozenset({"sets", "ties", "milestone", "rank_shift"})
 
 
 def player_facts(idx, by_player_facts, ident, current_key):
-    """This man's claims, grouped by season, newest season first.
+    """This man's claims, as the two to four sentences his page prints.
 
     A page for one segment of a split key carries only that segment's seasons.
     An unconfirmed split carries none: the name on it cannot be trusted.
@@ -146,11 +146,9 @@ def player_facts(idx, by_player_facts, ident, current_key):
         if F.season_key(season) >= current_key
         or fact["type"] in PAST_SEASON_TYPES
     ]
-    # The engine's sentence is kept on each claim, straightened, for the cases
-    # the paragraph writer cannot phrase and falls back to.
     rows = [(season, dict(fact, text=straighten(fact, season)))
             for season, fact in rows]
-    return seasons.paragraphs(idx, ident.name, rows)
+    return seasons.summary(idx, ident.name, rows, player=ident.data_key)
 
 
 # --------------------------------------------------------------------------

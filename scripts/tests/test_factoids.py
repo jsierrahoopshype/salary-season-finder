@@ -2312,8 +2312,9 @@ def _leap_data(previous, jump, team_a="OKC", team_b="OKC"):
     )
 
 
-def test_a_contracted_season_half_again_above_a_big_one_is_flagged():
-    idx = index_for(_leap_data(40000000, 62000000))
+def test_a_contracted_season_far_above_a_big_one_is_flagged():
+    # 65% over the season before it, past the 60% the guard allows
+    idx = index_for(_leap_data(40000000, 66000000))
     assert ("Leaper", CONTRACTED) in idx.impossible
     assert "off a season already worth 20.0% of the cap" in \
         idx.impossible[("Leaper", CONTRACTED)]
@@ -2322,7 +2323,7 @@ def test_a_contracted_season_half_again_above_a_big_one_is_flagged():
 def test_the_leap_is_flagged_across_a_move_as_well_as_on_one_roster():
     """A trade cannot rewrite the number, so whose books it sits on is no
     defence."""
-    idx = index_for(_leap_data(40000000, 62000000, team_b="BOS"))
+    idx = index_for(_leap_data(40000000, 66000000, team_b="BOS"))
     assert ("Leaper", CONTRACTED) in idx.impossible
 
 
@@ -2331,13 +2332,15 @@ def test_a_leap_off_a_small_season_is_a_rookie_growing_into_a_maximum():
     assert ("Leaper", CONTRACTED) not in idx.impossible
 
 
-def test_a_raise_inside_half_again_is_left_alone():
-    idx = index_for(_leap_data(40000000, 55000000))
+def test_a_maximum_extension_kicking_in_is_left_alone():
+    """A 51% step off a season already near the cap is what a maximum
+    extension does, which is why the guard allows up to 60%."""
+    idx = index_for(_leap_data(40000000, 60400000))
     assert ("Leaper", CONTRACTED) not in idx.impossible
 
 
 def test_a_flagged_salary_stays_out_of_every_comparison():
-    data = _leap_data(40000000, 62000000)
+    data = _leap_data(40000000, 66000000)
     idx = index_for(data)
     for universe in idx.u_franchise.values():
         assert all(e["key"] != ("Leaper", CONTRACTED) for e in universe.entries)

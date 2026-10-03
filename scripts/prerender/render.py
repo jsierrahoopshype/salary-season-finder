@@ -207,25 +207,18 @@ def summary_block(sentences, linker=None, url=None):
     )
 
 
-def facts_by_season(groups, current_key, linker=None, url=None):
-    """A player's seasons as paragraphs under season headings, newest first.
+def facts_summary(sentences, linker=None, url=None):
+    """One paragraph about a man's whole career, with its names linked.
 
-    Every season is open. An older season used to sit behind a details element,
-    which hid the part of the page a reader scrolls for and made the whole
-    section a row of closed drawers.
+    This replaced a box per season. Six seasons of the same record made six
+    near-identical boxes, and the year-by-year detail is in the table above
+    anyway; what a reader wants here is the shape of the career.
     """
-    if not groups:
+    if not sentences:
         return ""
     render = (lambda t: linker.html(t, url)) if linker else esc
-    out = ['<div class="hm-seasons">']
-    for season, _key, sentences in groups:
-        body = " ".join(render(text) for text in sentences)
-        out.append(
-            '<section class="hm-season is-open"><h3>{}</h3>'
-            '<p class="hm-facts">{}</p></section>'.format(esc(season), body)
-        )
-    out.append("</div>")
-    return "".join(out)
+    return '<p class="hm-facts">{}</p>'.format(
+        " ".join(render(text) for text in sentences))
 
 
 def related_chips(links):

@@ -186,21 +186,23 @@ table.hm-rank-table .hm-rank {
 }
 
 /* factoid sentences */
+/* The claims paragraph. It used to be a column of boxes, one per season, and
+   was laid out with flex; a paragraph laid out with flex makes every inline
+   link a flex item, which puts each one on a line of its own. Prose is prose:
+   normal flow, and the links inside it stay inline. */
 .hm-facts {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: .5rem;
+  font-size: .9rem;
+  line-height: 1.65;
+  color: var(--text);
+  margin: 0;
 }
 
-.hm-facts li {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--accent);
-  border-radius: 8px;
-  padding: .55rem .75rem;
-  font-size: .86rem;
-  line-height: 1.5;
+/* A link inside a sentence is part of the sentence. Nothing in this file may
+   give one a block or flex display; the test in test_prerender holds that. */
+.hm-facts a,
+.hm-summary a,
+.hm-inline-link {
+  display: inline;
 }
 
 /* roll call of every member, and the hub grids */
@@ -432,69 +434,6 @@ table.hm-rank-table th.hm-who {
  * A player's claims, grouped by season
  * ------------------------------------------------------------------ */
 
-.hm-seasons {
-  display: flex;
-  flex-direction: column;
-  gap: .4rem;
-}
-
-.hm-season {
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  background: var(--surface);
-  padding: .55rem .75rem;
-}
-
-.hm-season > h3,
-.hm-season > summary {
-  font-family: var(--mono);
-  font-size: .74rem;
-  font-weight: 700;
-  letter-spacing: .04em;
-  color: var(--text);
-  display: flex;
-  align-items: center;
-  gap: .45rem;
-  min-height: 1.6rem;
-}
-
-.hm-season > summary {
-  cursor: pointer;
-  list-style: none;
-}
-
-.hm-season > summary::-webkit-details-marker {
-  display: none;
-}
-
-.hm-season > summary::after {
-  content: "+";
-  margin-left: auto;
-  color: var(--text-secondary);
-  font-weight: 400;
-}
-
-.hm-season[open] > summary::after {
-  content: "\2212";
-}
-
-.hm-season .hm-count {
-  font-family: var(--mono);
-  font-size: .64rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  padding: .05rem .35rem;
-}
-
-.hm-season .hm-facts {
-  margin-top: .45rem;
-}
-
-.hm-season.is-open {
-  border-color: var(--accent-soft, var(--border));
-}
 
 @media (max-width: 860px) {
   .hm-summary p {
@@ -503,10 +442,6 @@ table.hm-rank-table th.hm-who {
 
   .hm-summary p:first-child {
     font-size: .92rem;
-  }
-
-  .hm-season > summary {
-    min-height: 2.25rem;
   }
 }
 
