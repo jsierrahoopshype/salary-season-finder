@@ -1790,3 +1790,127 @@ def test_a_timeline_reads_the_tense_of_its_season():
                 assert "Would" in plain or "would" in plain, (slug, season)
             else:
                 assert not plain.startswith("Would"), (slug, season)
+
+
+# --------------------------------------------------------------------------
+# how a timeline is worded
+# --------------------------------------------------------------------------
+
+TIMELINE_SLUGS = ("kyrie-irving", "giannis-antetokounmpo", "rudy-gobert",
+                  "stephen-curry", "lebron-james", "nikola-jokic")
+
+
+def _plain_timeline(slug):
+    return [(season, re.sub(r"<[^>]+>", "", text).replace("&#x27;", "'"))
+            for season, text in _timeline(slug)]
+
+
+def test_a_season_gets_one_sentence():
+    """Two facts that belong together are said in one breath; two that do not
+    are one fact, the stronger of them."""
+    for slug in TIMELINE_SLUGS:
+        for season, text in _plain_timeline(slug):
+            # the season's own figures carry full stops of their own, so a
+            # sentence is counted by a stop followed by a capital
+            assert not re.search(r"\.\s+[A-Z]", text), (slug, season, text)
+            assert text.endswith(".")
+
+
+def test_a_first_claim_uses_a_round_figure():
+    """"The first Duke player paid $31,742,000" is arithmetic. A threshold is
+    a number somebody crossed."""
+    allowed = {F.fmt_money(step) for step in TL.STEPS}
+    for slug in TIMELINE_SLUGS:
+        for season, text in _plain_timeline(slug):
+            # "for the first time" is a top-ten claim, not a threshold one
+            if not re.search(r"first [^.]*\bpaid\b", text):
+                continue
+            figures = re.findall(r"\$[\d.,]+(?: million)?", text)
+            for figure in figures:
+                assert figure in allowed, (slug, season, text)
+            assert "or more in a season" in text, (slug, season, text)
+
+
+def test_no_timeline_names_an_exact_draft_pick():
+    assert "draft_slot" not in TL.KINDS
+    for slug in TIMELINE_SLUGS:
+        for season, text in _plain_timeline(slug):
+            assert not re.search(r"No\. \d+ pick", text), (slug, season, text)
+
+
+def test_a_draft_standing_names_the_broadest_range_he_holds():
+    """Being the best-paid man taken outside the top 5 says more than outside
+    the top 20, because it is the bigger field."""
+    labels = [label for _cut, label in TL.DRAFT_RANGES]
+    seen = set()
+    for slug in TIMELINE_SLUGS:
+        for _season, text in _plain_timeline(slug):
+            for label in labels:
+                if label in text:
+                    seen.add(label)
+    assert seen, "no draft-range claim anywhere in the sample"
+    assert TL._draft_scopes({"draft_pick": 27, "draft_year": 2013}) == [
+        ("draft_range", "5"), ("draft_range", "10"),
+        ("draft_range", "14"), ("draft_range", "20")]
+    assert TL._draft_scopes({"draft_pick": None, "draft_year": None}) == [
+        ("draft_range", "undrafted")]
+
+
+def test_a_draft_class_is_not_itself_for_two_seasons():
+    """The top pick leads his class because the rookie scale says so."""
+    assert TL._green(("draft_class", "2011"), "2011-12") is False
+    assert TL._green(("draft_class", "2011"), "2012-13") is False
+    assert TL._green(("draft_class", "2011"), "2013-14") is True
+    assert TL._green(("college", "Duke"), "2011-12") is True
+
+
+def test_a_career_milestone_is_fifty_then_every_hundred():
+    assert TL.MARKS[0] == 50000000
+    assert all(mark % 100000000 == 0 for mark in TL.MARKS[1:])
+    wanted = {F.fmt_money(mark) for mark in TL.MARKS}
+    for slug in TIMELINE_SLUGS:
+        for season, text in _plain_timeline(slug):
+            if "career earnings" not in text or "pass" not in text \
+                    and "ross" not in text:
+                continue
+            for figure in re.findall(r"\$[\d.,]+(?: million)?", text):
+                assert figure in wanted, (slug, season, text)
+
+
+def test_a_record_set_is_never_a_first_at_an_exact_salary():
+    for slug in TIMELINE_SLUGS:
+        for season, text in _plain_timeline(slug):
+            assert not re.search(r"first .* paid \$[\d.,]+ in a season", text), \
+                (slug, season, text)
+
+
+def test_a_record_lost_never_says_saw():
+    for slug in TIMELINE_SLUGS:
+        for season, text in _plain_timeline(slug):
+            assert not text.startswith("Saw "), (slug, season, text)
+
+
+def test_no_two_seasons_running_open_on_the_same_word():
+    for slug in TIMELINE_SLUGS:
+        words = [TL._first_word(text) for _season, text in _plain_timeline(slug)]
+        for before, after in zip(words, words[1:]):
+            assert before != after, (slug, before)
+
+
+def test_no_phrasing_runs_for_more_than_two_seasons():
+    """Three "Lost the ..." lines in a row is the same sentence three times."""
+    for slug in TIMELINE_SLUGS:
+        shapes = [" ".join(text.split()[:2]).lower()
+                  for _season, text in _plain_timeline(slug)]
+        for i in range(len(shapes) - 2):
+            trio = shapes[i:i + 3]
+            assert len(set(trio)) > 1, (slug, trio)
+
+
+def test_a_merged_sentence_states_its_number_once():
+    """"His $39.3 million was the most ever paid to an international player
+    and a Bucks record" gives the figure once, not twice."""
+    for slug in TIMELINE_SLUGS:
+        for season, text in _plain_timeline(slug):
+            figures = re.findall(r"\$[\d.,]+ million", text)
+            assert len(figures) == len(set(figures)), (slug, season, text)
