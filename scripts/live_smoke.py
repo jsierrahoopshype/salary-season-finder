@@ -3,8 +3,17 @@
 
 The pages are built here but served by GitHub Pages behind the hoopsmatic.com
 Worker, so the only honest check is a GET of the real URL. Read-only, one
-request a second, with a cache-buster so the Worker's edge cache cannot answer
-with the version from before the deploy.
+request a second.
+
+Each request carries ?nocache=<buster>. The name is what matters: the Worker
+holds one cached entry per path and skips it only when the request carries a
+`nocache` parameter, and its cache key drops the query string, so any other
+buster asks the same stored entry and is answered from before the deploy. The
+value is the buster, which keeps each URL unique for the file paths (the
+sitemap) that the Worker hands to Cloudflare's own fetch cache instead.
+
+A title alone would pass on a page that had quietly lost a section, so every
+page family also names a string its body must contain.
 """
 
 from __future__ import annotations
@@ -20,19 +29,41 @@ import xml.etree.ElementTree as ET
 
 ROOT = "https://hoopsmatic.com/salary-season-finder"
 
-#: url -> the title it must carry.
+#: url -> the title it must carry, and the strings its body must contain.
 #:
 #: The root's title is not the one in index.html: the hoopsmatic.com Worker
 #: rewrites it on the way through, on purpose. What this file checks is what a
 #: reader is served, so the expectation is the Worker's title. Every subpage
 #: passes through untouched and carries the title this repository built.
+#:
+#: One entry per page family, and the strings are the headings the pages
+#: render, so a section that stops being built fails the check instead of
+#: reaching a reader. A test asserts every one of them against the built page,
+#: which is what stops a heading being typed here from memory. The root and the
+#: hubs carry no content expectation: the root is the tool itself, and a hub is
+#: a list of links with no section to lose.
+COHORT_EARNINGS = "Highest career earnings"
+
 PAGES = (
-    (ROOT, "NBA Player Salaries by season and position | HoopsMatic"),
-    (ROOT + "/colleges/", "NBA Salaries by College | HoopsMatic"),
-    (ROOT + "/college/duke/", "Highest-Paid Duke Players in NBA History | HoopsMatic"),
+    (ROOT, "NBA Player Salaries by season and position | HoopsMatic", ()),
+    (ROOT + "/colleges/", "NBA Salaries by College | HoopsMatic", ()),
+    (ROOT + "/team/76ers/", "76ers Payroll and Salary History | HoopsMatic",
+     ("Most career earnings with the",)),
+    (ROOT + "/player/joel-embiid/", "Joel Embiid: Salary History | HoopsMatic",
+     ("What the numbers say", "Season by season, what changed")),
+    (ROOT + "/college/duke/", "Highest-Paid Duke Players in NBA History | HoopsMatic",
+     (COHORT_EARNINGS,)),
     (ROOT + "/country/canada/",
-     "Highest-Paid NBA Players from Canada of All Time | HoopsMatic"),
-    (ROOT + "/player/joel-embiid/", "Joel Embiid: Salary History | HoopsMatic"),
+     "Highest-Paid NBA Players from Canada of All Time | HoopsMatic",
+     (COHORT_EARNINGS,)),
+    (ROOT + "/draft/2013/", "Highest-Paid Players of the 2013 NBA Draft | HoopsMatic",
+     (COHORT_EARNINGS,)),
+    (ROOT + "/pick/8/", "Highest-Paid No. 8 Picks in NBA History | HoopsMatic",
+     (COHORT_EARNINGS,)),
+    (ROOT + "/position/guard/", "Highest-Paid NBA Guards of All Time | HoopsMatic",
+     (COHORT_EARNINGS,)),
+    (ROOT + "/region/europe/", "Highest-Paid European Players in NBA History | HoopsMatic",
+     (COHORT_EARNINGS,)),
 )
 
 SITEMAP = ROOT + "/sitemap.xml"
@@ -42,10 +73,14 @@ TIMEOUT = 45
 
 
 def fetch(url, buster):
-    """One GET, with the cache-buster appended."""
+    """One GET, past the Worker's per-path cache.
+
+    `nocache` is the parameter the Worker reads; the buster is its value so the
+    URL is still unique for whatever caches on the full URL.
+    """
     joiner = "&" if "?" in url else "?"
     request = urllib.request.Request(
-        url + joiner + "cb=" + buster,
+        url + joiner + "nocache=" + buster,
         headers={"User-Agent": "hoopsmatic-live-smoke/1 (+github actions)",
                  "Cache-Control": "no-cache"},
     )
@@ -53,7 +88,7 @@ def fetch(url, buster):
         return response.getcode(), response.read().decode("utf-8", "replace")
 
 
-def check_page(url, expected_title, buster):
+def check_page(url, expected_title, must_contain, buster):
     problems = []
     try:
         status, body = fetch(url, buster)
@@ -78,6 +113,10 @@ def check_page(url, expected_title, buster):
     elif canonical.group(1) != url:
         problems.append("{} canonical is {}, expected {}".format(
             url, canonical.group(1), url))
+
+    for wanted in must_contain:
+        if wanted not in body:
+            problems.append("{} does not contain {!r}".format(url, wanted))
 
     for href, tag, snippet in github_io_links(body):
         problems.append(
@@ -140,8 +179,8 @@ def main(argv=None):
     args = parser.parse_args(argv)
 
     problems = []
-    for url, title in PAGES:
-        problems.extend(check_page(url, title, args.buster))
+    for url, title, must_contain in PAGES:
+        problems.extend(check_page(url, title, must_contain, args.buster))
         time.sleep(PAUSE_SECONDS)
     problems.extend(check_sitemap(args.buster))
 
