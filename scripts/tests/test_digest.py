@@ -56,17 +56,23 @@ NAMES = {"ATL": "Atlanta", "MEM": "Memphis", "DAL": "Dallas", "DEN": "Denver"}
 OPENED = datetime.date(2026, 7, 1)
 
 
-def context_for(new, slugs=None, teams=None):
+def context_for(new, slugs=None, teams=None, old=None):
     """The bundle render() reads, built the way main() builds it."""
     families = {"player": dict(slugs or {})}
     families.update(teams or {})
-    return {"names": NAMES, "teams": (teams or {}).get("team") or {},
-            "slugs": families, "idx": F.build_index(new)}
+    out = {"names": NAMES, "teams": (teams or {}).get("team") or {},
+           "slugs": families, "idx": F.build_index(new)}
+    if old is not None:
+        # The world before the change, which is what says whether a record a
+        # nudge would print was already his.
+        out["old"] = old
+        out["old_idx"] = F.build_index(old)
+    return out
 
 
 def digest(old, new, factoids=None, slugs=None, raises=None, teams=None):
     items = D.changes(old, new, CURRENT)
-    context = context_for(new, slugs, teams)
+    context = context_for(new, slugs, teams, old=old)
     D.attach_nuggets(items, context["idx"], new, factoids or {},
                      raises or [], OPENED)
     return items, D.render(items, WHEN, SCALE, TOLERANCE, context)
@@ -130,11 +136,13 @@ def test_a_player_season_that_has_gone_is_reported():
     assert [(i["kind"], i["player"]) for i in items] == [("gone", "Waived Man")]
 
 
-def test_a_salary_and_a_team_moving_together_are_two_changes():
+def test_a_salary_and_a_team_moving_together_are_one_item():
+    """One man, one day, one item, whatever the sheet did to him."""
     old = payload([rec("Busy Man", CURRENT, 10000000, team="ATL")])
     new = payload([rec("Busy Man", CURRENT, 12000000, team="DEN")])
     items, _ = digest(old, new)
-    assert sorted(i["kind"] for i in items) == ["salary", "team"]
+    assert len(items) == 1
+    assert [kind for kind, _members in items[0]["groups"]] == ["salary", "team"]
 
 
 def test_a_past_season_is_left_alone():
@@ -268,8 +276,8 @@ def test_minimum_deals_come_to_one_line():
                    rec("Min Two", CURRENT, 2553508),
                    rec("Paid Man", CURRENT, 20000000)])
     _items, posts = digest(old, new)
-    assert ("Also: 2 players on minimum deals new on the books: Min One, "
-            "Min Two.") in posts[0]
+    assert "Also: minimum salaries added for 2026-27: Min One, Min Two." \
+        in posts[0]
     assert "Min One is on" not in posts[0]
     assert "Paid Man" in posts[0]
     assert "Paid Man is on Atlanta's books at $20 million" in spoken(old, new)
@@ -470,9 +478,8 @@ def test_a_run_across_two_teams_names_neither():
                    rec("Split Deal", "2027-28", 8000000, team="ATL"),
                    rec("Split Deal", "2028-29", 8000000, team="MEM")])
     _items, posts = digest(old, new)
-    assert ("Split Deal's salary rises 60% in 2027-28: he is due $8 million a year "
-            "through 2028-29, up from $5 million now.") \
-        in posts[0]
+    assert ("Split Deal's salary rises 60% in 2027-28: he is due $8 million "
+            "a year through 2028-29, up from $5 million now.") in posts[0]
 
 
 def test_several_salary_changes_to_one_player_are_one_sentence():
@@ -512,7 +519,7 @@ def test_a_run_of_minimum_seasons_collapses_with_the_single_ones():
         rec("Min Two", "2027-28", 2680000),
     ])
     _items, posts = digest(old, new)
-    assert ("Also: 3 players on minimum salaries added for a later season: "
+    assert ("Also: minimum salaries added for later seasons: "
             "Min One, Min Run, Min Two.") in posts[0]
     assert "Min Run's deal" not in posts[0]
 
@@ -532,8 +539,8 @@ def test_a_run_takes_its_record_from_the_paid_season_it_covers():
     one already played out has a rank in it."""
     old = payload([rec("Famous", CURRENT, 40000000),
                    rec("Famous", "2027-28", 42000000)])
-    new = payload([rec("Famous", CURRENT, 41000000),
-                   rec("Famous", "2027-28", 43000000)])
+    new = payload([rec("Famous", CURRENT, 55000000),
+                   rec("Famous", "2027-28", 58000000)])
     factoids = {
         "Famous|2026-27": [{"text": "A 2026-27 thing.", "rank": 1}],
         "Famous|2027-28": [{"text": "A 2027-28 thing.", "rank": 1}],
@@ -554,14 +561,18 @@ def test_a_signing_that_arrives_as_four_seasons_is_one_sentence():
             "$4.2 million, rising to $6.8 million through 2028-29.") in posts[0]
 
 
-def test_a_team_change_is_never_grouped():
-    """Two seasons moving to two different teams are two things to say."""
+def test_two_teams_in_one_day_are_two_clauses_of_one_sentence():
+    """Two seasons moving to two different teams are two things to say, and a
+    clause that named neither would say nothing."""
     old = payload([rec("Moved", CURRENT, 10000000, team="ATL"),
                    rec("Moved", "2027-28", 11000000, team="ATL")])
     new = payload([rec("Moved", CURRENT, 10000000, team="MEM"),
                    rec("Moved", "2027-28", 11000000, team="DEN")])
     items, _posts = digest(old, new)
-    assert [i["kind"] for i in items] == ["team", "team"]
+    assert len(items) == 1
+    assert D.sentence(items[0], NAMES) == (
+        "Moved is on Denver's books at $11 million for 2027-28, and he is on "
+        "Memphis' books at $10 million for 2026-27.")
 
 
 # --------------------------------------------------------------------------
@@ -922,7 +933,8 @@ def test_the_record_comes_before_the_career_total():
     assert [n["kind"] for n in found][0] == "record"
 
 
-def test_two_nuggets_are_joined_with_one_and():
+def test_only_the_strongest_nugget_is_printed():
+    """An item is the lead and one nugget: two sentences in all."""
     item = {"player": "Joined Man", "season": CURRENT, "kind": "new"}
     nuggets = [
         {"kind": "raise", "opener": "That is the biggest raise",
@@ -931,9 +943,8 @@ def test_two_nuggets_are_joined_with_one_and():
          "tail": "the money runs through his age-30 season", "entities": []},
     ]
     text = D.nugget_sentence(nuggets, item)
-    assert text == ("That is the biggest raise, and the money runs through "
-                    "his age-30 season.")
-    assert text.count(", and ") == 1
+    assert text == "That is the biggest raise."
+    assert "age-30" not in text
 
 
 def test_a_nugget_that_already_has_an_and_takes_no_second_one():
@@ -951,54 +962,35 @@ def test_a_nugget_that_already_has_an_and_takes_no_second_one():
     assert "age-30" not in text
 
 
-def test_a_career_nugget_takes_a_sentence_of_its_own():
-    """Where he stands and what he would pass is a sentence, not a clause."""
-    item = {"player": "Busy Man", "season": CURRENT, "kind": "new"}
-    nuggets = [
-        {"kind": "record", "opener": "He will have earned $444.5 million by "
-                                     "the end of 2026-27, more than every "
-                                     "other player out of Arizona State "
-                                     "combined",
-         "tail": "he will have earned", "entities": []},
-        {"kind": "career",
-         "opener": "He's already fifth in career earnings and would pass "
-                   "$500 million in 2028-29",
-         "tail": "he's already fifth", "entities": []},
-    ]
-    text = D.nugget_sentence(nuggets, item)
-    assert text == ("He will have earned $444.5 million by the end of 2026-27, "
-                    "more than every other player out of Arizona State "
-                    "combined. He's already fifth in career earnings and would "
-                    "pass $500 million in 2028-29.")
-    assert "combined, and" not in text
-    # two sentences, and never a third
-    assert text.count(". ") == 1
+def test_the_nugget_order_is_the_order_the_brief_sets():
+    """record, then career milestone, then raise rank, then peers, then where
+    the money ends: the strongest of them is the one an item prints."""
+    assert N.NUGGET_ORDER == ("record", "career", "raise", "peers", "horizon")
 
 
-def test_a_career_nugget_leading_still_keeps_its_own_sentence():
-    item = {"player": "Busy Man", "season": CURRENT, "kind": "new"}
-    nuggets = [
-        {"kind": "career", "opener": "He's already fifth in career earnings "
-                                     "and would pass $500 million in 2028-29",
-         "tail": "he's already fifth", "entities": []},
-        {"kind": "horizon", "opener": "The money runs through his age-30 season",
-         "tail": "the money runs through his age-30 season", "entities": []},
-    ]
-    text = D.nugget_sentence(nuggets, item)
-    assert text == ("He's already fifth in career earnings and would pass "
-                    "$500 million in 2028-29. The money runs through his "
-                    "age-30 season.")
-
-
-def test_a_second_nugget_past_the_sentence_limit_is_dropped():
+def test_a_second_nugget_is_never_printed():
     item = {"player": "Wordy Man", "season": CURRENT, "kind": "new"}
     nuggets = [
-        {"kind": "peers", "opener": "That is " + "x" * D.SENTENCE_LIMIT,
-         "tail": "", "entities": []},
-        {"kind": "horizon", "opener": "The money runs through his age-30 season",
-         "tail": "the money runs through his age-30 season", "entities": []},
+        {"kind": "record", "opener": "That is the biggest salary in Hawks "
+                                     "history", "tail": "", "entities": []},
+        {"kind": "career", "opener": "He's already fifth in career earnings "
+                                     "and would pass $500 million in 2028-29",
+         "tail": "he's already", "entities": []},
     ]
-    assert "age-30" not in D.nugget_sentence(nuggets, item)
+    text = D.nugget_sentence(nuggets, item)
+    assert text == "That is the biggest salary in Hawks history."
+
+
+def test_an_item_is_two_sentences_at_most():
+    old = payload([])
+    new = payload([rec("Famous Man", CURRENT, 40000000, team="MEM")])
+    factoids = {"Famous Man|2026-27": [{
+        "text": "That is the biggest salary in Grizzlies history.", "rank": 1,
+        "key": "franchise|MEM|Famous Man|2026-27"}]}
+    _items, posts = digest(old, new, factoids=factoids)
+    body = posts[0].split("\n\n")[1]
+    assert body.count(". ") == 1
+    assert body.endswith(".")
 
 
 # --------------------------------------------------------------------------
@@ -1202,9 +1194,14 @@ def test_no_second_sentence_opens_with_that_is():
 
 
 def test_a_run_of_seasons_gives_its_total_over_the_seasons():
-    item = {"members": [{"salary": 8000000}, {"salary": 8000000},
-                        {"salary": 8000000}]}
+    item = {"members": [{"season": CURRENT, "salary": 8000000},
+                        {"season": "2027-28", "salary": 8000000},
+                        {"season": "2028-29", "salary": 8000000}]}
     assert D.over_seasons(item) == "$24 million over three seasons"
+    # the same season moved twice is one salary, not two
+    twice = {"members": [{"season": CURRENT, "salary": 8000000},
+                         {"season": CURRENT, "salary": 8000000}]}
+    assert D.over_seasons(twice) == ""
 
 
 # --------------------------------------------------------------------------
@@ -1478,7 +1475,9 @@ def test_a_career_nugget_with_no_legend_still_takes_one():
         {"kind": "raise", "opener": "No team has taken on a bigger raise",
          "tail": "no team has taken on a bigger raise", "entities": []},
     ]
-    assert "bigger raise" in D.nugget_sentence(nuggets, item)
+    # one nugget an item, so the raise rank behind it is not printed
+    assert "bigger raise" not in D.nugget_sentence(nuggets, item)
+    assert "career earnings" in D.nugget_sentence(nuggets, item)
 
 
 def test_every_man_named_ahead_of_him_is_linked():
@@ -1569,12 +1568,47 @@ def test_one_season_moving_enough_carries_the_whole_run():
     assert "Moved Man's 2026-27 salary rises to $30.9 million" in posts[0]
 
 
-def test_a_nudge_that_sets_a_record_is_posted():
+#: A record the engine cannot produce for the fixtures, so looking it up in the
+#: world before the change finds nothing and the nudge reads as making it.
+MADE_TODAY = "cohort_season|college|Nowhere|Record Man|2026-27"
+
+
+def test_a_nudge_that_makes_a_record_is_posted():
     old = payload([rec("Record Man", CURRENT, 30000000)])
     new = payload([rec("Record Man", CURRENT, 30900000)])
-    factoids = {"Record Man|2026-27": [{"text": "Worth saying.", "rank": 1}]}
+    factoids = {"Record Man|2026-27": [
+        {"text": "Worth saying.", "rank": 1, "key": MADE_TODAY}]}
     _items, posts = digest(old, new, factoids=factoids)
     assert "Record Man's 2026-27 salary rises to $30.9 million" in posts[0]
+    assert "Worth saying." in posts[0]
+
+
+def test_a_nudge_inside_a_record_he_already_held_is_not_posted():
+    """Holding a record at the rank he already held it at is not what today
+    did: the number behind it moved a little, and the line would have read the
+    same yesterday."""
+    old = payload([rec("Record Man", CURRENT, 30000000)])
+    new = payload([rec("Record Man", CURRENT, 30900000)])
+    # the fact the engine really does find for him, both days
+    before = F.factoids_for(old, "Record Man", CURRENT,
+                            index=F.build_index(old))
+    held = next(f for f in before if (f.get("rank") or 99) == 1)
+    factoids = {"Record Man|2026-27": [
+        {"text": "Worth saying.", "rank": held["rank"], "key": held["key"]}]}
+    _items, posts = digest(old, new, factoids=factoids)
+    assert "Record Man" not in posts[0]
+    assert posts[0].endswith("none today.")
+
+
+def test_a_nudge_that_moves_his_rank_in_a_record_is_posted():
+    old = payload([rec("Record Man", CURRENT, 30000000)])
+    new = payload([rec("Record Man", CURRENT, 30900000)])
+    before = F.factoids_for(old, "Record Man", CURRENT,
+                            index=F.build_index(old))
+    held = next(f for f in before if (f.get("rank") or 99) == 1)
+    factoids = {"Record Man|2026-27": [
+        {"text": "Worth saying.", "rank": 2, "key": held["key"]}]}
+    _items, posts = digest(old, new, factoids=factoids)
     assert "Worth saying." in posts[0]
 
 
@@ -1742,6 +1776,124 @@ def test_two_quiet_team_changes_for_one_man_are_one_entry():
     new = payload([rec("Moved Man", CURRENT, 6900000, team="MEM"),
                    rec("Moved Man", "2027-28", 8800000, team="MEM")])
     _items, posts = digest(old, new)
-    assert ("Also on the books: Moved Man (Memphis, $6.9 million in 2026-27 "
-            "and $8.8 million in 2027-28).") in posts[0]
+    assert ("Also on the books: Moved Man (Memphis, $15.7 million over two "
+            "seasons).") in posts[0]
     assert posts[0].count("Moved Man") == 1
+
+
+# --------------------------------------------------------------------------
+# one item a man a day
+# --------------------------------------------------------------------------
+
+
+def test_every_kind_he_had_is_a_clause_of_one_sentence():
+    old = payload([rec("Busy Man", CURRENT, 20000000, team="MEM"),
+                   rec("Busy Man", "2027-28", 21000000, team="MEM")])
+    new = payload([rec("Busy Man", CURRENT, 28000000, team="MEM"),
+                   rec("Busy Man", "2027-28", 21000000, team="DAL"),
+                   rec("Busy Man", "2028-29", 30000000, team="DAL")])
+    items, _posts = digest(old, new)
+    assert len(items) == 1
+    text = D.sentence(items[0], NAMES)
+    assert text.count(".") == 1
+    assert "Busy Man" in text and text.count("Busy Man") == 1
+    assert "he is on Dallas' books at $21 million for 2027-28" in text
+    assert "his 2026-27 salary rises to $28 million from $20 million" in text
+
+
+def test_a_season_already_named_is_not_named_twice():
+    """A salary and a team moving the same season is one figure, said once."""
+    old = payload([rec("Busy Man", CURRENT, 5200000, team="ATL")])
+    new = payload([rec("Busy Man", CURRENT, 7600000, team="MEM")])
+    items, _posts = digest(old, new)
+    assert D.sentence(items[0], NAMES) == (
+        "Busy Man's 2026-27 salary rises to $7.6 million from $5.2 million, "
+        "and it is now on Memphis' books.")
+
+
+def test_a_team_already_named_is_not_named_twice():
+    old = payload([rec("Busy Man", CURRENT, 9700000, team="ATL")])
+    new = payload([rec("Busy Man", CURRENT, 9700000, team="MEM"),
+                   rec("Busy Man", "2027-28", 10100000, team="MEM")])
+    items, _posts = digest(old, new)
+    assert D.sentence(items[0], NAMES) == (
+        "Busy Man is on Memphis' books at $10.1 million for 2027-28, and "
+        "$9.7 million for 2026-27.")
+
+
+def test_a_clause_with_an_and_of_its_own_takes_a_semicolon():
+    old = payload([rec("Busy Man", CURRENT, 20000000, team="MEM"),
+                   rec("Busy Man", "2027-28", 21000000, team="MEM"),
+                   rec("Busy Man", "2028-29", 22000000, team="MEM")])
+    new = payload([rec("Busy Man", CURRENT, 28000000, team="MEM"),
+                   rec("Busy Man", "2027-28", 29000000, team="MEM"),
+                   rec("Busy Man", "2028-29", 30000000, team="DAL")])
+    items, _posts = digest(old, new)
+    text = D.sentence(items[0], NAMES)
+    assert ", and his next two seasons go up with it; it is now on Dallas'" in text
+    assert text.count(".") == 1
+
+
+def test_every_team_a_merged_lead_names_is_linked():
+    old = payload([rec("Busy Man", CURRENT, 20000000, team="MEM")])
+    new = payload([rec("Busy Man", CURRENT, 28000000, team="MEM"),
+                   rec("Busy Man", "2027-28", 30000000, team="DAL")])
+    _items, posts = digest(
+        old, new, slugs={"Busy Man": "busy-man"},
+        teams={"team": {"MEM": "memphis-grizzlies", "DAL": "dallas-mavericks"}})
+    assert "/team/dallas-mavericks/|Dallas>" in posts[0]
+
+
+def test_a_merged_item_reads_every_season_for_its_nugget():
+    """The record can be on any season the day touched, not just the leading
+    group's."""
+    old = payload([rec("Famous Man", CURRENT, 40000000, team="MEM")])
+    new = payload([rec("Famous Man", CURRENT, 40000000, team="DAL"),
+                   rec("Famous Man", "2027-28", 60000000, team="DAL")])
+    factoids = {"Famous Man|2026-27": [{
+        "text": "That is the biggest salary in Grizzlies history.", "rank": 1,
+        "key": "franchise|MEM|Famous Man|2026-27"}]}
+    _items, posts = digest(old, new, factoids=factoids)
+    assert "biggest salary in Grizzlies history." in posts[0]
+
+
+# --------------------------------------------------------------------------
+# what the closing lines are allowed to say
+# --------------------------------------------------------------------------
+
+
+def test_the_closing_lines_say_neither_deals_nor_off_the_books():
+    old = payload([rec("Min Gone", CURRENT, 2553508, team="ATL"),
+                   rec("Min Moved", CURRENT, 2553508, team="ATL")])
+    new = payload([rec("Min Moved", CURRENT, 2553508, team="MEM"),
+                   rec("Min Added", CURRENT, 2553508, team="ATL"),
+                   rec("Min Later", "2027-28", 2680000, team="ATL")])
+    _items, posts = digest(old, new)
+    assert "deal" not in posts[0]
+    assert "off the books" not in posts[0]
+    assert "Also: minimum salaries added for 2026-27: Min Added." in posts[0]
+    assert "Also: minimum salaries added for later seasons: Min Later." in posts[0]
+    assert "Also: minimum salaries moved to another team: Min Moved." in posts[0]
+    assert "Also: minimum salaries removed: Min Gone." in posts[0]
+
+
+def test_the_closing_lines_carry_no_head_count():
+    old = payload([])
+    new = payload([rec("Min One", CURRENT, 2553508),
+                   rec("Min Two", CURRENT, 2553508)])
+    _items, posts = digest(old, new)
+    assert "Also: minimum salaries added for 2026-27: Min One, Min Two." \
+        in posts[0]
+    assert "2 players" not in posts[0]
+
+
+def test_a_changed_number_keeps_a_day_off_the_minimum_line():
+    """A correction to a minimum salary is as worth reading as any other, and
+    a man who also had seasons added does not lose it to a closing line."""
+    old = payload([rec("Min Man", CURRENT, 678882, years=1)])
+    new = payload([rec("Min Man", CURRENT, 1434000, years=1),
+                   rec("Min Man", "2027-28", 2680000, years=1),
+                   rec("Min Man", "2028-29", 2814000, years=1)])
+    _items, posts = digest(old, new)
+    assert "Also: minimum salaries" not in posts[0]
+    assert "his 2026-27 salary more than doubles to $1.4 million" in posts[0]
