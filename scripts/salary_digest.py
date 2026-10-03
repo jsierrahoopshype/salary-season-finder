@@ -37,6 +37,7 @@ import collections
 import datetime
 import json
 import os
+import re
 import subprocess
 import sys
 import urllib.error
@@ -46,7 +47,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 
+import digest_teams as T  # noqa: E402
 import factoids as F  # noqa: E402
+import digest_nuggets as N  # noqa: E402
 
 DATA_PATH = os.path.join("data", "data.json")
 STATE_PATH = os.path.join(REPO, "data", "digest_state.json")
@@ -60,8 +63,22 @@ TOOL_ROOT = "https://hoopsmatic.com/salary-season-finder"
 #: Slack renders a post this long comfortably; past it the thread is better.
 POST_LIMIT = 3500
 
-#: At most this many engine factoids ride along with one change.
-FACTOIDS_PER_CHANGE = 2
+#: At most this many nuggets ride along with one change.
+NUGGETS_PER_CHANGE = 2
+
+#: Cohort kind -> the directory its page lives in. Slugs for the first three
+#: are derived rather than stored, the same way the prerender derives them.
+COHORT_DIRS = {
+    "draft_class": "draft", "draft_slot": "pick", "position": "position",
+    "region": "region", "pick_range": "pick-range",
+    "college": "college", "nationality": "country",
+    "college_position": "college-position",
+}
+
+POSITION_SLUGS = {"G": "guard", "F": "forward", "C": "center"}
+
+#: The second sentence runs to this at most; past it the second nugget goes.
+SENTENCE_LIMIT = 260
 
 #: How near a scale amount a salary has to be to be read as that amount. The
 #: rungs of a season's scale are 4% apart at the narrowest, so this cannot reach
@@ -127,17 +144,28 @@ def load_state(path=STATE_PATH):
         return json.load(fh)
 
 
-def save_state(commit, path=STATE_PATH, posted=0):
+def save_state(commit, path=STATE_PATH, posted=0, raises=None, opened=None):
+    stamp = datetime.datetime.now(datetime.timezone.utc)
+    kept = []
+    for entry in raises or []:
+        entry = dict(entry)
+        entry.setdefault("date", stamp.date().isoformat())
+        if opened is None or entry["date"] >= opened.isoformat():
+            kept.append(entry)
+    kept.sort(key=lambda entry: (-(entry.get("amount") or 0), entry["player"]))
     payload = {
         "readme": (
             "The build scripts/salary_digest.py last read. Committed so that a "
             "rerun of the workflow compares against the same place and never "
-            "posts a day's changes twice."
+            "posts a day's changes twice. raises holds every raise the digest "
+            "has seen since the league year opened on July 1, which is what a "
+            "raise is ranked against; entries before that date are dropped."
         ),
         "last_commit": commit,
-        "last_run": datetime.datetime.now(datetime.timezone.utc).strftime(
-            "%Y-%m-%dT%H:%M:%SZ"),
+        "last_run": stamp.strftime("%Y-%m-%dT%H:%M:%SZ"),
         "changes_posted": posted,
+        "league_year_opened": opened.isoformat() if opened else "",
+        "raises": kept,
     }
     with open(path, "w", encoding="utf-8") as fh:
         json.dump(payload, fh, indent=1, sort_keys=True)
@@ -159,10 +187,24 @@ def load_factoids(path=FACTOIDS_PATH):
         return (json.load(fh) or {}).get("factoids") or {}
 
 
-def load_team_names(path=FRANCHISES_PATH):
-    """Team code -> the city a sentence names, from data/franchises.json."""
+def load_cohort_slugs(path=SLUGS_PATH):
+    """Every family's slug map except the players', for the link pass."""
     if not os.path.exists(path):
         return {}
+    with open(path, "r", encoding="utf-8") as fh:
+        families = (json.load(fh) or {}).get("slugs") or {}
+    return {name: table for name, table in families.items() if name != "player"}
+
+
+def load_team_names(path=FRANCHISES_PATH, codes=False):
+    """Team code -> the city a sentence names, from data/franchises.json.
+
+    With codes, the map the link pass wants instead: code -> page slug.
+    """
+    if not os.path.exists(path):
+        return {}
+    if codes:
+        return (load_cohort_slugs(SLUGS_PATH).get("team") or {})
     with open(path, "r", encoding="utf-8") as fh:
         payload = (json.load(fh) or {}).get("franchises") or {}
     out = {}
@@ -183,18 +225,104 @@ def load_player_slugs(path=SLUGS_PATH):
         return ((json.load(fh) or {}).get("slugs") or {}).get("player") or {}
 
 
+def link(text, url):
+    """Slack mrkdwn. A link is the only place the digest spends a URL."""
+    if not url:
+        return text
+    return "<{}|{}>".format(url, text)
+
+
+def apply_links(text, links):
+    """Turn each named entity in a sentence into a link, once.
+
+    Longest surface first, so linking a player never cuts a team name in half,
+    and on a word boundary, so "Arizona St" cannot swallow the first half of
+    "Arizona State". A surface already inside a link is left alone.
+    """
+    done = []
+    for surface, url in sorted(links, key=lambda pair: -len(pair[0])):
+        if not surface or not url:
+            continue
+        if any(surface in seen for seen in done):
+            continue
+        pattern = r"(?<![\w<|/-]){}(?![\w-])".format(re.escape(surface))
+        found = re.search(pattern, text)
+        if not found:
+            continue
+        text = text[:found.start()] + link(surface, url) + text[found.end():]
+        done.append(surface)
+    return text
+
+
+def team_url(teams, code):
+    slug = (teams or {}).get((code or "").strip())
+    return "{}/team/{}/".format(TOOL_ROOT, slug) if slug else ""
+
+
+def cohort_label(idx, kind, key):
+    """What a sentence calls this cohort, which is what a link has to cover."""
+    if kind == "college":
+        return idx.college_display(key) if idx else key
+    if kind == "draft_slot":
+        return "No. {}".format(key) if key != "undrafted" else "undrafted"
+    if kind == "draft_class":
+        return "{} draft class".format(key)
+    if kind == "position":
+        return {"G": "guard", "F": "forward", "C": "center"}.get(key, key)
+    if kind == "region":
+        return (F.REGION_PHRASES.get(key) or {}).get("one", key)
+    return key
+
+
+def cohort_url(slugs, kind, key):
+    """The page for one cohort, or nothing where that cohort has none."""
+    directory = COHORT_DIRS.get(kind)
+    if not directory:
+        return ""
+    if kind == "position":
+        slug = POSITION_SLUGS.get(key)
+    elif kind in ("draft_class", "draft_slot", "region", "pick_range"):
+        slug = str(key)
+    else:
+        slug = ((slugs or {}).get(kind.replace("nationality", "country")) or {}).get(key)
+    return "{}/{}/{}/".format(TOOL_ROOT, directory, slug) if slug else ""
+
+
+def peer_url(spec):
+    """The tool, filtered to exactly the peer group a nugget counted.
+
+    Every one of these is a filter the tool already has; the games floor only
+    needed carrying in the hash, which js/app.js now does.
+    """
+    low_p, high_p = spec["ppg"]
+    second = spec["second_stat"]
+    low_o, high_o = spec[second]
+    params = [
+        ("from", spec["season"]), ("to", spec["season"]),
+        ("pos", spec["pos"]),
+        ("gp_min", spec["gp_min"]),
+        ("ppg_min", low_p), ("ppg_max", high_p),
+        ("{}_min".format(second[:3]), low_o),
+        ("{}_max".format(second[:3]), high_o),
+    ]
+    return "{}#{}".format(TOOL_ROOT, "&".join(
+        "{}={}".format(key, value) for key, value in params))
+
+
 def player_url(slugs, name):
     """The page for this man, or nothing if he has none yet.
 
-    A split key files its segments as "Name#0" and "Name#1"; the later segment
-    is the man playing now, which is the one a digest is ever about.
+    ``slugs`` is either the player table or the whole families map. A split key
+    files its segments as "Name#0" and "Name#1"; the later segment is the man
+    playing now, which is the one a digest is ever about.
     """
-    slug = slugs.get(name)
+    table = slugs.get("player") if isinstance(slugs.get("player"), dict) else slugs
+    slug = table.get(name)
     if not slug:
-        parts = sorted(k for k in slugs if k.rsplit("#", 1)[0] == name)
+        parts = sorted(k for k in table if k.rsplit("#", 1)[0] == name)
         if not parts:
             return ""
-        slug = slugs[parts[-1]]
+        slug = table[parts[-1]]
     return "{}/player/{}/".format(TOOL_ROOT, slug)
 
 
@@ -256,9 +384,89 @@ def changes(old, new, from_season):
                 "was_team": before.get("team") or "", "team": after.get("team") or "",
             })
 
+    items = drop_rescales(items)
     items.sort(key=lambda i: (
         KIND_ORDER.index(i["kind"]), -(i.get("salary") or 0), i["player"]))
     return group_runs(items)
+
+
+#: How many salaries have to move by the same ratio before the day reads as the
+#: whole sheet being rebuilt against a new cap projection rather than as news.
+RESCALE_MIN = 10
+
+#: Ratios are rounded to this many places before they are counted as the same.
+RESCALE_PLACES = 3
+
+
+def drop_rescales(items):
+    """Salary changes that are one sheet-wide rescale, not one piece of news.
+
+    When a cap projection moves, every future salary built off it moves by the
+    same ratio on the same day. Fifty players did not each get a raise; one
+    number upstream changed. A run of changes sharing a ratio is dropped
+    wholesale rather than filling the digest.
+    """
+    counts = collections.Counter()
+    for item in items:
+        ratio = _ratio(item)
+        if ratio is not None:
+            counts[ratio] += 1
+    rescaled = {r for r, n in counts.items() if n >= RESCALE_MIN}
+    if not rescaled:
+        return items
+    return [i for i in items if _ratio(i) not in rescaled]
+
+
+def _ratio(item):
+    """What a salary was multiplied by, for a change that is only a number."""
+    if item.get("kind") != "salary":
+        return None
+    was, now = item.get("was") or 0, item.get("salary") or 0
+    if not was or not now:
+        return None
+    return round(now / float(was), RESCALE_PLACES)
+
+
+def drop_impossible(items, idx):
+    """A salary no contract can pay is a data fault, not a change to report.
+
+    The engine flags these on the index; the digest honours the same flag, so a
+    projection that cannot be real never becomes an item, a raise or part of a
+    team's committed total.
+    """
+    out = []
+    for item in items:
+        player = idx.canonical(item["player"])
+        members = item.get("members")
+        if members:
+            # A run is re-measured on the seasons that survive, not dropped
+            # because the flagged one happened to be its last.
+            kept = [m for m in members
+                    if (player, m["season"]) not in idx.impossible]
+            if not kept:
+                continue
+            if len(kept) != len(members):
+                item = _regroup(item, kept)
+        elif (player, item["season"]) in idx.impossible:
+            continue
+        out.append(item)
+    return out
+
+
+def _regroup(item, members):
+    """A run with some of its seasons flagged away, re-measured on the rest."""
+    item = dict(item, members=members)
+    item["season"] = members[-1]["season"]
+    item["first_season"] = members[0]["season"]
+    item["first_salary"] = members[0].get("salary")
+    item["last_salary"] = members[-1].get("salary")
+    item["first_was"] = members[0].get("was")
+    item["salary"] = max((m.get("salary") or 0) for m in members)
+    item["peak_salary"] = item["salary"]
+    if len(members) == 1:
+        item["kind"] = item["kind"].replace("_run", "")
+        item["members"] = []
+    return item
 
 
 def group_runs(items):
@@ -292,6 +500,8 @@ def group_runs(items):
             "salary": max((m.get("salary") or 0) for m in members),
             "first_salary": members[0].get("salary"),
             "last_salary": members[-1].get("salary"),
+            "first_was": members[0].get("was"),
+            "peak_salary": max((m.get("salary") or 0) for m in members),
             "team": list(teams)[0] if len(teams) == 1 else "",
             "members": members,
         })
@@ -347,76 +557,251 @@ def possessive(name):
     return name + ("'" if name.endswith("s") else "'s")
 
 
+def lead(item, names=None, teams=None, slugs=None):
+    """The first sentence, with every entity it names linked."""
+    text = sentence(item, names)
+    links = [(item["player"], player_url(slugs or {}, item["player"]))]
+    for code in (item.get("team") or "").split(","):
+        code = code.strip()
+        if code:
+            spelled = (names or {}).get(code, code)
+            links.append((spelled, team_url(teams, code)))
+    for code in (item.get("was_team") or "").split(","):
+        code = code.strip()
+        if code:
+            spelled = (names or {}).get(code, code)
+            links.append((spelled, team_url(teams, code)))
+    return apply_links(text, links)
+
+
+#: How a salary moved, in a verb a reader feels. The multiples first, because
+#: "nearly quadruples" says more than "gets a 294% raise"; then the percentage,
+#: which is how a raise inside a multiple is spoken about.
+#: Under this much the move is not the news, and "rises 4%" is a line nobody
+#: would file. The money itself leads instead.
+MOVEMENT_FLOOR = 0.15
+
+
+#: A multiple is only used where the number is close enough to it to be read
+#: that way. 2.6 times is not "triples", and 3.5 times is not "triples" either;
+#: both are "more than" the multiple below them. Outside these bands the
+#: percentage is the honest form.
+MULTIPLES = ((2.9, 3.1, "triples", "more than triples"),
+             (1.9, 2.1, "doubles", "more than doubles"))
+
+
+def movement(now, before):
+    """The verb phrase for a salary going from ``before`` to ``now``."""
+    if not before or not now:
+        return ""
+    ratio = now / float(before)
+    for low, high, exact, over in MULTIPLES:
+        if ratio > high:
+            return over
+        if ratio >= low:
+            return exact
+    if ratio >= 1 + MOVEMENT_FLOOR:
+        return "rises {:.0f}%".format((ratio - 1) * 100)
+    if ratio <= 1 - MOVEMENT_FLOOR:
+        return "falls {:.0f}%".format((1 - ratio) * 100)
+    return ""
+
+
+def over_seasons(item):
+    """"$24 million over three seasons", for a run that carries one figure."""
+    members = item.get("members") or []
+    total = sum((m.get("salary") or 0) for m in members)
+    if len(members) < 2 or not total:
+        return ""
+    return "{} over {} seasons".format(F.fmt_money(total), _spell(len(members)))
+
+
+NUMBER_WORDS = ("zero", "one", "two", "three", "four", "five", "six", "seven",
+                "eight", "nine", "ten")
+
+
+def _spell(n):
+    return NUMBER_WORDS[n] if 0 <= n < len(NUMBER_WORDS) else str(n)
+
+
 def sentence(item, names=None):
-    """One publishable sentence about what the data did."""
+    """One publishable line about what the data did.
+
+    The news first, in a verb that carries it, then the money. Never a contract
+    word: this data holds a salary against a season, and whether it came from a
+    signing, an option or a correction is not in it.
+    """
     player, season = item["player"], item["season"]
     money = F.fmt_money(item.get("salary"))
-    kind = item["kind"]
-    if kind == "new":
-        if item["team"]:
-            return "{} is on {} books for {} in {}.".format(
-                player, possessive(team_name(item["team"], names)), money, season)
-        return "{} is on the books for {} in {}.".format(player, money, season)
-    if kind == "extension":
-        tail = " with {}".format(team_name(item["team"], names)) if item["team"] else ""
-        return "{} now has {} on his deal, {}{}.".format(
-            player, season, money, tail)
-    if kind == "new_run":
-        if item["team"]:
-            return "{} is on {} books through {}, {}.".format(
-                player, possessive(team_name(item["team"], names)), season,
-                _money_shape(item))
-        return "{} is on the books through {}, {}.".format(
-            player, season, _money_shape(item))
-    if kind == "extension_run":
-        tail = " with {}".format(team_name(item["team"], names)) if item["team"] else ""
-        return "{}'s deal now runs through {}{}, {}.".format(
-            player, season, tail, _money_shape(item))
+    team = team_name(item["team"], names) if item.get("team") else ""
+    kind, now = item["kind"], item.get("current_salary") or 0
+    biggest = item.get("peak_salary") or item.get("salary") or 0
+    verb = movement(biggest, now)
+    through = item.get("members") and len(item["members"]) > 1
+
+    if kind in ("new", "new_run", "extension", "extension_run"):
+        where = "{} has him at".format(team) if team else "he is due"
+        if verb and now:
+            lead = "{}'s salary {} in {}".format(
+                player, verb, item.get("first_season") or season)
+            body = "{} {}".format(where, _run_money(item))
+            if through:
+                body += " through {}".format(season)
+            # "up from $4.2 million now" says nothing when the run opens on that
+            # same figure: the climb inside it is the whole story.
+            if item.get("first_salary") == now:
+                return "{}: {}.".format(lead, body)
+            return "{}: {}, up from {} now.".format(lead, body, F.fmt_money(now))
+        if through:
+            return "{} is due {} through {}{}.".format(
+                player, _run_money(item), season,
+                " on {} books".format(possessive(team)) if team else "")
+        if team:
+            return "{} is on {} books at {} for {}.".format(
+                player, possessive(team), money, season)
+        return "{} is due {} in {}.".format(player, money, season)
+
     if kind == "salary_run":
-        return "{}'s salary moved in {} seasons, {} through {}, now {}.".format(
-            player, len(item["members"]), item["first_season"], season,
-            _money_shape(item))
+        if verb and now:
+            return "{}'s salary {} by {}: {} has him at {}, up from {} now.".format(
+                player, verb, season, team or "his team", _run_money(item),
+                F.fmt_money(now))
+        return "{}'s {} through {} salaries are redrawn, now {}.".format(
+            player, item["first_season"], season, _run_money(item))
+
     if kind == "salary":
-        return "{}'s {} salary moved from {} to {}.".format(
-            player, season, F.fmt_money(item.get("was")), money)
+        was = item.get("was")
+        step = movement(item.get("salary") or 0, was or 0)
+        if step:
+            return "{}'s {} salary {} to {}, from {}.".format(
+                player, season, step, money, F.fmt_money(was))
+        return "{}'s {} salary is rewritten to {}, from {}.".format(
+            player, season, money, F.fmt_money(was))
+
     if kind == "team":
-        return "{}'s {} salary of {} is now on {} books, not {}.".format(
-            player, season, money,
-            possessive(team_name(item["team"], names)),
+        return "{}'s {} for {} moves to {} books from {}.".format(
+            player, money, season, possessive(team),
             possessive(team_name(item.get("was_team"), names)))
-    return "{}'s {} salary of {} is off the books.".format(player, season, money)
+
+    return "{} is no longer on {} {} books, a {} salary.".format(
+        player, possessive(team_name(item.get("was_team") or item.get("team"),
+                                     names)),
+        season, money)
 
 
-def _money_shape(item):
-    """What a run of seasons is worth: one figure, or the two ends of a climb."""
+def _run_money(item):
+    """What a run of seasons is worth: one figure a year, or the climb."""
     first, last = item.get("first_salary"), item.get("last_salary")
+    if first is None:
+        return F.fmt_money(item.get("salary"))
     if first == last:
         return "{} a year".format(F.fmt_money(first))
-    return "rising from {} to {}".format(F.fmt_money(first), F.fmt_money(last))
+    return "{}, rising to {}".format(F.fmt_money(first), F.fmt_money(last))
 
 
-def facts_for(item, factoids):
-    """Up to two factoids, from the seasons this change is about."""
-    seasons = [m["season"] for m in item.get("members") or []] or [item["season"]]
-    out = []
-    for season in seasons:
-        for fact in factoids.get("{}|{}".format(item["player"], season)) or []:
-            text = fact.get("text")
-            if text and text not in out:
-                out.append(text)
-                if len(out) >= FACTOIDS_PER_CHANGE:
-                    return out
-    return out
+def nugget_sentence(nuggets, item, names=None, teams=None, slugs=None,
+                    context_idx=None):
+    """The second sentence: at most two nuggets, linked, inside the limit."""
+    if not nuggets:
+        return ""
+    text = nuggets[0]["opener"]
+    used = nuggets[:1]
+    # A nugget already carrying an "and", or two clauses of its own, takes no
+    # second one: three clauses joined by two ands is not a sentence anybody
+    # reads, and nor is one with five figures in it. A career nugget that names
+    # a man he goes past is full for the same reason: the name is the thing to
+    # carry away, and a raise rank tacked on to it buries it.
+    follower = nuggets[1].get("tail") if len(nuggets) > 1 else ""
+    named_a_legend = (
+        nuggets[0].get("kind") == "career"
+        and bool((nuggets[0].get("detail") or {}).get("legends"))
+    )
+    compound = (
+        named_a_legend
+        or ", and " in text or ", and " in (follower or "")
+        or text.count(",") >= 2 or (follower or "").count(",") >= 2
+    )
+    if follower and not compound \
+            and len(text) + len(follower) + 7 <= SENTENCE_LIMIT:
+        text = "{}, and {}".format(text, follower)
+        used = nuggets[:2]
+    text = text.rstrip(".") + "."
+
+    links = []
+    for nugget in used:
+        for kind, key in nugget.get("entities") or []:
+            if kind == "player":
+                links.append((key, player_url(slugs or {}, key)))
+            else:
+                links.append((cohort_label(context_idx, kind, key),
+                              cohort_url(slugs or {}, kind, key)))
+        spec = nugget.get("peer_link")
+        if spec and nugget.get("link_phrase"):
+            links.append((nugget["link_phrase"], peer_url(spec)))
+    return apply_links(text, links)
 
 
-def block(item, factoids, slugs, names=None):
-    """One change, as the lines it takes up."""
-    lines = [sentence(item, names)]
-    lines.extend(facts_for(item, factoids))
-    url = player_url(slugs, item["player"])
-    if url:
-        lines.append(url)
-    return "\n".join(lines)
+#: Kinds where new money arrives, which is the only place a raise can be.
+RAISE_KINDS = ("new", "new_run", "extension", "extension_run", "salary",
+               "salary_run")
+
+
+def raise_amount(idx, item):
+    """New money against what he is paid now, which is what a raise is here.
+
+    Not the difference between two future figures: a reader measures a raise
+    against the salary on this season's books. A salary coming off the books is
+    not a raise, and nor is the same money moving to another team.
+    """
+    if item["kind"] not in RAISE_KINDS:
+        return 0
+    now = idx.record(item["player"], idx.current_season) or {}
+    current = now.get("salary") or 0
+    biggest = max(
+        [(m.get("salary") or 0) for m in item.get("members") or []]
+        or [item.get("salary") or 0])
+    return max(0, biggest - current)
+
+
+def attach_nuggets(items, idx, data, factoids, raises, opened):
+    """Give every item the two nuggets it prints, its raise and its context."""
+    for item in items:
+        # What he is paid this season is what every movement is measured
+        # against: a reader hears a raise against today's money, not against
+        # one future figure versus another.
+        now = idx.record(item["player"], idx.current_season) or {}
+        item["current_salary"] = now.get("salary") or 0
+        item.setdefault("peak_salary", item.get("salary") or 0)
+        item["raise_amount"] = raise_amount(idx, item)
+    pool = list(raises) + [
+        {"player": item["player"], "season": item["season"],
+         "amount": item["raise_amount"]}
+        for item in items if item["raise_amount"] > 0
+    ]
+    for item in items:
+        item["nuggets"] = N.nuggets_for(
+            item, idx, data, factoids, pool, F.fmt_money, fmt_pct, opened,
+            limit=NUGGETS_PER_CHANGE)
+    return pool
+
+
+def fmt_pct(value):
+    text = "{:.1f}".format(value or 0.0)
+    if text.endswith(".0"):
+        text = text[:-2]
+    return text + "%"
+
+
+def block(item, context):
+    """One change, as at most two sentences with their links inside them."""
+    names, teams, slugs = context["names"], context["teams"], context["slugs"]
+    out = [lead(item, names, teams, slugs)]
+    second = nugget_sentence(
+        item.get("nuggets") or [], item, names, teams, slugs,
+        context_idx=context.get("idx"))
+    if second:
+        out.append(second)
+    return " ".join(out)
 
 
 def collapsed_line(kind, players):
@@ -427,26 +812,45 @@ def collapsed_line(kind, players):
         COLLAPSE_LABEL[kind], ", ".join(who))
 
 
-def render(items, when, scale, tolerance, factoids, slugs, names=None):
+def team_lines(context):
+    """The committed-money lines a day earned, each with its names linked."""
+    out = []
+    names, teams, slugs = context["names"], context["teams"], context["slugs"]
+    for entry in context.get("commitments") or ():
+        name = team_name(entry["team"], names)
+        text = T.line(entry, name, F.fmt_money)
+        links = [(name, team_url(teams, entry["team"]))]
+        links += [(player, player_url(slugs, player))
+                  for player, _amount in entry["top"]]
+        out.append(apply_links(text, links))
+    return out
+
+
+def render(items, when, scale, tolerance, context):
     """The digest, as the posts it takes."""
     header = "Salary data changes, {}".format(ap_date(when))
-    if not items:
+    commitments = team_lines(context)
+    if not items and not commitments:
         return ["{}: none today.".format(header)]
 
     blocks = []
     collapsed = collections.defaultdict(set)
     for item in items:
-        facts = facts_for(item, factoids)
-        # a run of seasons collapses on the same line as a single one of its kind
+        # A run of seasons collapses on the same line as a single one of its
+        # kind. A record is what rescues a minimum deal from that line: every
+        # other nugget has something to say about every deal, so letting any of
+        # them rescue one would collapse nothing.
         base = item["kind"].replace("_run", "")
-        if facts or base not in COLLAPSE_LABEL \
+        rescued = any(n["kind"] == "record" for n in item.get("nuggets") or [])
+        if rescued or base not in COLLAPSE_LABEL \
                 or not is_minimum(item, scale, tolerance):
-            blocks.append(block(item, factoids, slugs, names))
+            blocks.append(block(item, context))
         else:
             collapsed[base].add(item["player"])
     for kind in KIND_ORDER:
         if collapsed.get(kind):
             blocks.append(collapsed_line(kind, collapsed[kind]))
+    blocks.extend(commitments)
 
     # Pack into posts without ever splitting one change across two.
     posts, current = [], []
@@ -470,7 +874,12 @@ def render(items, when, scale, tolerance, factoids, slugs, names=None):
 
 # ── posting it ─────────────────────────────────────────────────────────
 def post(url, text):
-    body = json.dumps({"text": text}).encode("utf-8")
+    # Slack unfurls every link in a post by default, which on a digest of ten
+    # items is ten preview cards nobody asked for.
+    body = json.dumps({
+        "text": text, "mrkdwn": True,
+        "unfurl_links": False, "unfurl_media": False,
+    }).encode("utf-8")
     request = urllib.request.Request(
         url, data=body, headers={"Content-Type": "application/json"})
     with urllib.request.urlopen(request, timeout=30) as response:
@@ -510,13 +919,39 @@ def main(argv=None):
         return 0
 
     from_season = F.compute_current_season(new)
-    items = changes(old, new, from_season)
+    idx = F.build_index(new)
+    items = drop_impossible(changes(old, new, from_season), idx)
     print("comparing {}..{} from {} onward: {} change(s)".format(
         since[:8], head[:8] or "working tree", from_season, len(items)))
 
+    today = datetime.date.today()
+    opened = N.league_year_start(today)
+    state = load_state(args.state)
+    raises = [
+        entry for entry in (state.get("raises") or [])
+        if (entry.get("date") or "") >= opened.isoformat()
+    ]
+    pool = attach_nuggets(items, idx, new, load_factoids(), raises, opened)
+
+    # What the day did to what the teams it touched have committed. The old
+    # build is measured on its own index, because a salary the guard flags in
+    # one build may not be flagged in the other.
+    old_idx = F.build_index(old)
+    commitments = T.crossings(
+        T.commitments(old, old_idx), T.commitments(new, idx), idx,
+        T.touched_teams(items, idx))
+
     scale, tolerance = load_min_scale()
-    posts = render(items, datetime.date.today(), scale, tolerance,
-                   load_factoids(), load_player_slugs(), load_team_names())
+    context = {
+        "names": load_team_names(),
+        "teams": load_team_names(codes=True),
+        "slugs": load_player_slugs(),
+        "idx": idx,
+        "commitments": commitments,
+    }
+    context["slugs"] = {"player": context["slugs"]}
+    context["slugs"].update(load_cohort_slugs())
+    posts = render(items, today, scale, tolerance, context)
 
     for text in posts:
         print("\n" + "-" * 60)
@@ -534,7 +969,8 @@ def main(argv=None):
     if not webhook:
         print("\n{} is not set: the digest is in the job summary only".format(
             args.webhook_env))
-        save_state(head, path=args.state, posted=len(items))
+        save_state(head, path=args.state, posted=len(items), raises=pool,
+                   opened=opened)
         return 0
 
     for text in posts:
@@ -544,7 +980,8 @@ def main(argv=None):
             print("could not post to Slack: {}".format(problem))
             return 1
     print("\nposted {} message(s)".format(len(posts)))
-    save_state(head, path=args.state, posted=len(items))
+    save_state(head, path=args.state, posted=len(items), raises=pool,
+               opened=opened)
     return 0
 
 

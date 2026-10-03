@@ -2833,6 +2833,10 @@
     if (f.rpgMax != null) params.rpg_max = f.rpgMax;
     if (f.apgMin != null) params.apg_min = f.apgMin;
     if (f.apgMax != null) params.apg_max = f.apgMax;
+    // the digest's peer links are a games-played floor plus two stat bands, so
+    // the games filter has to survive a round trip through the hash
+    if (f.gpMin != null) params.gp_min = f.gpMin;
+    if (f.gpMax != null) params.gp_max = f.gpMax;
     if (f.team) params.team = f.team;
     if (f.college) params.college = f.college;
     if (f.awards.length > 0) params.awards = f.awards.join(",");
@@ -2893,6 +2897,8 @@
     if (params.ppg_max) document.getElementById("ppgMax").value = params.ppg_max;
     if (params.rpg_min) document.getElementById("rpgMin").value = params.rpg_min;
     if (params.rpg_max) document.getElementById("rpgMax").value = params.rpg_max;
+    if (params.gp_min) document.getElementById("gpMin").value = params.gp_min;
+    if (params.gp_max) document.getElementById("gpMax").value = params.gp_max;
     if (params.apg_min) document.getElementById("apgMin").value = params.apg_min;
     if (params.apg_max) document.getElementById("apgMax").value = params.apg_max;
     if (params.team) document.getElementById("teamFilter").value = params.team;
