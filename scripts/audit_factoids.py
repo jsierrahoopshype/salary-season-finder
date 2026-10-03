@@ -35,6 +35,7 @@ from factoids import (  # noqa: E402
     load_identity_splits,
     season_key,
     team_amounts,
+    team_codes,
 )
 
 
@@ -315,7 +316,7 @@ def audit_franchises(data, idx):
     rule("(d) FRANCHISE MAP")
     codes = collections.defaultdict(list)
     for rec in idx.records:
-        for code, _amount in team_amounts(rec):
+        for code in team_codes(rec):
             codes[code].append(season_key(rec["season"]))
     print("{} team codes in data.json, {} in data/franchises.json\n".format(
         len(codes), len(idx.franchises)

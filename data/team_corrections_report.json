@@ -11,11 +11,7 @@
    "player": "Aaron Gordon",
    "season": "2020-21",
    "sheet_team": "DEN",
-   "split_basis": "games played",
-   "team_salaries": {
-    "DEN": 9068182,
-    "ORL": 9068182
-   }
+   "split_basis": "no allocation; season marked split"
   },
   {
    "corrected_team": "OKC",
@@ -136,11 +132,7 @@
    "player": "Daniel Gafford",
    "season": "2023-24",
    "sheet_team": "DAL",
-   "split_basis": "games played",
-   "team_salaries": {
-    "DAL": 4860243,
-    "WAS": 7541757
-   }
+   "split_basis": "no allocation; season marked split"
   },
   {
    "corrected_team": "CLE",
@@ -159,33 +151,21 @@
    "player": "Derrick White",
    "season": "2021-22",
    "sheet_team": "BOS",
-   "split_basis": "games played",
-   "team_salaries": {
-    "BOS": 5435238,
-    "SAS": 10243333
-   }
+   "split_basis": "no allocation; season marked split"
   },
   {
    "corrected_team": "NOP, POR",
    "player": "Didi Louzada",
    "season": "2021-22",
    "sheet_team": "POR",
-   "split_basis": "games played",
-   "team_salaries": {
-    "NOP": 397084,
-    "POR": 1389794
-   }
+   "split_basis": "no allocation; season marked split"
   },
   {
    "corrected_team": "IND, SAC",
    "player": "Domantas Sabonis",
    "season": "2021-22",
    "sheet_team": "SAC",
-   "split_basis": "games played",
-   "team_salaries": {
-    "IND": 14024194,
-    "SAC": 4475806
-   }
+   "split_basis": "no allocation; season marked split"
   },
   {
    "corrected_team": "HOU",
@@ -210,11 +190,7 @@
    "player": "Dwight Powell",
    "season": "2014-15",
    "sheet_team": "DAL",
-   "split_basis": "games played",
-   "team_salaries": {
-    "BOS": 87472,
-    "DAL": 419864
-   }
+   "split_basis": "no allocation; season marked split"
   },
   {
    "corrected_team": "BKN",
@@ -239,11 +215,7 @@
    "player": "Gary Payton II",
    "season": "2022-23",
    "sheet_team": "GSW",
-   "split_basis": "games played",
-   "team_salaries": {
-    "GSW": 2640909,
-    "POR": 5659091
-   }
+   "split_basis": "no allocation; season marked split"
   },
   {
    "corrected_team": "MIL",
@@ -262,11 +234,7 @@
    "player": "Grant Williams",
    "season": "2023-24",
    "sheet_team": "CHA",
-   "split_basis": "games played",
-   "team_salaries": {
-    "CHA": 4733487,
-    "DAL": 7671513
-   }
+   "split_basis": "no allocation; season marked split"
   },
   {
    "corrected_team": "PHX",
@@ -285,11 +253,7 @@
    "player": "Immanuel Quickley",
    "season": "2023-24",
    "sheet_team": "TOR",
-   "split_basis": "games played",
-   "team_salaries": {
-    "NYK": 1840389,
-    "TOR": 2331159
-   }
+   "split_basis": "no allocation; season marked split"
   },
   {
    "corrected_team": "OKC",
@@ -326,11 +290,7 @@
    "player": "Jakob Poeltl",
    "season": "2022-23",
    "sheet_team": "TOR",
-   "split_basis": "games played",
-   "team_salaries": {
-    "SAS": 6004372,
-    "TOR": 3393776
-   }
+   "split_basis": "no allocation; season marked split"
   },
   {
    "corrected_team": "DEN",
@@ -349,22 +309,14 @@
    "player": "Jarred Vanderbilt",
    "season": "2022-23",
    "sheet_team": "LAL",
-   "split_basis": "games played",
-   "team_salaries": {
-    "LAL": 1458000,
-    "UTA": 2916000
-   }
+   "split_basis": "no allocation; season marked split"
   },
   {
    "corrected_team": "BKN, CLE",
    "player": "Jarrett Allen",
    "season": "2020-21",
    "sheet_team": "CLE",
-   "split_basis": "games played",
-   "team_salaries": {
-    "BKN": 744743,
-    "CLE": 3165159
-   }
+   "split_basis": "no allocation; season marked split"
   },
   {
    "corrected_team": "LAL",
@@ -425,11 +377,7 @@
    "player": "Josh Hart",
    "season": "2022-23",
    "sheet_team": "NYK",
-   "split_basis": "games played",
-   "team_salaries": {
-    "NYK": 4263158,
-    "POR": 8696842
-   }
+   "split_basis": "no allocation; season marked split"
   },
   {
    "corrected_team": "HOU",
@@ -442,11 +390,7 @@
    "player": "Julian Champagnie",
    "season": "2022-23",
    "sheet_team": "SAS",
-   "split_basis": "games played",
-   "team_salaries": {
-    "PHI": 59870,
-    "SAS": 449021
-   }
+   "split_basis": "no allocation; season marked split"
   },
   {
    "corrected_team": "MIN",
@@ -513,11 +457,7 @@
    "player": "Kyrie Irving",
    "season": "2022-23",
    "sheet_team": "DAL",
-   "split_basis": "games played",
-   "team_salaries": {
-    "BKN": 25944705,
-    "DAL": 12972352
-   }
+   "split_basis": "no allocation; season marked split"
   },
   {
    "corrected_team": "CHA",
@@ -626,11 +566,7 @@
    "player": "OG Anunoby",
    "season": "2023-24",
    "sheet_team": "NYK",
-   "split_basis": "games played",
-   "team_salaries": {
-    "NYK": 8575714,
-    "TOR": 10067143
-   }
+   "split_basis": "no allocation; season marked split"
   },
   {
    "corrected_team": "BKN",
@@ -649,22 +585,14 @@
    "player": "PJ Washington",
    "season": "2023-24",
    "sheet_team": "DAL",
-   "split_basis": "games played",
-   "team_salaries": {
-    "CHA": 10154854,
-    "DAL": 6692972
-   }
+   "split_basis": "no allocation; season marked split"
   },
   {
    "corrected_team": "IND, TOR",
    "player": "Pascal Siakam",
    "season": "2023-24",
    "sheet_team": "IND",
-   "split_basis": "games played",
-   "team_salaries": {
-    "IND": 19420372,
-    "TOR": 18473036
-   }
+   "split_basis": "no allocation; season marked split"
   },
   {
    "corrected_team": "PHI",
@@ -695,11 +623,7 @@
    "player": "RJ Barrett",
    "season": "2023-24",
    "sheet_team": "TOR",
-   "split_basis": "games played",
-   "team_salaries": {
-    "NYK": 10706589,
-    "TOR": 13177340
-   }
+   "split_basis": "no allocation; season marked split"
   },
   {
    "corrected_team": "PHX",
@@ -784,11 +708,7 @@
    "player": "Tyrese Haliburton",
    "season": "2021-22",
    "sheet_team": "IND",
-   "split_basis": "games played",
-   "team_salaries": {
-    "IND": 1358618,
-    "SAC": 2664982
-   }
+   "split_basis": "no allocation; season marked split"
   },
   {
    "corrected_team": "UTA",
@@ -801,11 +721,7 @@
    "player": "Wendell Carter Jr",
    "season": "2020-21",
    "sheet_team": "ORL",
-   "split_basis": "games played",
-   "team_salaries": {
-    "CHI": 3228942,
-    "ORL": 2219898
-   }
+   "split_basis": "no allocation; season marked split"
   },
   {
    "corrected_team": "CHI",
@@ -829,5 +745,5 @@
  "current_season": "2026-27",
  "disagreements_found": 2221,
  "left_to_the_salary_sheet": 2101,
- "note": "A completed season takes its team from the player's stats line where the salary sheet gave it the team he is on now, which is what the one-TEAM-per-row current sheet does to a man who moved in the summer. Disagreements of any other shape are the sheet naming whose books paid a salary and the stats naming who he played for, which are different facts, and are left alone."
+ "note": "A completed season takes its team from the player's stats line where the salary sheet gave it the team he is on now, which is what the one-TEAM-per-row current sheet does to a man who moved in the summer. Disagreements of any other shape are the sheet naming whose books paid a salary and the stats naming who he played for, which are different facts, and are left alone. A season he was traded inside keeps both teams and its whole salary: nothing here records how the two divided it, so neither is given a figure, and the season is marked split so no franchise record counts it."
 }

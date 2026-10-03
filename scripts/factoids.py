@@ -833,17 +833,48 @@ def is_split_season(record):
     kept out of franchise claims entirely rather than attributed to the wrong
     team. Season, cohort, cap and career claims use the full-season salary and
     are unaffected.
+
+    A season the build corrected to two teams carries teams_split with no
+    amounts at all: the build knows he was traded inside it and has no basis for
+    dividing the money, so it names the teams and leaves the figure whole.
     """
+    if record.get("teams_split"):
+        return True
     return len(record.get("team_salaries") or {}) > 1
+
+
+def _split_count(record):
+    """How many teams a split season names, for a drop message."""
+    splits = record.get("team_salaries") or {}
+    if len(splits) > 1:
+        return len(splits)
+    return len(team_codes(record))
+
+
+def team_codes(record):
+    """The teams a season puts a man on, in order.
+
+    Membership, not money: a season the build cannot divide still happened on
+    both teams, so both name him on their page. What neither gets is a figure.
+    """
+    splits = record.get("team_salaries") or {}
+    if len(splits) > 1:
+        return [code for code, _amount in sorted(
+            splits.items(), key=lambda kv: (-kv[1], kv[0]))]
+    return [t.strip() for t in str(record.get("team") or "").split(",") if t.strip()]
 
 
 def team_amounts(record):
     """Per-team amounts for a season record.
 
     A mid-season move carries team_salaries; everything else is the single team
-    with the full salary. Returns an ordered list of (team_code, amount).
+    with the full salary. Returns an ordered list of (team_code, amount), and []
+    for a season whose split the build cannot attribute: no team is credited a
+    figure this build made up.
     """
     splits = record.get("team_salaries") or {}
+    if record.get("teams_split") and not splits:
+        return []
     if len(splits) > 1:
         return sorted(splits.items(), key=lambda kv: (-kv[1], kv[0]))
     teams = [t.strip() for t in str(record.get("team") or "").split(",") if t.strip()]
@@ -1128,8 +1159,8 @@ def _flag_impossible_salaries(idx):
                 )
 
             if reason is None and previous is not None:
-                teams = [c for c, _a in team_amounts(record)]
-                prev_teams = [c for c, _a in team_amounts(previous)]
+                teams = team_codes(record)
+                prev_teams = team_codes(previous)
                 same_team = (
                     len(teams) == 1 and len(prev_teams) == 1 and teams[0] == prev_teams[0]
                 )
@@ -1923,9 +1954,9 @@ def _family_franchise(ctx, out, log):
     if is_split_season(record):
         log.drop(
             "franchise", season, "split_season",
-            "team_salaries splits this season across {} teams, which is cap-sheet "
-            "allocation rather than money paid while on a roster".format(
-                len(record.get("team_salaries") or {})
+            "this season splits across {} teams, which is cap-sheet allocation "
+            "rather than money paid while on a roster".format(
+                _split_count(record)
             ),
         )
         return
@@ -2767,9 +2798,9 @@ def _family_rank_shift(ctx, out, log):
         log.drop(
             "rank_shift", season, "split_season",
             "a team high-earner shift compares two seasons on one roster, and "
-            "{} splits across {} teams in team_salaries, which is cap-sheet "
+            "{} splits across {} teams, which is cap-sheet "
             "allocation rather than money paid while on a roster".format(
-                season, len(record.get("team_salaries") or {})
+                season, _split_count(record)
             ),
         )
         return
@@ -2801,7 +2832,7 @@ def _family_rank_shift(ctx, out, log):
             "rank_shift", previous["season"], "split_season",
             "the season being compared against splits across {} teams, so its "
             "roster rank belongs to no single team".format(
-                len(previous.get("team_salaries") or {})
+                _split_count(previous)
             ),
         )
         return

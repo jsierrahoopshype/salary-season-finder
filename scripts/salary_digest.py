@@ -657,22 +657,8 @@ def sentence(item, names=None):
                 player, possessive(team), money, season)
         return "{} is due {} in {}.".format(player, money, season)
 
-    if kind == "salary_run":
-        if verb and now:
-            return "{}'s salary {} by {}: {} has him at {}, up from {} now.".format(
-                player, verb, season, team or "his team", _run_money(item),
-                F.fmt_money(now))
-        return "{}'s {} through {} salaries are redrawn, now {}.".format(
-            player, item["first_season"], season, _run_money(item))
-
-    if kind == "salary":
-        was = item.get("was")
-        step = movement(item.get("salary") or 0, was or 0)
-        if step:
-            return "{}'s {} salary {} to {}, from {}.".format(
-                player, season, step, money, F.fmt_money(was))
-        return "{}'s {} salary is rewritten to {}, from {}.".format(
-            player, season, money, F.fmt_money(was))
+    if kind in ("salary", "salary_run"):
+        return changed_salary(item)
 
     if kind == "team":
         # Where the money used to sit is not the news and dates the line: what
@@ -684,6 +670,87 @@ def sentence(item, names=None):
         player, possessive(team_name(item.get("was_team") or item.get("team"),
                                      names)),
         season, money)
+
+
+def step_verb(now, before):
+    """The verb a changed number takes, with no percentage in it.
+
+    Both figures are in the sentence, so a reader can see the size of the move
+    without being told it; what the verb is for is the direction, and the
+    multiple where the move is big enough to be read as one.
+    """
+    if not before or not now:
+        return ""
+    ratio = now / float(before)
+    for low, high, exact, over in MULTIPLES:
+        if ratio > high:
+            return over
+        if ratio >= low:
+            return exact
+    if now > before:
+        return "rises"
+    if now < before:
+        return "falls"
+    return ""
+
+
+def changed_salary(item):
+    """A number that moved: the first season it moved in, old to new.
+
+    One number a reader can hold, in the season nearest to now, and then how
+    many seasons behind it moved with it. The old wording called a run of them
+    "redrawn", which says a sheet changed without saying what it now says.
+    """
+    player = item["player"]
+    first = item.get("first_season") or item["season"]
+    was = item.get("first_was")
+    if was is None:
+        was = item.get("was")
+    now = item.get("first_salary")
+    if now is None:
+        now = item.get("salary")
+    verb = step_verb(now or 0, was or 0)
+    tail = _rest_of_run(item)
+    if not verb:
+        return "{}'s {} salary is {}{}.".format(
+            player, first, F.fmt_money(now), tail)
+    return "{}'s {} salary {} to {} from {}{}.".format(
+        player, first, verb, F.fmt_money(now), F.fmt_money(was), tail)
+
+
+def _rest_of_run(item):
+    """"and his next two seasons go up with it", for the seasons behind it.
+
+    "With it" only where they went the same way as the season in front of them.
+    Where they went the other way they are a second fact about the same day, so
+    the clause says so instead of claiming they followed.
+    """
+    members = item.get("members") or []
+    rest = members[1:]
+    if not rest:
+        return ""
+    first = members[0]
+    led = _way((first.get("salary") or 0) - (first.get("was") or 0))
+    ways = {_way((m.get("salary") or 0) - (m.get("was") or 0)) for m in rest}
+    one = len(rest) == 1
+    how_many = "season" if one else "{} seasons".format(_spell(len(rest)))
+    if len(ways) > 1:
+        return ", and his next {} {} with it".format(
+            how_many, "moves" if one else "move")
+    way = ways.pop()
+    move = {1: "goes up" if one else "go up",
+            -1: "comes down" if one else "come down",
+            0: "holds" if one else "hold"}[way]
+    if way == led:
+        return ", and his next {} {} with it".format(how_many, move)
+    return ", while his next {} {}".format(how_many, move)
+
+
+def _way(difference):
+    """Which way a number moved: up, down or not at all."""
+    if difference > 0:
+        return 1
+    return -1 if difference < 0 else 0
 
 
 def _run_money(item):
@@ -698,31 +765,41 @@ def _run_money(item):
 
 def nugget_sentence(nuggets, item, names=None, teams=None, slugs=None,
                     context_idx=None):
-    """The second sentence: at most two nuggets, linked, inside the limit."""
+    """What the money means: at most two nuggets, linked, inside the limit."""
     if not nuggets:
         return ""
-    text = nuggets[0]["opener"]
+    first = nuggets[0]
+    second = nuggets[1] if len(nuggets) > 1 else None
+    sentences = [first["opener"]]
     used = nuggets[:1]
-    # A nugget already carrying an "and", or two clauses of its own, takes no
-    # second one: three clauses joined by two ands is not a sentence anybody
-    # reads, and nor is one with five figures in it. A career nugget that names
-    # a man he goes past is full for the same reason: the name is the thing to
-    # carry away, and a raise rank tacked on to it buries it.
-    follower = nuggets[1].get("tail") if len(nuggets) > 1 else ""
+    # A career nugget that names a man he goes past is full: the name is the
+    # thing to carry away, and a raise rank tacked on to it buries it.
     named_a_legend = (
-        nuggets[0].get("kind") == "career"
-        and bool((nuggets[0].get("detail") or {}).get("legends"))
+        first.get("kind") == "career"
+        and bool((first.get("detail") or {}).get("legends"))
     )
-    compound = (
-        named_a_legend
-        or ", and " in text or ", and " in (follower or "")
-        or text.count(",") >= 2 or (follower or "").count(",") >= 2
-    )
-    if follower and not compound \
-            and len(text) + len(follower) + 7 <= SENTENCE_LIMIT:
-        text = "{}, and {}".format(text, follower)
-        used = nuggets[:2]
-    text = text.rstrip(".") + "."
+    if second is not None and not named_a_legend:
+        if "career" in (first.get("kind"), second.get("kind")):
+            # Where he stands and what he would pass is a sentence of its own.
+            # It carries two figures and a season already, and hung off another
+            # nugget by an "and" it reads as a stat list rather than a line.
+            sentences.append(second["opener"])
+            used = nuggets[:2]
+        else:
+            # A nugget already carrying an "and", or two clauses of its own,
+            # takes no second one: three clauses joined by two ands is not a
+            # sentence anybody reads, and nor is one with five figures in it.
+            follower = second.get("tail")
+            compound = (
+                ", and " in sentences[0] or ", and " in (follower or "")
+                or sentences[0].count(",") >= 2
+                or (follower or "").count(",") >= 2
+            )
+            if follower and not compound \
+                    and len(sentences[0]) + len(follower) + 7 <= SENTENCE_LIMIT:
+                sentences[0] = "{}, and {}".format(sentences[0], follower)
+                used = nuggets[:2]
+    text = " ".join(part.rstrip(".") + "." for part in sentences)
 
     links = []
     for nugget in used:
@@ -802,6 +879,110 @@ def collapsed_line(kind, players):
         COLLAPSE_LABEL[kind], ", ".join(who))
 
 
+#: How far a number has to move to be worth an item of its own. Under this the
+#: sheet has been nudged, not rewritten, and a line saying so is a line nobody
+#: would file. A record it sets is the one thing that still makes it news.
+TINY_CHANGE = 0.05
+
+#: How far money has to move to be a story by itself: a raise or a cut a reader
+#: would repeat. Under it an item needs something else to say.
+STORY_MOVE = 0.25
+
+#: Kinds that can go on the "also on the books" line. A season coming off the
+#: books is not on them, so "gone" keeps its own entry however quiet it is.
+ALSO_KINDS = ("new", "extension", "salary", "team")
+
+
+def _steps(item):
+    """Every ratio a change moved a number by, one per season it touched."""
+    members = item.get("members") or []
+    pairs = [(m.get("salary") or 0, m.get("was") or 0) for m in members]
+    if not pairs:
+        pairs = [(item.get("salary") or 0, item.get("was") or 0)]
+    return [now / float(was) for now, was in pairs if was and now]
+
+
+def tiny_change(item):
+    """A changed number that moved too little in every season to be news."""
+    if item["kind"].replace("_run", "") != "salary":
+        return False
+    steps = _steps(item)
+    if not steps:
+        return False
+    return all(abs(step - 1) < TINY_CHANGE for step in steps)
+
+
+def has_story(item):
+    """Whether an item has anything of its own to say.
+
+    A raise or a cut a reader would repeat, a record, or the company he keeps.
+    Everything else is a figure on a sheet, which the closing line carries.
+    """
+    for nugget in item.get("nuggets") or []:
+        if nugget["kind"] in ("record", "peers"):
+            return True
+    steps = _steps(item)
+    if steps and max(abs(step - 1) for step in steps) >= STORY_MOVE:
+        return True
+    # New money has no "before" of its own: what it is measured against is the
+    # salary he is on now, which is how a reader hears a raise. Money moving to
+    # another team's books is not new money and is measured against nothing.
+    if item["kind"] not in RAISE_KINDS:
+        return False
+    now = item.get("current_salary") or 0
+    biggest = item.get("peak_salary") or item.get("salary") or 0
+    if now and biggest and abs(biggest / float(now) - 1) >= STORY_MOVE:
+        return True
+    return False
+
+
+def also_line(items, context):
+    """The one line the day's quiet items come to, with every name linked.
+
+    One entry a man, however many of his seasons were quiet: his name twice in
+    the same line is the thing this line exists to avoid.
+    """
+    names, teams, slugs = context["names"], context["teams"], context["slugs"]
+    by_player = collections.OrderedDict()
+    for item in sorted(items, key=lambda i: (-(i.get("salary") or 0), i["player"])):
+        by_player.setdefault(item["player"], []).append(item)
+
+    parts, links = [], []
+    for player, mine in by_player.items():
+        mine.sort(key=lambda i: F.season_key(i["season"]))
+        spelled = {team_name(i["team"], names) for i in mine if i.get("team")}
+        if len(spelled) == 1:
+            inside = "{}, {}".format(
+                spelled.pop(), _join_and([_also_money(i) for i in mine]))
+        elif spelled:
+            inside = _join_and([
+                "{}, {}".format(team_name(i["team"], names), _also_money(i))
+                for i in mine])
+        else:
+            inside = _join_and([_also_money(i) for i in mine])
+        parts.append("{} ({})".format(player, inside))
+        links.append((player, player_url(slugs or {}, player)))
+        for item in mine:
+            for code in (item.get("team") or "").split(","):
+                code = code.strip()
+                if code:
+                    links.append(((names or {}).get(code, code),
+                                  team_url(teams, code)))
+    return apply_links("Also on the books: {}.".format(", ".join(parts)), links)
+
+
+def _also_money(item):
+    """What one quiet item is worth, in the fewest words that are true."""
+    return over_seasons(item) or "{} in {}".format(
+        F.fmt_money(item.get("salary")), item["season"])
+
+
+def _join_and(parts):
+    if len(parts) < 2:
+        return "".join(parts)
+    return "{} and {}".format(", ".join(parts[:-1]), parts[-1])
+
+
 def team_lines(context):
     """The committed-money lines a day earned, each with its names linked."""
     out = []
@@ -825,22 +1006,33 @@ def render(items, when, scale, tolerance, context):
 
     blocks = []
     collapsed = collections.defaultdict(set)
+    quiet = []
     for item in items:
         # A run of seasons collapses on the same line as a single one of its
-        # kind. A record is what rescues a minimum deal from that line: every
+        # kind. A record is what rescues a deal from any of these lines: every
         # other nugget has something to say about every deal, so letting any of
         # them rescue one would collapse nothing.
         base = item["kind"].replace("_run", "")
         rescued = any(n["kind"] == "record" for n in item.get("nuggets") or [])
-        if rescued or base not in COLLAPSE_LABEL \
-                or not is_minimum(item, scale, tolerance):
-            blocks.append(block(item, context))
-        else:
+        if tiny_change(item) and not rescued:
+            continue
+        if not rescued and base in COLLAPSE_LABEL \
+                and is_minimum(item, scale, tolerance):
             collapsed[base].add(item["player"])
+            continue
+        if base in ALSO_KINDS and not has_story(item):
+            quiet.append(item)
+            continue
+        blocks.append(block(item, context))
     for kind in KIND_ORDER:
         if collapsed.get(kind):
             blocks.append(collapsed_line(kind, collapsed[kind]))
+    if quiet:
+        blocks.append(also_line(quiet, context))
     blocks.extend(commitments)
+    if not blocks:
+        # Everything the day held was a nudge or a figure already on the books.
+        return ["{}: none today.".format(header)]
 
     # Pack into posts without ever splitting one change across two.
     posts, current = [], []

@@ -11,8 +11,8 @@ b) career          the career-salary milestone this crosses and when, the most
                    today
 c) raise           his raise against every raise the digest has seen since the
                    league year opened on July 1
-d) peers           the men at his position putting up his numbers, by what
-                   share of the cap they take
+d) peers           the men at his position putting up his numbers, and the
+                   real money they are paid
 e) horizon         how far the money runs, in the age he will be when it ends
 
 Nothing here says "guaranteed": the data holds salaries, not contract terms,
@@ -57,6 +57,12 @@ STAT_WORD = {"apg": "assists", "rpg": "rebounds", "ppg": "points"}
 #: description of how he played.
 PEER_MIN_GAMES = 40
 PEER_MIN_PLAYERS = 5
+
+#: Games played in the season under way before that season is the one a
+#: comparison reads. Ten games is enough for a per-game average to describe how
+#: a man is playing; under that the season played out is the better description,
+#: and it is the one a reader means by "last season".
+PEER_CURRENT_MIN_GAMES = 10
 
 #: Who is worth naming as a career passed on the way to a milestone. A man has
 #: to carry one of these, which is a short list on purpose: "past Josh Howard on
@@ -232,17 +238,22 @@ def career_nugget(idx, item, money):
     passed = _legends_between(idx, paid, milestone)
     rank_all, rank_active = _career_ranks(idx, player, paid)
 
-    text = "He would reach {} in career earnings by {}".format(
-        money(milestone), season)
     standing = _standing(rank_all, rank_active)
     # One or the other, never both: a name the reader knows is worth more than
     # a rank, and a sentence carrying the milestone, the season, two names and
     # a standing is a stat list rather than a line.
     if passed:
-        text += ", going past {} on the way".format(
-            _join([p["name"] for p in passed]))
+        text = ("He would pass {} in career earnings in {}, going past {} "
+                "on the way".format(money(milestone), season,
+                                    _join([p["name"] for p in passed])))
     elif standing:
-        text += ", where he already stands {}".format(standing)
+        # Where he stands is a fact about today, so it leads, and the milestone
+        # follows it as the thing still to come.
+        text = "He's already {} and would pass {} in {}".format(
+            standing, money(milestone), season)
+    else:
+        text = "He would pass {} in career earnings in {}".format(
+            money(milestone), season)
     return {
         "kind": "career",
         "opener": text,
@@ -320,8 +331,20 @@ def _standing(rank_all, rank_active):
     if not best or best > STANDING_MAX_RANK:
         return ""
     if rank_active is not None and (rank_all is None or rank_active < rank_all):
-        return "{} among players on a roster".format(_ordinal(rank_active))
-    return "{} of all time".format(_ordinal(rank_all))
+        return "{} in career earnings among players on a roster".format(
+            _rank_word(rank_active))
+    return "{} in career earnings".format(_rank_word(rank_all))
+
+
+#: Ranks a sentence spells out. Past these the digit is how a rank is read.
+RANK_WORDS = ("", "first", "second", "third", "fourth", "fifth", "sixth",
+              "seventh", "eighth", "ninth", "tenth")
+
+
+def _rank_word(rank):
+    if rank and rank < len(RANK_WORDS):
+        return RANK_WORDS[rank]
+    return _ordinal(rank)
 
 
 # ── (c) the raise, against the league year's raises ───────────────────
@@ -355,16 +378,22 @@ def raise_nugget(item, raises, money, opened):
 
 # ── (d) peers ─────────────────────────────────────────────────────────
 def peer_nugget(idx, item, data, money):
-    """What the men who played like him last season are paid this one.
+    """What the men playing like him are paid.
 
     Real money on both sides. A share of the cap is a ratio a reader has to do
     arithmetic on; what they want to know is what these players make.
+
+    Which season the numbers come from is decided once, by him, and then holds
+    for everybody in the comparison: his figures and theirs are always the same
+    season, and the sentence says which.
     """
     player = item["player"]
-    season = _last_completed(idx)
+    season, when, games_floor = _peer_window(idx, player)
     if not season:
         return None
-    mine = idx.record(player, season) or _latest_with_stats(idx, player)
+    # His own line in that season and no other: his numbers from one season set
+    # against theirs from a different one is not a comparison.
+    mine = idx.record(player, season)
     if not mine:
         return None
     position, _noun = F.position_group(mine.get("pos"))
@@ -382,7 +411,7 @@ def peer_nugget(idx, item, data, money):
     group = [
         record for record in data["seasons"]
         if record["season"] == season
-        and (record.get("gp") or 0) >= PEER_MIN_GAMES
+        and (record.get("gp") or 0) >= games_floor
         and F.position_group(record.get("pos"))[0] == position
         and record.get("ppg") is not None and record.get(second) is not None
         and low_p <= record["ppg"] <= high_p
@@ -405,11 +434,18 @@ def peer_nugget(idx, item, data, money):
     median = paid[len(paid) // 2][0]
     best_salary, best_player = paid[-1]
 
-    phrase = "{} who averaged {} to {} points and {} to {} {} last season".format(
-        _plural(position).capitalize(),
-        _num(low_p), _num(high_p), _num(low_o), _num(high_o), STAT_WORD[second])
-    body = ("{} make a median {} this season; the best-paid of them, {}, "
-            "is on {}".format(phrase, money(median), best_player,
+    # A season still being played takes the perfect: he has averaged this much
+    # so far. A season played out is finished, and so is the verb.
+    now = when == "this season"
+    phrase = "{} who {} {} to {} points and {} to {} {} {}".format(
+        _plural(position).capitalize(), "have averaged" if now else "averaged",
+        _num(low_p), _num(high_p), _num(low_o), _num(high_o),
+        STAT_WORD[second], when)
+    # "this season" twice in one clause says it once too often: where the
+    # numbers are from this season, the money plainly is too.
+    paid_when = "" if now else " this season"
+    body = ("{} make a median {}{}; the best-paid of them, {}, "
+            "is on {}".format(phrase, money(median), paid_when, best_player,
                               money(best_salary)))
     return {
         "kind": "peers",
@@ -421,7 +457,7 @@ def peer_nugget(idx, item, data, money):
         # wording changed
         "link_phrase": phrase,
         "peer_link": {
-            "season": season, "pos": position, "gp_min": PEER_MIN_GAMES,
+            "season": season, "pos": position, "gp_min": games_floor,
             "ppg": (low_p, high_p), second: (low_o, high_o),
             "second_stat": second, "count": len(group),
             "others": len(peers),
@@ -461,11 +497,27 @@ def _last_completed(idx):
     return ""
 
 
-def _latest_with_stats(idx, player):
-    for record in reversed(idx.by_player.get(player) or []):
-        if record.get("ppg") is not None:
-            return record
-    return None
+def _peer_window(idx, player):
+    """(season, how a sentence says it, the games floor) for a comparison.
+
+    The season under way once he has ten games in it, and the season played out
+    until then. One answer for the whole comparison, so his numbers and theirs
+    are never read off different seasons.
+    """
+    current = idx.current_season
+    mine = idx.record(player, current) or {}
+    if (mine.get("gp") or 0) >= PEER_CURRENT_MIN_GAMES \
+            and mine.get("ppg") is not None:
+        # A season still being played has no 40-game men in it until the new
+        # year, so the ten games that opened this window is the bar everybody
+        # in it clears. A season played out keeps the full floor.
+        floor = (PEER_CURRENT_MIN_GAMES if idx.current_season_in_progress
+                 else PEER_MIN_GAMES)
+        return current, "this season", floor
+    season = _last_completed(idx)
+    if not season:
+        return "", "", 0
+    return season, "last season", PEER_MIN_GAMES
 
 
 # ── (e) where the money ends ──────────────────────────────────────────

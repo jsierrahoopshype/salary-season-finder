@@ -162,7 +162,7 @@ def related_links(idx, ident, lookup):
 
     codes = []
     for record in ident.records:
-        for code, _amount in F.team_amounts(record):
+        for code in F.team_codes(record):
             if code in idx.franchises and code not in codes:
                 codes.append(code)
     for code in codes:
