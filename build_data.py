@@ -639,8 +639,12 @@ def correct_past_season_teams(records, stats_lookup):
     2025-26 read MIA, a season he played in Milwaukee.
 
     The signature is narrow on purpose. A past season is only rewritten where it
-    carries exactly the team he is on now and the stats disagree, which is what
-    inheriting the row's TEAM column looks like. Everywhere else the two sources
+    carries one team, that team is one of the teams he is on now, and the stats
+    disagree, which is what inheriting the row's TEAM column looks like. One OF
+    the teams rather than the whole TEAM string, because a man traded inside the
+    current season holds two of them: Kentavious Caldwell-Pope reads "MEM, PHI"
+    in 2026-27, and his 2025-26 came through as PHI, a season he played in
+    Memphis. Everywhere else the two sources
     are saying different true things: the sheet names whose books paid the
     salary and the stats name who he played for, and for a man waived by one
     team while playing for another the sheet is the one a salary tool wants.
@@ -652,6 +656,12 @@ def correct_past_season_teams(records, stats_lookup):
         rec["player"]: (rec.get("team") or "").strip()
         for rec in records
         if rec["season"] == current and (rec.get("team") or "").strip()
+    }
+    # The teams he is on now, one by one, so a current season he was traded
+    # inside still matches the single team a past season inherited from it.
+    now_teams = {
+        player: {t.strip() for t in teams.split(",") if t.strip()}
+        for player, teams in now_team.items()
     }
 
     applied, seen, skipped = [], 0, 0
@@ -665,7 +675,7 @@ def correct_past_season_teams(records, stats_lookup):
         if set(sheet) == set(played):
             continue
         seen += 1
-        if len(sheet) != 1 or sheet[0] != now_team.get(rec["player"]):
+        if len(sheet) != 1 or sheet[0] not in now_teams.get(rec["player"], set()):
             skipped += 1
             continue
 

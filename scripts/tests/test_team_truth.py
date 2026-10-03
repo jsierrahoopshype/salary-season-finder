@@ -63,6 +63,58 @@ def test_a_past_season_wearing_his_new_team_is_corrected():
     }]
 
 
+def test_a_past_season_is_corrected_when_the_current_one_is_itself_a_split():
+    """Kentavious Caldwell-Pope, the case the first version of this rule missed.
+
+    He was traded inside 2026-27, so his current season reads "MEM, PHI". His
+    2025-26 came through the current sheet as PHI, a season he played in
+    Memphis: the sheet's one TEAM column reaching a year column it should not
+    have. Comparing the past season against the whole current TEAM string left
+    it standing, because "PHI" is not "MEM, PHI". It is one of them, which is
+    the test the rule applies now.
+    """
+    records = league(CURRENT) + [
+        rec("Kentavious Caldwell-Pope", "2025-26", "PHI", salary=21621500),
+        rec("Kentavious Caldwell-Pope", CURRENT, "MEM, PHI", salary=21621500,
+            team_salaries={"MEM": 17744971, "PHI": 3876529}),
+    ]
+    report = B.correct_past_season_teams(
+        records, stats([("Kentavious Caldwell-Pope", "2025-26", "MEM", 51)]))
+
+    past = [r for r in records if r["season"] == "2025-26"][0]
+    assert past["team"] == "MEM"
+    # One team played it, so the whole salary is Memphis's and there is no
+    # split to carry.
+    assert past["salary"] == 21621500
+    assert "team_salaries" not in past
+    assert "teams_split" not in past
+    # the current season it was read against is untouched
+    now = [r for r in records if r["season"] == CURRENT
+           and r["player"] == "Kentavious Caldwell-Pope"][0]
+    assert now["team"] == "MEM, PHI"
+    assert now["team_salaries"] == {"MEM": 17744971, "PHI": 3876529}
+    assert report["applied"] == [{
+        "player": "Kentavious Caldwell-Pope", "season": "2025-26",
+        "sheet_team": "PHI", "corrected_team": "MEM",
+    }]
+
+
+def test_a_past_team_he_is_not_on_now_is_still_left_alone():
+    """Membership widened the rule; it did not open it. A past season naming a
+    team nowhere in his current row is the sheet and the stats saying different
+    true things, and stays the sheet's."""
+    records = league(CURRENT) + [
+        rec("Waived", "2025-26", "DET"),
+        rec("Waived", CURRENT, "MEM, PHI",
+            team_salaries={"MEM": 2000000, "PHI": 1000000}),
+    ]
+    report = B.correct_past_season_teams(
+        records, stats([("Waived", "2025-26", "CHA", 40)]))
+    assert [r for r in records if r["season"] == "2025-26"][0]["team"] == "DET"
+    assert report["applied"] == []
+    assert report["left_alone"] == 1
+
+
 def test_the_current_season_is_left_alone():
     records = league(CURRENT) + [rec("Mover", CURRENT, "MIA")]
     B.correct_past_season_teams(

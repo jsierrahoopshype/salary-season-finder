@@ -47,8 +47,12 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Wait for the Worker cache to turn over
-        run: sleep 360
+      # The check asks with ?nocache=, which is the parameter the Worker reads
+      # to skip its own per-path entry, so there is no 300-second TTL left to
+      # outlast. What is left is the deployment landing on GitHub Pages, which
+      # the Worker reads through on the miss.
+      - name: Let the deployment land
+        run: sleep 60
 
       - name: Fetch the live pages
         id: smoke

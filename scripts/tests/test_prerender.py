@@ -1365,12 +1365,13 @@ def test_the_live_check_covers_every_page_family_with_a_section():
     sys.path.insert(0, os.path.join(REPO, "scripts"))
     import live_smoke
 
-    #: season pages are not checked yet, and hubs have no section to lose.
-    uncovered = {"season", "pick_range", "college_position", "agent"}
+    #: hubs have no section to lose, and these three families render the same
+    #: sections as the cohort pages already covered.
+    uncovered = {"pick_range", "college_position", "agent"}
     families = {
-        "player": "/player/", "team": "/team/", "college": "/college/",
-        "country": "/country/", "draft": "/draft/", "pick": "/pick/",
-        "position": "/position/", "region": "/region/",
+        "player": "/player/", "team": "/team/", "season": "/season/",
+        "college": "/college/", "country": "/country/", "draft": "/draft/",
+        "pick": "/pick/", "position": "/position/", "region": "/region/",
     }
     assert set(families) | uncovered == set(C.FAMILIES)
     for family, mark in families.items():
