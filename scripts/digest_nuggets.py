@@ -8,7 +8,8 @@ a) record          a record or near-record the engine already found, paid
                    seasons only, because a contracted season is not a record
 b) career          the career-salary milestone this crosses and when, measured
                    against a career it clears where one of them is a name the
-                   reader knows
+                   reader knows, or against his place in the list where he is
+                   near the top of it
 c) raise           his raise against every raise the digest has seen since the
                    league year opened on July 1
 d) peers           the men at his position putting up his numbers, and the
@@ -41,6 +42,20 @@ MILESTONES = (
 
 #: A nugget of kind (a) has to be this rank or better to be worth a sentence.
 NEAR_RECORD_RANK = 3
+
+#: Where a career-earnings rank stops being worth a sentence. Inside the top
+#: 25 it is a fact about him; past it, it is a number.
+STANDING_MAX_RANK = 25
+
+#: Ranks a sentence spells out. Past these the digit is how a rank is read.
+RANK_WORDS = ("", "first", "second", "third", "fourth", "fifth", "sixth",
+              "seventh", "eighth", "ninth", "tenth")
+
+
+def _rank_word(rank):
+    if rank and rank < len(RANK_WORDS):
+        return RANK_WORDS[rank]
+    return _ordinal(rank)
 
 #: A raise outside the ten biggest of the league year is not news, and "the
 #: 64th biggest raise since July 1" is a sentence nobody would print.
@@ -237,13 +252,21 @@ def career_nugget(idx, item, money):
     passed = _legends_between(idx, paid, milestone)
     rank_all, rank_active = _career_ranks(idx, player, paid)
 
-    text = "He'd pass {} in career earnings in {}".format(
-        money(milestone), season)
-    # A name the reader knows is worth more than a rank, so where a career he
-    # is about to clear carries one, the clause measures the milestone against
-    # that man rather than against a place in a list.
+    # Three forms, in this order. A name the reader knows is worth more than a
+    # rank, so a career he is about to clear takes the sentence where one of
+    # them carries a name. Failing that, a place near the top of the list is
+    # worth saying; past the top of it, a rank is a number and the milestone
+    # stands on its own.
     if passed:
-        text += ", {}".format(_legend_clause(idx, player, season, passed[0]))
+        text = "He'd pass {} in career earnings in {}, {}".format(
+            money(milestone), season,
+            _legend_clause(idx, player, season, passed[0]))
+    elif rank_all and rank_all <= STANDING_MAX_RANK:
+        text = "He's already {} in career earnings and would pass {} in {}".format(
+            _rank_word(rank_all), money(milestone), season)
+    else:
+        text = "He'd pass {} in career earnings in {}".format(
+            money(milestone), season)
     return {
         "kind": "career",
         "opener": text,
