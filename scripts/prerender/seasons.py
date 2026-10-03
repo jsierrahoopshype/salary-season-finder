@@ -1,23 +1,27 @@
-"""A player page's season paragraphs: what the numbers say, in prose.
+"""A player page's "What the numbers say": one paragraph about his whole career.
 
-The engine writes one sentence per claim, which is right for a digest and wrong
-for a page: a man's 2026-27 can carry five claims about the same career total,
-and five sentences all opening with his name is a list, not a paragraph.
+The engine writes one sentence per claim, per season, which is right for a
+digest and wrong for a page. A man who has been the highest-paid player of his
+draft class for six straight seasons gets six near-identical sentences out of
+it; a reader wants that said once, with its span, and then wants to know what
+he has earned and what is still to come.
 
-So this module reads the structured side of each claim (its value, rank, field
-and the holder it measures against) and writes the season back out:
+So this module reads the structured side of every claim he has and writes two
+to four sentences:
 
-- the three most notable claims, records first, then milestones, then where he
-  moved in a ranking;
-- claims that share a figure said once, with their comparisons listed;
-- a claim about a college position dropped where the same claim holds for the
-  whole college, because "the most of any Duke guard" says nothing once he is
-  the most of any Duke player;
-- his name once, at the top, and "he" after that.
+1. the record he has held longest, with the seasons it covers;
+2. what he will have earned by the end of the season being played, and the
+   widest field that total leads;
+3. the biggest record still ahead of him, stated conditionally because nobody
+   has been paid a contracted salary.
 
-Everything here is derived from the claims the engine already allowed. Nothing
-new is asserted: a comparison this module cannot phrase is left as the sentence
-the engine wrote.
+A milestone he passed in a single past season is dropped: the table below
+carries the year-by-year detail, and "passed $150 million in 2020-21" is a row
+of it rather than a line of prose.
+
+Nothing new is asserted. Every sentence is built from claims the engine already
+allowed, and a comparison this module cannot phrase is left out rather than
+guessed at.
 """
 
 from __future__ import annotations
@@ -30,96 +34,271 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import factoids as F  # noqa: E402
 
-#: Claims per season. Three is a paragraph; the fourth is a list.
-FACTS_PER_SEASON = 3
+#: Sentences in a summary. Two is a paragraph, five is the list this replaced.
+MIN_SENTENCES = 2
+MAX_SENTENCES = 4
 
-#: Most notable first. A record is what happened; a milestone is what it
-#: reached; a rank shift is where it put him.
-TYPE_ORDER = {"sets": 0, "ties": 1, "milestone": 2, "rank_shift": 3,
-              "approaches": 4}
+#: Seasons a record has to be held for before it is worth a span of its own.
+#: One season is a record, not a run.
+MIN_SPAN = 2
 
-#: The two measures a claim can be about. Facts only merge inside one of them:
-#: a season salary and a career total are different numbers even when they are
-#: equal.
-SEASON_SALARY = "season"
-CAREER_TOTAL = "career"
+#: Claims that count as holding a record. A tie is a shared record, which is
+#: still being the highest paid.
+HOLDING = ("sets", "ties")
 
 
-def paragraphs(idx, name, rows, linker=None, url=None):
-    """[(season, season_key, [sentence, ...])], newest season first.
+def summary(idx, name, rows, player=None):
+    """Two to four sentences about one man, or [] where he has nothing.
 
-    ``rows`` is [(season, fact)] for one man, already filtered for mirrors and
-    for what an older season is still worth saying.
+    ``rows`` is [(season, fact)] for him, already filtered for mirrors, and
+    ``player`` is the key the engine files him under, so a man with no claims at
+    all still gets the one sentence his career total is worth.
     """
-    by_season = collections.defaultdict(list)
+    held = _by_field(idx, rows)
+    spans = _spans(idx, held)
+    sentences, used = [], set()
+
+    best = _pick_span(spans)
+    if best:
+        used.add(best["field"])
+        sentences.append(_span_sentence(idx, name, best))
+
+    # Each field is named once in the paragraph: "the highest-paid Duke player
+    # every season" followed by "more than any other Duke player" is one fact
+    # said twice. The record still to come claims its field before the career
+    # total does, because a record is the better use of it; the career total
+    # then takes the widest field left.
+    ahead_text, ahead_field = _future_sentence(idx, rows, used)
+    if ahead_field:
+        used.add(ahead_field)
+
+    subject = "he" if sentences else name
+    total, field = _career_sentence(idx, rows, subject, player, used)
+    if total:
+        sentences.append(total)
+        if field:
+            used.add(field)
+        subject = "he"
+
+    if ahead_text:
+        sentences.append(_future_wording(ahead_text, subject))
+        subject = "he"
+
+    # A page with only one thing to say gets a second from the next-widest
+    # record he holds, so the section is a paragraph rather than a line.
+    while len(sentences) < MIN_SENTENCES:
+        nxt = _pick_span(spans, skip=used)
+        if not nxt:
+            break
+        used.add(nxt["field"])
+        sentences.append(_span_sentence(idx, name if not sentences else "he", nxt))
+    return sentences[:MAX_SENTENCES]
+
+
+# -- the inventory ----------------------------------------------------------
+
+def _by_field(idx, rows):
+    """{(kind, key): {season: fact}} for single-season records he holds."""
+    out = collections.defaultdict(dict)
     for season, fact in rows:
-        by_season[season].append(fact)
-
-    out, openings = [], _Openings()
-    for season in sorted(by_season, key=F.season_key, reverse=True):
-        facts = _choose(idx, by_season[season])
-        if not facts:
+        if fact.get("type") not in HOLDING:
             continue
-        sentences = _write(idx, name, season, facts, openings)
-        if sentences:
-            out.append((season, F.season_key(season), sentences))
+        if _measure(fact) != "season":
+            continue
+        field = _cohort(fact)
+        if field[0] is None:
+            continue
+        out[field][season] = fact
     return out
 
 
-# -- choosing ---------------------------------------------------------------
+def _spans(idx, held):
+    """The longest unbroken run of paid seasons in each field.
 
-def _choose(idx, facts):
-    """The three most notable claims of one season, redundancy removed."""
-    kept = _drop_covered_college_positions(facts)
-    kept.sort(key=_notability)
-    return kept[:FACTS_PER_SEASON]
-
-
-def _notability(fact):
-    """Records, then milestones, then rank shifts; inside a tier, the widest
-    field first, because being first of 400 beats being first of 15."""
-    return (
-        TYPE_ORDER.get(fact.get("type"), 9),
-        -(fact.get("comparison_size") or 0),
-        fact.get("rank") or 99,
-        fact.get("key") or "",
-    )
-
-
-#: Claims where one field contains another, so holding the wider one says the
-#: narrower one too: every Duke guard is a Duke player, every top-10 pick is a
-#: lottery pick, and every European player is an international one. Only for a
-#: record: being fifth among lottery picks says nothing about the top-10 list.
-def _wider_of(kind, key):
-    """The (kind, key) whose record would already cover this one, or None."""
-    if kind == "college_position":
-        return "college", (key or "").split("|")[0]
-    if kind == "pick_range" and key == "top-10":
-        return "pick_range", "lottery"
-    if kind == "region" and key != "international":
-        return "region", "international"
-    return None
-
-
-def _drop_covered_college_positions(facts):
-    """"The most of any Duke guard" goes when he is the most of any Duke player.
-
-    The wider claim contains the narrower one, so the narrower one is only
-    worth a page's space where the wider one was not made.
+    Paid seasons only: a contracted season is money nobody has been paid, so a
+    record in it cannot be part of "has been the highest-paid ... since".
     """
-    held = {
-        (_measure(f), f.get("type"), _cohort(f))
-        for f in facts if f.get("type") in ("sets", "ties")
-    }
     out = []
-    for fact in facts:
-        wider = _wider_of(*_cohort(fact))
-        if wider and fact.get("type") in ("sets", "ties") \
-                and (_measure(fact), fact.get("type"), wider) in held:
-            continue
-        out.append(fact)
+    for field, by_season in held.items():
+        seasons = sorted(
+            (s for s in by_season if not idx.is_contracted(s)), key=F.season_key)
+        for run in _runs(seasons):
+            if len(run) < MIN_SPAN:
+                continue
+            fact = by_season[run[-1]]
+            out.append({
+                "field": field,
+                "seasons": run,
+                "open": F.season_key(run[-1]) == idx.current_key,
+                "size": fact.get("comparison_size") or 0,
+            })
     return out
 
+
+def _runs(seasons):
+    """Consecutive seasons, split where a season is missing."""
+    out, run = [], []
+    for season in seasons:
+        if run and F.season_key(season) != F.season_key(run[-1]) + 1:
+            out.append(run)
+            run = []
+        run.append(season)
+    if run:
+        out.append(run)
+    return out
+
+
+#: Field sizes a run is sorted into before its length is compared. A ten-season
+#: run against 62 player seasons is a smaller fact than a six-season run against
+#: 470, and comparing the raw counts would put the narrow one first; comparing
+#: the tiers puts the wide fields together and then prefers the longer run.
+SIZE_TIERS = (400, 100)
+
+
+def _tier(size):
+    for i, floor in enumerate(SIZE_TIERS):
+        if size >= floor:
+            return len(SIZE_TIERS) - i
+    return 0
+
+
+def _pick_span(spans, skip=()):
+    """The run worth leading on: one still running, against a wide field, held
+    for the most seasons."""
+    pool = [s for s in spans if s["field"] not in skip]
+    if not pool:
+        return None
+    return max(pool, key=lambda s: (s["open"], _tier(s["size"]),
+                                    len(s["seasons"]), s["size"],
+                                    str(s["field"])))
+
+
+# -- the sentences ----------------------------------------------------------
+
+def _span_sentence(idx, subject, span):
+    """"... has been the highest-paid No. 15 pick every season since 2021-22." """
+    kind, key = span["field"]
+    first, last = span["seasons"][0], span["seasons"][-1]
+    if kind == "franchise":
+        team = (idx.franchises.get(key) or {}).get("name") or key
+        # the nickname takes an article: "the Heat's", "the 76ers'"
+        who = "the {} highest-paid player".format(_possessive(team))
+    else:
+        who = "the highest-paid {}".format(_noun(idx, kind, key))
+    if span["open"]:
+        return "{} has been {} every season since {}.".format(
+            _cap(subject), who, first)
+    if first == last:
+        return "{} was {} in {}.".format(_cap(subject), who, first)
+    return "{} was {} in every season from {} to {}.".format(
+        _cap(subject), who, first, last)
+
+
+def _career_sentence(idx, rows, subject, player=None, used=()):
+    """(the sentence, the field it used) for what he will have earned."""
+    paid, through = _career_total(idx, rows, player)
+    if not paid or not through:
+        return None, None
+    opening = _career_opening(idx, subject, F.fmt_money(paid), through)
+    lead = _best_career_claim(rows, used)
+    if lead is None:
+        return opening + ".", None
+    kind, key = _cohort(lead)
+    if lead.get("type") in HOLDING:
+        return "{}, more than any other {}.".format(
+            opening, _noun(idx, kind, key)), (kind, key)
+    rank = lead.get("rank")
+    if not rank or rank > 5:
+        return opening + ".", None
+    return "{}, the {}-most of any {}.".format(
+        opening, _word(rank), _noun(idx, kind, key)), (kind, key)
+
+
+def _future_sentence(idx, rows, used):
+    """(the sentence, minus its subject, the field it used).
+
+    The biggest record still ahead of him, stated conditionally: nobody has been
+    paid a contracted salary, so it would be a record rather than is one.
+    """
+    best = None
+    for season, fact in rows:
+        if not idx.is_contracted(season):
+            continue
+        if fact.get("type") not in HOLDING or _measure(fact) != "season":
+            continue
+        field = _cohort(fact)
+        if field[0] is None or field in used:
+            continue
+        score = (fact.get("comparison_size") or 0, fact.get("value") or 0)
+        if best is None or score > best[0]:
+            best = (score, season, fact)
+    if best is None:
+        return None, None
+    _score, season, fact = best
+    kind, key = _cohort(fact)
+    money = F.fmt_money(fact.get("value"))
+    if kind == "franchise":
+        team = (idx.franchises.get(key) or {}).get("name") or key
+        where = "in {} history".format(team)
+    else:
+        where = "of any {}".format(_noun(idx, kind, key))
+    return ("{{}} {} in {} would be the biggest single-season salary {}.".format(
+        money, season, where), (kind, key))
+
+
+def _future_wording(template, subject):
+    return template.format(
+        "His" if subject == "he" else _possessive(subject))
+
+
+def _career_opening(idx, subject, money, through):
+    """The 2026-27 framing: the season is being played, so it is not earned yet.
+
+    A season under way has months of salary still to be paid, so the total it
+    runs through is a figure he will reach rather than one he has.
+    """
+    tense = F.season_tense(idx, through)
+    if tense == F.CURRENT and idx.current_season_in_progress:
+        him = "he'll" if subject == "he" else _cap(subject) + " will"
+        return "By the end of {} {} have earned {}".format(through, him, money)
+    if tense == F.CURRENT:
+        return "{} has earned {} through {}".format(_cap(subject), money, through)
+    return "{} earned {} through {}".format(_cap(subject), money, through)
+
+
+def _career_total(idx, rows, player=None):
+    """His money already paid, and the season it runs through."""
+    if player is None:
+        for _season, fact in rows:
+            parts = (fact.get("key") or "").split("|")
+            if len(parts) > 2:
+                player = parts[-2]
+                break
+    if player is None:
+        return None, None
+    if not idx.career_rankable(player):
+        return None, None
+    return idx.paid_through(player)
+
+
+def _best_career_claim(rows, used=()):
+    """The widest field his career total leads, or ranks near the top of."""
+    best = None
+    for _season, fact in rows:
+        if _measure(fact) != "career":
+            continue
+        if _cohort(fact)[0] is None or _cohort(fact) in used:
+            continue
+        if fact.get("type") not in HOLDING and (fact.get("rank") or 99) > 5:
+            continue
+        rank = (fact.get("type") not in HOLDING, fact.get("rank") or 99)
+        score = (rank[0], rank[1], -(fact.get("comparison_size") or 0))
+        if best is None or score < best[0]:
+            best = (score, fact)
+    return best[1] if best else None
+
+
+# -- reading a claim --------------------------------------------------------
 
 def _cohort(fact):
     """(kind, key) for a cohort claim, ("franchise", code) for a franchise one,
@@ -138,264 +317,52 @@ def _cohort(fact):
 def _measure(fact):
     """Which number a claim is about."""
     key = (fact.get("key") or "")
-    if key.startswith("cohort_career") or key.startswith("career_rank"):
-        return CAREER_TOTAL
-    if key.startswith("career_milestone") or key.startswith("milestone"):
-        return CAREER_TOTAL
-    return SEASON_SALARY
+    if key.startswith("cohort_career") or key.startswith("career_"):
+        return "career"
+    return "season"
 
 
-# -- writing ----------------------------------------------------------------
+# -- naming a field ---------------------------------------------------------
 
-def _write(idx, name, season, facts, openings):
-    """One season's paragraph: merged sentences, his name once, no repeats."""
-    groups = _group_by_number(facts)
-    sentences, named = [], False
-    for measure, value, members in groups:
-        subject = name if not named else "he"
-        text = _sentence(idx, name, subject, season, measure, value, members,
-                         openings, first=not named)
-        if not text:
-            continue
-        named = True
-        text = _cap(text)
-        openings.seen.add(_opening(text))
-        sentences.append(text)
-    return sentences
-
-
-def _group_by_number(facts):
-    """[(measure, value, [fact, ...])] in notability order.
-
-    Two claims merge when they are about the same measure at the same figure,
-    which is what makes "the most of any Duke player and third in the 2011
-    draft class" one sentence instead of two.
-    """
-    order, groups = [], {}
-    for fact in facts:
-        key = (_measure(fact), _round(fact.get("value")))
-        if key not in groups:
-            groups[key] = []
-            order.append(key)
-        groups[key].append(fact)
-    return [(measure, value, groups[(measure, value)])
-            for measure, value in order]
-
-
-def _round(value):
-    return round(value or 0, 2)
-
-
-def _sentence(idx, name, subject, season, measure, value, members, openings,
-              first):
-    """One sentence for one figure, carrying every comparison made about it."""
-    clauses = [c for c in (_clause(idx, f) for f in members) if c]
-    if not clauses:
-        # Nothing this module can phrase: the engine's own sentence stands,
-        # with his name cut to "he" where he has already been named.
-        return _fallback(name, members[0], first)
-    body = _join(clauses)
-    if measure == CAREER_TOTAL:
-        return _career_lead(idx, subject, season, value, openings, first) + \
-            ", " + body + "."
-    return _salary_lead(idx, subject, season, value, openings, first) + \
-        ", " + body + "."
-
-
-def _career_lead(idx, subject, season, value, openings, first):
-    """"Kyrie Irving will have earned $391.9 million by the end of 2026-27"."""
-    money = F.fmt_money(value)
-    tense = F.season_tense(idx, season)
-    if tense == F.PAST:
-        shapes = [
-            "{s} had earned {m} through {season}",
-            "Through {season} {s} had earned {m}",
-            "By the end of {season} {s} had earned {m}",
-            "{p} career earnings stood at {m} through {season}",
-        ]
-    elif tense == F.CURRENT and idx.current_season_in_progress:
-        shapes = [
-            "{s} will have earned {m} by the end of {season}",
-            "By the end of {season} {s} will have earned {m}",
-            "{season} takes {o} to {m} in career earnings",
-        ]
-    else:
-        shapes = [
-            "{s} has earned {m} through {season}",
-            "Through {season} {s} has earned {m}",
-        ]
-    return _pick_shape(shapes, openings, group="career|" + tense,
-                       **_cases(subject, money, season))
-
-
-def _salary_lead(idx, subject, season, value, openings, first):
-    """"Kyrie Irving was paid $38 million in 2023-24"."""
-    money = F.fmt_money(value)
-    tense = F.season_tense(idx, season)
-    if tense == F.PAST:
-        shapes = [
-            "{s} was paid {m} in {season}",
-            "In {season} {s} was paid {m}",
-            "{p} {season} salary was {m}",
-            "{s} drew {m} in {season}",
-        ]
-    elif tense == F.FUTURE:
-        shapes = [
-            "{s} is due {m} in {season}",
-            "In {season} {s} is due {m}",
-            "{season} carries {m} for {o}",
-            "{s} is on the books for {m} in {season}",
-        ]
-    else:
-        shapes = [
-            "{s} is on {m} this season",
-            "{s} is paid {m} in {season}",
-            "{p} {season} salary is {m}",
-        ]
-    return _pick_shape(shapes, openings, group="salary|" + tense,
-                       **_cases(subject, money, season))
-
-
-class _Openings(object):
-    """What a page has already said, so the next sentence says it differently.
-
-    Two rules, because two things repeat. The literal opening of a sentence is
-    held once: no page says "He is on" twice. And the shape is taken in turn
-    rather than greedily, because eight seasons all reading "In 2019-20 he was
-    paid ..." differ in their first two words and repeat all the same.
-    """
-
-    __slots__ = ("seen", "turns")
-
-    def __init__(self):
-        self.seen = set()
-        self.turns = {}
-
-    def next_turn(self, group, count):
-        n = self.turns.get(group, 0)
-        self.turns[group] = n + 1
-        return n % count
-
-
-def _pick_shape(shapes, openings, group="", **fields):
-    """The shape whose turn it is, moved on if the page has used its opening."""
-    start = openings.next_turn(group, len(shapes))
-    for step in range(len(shapes)):
-        shape = shapes[(start + step) % len(shapes)]
-        text = shape.format(**fields)
-        if _opening(_cap(text)) not in openings.seen:
-            return text
-    return shapes[start].format(**fields)
-
-
-def _opening(text):
-    return " ".join(text.split()[:2]).strip(",.").lower()
-
-
-def _cases(subject, money, season):
-    """The three forms a shape may need him in: subject, object, possessive."""
-    if subject == "he":
-        return {"s": "he", "o": "him", "p": "his", "m": money, "season": season}
-    possessive = subject + ("'" if subject.endswith("s") else "'s")
-    return {"s": subject, "o": subject, "p": possessive,
-            "m": money, "season": season}
-
-
-def _cap(text):
-    """A sentence opening with "he" is still a sentence opening."""
-    return text[:1].upper() + text[1:] if text else text
-
-
-def _fallback(name, fact, first):
-    """The engine's sentence, with the repeated name taken out.
-
-    The engine opens most claims with the man's name, either bare ("Kyrie
-    Irving passed $250 million") or possessive ("Kyrie Irving's $38 million").
-    Both become "he" once the paragraph has named him.
-    """
-    text = fact.get("text") or ""
-    if first or not text or not name:
-        return text
-    if text.startswith(name + "'s "):
-        return "His " + text[len(name) + 3:]
-    if text.startswith(name + "' "):
-        return "His " + text[len(name) + 2:]
-    if text.startswith(name + " "):
-        return "He " + text[len(name) + 1:]
-    return text
-
-
-# -- the comparison clauses -------------------------------------------------
-
-def _clause(idx, fact):
-    """"the most of any Duke player", "third in the 2011 draft class behind X"."""
-    kind, key = _cohort(fact)
-    where_one, where_many = _where(idx, kind, key)
-    if where_one is None:
-        return None
-    rank, kind_of = fact.get("rank"), fact.get("type")
-    holder = fact.get("previous_holder") or {}
-    who = holder.get("player")
-    if kind_of == "sets" or rank == 1:
-        return "the most {}".format(where_one)
-    if kind_of == "ties":
-        return "level with the most {}".format(where_one)
-    if not rank:
-        return None
-    text = "{} {}".format(F.ordinal(rank), where_many)
-    if who:
-        text += " behind {}".format(who)
-    return text
-
-
-def _where(idx, kind, key):
-    """(the "of any X" form, the "among Xs" form) for one comparison field."""
+def _noun(idx, kind, key):
+    """The singular a sentence puts after "the highest-paid"."""
     if kind == "college":
-        college = idx.college_display(key)
-        return "of any {} player".format(college), "among {} players".format(college)
+        return "{} player".format(idx.college_display(key))
     if kind == "college_position":
         college, position = (key.split("|") + [""])[:2]
         noun = F.position_group(position)[1] or "player"
-        college = idx.college_display(college)
-        return ("of any {} {}".format(college, noun),
-                "among {} {}s".format(college, noun))
+        return "{} {}".format(idx.college_display(college), noun)
     if kind == "draft_class":
-        return ("in the {} draft class".format(key),
-                "in the {} draft class".format(key))
+        return "player from the {} draft class".format(key)
     if kind == "draft_slot":
-        if key == "undrafted":
-            return "of any undrafted player", "among undrafted players"
-        return "of any No. {} pick".format(key), "among No. {} picks".format(key)
+        return "undrafted player" if key == "undrafted" else "No. {} pick".format(key)
     if kind == "position":
-        noun = F.position_group(key)[1]
-        if not noun:
-            return None, None
-        return "of any {}".format(noun), "among {}s".format(noun)
+        return F.position_group(key)[1] or "player"
     if kind == "nationality":
         article = "the " if key in F.NATIONALITY_TAKES_THE else ""
-        return ("of any player from {}{}".format(article, key),
-                "among players from {}{}".format(article, key))
+        return "player from {}{}".format(article, key)
     if kind == "region":
-        phrases = F.REGION_PHRASES.get(key)
-        if not phrases:
-            return None, None
-        return ("of any {}".format(phrases["one"]),
-                "among {}".format(phrases["many"]))
+        return (F.REGION_PHRASES.get(key) or {}).get("one") or "player"
     if kind == "pick_range":
-        label = {"top-10": "top-10 pick", "lottery": "lottery pick",
-                 "second-round": "second-round pick"}.get(key)
-        if not label:
-            return None, None
-        return "of any {}".format(label), "among {}s".format(label)
+        return {"top-10": "top-10 pick", "lottery": "lottery pick",
+                "second-round": "second-round pick"}.get(key, "pick")
     if kind == "franchise":
-        team = (idx.franchises.get(key) or {}).get("name")
-        if not team:
-            return None, None
-        return ("in {} history".format(team), "in {} history".format(team))
-    return None, None
+        return (idx.franchises.get(key) or {}).get("name") or key
+    return "player"
 
 
-def _join(clauses):
-    if len(clauses) == 1:
-        return clauses[0]
-    return "{} and {}".format(", ".join(clauses[:-1]), clauses[-1])
+# -- small helpers ----------------------------------------------------------
+
+WORDS = ("", "", "second", "third", "fourth", "fifth")
+
+
+def _word(rank):
+    return WORDS[rank] if 0 < rank < len(WORDS) else F.ordinal(rank)
+
+
+def _possessive(name):
+    return name + ("'" if name.endswith("s") else "'s")
+
+
+def _cap(text):
+    return text[:1].upper() + text[1:] if text else text

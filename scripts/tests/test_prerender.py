@@ -13,7 +13,7 @@ import re
 import subprocess
 import sys
 import xml.etree.ElementTree as ET
-from html import escape
+from html import escape, unescape
 
 import pytest
 
@@ -659,59 +659,109 @@ def test_no_page_says_it_passed_a_figure_from_a_later_season():
 
 
 # --------------------------------------------------------------------------
-# a player's claims, grouped by season
+# a player's claims, as one summary paragraph
 # --------------------------------------------------------------------------
 
 
-def _paragraphs(who):
-    """[(season, paragraph html)] from a player page, newest season first."""
+def _player_summary(who):
+    """The "What the numbers say" paragraph of a player page, as plain text."""
     html = read(os.path.join("player", who, "index.html"))
     block = html[html.index("What the numbers say"):]
-    block = block[:block.index("</div>", block.index("hm-seasons"))]
-    return re.findall(r'<h3>([\d-]{7})</h3><p class="hm-facts">(.*?)</p>',
-                      block, re.S)
+    found = re.search(r'<p class="hm-facts">(.*?)</p>', block, re.S)
+    if not found:
+        return ""
+    return unescape(re.sub(r"<[^>]+>", "", found.group(1)))
+
+
+def _sentences(body):
+    return [s for s in re.split(r"(?<=\.)\s+", body) if s.strip()]
 
 
 @built
-def test_a_player_page_groups_its_claims_by_season():
-    seasons = [s for s, _body in _paragraphs("joel-embiid")]
-    assert seasons == sorted(seasons, key=F.season_key, reverse=True), seasons
-    assert seasons[0] > seasons[-1]
-
-
-@built
-def test_every_season_is_open():
-    """The part of the page a reader scrolls for is not behind a drawer."""
-    html = read(os.path.join("player", "joel-embiid", "index.html"))
+def test_a_player_page_says_it_in_one_paragraph():
+    html = read(os.path.join("player", "giannis-antetokounmpo", "index.html"))
     block = html[html.index("What the numbers say"):]
-    assert "<details" not in block
-    assert block.count('<section class="hm-season is-open">') == \
-        len(_paragraphs("joel-embiid"))
+    block = block[:block.index("</section>")]
+    assert block.count('<p class="hm-facts">') == 1
+    assert "<details" not in block and "hm-season" not in block
 
 
 @built
-def test_a_season_is_one_paragraph_of_at_most_three_claims():
-    for season, body in _paragraphs("joel-embiid"):
-        sentences = [s for s in re.split(r"(?<=\.)\s+", body) if s.strip()]
-        assert len(sentences) <= 3, (season, sentences)
+def test_a_summary_is_two_to_four_sentences():
+    for who in ("giannis-antetokounmpo", "kyrie-irving", "joel-embiid"):
+        count = len(_sentences(_player_summary(who)))
+        assert 2 <= count <= 4, (who, count)
 
 
 @built
-def test_a_paragraph_names_him_once_and_then_says_he():
-    for season, body in _paragraphs("joel-embiid"):
-        plain = re.sub(r"<[^>]+>", "", body)
-        assert plain.count("Joel Embiid") <= 1, (season, plain)
+def test_a_summary_names_him_once_and_then_says_he():
+    for who, name in (("giannis-antetokounmpo", "Giannis Antetokounmpo"),
+                      ("kyrie-irving", "Kyrie Irving")):
+        plain = _player_summary(who)
+        assert plain.count(name) == 1, (who, plain)
 
 
 @built
-def test_an_older_season_keeps_only_what_it_did():
-    """No "fourth-highest four years ago" on a page that shows every season."""
-    current = F.season_key("2026-27")
-    for season, body in _paragraphs("joel-embiid"):
-        if F.season_key(season) >= current:
-            continue
-        assert "-highest" not in body, season
-        assert "-largest" not in body, season
+def test_a_record_held_for_years_is_said_once_with_its_span():
+    plain = _player_summary("giannis-antetokounmpo")
+    assert "every season since" in plain
+    assert plain.count("highest-paid") == 1, plain
+
+
+@built
+def test_a_summary_makes_one_superlative_claim_a_sentence():
+    for who in ("giannis-antetokounmpo", "kyrie-irving", "joel-embiid"):
+        for sentence in _sentences(_player_summary(who)):
+            claims = (sentence.count("more than any")
+                      + sentence.count("highest-paid")
+                      + sentence.count("biggest")
+                      + sentence.count("-most"))
+            assert claims <= 1, (who, sentence)
+
+
+@built
+def test_a_summary_frames_the_season_being_played():
+    plain = _player_summary("giannis-antetokounmpo")
+    assert "By the end of 2026-27 he'll have earned" in plain
+
+
+@built
+def test_a_record_still_to_come_is_conditional():
+    plain = _player_summary("giannis-antetokounmpo")
+    assert "would be the biggest single-season salary" in plain
+
+
+@built
+def test_a_past_milestone_is_left_to_the_table():
+    """"passed $150 million in 2020-21" is a row, not a line of prose."""
+    for who in ("giannis-antetokounmpo", "kyrie-irving", "joel-embiid"):
+        plain = _player_summary(who)
+        assert "in career earnings in" not in plain, who
+
+
+@built
+def test_a_link_inside_a_sentence_stays_inline():
+    """The paragraph used to be laid out with flex, which made every link in it
+    a flex item and so a block of its own."""
+    css = read(os.path.join("css", "pages.css"))
+    for selector in (".hm-facts", ".hm-summary p", ".hm-inline-link"):
+        for block in _css_blocks(css, selector):
+            assert "display: flex" not in block, (selector, block)
+            assert "display: block" not in block, (selector, block)
+            assert "display: grid" not in block, (selector, block)
+    inline = _css_blocks(css, ".hm-facts a")
+    assert inline and any("display: inline" in b for b in inline)
+
+
+def _css_blocks(css, selector):
+    """Every rule body whose selector list contains this selector."""
+    css = re.sub(r"/\*.*?\*/", "", css, flags=re.S)
+    out = []
+    for match in re.finditer(r"([^{}]+)\{([^{}]*)\}", css):
+        heads = [h.strip() for h in match.group(1).split(",")]
+        if selector in heads:
+            out.append(match.group(2))
+    return out
 
 
 # --------------------------------------------------------------------------
@@ -911,17 +961,19 @@ def test_no_title_or_description_carries_the_window():
 def test_a_claim_links_the_things_it_names():
     html = read(os.path.join("player", "joel-embiid", "index.html"))
     block = html[html.index("What the numbers say"):]
-    for expect in ("/college/kansas/", "/draft/2014/", "/team/76ers/",
-                   "/position/center/", "/pick/3/"):
+    for expect in ("/team/76ers/", "/position/center/", "/country/united-states/"):
         assert 'class="hm-inline-link" href="{}{}"'.format(C.TOOL_ROOT, expect) in block, expect
 
 
 @built
-def test_a_rival_named_in_a_claim_links_to_his_page():
+def test_a_college_position_is_one_link_not_two():
+    """"Duke guard" is a page. Linking "Duke" and "guard" separately puts two
+    links side by side and sends the reader to neither of the right ones."""
     html = read(os.path.join("player", "kyrie-irving", "index.html"))
     block = html[html.index("What the numbers say"):]
-    assert 'class="hm-inline-link" href="{}/player/luka-doncic/"'.format(
-        C.TOOL_ROOT) in block
+    block = block[:block.index("</section>")]
+    assert "/college-position/duke-guards/" in block
+    assert "</a> <a" not in block
 
 
 @built

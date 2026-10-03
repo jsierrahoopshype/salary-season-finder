@@ -12,7 +12,7 @@ import factoids as F  # noqa: E402
 
 from . import config as C  # noqa: E402
 from .render import (  # noqa: E402
-    CONTRACTED_TAG, esc, facts_by_season, links_row, money, money_short,
+    CONTRACTED_TAG, esc, facts_summary, links_row, money, money_short,
     more_block, page_url, player_link, rank_table, related_chips, roll_call,
     scope_line, section, summary_block,
 )
@@ -344,9 +344,8 @@ def player_page(idx, ident, season_table_html, facts, related, linker=None):
     if facts:
         body.append(section(
             "What the numbers say",
-            "Season by season, newest first.",
-            facts_by_season(facts, F.season_key(idx.current_season),
-                            linker, ident.url),
+            None,
+            facts_summary(facts, linker, ident.url),
         ))
     elif not ident.extra.get("factoids_allowed"):
         body.append(section(

@@ -3812,7 +3812,7 @@
   ],
   "Anthony Davis|2027-28": [
    {
-    "comparison_size": 348,
+    "comparison_size": 349,
     "contracted": true,
     "family": "cap_context",
     "id": "13baad1617b123cd",
@@ -10137,6 +10137,20 @@
     "scope_note": "Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Thunder franchise history here includes the Seattle SuperSonics seasons. This salary is contracted, not money already paid.",
     "text": "Chet Holmgren's $44.5 million in 2027-28 would be the highest single-season salary in Thunder history, breaking his own mark of $41.2 million in 2026-27.",
     "type": "sets",
+    "value": 44539470
+   },
+   {
+    "comparison_size": 12,
+    "contracted": true,
+    "family": "rank_shift",
+    "id": "dfb887da9cc93b1a",
+    "key": "team_high_ceases|Chet Holmgren|2027-28",
+    "margin": null,
+    "previous_holder": null,
+    "rank": 2,
+    "scope_note": "Same franchise in consecutive seasons. Roster of 12 players with a salary on file.",
+    "text": "Chet Holmgren would be no longer the Thunder's highest-paid player in 2027-28 after holding that spot in 2026-27.",
+    "type": "rank_shift",
     "value": 44539470
    }
   ],
@@ -17356,7 +17370,7 @@
   ],
   "Devin Booker|2027-28": [
    {
-    "comparison_size": 348,
+    "comparison_size": 349,
     "contracted": true,
     "family": "cap_context",
     "id": "844cbfeeb60ff8fb",
@@ -17367,9 +17381,9 @@
      "season": "2027-28",
      "value": 36.0
     },
-    "rank": 7,
+    "rank": 8,
     "scope_note": "Share of the 2027-28 salary cap, ranked within that season. Contracted salary against a projected cap. This salary is contracted, not money already paid.",
-    "text": "Devin Booker's $61 million salary would take up 35.0% of the 2027-28 cap, the seventh-largest share of the cap in 2027-28, behind Anthony Davis' 36.0% (2027-28).",
+    "text": "Devin Booker's $61 million salary would take up 35.0% of the 2027-28 cap, the eighth-largest share of the cap in 2027-28, behind Anthony Davis' 36.0% (2027-28).",
     "type": "approaches",
     "value": 35.0
    },
@@ -19740,7 +19754,7 @@
   ],
   "Donovan Mitchell|2027-28": [
    {
-    "comparison_size": 348,
+    "comparison_size": 349,
     "contracted": true,
     "family": "cap_context",
     "id": "0e81d0acc6ef3279",
@@ -19751,9 +19765,9 @@
      "season": "2027-28",
      "value": 36.0
     },
-    "rank": 9,
+    "rank": 10,
     "scope_note": "Share of the 2027-28 salary cap, ranked within that season. Contracted salary against a projected cap. This salary is contracted, not money already paid.",
-    "text": "Donovan Mitchell's $60.9 million salary would take up 34.9% of the 2027-28 cap, the ninth-largest share of the cap in 2027-28, behind Anthony Davis' 36.0% (2027-28).",
+    "text": "Donovan Mitchell's $60.9 million salary would take up 34.9% of the 2027-28 cap, the 10th-largest share of the cap in 2027-28, behind Anthony Davis' 36.0% (2027-28).",
     "type": "approaches",
     "value": 34.9
    },
@@ -25172,7 +25186,7 @@
   ],
   "Giannis Antetokounmpo|2027-28": [
    {
-    "comparison_size": 348,
+    "comparison_size": 349,
     "contracted": true,
     "family": "cap_context",
     "id": "cbefcca4fdeb673a",
@@ -29954,20 +29968,6 @@
     "text": "Jalen Williams' $44.5 million in 2027-28 would be the highest single-season salary in Thunder history, ahead of Chet Holmgren's $41.2 million (2026-27).",
     "type": "sets",
     "value": 44539470
-   },
-   {
-    "comparison_size": 11,
-    "contracted": true,
-    "family": "rank_shift",
-    "id": "aef18a0d9c858da5",
-    "key": "team_high_becomes|Jalen Williams|2027-28",
-    "margin": null,
-    "previous_holder": null,
-    "rank": 1,
-    "scope_note": "Same franchise in consecutive seasons. Roster of 11 players with a salary on file.",
-    "text": "Jalen Williams would be the Thunder's highest-paid player in 2027-28 after ranking second on the roster in 2026-27.",
-    "type": "rank_shift",
-    "value": 44539470
    }
   ],
   "Jalen Williams|2028-29": [
@@ -32802,7 +32802,7 @@
   ],
   "Jaylen Brown|2027-28": [
    {
-    "comparison_size": 348,
+    "comparison_size": 349,
     "contracted": true,
     "family": "cap_context",
     "id": "6fd5fceac0976e72",
@@ -33618,7 +33618,7 @@
   ],
   "Jayson Tatum|2027-28": [
    {
-    "comparison_size": 348,
+    "comparison_size": 349,
     "contracted": true,
     "family": "cap_context",
     "id": "09e50a389baf8b78",
@@ -36322,7 +36322,7 @@
   ],
   "Joel Embiid|2027-28": [
    {
-    "comparison_size": 348,
+    "comparison_size": 349,
     "contracted": true,
     "family": "cap_context",
     "id": "5d498253662a0d1c",
@@ -40296,7 +40296,7 @@
   ],
   "Karl-Anthony Towns|2027-28": [
    {
-    "comparison_size": 348,
+    "comparison_size": 349,
     "contracted": true,
     "family": "cap_context",
     "id": "80f34857e76d03f8",
@@ -40307,9 +40307,9 @@
      "season": "2027-28",
      "value": 36.0
     },
-    "rank": 7,
+    "rank": 8,
     "scope_note": "Share of the 2027-28 salary cap, ranked within that season. Contracted salary against a projected cap. This salary is contracted, not money already paid.",
-    "text": "Karl-Anthony Towns' $61 million salary would take up 35.0% of the 2027-28 cap, the seventh-largest share of the cap in 2027-28, behind Anthony Davis' 36.0% (2027-28).",
+    "text": "Karl-Anthony Towns' $61 million salary would take up 35.0% of the 2027-28 cap, the eighth-largest share of the cap in 2027-28, behind Anthony Davis' 36.0% (2027-28).",
     "type": "approaches",
     "value": 35.0
    },
@@ -54244,7 +54244,7 @@
   ],
   "Nikola Jokic|2027-28": [
    {
-    "comparison_size": 348,
+    "comparison_size": 349,
     "contracted": true,
     "family": "cap_context",
     "id": "bb66588c11f56c0a",
@@ -62810,6 +62810,244 @@
     "text": "Shai Gilgeous-Alexander is no longer the Thunder's highest-paid player in 2026-27 after holding that spot in 2025-26.",
     "type": "rank_shift",
     "value": 40806150
+   }
+  ],
+  "Shai Gilgeous-Alexander|2027-28": [
+   {
+    "comparison_size": 349,
+    "contracted": true,
+    "family": "cap_context",
+    "id": "e51f2b2e894f50ba",
+    "key": "cap_pct_season|Shai Gilgeous-Alexander|2027-28",
+    "margin": -0.7,
+    "previous_holder": {
+     "player": "Anthony Davis",
+     "season": "2027-28",
+     "value": 36.0
+    },
+    "rank": 7,
+    "scope_note": "Share of the 2027-28 salary cap, ranked within that season. Contracted salary against a projected cap. This salary is contracted, not money already paid.",
+    "text": "Shai Gilgeous-Alexander's $61.6 million salary would take up 35.3% of the 2027-28 cap, the seventh-largest share of the cap in 2027-28, behind Anthony Davis' 36.0% (2027-28).",
+    "type": "approaches",
+    "value": 35.3
+   },
+   {
+    "comparison_size": 3351,
+    "contracted": true,
+    "family": "career_earnings",
+    "id": "de13e8e3aa8f51ff",
+    "key": "career_milestone|Shai Gilgeous-Alexander|2027-28|200000000",
+    "margin": 57864882.0,
+    "previous_holder": null,
+    "rank": null,
+    "scope_note": "Career earnings are nominal dollars. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. 70 other players had reached it.",
+    "text": "Shai Gilgeous-Alexander is on track to pass $200 million in career earnings in 2027-28 if his salaries are paid in full.",
+    "type": "milestone",
+    "value": 257864882
+   },
+   {
+    "comparison_size": 3351,
+    "contracted": true,
+    "family": "career_earnings",
+    "id": "fecd15d7dd5acbb6",
+    "key": "career_milestone|Shai Gilgeous-Alexander|2027-28|250000000",
+    "margin": 7864882.0,
+    "previous_holder": null,
+    "rank": null,
+    "scope_note": "Career earnings are nominal dollars. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. 45 other players had reached it.",
+    "text": "Shai Gilgeous-Alexander is on track to pass $250 million in career earnings in 2027-28 if his salaries are paid in full.",
+    "type": "milestone",
+    "value": 257864882
+   },
+   {
+    "comparison_size": 260,
+    "contracted": true,
+    "family": "cohort",
+    "id": "ea09bb03c7c8fcb4",
+    "key": "cohort_season|college_position|Kentucky|G|Shai Gilgeous-Alexander|2027-28",
+    "margin": 4521272,
+    "previous_holder": {
+     "player": "Devin Booker",
+     "season": "2026-27",
+     "value": 57078728
+    },
+    "rank": 1,
+    "scope_note": "Cohort of 41 players and 260 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "text": "Shai Gilgeous-Alexander's $61.6 million in 2027-28 would be the highest single-season salary among Kentucky guards, passing Devin Booker's $57.1 million (2026-27).",
+    "type": "sets",
+    "value": 61600000
+   },
+   {
+    "comparison_size": 603,
+    "contracted": true,
+    "family": "cohort",
+    "id": "ba537e213356aff6",
+    "key": "cohort_season|college|Kentucky|Shai Gilgeous-Alexander|2027-28",
+    "margin": 3143434,
+    "previous_holder": {
+     "player": "Anthony Davis",
+     "season": "2026-27",
+     "value": 58456566
+    },
+    "rank": 1,
+    "scope_note": "Cohort of 86 players and 603 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "text": "Shai Gilgeous-Alexander's $61.6 million in 2027-28 would be the highest single-season salary among players out of Kentucky, passing Anthony Davis' $58.5 million (2026-27).",
+    "type": "sets",
+    "value": 61600000
+   },
+   {
+    "comparison_size": 513,
+    "contracted": true,
+    "family": "cohort",
+    "id": "509a6ac06e138cb4",
+    "key": "cohort_season|draft_class|2018|Shai Gilgeous-Alexander|2027-28",
+    "margin": 10566400,
+    "previous_holder": {
+     "player": "Luka Doncic",
+     "season": "2026-27",
+     "value": 51033600
+    },
+    "rank": 1,
+    "scope_note": "Cohort of 102 players and 513 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "text": "Shai Gilgeous-Alexander's $61.6 million in 2027-28 would be the highest single-season salary in the 2018 draft class, passing Luka Doncic's $51 million (2026-27).",
+    "type": "sets",
+    "value": 61600000
+   },
+   {
+    "comparison_size": 393,
+    "contracted": true,
+    "family": "cohort",
+    "id": "a2d0c756e8ce5a69",
+    "key": "cohort_season|draft_slot|11|Shai Gilgeous-Alexander|2027-28",
+    "margin": 16128000,
+    "previous_holder": {
+     "player": "Domantas Sabonis",
+     "season": "2026-27",
+     "value": 45472000
+    },
+    "rank": 1,
+    "scope_note": "Cohort of 45 players and 393 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "text": "Shai Gilgeous-Alexander's $61.6 million in 2027-28 would be the highest single-season salary by a No. 11 pick, passing Domantas Sabonis' $45.5 million (2026-27).",
+    "type": "sets",
+    "value": 61600000
+   },
+   {
+    "comparison_size": 354,
+    "contracted": true,
+    "family": "cohort",
+    "id": "42428ed0d5f66088",
+    "key": "cohort_season|nationality|Canada|Shai Gilgeous-Alexander|2027-28",
+    "margin": 11494372,
+    "previous_holder": {
+     "player": "Jamal Murray",
+     "season": "2026-27",
+     "value": 50105628
+    },
+    "rank": 1,
+    "scope_note": "Cohort of 57 players and 354 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "text": "Shai Gilgeous-Alexander's $61.6 million in 2027-28 would be the highest single-season salary by a player from Canada, passing Jamal Murray's $50.1 million (2026-27).",
+    "type": "sets",
+    "value": 61600000
+   },
+   {
+    "comparison_size": 5944,
+    "contracted": true,
+    "family": "cohort",
+    "id": "a558dcc2760cd79d",
+    "key": "cohort_season|pick_range|lottery|Shai Gilgeous-Alexander|2027-28",
+    "margin": -987158,
+    "previous_holder": {
+     "player": "Stephen Curry",
+     "season": "2026-27",
+     "value": 62587158
+    },
+    "rank": 2,
+    "scope_note": "Cohort of 633 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "text": "Shai Gilgeous-Alexander's $61.6 million in 2027-28 would be the second-highest single-season salary by a lottery pick, behind Stephen Curry's $62.6 million (2026-27).",
+    "type": "approaches",
+    "value": 61600000
+   },
+   {
+    "comparison_size": 7620,
+    "contracted": true,
+    "family": "cohort",
+    "id": "7dc157f391ea2cea",
+    "key": "cohort_season|position|G|Shai Gilgeous-Alexander|2027-28",
+    "margin": -987158,
+    "previous_holder": {
+     "player": "Stephen Curry",
+     "season": "2026-27",
+     "value": 62587158
+    },
+    "rank": 2,
+    "scope_note": "Cohort of 1368 players and 7620 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "text": "Shai Gilgeous-Alexander's $61.6 million in 2027-28 would be the second-highest single-season salary by a guard, behind Stephen Curry's $62.6 million (2026-27).",
+    "type": "approaches",
+    "value": 61600000
+   },
+   {
+    "comparison_size": 3345,
+    "contracted": true,
+    "family": "cohort",
+    "id": "3b42f825acd184c0",
+    "key": "cohort_season|region|international|Shai Gilgeous-Alexander|2027-28",
+    "margin": 2566886,
+    "previous_holder": {
+     "player": "Nikola Jokic",
+     "season": "2026-27",
+     "value": 59033114
+    },
+    "rank": 1,
+    "scope_note": "Cohort of 639 players and 3345 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "text": "Shai Gilgeous-Alexander's $61.6 million in 2027-28 would be the highest single-season salary by an international player, passing Nikola Jokic's $59 million (2026-27).",
+    "type": "sets",
+    "value": 61600000
+   },
+   {
+    "comparison_size": 606,
+    "contracted": true,
+    "family": "franchise",
+    "id": "9d77a8766383a13e",
+    "key": "franchise|OKC|Shai Gilgeous-Alexander|2027-28",
+    "margin": 20359750,
+    "previous_holder": {
+     "player": "Chet Holmgren",
+     "season": "2026-27",
+     "value": 41240250
+    },
+    "rank": 1,
+    "scope_note": "Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Thunder franchise history here includes the Seattle SuperSonics seasons. This salary is contracted, not money already paid.",
+    "text": "Shai Gilgeous-Alexander's $61.6 million in 2027-28 would be the highest single-season salary in Thunder history, passing Chet Holmgren's $41.2 million (2026-27).",
+    "type": "sets",
+    "value": 61600000
+   },
+   {
+    "comparison_size": 350,
+    "contracted": true,
+    "family": "rank_shift",
+    "id": "40f7e4ca57654a70",
+    "key": "rank_league_top10|Shai Gilgeous-Alexander|2027-28",
+    "margin": null,
+    "previous_holder": null,
+    "rank": 7,
+    "scope_note": "First season inside the top 10. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "text": "Shai Gilgeous-Alexander's salary in 2027-28 would put him in the league's top 10 for the first time in his career.",
+    "type": "rank_shift",
+    "value": 61600000
+   },
+   {
+    "comparison_size": 12,
+    "contracted": true,
+    "family": "rank_shift",
+    "id": "1fe1a2ac3afecc9a",
+    "key": "team_high_becomes|Shai Gilgeous-Alexander|2027-28",
+    "margin": null,
+    "previous_holder": null,
+    "rank": 1,
+    "scope_note": "Same franchise in consecutive seasons. Roster of 12 players with a salary on file.",
+    "text": "Shai Gilgeous-Alexander would be the Thunder's highest-paid player in 2027-28 after ranking third on the roster in 2026-27.",
+    "type": "rank_shift",
+    "value": 61600000
    }
   ],
   "Shai Gilgeous-Alexander|2028-29": [
@@ -71709,7 +71947,7 @@
  },
  "meta": {
   "current_season": "2026-27",
-  "factoid_count": 4012,
+  "factoid_count": 4026,
   "families": [
    "cap_context",
    "career_earnings",
@@ -71852,7 +72090,7 @@
    "split_season_records": 757,
    "truncated_careers": 359
   },
-  "record_count": 1491,
+  "record_count": 1492,
   "scope_first_season": "1990-91",
   "seasons_covered": [
    "2014-15",

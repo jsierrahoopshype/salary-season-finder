@@ -86,11 +86,16 @@ IMPOSSIBLE_RAISE = 0.40
 #: one, so the season underneath has to be big to begin with.
 IMPOSSIBLE_RAISE_BASE_CAP_PCT = 25.0
 
-#: A looser pair of the same test, with no roster condition. Half again as much
-#: as the season before it is past any legal raise, wherever the money is
-#: filed, and a season already worth this much of its cap is a real salary
-#: rather than a rookie-scale year growing into a maximum one.
-IMPOSSIBLE_LEAP = 0.50
+#: A looser pair of the same test, with no roster condition. A jump this far
+#: past the season before it is beyond any raise a contract can carry, wherever
+#: the money is filed, and a season already worth this much of its cap is a
+#: real salary rather than a rookie-scale year growing into a maximum one.
+#:
+#: The jump was 50% until a maximum extension kicking in off a season already
+#: near the cap turned out to clear it legally: Shai Gilgeous-Alexander's
+#: 2027-28 is a 51% step off a 24.6% season and is a real salary. 60% leaves
+#: that alone and still catches the projections, which are all above 100%.
+IMPOSSIBLE_LEAP = 0.60
 IMPOSSIBLE_LEAP_BASE_CAP_PCT = 15.0
 
 #: "approaches" = not the record, and either inside the top N by rank or
