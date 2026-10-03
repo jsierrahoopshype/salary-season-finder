@@ -582,17 +582,24 @@ def lead(item, names=None, teams=None, slugs=None):
 MOVEMENT_FLOOR = 0.15
 
 
+#: A multiple is only used where the number is close enough to it to be read
+#: that way. 2.6 times is not "triples", and 3.5 times is not "triples" either;
+#: both are "more than" the multiple below them. Outside these bands the
+#: percentage is the honest form.
+MULTIPLES = ((2.9, 3.1, "triples", "more than triples"),
+             (1.9, 2.1, "doubles", "more than doubles"))
+
+
 def movement(now, before):
     """The verb phrase for a salary going from ``before`` to ``now``."""
     if not before or not now:
         return ""
     ratio = now / float(before)
-    for factor, word in ((5, "quintuples"), (4, "quadruples"), (3, "triples"),
-                         (2, "doubles")):
-        if ratio >= factor:
-            return word
-        if ratio >= factor - 0.15:
-            return "nearly " + word
+    for low, high, exact, over in MULTIPLES:
+        if ratio > high:
+            return over
+        if ratio >= low:
+            return exact
     if ratio >= 1 + MOVEMENT_FLOOR:
         return "rises {:.0f}%".format((ratio - 1) * 100)
     if ratio <= 1 - MOVEMENT_FLOOR:
@@ -701,10 +708,17 @@ def nugget_sentence(nuggets, item, names=None, teams=None, slugs=None,
     used = nuggets[:1]
     # A nugget already carrying an "and", or two clauses of its own, takes no
     # second one: three clauses joined by two ands is not a sentence anybody
-    # reads, and nor is one with five figures in it.
+    # reads, and nor is one with five figures in it. A career nugget that names
+    # a man he goes past is full for the same reason: the name is the thing to
+    # carry away, and a raise rank tacked on to it buries it.
     follower = nuggets[1].get("tail") if len(nuggets) > 1 else ""
+    named_a_legend = (
+        nuggets[0].get("kind") == "career"
+        and bool((nuggets[0].get("detail") or {}).get("legends"))
+    )
     compound = (
-        ", and " in text or ", and " in (follower or "")
+        named_a_legend
+        or ", and " in text or ", and " in (follower or "")
         or text.count(",") >= 2 or (follower or "").count(",") >= 2
     )
     if follower and not compound \

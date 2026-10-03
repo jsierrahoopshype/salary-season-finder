@@ -385,9 +385,14 @@ def peer_nugget(idx, item, data, pct):
     mine_share = _cap_share(idx, item)
     if mine_share is None:
         return None
+    # The count is of the other men, because he is not one of his own peers and
+    # the median and the maximum below are taken over them alone. The link still
+    # reproduces the whole band, him included, which is what the tool's filters
+    # describe; peer_link carries both numbers so a check can use the right one.
     phrase = (
-        "{} {} who averaged {} to {} points and {} to {} {} last season".format(
-            len(group), _plural(position),
+        "{} other {} who averaged {} to {} points and {} to {} {} "
+        "last season".format(
+            len(peers), _plural(position),
             _num(low_p), _num(high_p), _num(low_o), _num(high_o),
             STAT_WORD[second])
     )
@@ -410,9 +415,11 @@ def peer_nugget(idx, item, data, pct):
             "season": season, "pos": position, "gp_min": PEER_MIN_GAMES,
             "ppg": (low_p, high_p), second: (low_o, high_o),
             "second_stat": second, "count": len(group),
+            "others": len(peers),
         },
         "detail": {
             "season": season, "mine": mine_share, "median": median,
+            "others": len(peers), "in_band": len(group),
             "peers": [(name, share) for share, name in reversed(shares)],
             "bands": {"ppg": (low_p, high_p), second: (low_o, high_o)},
             "widened": widen,

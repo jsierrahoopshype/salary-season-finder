@@ -488,7 +488,7 @@ def test_a_run_is_not_a_minimum_run_when_one_season_is_above_it():
                    rec("Mixed", "2027-28", 2680000),
                    rec("Mixed", "2028-29", 20000000)])
     _items, posts = digest(old, new)
-    assert "Mixed's salary quintuples in 2027-28" in posts[0]
+    assert "Mixed's salary more than triples in 2027-28" in posts[0]
     assert "Also:" not in posts[0]
 
 
@@ -680,7 +680,8 @@ def test_the_peer_phrase_is_the_link_in_the_sentence():
     item = {"player": "Peer Man", "season": CURRENT, "kind": "salary"}
     text = D.nugget_sentence([nugget], item, NAMES, {}, {"player": {}})
     assert "<https://hoopsmatic.com/salary-season-finder#from=2025-26" in text
-    assert "|5 guards who averaged 7 to 8 points and 5 to 6 assists last season>" in text
+    assert "|4 other guards who averaged 7 to 8 points and 5 to 6 assists " \
+        "last season>" in text
 
 
 def test_the_season_compared_is_the_one_already_played_out():
@@ -1076,16 +1077,21 @@ def test_the_verb_carries_the_news():
     new = payload([rec("Shead", CURRENT, 2000000, team="MEM"),
                    rec("Shead", "2027-28", 8000000, team="MEM")])
     _items, posts = digest(old, new)
-    assert "Shead's salary quadruples in 2027-28" in posts[0]
+    assert "Shead's salary more than triples in 2027-28" in posts[0]
 
 
-def test_a_multiple_beats_a_percentage():
-    assert D.movement(8000000, 2000000) == "quadruples"
-    assert D.movement(7800000, 2000000) == "nearly quadruples"
-    assert D.movement(6000000, 2000000) == "triples"
-    assert D.movement(4000000, 2000000) == "doubles"
-    assert D.movement(2600000, 2000000) == "rises 30%"
-    assert D.movement(1400000, 2000000) == "falls 30%"
+def test_a_multiple_is_only_used_where_the_number_is_one():
+    """2.6 times is not "triples", and 3.5 times is not "triples" either."""
+    assert D.movement(1850000, 1000000) == "rises 85%"
+    assert D.movement(1900000, 1000000) == "doubles"
+    assert D.movement(2100000, 1000000) == "doubles"
+    assert D.movement(2150000, 1000000) == "more than doubles"
+    assert D.movement(2600000, 1000000) == "more than doubles"
+    assert D.movement(2900000, 1000000) == "triples"
+    assert D.movement(3100000, 1000000) == "triples"
+    assert D.movement(3200000, 1000000) == "more than triples"
+    assert D.movement(5400000, 1000000) == "more than triples"
+    assert D.movement(700000, 1000000) == "falls 30%"
 
 
 def test_a_move_too_small_to_be_news_gets_no_verb():
@@ -1220,16 +1226,17 @@ def test_a_salary_the_guard_flagged_is_not_a_change():
 
 
 def test_a_run_keeps_the_seasons_the_guard_left_alone():
+    # 2028-29 is a 73% jump over 2027-28, past the 60% the guard allows
     data = payload([rec("Leaper", CURRENT, 40000000),
                     rec("Leaper", "2027-28", 44000000),
-                    rec("Leaper", "2028-29", 70000000)])
+                    rec("Leaper", "2028-29", 76000000)])
     data["salary_cap"] = {s: {"cap": 200000000}
                           for s in (CURRENT, "2027-28", "2028-29")}
     idx = F.build_index(data)
     item = {"kind": "extension_run", "player": "Leaper", "season": "2028-29",
-            "first_season": "2027-28", "salary": 70000000, "team": "ATL",
+            "first_season": "2027-28", "salary": 76000000, "team": "ATL",
             "members": [{"season": "2027-28", "salary": 44000000},
-                        {"season": "2028-29", "salary": 70000000}]}
+                        {"season": "2028-29", "salary": 76000000}]}
     kept = D.drop_impossible([item], idx)
     assert len(kept) == 1
     # one season left, so it stops being a run and becomes a single change
@@ -1330,3 +1337,79 @@ def test_a_team_line_never_counts_a_flagged_salary():
     idx = F.build_index(data)
     assert ("Leaper", "2027-28") in idx.impossible
     assert ("ATL", "2027-28") not in T.commitments(data, idx)
+
+
+# --------------------------------------------------------------------------
+# a man is not one of his own peers
+# --------------------------------------------------------------------------
+
+
+def test_the_peer_count_is_of_the_others():
+    nugget, _data = peer_nugget_for(
+        (7.4, 5.2), [(7.1, 5.0), (7.9, 5.9), (7.2, 5.5), (7.6, 5.1)])
+    assert "4 other guards" in nugget["opener"]
+    assert nugget["detail"]["others"] == 4
+    assert nugget["detail"]["in_band"] == 5
+
+
+def test_the_comparison_is_against_the_others_alone():
+    """His own share is not in the median, and "more than any of them" means
+    any of them, not any of them including himself."""
+    nugget, _data = peer_nugget_for(
+        (7.4, 5.2), [(7.1, 5.0), (7.9, 5.9), (7.2, 5.5), (7.6, 5.1)],
+        cap_pct=20.0)
+    assert len(nugget["detail"]["peers"]) == 4
+    assert all(name != "Peer Man" for name, _share in nugget["detail"]["peers"])
+    assert nugget["detail"]["mine"] not in [s for _n, s in nugget["detail"]["peers"]]
+
+
+def test_the_link_still_returns_the_whole_band():
+    """The tool's filters describe a band, not a band minus one man, so the
+    link returns him too and the spec carries both counts."""
+    nugget, data = peer_nugget_for(
+        (7.4, 5.2), [(7.1, 5.0), (7.9, 5.9), (7.2, 5.5), (7.6, 5.1)])
+    spec = nugget["peer_link"]
+    assert spec["count"] == spec["others"] + 1
+    url = D.peer_url(spec)
+    params = dict(part.split("=", 1) for part in url.split("#", 1)[1].split("&"))
+    found = [
+        record for record in data["seasons"]
+        if record["season"] == params["from"]
+        and (record.get("gp") or 0) >= int(params["gp_min"])
+        and float(params["ppg_min"]) <= (record.get("ppg") or -1) <= float(params["ppg_max"])
+        and float(params["apg_min"]) <= (record.get("apg") or -1) <= float(params["apg_max"])
+    ]
+    assert len(found) == spec["count"]
+
+
+# --------------------------------------------------------------------------
+# a career nugget that names a legend stands alone
+# --------------------------------------------------------------------------
+
+
+def test_a_named_legend_leaves_no_room_for_a_second_nugget():
+    item = {"player": "Man", "season": CURRENT, "kind": "new"}
+    nuggets = [
+        {"kind": "career",
+         "opener": "He would reach $100 million in career earnings by 2028-29, "
+                   "going past Ben Wallace on the way",
+         "tail": "x", "entities": [],
+         "detail": {"legends": [{"name": "Ben Wallace"}]}},
+        {"kind": "raise", "opener": "No team has taken on a bigger raise",
+         "tail": "no team has taken on a bigger raise", "entities": []},
+    ]
+    text = D.nugget_sentence(nuggets, item)
+    assert "Ben Wallace" in text
+    assert "bigger raise" not in text
+
+
+def test_a_career_nugget_with_no_legend_still_takes_one():
+    item = {"player": "Man", "season": CURRENT, "kind": "new"}
+    nuggets = [
+        {"kind": "career",
+         "opener": "He would reach $50 million in career earnings by 2027-28",
+         "tail": "x", "entities": [], "detail": {"legends": []}},
+        {"kind": "raise", "opener": "No team has taken on a bigger raise",
+         "tail": "no team has taken on a bigger raise", "entities": []},
+    ]
+    assert "bigger raise" in D.nugget_sentence(nuggets, item)
