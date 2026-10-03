@@ -103,7 +103,9 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/data.json
+          # The report build_data.py writes beside the data, so the two never
+          # describe different days.
+          git add data/data.json data/team_corrections_report.json
           git commit -m "Auto-update salary data [$(date -u +%Y-%m-%d)]"
           git push
 
@@ -151,7 +153,10 @@ jobs:
           git commit -m "Auto-update factoids [$(date -u +%Y-%m-%d)]"
           # update-data pushed moments ago; rebase rather than race it
           for attempt in 1 2 3; do
-            git pull --rebase origin "${GITHUB_REF_NAME}" && git push && exit 0
+            # --autostash so a file this job did not stage cannot stop the
+            # rebase, and with it the push, the way it did once already.
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" \
+              && git push && exit 0
             echo "push attempt $attempt failed, retrying"
             sleep $((attempt * 5))
           done
@@ -198,8 +203,16 @@ jobs:
 
       - name: Commit and push pages
         run: |
-          git add -A agent agents college colleges countries country draft \
-            draft-classes pick picks player position positions season team \
+          # Every family in scripts/prerender/config.py, hubs included. A
+          # family left off this list is not merely left uncommitted: its files
+          # stay unstaged, and the "git pull --rebase" below then refuses to
+          # run, so the push fails and no page lands at all. That is how
+          # region, pick-range and college-position stopped the daily pages on
+          # 2026-10-03, leaving 700 of them a build behind.
+          git add -A agent agents college colleges college-position \
+            college-positions countries country draft draft-classes pick \
+            pick-range pick-ranges picks player position positions region \
+            regions season team \
             404.html sitemap.xml data/slugs.json data/page_hashes.json \
             js/player-pages.js index.html
           if git diff --cached --quiet; then
@@ -211,7 +224,10 @@ jobs:
           git commit -m "Auto-update entity pages [$(date -u +%Y-%m-%d)]"
           # the two jobs before this one pushed; rebase rather than race them
           for attempt in 1 2 3; do
-            git pull --rebase origin "${GITHUB_REF_NAME}" && git push && exit 0
+            # --autostash so a file this job did not stage cannot stop the
+            # rebase, and with it the push, the way it did once already.
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" \
+              && git push && exit 0
             echo "push attempt $attempt failed, retrying"
             sleep $((attempt * 5))
           done
@@ -273,7 +289,10 @@ jobs:
           git commit -m "Record the build the salary digest read [$(date -u +%Y-%m-%d)]"
           # three jobs pushed before this one; rebase rather than race them
           for attempt in 1 2 3; do
-            git pull --rebase origin "${GITHUB_REF_NAME}" && git push && exit 0
+            # --autostash so a file this job did not stage cannot stop the
+            # rebase, and with it the push, the way it did once already.
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" \
+              && git push && exit 0
             echo "push attempt $attempt failed, retrying"
             sleep $((attempt * 5))
           done

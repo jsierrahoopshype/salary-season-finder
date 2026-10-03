@@ -1649,3 +1649,21 @@ def test_the_awards_column_is_held_to_a_width_so_its_badges_wrap():
     badge = css[css.index("table.player-season-table td.ps-awards .award-badge"):]
     badge = badge[:badge.index("}")]
     assert "overflow-wrap: anywhere;" in badge
+
+
+def test_the_daily_build_commits_every_family_it_writes():
+    """A family the daily build does not stage is not merely left out.
+
+    Its files stay unstaged, and the "git pull --rebase" that follows then
+    refuses to run, so the push fails and no page lands at all. That is how
+    region, pick-range and college-position stopped the daily pages on
+    2026-10-03 and left 700 of them a build behind, which no test caught
+    because the drift only shows up in the next pull request.
+    """
+    workflow = read(os.path.join(".github", "workflows", "update-data.yml"))
+    block = workflow[workflow.index("git add -A agent"):]
+    block = block[:block.index("if git diff --cached")]
+    staged = set(block.replace("\\", "").split())
+    wanted = {spec["dir"] for spec in C.FAMILIES.values()}
+    wanted |= {spec["hub"] for spec in C.FAMILIES.values() if spec["hub"]}
+    assert wanted - staged == set()
