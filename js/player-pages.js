@@ -11,6 +11,7 @@
   // data.json spelling -> the one man he is
   var ALIASES = {
   "Andre Jackson": "Andre Jackson Jr",
+  "Dominck Barlow": "Dominick Barlow",
   "Ricky Council": "Ricky Council IV",
   "Terrence Shannon": "Terrence Shannon Jr",
   "Terrence Shannon Jr.": "Terrence Shannon Jr",
