@@ -1856,11 +1856,15 @@ def test_a_draft_standing_names_the_broadest_range_he_holds():
         ("draft_range", "undrafted")]
 
 
-def test_a_draft_class_is_not_itself_for_two_seasons():
-    """The top pick leads his class because the rookie scale says so."""
-    assert TL._green(("draft_class", "2011"), "2011-12") is False
-    assert TL._green(("draft_class", "2011"), "2012-13") is False
-    assert TL._green(("draft_class", "2011"), "2013-14") is True
+def test_a_draft_class_counts_from_its_fifth_season():
+    """Until then its men are on rookie-scale deals and the order inside the
+    class is the order the scale set."""
+    assert TL.CLASS_GRACE == 4
+    for season in ("2011-12", "2012-13", "2013-14", "2014-15"):
+        assert TL._green(("draft_class", "2011"), season) is False, season
+    for season in ("2015-16", "2016-17"):
+        assert TL._green(("draft_class", "2011"), season) is True, season
+    # every other cohort is itself from the first season
     assert TL._green(("college", "Duke"), "2011-12") is True
 
 
