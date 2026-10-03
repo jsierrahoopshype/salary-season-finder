@@ -68,10 +68,13 @@ UNDRAFTED = "undrafted player"
 #: than a milestone.
 STEPS = (10000000, 20000000, 30000000, 40000000, 50000000, 60000000)
 
-#: A draft class has no record worth reporting in its first two seasons: the
-#: top pick is the best-paid man in it by the rookie scale, which is a fact
-#: about the scale and not about him.
-CLASS_GRACE = 2
+#: Seasons a draft class has to be old before a claim about it means anything.
+#: Four, so a class counts from its fifth season on. Until then its men are on
+#: rookie-scale deals and the order inside it is the order the scale set: the
+#: top pick leads the class because he was the top pick, which is a fact about
+#: the scale and not about him. The fifth season is the first one every man in
+#: the class could have signed for himself.
+CLASS_GRACE = 4
 
 #: How far down a career-earnings list is worth a line. Past this, moving a
 #: place is arithmetic rather than news: a man's rank inside his draft class
@@ -299,8 +302,8 @@ def _green(scope, season):
         first = int(key)
     except (TypeError, ValueError):
         return True
-    # season_key("2011-12") is 2012, so the class of 2011 plays its first two
-    # seasons on keys 2012 and 2013 and is fair game from 2014 onward.
+    # season_key("2011-12") is 2012, so the class of 2011 plays its first
+    # season on key 2012 and its fifth on 2016, which is the first it counts.
     return F.season_key(season) >= first + 1 + CLASS_GRACE
 
 
