@@ -126,6 +126,7 @@ def record_nugget(idx, item, factoids):
                     "entities": _fact_entities(fact),
                     "detail": {"rank": fact.get("rank"),
                                "key": fact.get("key"),
+                               "season": season,
                                "previous_holder": fact.get("previous_holder")},
                 }
     return None
@@ -558,8 +559,14 @@ def _age_in(idx, player, season):
 
 
 # ── choosing ──────────────────────────────────────────────────────────
-def nuggets_for(item, idx, data, factoids, raises, money, opened, limit=2):
-    """The first two of the five that have something to say, in order."""
+#: The five, strongest first. An item prints one of them, so this is the order
+#: that decides which: a record, then the career milestone, then where the raise
+#: ranks, then the company he keeps, then where the money ends.
+NUGGET_ORDER = ("record", "career", "raise", "peers", "horizon")
+
+
+def nuggets_for(item, idx, data, factoids, raises, money, opened, limit=1):
+    """The strongest of the five that have something to say, in NUGGET_ORDER."""
     found = []
     for build in (
         lambda: record_nugget(idx, item, factoids),
