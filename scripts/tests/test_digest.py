@@ -745,11 +745,13 @@ def test_the_peer_phrase_is_the_link_in_the_sentence():
 # --------------------------------------------------------------------------
 
 
-def career_payload(paid_seasons, future, player="Rich Man", legends=()):
+def career_payload(paid_seasons, future, player="Rich Man", legends=(),
+                   others=0):
     """A career already paid, a season still to come, and retired men between.
 
     ``legends`` are (name, total, awards) for careers that finished inside the
-    window, which is what makes them passable.
+    window, which is what makes them passable. ``others`` is how many men
+    out-earn him, which is what puts him at that rank plus one.
     """
     records, running = [], 0
     for season, salary in paid_seasons:
@@ -764,9 +766,18 @@ def career_payload(paid_seasons, future, player="Rich Man", legends=()):
         records.append({"player": name, "season": "2015-16", "team": "MEM",
                         "salary": total, "years_exp": 4, "awards": list(awards),
                         "career_earnings": total})
+    for i in range(others):
+        # Richer than him, so he ranks behind them, and far enough past the
+        # milestone that none of them sits between him and it.
+        total = 900000000 + i * 1000000
+        records.append({"player": "Rich {:02d}".format(i), "season": "2015-16",
+                        "team": "MEM", "salary": total, "years_exp": 4,
+                        "career_earnings": total})
     out = payload(records)
+    # newest first, the way data.json carries it, so compute_current_season
+    # walks it the way the front end does
     out["seasons_list"] = sorted(
-        {r["season"] for r in out["seasons"]}, key=F.season_key)
+        {r["season"] for r in out["seasons"]}, key=F.season_key, reverse=True)
     out["players"] = sorted({r["player"] for r in out["seasons"]})
     return out
 
@@ -785,7 +796,8 @@ def test_the_career_nugget_names_the_milestone_and_the_season():
     nugget, _idx = career_nugget_for(
         paid_seasons=[(CURRENT, 45000000)], future=[("2027-28", 48000000)])
     assert nugget is not None
-    assert nugget["opener"] == "He'd pass $50 million in career earnings in 2027-28"
+    assert nugget["opener"] == ("He's already first in career earnings and "
+                                "would pass $50 million in 2027-28")
     assert nugget["detail"]["milestone"] == 50000000
     assert nugget["detail"]["crosses_in"] == "2027-28"
 
@@ -822,16 +834,36 @@ def test_a_career_short_of_the_next_milestone_has_no_career_nugget():
     assert nugget is None
 
 
-def test_a_career_nugget_never_prints_a_rank():
-    """A milestone is measured against a man or against nothing: "fifth in
-    career earnings" is a place in a list, and the ranks stay on the detail
-    for whoever wants them."""
+def test_a_rank_past_the_top_of_the_list_is_not_printed():
+    """Inside the top 25 a place in the list is a fact about him. Past it, it
+    is a number, and the milestone stands on its own."""
+    assert N.STANDING_MAX_RANK == 25
     nugget, _idx = career_nugget_for(
-        paid_seasons=[(CURRENT, 45000000)], future=[("2027-28", 48000000)])
+        paid_seasons=[(CURRENT, 45000000)], future=[("2027-28", 48000000)],
+        others=30)
+    assert nugget["detail"]["rank_all"] > N.STANDING_MAX_RANK
     assert nugget["opener"] == "He'd pass $50 million in career earnings in 2027-28"
-    assert nugget["detail"]["rank_all"] == 1
-    for word in ("first", "1st", "already", "of all time", "on a roster"):
+    for word in ("already", "in career earnings and"):
         assert word not in nugget["opener"]
+
+
+def test_a_rank_inside_the_top_of_the_list_leads_the_sentence():
+    nugget, _idx = career_nugget_for(
+        paid_seasons=[(CURRENT, 45000000)], future=[("2027-28", 48000000)],
+        others=4)
+    assert nugget["detail"]["rank_all"] == 5
+    assert nugget["opener"] == ("He's already fifth in career earnings and "
+                                "would pass $50 million in 2027-28")
+
+
+def test_a_legend_beats_a_rank():
+    """A name the reader knows is worth more than a place in a list."""
+    nugget, _idx = career_nugget_for(
+        paid_seasons=[(CURRENT, 45000000)], future=[("2027-28", 48000000)],
+        legends=[("Top 75 Man", 48000000, ["NBA Top-75"])])
+    assert nugget["detail"]["rank_all"] == 2
+    assert "already" not in nugget["opener"]
+    assert "more than Top 75 Man" in nugget["opener"]
 
 
 # --------------------------------------------------------------------------
@@ -1568,9 +1600,9 @@ def test_a_run_coming_down_says_what_it_cuts():
         in spoken(old, new)
 
 
-def test_a_run_moving_both_ways_claims_no_span():
-    """A run that rises then falls is not money owed "through" anything, so the
-    net is given without a span."""
+def test_a_run_moving_both_ways_still_says_what_it_added():
+    """Whichever way the seasons inside it went, what he is owed through the
+    last of them went up by this much."""
     old = payload([rec("Mixed Man", CURRENT, 30000000),
                    rec("Mixed Man", "2027-28", 31000000),
                    rec("Mixed Man", "2028-29", 20000000)])
@@ -1579,22 +1611,70 @@ def test_a_run_moving_both_ways_claims_no_span():
                    rec("Mixed Man", "2028-29", 30000000)])
     text = spoken(old, new)
     assert ("Mixed Man's 2026-27 salary jumps to $40 million from $30 million, "
-            "adding $14 million to what he's owed.") in text
-    assert "through" not in text
+            "adding $14 million to what he's owed through 2028-29.") in text
+    assert "front-loaded" not in text
     assert "with it" not in text
 
 
-def test_a_run_moving_both_ways_for_nothing_says_only_that():
-    """Under the floor the net is not worth a figure: the later seasons moved,
-    and that is the whole of it."""
+def test_a_run_moving_both_ways_for_nothing_says_what_happened():
+    """Under the floor the net is not the story: which end of the deal grew,
+    and which paid for it."""
     old = payload([rec("Wash Man", CURRENT, 30000000),
                    rec("Wash Man", "2027-28", 31000000),
                    rec("Wash Man", "2028-29", 32000000)])
     new = payload([rec("Wash Man", CURRENT, 36000000),
                    rec("Wash Man", "2027-28", 28000000),
                    rec("Wash Man", "2028-29", 30000000)])
-    assert ("Wash Man's 2026-27 salary jumps to $36 million from $30 million, "
-            "and his later seasons change too.") in spoken(old, new)
+    assert spoken(old, new) == (
+        "Wash Man's salary is front-loaded: $36 million in 2026-27, up from "
+        "$30 million, with his later seasons coming down by almost as much. "
+        "He's still owed $94 million through 2028-29.")
+
+
+def test_a_flat_total_comes_down_by_as_much():
+    """Exactly flat is "as much"; a little off is "almost as much"."""
+    old = payload([rec("Flat Man", CURRENT, 30000000),
+                   rec("Flat Man", "2027-28", 32000000)])
+    new = payload([rec("Flat Man", CURRENT, 36000000),
+                   rec("Flat Man", "2027-28", 26000000)])
+    text = spoken(old, new)
+    assert "with his later seasons coming down by as much." in text
+    assert "He's still owed $62 million through 2027-28." in text
+
+
+def test_a_barely_moved_first_season_is_not_a_loaded_deal():
+    """"Front-loaded" is a claim about the front of the deal, so the season at
+    the front has to have moved enough to carry it."""
+    old = payload([rec("Flat Man", CURRENT, 56000000),
+                   rec("Flat Man", "2027-28", 40000000)])
+    new = payload([rec("Flat Man", CURRENT, 56100000),
+                   rec("Flat Man", "2027-28", 39900000)])
+    text = spoken(old, new)
+    assert "loaded" not in text
+    assert ("Flat Man's 2026-27 salary rises to $56.1 million from $56 "
+            "million, and his later seasons change too.") in text
+
+
+def test_a_deal_loaded_at_the_back_says_so():
+    old = payload([rec("Back Man", CURRENT, 36000000),
+                   rec("Back Man", "2027-28", 26000000)])
+    new = payload([rec("Back Man", CURRENT, 30000000),
+                   rec("Back Man", "2027-28", 32000000)])
+    text = spoken(old, new)
+    assert text.startswith(
+        "Back Man's salary is back-loaded: $30 million in 2026-27, down from "
+        "$36 million, with his later seasons going up by as much.")
+
+
+def test_a_total_that_moves_keeps_the_adding_form():
+    """Reshaping is for a flat total. Money added is still money added."""
+    old = payload([rec("Paid Man", CURRENT, 30000000),
+                   rec("Paid Man", "2027-28", 31000000)])
+    new = payload([rec("Paid Man", CURRENT, 40000000),
+                   rec("Paid Man", "2027-28", 29000000)])
+    text = spoken(old, new)
+    assert "front-loaded" not in text
+    assert "adding $8 million to what he's owed through 2027-28." in text
 
 
 def test_a_multiple_is_still_the_verb_where_one_fits():

@@ -536,6 +536,7 @@ def _group_item(kind, members, parent=None):
     })
     if parent is not None:
         item["current_salary"] = parent.get("current_salary") or 0
+        item["owed"] = parent.get("owed")
     return item
 
 
@@ -704,14 +705,17 @@ def sentence(item, names=None):
             if code.strip())
     if not clauses:
         return ""
+    # A clause that could not say it all leaves the rest as its own sentence.
+    after = " ".join(said.get("after") or ())
+    after = " " + after if after else ""
     if len(clauses) == 1:
-        return clauses[0] + "."
+        return clauses[0] + "." + after
     # A clause carrying an "and" of its own, or two clauses of its own, cannot
     # take another: the semicolon keeps the day to one sentence without three
     # ands inside it, and without an "and" a reader has to re-read.
     if any(_crowded(text) for text in clauses):
-        return "; ".join(clauses) + "."
-    return "{}, and {}.".format(", ".join(clauses[:-1]), clauses[-1])
+        return "; ".join(clauses) + "." + after
+    return "{}, and {}.".format(", ".join(clauses[:-1]), clauses[-1]) + after
 
 
 def _crowded(text):
@@ -767,7 +771,7 @@ def _clause(item, names, who, whose, said=None):
         return "{} is due {} in {}".format(who, money, season)
 
     if kind in ("salary", "salary_run"):
-        return changed_salary(item, whose)
+        return changed_salary(item, whose, said)
 
     if kind in ("team", "team_run"):
         # Where the money used to sit is not the news and dates the line: what
@@ -839,13 +843,16 @@ def step_verb(now, before):
     return ""
 
 
-def changed_salary(item, whose=None):
+def changed_salary(item, whose=None, said=None):
     """A number that moved: the first season it moved in, old to new.
 
     One number a reader can hold, in the season nearest to now, and then what
     the whole move is worth: the money added to or taken off what he is owed,
     and the season it runs to. "His next four seasons move with it" said that
     they moved and never said by how much, which is the only part worth a line.
+
+    Where the money only moved about inside the deal, the shape is the story
+    and the clause says so instead.
     """
     if whose is None:
         whose = possessive(item["player"])
@@ -856,6 +863,19 @@ def changed_salary(item, whose=None):
     now = item.get("first_salary")
     if now is None:
         now = item.get("salary")
+
+    reshaped = _reshaped(item)
+    if reshaped:
+        if said is not None:
+            owed = _owed_sentence(item)
+            if owed:
+                said.setdefault("after", []).append(owed)
+        return "{} salary is {}: {} in {}, {} from {}, with his later seasons " \
+            "{} by {}".format(
+                whose, reshaped["shape"], F.fmt_money(now), first,
+                "up" if (now or 0) > (was or 0) else "down", F.fmt_money(was),
+                reshaped["way"], reshaped["much"])
+
     verb = step_verb(now or 0, was or 0)
     tail = _rest_of_run(item)
     if not verb:
@@ -863,6 +883,48 @@ def changed_salary(item, whose=None):
             whose, first, F.fmt_money(now), tail)
     return "{} {} salary {} to {} from {}{}".format(
         whose, first, verb, F.fmt_money(now), F.fmt_money(was), tail)
+
+
+def _reshaped(item):
+    """A day that moved money about inside a deal without changing the total.
+
+    The seasons went different ways and the total barely moved, so the figure
+    a reader wants is not what was added: it is which end of the deal grew and
+    which paid for it. Returns the words that say so, or None.
+    """
+    members = item.get("members") or []
+    if len(members) < 2:
+        return None
+    now = sum((m.get("salary") or 0) for m in members)
+    was = sum((m.get("was") or 0) for m in members)
+    net = now - was
+    ways = {_way((m.get("salary") or 0) - (m.get("was") or 0)) for m in members}
+    if len(ways) < 2 or (was and abs(net) >= was * NET_FLOOR):
+        return None
+    first_now = members[0].get("salary") or 0
+    first_was = members[0].get("was") or 0
+    led = _way(first_now - first_was)
+    if not led:
+        return None
+    # "Front-loaded" is a claim about the front of the deal, so the season at
+    # the front has to have moved enough to carry it. $56.1 million up from
+    # $56 million is not a deal being loaded anywhere.
+    if not first_was or abs(first_now - first_was) < first_was * TINY_CHANGE:
+        return None
+    return {
+        "shape": "front-loaded" if led > 0 else "back-loaded",
+        "way": "coming down" if led > 0 else "going up",
+        # Only an exactly flat total is "as much"; a little off and it is not.
+        "much": "as much" if not net else "almost as much",
+    }
+
+
+def _owed_sentence(item):
+    """"He's still owed $200 million through 2030-31." """
+    total, through = item.get("owed") or (0, "")
+    if not total or not through:
+        return ""
+    return "He's still owed {} through {}.".format(F.fmt_money(total), through)
 
 
 #: A net move smaller than this is not worth a figure of its own: the seasons
@@ -874,10 +936,9 @@ def _rest_of_run(item):
     """What the seasons behind the first one are worth, as a clause.
 
     The money the day put on or took off what he is owed, and the season it
-    runs to. Where the seasons moved in different directions the span is not
-    his: a run that rises then falls is not money owed "through" anything, so
-    the clause gives the figure without a span, and where the net is too small
-    for a figure it says only that the later seasons moved.
+    runs to, whichever way the seasons inside it went: what he is owed through
+    the last of them went up or down by this much. Where the net is too small
+    for a figure the clause says only that the later seasons moved.
     """
     members = item.get("members") or []
     rest = members[1:]
@@ -886,18 +947,13 @@ def _rest_of_run(item):
     now = sum((m.get("salary") or 0) for m in members)
     was = sum((m.get("was") or 0) for m in members)
     net = now - was
-    ways = {_way((m.get("salary") or 0) - (m.get("was") or 0)) for m in members}
-    mixed = len(ways) > 1
-    small = not was or abs(net) < was * NET_FLOOR
-
-    if mixed and small:
-        return ", and his later seasons change too"
-    if not net:
+    if not net or not was or abs(net) < was * NET_FLOOR:
+        # Nothing was added or taken off worth a figure, and the shape is not
+        # one _reshaped would claim either: all a line can say is that the
+        # seasons behind the first one moved.
         return ", and his later seasons change too"
     moved = "adding {} to".format(F.fmt_money(net)) if net > 0 \
         else "cutting {} from".format(F.fmt_money(-net))
-    if mixed:
-        return ", {} what he's owed".format(moved)
     return ", {} what he's owed through {}".format(moved, members[-1]["season"])
 
 
@@ -971,6 +1027,25 @@ def raise_amount(idx, item):
     return max(0, max(amounts) - current)
 
 
+def owed_over(idx, item):
+    """(what he is owed across the seasons a change touched, the last of them).
+
+    Every season in the range, not only the ones that moved: "owed $200 million
+    through 2030-31" is a figure about a span, and a season the day left alone
+    is still money inside it.
+    """
+    seasons = [m["season"] for m in item.get("members") or [item]]
+    if not seasons:
+        return 0, ""
+    first, last = min(seasons, key=F.season_key), max(seasons, key=F.season_key)
+    low, high = F.season_key(first), F.season_key(last)
+    total = 0
+    for record in idx.by_player.get(idx.canonical(item["player"])) or ():
+        if low <= F.season_key(record["season"]) <= high:
+            total += record.get("salary") or 0
+    return total, last
+
+
 def attach_nuggets(items, idx, data, factoids, raises, opened):
     """Give every item the two nuggets it prints, its raise and its context."""
     for item in items:
@@ -981,6 +1056,7 @@ def attach_nuggets(items, idx, data, factoids, raises, opened):
         item["current_salary"] = now.get("salary") or 0
         item.setdefault("peak_salary", item.get("salary") or 0)
         item["raise_amount"] = raise_amount(idx, item)
+        item["owed"] = owed_over(idx, item)
     pool = list(raises) + [
         {"player": item["player"], "season": item["season"],
          "amount": item["raise_amount"]}
