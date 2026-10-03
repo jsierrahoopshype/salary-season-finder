@@ -1,0 +1,833 @@
+{
+ "corrections": [
+  {
+   "corrected_team": "DAL",
+   "player": "AJ Johnson",
+   "season": "2025-26",
+   "sheet_team": "NOP"
+  },
+  {
+   "corrected_team": "DEN, ORL",
+   "player": "Aaron Gordon",
+   "season": "2020-21",
+   "sheet_team": "DEN",
+   "split_basis": "games played",
+   "team_salaries": {
+    "DEN": 9068182,
+    "ORL": 9068182
+   }
+  },
+  {
+   "corrected_team": "OKC",
+   "player": "Aaron Wiggins",
+   "season": "2025-26",
+   "sheet_team": "ATL"
+  },
+  {
+   "corrected_team": "PHI",
+   "player": "Andre Drummond",
+   "season": "2025-26",
+   "sheet_team": "NYK"
+  },
+  {
+   "corrected_team": "MIL",
+   "player": "Andre Jackson Jr",
+   "season": "2025-26",
+   "sheet_team": "TOR"
+  },
+  {
+   "corrected_team": "CHI",
+   "player": "Anfernee Simons",
+   "season": "2025-26",
+   "sheet_team": "PHI"
+  },
+  {
+   "corrected_team": "CHA",
+   "player": "Antonio Reeves",
+   "season": "2025-26",
+   "sheet_team": "MIN"
+  },
+  {
+   "corrected_team": "NYK",
+   "player": "Ariel Hukporti",
+   "season": "2025-26",
+   "sheet_team": "PHI"
+  },
+  {
+   "corrected_team": "LAC",
+   "player": "Bennedict Mathurin",
+   "season": "2025-26",
+   "sheet_team": "NOP"
+  },
+  {
+   "corrected_team": "MIL",
+   "player": "Bobby Portis",
+   "season": "2025-26",
+   "sheet_team": "MIA"
+  },
+  {
+   "corrected_team": "LAC",
+   "player": "Bogdan Bogdanovic",
+   "season": "2025-26",
+   "sheet_team": "HOU"
+  },
+  {
+   "corrected_team": "OKC",
+   "player": "Branden Carlson",
+   "season": "2025-26",
+   "sheet_team": "POR"
+  },
+  {
+   "corrected_team": "TOR",
+   "player": "Brandon Ingram",
+   "season": "2025-26",
+   "sheet_team": "LAC"
+  },
+  {
+   "corrected_team": "DAL",
+   "player": "Brandon Williams",
+   "season": "2025-26",
+   "sheet_team": "GSW"
+  },
+  {
+   "corrected_team": "DEN",
+   "player": "Bruce Brown",
+   "season": "2025-26",
+   "sheet_team": "NYK"
+  },
+  {
+   "corrected_team": "ATL",
+   "player": "Buddy Hield",
+   "season": "2025-26",
+   "sheet_team": "CHI"
+  },
+  {
+   "corrected_team": "POR",
+   "player": "Caleb Love",
+   "season": "2025-26",
+   "sheet_team": "PHI"
+  },
+  {
+   "corrected_team": "DET",
+   "player": "Caris LeVert",
+   "season": "2025-26",
+   "sheet_team": "MIL"
+  },
+  {
+   "corrected_team": "UTA",
+   "player": "Cody Williams",
+   "season": "2025-26",
+   "sheet_team": "MIN"
+  },
+  {
+   "corrected_team": "CHI",
+   "player": "Collin Sexton",
+   "season": "2025-26",
+   "sheet_team": "LAL"
+  },
+  {
+   "corrected_team": "DEN",
+   "player": "Curtis Jones",
+   "season": "2025-26",
+   "sheet_team": "CLE"
+  },
+  {
+   "corrected_team": "DAL, WAS",
+   "player": "Daniel Gafford",
+   "season": "2023-24",
+   "sheet_team": "DAL",
+   "split_basis": "games played",
+   "team_salaries": {
+    "DAL": 4860243,
+    "WAS": 7541757
+   }
+  },
+  {
+   "corrected_team": "CLE",
+   "player": "Dean Wade",
+   "season": "2025-26",
+   "sheet_team": "PHI"
+  },
+  {
+   "corrected_team": "CLE",
+   "player": "Dennis Schroeder",
+   "season": "2025-26",
+   "sheet_team": "CHA"
+  },
+  {
+   "corrected_team": "BOS, SAS",
+   "player": "Derrick White",
+   "season": "2021-22",
+   "sheet_team": "BOS",
+   "split_basis": "games played",
+   "team_salaries": {
+    "BOS": 5435238,
+    "SAS": 10243333
+   }
+  },
+  {
+   "corrected_team": "NOP, POR",
+   "player": "Didi Louzada",
+   "season": "2021-22",
+   "sheet_team": "POR",
+   "split_basis": "games played",
+   "team_salaries": {
+    "NOP": 397084,
+    "POR": 1389794
+   }
+  },
+  {
+   "corrected_team": "IND, SAC",
+   "player": "Domantas Sabonis",
+   "season": "2021-22",
+   "sheet_team": "SAC",
+   "split_basis": "games played",
+   "team_salaries": {
+    "IND": 14024194,
+    "SAC": 4475806
+   }
+  },
+  {
+   "corrected_team": "HOU",
+   "player": "Dorian Finney-Smith",
+   "season": "2025-26",
+   "sheet_team": "ATL"
+  },
+  {
+   "corrected_team": "SAC",
+   "player": "Drew Eubanks",
+   "season": "2025-26",
+   "sheet_team": "NYK"
+  },
+  {
+   "corrected_team": "LAL",
+   "player": "Drew Timme",
+   "season": "2025-26",
+   "sheet_team": "MIN"
+  },
+  {
+   "corrected_team": "BOS, DAL",
+   "player": "Dwight Powell",
+   "season": "2014-15",
+   "sheet_team": "DAL",
+   "split_basis": "games played",
+   "team_salaries": {
+    "BOS": 87472,
+    "DAL": 419864
+   }
+  },
+  {
+   "corrected_team": "BKN",
+   "player": "EJ Liddell",
+   "season": "2025-26",
+   "sheet_team": "PHX"
+  },
+  {
+   "corrected_team": "UTA",
+   "player": "Elijah Harkless",
+   "season": "2025-26",
+   "sheet_team": "DET"
+  },
+  {
+   "corrected_team": "MIL",
+   "player": "Gary Harris",
+   "season": "2025-26",
+   "sheet_team": "DET"
+  },
+  {
+   "corrected_team": "GSW, POR",
+   "player": "Gary Payton II",
+   "season": "2022-23",
+   "sheet_team": "GSW",
+   "split_basis": "games played",
+   "team_salaries": {
+    "GSW": 2640909,
+    "POR": 5659091
+   }
+  },
+  {
+   "corrected_team": "MIL",
+   "player": "Giannis Antetokounmpo",
+   "season": "2025-26",
+   "sheet_team": "MIA"
+  },
+  {
+   "corrected_team": "TOR",
+   "player": "Gradey Dick",
+   "season": "2025-26",
+   "sheet_team": "LAC"
+  },
+  {
+   "corrected_team": "CHA, DAL",
+   "player": "Grant Williams",
+   "season": "2023-24",
+   "sheet_team": "CHA",
+   "split_basis": "games played",
+   "team_salaries": {
+    "CHA": 4733487,
+    "DAL": 7671513
+   }
+  },
+  {
+   "corrected_team": "PHX",
+   "player": "Grayson Allen",
+   "season": "2025-26",
+   "sheet_team": "CHA"
+  },
+  {
+   "corrected_team": "SAS",
+   "player": "Harrison Ingram",
+   "season": "2025-26",
+   "sheet_team": "UTA"
+  },
+  {
+   "corrected_team": "NYK, TOR",
+   "player": "Immanuel Quickley",
+   "season": "2023-24",
+   "sheet_team": "TOR",
+   "split_basis": "games played",
+   "team_salaries": {
+    "NYK": 1840389,
+    "TOR": 2331159
+   }
+  },
+  {
+   "corrected_team": "OKC",
+   "player": "Isaiah Joe",
+   "season": "2025-26",
+   "sheet_team": "DET"
+  },
+  {
+   "corrected_team": "DET",
+   "player": "Isaiah Stewart",
+   "season": "2025-26",
+   "sheet_team": "MEM"
+  },
+  {
+   "corrected_team": "MEM",
+   "player": "Ja Morant",
+   "season": "2025-26",
+   "sheet_team": "POR"
+  },
+  {
+   "corrected_team": "WAS",
+   "player": "Jaden Hardy",
+   "season": "2025-26",
+   "sheet_team": "LAL"
+  },
+  {
+   "corrected_team": "MIA",
+   "player": "Jaime Jaquez",
+   "season": "2025-26",
+   "sheet_team": "MIL"
+  },
+  {
+   "corrected_team": "SAS, TOR",
+   "player": "Jakob Poeltl",
+   "season": "2022-23",
+   "sheet_team": "TOR",
+   "split_basis": "games played",
+   "team_salaries": {
+    "SAS": 6004372,
+    "TOR": 3393776
+   }
+  },
+  {
+   "corrected_team": "DEN",
+   "player": "Jalen Pickett",
+   "season": "2025-26",
+   "sheet_team": "LAC"
+  },
+  {
+   "corrected_team": "BKN",
+   "player": "Jalen Wilson",
+   "season": "2025-26",
+   "sheet_team": "ATL"
+  },
+  {
+   "corrected_team": "LAL, UTA",
+   "player": "Jarred Vanderbilt",
+   "season": "2022-23",
+   "sheet_team": "LAL",
+   "split_basis": "games played",
+   "team_salaries": {
+    "LAL": 1458000,
+    "UTA": 2916000
+   }
+  },
+  {
+   "corrected_team": "BKN, CLE",
+   "player": "Jarrett Allen",
+   "season": "2020-21",
+   "sheet_team": "CLE",
+   "split_basis": "games played",
+   "team_salaries": {
+    "BKN": 744743,
+    "CLE": 3165159
+   }
+  },
+  {
+   "corrected_team": "LAL",
+   "player": "Jaxson Hayes",
+   "season": "2025-26",
+   "sheet_team": "UTA"
+  },
+  {
+   "corrected_team": "BOS",
+   "player": "Jaylen Brown",
+   "season": "2025-26",
+   "sheet_team": "PHI"
+  },
+  {
+   "corrected_team": "POR",
+   "player": "Jerami Grant",
+   "season": "2025-26",
+   "sheet_team": "MEM"
+  },
+  {
+   "corrected_team": "ORL",
+   "player": "Jett Howard",
+   "season": "2025-26",
+   "sheet_team": "DAL"
+  },
+  {
+   "corrected_team": "LAC",
+   "player": "John Collins",
+   "season": "2025-26",
+   "sheet_team": "DET"
+  },
+  {
+   "corrected_team": "ATL",
+   "player": "Jonathan Kuminga",
+   "season": "2025-26",
+   "sheet_team": "MIN"
+  },
+  {
+   "corrected_team": "TOR",
+   "player": "Jonathan Mogbo",
+   "season": "2025-26",
+   "sheet_team": "SAC"
+  },
+  {
+   "corrected_team": "NOP",
+   "player": "Jordan Hawkins",
+   "season": "2025-26",
+   "sheet_team": "MEM"
+  },
+  {
+   "corrected_team": "CHA",
+   "player": "Josh Green",
+   "season": "2025-26",
+   "sheet_team": "UTA"
+  },
+  {
+   "corrected_team": "NYK, POR",
+   "player": "Josh Hart",
+   "season": "2022-23",
+   "sheet_team": "NYK",
+   "split_basis": "games played",
+   "team_salaries": {
+    "NYK": 4263158,
+    "POR": 8696842
+   }
+  },
+  {
+   "corrected_team": "HOU",
+   "player": "Josh Okogie",
+   "season": "2025-26",
+   "sheet_team": "UTA"
+  },
+  {
+   "corrected_team": "PHI, SAS",
+   "player": "Julian Champagnie",
+   "season": "2022-23",
+   "sheet_team": "SAS",
+   "split_basis": "games played",
+   "team_salaries": {
+    "PHI": 59870,
+    "SAS": 449021
+   }
+  },
+  {
+   "corrected_team": "MIN",
+   "player": "Julian Phillips",
+   "season": "2025-26",
+   "sheet_team": "HOU"
+  },
+  {
+   "corrected_team": "MIN",
+   "player": "Julius Randle",
+   "season": "2025-26",
+   "sheet_team": "BKN"
+  },
+  {
+   "corrected_team": "MIA",
+   "player": "Kasparas Jakucionis",
+   "season": "2025-26",
+   "sheet_team": "MIL"
+  },
+  {
+   "corrected_team": "LAC",
+   "player": "Kawhi Leonard",
+   "season": "2025-26",
+   "sheet_team": "TOR"
+  },
+  {
+   "corrected_team": "MIA",
+   "player": "Kel'el Ware",
+   "season": "2025-26",
+   "sheet_team": "MIL"
+  },
+  {
+   "corrected_team": "PHI",
+   "player": "Kelly Oubre",
+   "season": "2025-26",
+   "sheet_team": "IND"
+  },
+  {
+   "corrected_team": "CLE",
+   "player": "Keon Ellis",
+   "season": "2025-26",
+   "sheet_team": "BKN"
+  },
+  {
+   "corrected_team": "NOP",
+   "player": "Kevon Looney",
+   "season": "2025-26",
+   "sheet_team": "LAL"
+  },
+  {
+   "corrected_team": "DAL",
+   "player": "Khris Middleton",
+   "season": "2025-26",
+   "sheet_team": "WAS"
+  },
+  {
+   "corrected_team": "POR",
+   "player": "Kris Murray",
+   "season": "2025-26",
+   "sheet_team": "MEM"
+  },
+  {
+   "corrected_team": "BKN, DAL",
+   "player": "Kyrie Irving",
+   "season": "2022-23",
+   "sheet_team": "DAL",
+   "split_basis": "games played",
+   "team_salaries": {
+    "BKN": 25944705,
+    "DAL": 12972352
+   }
+  },
+  {
+   "corrected_team": "CHA",
+   "player": "LaMelo Ball",
+   "season": "2025-26",
+   "sheet_team": "MIN"
+  },
+  {
+   "corrected_team": "CLE",
+   "player": "Larry Nance Jr",
+   "season": "2025-26",
+   "sheet_team": "IND"
+  },
+  {
+   "corrected_team": "LAL",
+   "player": "LeBron James",
+   "season": "2025-26",
+   "sheet_team": "PHI"
+  },
+  {
+   "corrected_team": "OKC",
+   "player": "Luguentz Dort",
+   "season": "2025-26",
+   "sheet_team": "ATL"
+  },
+  {
+   "corrected_team": "LAL",
+   "player": "Luke Kennard",
+   "season": "2025-26",
+   "sheet_team": "PHX"
+  },
+  {
+   "corrected_team": "DET",
+   "player": "Marcus Sasser",
+   "season": "2025-26",
+   "sheet_team": "DAL"
+  },
+  {
+   "corrected_team": "DAL",
+   "player": "Marvin Bagley",
+   "season": "2025-26",
+   "sheet_team": "DEN"
+  },
+  {
+   "corrected_team": "POR",
+   "player": "Matisse Thybulle",
+   "season": "2025-26",
+   "sheet_team": "LAL"
+  },
+  {
+   "corrected_team": "NOP",
+   "player": "Micah Peavy",
+   "season": "2025-26",
+   "sheet_team": "MEM"
+  },
+  {
+   "corrected_team": "CHA",
+   "player": "Miles Bridges",
+   "season": "2025-26",
+   "sheet_team": "PHX"
+  },
+  {
+   "corrected_team": "NYK",
+   "player": "Mitchell Robinson",
+   "season": "2025-26",
+   "sheet_team": "BOS"
+  },
+  {
+   "corrected_team": "ORL",
+   "player": "Moritz Wagner",
+   "season": "2025-26",
+   "sheet_team": "BKN"
+  },
+  {
+   "corrected_team": "MIN",
+   "player": "Naz Reid",
+   "season": "2025-26",
+   "sheet_team": "CHA"
+  },
+  {
+   "corrected_team": "CHI",
+   "player": "Nick Richards",
+   "season": "2025-26",
+   "sheet_team": "MIA"
+  },
+  {
+   "corrected_team": "BKN",
+   "player": "Nicolas Claxton",
+   "season": "2025-26",
+   "sheet_team": "CHI"
+  },
+  {
+   "corrected_team": "BOS",
+   "player": "Nikola Vucevic",
+   "season": "2025-26",
+   "sheet_team": "ORL"
+  },
+  {
+   "corrected_team": "MIA",
+   "player": "Norman Powell",
+   "season": "2025-26",
+   "sheet_team": "CHI"
+  },
+  {
+   "corrected_team": "NYK, TOR",
+   "player": "OG Anunoby",
+   "season": "2023-24",
+   "sheet_team": "NYK",
+   "split_basis": "games played",
+   "team_salaries": {
+    "NYK": 8575714,
+    "TOR": 10067143
+   }
+  },
+  {
+   "corrected_team": "BKN",
+   "player": "Ochai Agbaji",
+   "season": "2025-26",
+   "sheet_team": "NYK"
+  },
+  {
+   "corrected_team": "UTA",
+   "player": "Oscar Tshiebwe",
+   "season": "2025-26",
+   "sheet_team": "HOU"
+  },
+  {
+   "corrected_team": "CHA, DAL",
+   "player": "PJ Washington",
+   "season": "2023-24",
+   "sheet_team": "DAL",
+   "split_basis": "games played",
+   "team_salaries": {
+    "CHA": 10154854,
+    "DAL": 6692972
+   }
+  },
+  {
+   "corrected_team": "IND, TOR",
+   "player": "Pascal Siakam",
+   "season": "2023-24",
+   "sheet_team": "IND",
+   "split_basis": "games played",
+   "team_salaries": {
+    "IND": 19420372,
+    "TOR": 18473036
+   }
+  },
+  {
+   "corrected_team": "PHI",
+   "player": "Paul George",
+   "season": "2025-26",
+   "sheet_team": "BOS"
+  },
+  {
+   "corrected_team": "DEN",
+   "player": "Peyton Watson",
+   "season": "2025-26",
+   "sheet_team": "CLE"
+  },
+  {
+   "corrected_team": "PHI",
+   "player": "Quentin Grimes",
+   "season": "2025-26",
+   "sheet_team": "LAL"
+  },
+  {
+   "corrected_team": "GSW",
+   "player": "Quinten Post",
+   "season": "2025-26",
+   "sheet_team": "MEM"
+  },
+  {
+   "corrected_team": "NYK, TOR",
+   "player": "RJ Barrett",
+   "season": "2023-24",
+   "sheet_team": "TOR",
+   "split_basis": "games played",
+   "team_salaries": {
+    "NYK": 10706589,
+    "TOR": 13177340
+   }
+  },
+  {
+   "corrected_team": "PHX",
+   "player": "Royce O'Neale",
+   "season": "2025-26",
+   "sheet_team": "CHA"
+  },
+  {
+   "corrected_team": "LAL",
+   "player": "Rui Hachimura",
+   "season": "2025-26",
+   "sheet_team": "LAC"
+  },
+  {
+   "corrected_team": "TOR",
+   "player": "Sandro Mamukelashvili",
+   "season": "2025-26",
+   "sheet_team": "LAL"
+  },
+  {
+   "corrected_team": "MEM",
+   "player": "Santiago Aldama",
+   "season": "2025-26",
+   "sheet_team": "DAL"
+  },
+  {
+   "corrected_team": "IND",
+   "player": "Taelon Peter",
+   "season": "2025-26",
+   "sheet_team": "SAS"
+  },
+  {
+   "corrected_team": "MIL",
+   "player": "Taurean Prince",
+   "season": "2025-26",
+   "sheet_team": "DET"
+  },
+  {
+   "corrected_team": "DEN",
+   "player": "Tim Hardaway Jr",
+   "season": "2025-26",
+   "sheet_team": "MIA"
+  },
+  {
+   "corrected_team": "DET",
+   "player": "Tobias Harris",
+   "season": "2025-26",
+   "sheet_team": "SAS"
+  },
+  {
+   "corrected_team": "CHA",
+   "player": "Tre Mann",
+   "season": "2025-26",
+   "sheet_team": "WAS"
+  },
+  {
+   "corrected_team": "PHI",
+   "player": "Trendon Watford",
+   "season": "2025-26",
+   "sheet_team": "NOP"
+  },
+  {
+   "corrected_team": "NOP",
+   "player": "Trey Alexander",
+   "season": "2025-26",
+   "sheet_team": "UTA"
+  },
+  {
+   "corrected_team": "NYK",
+   "player": "Trey Jemison",
+   "season": "2025-26",
+   "sheet_team": "TOR"
+  },
+  {
+   "corrected_team": "MIA",
+   "player": "Tyler Herro",
+   "season": "2025-26",
+   "sheet_team": "MIL"
+  },
+  {
+   "corrected_team": "IND, SAC",
+   "player": "Tyrese Haliburton",
+   "season": "2021-22",
+   "sheet_team": "IND",
+   "split_basis": "games played",
+   "team_salaries": {
+    "IND": 1358618,
+    "SAC": 2664982
+   }
+  },
+  {
+   "corrected_team": "UTA",
+   "player": "Walker Kessler",
+   "season": "2025-26",
+   "sheet_team": "LAL"
+  },
+  {
+   "corrected_team": "CHI, ORL",
+   "player": "Wendell Carter Jr",
+   "season": "2020-21",
+   "sheet_team": "ORL",
+   "split_basis": "games played",
+   "team_salaries": {
+    "CHI": 3228942,
+    "ORL": 2219898
+   }
+  },
+  {
+   "corrected_team": "CHI",
+   "player": "Yuki Kawamura",
+   "season": "2025-26",
+   "sheet_team": "LAC"
+  },
+  {
+   "corrected_team": "ATL",
+   "player": "Zaccharie Risacher",
+   "season": "2025-26",
+   "sheet_team": "DAL"
+  },
+  {
+   "corrected_team": "BKN",
+   "player": "Ziaire Williams",
+   "season": "2025-26",
+   "sheet_team": "LAL"
+  }
+ ],
+ "current_season": "2026-27",
+ "disagreements_found": 2221,
+ "left_to_the_salary_sheet": 2101,
+ "note": "A completed season takes its team from the player's stats line where the salary sheet gave it the team he is on now, which is what the one-TEAM-per-row current sheet does to a man who moved in the summer. Disagreements of any other shape are the sheet naming whose books paid a salary and the stats naming who he played for, which are different facts, and are left alone."
+}

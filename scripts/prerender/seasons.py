@@ -205,11 +205,20 @@ def _career_sentence(idx, rows, subject, player=None, used=()):
         return opening + ".", None
     kind, key = _cohort(lead)
     if lead.get("type") in HOLDING:
+        # How far clear he is, where the engine found something stronger to say
+        # than the name of whoever is second.
+        clear = lead.get("lead")
+        if clear:
+            return "{}, {}.".format(opening, clear), (kind, key)
         return "{}, more than any other {}.".format(
             opening, _noun(idx, kind, key)), (kind, key)
     rank = lead.get("rank")
     if not rank or rank > 5:
         return opening + ".", None
+    behind = lead.get("ahead")
+    if behind:
+        return "{}, the {}-most of any {}, behind {}.".format(
+            opening, _word(rank), _noun(idx, kind, key), behind), (kind, key)
     return "{}, the {}-most of any {}.".format(
         opening, _word(rank), _noun(idx, kind, key)), (kind, key)
 

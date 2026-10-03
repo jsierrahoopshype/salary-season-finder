@@ -2107,7 +2107,8 @@ def test_an_active_player_leads_the_career_list_over_a_retired_one():
     assert len(out) == 1
     assert "will have earned $400 million by the end of {}".format(CURRENT) \
         in out[0]["text"]
-    assert "more than anyone else in NBA history" in out[0]["text"]
+    # the fixture's field is small, so he out-earns all of it put together
+    assert "more than everyone else in NBA history combined" in out[0]["text"]
     # In 2019-20 the retired man did lead, and a line about that season says
     # so; what the bug got wrong is the list as it stands now, where the active
     # man is above him.
@@ -2364,7 +2365,8 @@ def test_passing_is_for_a_mark_that_was_above_him():
 def test_a_mark_he_already_stood_above_is_one_he_is_ahead_of():
     """He passed this man years ago; today he is simply ahead of him."""
     data = make_data(tail("OKC", season="2018-19") + [
-        rec("Holder", "2019-20", 10000000, team="OKC"),
+        # a lead under double, so the sentence keeps its comparison clause
+        rec("Holder", "2019-20", 20000000, team="OKC"),
         # his big season was elsewhere, so the Thunder list never held it
         rec("Climber", "2020-21", 30000000, team="BOS", career_earnings=30000000),
         rec("Climber", "2021-22", 31000000, team="OKC", career_earnings=61000000),
@@ -2433,3 +2435,97 @@ def test_the_season_under_way_still_sees_every_season_already_paid():
     ])
     out = facts(data, "Now Man", CURRENT, family="franchise")
     assert "Holder's $50 million (2020-21)" in out[0]["text"]
+
+
+# --------------------------------------------------------------------------
+# how far clear a leader is
+# --------------------------------------------------------------------------
+
+
+def _field_of(values, season=CURRENT, team="OKC"):
+    """One career each, at the totals given, plus a filler field."""
+    out = []
+    for i, value in enumerate(values):
+        name = "Man {:02d}".format(i)
+        out.append(opener(name, season, value, team=team, career_earnings=value,
+                          college="Kentucky", draft_year=2016, draft_pick=5))
+    return out
+
+
+def _career_text(values, who=0, season=CURRENT):
+    data = make_data(_field_of(values, season) + tail("BOS", season="2018-19"))
+    out = facts(data, "Man {:02d}".format(who), season, family="cohort")
+    return [f["text"] for f in out if f["key"].startswith("cohort_career")]
+
+
+def test_out_earning_the_whole_field_is_said_first():
+    texts = _career_text([200000000] + [1000000] * 20)
+    assert any("more than every other" in t and "combined" in t for t in texts), texts
+
+
+def test_a_clean_multiple_of_the_next_man_is_said():
+    texts = _career_text([60000000] + [20000000] * 20)
+    assert any("3 times as much as the next" in t for t in texts), texts
+
+
+def test_a_multiple_rounds_down_and_never_up():
+    assert F._multiple(2.9) == "2.5"
+    assert F._multiple(2.4) == "2"
+    assert F._multiple(3.9) == "3"
+    assert F._multiple(2.0) == "2"
+    assert F._multiple(7.4) == "7"
+
+
+def test_a_lead_under_double_keeps_the_runner_up():
+    texts = _career_text([30000000] + [20000000] * 20)
+    assert any("ahead of" in t or "passing" in t for t in texts), texts
+    assert not any("times as much" in t for t in texts), texts
+
+
+def test_a_share_of_the_whole_field_is_the_last_resort():
+    """Not double the next man, but still a quarter of everything paid out."""
+    texts = _career_text([60000000, 40000000] + [1000000] * 20)
+    assert any("% of all the money ever paid to" in t for t in texts), texts
+
+
+def test_a_single_season_record_only_gets_the_multiple():
+    data = make_data(
+        [opener("Giant", "2021-22", 60000000, team="OKC", career_earnings=60000000)]
+        + [opener("Small {}".format(i), "2021-22", 2000000, team="OKC",
+                  career_earnings=2000000) for i in range(20)]
+    )
+    out = facts(data, "Giant", "2021-22", family="franchise")
+    assert out, "the fixture has to produce a franchise record"
+    assert "times as much as the next" in out[0]["text"], out[0]["text"]
+    assert "combined" not in out[0]["text"]
+
+
+def test_a_dominance_clause_still_names_a_season():
+    """Every claim on this site says which season it is about."""
+    for texts in (_career_text([200000000] + [1000000] * 20),
+                  _career_text([60000000] + [20000000] * 20)):
+        for text in texts:
+            assert re.search(r"\d{4}-\d{2}", text), text
+
+
+# --------------------------------------------------------------------------
+# everyone ahead of him, by name
+# --------------------------------------------------------------------------
+
+
+def test_third_place_names_both_men_ahead():
+    texts = _career_text([30000000, 20000000, 10000000], who=2)
+    assert any("behind Man 00 and Man 01" in t for t in texts), texts
+
+
+def test_second_place_keeps_the_single_holder_and_his_figure():
+    texts = _career_text([30000000, 20000000, 10000000], who=1)
+    assert any("behind Man 00's $30 million" in t for t in texts), texts
+
+
+def test_fourth_place_is_not_a_list_of_names():
+    texts = _career_text([40000000, 30000000, 20000000, 10000000] + [5000000] * 10,
+                         who=3)
+    assert texts
+    for text in texts:
+        assert " and Man " not in text, text
