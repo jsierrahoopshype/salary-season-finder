@@ -539,3 +539,81 @@ table.hm-rank-table th.hm-who {
 .hm-more-head:first-of-type {
   margin-top: .2rem;
 }
+
+/* A ranked table whose rows come in groups: a team, then the roster inside it
+   ranked by what each man was paid. The group's own row carries the weight so
+   a reader can see where one team stops and the next starts; the striping is
+   switched off inside a group, because the indent is doing that job. */
+table.hm-grouped tbody.hm-group {
+  border-top: 2px solid var(--border);
+}
+
+table.hm-grouped tbody.hm-group:first-of-type {
+  border-top: none;
+}
+
+table.hm-grouped tr.hm-group-head th.hm-who,
+table.hm-grouped tr.hm-group-head td {
+  background: var(--surface-hover);
+  font-weight: 700;
+}
+
+table.hm-grouped tr.hm-group-head th.hm-who a {
+  font-weight: 700;
+}
+
+table.hm-grouped tr.hm-group-row th.hm-who {
+  padding-left: 1.6rem;
+  font-weight: 500;
+}
+
+table.hm-grouped tbody tr:nth-child(even) th.hm-who {
+  background: var(--surface);
+}
+
+/* The season-by-season timeline on a player page: the season is the term and
+   what changed is the description, so it is a definition list. One row a
+   season, the season in the mono face so the column reads as a spine. */
+.hm-timeline {
+  margin: 0;
+  display: grid;
+  gap: .55rem;
+}
+
+.hm-timeline .hm-event {
+  display: grid;
+  grid-template-columns: 5rem 1fr;
+  gap: .75rem;
+  align-items: baseline;
+  padding-bottom: .55rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.hm-timeline .hm-event:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.hm-timeline dt {
+  font-family: var(--mono);
+  font-size: .72rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.hm-timeline dd {
+  margin: 0;
+  font-size: .9rem;
+  line-height: 1.5;
+}
+
+.hm-timeline dd a {
+  display: inline;
+}
+
+@media (max-width: 30rem) {
+  .hm-timeline .hm-event {
+    grid-template-columns: 1fr;
+    gap: .15rem;
+  }
+}
