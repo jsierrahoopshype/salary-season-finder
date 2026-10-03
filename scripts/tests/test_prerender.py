@@ -1918,3 +1918,40 @@ def test_a_merged_sentence_states_its_number_once():
         for season, text in _plain_timeline(slug):
             figures = re.findall(r"\$[\d.,]+ million", text)
             assert len(figures) == len(set(figures)), (slug, season, text)
+
+
+def test_every_rank_line_names_the_list_it_is_a_rank_on():
+    """A place on a career-earnings list says "career earnings". Without it,
+    "third on the list of highest-paid Duke players ever" read as a
+    single-season place on a page that also reports single-season records."""
+    for kind in ("list_up", "list_down"):
+        for forms in TL._PHRASES[kind].values():
+            for form in forms:
+                assert "career earnings" in form, (kind, form)
+    for forms in TL._PHRASES["list_top"].values():
+        for form in forms:
+            assert "career earner" in form or "career-earnings" in form, form
+
+
+def test_no_timeline_says_highest_paid_ever():
+    for kind, tenses in TL._PHRASES.items():
+        for forms in tenses.values():
+            for form in forms:
+                assert "ever." not in form, (kind, form)
+    for slug in TIMELINE_SLUGS:
+        for season, text in _plain_timeline(slug):
+            assert "highest-paid" not in text or "ever" not in text, \
+                (slug, season, text)
+
+
+def test_a_rank_line_in_the_pages_names_career_earnings():
+    ranked = 0
+    for slug in TIMELINE_SLUGS:
+        for season, text in _plain_timeline(slug):
+            if not re.search(r"\b(Moved up|Climbed|Dropped|Slipped|Sits|Ranks"
+                             r"|Would move up|Would climb|Would drop"
+                             r"|Would slip)\b", text):
+                continue
+            ranked += 1
+            assert "career earnings" in text, (slug, season, text)
+    assert ranked, "no rank line in the sample to check"

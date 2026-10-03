@@ -822,20 +822,24 @@ _PHRASES = {
         LATER: ("Would become the biggest career earner among {group}.",
                 "Would move to the top of the career-earnings list for {group}."),
     },
+    # Every rank line names the list it is a rank on. "Third on the list of
+    # highest-paid Duke players ever" was a career-earnings place and read as a
+    # single-season one, which on a page that also reports single-season
+    # records is a contradiction a season apart.
     "list_up": {
         PAST: ("Moved up to {place} among {group} in career earnings.",
-               "Climbed to {place} on the list of highest-paid {group} ever."),
+               "Climbed to {place} in career earnings among {group}."),
         NOW: ("Sits {place} among {group} in career earnings.",
-              "Ranks {place} on the list of highest-paid {group} ever."),
+              "Ranks {place} in career earnings among {group}."),
         LATER: ("Would move up to {place} among {group} in career earnings.",
-                "Would climb to {place} on the list of highest-paid {group} ever."),
+                "Would climb to {place} in career earnings among {group}."),
     },
     "list_down": {
-        PAST: ("Dropped to {place} on the list of highest-paid {group} ever.",
-               "Slipped to {place} among {group} in career earnings."),
-        NOW: ("Sits {place} on the list of highest-paid {group} ever.",
-              "Ranks {place} among {group} in career earnings."),
-        LATER: ("Would drop to {place} on the list of highest-paid {group} ever.",
-                "Would slip to {place} among {group} in career earnings."),
+        PAST: ("Dropped to {place} among {group} in career earnings.",
+               "Slipped to {place} in career earnings among {group}."),
+        NOW: ("Sits {place} among {group} in career earnings.",
+              "Ranks {place} in career earnings among {group}."),
+        LATER: ("Would drop to {place} among {group} in career earnings.",
+                "Would slip to {place} in career earnings among {group}."),
     },
 }
