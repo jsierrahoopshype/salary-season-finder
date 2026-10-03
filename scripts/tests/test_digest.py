@@ -9,6 +9,7 @@ from __future__ import annotations
 import datetime
 import json
 import os
+import subprocess
 
 import pytest
 
@@ -391,6 +392,25 @@ def test_a_dry_run_writes_no_state(tmp_path, capsys):
     assert not os.path.exists(path)
 
 
+def _data_matches_the_commit():
+    """Whether data/data.json on disk is the one HEAD carries.
+
+    The data-build workflow rebuilds it from the live sheets before running the
+    tests, and the sheets move every day, so there the file on disk is a
+    different build from the committed one and comparing them is supposed to
+    find changes.
+    """
+    try:
+        done = subprocess.run(
+            ["git", "status", "--porcelain", "--", "data/data.json"],
+            cwd=REPO, capture_output=True, text=True, check=True)
+    except (OSError, subprocess.CalledProcessError):
+        return False
+    return not done.stdout.strip()
+
+
+@pytest.mark.skipif(not _data_matches_the_commit(),
+                    reason="data.json on disk is a different build from HEAD")
 def test_a_rerun_from_the_same_build_has_nothing_to_say(tmp_path, capsys):
     path = str(tmp_path / "state.json")
     D.save_state(D.head_commit(), path=path)
