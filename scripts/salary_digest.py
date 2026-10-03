@@ -566,11 +566,7 @@ def lead(item, names=None, teams=None, slugs=None):
         if code:
             spelled = (names or {}).get(code, code)
             links.append((spelled, team_url(teams, code)))
-    for code in (item.get("was_team") or "").split(","):
-        code = code.strip()
-        if code:
-            spelled = (names or {}).get(code, code)
-            links.append((spelled, team_url(teams, code)))
+    # was_team is deliberately absent from every sentence, so it gets no link.
     return apply_links(text, links)
 
 
@@ -679,9 +675,10 @@ def sentence(item, names=None):
             player, season, money, F.fmt_money(was))
 
     if kind == "team":
-        return "{}'s {} for {} moves to {} books from {}.".format(
-            player, money, season, possessive(team),
-            possessive(team_name(item.get("was_team"), names)))
+        # Where the money used to sit is not the news and dates the line: what
+        # a reader wants is whose books it is on now.
+        return "{} is on {} books at {} for {}.".format(
+            player, possessive(team), money, season)
 
     return "{} is no longer on {} {} books, a {} salary.".format(
         player, possessive(team_name(item.get("was_team") or item.get("team"),
@@ -780,16 +777,9 @@ def attach_nuggets(items, idx, data, factoids, raises, opened):
     ]
     for item in items:
         item["nuggets"] = N.nuggets_for(
-            item, idx, data, factoids, pool, F.fmt_money, fmt_pct, opened,
+            item, idx, data, factoids, pool, F.fmt_money, opened,
             limit=NUGGETS_PER_CHANGE)
     return pool
-
-
-def fmt_pct(value):
-    text = "{:.1f}".format(value or 0.0)
-    if text.endswith(".0"):
-        text = text[:-2]
-    return text + "%"
 
 
 def block(item, context):

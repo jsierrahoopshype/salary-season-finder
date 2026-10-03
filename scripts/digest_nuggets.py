@@ -52,12 +52,11 @@ STANDING_MAX_RANK = 100
 SECOND_STAT = {"G": "apg", "F": "rpg", "C": "rpg"}
 STAT_WORD = {"apg": "assists", "rpg": "rebounds", "ppg": "points"}
 
-#: Peer bands start as the whole-number band holding each figure and widen by
-#: one on each side, twice at most, until the group is big enough to mean
-#: something.
+#: The peer band is the whole-number band holding each of his figures, and is
+#: never widened: a band stretched until it finds him five men is no longer a
+#: description of how he played.
 PEER_MIN_GAMES = 40
 PEER_MIN_PLAYERS = 5
-PEER_WIDENINGS = 2
 
 #: Who is worth naming as a career passed on the way to a milestone. A man has
 #: to carry one of these, which is a short list on purpose: "past Josh Howard on
@@ -106,6 +105,10 @@ def record_nugget(idx, item, factoids):
             if (fact.get("rank") or 99) > NEAR_RECORD_RANK:
                 continue
             if _ranks_a_future_season(idx, fact):
+                continue
+            if (fact.get("key") or "").startswith("cap_pct"):
+                # The digest talks in money. A share of the cap is a ratio the
+                # reader has to do arithmetic on to picture.
                 continue
             text = _trim_rival(
                 _his_own(fact.get("text") or "", item["player"])).strip()
@@ -178,7 +181,7 @@ def _his_own(text, player):
 
 
 def _fact_entities(fact):
-    """Everything a factoid names: its cohort, and the man it measures against."""
+    """Everything a factoid names: its cohort, and the men it measures against."""
     out = []
     parts = (fact.get("key") or "").split("|")
     if len(parts) >= 3 and parts[0].startswith("cohort"):
@@ -186,7 +189,20 @@ def _fact_entities(fact):
     holder = (fact.get("previous_holder") or {}).get("player")
     if holder:
         out.append(("player", holder))
+    # A second or third place names everyone above him, and every name in a
+    # digest line is a link to his page.
+    for name in _names_in(fact.get("ahead") or ""):
+        out.append(("player", name))
     return out
+
+
+def _names_in(clause):
+    """"Brook Lopez and Robin Lopez" -> both names."""
+    if not clause:
+        return []
+    head, _sep, last = clause.rpartition(" and ")
+    parts = [p.strip() for p in head.split(",")] + [last.strip()]
+    return [p for p in parts if p and not p.startswith("his own")]
 
 
 # ── (b) the career total ──────────────────────────────────────────────
@@ -338,8 +354,12 @@ def raise_nugget(item, raises, money, opened):
 
 
 # ── (d) peers ─────────────────────────────────────────────────────────
-def peer_nugget(idx, item, data, pct):
-    """The men at his position putting up his numbers, by share of the cap."""
+def peer_nugget(idx, item, data, money):
+    """What the men who played like him last season are paid this one.
+
+    Real money on both sides. A share of the cap is a ratio a reader has to do
+    arithmetic on; what they want to know is what these players make.
+    """
     player = item["player"]
     season = _last_completed(idx)
     if not season:
@@ -355,58 +375,47 @@ def peer_nugget(idx, item, data, pct):
     if points is None or other is None:
         return None
 
-    pool = [
+    # The whole-number band holding each of his figures, and no other. A band
+    # that has to be widened to find him company is not the company he keeps.
+    low_p, high_p = _band(points, 0)
+    low_o, high_o = _band(other, 0)
+    group = [
         record for record in data["seasons"]
         if record["season"] == season
         and (record.get("gp") or 0) >= PEER_MIN_GAMES
         and F.position_group(record.get("pos"))[0] == position
         and record.get("ppg") is not None and record.get(second) is not None
+        and low_p <= record["ppg"] <= high_p
+        and low_o <= record[second] <= high_o
     ]
-    for widen in range(PEER_WIDENINGS + 1):
-        low_p, high_p = _band(points, widen)
-        low_o, high_o = _band(other, widen)
-        # The group is whoever the bands hold, him included where he cleared the
-        # games floor himself, because that is what the link has to return.
-        group = [
-            record for record in pool
-            if low_p <= record["ppg"] <= high_p and low_o <= record[second] <= high_o
-        ]
-        if len(group) >= PEER_MIN_PLAYERS:
-            break
-    if len(group) < PEER_MIN_PLAYERS:
-        return None
     peers = [record for record in group if record["player"] != player]
-    if not peers:
+    if len(peers) < PEER_MIN_PLAYERS:
         return None
 
-    shares = sorted(
-        (record.get("salary_cap_pct") or 0.0, record["player"]) for record in peers)
-    median = shares[len(shares) // 2][0] if shares else 0.0
-    mine_share = _cap_share(idx, item)
-    if mine_share is None:
+    # What they are paid now, not what they were paid for the season they put
+    # those numbers up in.
+    paid = []
+    for record in peers:
+        now = idx.record(record["player"], idx.current_season)
+        if now and now.get("salary"):
+            paid.append((now["salary"], record["player"]))
+    if len(paid) < PEER_MIN_PLAYERS:
         return None
-    # The count is of the other men, because he is not one of his own peers and
-    # the median and the maximum below are taken over them alone. The link still
-    # reproduces the whole band, him included, which is what the tool's filters
-    # describe; peer_link carries both numbers so a check can use the right one.
-    phrase = (
-        "{} other {} who averaged {} to {} points and {} to {} {} "
-        "last season".format(
-            len(peers), _plural(position),
-            _num(low_p), _num(high_p), _num(low_o), _num(high_o),
-            STAT_WORD[second])
-    )
-    if mine_share > shares[-1][0]:
-        body = "He takes {} of the cap, more than any of the {}".format(
-            pct(mine_share), phrase)
-    else:
-        body = "He takes {} of the cap against a median {} for the {}".format(
-            pct(mine_share), pct(median), phrase)
+    paid.sort()
+    median = paid[len(paid) // 2][0]
+    best_salary, best_player = paid[-1]
+
+    phrase = "{} who averaged {} to {} points and {} to {} {} last season".format(
+        _plural(position).capitalize(),
+        _num(low_p), _num(high_p), _num(low_o), _num(high_o), STAT_WORD[second])
+    body = ("{} make a median {} this season; the best-paid of them, {}, "
+            "is on {}".format(phrase, money(median), best_player,
+                              money(best_salary)))
     return {
         "kind": "peers",
         "opener": body,
         "tail": body[0].lower() + body[1:],
-        "entities": [],
+        "entities": [("player", best_player)],
         # the exact words the link has to sit on, carried rather than found
         # again by the sentence writer, which is what broke the last time the
         # wording changed
@@ -418,16 +427,15 @@ def peer_nugget(idx, item, data, pct):
             "others": len(peers),
         },
         "detail": {
-            "season": season, "mine": mine_share, "median": median,
-            "others": len(peers), "in_band": len(group),
-            "peers": [(name, share) for share, name in reversed(shares)],
+            "season": season, "median": median, "best": (best_player, best_salary),
+            "peers": [(name, salary) for salary, name in reversed(paid)],
             "bands": {"ppg": (low_p, high_p), second: (low_o, high_o)},
-            "widened": widen,
+            "others": len(peers), "in_band": len(group), "paid_now": len(paid),
         },
     }
 
 
-def _band(value, widen):
+def _band(value, widen=0):
     low = int(value // 1) - widen
     return max(0, low), int(value // 1) + 1 + widen
 
@@ -457,18 +465,6 @@ def _latest_with_stats(idx, player):
     for record in reversed(idx.by_player.get(player) or []):
         if record.get("ppg") is not None:
             return record
-    return None
-
-
-def _cap_share(idx, item):
-    record = item.get("record") or {}
-    if record.get("salary_cap_pct"):
-        return record["salary_cap_pct"]
-    entry = idx.cap.get(item["season"]) or {}
-    cap = entry.get("cap") if isinstance(entry, dict) else entry
-    salary = item.get("salary")
-    if cap and salary:
-        return salary / float(cap) * 100.0
     return None
 
 
@@ -510,14 +506,14 @@ def _age_in(idx, player, season):
 
 
 # ── choosing ──────────────────────────────────────────────────────────
-def nuggets_for(item, idx, data, factoids, raises, money, pct, opened, limit=2):
+def nuggets_for(item, idx, data, factoids, raises, money, opened, limit=2):
     """The first two of the five that have something to say, in order."""
     found = []
     for build in (
         lambda: record_nugget(idx, item, factoids),
         lambda: career_nugget(idx, item, money),
         lambda: raise_nugget(item, raises, money, opened),
-        lambda: peer_nugget(idx, item, data, pct),
+        lambda: peer_nugget(idx, item, data, money),
         lambda: horizon_nugget(idx, item),
     ):
         try:

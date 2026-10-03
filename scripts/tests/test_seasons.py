@@ -42,9 +42,11 @@ class FakeIndex(object):
         return self._paid[1], self._paid[2]
 
 
-def fact(key, kind="sets", value=1000000, rank=1, size=400):
-    return {"key": key, "type": kind, "value": value, "rank": rank,
-            "comparison_size": size, "text": "Engine wrote this."}
+def fact(key, kind="sets", value=1000000, rank=1, size=400, **extra):
+    out = {"key": key, "type": kind, "value": value, "rank": rank,
+           "comparison_size": size, "text": "Engine wrote this."}
+    out.update(extra)
+    return out
 
 
 def season_fact(field, ckey, season=CURRENT, **kw):
@@ -319,3 +321,41 @@ def test_a_college_position_key_keeps_its_position():
     assert S._cohort(
         {"key": "cohort_season|college_position|Duke|G|Subject|2026-27"}
     ) == ("college_position", "Duke|G")
+
+
+# --------------------------------------------------------------------------
+# how far clear a leader is, and who is ahead of him
+# --------------------------------------------------------------------------
+
+
+def test_a_dominant_leader_says_how_far_clear_he_is():
+    rows = [(CURRENT, career_fact(
+        "nationality", "Greece",
+        **{"lead": "more than every other player from Greece combined"}))]
+    idx = FakeIndex(paid=("Subject", 397500000, CURRENT))
+    assert " ".join(write(rows, idx=idx)) == (
+        "By the end of 2026-27 Test Man will have earned $397.5 million, "
+        "more than every other player from Greece combined.")
+
+
+def test_a_leader_with_nothing_stronger_to_say_keeps_the_plain_form():
+    rows = [(CURRENT, career_fact("college", "Duke"))]
+    idx = FakeIndex(paid=("Subject", 391900000, CURRENT))
+    assert "more than any other Duke player" in " ".join(write(rows, idx=idx))
+
+
+def test_a_third_place_names_everyone_ahead():
+    rows = [(CURRENT, career_fact("college", "Stanford", kind="approaches",
+                                  rank=3, **{"ahead": "Brook Lopez and Robin Lopez"}))]
+    idx = FakeIndex(paid=("Subject", 87700000, CURRENT))
+    assert " ".join(write(rows, idx=idx)) == (
+        "By the end of 2026-27 Test Man will have earned $87.7 million, "
+        "the third-most of any Stanford player, behind Brook Lopez and "
+        "Robin Lopez.")
+
+
+def test_a_place_with_nobody_listed_ahead_says_only_the_rank():
+    rows = [(CURRENT, career_fact("college", "Duke", kind="approaches", rank=5))]
+    idx = FakeIndex(paid=("Subject", 1000000, CURRENT))
+    assert " ".join(write(rows, idx=idx)).endswith(
+        "the fifth-most of any Duke player.")

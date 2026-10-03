@@ -157,8 +157,7 @@ def test_each_kind_has_its_own_sentence():
     items, posts = digest(old, new)
     text = posts[0]
     assert "Signed Man is on Dallas' books at $9 million for 2026-27." in text
-    assert ("Traded Man's $10 million for 2026-27 moves to Memphis' books "
-            "from Atlanta's.") in text
+    assert "Traded Man is on Memphis' books at $10 million for 2026-27." in text
     assert ("Waived Man is no longer on Atlanta's 2026-27 books, a $8 million "
             "salary.") in text
 
@@ -536,26 +535,31 @@ def test_a_team_change_is_never_grouped():
 PAST = "2025-26"
 
 
-def peer_payload(mine, others, salary=25000000, cap_pct=20.0):
-    """A finished season full of guards, plus the current season he is paid in.
+def peer_payload(mine, others, salary=25000000, now_salaries=None):
+    """A finished season full of guards, and what each is paid this season.
 
     ``mine`` and ``others`` are (ppg, apg) pairs; everyone played 60 games, so
-    the games floor is clear and only the bands decide the group.
+    the games floor is clear and only the band decides the group.
     """
-    records = []
+    records, names = [], []
     for i, (ppg, apg) in enumerate([mine] + list(others)):
         name = "Peer Man" if i == 0 else "Guard {:02d}".format(i)
+        names.append(name)
         records.append({
             "player": name, "season": PAST, "team": "ATL", "salary": 5000000,
             "years_exp": 4, "pos": "G", "gp": 60, "ppg": ppg, "apg": apg,
             "rpg": 3.0, "age": 26,
-            "salary_cap_pct": cap_pct if i == 0 else 1.0 + i * 0.5,
+        })
+    now = now_salaries or [1000000 * (i + 1) for i in range(len(names) - 1)]
+    for name, paid in zip(names[1:], now):
+        records.append({
+            "player": name, "season": CURRENT, "team": "ATL", "salary": paid,
+            "years_exp": 5, "pos": "G", "gp": 0, "age": 27,
         })
     out = payload(records)
     out["seasons"].append({
         "player": "Peer Man", "season": CURRENT, "team": "ATL",
         "salary": salary, "years_exp": 5, "pos": "G", "gp": 0, "age": 27,
-        "salary_cap_pct": cap_pct,
     })
     out["seasons_list"] = [PAST, CURRENT]
     out["players"] = sorted({r["player"] for r in out["seasons"]})
@@ -568,62 +572,86 @@ def peer_nugget_for(mine, others, **kwargs):
     item = {"player": "Peer Man", "season": CURRENT, "kind": "salary",
             "salary": kwargs.get("salary", 25000000),
             "record": idx.record("Peer Man", CURRENT), "members": []}
-    return N.peer_nugget(idx, item, data, D.fmt_pct), data
+    return N.peer_nugget(idx, item, data, F.fmt_money), data
 
 
 def test_a_band_is_the_whole_numbers_around_each_figure():
-    assert N._band(7.4, 0) == (7, 8)
-    assert N._band(5.2, 0) == (5, 6)
-    assert N._band(0.4, 0) == (0, 1)
+    assert N._band(7.4) == (7, 8)
+    assert N._band(5.2) == (5, 6)
+    assert N._band(0.4) == (0, 1)
 
 
-def test_a_band_widens_by_one_on_each_side():
-    assert N._band(7.4, 1) == (6, 9)
-    assert N._band(7.4, 2) == (5, 10)
-    assert N._band(0.4, 2) == (0, 3)
-
-
-def test_the_peer_sentence_states_the_bands_it_used():
-    nugget, _data = peer_nugget_for(
-        (7.4, 5.2), [(7.1, 5.0), (7.9, 5.9), (7.2, 5.5), (7.6, 5.1)])
-    assert nugget is not None
-    assert "7 to 8 points and 5 to 6 assists" in nugget["opener"]
-    assert nugget["detail"]["widened"] == 0
-    assert nugget["peer_link"]["count"] == 5
-
-
-def test_too_few_players_widens_the_bands():
-    """Three men inside the tight band, two more one point out."""
-    nugget, _data = peer_nugget_for(
-        (7.4, 5.2), [(7.1, 5.0), (7.9, 5.9), (6.5, 4.5), (8.5, 6.5)])
-    assert nugget is not None
-    assert nugget["detail"]["widened"] == 1
-    assert "6 to 9 points and 4 to 7 assists" in nugget["opener"]
-
-
-def test_a_group_that_stays_too_small_after_two_widenings_is_skipped():
-    nugget, _data = peer_nugget_for((7.4, 5.2), [(20.0, 1.0), (21.0, 1.5)])
+def test_the_band_is_never_widened():
+    """A band stretched until it finds him company is no longer a description
+    of how he played."""
+    nugget, _data = peer_nugget_for((7.4, 5.2), [(7.1, 5.0), (7.9, 5.9),
+                                                 (6.5, 4.5), (8.5, 6.5)])
     assert nugget is None
 
 
-def test_the_games_floor_keeps_a_short_season_out_of_the_group():
-    data = peer_payload((7.4, 5.2),
-                        [(7.1, 5.0), (7.9, 5.9), (7.2, 5.5), (7.6, 5.1)])
-    for record in data["seasons"]:
-        if record["player"] == "Guard 01":
-            record["gp"] = 12
+def test_five_other_players_are_needed():
+    assert peer_nugget_for(
+        (7.4, 5.2), [(7.1, 5.0), (7.9, 5.9), (7.2, 5.5)])[0] is None
+    assert peer_nugget_for(
+        (7.4, 5.2), [(7.1, 5.0), (7.9, 5.9), (7.2, 5.5), (7.6, 5.1),
+                     (7.3, 5.7)])[0] is not None
+
+
+def test_the_sentence_states_the_band_it_used():
+    nugget, _data = peer_nugget_for(
+        (7.4, 5.2), [(7.1, 5.0), (7.9, 5.9), (7.2, 5.5), (7.6, 5.1), (7.3, 5.7)])
+    assert nugget["opener"].startswith(
+        "Guards who averaged 7 to 8 points and 5 to 6 assists last season")
+
+
+def test_the_comparison_is_real_money_not_a_share_of_the_cap():
+    nugget, _data = peer_nugget_for(
+        (7.4, 5.2), [(7.1, 5.0), (7.9, 5.9), (7.2, 5.5), (7.6, 5.1), (7.3, 5.7)],
+        now_salaries=[1000000, 2000000, 2900000, 4000000, 5100000])
+    assert "of the cap" not in nugget["opener"]
+    assert "make a median $2.9 million this season" in nugget["opener"]
+    assert "the best-paid of them, Guard 05, is on $5.1 million" in nugget["opener"]
+
+
+def test_the_peers_are_paid_at_this_season_not_the_one_they_played():
+    """They put the numbers up last season; what they make now is the news."""
+    nugget, _data = peer_nugget_for(
+        (7.4, 5.2), [(7.1, 5.0), (7.9, 5.9), (7.2, 5.5), (7.6, 5.1), (7.3, 5.7)],
+        now_salaries=[9000000] * 5)
+    assert "median $9 million" in nugget["opener"]
+    assert "$5 million" not in nugget["opener"]
+
+
+def test_no_head_count_is_printed():
+    nugget, _data = peer_nugget_for(
+        (7.4, 5.2), [(7.1, 5.0), (7.9, 5.9), (7.2, 5.5), (7.6, 5.1), (7.3, 5.7)])
+    group = nugget["opener"].split(" make ")[0]
+    assert group == ("Guards who averaged 7 to 8 points and 5 to 6 assists "
+                     "last season")
+    assert "other guards" not in nugget["opener"]
+
+
+def test_a_peer_with_no_salary_this_season_is_not_counted():
+    data = peer_payload((7.4, 5.2), [(7.1, 5.0), (7.9, 5.9), (7.2, 5.5),
+                                     (7.6, 5.1), (7.3, 5.7)])
+    data["seasons"] = [r for r in data["seasons"]
+                       if not (r["player"] == "Guard 01" and r["season"] == CURRENT)]
     idx = F.build_index(data)
     item = {"player": "Peer Man", "season": CURRENT, "kind": "salary",
             "salary": 25000000, "record": idx.record("Peer Man", CURRENT),
             "members": []}
-    nugget = N.peer_nugget(idx, item, data, D.fmt_pct)
-    # Four left inside the tight band, so the bands widen rather than print four.
-    assert nugget is None or nugget["detail"]["widened"] > 0
+    assert N.peer_nugget(idx, item, data, F.fmt_money) is None
+
+
+def test_the_best_paid_peer_is_linked():
+    nugget, _data = peer_nugget_for(
+        (7.4, 5.2), [(7.1, 5.0), (7.9, 5.9), (7.2, 5.5), (7.6, 5.1), (7.3, 5.7)])
+    assert ("player", "Guard 05") in nugget["entities"]
 
 
 def test_a_forward_is_read_by_rebounds():
-    data = peer_payload((7.4, 5.2),
-                        [(7.1, 5.0), (7.9, 5.9), (7.2, 5.5), (7.6, 5.1)])
+    data = peer_payload((7.4, 5.2), [(7.1, 5.0), (7.9, 5.9), (7.2, 5.5),
+                                     (7.6, 5.1), (7.3, 5.7)])
     for record in data["seasons"]:
         record["pos"] = "F"
         record["rpg"] = 6.3
@@ -631,42 +659,21 @@ def test_a_forward_is_read_by_rebounds():
     item = {"player": "Peer Man", "season": CURRENT, "kind": "salary",
             "salary": 25000000, "record": idx.record("Peer Man", CURRENT),
             "members": []}
-    nugget = N.peer_nugget(idx, item, data, D.fmt_pct)
+    nugget = N.peer_nugget(idx, item, data, F.fmt_money)
     assert nugget is not None
-    assert "6 to 7 rebounds" in nugget["opener"]
-    assert "forwards" in nugget["opener"]
+    assert nugget["opener"].startswith(
+        "Forwards who averaged 7 to 8 points and 6 to 7 rebounds last season")
 
 
-def test_the_peer_comparison_is_a_cap_share():
-    nugget, _data = peer_nugget_for(
-        (7.4, 5.2), [(7.1, 5.0), (7.9, 5.9), (7.2, 5.5), (7.6, 5.1)],
-        cap_pct=20.0)
-    assert "20% of the cap" in nugget["opener"]
-    assert "more than any of the" in nugget["opener"]
-    assert nugget["detail"]["mine"] == 20.0
-
-
-def test_a_middling_share_is_given_against_the_median():
-    nugget, _data = peer_nugget_for(
-        (7.4, 5.2), [(7.1, 5.0), (7.9, 5.9), (7.2, 5.5), (7.6, 5.1)],
-        cap_pct=2.0)
-    assert "against a median" in nugget["opener"]
-
-
-def test_the_peer_link_returns_exactly_the_group_the_nugget_counted():
-    """The link is the tool's own filters, so the same rule can be run here."""
+def test_the_peer_link_returns_exactly_the_band():
     nugget, data = peer_nugget_for(
-        (7.4, 5.2), [(7.1, 5.0), (7.9, 5.9), (7.2, 5.5), (7.6, 5.1)])
+        (7.4, 5.2), [(7.1, 5.0), (7.9, 5.9), (7.2, 5.5), (7.6, 5.1), (7.3, 5.7)])
     spec = nugget["peer_link"]
     url = D.peer_url(spec)
     params = dict(part.split("=", 1) for part in url.split("#", 1)[1].split("&"))
-    assert params["from"] == params["to"] == PAST
-    assert params["pos"] == "G"
-    assert int(params["gp_min"]) == N.PEER_MIN_GAMES
     found = [
         record for record in data["seasons"]
         if record["season"] == params["from"]
-        and (record.get("pos") or "").startswith(params["pos"])
         and (record.get("gp") or 0) >= int(params["gp_min"])
         and float(params["ppg_min"]) <= (record.get("ppg") or -1) <= float(params["ppg_max"])
         and float(params["apg_min"]) <= (record.get("apg") or -1) <= float(params["apg_max"])
@@ -676,17 +683,12 @@ def test_the_peer_link_returns_exactly_the_group_the_nugget_counted():
 
 def test_the_peer_phrase_is_the_link_in_the_sentence():
     nugget, _data = peer_nugget_for(
-        (7.4, 5.2), [(7.1, 5.0), (7.9, 5.9), (7.2, 5.5), (7.6, 5.1)])
+        (7.4, 5.2), [(7.1, 5.0), (7.9, 5.9), (7.2, 5.5), (7.6, 5.1), (7.3, 5.7)])
     item = {"player": "Peer Man", "season": CURRENT, "kind": "salary"}
     text = D.nugget_sentence([nugget], item, NAMES, {}, {"player": {}})
     assert "<https://hoopsmatic.com/salary-season-finder#from=2025-26" in text
-    assert "|4 other guards who averaged 7 to 8 points and 5 to 6 assists " \
-        "last season>" in text
-
-
-def test_the_season_compared_is_the_one_already_played_out():
-    data = peer_payload((7.4, 5.2), [(7.1, 5.0)])
-    assert N._last_completed(F.build_index(data)) == PAST
+    assert "|Guards who averaged 7 to 8 points and 5 to 6 assists last season>" \
+        in text
 
 
 # --------------------------------------------------------------------------
@@ -863,7 +865,7 @@ def test_at_most_two_nuggets_ride_with_one_change():
         {"player": "Nobody", "season": CURRENT, "kind": "new", "salary": 1,
          "members": [], "raise_amount": 0},
         F.build_index(payload([])), payload([]), {}, [], F.fmt_money,
-        D.fmt_pct, OPENED, limit=2)
+        OPENED, limit=2)
     assert len(found) <= 2
 
 
@@ -876,7 +878,7 @@ def test_the_record_comes_before_the_career_total():
             "raise_amount": 3000000}
     factoids = {"Both Man|2026-27": [{"text": "A record.", "rank": 1}]}
     found = N.nuggets_for(item, idx, data, factoids, [], F.fmt_money,
-                          D.fmt_pct, OPENED)
+                          OPENED)
     assert [n["kind"] for n in found][0] == "record"
 
 
@@ -959,7 +961,15 @@ def test_every_team_the_first_sentence_names_is_linked():
     assert "<https://hoopsmatic.com/salary-season-finder/player/moved-man/" \
         "|Moved Man>" in text
     assert "/team/memphis-grizzlies/|Memphis>" in text
-    assert "/team/dallas-mavericks/|Dallas>" in text
+
+
+def test_a_team_change_never_names_the_team_it_left():
+    """Where the money used to sit is not the news and dates the line."""
+    old = payload([rec("Moved Man", CURRENT, 20000000, team="DAL")])
+    new = payload([rec("Moved Man", CURRENT, 20000000, team="MEM")])
+    _items, posts = digest(old, new)
+    assert "Moved Man is on Memphis' books at $20 million for 2026-27." in posts[0]
+    assert "Dallas" not in posts[0]
 
 
 def test_a_cohort_a_record_names_is_linked_to_its_page():
@@ -1139,12 +1149,25 @@ def test_a_rank_inside_a_season_already_paid_is_fine():
     old = payload([])
     new = payload([rec("Paid Man", CURRENT, 60000000)])
     factoids = {"Paid Man|2026-27": [{
+        "text": "His $60 million is the biggest salary of 2026-27.",
+        "rank": 1, "key": "cohort_season|position|G|Paid Man|2026-27",
+        "previous_holder": {"player": "Other", "season": "2025-26", "value": 32},
+    }]}
+    _items, posts = digest(old, new, factoids=factoids)
+    assert "the biggest salary of 2026-27" in posts[0]
+
+
+def test_the_digest_never_talks_in_cap_shares():
+    old = payload([])
+    new = payload([rec("Paid Man", CURRENT, 60000000)])
+    factoids = {"Paid Man|2026-27": [{
         "text": "His $60 million is the largest share of the cap in 2026-27.",
         "rank": 1, "key": "cap_pct_season|Paid Man|2026-27",
         "previous_holder": {"player": "Other", "season": "2025-26", "value": 32},
     }]}
     _items, posts = digest(old, new, factoids=factoids)
-    assert "largest share of the cap in 2026-27" in posts[0]
+    for post in posts:
+        assert "of the cap" not in post
 
 
 # --------------------------------------------------------------------------
@@ -1344,44 +1367,6 @@ def test_a_team_line_never_counts_a_flagged_salary():
 # --------------------------------------------------------------------------
 
 
-def test_the_peer_count_is_of_the_others():
-    nugget, _data = peer_nugget_for(
-        (7.4, 5.2), [(7.1, 5.0), (7.9, 5.9), (7.2, 5.5), (7.6, 5.1)])
-    assert "4 other guards" in nugget["opener"]
-    assert nugget["detail"]["others"] == 4
-    assert nugget["detail"]["in_band"] == 5
-
-
-def test_the_comparison_is_against_the_others_alone():
-    """His own share is not in the median, and "more than any of them" means
-    any of them, not any of them including himself."""
-    nugget, _data = peer_nugget_for(
-        (7.4, 5.2), [(7.1, 5.0), (7.9, 5.9), (7.2, 5.5), (7.6, 5.1)],
-        cap_pct=20.0)
-    assert len(nugget["detail"]["peers"]) == 4
-    assert all(name != "Peer Man" for name, _share in nugget["detail"]["peers"])
-    assert nugget["detail"]["mine"] not in [s for _n, s in nugget["detail"]["peers"]]
-
-
-def test_the_link_still_returns_the_whole_band():
-    """The tool's filters describe a band, not a band minus one man, so the
-    link returns him too and the spec carries both counts."""
-    nugget, data = peer_nugget_for(
-        (7.4, 5.2), [(7.1, 5.0), (7.9, 5.9), (7.2, 5.5), (7.6, 5.1)])
-    spec = nugget["peer_link"]
-    assert spec["count"] == spec["others"] + 1
-    url = D.peer_url(spec)
-    params = dict(part.split("=", 1) for part in url.split("#", 1)[1].split("&"))
-    found = [
-        record for record in data["seasons"]
-        if record["season"] == params["from"]
-        and (record.get("gp") or 0) >= int(params["gp_min"])
-        and float(params["ppg_min"]) <= (record.get("ppg") or -1) <= float(params["ppg_max"])
-        and float(params["apg_min"]) <= (record.get("apg") or -1) <= float(params["apg_max"])
-    ]
-    assert len(found) == spec["count"]
-
-
 # --------------------------------------------------------------------------
 # a career nugget that names a legend stands alone
 # --------------------------------------------------------------------------
@@ -1413,3 +1398,25 @@ def test_a_career_nugget_with_no_legend_still_takes_one():
          "tail": "no team has taken on a bigger raise", "entities": []},
     ]
     assert "bigger raise" in D.nugget_sentence(nuggets, item)
+
+
+def test_every_man_named_ahead_of_him_is_linked():
+    old, new = payload([]), payload([rec("Third Man", CURRENT, 4000000)])
+    factoids = {"Third Man|2026-27": [{
+        "text": "Third Man has earned the third-most among players out of "
+                "Stanford, behind Brook Lopez and Robin Lopez.",
+        "rank": 3, "key": "cohort_career|college|Stanford|Third Man|2026-27",
+        "ahead": "Brook Lopez and Robin Lopez",
+        "previous_holder": {"player": "Brook Lopez", "season": CURRENT,
+                            "value": 1},
+    }]}
+    slugs = {"player": {"Brook Lopez": "brook-lopez",
+                        "Robin Lopez": "robin-lopez",
+                        "Third Man": "third-man"},
+             "college": {"Stanford": "stanford"}}
+    items = D.changes(old, new, CURRENT)
+    context = context_for(new, slugs["player"], {"college": slugs["college"]})
+    D.attach_nuggets(items, context["idx"], new, factoids, [], OPENED)
+    text = D.block(items[0], context)
+    assert "/player/brook-lopez/|Brook Lopez>" in text
+    assert "/player/robin-lopez/|Robin Lopez>" in text

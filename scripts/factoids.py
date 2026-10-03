@@ -25,6 +25,7 @@ from __future__ import annotations
 
 import argparse
 import bisect
+import math
 import hashlib
 import json
 import os
@@ -1661,12 +1662,18 @@ def _make(
     comparison_size=None,
     previous_holder=None,
     margin=None,
+    lead=None,
+    ahead=None,
 ):
     """Assemble one factoid dict.
 
     ``id`` hashes the claim's identity, never its value, so a claim that
     persists across daily runs keeps its id and part two's diff can compare
     values instead of seeing a new factoid every time a number moves.
+
+    ``lead`` is how far clear a leader is, from dominance(), and ``ahead`` names
+    everyone above a second or third place. Both are computed here so the pages
+    and the digest say the same thing without recomputing it from a sentence.
     """
     return {
         "id": hashlib.sha1(claim_key.encode("utf-8")).hexdigest()[:16],
@@ -1680,6 +1687,8 @@ def _make(
         "comparison_size": comparison_size,
         "previous_holder": previous_holder,
         "margin": margin,
+        "lead": lead,
+        "ahead": ahead,
         "contracted": bool(contracted),
     }
 
@@ -1729,6 +1738,126 @@ def _overtake(top, prior_best):
     if top is None or prior_best is None:
         return "passing"
     return "passing" if top["value"] > prior_best else "ahead of"
+
+
+#: How far clear a lead has to be before it is worth a word of its own, and how
+#: big a share of a field's whole payroll is worth stating.
+DOMINANCE_MULTIPLE = 2.0
+DOMINANCE_SHARE_PCT = 25.0
+
+
+def dominance(universe, value, exclude_key, rival_phrase, top, as_of=None,
+              career=True):
+    """The strongest true thing about leading a field, or None for "ahead of".
+
+    Three claims, in the order a reader feels them. Out-earning the whole field
+    put together is the biggest; a clean multiple of the next man is the next;
+    and holding a quarter of everything the field has ever been paid is the
+    third. A lead too narrow for any of them is just a lead.
+
+    ``career`` is False for a single-season list, where only the multiple
+    applies: a season's entries are player seasons, so adding them up is not a
+    statement about players.
+    """
+    others = [
+        entry for entry in universe.entries
+        if entry["key"] != exclude_key
+        and (as_of is None or season_key(entry["season"]) <= as_of)
+    ]
+    if not others or top is None or not value:
+        return None
+    one = _rival_singular(rival_phrase)
+    total = sum(entry["value"] for entry in others)
+
+    if career and total and value > total:
+        return "more than {} combined".format(_rival_every(rival_phrase))
+
+    best = top["value"]
+    if best > 0 and value / float(best) >= DOMINANCE_MULTIPLE:
+        return "{} times as much as the next {}, {}".format(
+            _multiple(value / float(best)), one, _name(top))
+
+    if career and total:
+        share = value / float(total + value) * 100.0
+        if share >= DOMINANCE_SHARE_PCT:
+            return "{:.0f}% of all the money ever paid to {}".format(
+                share, _rival_plural(rival_phrase))
+    return None
+
+
+def _multiple(factor):
+    """Down to a whole number, or to the half between two and three.
+
+    Rounding up would overstate a lead, so every one of these rounds down.
+    """
+    if factor < 3:
+        return "{:g}".format(math.floor(factor * 2) / 2.0)
+    return "{:g}".format(math.floor(factor))
+
+
+def _rival_every(phrase):
+    """"any other player out of Duke" -> "every other player out of Duke"."""
+    if phrase.startswith("any other "):
+        return "every other " + phrase[len("any other "):]
+    if phrase.startswith("anyone else "):
+        return "everyone else " + phrase[len("anyone else "):]
+    return phrase
+
+
+def _rival_singular(phrase):
+    """"any other player out of Duke" -> "player out of Duke"."""
+    if phrase.startswith("any other "):
+        return phrase[len("any other "):]
+    if phrase.startswith("anyone else among "):
+        # "anyone else among Kansas forwards" already names them in the plural
+        return _depluralise(phrase[len("anyone else among "):])
+    if phrase.startswith("anyone else "):
+        return "player " + phrase[len("anyone else "):]
+    return phrase
+
+
+def _rival_plural(phrase):
+    if phrase.startswith("anyone else among "):
+        return phrase[len("anyone else among "):]
+    one = _rival_singular(phrase)
+    if one.startswith("player "):
+        return "players " + one[len("player "):]
+    return one + "s"
+
+
+def _depluralise(noun):
+    """"Kansas forwards" -> "Kansas forward". Only the nouns these labels use."""
+    if noun.endswith("ies"):
+        return noun[:-3] + "y"
+    if noun.endswith("s") and not noun.endswith("ss"):
+        return noun[:-1]
+    return noun
+
+
+def _ahead_clause(verdict, subject=None, money=True):
+    """Everyone ahead of him, by name, for a second or third place.
+
+    "the third-most among Stanford players, behind Brook Lopez" leaves the
+    reader wondering who the other one is.
+    """
+    rank = verdict.get("rank") or 0
+    if not 2 <= rank <= 3:
+        # Deeper than third the list of names is longer than the fact.
+        return None
+    leaders = [e for e in (verdict.get("leaders") or []) if e["value"] > 0][:rank - 1]
+    if len(leaders) < 2:
+        # Second place has one man ahead, whom the usual clause already names
+        # with his figure.
+        return None
+    names = []
+    for entry in leaders:
+        if subject is not None and entry.get("person") == subject:
+            names.append("his own {}".format(
+                fmt_money(entry["value"]) if money
+                else "{:.1f}%".format(entry["value"])))
+        else:
+            names.append(_name(entry))
+    return "{} and {}".format(", ".join(names[:-1]), names[-1])
 
 
 def pre_window_shadow(universe, value, margin=PRE_WINDOW_MARGIN):
@@ -1855,15 +1984,27 @@ def _family_franchise(ctx, out, log):
                     )
                 )
             else:
-                text = (
-                    "{} {} in {}{} {} the highest single-season salary in {} "
-                    "history, {} {}.".format(
-                        _possessive(subject_name), fmt_money(amount), season, split_note,
-                        _is_verb(tense), name,
-                        _overtake(top, ctx["prior_best_salary"]),
-                        _behind_clause(top, subject=subject_person),
+                clear = dominance(
+                    universe, amount, (player, season),
+                    "any other {} player".format(name), top,
+                    as_of=ctx["as_of"], career=False)
+                if clear:
+                    text = (
+                        "{} {} in {}{} {} the highest single-season salary in {} "
+                        "history, {}.".format(
+                            _possessive(subject_name), fmt_money(amount), season,
+                            split_note, _is_verb(tense), name, clear)
                     )
-                )
+                else:
+                    text = (
+                        "{} {} in {}{} {} the highest single-season salary in {} "
+                        "history, {} {}.".format(
+                            _possessive(subject_name), fmt_money(amount), season, split_note,
+                            _is_verb(tense), name,
+                            _overtake(top, ctx["prior_best_salary"]),
+                            _behind_clause(top, subject=subject_person),
+                        )
+                    )
         elif kind == "ties":
             text = (
                 "{} {} in {}{} {} the highest single-season salary in {} "
@@ -1878,7 +2019,8 @@ def _family_franchise(ctx, out, log):
                 "history, behind {}.".format(
                     _possessive(subject_name), fmt_money(amount), season, split_note,
                     _is_verb(tense), ordinal(verdict["rank"]), name,
-                    _behind_clause(top, subject=subject_person),
+                    _ahead_clause(verdict, subject=subject_person)
+                    or _behind_clause(top, subject=subject_person),
                 )
             )
 
@@ -2015,6 +2157,9 @@ def _family_career(ctx, out, log):
     )
     if active:
         scope += " {} is still playing, so this is his total to date.".format(subject_name)
+    _lead = dominance(
+        idx.career_universe(ctx["as_of"]), paid_total, (player, None),
+        _career_rival(ALL_TIME), top, as_of=ctx["as_of"]) if kind == "sets" else None
     out.append(
         _make(
             "career_earnings", kind,
@@ -2023,10 +2168,12 @@ def _family_career(ctx, out, log):
                 kind, subject_name, subject_person, paid_total, verdict, top,
                 active, through=season, prior_total=ctx["prior_career_total"],
                 tense=tense, in_progress=idx.current_season_in_progress,
-            ),
+                lead=_lead, ),
             scope, paid_total, contracted,
             rank=verdict["rank"], comparison_size=verdict["size"],
             previous_holder=_holder(top), margin=paid_total - top["value"],
+            lead=_lead if active else None,
+            ahead=_ahead_clause(verdict, subject=subject_person),
         )
     )
 
@@ -2068,23 +2215,33 @@ def _career_opening(subject_name, money, active, through, tense, in_progress):
 
 def _career_rank_text(kind, subject_name, subject_person, total, verdict, top,
                       active, label=ALL_TIME, through=None, prior_total=None,
-                      tense=CURRENT, in_progress=False):
+                      tense=CURRENT, in_progress=False, lead=None):
     """One career-earnings sentence, active or finished, all-time or cohort.
 
     Neither form says "since 1990-91": the page carries that note once.
+    ``lead`` is how far clear he is, from dominance(), which says more than the
+    name of whoever is second.
     """
     opening = _career_opening(
         subject_name, fmt_money(total), active, through, tense, in_progress)
+    rival = _career_rival(label)
     if kind == "sets":
+        # A finished career reads "earned ... in his career", which names no
+        # season, and every claim on this site names the season it is about. The
+        # clause it would replace is the one carrying it, so a finished career
+        # keeps that clause.
+        if lead and active:
+            return "{}, {}.".format(opening, lead)
         return "{}, more than {}, {} {}.".format(
-            opening, _career_rival(label), _overtake(top, prior_total),
+            opening, rival, _overtake(top, prior_total),
             _behind_clause(top, subject=subject_person))
     if kind == "ties":
         return "{}, level with the most {}, matching {}.".format(
             opening, label, _behind_clause(top, subject=subject_person))
     return "{}, the {}-most {}, behind {}.".format(
         opening, ordinal(verdict["rank"]), label,
-        _behind_clause(top, subject=subject_person))
+        _ahead_clause(verdict, subject=subject_person)
+        or _behind_clause(top, subject=subject_person))
 
 
 # -- family 3: cohorts -----------------------------------------------------
@@ -2145,12 +2302,20 @@ def _family_cohorts(ctx, out, log):
                         fmt_money(top["value"]), top["season"],
                     )
                 else:
-                    text = "{} {} in {} {} the highest single-season salary {}, {} {}.".format(
-                        _possessive(subject_name), fmt_money(salary), season,
-                        _is_verb(tense), label,
-                        _overtake(top, ctx["prior_best_salary"]),
-                        _behind_clause(top, subject=subject_person),
-                    )
+                    clear = dominance(
+                        universe, salary, (player, season), _career_rival(label),
+                        top, as_of=ctx["as_of"], career=False)
+                    if clear:
+                        text = "{} {} in {} {} the highest single-season salary {}, {}.".format(
+                            _possessive(subject_name), fmt_money(salary), season,
+                            _is_verb(tense), label, clear)
+                    else:
+                        text = "{} {} in {} {} the highest single-season salary {}, {} {}.".format(
+                            _possessive(subject_name), fmt_money(salary), season,
+                            _is_verb(tense), label,
+                            _overtake(top, ctx["prior_best_salary"]),
+                            _behind_clause(top, subject=subject_person),
+                        )
             elif verdict_kind == "ties":
                 text = "{} {} in {} {} the highest single-season salary {}, matching {}.".format(
                     _possessive(subject_name), fmt_money(salary), season,
@@ -2159,7 +2324,9 @@ def _family_cohorts(ctx, out, log):
             else:
                 text = "{} {} in {} {} the {}-highest single-season salary {}, behind {}.".format(
                     _possessive(subject_name), fmt_money(salary), season, _is_verb(tense),
-                    ordinal(verdict["rank"]), label, _behind_clause(top, subject=subject_person),
+                    ordinal(verdict["rank"]), label,
+                    _ahead_clause(verdict, subject=subject_person)
+                    or _behind_clause(top, subject=subject_person),
                 )
             out.append(
                 _make(
@@ -2216,6 +2383,9 @@ def _family_cohorts(ctx, out, log):
         )
         if cactive:
             scope += " {} is still playing, so this is his total to date.".format(subject_name)
+        clead = dominance(
+            cu, career_total, (player, None), _career_rival(label), ctop,
+            as_of=ctx["as_of"]) if ckind == "sets" else None
         out.append(
             _make(
                 "cohort", ckind,
@@ -2225,10 +2395,13 @@ def _family_cohorts(ctx, out, log):
                     ctop, cactive, label=label, through=season,
                     prior_total=ctx["prior_career_total"],
                     tense=tense, in_progress=idx.current_season_in_progress,
+                    lead=clead,
                 ),
                 scope, career_total, contracted,
                 rank=cverdict["rank"], comparison_size=cverdict["size"],
                 previous_holder=_holder(ctop), margin=career_total - ctop["value"],
+                lead=clead if cactive else None,
+                ahead=_ahead_clause(cverdict, subject=subject_person),
             )
         )
 

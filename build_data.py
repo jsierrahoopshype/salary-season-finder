@@ -592,6 +592,134 @@ def find_agent_for_season(agent_lookup, pid, season):
 
 
 # ── CSV processors ─────────────────────────────────────────────────────
+#: How many rostered players a season needs before it counts as under way. The
+#: same rule js/app.js and scripts/factoids.py use to find the current season,
+#: so all three agree on which seasons are finished.
+ROSTERED_PER_TEAM = 15
+
+
+def current_season_of(records):
+    """The newest season with a full league's worth of salaries on it."""
+    counts = defaultdict(int)
+    teams = set()
+    for rec in records:
+        if rec.get("salary"):
+            counts[rec["season"]] += 1
+        for team in (rec.get("team") or "").split(","):
+            if team.strip():
+                teams.add(team.strip())
+    floor = max(len(teams), 1) * ROSTERED_PER_TEAM
+    seasons = sorted({r["season"] for r in records},
+                     key=lambda s: season_to_year(s) or 0, reverse=True)
+    for season in seasons:
+        if counts.get(season, 0) >= floor:
+            return season
+    return seasons[0] if seasons else ""
+
+
+def stats_teams_for(stats_lookup, player, season):
+    """The teams a man's stats lines put him on that season, in order.
+
+    TOT is a league total row, not a team, so it never counts as one.
+    """
+    out = []
+    for row in stats_lookup.get((normalize_name(player), season)) or []:
+        team = row.get("team")
+        if team and team != "TOT" and team not in out:
+            out.append(team)
+    return out
+
+
+def correct_past_season_teams(records, stats_lookup):
+    """A completed season belongs to the team he played it for.
+
+    The current-salaries sheet carries one TEAM column per player and applies it
+    to every season in his row, so a move in the summer rewrites the team on a
+    season he had already played: after Giannis Antetokounmpo moved to Miami his
+    2025-26 read MIA, a season he played in Milwaukee.
+
+    The signature is narrow on purpose. A past season is only rewritten where it
+    carries exactly the team he is on now and the stats disagree, which is what
+    inheriting the row's TEAM column looks like. Everywhere else the two sources
+    are saying different true things: the sheet names whose books paid the
+    salary and the stats name who he played for, and for a man waived by one
+    team while playing for another the sheet is the one a salary tool wants.
+    Those are counted in the report and left alone.
+    """
+    current = current_season_of(records)
+    current_key = season_to_year(current) or 0
+    now_team = {
+        rec["player"]: (rec.get("team") or "").strip()
+        for rec in records
+        if rec["season"] == current and (rec.get("team") or "").strip()
+    }
+
+    applied, seen, skipped = [], 0, 0
+    for rec in records:
+        if (season_to_year(rec["season"]) or 0) >= current_key:
+            continue
+        played = stats_teams_for(stats_lookup, rec["player"], rec["season"])
+        if not played:
+            continue
+        sheet = [t.strip() for t in (rec.get("team") or "").split(",") if t.strip()]
+        if set(sheet) == set(played):
+            continue
+        seen += 1
+        if len(sheet) != 1 or sheet[0] != now_team.get(rec["player"]):
+            skipped += 1
+            continue
+
+        row = {
+            "player": rec["player"],
+            "season": rec["season"],
+            "sheet_team": ", ".join(sheet),
+            "corrected_team": ", ".join(played),
+        }
+        rec["team"] = ", ".join(played)
+        if len(played) == 1:
+            # One team played it, so the whole salary is that team's and there
+            # is no split to carry.
+            rec.pop("team_salaries", None)
+        else:
+            # He was traded inside the season. The sheet put the whole salary on
+            # the team he finished at, which is the one fact it had; the games
+            # he played for each is the only basis this build has for dividing
+            # it, and dividing it is what marks the season as split so no
+            # franchise record claims the whole figure.
+            rec["team_salaries"] = _split_by_games(
+                rec.get("salary") or 0, stats_lookup, rec["player"], rec["season"],
+                played)
+            row["split_basis"] = "games played"
+            row["team_salaries"] = dict(rec["team_salaries"])
+        applied.append(row)
+
+    applied.sort(key=lambda r: (r["player"], r["season"]))
+    print(f"    Team corrections: {len(applied)} applied, {skipped} left to the "
+          f"salary sheet, of {seen} disagreements before {current}")
+    return {"current_season": current, "applied": applied,
+            "disagreements": seen, "left_alone": skipped}
+
+
+def _split_by_games(salary, stats_lookup, player, season, teams):
+    """Divide a traded season's salary across its teams by games played."""
+    games = {}
+    for row in stats_lookup.get((normalize_name(player), season)) or []:
+        team = row.get("team")
+        if team in teams:
+            games[team] = games.get(team, 0) + (row.get("gp") or 0)
+    total = sum(games.values())
+    if not total or not salary:
+        # Nothing to divide on: an even split still marks the season as split.
+        share = int(round(salary / float(len(teams)))) if salary else 0
+        return {team: share for team in teams}
+    out, spent = {}, 0
+    for team in teams[:-1]:
+        out[team] = int(round(salary * games.get(team, 0) / float(total)))
+        spent += out[team]
+    out[teams[-1]] = salary - spent
+    return out
+
+
 def process_stats(csv_data):
     rows = parse_csv_string(csv_data)
     if not rows:
@@ -1305,6 +1433,16 @@ def build_data():
             all_agents_set.add(agent)
         all_players_set.add(player)
 
+    # A completed season belongs to the team he played it for
+    corrections = correct_past_season_teams(final_records, stats_lookup)
+    if corrections["applied"]:
+        all_teams_set = set()
+        for rec in final_records:
+            for t in (rec.get("team") or "").split(","):
+                t = t.strip()
+                if t:
+                    all_teams_set.add(t)
+
     # Compute team salary ranks
     team_season_groups = defaultdict(list)
     for i, rec in enumerate(final_records):
@@ -1358,6 +1496,26 @@ def build_data():
     out_path = os.path.join(OUT_DIR, "data.json")
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(output, f, separators=(",", ":"))
+
+    # Every team the build moved, committed so a reader of the data can see
+    # which seasons were taken off the salary sheet's word and why.
+    report_path = os.path.join(OUT_DIR, "team_corrections_report.json")
+    with open(report_path, "w", encoding="utf-8") as f:
+        json.dump({
+            "note": (
+                "A completed season takes its team from the player's stats line "
+                "where the salary sheet gave it the team he is on now, which is "
+                "what the one-TEAM-per-row current sheet does to a man who moved "
+                "in the summer. Disagreements of any other shape are the sheet "
+                "naming whose books paid a salary and the stats naming who he "
+                "played for, which are different facts, and are left alone."
+            ),
+            "current_season": corrections["current_season"],
+            "disagreements_found": corrections["disagreements"],
+            "left_to_the_salary_sheet": corrections["left_alone"],
+            "corrections": corrections["applied"],
+        }, f, indent=1, sort_keys=True)
+        f.write("\n")
 
     size_mb = os.path.getsize(out_path) / 1024 / 1024
     print(f"    Written to {out_path}")
