@@ -185,6 +185,39 @@ def rank_table(columns, rows, table_class=""):
     )
 
 
+def grouped_rank_table(columns, groups):
+    """A ranked table whose rows come in groups, each with its own head row.
+
+    ``groups`` is [(head cells, [row cells])]: a team and the players on it,
+    ranked inside it. One tbody a group, so the head row can be styled as one
+    and a screen reader reads the group as a unit.
+    """
+    if not groups:
+        return '<p class="hm-empty">Nothing on file.</p>'
+    head = "".join(
+        '<th class="{}" scope="col">{}</th>'.format(cls, esc(label))
+        for label, cls in columns
+    )
+
+    def row(cells, kind):
+        out = ['<th class="hm-who" scope="row">{}</th>'.format(cells[0])]
+        for value, (_label, cls) in zip(cells[1:], columns[1:]):
+            out.append('<td class="{}">{}</td>'.format(cls, value))
+        return '<tr class="{}">{}</tr>'.format(kind, "".join(out))
+
+    body = []
+    for lead, members in groups:
+        rows = [row(lead, "hm-group-head")]
+        rows += [row(cells, "hm-group-row") for cells in members]
+        body.append('<tbody class="hm-group">{}</tbody>'.format("".join(rows)))
+    return (
+        '<div class="ps-scroll"><table class="hm-rank-table hm-grouped">'
+        "<thead><tr>{}</tr></thead>{}</table></div>".format(
+            head, "".join(body)
+        )
+    )
+
+
 def player_link(ident, rank=None, tag="", face=""):
     href = page_url("player", ident.slug)
     prefix = '<span class="hm-rank">{}</span>'.format(rank) if rank else ""
@@ -219,6 +252,24 @@ def facts_summary(sentences, linker=None, url=None):
     render = (lambda t: linker.html(t, url)) if linker else esc
     return '<p class="hm-facts">{}</p>'.format(
         " ".join(render(text) for text in sentences))
+
+
+def timeline_list(entries, linker=None, url=None):
+    """The season-by-season timeline, one season a row.
+
+    ``entries`` is [(season, line)], newest first. The season is the term and
+    the line is the description, which is what a timeline is: a definition
+    list, not a table of numbers.
+    """
+    if not entries:
+        return ""
+    render = (lambda t: linker.sentences_html(t, url)) if linker else esc
+    rows = []
+    for season, text in entries:
+        rows.append(
+            '<div class="hm-event"><dt>{}</dt><dd>{}</dd></div>'.format(
+                esc(season), render(text)))
+    return '<dl class="hm-timeline">{}</dl>'.format("".join(rows))
 
 
 def related_chips(links):

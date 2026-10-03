@@ -39,6 +39,7 @@ from prerender import render as R  # noqa: E402
 from prerender import slugs as S  # noqa: E402
 from prerender import linkify  # noqa: E402
 from prerender import seasons  # noqa: E402
+from prerender import timeline as TL  # noqa: E402
 from prerender.media import Media  # noqa: E402
 from prerender.phrasing import drop_mirrors, straighten  # noqa: E402
 
@@ -534,11 +535,19 @@ def main(argv=None):
         "awards": C.TOOL_ROOT,
     })
     current_key = F.season_key(idx.current_season)
+    # One sweep of the file for every man's timeline, because what a season
+    # changed is a question about the seasons before it and there is no point
+    # asking it 3,353 times.
+    events = TL.build(idx)
     for ident in built["players"]:
         facts = player_facts(idx, by_player_facts, ident, current_key)
+        # The same gate the summary is held to: where one data key covers two
+        # men and the split is unchecked, nothing is claimed about either.
+        story = (TL.lines(idx, ident.records, events)
+                 if ident.extra.get("factoids_allowed") else [])
         title, description, body = P.player_page(
             idx, ident, tables.get(ident.key, ""), facts,
-            related_links(idx, ident, lookup), linker,
+            related_links(idx, ident, lookup), linker, story,
         )
         emit(ident, title, description, body, [
             ("Salary Season Finder", C.TOOL_ROOT), (ident.name, None),

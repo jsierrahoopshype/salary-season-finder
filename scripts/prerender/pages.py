@@ -12,9 +12,9 @@ import factoids as F  # noqa: E402
 
 from . import config as C  # noqa: E402
 from .render import (  # noqa: E402
-    CONTRACTED_TAG, esc, facts_summary, links_row, money, money_short,
-    more_block, page_url, player_link, rank_table, related_chips, roll_call,
-    scope_line, section, summary_block,
+    CONTRACTED_TAG, esc, facts_summary, grouped_rank_table, links_row, money,
+    money_short, more_block, page_url, player_link, rank_table, related_chips,
+    roll_call, scope_line, section, summary_block, timeline_list,
 )
 from .summary import cohort_summary  # noqa: E402
 
@@ -317,7 +317,8 @@ def cohort_page(idx, entity, identities, facts_by_cohort, media=None,
 # player pages
 # --------------------------------------------------------------------------
 
-def player_page(idx, ident, season_table_html, facts, related, linker=None):
+def player_page(idx, ident, season_table_html, facts, related, linker=None,
+                timeline=()):
     title = C.TITLES["player"][0].format(name=ident.name)
     first, last = ident.records[0], ident.records[-1]
     paid = [r for r in ident.records if _paid(idx, r)]
@@ -346,6 +347,12 @@ def player_page(idx, ident, season_table_html, facts, related, linker=None):
             "What the numbers say",
             None,
             facts_summary(facts, linker, ident.url),
+        ))
+    if timeline:
+        body.append(section(
+            "Season by season, what changed",
+            "Only the seasons that changed something, newest first.",
+            timeline_list(timeline, linker, ident.url),
         ))
     elif not ident.extra.get("factoids_allowed"):
         body.append(section(
@@ -489,17 +496,7 @@ def season_page(idx, entity, identities):
             str(record.get("age") or "-"),
         ])
 
-    payrolls = collections.defaultdict(float)
-    for record in entity.records:
-        for code, amount in F.team_amounts(record):
-            if code in idx.franchises:
-                payrolls[code] += amount or 0
-    payroll_rows = [
-        ['<a href="{}">{}</a>'.format(
-            esc(page_url("team", _team_slug(code))), esc(idx.franchises[code]["name"])),
-         money(amount)]
-        for code, amount in sorted(payrolls.items(), key=lambda kv: -kv[1])
-    ]
+    payroll_groups = _payroll_groups(idx, entity, owners, season, contracted)
 
     body = [
         "<h1>NBA salaries {}</h1>".format(esc(season)),
@@ -517,8 +514,13 @@ def season_page(idx, entity, identities):
         ),
         section(
             "Team payrolls",
-            "What each franchise carried in {}.".format(season),
-            rank_table([("Team", "hm-who"), ("Payroll", "hm-money")], payroll_rows),
+            "What each franchise carried in {}, ranked, and the roster inside "
+            "it ranked by what each man was paid.".format(season),
+            grouped_rank_table(
+                [("Team", "hm-who"), ("Payroll", "hm-money"),
+                 ("% of cap", "hm-num")],
+                payroll_groups,
+            ),
         ),
         section(
             "Every player",
@@ -527,6 +529,57 @@ def season_page(idx, entity, identities):
         ),
     ]
     return title, description, "\n".join(body)
+
+
+def _payroll_groups(idx, entity, owners, season, contracted):
+    """Every franchise that season, ranked, with its roster ranked inside it.
+
+    A team's payroll is what its own rows add up to, so a split season counts
+    on each team only for the part team_amounts gives it, and a season the
+    build cannot divide counts on neither. The share of the cap is the same
+    figure for a team as for a player: what it took of that season's cap.
+    """
+    cap = ((idx.cap or {}).get(season) or {}).get("cap") or 0
+    payrolls = collections.defaultdict(float)
+    rosters = collections.defaultdict(list)
+    for record in entity.records:
+        for code, amount in F.team_amounts(record):
+            if code not in idx.franchises:
+                continue
+            payrolls[code] += amount or 0
+            rosters[code].append((amount or 0, record))
+
+    groups = []
+    ranked = sorted(payrolls.items(), key=lambda kv: (-kv[1], kv[0]))
+    for place, (code, total) in enumerate(ranked, start=1):
+        lead = [
+            '<span class="hm-rank">{}</span><a href="{}">{}</a>'.format(
+                place, esc(page_url("team", _team_slug(code))),
+                esc(idx.franchises[code]["name"])),
+            money(total),
+            _share(total, cap),
+        ]
+        members = []
+        inside = sorted(rosters[code], key=lambda pair: -pair[0])
+        for seat, (amount, record) in enumerate(inside, start=1):
+            ident = owners.get(id(record))
+            if ident is None:
+                continue
+            members.append([
+                player_link(ident, rank=seat,
+                            tag=CONTRACTED_TAG if contracted else ""),
+                money(amount),
+                _share(amount, cap),
+            ])
+        groups.append((lead, members))
+    return groups
+
+
+def _share(amount, cap):
+    """What a figure took of a season's cap, where the cap is on file."""
+    if not cap or not amount:
+        return "-"
+    return "{:.1f}%".format(100.0 * amount / cap)
 
 
 _TEAM_SLUGS = {}

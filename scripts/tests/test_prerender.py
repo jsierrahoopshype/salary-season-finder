@@ -21,6 +21,7 @@ import factoids as F
 from prerender import config as C
 from prerender import entities as E
 from prerender import slugs as S
+from prerender import timeline as TL
 
 REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SITEMAP = os.path.join(REPO, "sitemap.xml")
@@ -1667,3 +1668,125 @@ def test_the_daily_build_commits_every_family_it_writes():
     wanted = {spec["dir"] for spec in C.FAMILIES.values()}
     wanted |= {spec["hub"] for spec in C.FAMILIES.values() if spec["hub"]}
     assert wanted - staged == set()
+
+
+# --------------------------------------------------------------------------
+# the team section of a season page: ranked, with the roster inside it
+# --------------------------------------------------------------------------
+
+
+def _payroll_block(season="2021-22"):
+    html = read(os.path.join("season", season, "index.html"))
+    start = html.index("<h2>Team payrolls</h2>")
+    return html[start:html.index("</table></div>", start)]
+
+
+def test_the_season_team_section_ranks_the_teams():
+    block = _payroll_block()
+    heads = re.findall(
+        r'<tr class="hm-group-head"><th[^>]*><span class="hm-rank">(\d+)</span>',
+        block)
+    assert heads == [str(n) for n in range(1, len(heads) + 1)]
+    assert len(heads) == 30
+
+
+def test_the_season_team_section_ranks_the_roster_inside_each_team():
+    block = _payroll_block()
+    groups = re.findall(r'<tbody class="hm-group">(.*?)</tbody>', block, re.S)
+    assert len(groups) == 30
+    for group in groups:
+        seats = re.findall(
+            r'<tr class="hm-group-row"><th[^>]*><span class="hm-rank">(\d+)</span>',
+            group)
+        assert seats, "a team with no roster inside it"
+        assert seats == [str(n) for n in range(1, len(seats) + 1)]
+
+
+def test_a_team_payroll_is_ordered_by_what_it_carried():
+    block = _payroll_block()
+    totals = [
+        int(re.sub(r"[^0-9]", "", money))
+        for money in re.findall(
+            r'<tr class="hm-group-head">.*?<td class="hm-money">([^<]+)</td>',
+            block, re.S)
+    ]
+    assert totals == sorted(totals, reverse=True)
+
+
+# --------------------------------------------------------------------------
+# the timeline on a player page
+# --------------------------------------------------------------------------
+
+
+def _timeline(slug):
+    html = read(os.path.join("player", slug, "index.html"))
+    if "<h2>Season by season, what changed</h2>" not in html:
+        return []
+    start = html.index("<h2>Season by season, what changed</h2>")
+    block = html[start:html.index("</dl>", start)]
+    return re.findall(r"<dt>([^<]+)</dt><dd>(.*?)</dd>", block, re.S)
+
+
+def test_a_long_career_gets_a_timeline_newest_first():
+    rows = _timeline("kyrie-irving")
+    assert len(rows) > 5
+    keys = [F.season_key(season) for season, _text in rows]
+    assert keys == sorted(keys, reverse=True)
+
+
+def test_a_timeline_line_never_repeats_his_own_name():
+    """Lines open on the verb or on "He": the page is already about him."""
+    for slug, name in (("kyrie-irving", "Kyrie Irving"),
+                       ("stephen-curry", "Stephen Curry"),
+                       ("rudy-gobert", "Rudy Gobert")):
+        for _season, text in _timeline(slug):
+            assert name not in re.sub(r"<[^>]+>", "", text)
+
+
+def test_a_timeline_carries_no_em_dash():
+    for slug in ("kyrie-irving", "giannis-antetokounmpo", "stephen-curry"):
+        for _season, text in _timeline(slug):
+            plain = re.sub(r"<[^>]+>", "", text)
+            assert "—" not in plain and "--" not in plain
+
+
+def test_no_season_carries_more_than_two_events():
+    """Checked on the sweep rather than on the prose, where "No. 1 picks" is
+    not the end of a sentence."""
+    idx = F.build_index(json.loads(read(os.path.join("data", "data.json"))))
+    found = TL.build(idx)
+    assert found
+    for key, events in found.items():
+        assert len(events) <= TL.PER_SEASON, key
+
+
+def test_two_timeline_lines_never_open_the_same_way():
+    for slug in ("kyrie-irving", "giannis-antetokounmpo", "rudy-gobert",
+                 "stephen-curry"):
+        openings = [
+            " ".join(re.sub(r"<[^>]+>", "", text).split()[:2]).lower()
+            for _season, text in _timeline(slug)
+        ]
+        for before, after in zip(openings, openings[1:]):
+            assert before != after, (slug, before)
+
+
+def test_a_timeline_links_the_cohorts_and_men_it_names():
+    rows = _timeline("kyrie-irving")
+    joined = " ".join(text for _season, text in rows)
+    assert "<a " in joined and "href=" in joined
+    assert "/college/duke/" in joined
+
+
+def test_a_timeline_reads_the_tense_of_its_season():
+    """Past seasons happened, the season being played is happening, and a
+    contracted one is money nobody has been paid."""
+    current = F.compute_current_season(
+        json.loads(read(os.path.join("data", "data.json"))))
+    for slug in ("stephen-curry", "rudy-gobert", "giannis-antetokounmpo"):
+        for season, text in _timeline(slug):
+            plain = re.sub(r"<[^>]+>", "", text)
+            if F.season_key(season) > F.season_key(current):
+                assert "Would" in plain or "would" in plain, (slug, season)
+            else:
+                assert not plain.startswith("Would"), (slug, season)
