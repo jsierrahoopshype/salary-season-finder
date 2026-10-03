@@ -41,7 +41,9 @@ ROOT = "https://hoopsmatic.com/salary-season-finder"
 #: reaching a reader. A test asserts every one of them against the built page,
 #: which is what stops a heading being typed here from memory. The root and the
 #: hubs carry no content expectation: the root is the tool itself, and a hub is
-#: a list of links with no section to lose.
+#: a list of links with no section to lose. The season entry names one fixed
+#: season rather than the current one: a past season page renders the same
+#: sections, and the test below would fail the day the slug stopped existing.
 COHORT_EARNINGS = "Highest career earnings"
 
 PAGES = (
@@ -60,6 +62,8 @@ PAGES = (
      (COHORT_EARNINGS,)),
     (ROOT + "/pick/8/", "Highest-Paid No. 8 Picks in NBA History | HoopsMatic",
      (COHORT_EARNINGS,)),
+    (ROOT + "/season/2026-27/", "NBA Salaries 2026-27 | HoopsMatic",
+     ("Team payrolls",)),
     (ROOT + "/position/guard/", "Highest-Paid NBA Guards of All Time | HoopsMatic",
      (COHORT_EARNINGS,)),
     (ROOT + "/region/europe/", "Highest-Paid European Players in NBA History | HoopsMatic",
