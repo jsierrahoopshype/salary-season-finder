@@ -27,17 +27,51 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import factoids as F  # noqa: E402
-from digest_nuggets import MILESTONES  # noqa: E402
+#: The career totals worth a line: the first fifty million, and every hundred
+#: million after it. The engine's own ladder has rungs at 150 and 250, which on
+#: a timeline reads as a man passing something every other season.
+MARKS = (50000000, 100000000, 200000000, 300000000, 400000000, 500000000,
+         600000000, 700000000)
 
 from . import config as C  # noqa: E402
 from .seasons import _noun  # noqa: E402
 
-#: The cohorts a timeline talks about. Each has a page, so each can be linked,
-#: and each is one a reader recognises as a group. Pick ranges and college
-#: positions are left out: they are real cohorts and they are not how anybody
-#: describes a career.
-KINDS = ("college", "nationality", "draft_class", "draft_slot", "position",
-         "region")
+#: The cohorts a timeline talks about. Each is one a reader recognises as a
+#: group. Pick ranges and college positions are left out: they are real
+#: cohorts and they are not how anybody describes a career. So is the exact
+#: pick: "the highest salary ever for a No. 27 pick" is a group of one draft
+#: slot and nobody's idea of an achievement, so a draft standing is read off
+#: the ranges below instead.
+KINDS = ("college", "nationality", "draft_class", "position", "region")
+
+#: Where a draft runs out, and what each boundary is called. A man is measured
+#: against everyone taken after the boundary he cleared, so a 27th pick is one
+#: of the men drafted outside the top 5, outside the top 10, outside the
+#: lottery and outside the top 20. The claim worth making is the broadest of
+#: those he holds, which is the smallest cutoff: being the best-paid man taken
+#: outside the top 5 says more than being the best-paid taken outside the top
+#: 20, because it is the bigger field.
+DRAFT_RANGES = (
+    (5, "player drafted outside the top 5"),
+    (10, "player drafted outside the top 10"),
+    (14, "player drafted outside the lottery"),
+    (20, "player drafted outside the top 20"),
+    (30, "player drafted in the second round"),
+)
+
+#: What an undrafted man is measured against.
+UNDRAFTED = "undrafted player"
+
+#: The round figures a "first to be paid this much" claim is allowed to use.
+#: The exact salary is not a threshold anybody crossed on purpose, and "the
+#: first Duke player paid $31,742,000 in a season" is a coincidence rather
+#: than a milestone.
+STEPS = (10000000, 20000000, 30000000, 40000000, 50000000, 60000000)
+
+#: A draft class has no record worth reporting in its first two seasons: the
+#: top pick is the best-paid man in it by the rookie scale, which is a fact
+#: about the scale and not about him.
+CLASS_GRACE = 2
 
 #: How far down a career-earnings list is worth a line. Past this, moving a
 #: place is arithmetic rather than news: a man's rank inside his draft class
@@ -59,12 +93,12 @@ PER_SEASON = 2
 #: how the money moved, then what a career adds up to.
 STRENGTH = {
     "league_top_start": 0, "league_top_end": 1,
-    "list_top": 7,
     "high_set": 2, "high_lost": 3,
-    "top_start": 4, "top_end": 5,
-    "move_top": 6, "league_top10_first": 7,
-    "milestone": 8, "move_five": 9,
-    "list_up": 10, "list_down": 11,
+    "threshold_first": 4,
+    "top_start": 5, "top_end": 6,
+    "move_top": 7, "league_top10_first": 8,
+    "list_top": 9, "milestone": 10, "move_five": 11,
+    "list_up": 12, "list_down": 13,
 }
 
 
@@ -94,6 +128,7 @@ def build(idx):
     held = collections.defaultdict(set)   # player -> scopes he was top of
     ranked = collections.defaultdict(dict)  # scope -> {player: his place}
     passed = set()     # milestones each man has already crossed
+    steps = {}         # scope -> the biggest round figure anyone in it crossed
     seen_top10 = set()
     previous = {}      # player -> his salary the season before
 
@@ -105,6 +140,7 @@ def build(idx):
         _statuses(idx, season, rows, sizes, scopes_of, held, found, here)
         if paid:
             _records(idx, season, rows, sizes, scopes_of, high, found, here)
+            _thresholds(idx, season, rows, sizes, scopes_of, steps, found)
         _moves(idx, season, rows, previous, found)
         _league(idx, season, rows, found, seen_top10, here)
 
@@ -151,15 +187,36 @@ def _thin(events):
 # -- the scopes one record belongs to ---------------------------------------
 
 def _scopes(idx, record):
-    """Every group a season of his is measured inside, cohorts and his team."""
+    """Every group a season of his is measured inside, cohorts and his team.
+
+    A draft standing comes in as one scope per boundary he cleared, so the
+    writer can take the broadest of them he holds rather than naming his pick.
+    """
     out = []
-    for kind, key, _phrase in F._cohorts_for(record, idx):
+    allowed = F._cohorts_for(record, idx)
+    for kind, key, _phrase in allowed:
         if kind in KINDS:
             out.append((kind, key))
+    if allowed:
+        # The same identity guard _cohorts_for applies: a name whose draft
+        # fields belong to a son of the same name joins no draft group.
+        for scope in _draft_scopes(record):
+            out.append(scope)
     for code in F.team_codes(record):
         if code in idx.franchises:
             out.append(("franchise", code))
     return out
+
+
+def _draft_scopes(record):
+    """Every draft boundary a man was taken after, broadest first."""
+    pick = record.get("draft_pick")
+    if pick is None and record.get("draft_year") is None:
+        return [("draft_range", "undrafted")]
+    if not pick:
+        return []
+    return [("draft_range", str(cut)) for cut, _label in DRAFT_RANGES
+            if pick > cut]
 
 
 def _sizes(idx):
@@ -202,7 +259,7 @@ def _statuses(idx, season, rows, sizes, scopes_of, held, found, here):
 
     tops = collections.defaultdict(set)
     for scope, (_salary, player) in best.items():
-        if _countable(scope, sizes):
+        if _countable(scope, sizes) and _green(scope, season):
             tops[player].add(scope)
 
     for player, record in here.items():
@@ -227,6 +284,24 @@ def _statuses(idx, season, rows, sizes, scopes_of, held, found, here):
             held[player] = tops[player]
         elif player in here:
             held[player] = set()
+
+
+def _green(scope, season):
+    """Whether a scope is old enough that season for a claim about it.
+
+    A draft class takes two seasons to mean anything: in the first of them the
+    top pick leads it because the rookie scale says so.
+    """
+    kind, key = scope
+    if kind != "draft_class":
+        return True
+    try:
+        first = int(key)
+    except (TypeError, ValueError):
+        return True
+    # season_key("2011-12") is 2012, so the class of 2011 plays its first two
+    # seasons on keys 2012 and 2013 and is fair game from 2014 onward.
+    return F.season_key(season) >= first + 1 + CLASS_GRACE
 
 
 def _countable(scope, sizes):
@@ -255,7 +330,7 @@ def _records(idx, season, rows, sizes, scopes_of, high, found, here):
             continue
         salary = record.get("salary") or 0
         for scope in scopes_of[id(record)]:
-            if not _countable(scope, sizes):
+            if not _countable(scope, sizes) or not _green(scope, season):
                 continue
             if scope not in best or salary > best[scope][0]:
                 best[scope] = (salary, player)
@@ -282,6 +357,38 @@ def _records(idx, season, rows, sizes, scopes_of, high, found, here):
 
 
 # -- how the money moved ----------------------------------------------------
+
+def _thresholds(idx, season, rows, sizes, scopes_of, steps, found):
+    """The first man in a group paid a round figure or more in one season.
+
+    The figure is one of STEPS, never his salary: being the first Duke player
+    paid $30 million or more is a threshold somebody crossed; being the first
+    paid $31,742,000 is arithmetic. Only the man who crossed it first gets the
+    line, which is what the running high per group is for.
+    """
+    best = {}
+    for record in rows:
+        if F.is_split_season(record):
+            continue
+        player = idx.canonical(record["player"])
+        if (player, season) in idx.impossible:
+            continue
+        salary = record.get("salary") or 0
+        for scope in scopes_of[id(record)]:
+            if not _countable(scope, sizes) or not _green(scope, season):
+                continue
+            if scope not in best or salary > best[scope][0]:
+                best[scope] = (salary, player)
+
+    for scope, (salary, player) in sorted(best.items(), key=lambda kv: str(kv[0])):
+        standing = steps.get(scope, 0)
+        crossed = max((step for step in STEPS if salary >= step), default=0)
+        if crossed > standing:
+            steps[scope] = crossed
+            found[(player, season)].append({
+                "kind": "threshold_first", "scope": scope, "value": crossed,
+                "size": sizes.get(scope, 0)})
+
 
 def _moves(idx, season, rows, previous, found):
     """The biggest raises and cuts in the league that season.
@@ -346,7 +453,7 @@ def _milestones(season, rows, idx, career, passed, found):
         if not idx.career_rankable(player):
             continue
         total = career[player]
-        for milestone in MILESTONES:
+        for milestone in MARKS:
             if total >= milestone and (player, milestone) not in passed:
                 passed.add((player, milestone))
                 found[(player, season)].append({
@@ -358,7 +465,8 @@ def _lists(idx, season, rows, sizes, scopes_of, career, members, ranked, found):
     touched = set()
     for record in rows:
         for scope in scopes_of[id(record)]:
-            if scope[0] != "franchise" and _countable(scope, sizes):
+            if (scope[0] != "franchise" and _countable(scope, sizes)
+                    and _green(scope, season)):
                 touched.add(scope)
     here = {idx.canonical(r["player"]) for r in rows}
     for scope in sorted(touched, key=str):
@@ -382,18 +490,16 @@ def _lists(idx, season, rows, sizes, scopes_of, career, members, ranked, found):
         ranked[scope] = places
 
 
-def stable_pick(options, *parts):
-    """One of ``options``, fixed by what it is about so a rebuild repeats it."""
-    key = "|".join(str(part) for part in parts)
-    digest = hashlib.sha1(key.encode("utf-8")).hexdigest()
-    return options[int(digest, 16) % len(options)]
+def _range_noun(key):
+    """What a draft boundary is called in a sentence."""
+    if key == "undrafted":
+        return UNDRAFTED
+    for cut, label in DRAFT_RANGES:
+        if str(cut) == key:
+            return label
+    return ""
 
 
-# --------------------------------------------------------------------------
-# writing it
-# --------------------------------------------------------------------------
-
-#: Ranks a line spells out. Past these a digit is how a place is read.
 WORDS = ("", "first", "second", "third", "fourth", "fifth", "sixth",
          "seventh", "eighth", "ninth", "tenth")
 
@@ -404,70 +510,171 @@ PAST, NOW, LATER = "past", "now", "later"
 
 
 def lines(idx, records, events):
-    """[(season, one line)] for one man, newest season first.
+    """[(season, one sentence)] for one man, newest season first.
 
-    ``events`` is what build() found, and a season it found nothing in gets no
-    line at all. Openings are varied and never repeat from the line before, so
-    a career does not read as the same sentence forty times.
+    One sentence a season. Where the season's two events share a number or a
+    subject they are said together, with the number given once; where they
+    have nothing to do with each other only the stronger is kept, because two
+    unrelated facts in one line read as a list.
+
+    A season build() found nothing in gets no line. No two lines open on the
+    same word, and no phrasing runs for more than two seasons together, so a
+    career does not read as the same sentence forty times.
     """
-    out, above = [], ""
+    out = []
     if not records:
         return out
     player = idx.canonical(records[0]["player"])
     seasons = sorted({r["season"] for r in records},
                      key=F.season_key, reverse=True)
+    word, recent = "", []
     for season in seasons:
         found = events.get((player, season)) or []
         if not found:
             continue
-        # The first clause of a line avoids how the line above it opened; a
-        # clause after it avoids the one in front of it. Both rules at once, so
-        # neither two lines nor two clauses start the same way.
-        said, avoid = [], above
-        for event in found:
-            text = _say(idx, event, _tense(idx, season), season, avoid=avoid)
-            if text:
-                said.append(text)
-                avoid = _opening(text)
-        if said:
-            out.append((season, " ".join(said)))
-            above = _opening(said[0])
+        tense = _tense(idx, season)
+        text, pattern = _merged(idx, found, tense, season, word, recent)
+        if not text:
+            text, pattern = _single(idx, found, tense, season, word, recent)
+        if not text:
+            continue
+        out.append((season, text))
+        word = _first_word(text)
+        recent = (recent + [pattern])[-2:]
     return out
 
 
+def _first_word(text):
+    """The word a line opens on, which is what must not repeat."""
+    return (text.split() or [""])[0].strip(",.'").lower()
+
+
+def _allowed(forms, kind, word, recent):
+    """The forms a line may take here, after the two repetition rules.
+
+    A form is out if it opens on the word the line above opened on, and out if
+    its phrasing has already run for the last two seasons. Where that leaves
+    nothing, the word rule is dropped first: a repeated opening is a smaller
+    fault than saying the wrong thing.
+    """
+    tired = [i for i, _f in enumerate(forms)
+             if recent.count((kind, i)) >= 2]
+    fresh = [i for i, form in enumerate(forms)
+             if i not in tired and _first_word(form) != word]
+    return fresh or [i for i, _f in enumerate(forms) if i not in tired] \
+        or list(range(len(forms)))
+
+
+def _pick(forms, kind, word, recent, *parts):
+    """(the form, its pattern) for one clause."""
+    options = _allowed(forms, kind, word, recent)
+    chosen = options[int(hashlib.sha1(
+        "|".join(str(p) for p in parts).encode("utf-8")).hexdigest(),
+        16) % len(options)]
+    return forms[chosen], (kind, chosen)
+
+
+def _single(idx, found, tense, season, word, recent):
+    """The strongest event a season had, on its own."""
+    for event in found:
+        options = _PHRASES.get(_family(event))
+        bits = _bits(idx, event, season)
+        if not options or bits is None:
+            continue
+        forms = options.get(tense) or options.get(PAST) or ()
+        if not forms:
+            continue
+        form, pattern = _pick(forms, _family(event), word, recent,
+                              event["kind"], season, bits.get("who", ""))
+        return form.format(**bits), pattern
+    return "", None
+
+
+def _family(event):
+    """Which set of phrasings an event takes.
+
+    A franchise says it its own way: "the Bucks single-season record" is a
+    sentence and "the player on the Bucks single-season record" is not.
+    """
+    kind = event["kind"]
+    if (event.get("scope") or ("", ""))[0] == "franchise" \
+            and kind + "_team" in _PHRASES:
+        return kind + "_team"
+    return kind
+
+
+#: What can be said in one breath, as (the strongest kind, the one after it).
+#: A record and a record share a figure; a milestone and a place on a list are
+#: both about the same career total.
+MERGES = (("high_set", "high_set"),
+          ("milestone", "list_up"), ("milestone", "list_down"),
+          ("milestone", "list_top"))
+
+
+def _merged(idx, found, tense, season, word, recent):
+    """One sentence carrying both of a season's events, where they belong together."""
+    if len(found) < 2:
+        return "", None
+    first, second = found[0], found[1]
+    if (first["kind"], second["kind"]) not in MERGES:
+        return "", None
+    one, two = _bits(idx, first, season), _bits(idx, second, season)
+    if one is None or two is None:
+        return "", None
+
+    if first["kind"] == "high_set":
+        if first.get("value") != second.get("value"):
+            return "", None
+        # The cohort reads first and the team second, which is how the fact is
+        # spoken: the most ever paid to an international player, and a club
+        # record on top of it.
+        cohort, team = first, second
+        if (first.get("scope") or ("",))[0] == "franchise":
+            cohort, team = second, first
+        one, two = _bits(idx, cohort, season), _bits(idx, team, season)
+        tail = ("a {} record".format(two["team"])
+                if (team.get("scope") or ("",))[0] == "franchise"
+                else "the most ever for {} {}".format(two["a"], two["who"]))
+        forms = _MERGED["high_set"].get(tense) or _MERGED["high_set"][PAST]
+        form, pattern = _pick(forms, "merged_high", word, recent,
+                              season, one.get("who", ""))
+        return form.format(tail=tail, **one), pattern
+
+    place = ("the most of any {}".format(two["group"])
+             if second["kind"] == "list_top"
+             else "{} among {}".format(two["place"], two["group"]))
+    forms = _MERGED["milestone"].get(tense) or _MERGED["milestone"][PAST]
+    form, pattern = _pick(forms, "merged_milestone", word, recent,
+                          season, one.get("money", ""))
+    return form.format(place=place, **one), pattern
+
+
+_MERGED = {
+    "high_set": {
+        PAST: ("His {money} was the most ever paid to {a} {who} and {tail}.",
+               "At {money} he was the best-paid {who} the league had seen, and {tail}."),
+        NOW: ("His {money} is the most ever paid to {a} {who} and {tail}.",
+              "At {money} he is the best-paid {who} the league has seen, and {tail}."),
+        LATER: ("His {money} would be the most ever paid to {a} {who} and {tail}.",
+                "At {money} he would be the best-paid {who} the league has seen, and {tail}."),
+    },
+    "milestone": {
+        PAST: ("Passed {money} in career earnings, {place}.",
+               "Crossed {money} in career earnings, {place}."),
+        NOW: ("Will pass {money} in career earnings this season, {place}.",
+              "Will cross {money} in career earnings this season, {place}."),
+        LATER: ("Would pass {money} in career earnings, {place}.",
+                "Would cross {money} in career earnings, {place}."),
+    },
+}
+
+
 def _tense(idx, season):
+    """Which tense a season takes: it happened, it is happening, or it would."""
     key = F.season_key(season)
     if key > idx.current_key:
         return LATER
     return NOW if key == idx.current_key else PAST
-
-
-def _opening(text):
-    """The first two words of a line, which is what must not repeat."""
-    return " ".join(text.split()[:2]).lower()
-
-
-def _say(idx, event, tense, season, avoid=""):
-    """One event as one clause, in the tense the season takes."""
-    kind = event["kind"]
-    # A franchise takes its own wording: "the Bucks single-season record" is a
-    # sentence and "the player on the Bucks single-season record" is not.
-    if (event.get("scope") or ("", ""))[0] == "franchise":
-        options = _PHRASES.get(kind + "_team") or _PHRASES.get(kind)
-    else:
-        options = _PHRASES.get(kind)
-    if not options:
-        return ""
-    bits = _bits(idx, event, season)
-    if bits is None:
-        return ""
-    forms = options.get(tense) or options.get(PAST) or ()
-    if not forms:
-        return ""
-    choices = [f for f in forms if _opening(f.format(**bits)) != avoid] or list(forms)
-    form = stable_pick(choices, event["kind"], season, bits.get("who", ""),
-                       bits.get("name", ""))
-    return form.format(**bits)
 
 
 def _bits(idx, event, season):
@@ -477,7 +684,7 @@ def _bits(idx, event, season):
     scope = event.get("scope")
     if scope is not None:
         kind, key = scope
-        noun = _noun(idx, kind, key)
+        noun = _range_noun(key) if kind == "draft_range" else _noun(idx, kind, key)
         if not noun:
             return None
         out["team"] = noun
@@ -498,7 +705,7 @@ def _bits(idx, event, season):
 
 
 #: Two ways of saying each event, so no line reads like the one above it, and
-#: one per tense, because a contracted season has not happened.
+#: one set per tense, because a contracted season has not happened.
 _PHRASES = {
     "league_top_start": {
         PAST: ("Became the highest-paid player in the NBA.",
@@ -510,43 +717,51 @@ _PHRASES = {
     },
     "league_top_end": {
         PAST: ("Lost the league's biggest salary to {name}.",
-               "Gave up the NBA's top salary to {name}."),
+               "{name} took over the NBA's top salary."),
         NOW: ("No longer holds the league's biggest salary, which is {name}'s.",
-              "Has been passed by {name} at the top of the league."),
+              "{name} has the NBA's top salary now."),
         LATER: ("Would lose the league's biggest salary to {name}.",
-                "Would give up the NBA's top salary to {name}."),
+                "{name} would take over the NBA's top salary."),
     },
     "high_set": {
-        PAST: ("Set the biggest single-season salary ever paid to {a} {who}, {money}.",
-               "Became the first {who} paid {money} in a season."),
-        NOW: ("Holds the biggest single-season salary ever paid to {a} {who}, {money}.",
-              "Is the first {who} paid {money} in a season."),
-        LATER: ("Would set the biggest single-season salary ever paid to {a} {who}, {money}.",
-                "Would be the first {who} paid {money} in a season."),
+        PAST: ("Set a new high for {a} {who}, {money}.",
+               "Raised the single-season record among {group} to {money}."),
+        NOW: ("Holds the single-season high among {group}, {money}.",
+              "Carries the single-season record among {group}, {money}."),
+        LATER: ("Would set a new high for {a} {who}, {money}.",
+                "Would raise the single-season record among {group} to {money}."),
     },
     "high_set_team": {
-        PAST: ("Set the biggest single-season salary in {team} history, {money}.",
-               "Pushed the {team} single-season record to {money}."),
-        NOW: ("Holds the biggest single-season salary in {team} history, {money}.",
-              "Carries the {team} single-season record, {money}."),
-        LATER: ("Would set the biggest single-season salary in {team} history, {money}.",
-                "Would push the {team} single-season record to {money}."),
+        PAST: ("Set a new high for a {team} player, {money}.",
+               "Raised the {team} single-season record to {money}."),
+        NOW: ("Holds the {team} single-season record, {money}.",
+              "Carries the biggest salary in {team} history, {money}."),
+        LATER: ("Would set a new high for a {team} player, {money}.",
+                "Would raise the {team} single-season record to {money}."),
     },
     "high_lost": {
-        PAST: ("Saw {name} pass the biggest salary ever paid to {a} {who}.",
-               "Lost the single-season high among {group} to {name}."),
-        NOW: ("Has seen {name} pass the biggest salary ever paid to {a} {who}.",
-              "No longer holds the single-season high among {group}, which is {name}'s."),
-        LATER: ("Would see {name} pass the biggest salary ever paid to {a} {who}.",
-                "Would lose the single-season high among {group} to {name}."),
+        PAST: ("Lost the single-season record among {group} to {name}.",
+               "{name} took over the single-season high among {group}."),
+        NOW: ("No longer holds the single-season high among {group}, which is {name}'s.",
+              "{name} holds the single-season record among {group} now."),
+        LATER: ("Would lose the single-season record among {group} to {name}.",
+                "{name} would take over the single-season high among {group}."),
     },
     "high_lost_team": {
         PAST: ("Lost the {team} single-season record to {name}.",
-               "Saw {name} pass his {team} single-season record."),
-        NOW: ("Has lost the {team} single-season record to {name}.",
-              "Watches {name} hold the {team} single-season record he set."),
+               "{name} took over the {team} single-season record."),
+        NOW: ("No longer holds the {team} single-season record, which is {name}'s.",
+              "{name} holds the {team} single-season record now."),
         LATER: ("Would lose the {team} single-season record to {name}.",
-                "Would see {name} pass his {team} single-season record."),
+                "{name} would take over the {team} single-season record."),
+    },
+    "threshold_first": {
+        PAST: ("Became the first {who} paid {money} or more in a season.",
+               "Was the first {who} to be paid {money} or more in a season."),
+        NOW: ("Is the first {who} paid {money} or more in a season.",
+              "Becomes the first {who} paid {money} or more in a season."),
+        LATER: ("Would be the first {who} paid {money} or more in a season.",
+                "Would become the first {who} paid {money} or more in a season."),
     },
     "top_start": {
         PAST: ("Became the highest-paid {who}.",
@@ -558,11 +773,11 @@ _PHRASES = {
     },
     "top_end": {
         PAST: ("Lost the highest-paid {who} spot to {name}.",
-               "Was passed as the highest-paid {who} by {name}."),
-        NOW: ("Has been passed as the highest-paid {who} by {name}.",
-              "No longer the highest-paid {who}, a spot {name} holds."),
+               "{name} took over as the highest-paid {who}."),
+        NOW: ("No longer the highest-paid {who}, a spot {name} holds.",
+              "{name} is the highest-paid {who} now."),
         LATER: ("Would lose the highest-paid {who} spot to {name}.",
-                "Would be passed as the highest-paid {who} by {name}."),
+                "{name} would take over as the highest-paid {who}."),
     },
     "move_top": {
         PAST: ("Took the biggest {way} in the league, {money}.",
@@ -591,18 +806,10 @@ _PHRASES = {
     "milestone": {
         PAST: ("Passed {money} in career earnings.",
                "Crossed {money} in career earnings."),
-        NOW: ("Passes {money} in career earnings.",
-              "Crosses {money} in career earnings."),
+        NOW: ("Will pass {money} in career earnings this season.",
+              "Will cross {money} in career earnings this season."),
         LATER: ("Would pass {money} in career earnings.",
                 "Would cross {money} in career earnings."),
-    },
-    "list_up": {
-        PAST: ("Moved up to {place} among {group} in career earnings.",
-               "Climbed to {place} on the list of highest-paid {group} ever."),
-        NOW: ("Sits {place} among {group} in career earnings.",
-              "Ranks {place} on the list of highest-paid {group} ever."),
-        LATER: ("Would move up to {place} among {group} in career earnings.",
-                "Would climb to {place} on the list of highest-paid {group} ever."),
     },
     "list_top": {
         PAST: ("Became the biggest career earner among {group}.",
@@ -611,6 +818,14 @@ _PHRASES = {
               "Leads the career-earnings list for {group}."),
         LATER: ("Would become the biggest career earner among {group}.",
                 "Would move to the top of the career-earnings list for {group}."),
+    },
+    "list_up": {
+        PAST: ("Moved up to {place} among {group} in career earnings.",
+               "Climbed to {place} on the list of highest-paid {group} ever."),
+        NOW: ("Sits {place} among {group} in career earnings.",
+              "Ranks {place} on the list of highest-paid {group} ever."),
+        LATER: ("Would move up to {place} among {group} in career earnings.",
+                "Would climb to {place} on the list of highest-paid {group} ever."),
     },
     "list_down": {
         PAST: ("Dropped to {place} on the list of highest-paid {group} ever.",
