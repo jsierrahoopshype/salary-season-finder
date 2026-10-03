@@ -808,6 +808,11 @@ def _total(item):
     return sum(_by_season(item.get("members") or []).values())
 
 
+#: Where a one-season move stops being a rise and reads as a jump. Under it
+#: "rises" is the honest verb; a fifth of a salary in one season is not.
+STEP_JUMP = 0.20
+
+
 def step_verb(now, before):
     """The verb a changed number takes, with no percentage in it.
 
@@ -823,6 +828,10 @@ def step_verb(now, before):
             return over
         if ratio >= low:
             return exact
+    if ratio >= 1 + STEP_JUMP:
+        return "jumps"
+    if ratio <= 1 - STEP_JUMP:
+        return "drops"
     if now > before:
         return "rises"
     if now < before:
@@ -833,9 +842,10 @@ def step_verb(now, before):
 def changed_salary(item, whose=None):
     """A number that moved: the first season it moved in, old to new.
 
-    One number a reader can hold, in the season nearest to now, and then how
-    many seasons behind it moved with it. The old wording called a run of them
-    "redrawn", which says a sheet changed without saying what it now says.
+    One number a reader can hold, in the season nearest to now, and then what
+    the whole move is worth: the money added to or taken off what he is owed,
+    and the season it runs to. "His next four seasons move with it" said that
+    they moved and never said by how much, which is the only part worth a line.
     """
     if whose is None:
         whose = possessive(item["player"])
@@ -855,32 +865,40 @@ def changed_salary(item, whose=None):
         whose, first, verb, F.fmt_money(now), F.fmt_money(was), tail)
 
 
-def _rest_of_run(item):
-    """"and his next two seasons go up with it", for the seasons behind it.
+#: A net move smaller than this is not worth a figure of its own: the seasons
+#: behind the first one changed, and saying so is all the line can carry.
+NET_FLOOR = 0.05
 
-    "With it" only where they went the same way as the season in front of them.
-    Where they went the other way they are a second fact about the same day, so
-    the clause says so instead of claiming they followed.
+
+def _rest_of_run(item):
+    """What the seasons behind the first one are worth, as a clause.
+
+    The money the day put on or took off what he is owed, and the season it
+    runs to. Where the seasons moved in different directions the span is not
+    his: a run that rises then falls is not money owed "through" anything, so
+    the clause gives the figure without a span, and where the net is too small
+    for a figure it says only that the later seasons moved.
     """
     members = item.get("members") or []
     rest = members[1:]
     if not rest:
         return ""
-    first = members[0]
-    led = _way((first.get("salary") or 0) - (first.get("was") or 0))
-    ways = {_way((m.get("salary") or 0) - (m.get("was") or 0)) for m in rest}
-    one = len(rest) == 1
-    how_many = "season" if one else "{} seasons".format(_spell(len(rest)))
-    if len(ways) > 1:
-        return ", and his next {} {} with it".format(
-            how_many, "moves" if one else "move")
-    way = ways.pop()
-    move = {1: "goes up" if one else "go up",
-            -1: "comes down" if one else "come down",
-            0: "holds" if one else "hold"}[way]
-    if way == led:
-        return ", and his next {} {} with it".format(how_many, move)
-    return ", while his next {} {}".format(how_many, move)
+    now = sum((m.get("salary") or 0) for m in members)
+    was = sum((m.get("was") or 0) for m in members)
+    net = now - was
+    ways = {_way((m.get("salary") or 0) - (m.get("was") or 0)) for m in members}
+    mixed = len(ways) > 1
+    small = not was or abs(net) < was * NET_FLOOR
+
+    if mixed and small:
+        return ", and his later seasons change too"
+    if not net:
+        return ", and his later seasons change too"
+    moved = "adding {} to".format(F.fmt_money(net)) if net > 0 \
+        else "cutting {} from".format(F.fmt_money(-net))
+    if mixed:
+        return ", {} what he's owed".format(moved)
+    return ", {} what he's owed through {}".format(moved, members[-1]["season"])
 
 
 def _way(difference):
@@ -1248,13 +1266,39 @@ def render(items, when, scale, tolerance, context):
 
 
 # ── posting it ─────────────────────────────────────────────────────────
-def post(url, text):
-    # Slack unfurls every link in a post by default, which on a digest of ten
-    # items is ten preview cards nobody asked for.
-    body = json.dumps({
+def payload(text):
+    """What goes on the wire, as the dict Slack reads it from.
+
+    ``mrkdwn`` is what makes Slack parse <url|text>; without it the post
+    arrives with the angle brackets in it. Markdown is not an option on either
+    setting, which is why every link in this file is built by link() and why
+    no_markdown_links() refuses a post that carries one.
+
+    Slack unfurls every link in a post by default, which on a digest of ten
+    items is ten preview cards nobody asked for.
+    """
+    return {
         "text": text, "mrkdwn": True,
         "unfurl_links": False, "unfurl_media": False,
-    }).encode("utf-8")
+    }
+
+
+#: What a Markdown link looks like, which is what Slack prints verbatim.
+MARKDOWN_LINK = "]("
+
+
+def no_markdown_links(text):
+    """Raise rather than post a line Slack would print the brackets of."""
+    if MARKDOWN_LINK in text:
+        where = text.index(MARKDOWN_LINK)
+        raise ValueError(
+            "a Markdown link reached the digest, which Slack prints verbatim: "
+            "...{}...".format(text[max(0, where - 60):where + 20]))
+    return text
+
+
+def post(url, text):
+    body = json.dumps(payload(no_markdown_links(text))).encode("utf-8")
     request = urllib.request.Request(
         url, data=body, headers={"Content-Type": "application/json"})
     with urllib.request.urlopen(request, timeout=30) as response:
@@ -1330,6 +1374,10 @@ def main(argv=None):
     context["slugs"] = {"player": context["slugs"]}
     context["slugs"].update(load_cohort_slugs())
     posts = render(items, today, scale, tolerance, context)
+    # Checked before a word of it goes out, and in a dry run too, so a
+    # Markdown link is caught where it is cheap rather than in Slack.
+    for text in posts:
+        no_markdown_links(text)
 
     for text in posts:
         print("\n" + "-" * 60)
