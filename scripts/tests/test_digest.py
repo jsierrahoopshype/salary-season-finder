@@ -308,7 +308,7 @@ def test_a_salary_change_is_never_collapsed():
     old = payload([rec("Min Man", CURRENT, 2553508)])
     new = payload([rec("Min Man", CURRENT, 1800000)])
     _items, posts = digest(old, new)
-    assert "Min Man's 2026-27 salary falls to $1.8 million from $2.6 million." \
+    assert "Min Man's 2026-27 salary drops to $1.8 million from $2.6 million." \
         in posts[0]
     assert "Also:" not in posts[0]
 
@@ -492,17 +492,19 @@ def test_several_salary_changes_to_one_player_are_one_sentence():
     items, posts = digest(old, new)
     assert [i["kind"] for i in items] == ["salary_run"]
     assert ("Redrawn's 2027-28 salary rises to $26.7 million from $25.8 "
-            "million, and his next two seasons go up with it.") in posts[0]
+            "million, adding $39.7 million to what he's owed through "
+            "2029-30.") in posts[0]
     assert "redrawn" not in posts[0].lower().replace("redrawn's", "")
+    assert "with it" not in posts[0]
 
 
 def test_one_season_on_its_own_keeps_its_own_sentence():
     old = payload([rec("Single", CURRENT, 10000000)])
     new = payload([rec("Single", CURRENT, 14000000)])
     _items, posts = digest(old, new)
-    assert "Single's 2026-27 salary rises to $14 million from $10 million." \
+    assert "Single's 2026-27 salary jumps to $14 million from $10 million." \
         in posts[0]
-    assert "with it" not in posts[0]
+    assert "owed" not in posts[0]
 
 
 def test_a_run_of_minimum_seasons_collapses_with_the_single_ones():
@@ -783,8 +785,7 @@ def test_the_career_nugget_names_the_milestone_and_the_season():
     nugget, _idx = career_nugget_for(
         paid_seasons=[(CURRENT, 45000000)], future=[("2027-28", 48000000)])
     assert nugget is not None
-    assert nugget["opener"] == ("He's already first in career earnings and "
-                                "would pass $50 million in 2027-28")
+    assert nugget["opener"] == "He'd pass $50 million in career earnings in 2027-28"
     assert nugget["detail"]["milestone"] == 50000000
     assert nugget["detail"]["crosses_in"] == "2027-28"
 
@@ -811,7 +812,8 @@ def test_the_most_decorated_retired_men_passed_are_named():
     assert names == ["All Nba Man"]
     assert "Plain Man" not in nugget["opener"]
     assert "Mvp Man" not in nugget["opener"]
-    assert "going past All Nba Man on the way" in nugget["opener"]
+    assert "going past" not in nugget["opener"]
+    assert "more than All Nba Man " in nugget["opener"]
 
 
 def test_a_career_short_of_the_next_milestone_has_no_career_nugget():
@@ -820,13 +822,16 @@ def test_a_career_short_of_the_next_milestone_has_no_career_nugget():
     assert nugget is None
 
 
-def test_a_standing_past_the_hundredth_name_is_not_printed():
-    assert N._standing(461, 300) == ""
-    assert N._standing(5, None) == "fifth in career earnings"
-    assert N._standing(144, None) == ""
-    assert "among players on a roster" in N._standing(400, 52)
-    # past the words, the digit is how a rank is read
-    assert N._standing(12, None) == "12th in career earnings"
+def test_a_career_nugget_never_prints_a_rank():
+    """A milestone is measured against a man or against nothing: "fifth in
+    career earnings" is a place in a list, and the ranks stay on the detail
+    for whoever wants them."""
+    nugget, _idx = career_nugget_for(
+        paid_seasons=[(CURRENT, 45000000)], future=[("2027-28", 48000000)])
+    assert nugget["opener"] == "He'd pass $50 million in career earnings in 2027-28"
+    assert nugget["detail"]["rank_all"] == 1
+    for word in ("first", "1st", "already", "of all time", "on a roster"):
+        assert word not in nugget["opener"]
 
 
 # --------------------------------------------------------------------------
@@ -1272,13 +1277,44 @@ def test_nobody_decorated_enough_means_no_names():
     assert "on the way" not in nugget["opener"]
 
 
-def test_a_career_nugget_gives_the_standing_or_the_names_not_both():
+def test_a_career_nugget_measures_the_milestone_against_the_man_not_a_rank():
     nugget, _idx = career_nugget_for(
         paid_seasons=[(CURRENT, 45000000)],
         future=[("2027-28", 48000000)],
         legends=[("Top 75 Man", 48000000, ["NBA Top-75"])])
-    assert "going past" in nugget["opener"]
-    assert "already stands" not in nugget["opener"]
+    assert nugget["opener"] == (
+        "He'd pass $50 million in career earnings in 2027-28, more than "
+        "Top 75 Man made in his whole career")
+    assert "already" not in nugget["opener"]
+    assert "going past" not in nugget["opener"]
+
+
+def test_the_legend_clause_is_one_of_two_and_never_changes_between_builds():
+    """Two ways of saying it, so a digest does not read as one sentence over
+    and over, and a stable hash so a rebuild says it the same way."""
+    assert N.LEGEND_FORMS == (
+        "more than {name} made in his whole career",
+        "more than {name} earned in his {seasons} seasons",
+    )
+    legend = {"name": "Latrell Sprewell", "seasons": 13}
+    once = N._legend_clause(None, "Jalen Duren", "2028-29", legend)
+    assert once in (
+        "more than Latrell Sprewell made in his whole career",
+        "more than Latrell Sprewell earned in his 13 seasons",
+    )
+    for _ in range(5):
+        assert N._legend_clause(None, "Jalen Duren", "2028-29", legend) == once
+    # a different man gets his own answer, not the same one every time
+    answers = {N._legend_clause(None, "Player {}".format(i), CURRENT, legend)
+               for i in range(12)}
+    assert len(answers) == 2
+
+
+def test_a_one_season_career_is_never_given_a_season_count():
+    """"more than X earned in his 1 seasons" is not a sentence."""
+    legend = {"name": "One Year Man", "seasons": 1}
+    assert N._legend_clause(None, "Any Man", CURRENT, legend) == (
+        "more than One Year Man made in his whole career")
 
 
 # --------------------------------------------------------------------------
@@ -1518,27 +1554,47 @@ def test_a_changed_number_is_never_called_redrawn():
     text = spoken(old, new)
     assert text.startswith(
         "Harden Man's 2026-27 salary rises to $30.6 million from $28.1 "
-        "million, and his next two seasons go up with it.")
+        "million, adding $9.2 million to what he's owed through 2028-29.")
     assert "redrawn" not in text.lower()
 
 
-def test_a_run_coming_down_comes_down_with_it():
+def test_a_run_coming_down_says_what_it_cuts():
     old = payload([rec("Cut Man", CURRENT, 30000000),
                    rec("Cut Man", "2027-28", 31000000)])
     new = payload([rec("Cut Man", CURRENT, 20000000),
                    rec("Cut Man", "2027-28", 21000000)])
-    assert ("Cut Man's 2026-27 salary falls to $20 million from $30 million, "
-            "and his next season comes down with it.") in spoken(old, new)
+    assert ("Cut Man's 2026-27 salary drops to $20 million from $30 million, "
+            "cutting $20 million from what he's owed through 2027-28.") \
+        in spoken(old, new)
 
 
-def test_a_run_moving_both_ways_moves_with_it():
+def test_a_run_moving_both_ways_claims_no_span():
+    """A run that rises then falls is not money owed "through" anything, so the
+    net is given without a span."""
     old = payload([rec("Mixed Man", CURRENT, 30000000),
                    rec("Mixed Man", "2027-28", 31000000),
                    rec("Mixed Man", "2028-29", 20000000)])
     new = payload([rec("Mixed Man", CURRENT, 40000000),
                    rec("Mixed Man", "2027-28", 25000000),
                    rec("Mixed Man", "2028-29", 30000000)])
-    assert "and his next two seasons move with it." in spoken(old, new)
+    text = spoken(old, new)
+    assert ("Mixed Man's 2026-27 salary jumps to $40 million from $30 million, "
+            "adding $14 million to what he's owed.") in text
+    assert "through" not in text
+    assert "with it" not in text
+
+
+def test_a_run_moving_both_ways_for_nothing_says_only_that():
+    """Under the floor the net is not worth a figure: the later seasons moved,
+    and that is the whole of it."""
+    old = payload([rec("Wash Man", CURRENT, 30000000),
+                   rec("Wash Man", "2027-28", 31000000),
+                   rec("Wash Man", "2028-29", 32000000)])
+    new = payload([rec("Wash Man", CURRENT, 36000000),
+                   rec("Wash Man", "2027-28", 28000000),
+                   rec("Wash Man", "2028-29", 30000000)])
+    assert ("Wash Man's 2026-27 salary jumps to $36 million from $30 million, "
+            "and his later seasons change too.") in spoken(old, new)
 
 
 def test_a_multiple_is_still_the_verb_where_one_fits():
@@ -1798,7 +1854,7 @@ def test_every_kind_he_had_is_a_clause_of_one_sentence():
     assert text.count(".") == 1
     assert "Busy Man" in text and text.count("Busy Man") == 1
     assert "he is on Dallas' books at $21 million for 2027-28" in text
-    assert "his 2026-27 salary rises to $28 million from $20 million" in text
+    assert "his 2026-27 salary jumps to $28 million from $20 million" in text
 
 
 def test_a_season_already_named_is_not_named_twice():
@@ -1807,7 +1863,7 @@ def test_a_season_already_named_is_not_named_twice():
     new = payload([rec("Busy Man", CURRENT, 7600000, team="MEM")])
     items, _posts = digest(old, new)
     assert D.sentence(items[0], NAMES) == (
-        "Busy Man's 2026-27 salary rises to $7.6 million from $5.2 million, "
+        "Busy Man's 2026-27 salary jumps to $7.6 million from $5.2 million, "
         "and it is now on Memphis' books.")
 
 
@@ -1830,7 +1886,8 @@ def test_a_clause_with_an_and_of_its_own_takes_a_semicolon():
                    rec("Busy Man", "2028-29", 30000000, team="DAL")])
     items, _posts = digest(old, new)
     text = D.sentence(items[0], NAMES)
-    assert ", and his next two seasons go up with it; it is now on Dallas'" in text
+    assert ("adding $24 million to what he's owed through 2028-29, and it is "
+            "now on Dallas' books.") in text
     assert text.count(".") == 1
 
 
@@ -1897,3 +1954,63 @@ def test_a_changed_number_keeps_a_day_off_the_minimum_line():
     _items, posts = digest(old, new)
     assert "Also: minimum salaries" not in posts[0]
     assert "his 2026-27 salary more than doubles to $1.4 million" in posts[0]
+
+
+# --------------------------------------------------------------------------
+# what Slack receives
+# --------------------------------------------------------------------------
+
+
+def test_a_link_is_never_markdown():
+    """Slack prints [text](url) verbatim. Every link in the digest is mrkdwn."""
+    old = payload([rec("Moved Man", CURRENT, 20000000, team="DAL")])
+    new = payload([rec("Moved Man", CURRENT, 20000000, team="MEM"),
+                   rec("Quiet Man", "2027-28", 8800000, team="DAL")])
+    factoids = {"Moved Man|2026-27": [{
+        "text": "That is the biggest salary in Grizzlies history.", "rank": 1,
+        "key": "franchise|MEM|Moved Man|2026-27"}]}
+    slugs = {"Moved Man": "moved-man", "Quiet Man": "quiet-man"}
+    teams = {"team": {"MEM": "memphis-grizzlies", "DAL": "dallas-mavericks"}}
+    _items, posts = digest(old, new, factoids=factoids, slugs=slugs, teams=teams)
+    assert posts
+    for post in posts:
+        assert "](" not in post
+        assert "<https://" in post
+
+
+def test_a_markdown_link_is_refused_rather_than_posted():
+    with pytest.raises(ValueError) as caught:
+        D.no_markdown_links("Signed Man is on [Memphis](https://x/) books.")
+    assert "Markdown" in str(caught.value)
+    assert D.no_markdown_links("<https://x/|Memphis> has him.") is not None
+
+
+def test_the_payload_tells_slack_to_parse_mrkdwn():
+    """Without mrkdwn the post arrives with its angle brackets showing."""
+    body = D.payload("<https://x/|Memphis> has him.")
+    assert body["mrkdwn"] is True
+    assert body["text"] == "<https://x/|Memphis> has him."
+    assert body["unfurl_links"] is False and body["unfurl_media"] is False
+    # json, not form-encoded: that is what the webhook reads
+    assert json.loads(json.dumps(body)) == body
+
+
+def test_no_posted_line_in_the_window_carries_a_markdown_link():
+    """Every shape the digest writes, over every kind of change, checked in one
+    pass: lead clauses, nuggets, the closing lines and the team lines."""
+    old = payload([rec("Gone Man", CURRENT, 8000000, team="ATL"),
+                   rec("Cut Man", CURRENT, 30000000, team="MEM"),
+                   rec("Moved Man", CURRENT, 20000000, team="DAL")])
+    new = payload([rec("Cut Man", CURRENT, 20000000, team="MEM"),
+                   rec("Cut Man", "2027-28", 21000000, team="MEM"),
+                   rec("Moved Man", CURRENT, 20000000, team="MEM"),
+                   rec("Signed Man", CURRENT, 9000000, team="DEN"),
+                   rec("Min Man", CURRENT, 2553508, team="DEN")])
+    slugs = {name: name.lower().replace(" ", "-")
+             for name in ("Gone Man", "Cut Man", "Moved Man", "Signed Man",
+                          "Min Man")}
+    teams = {"team": {"MEM": "memphis-grizzlies", "DAL": "dallas-mavericks",
+                      "ATL": "atlanta-hawks", "DEN": "denver-nuggets"}}
+    _items, posts = digest(old, new, slugs=slugs, teams=teams)
+    for post in posts:
+        assert D.no_markdown_links(post) is post

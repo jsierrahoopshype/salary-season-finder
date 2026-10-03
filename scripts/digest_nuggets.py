@@ -2,13 +2,13 @@
 """The second sentence of a digest item: what the money means.
 
 One module per question, because each of these is a different search of the
-data and the digest only prints the first two that answer:
+data and the digest prints the strongest one that answers:
 
 a) record          a record or near-record the engine already found, paid
                    seasons only, because a contracted season is not a record
-b) career          the career-salary milestone this crosses and when, the most
-                   decorated retired men passed on the way, and where he stands
-                   today
+b) career          the career-salary milestone this crosses and when, measured
+                   against a career it clears where one of them is a name the
+                   reader knows
 c) raise           his raise against every raise the digest has seen since the
                    league year opened on July 1
 d) peers           the men at his position putting up his numbers, and the
@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import collections
 import datetime
+import hashlib
 import re
 import os
 import sys
@@ -44,9 +45,6 @@ NEAR_RECORD_RANK = 3
 #: A raise outside the ten biggest of the league year is not news, and "the
 #: 64th biggest raise since July 1" is a sentence nobody would print.
 RAISE_MAX_RANK = 10
-
-#: A career-salary standing past this is a number rather than a fact.
-STANDING_MAX_RANK = 100
 
 #: Which second number a position is read by. Points is always the first.
 SECOND_STAT = {"G": "apg", "F": "rpg", "C": "rpg"}
@@ -239,22 +237,13 @@ def career_nugget(idx, item, money):
     passed = _legends_between(idx, paid, milestone)
     rank_all, rank_active = _career_ranks(idx, player, paid)
 
-    standing = _standing(rank_all, rank_active)
-    # One or the other, never both: a name the reader knows is worth more than
-    # a rank, and a sentence carrying the milestone, the season, two names and
-    # a standing is a stat list rather than a line.
+    text = "He'd pass {} in career earnings in {}".format(
+        money(milestone), season)
+    # A name the reader knows is worth more than a rank, so where a career he
+    # is about to clear carries one, the clause measures the milestone against
+    # that man rather than against a place in a list.
     if passed:
-        text = ("He would pass {} in career earnings in {}, going past {} "
-                "on the way".format(money(milestone), season,
-                                    _join([p["name"] for p in passed])))
-    elif standing:
-        # Where he stands is a fact about today, so it leads, and the milestone
-        # follows it as the thing still to come.
-        text = "He's already {} and would pass {} in {}".format(
-            standing, money(milestone), season)
-    else:
-        text = "He would pass {} in career earnings in {}".format(
-            money(milestone), season)
+        text += ", {}".format(_legend_clause(idx, player, season, passed[0]))
     return {
         "kind": "career",
         "opener": text,
@@ -266,6 +255,33 @@ def career_nugget(idx, item, money):
             "rank_all": rank_all, "rank_active": rank_active,
         },
     }
+
+
+#: The two ways of measuring a milestone against a career it clears. Both say
+#: the same thing; which one a nugget takes is fixed by the hash below, so a
+#: line does not change wording between builds, and the digest does not read as
+#: one sentence printed over and over.
+LEGEND_FORMS = (
+    "more than {name} made in his whole career",
+    "more than {name} earned in his {seasons} seasons",
+)
+
+
+def _legend_clause(idx, player, season, legend):
+    """"more than Latrell Sprewell made in his whole career".
+
+    The season count is only offered where the data holds his career whole,
+    which is what _legends_between already requires of him, so "his 13
+    seasons" is his 13 seasons and not the 13 this file happens to hold.
+    """
+    # "his 1 seasons" is not a sentence, so a one-season career only ever
+    # takes the first form.
+    seasons = legend.get("seasons") or 0
+    forms = LEGEND_FORMS if seasons > 1 else LEGEND_FORMS[:1]
+    key = "{}|{}|{}".format(player, season, legend["name"])
+    digest = hashlib.sha1(key.encode("utf-8")).hexdigest()
+    form = forms[int(digest, 16) % len(forms)]
+    return form.format(name=legend["name"], seasons=seasons)
 
 
 def _legends_between(idx, paid, milestone):
@@ -290,6 +306,9 @@ def _legends_between(idx, paid, milestone):
                 counts[award] += 1
         found.append({
             "name": player, "total": total,
+            # distinct seasons, so a row the sheets carry twice cannot inflate
+            # "his 13 seasons" into 14
+            "seasons": len({r["season"] for r in records}),
             "decorations": {name: counts.get(name, 0) for name in DECORATIONS},
             "rank_key": tuple(counts.get(name, 0) for name in DECORATIONS),
         })
@@ -321,31 +340,6 @@ def _career_ranks(idx, player, paid):
     rank_all = next((i for i, row in enumerate(everyone, 1) if row[0] == player), None)
     rank_active = next((i for i, row in enumerate(active, 1) if row[0] == player), None)
     return rank_all, rank_active
-
-
-def _standing(rank_all, rank_active):
-    """The more telling of the two ranks, which is the shorter number.
-
-    Past the hundredth name neither is telling, so neither is printed.
-    """
-    best = min([r for r in (rank_all, rank_active) if r] or [0])
-    if not best or best > STANDING_MAX_RANK:
-        return ""
-    if rank_active is not None and (rank_all is None or rank_active < rank_all):
-        return "{} in career earnings among players on a roster".format(
-            _rank_word(rank_active))
-    return "{} in career earnings".format(_rank_word(rank_all))
-
-
-#: Ranks a sentence spells out. Past these the digit is how a rank is read.
-RANK_WORDS = ("", "first", "second", "third", "fourth", "fifth", "sixth",
-              "seventh", "eighth", "ninth", "tenth")
-
-
-def _rank_word(rank):
-    if rank and rank < len(RANK_WORDS):
-        return RANK_WORDS[rank]
-    return _ordinal(rank)
 
 
 # ── (c) the raise, against the league year's raises ───────────────────
