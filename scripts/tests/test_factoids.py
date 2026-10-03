@@ -2050,19 +2050,22 @@ def test_missing_name_aliases_file_is_not_an_error():
     not os.path.exists(os.path.join(REPO, "data", "name_aliases.json")),
     reason="data/name_aliases.json not present",
 )
-def test_shipped_aliases_merge_the_five_pairs_and_leave_the_fathers_alone():
+def test_shipped_aliases_merge_the_six_players_and_leave_the_fathers_alone():
     with open(REAL_DATA, "r", encoding="utf-8") as fh:
         data = json.load(fh)
     aliases = F.load_name_aliases()
     assert aliases["Wendell Carter"] == "Wendell Carter Jr"
-    # Five merged players. Terrence Shannon Jr contributes two alias spellings,
+    # Six merged players. Terrence Shannon Jr contributes two alias spellings,
     # because the canonical is his real name and neither raw spelling is it.
-    # Marcus Thornton II was a sixth until the build began joining on a person:
+    # Marcus Thornton II was in here until the build began joining on a person:
     # bio.csv has one Marcus Thornton and no row for the man paid in 2017-18,
-    # so the two are not one career.
+    # so the two are not one career. Dominick Barlow is the only one of the six
+    # that is a plain misspelling rather than a suffix, and the only one whose
+    # two spellings share a season.
     canonicals = set(aliases.values())
-    assert len(canonicals) == 5
-    assert len(aliases) == 6
+    assert len(canonicals) == 6
+    assert len(aliases) == 7
+    assert aliases["Dominck Barlow"] == "Dominick Barlow"
     assert "Marcus Thornton II" not in aliases
     assert "Marcus Thornton" not in aliases.values()
     assert aliases["Terrence Shannon"] == "Terrence Shannon Jr"

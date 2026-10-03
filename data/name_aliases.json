@@ -1,6 +1,7 @@
 {
  "alias_to_canonical": {
   "Andre Jackson": "Andre Jackson Jr",
+  "Dominck Barlow": "Dominick Barlow",
   "Ricky Council": "Ricky Council IV",
   "Terrence Shannon": "Terrence Shannon Jr",
   "Terrence Shannon Jr.": "Terrence Shannon Jr",
@@ -33,6 +34,29 @@
      "last_season": "2026-27",
      "name": "Andre Jackson",
      "seasons": 2
+    }
+   ]
+  },
+  {
+   "aliases": [
+    "Dominck Barlow"
+   ],
+   "canonical": "Dominick Barlow",
+   "college": "Overtime Elite",
+   "draft_year": null,
+   "evidence": "one letter dropped from the same name, the i in Dominick; both spellings are on the 76ers in 2025-26, which is the one season they share, and the misspelled row is a part-season payment of $347,451 beside his $3,415,000. Dominick Barlow runs 2022-23 to 2026-27 and Dominck Barlow has that one row and no other. Unlike the suffix groups above, this pair does share a season: the row is a second payment inside it rather than a separate career.",
+   "spellings": [
+    {
+     "first_season": "2022-23",
+     "last_season": "2026-27",
+     "name": "Dominick Barlow",
+     "seasons": 5
+    },
+    {
+     "first_season": "2025-26",
+     "last_season": "2025-26",
+     "name": "Dominck Barlow",
+     "seasons": 1
     }
    ]
   },

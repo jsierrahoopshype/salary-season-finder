@@ -1955,3 +1955,93 @@ def test_a_rank_line_in_the_pages_names_career_earnings():
             ranked += 1
             assert "career earnings" in text, (slug, season, text)
     assert ranked, "no rank line in the sample to check"
+
+
+# --------------------------------------------------------------------------
+# most career earnings with one franchise
+# --------------------------------------------------------------------------
+
+
+def _with_team_block(slug="76ers"):
+    html = read(os.path.join("team", slug, "index.html"))
+    start = html.index("Most career earnings with the")
+    return html[start:html.index("</table></div>", start)]
+
+
+def test_the_career_earnings_section_sits_above_franchise_history():
+    html = read(os.path.join("team", "76ers", "index.html"))
+    assert html.index("Most career earnings with the") < \
+        html.index("Biggest salaries in franchise history")
+
+
+def test_the_career_earnings_section_ranks_and_counts_its_seasons():
+    block = _with_team_block()
+    rows = re.findall(r"<tr>(.*?)</tr>", block, re.S)[1:]
+    assert 0 < len(rows) <= C.TABLE_ROWS
+    places = [int(m) for m in re.findall(r'<span class="hm-rank">(\d+)</span>',
+                                        block)]
+    assert places == sorted(places)
+    assert places[0] == 1
+    for row in rows:
+        cells = re.findall(r"<t[hd][^>]*>(.*?)</t[hd]>", row, re.S)
+        count, first, last = re.match(
+            r"(\d+), (\S+) to (\S+)", cells[1]).groups()
+        assert int(count) >= 1
+        assert F.season_key(first) <= F.season_key(last)
+        # a count can exceed the span's length only if seasons repeat, which
+        # they cannot: it is a set of them
+        assert int(count) <= F.season_key(last) - F.season_key(first) + 1
+
+
+def test_the_career_earnings_section_falls_from_the_top():
+    block = _with_team_block()
+    totals = [int(re.sub(r"[^0-9]", "", money)) for money in
+              re.findall(r'<td class="hm-money">([^<]+)</td>', block)]
+    assert totals == sorted(totals, reverse=True)
+
+
+def test_career_earnings_with_a_team_counts_only_money_paid():
+    """The convention the career-earnings claims use: no contracted season,
+    and no split season either."""
+    data = json.loads(read(os.path.join("data", "data.json")))
+    idx = F.build_index(data)
+    wanted = collections.defaultdict(int)
+    for record in idx.records:
+        if idx.is_contracted(record["season"]) or F.is_split_season(record):
+            continue
+        for team, amount in F.team_amounts(record):
+            if team == "PHI":
+                wanted[idx.canonical(record["player"])] += amount or 0
+    best = max(wanted.items(), key=lambda kv: kv[1])
+    block = _with_team_block()
+    assert best[0] in block
+    assert "{:,}".format(best[1]) in block
+
+
+def test_a_roster_row_reads_its_percentage_off_the_money_beside_it():
+    """A two-team man's whole-season percentage beside one team's part of him
+    is two different bases in one row."""
+    data = json.loads(read(os.path.join("data", "data.json")))
+    current = F.compute_current_season(data)
+    cap = ((data.get("salary_cap") or {}).get(current) or {}).get("cap")
+    assert cap
+    for slug in ("76ers", "grizzlies", "bucks"):
+        html = read(os.path.join("team", slug, "index.html"))
+        start = html.index("<h2>{} roster</h2>".format(current))
+        block = html[start:html.index("</table></div>", start)]
+        for row in re.findall(r"<tr>(.*?)</tr>", block, re.S)[1:]:
+            cells = re.findall(r"<t[hd][^>]*>(.*?)</t[hd]>", row, re.S)
+            money_cell, pct_cell = cells[1], cells[2]
+            if pct_cell == "-":
+                continue
+            paid = int(re.sub(r"[^0-9]", "", money_cell))
+            assert abs(float(pct_cell.rstrip("%")) - 100.0 * paid / cap) < 0.1, \
+                (slug, cells[0][:60], money_cell, pct_cell)
+
+
+def test_the_misspelt_barlow_is_one_career_with_the_right_one():
+    aliases = json.loads(read(os.path.join("data", "name_aliases.json")))
+    assert aliases["alias_to_canonical"]["Dominck Barlow"] == "Dominick Barlow"
+    html = read(os.path.join("team", "76ers", "index.html"))
+    assert "Dominck Barlow" not in html
+    assert "Dominick Barlow" in html

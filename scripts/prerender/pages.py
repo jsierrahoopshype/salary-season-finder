@@ -399,6 +399,13 @@ def team_page(idx, entity, identities):
         for season, total in sorted(future.items(), key=lambda kv: F.season_key(kv[0]))
     ]
 
+    # The money is what this team carries, so the share of the cap has to be
+    # that money's share. Reading it off salary_cap_pct put a two-team man's
+    # whole-season percentage beside one team's part of him: Kentavious
+    # Caldwell-Pope's $3.9 million on these books read as 13% of the cap,
+    # which is what his $21.6 million season is worth, not what Philadelphia
+    # pays him.
+    cap = ((idx.cap or {}).get(idx.current_season) or {}).get("cap") or 0
     current_rows = []
     for record in sorted(current, key=lambda r: -(r.get("salary") or 0)):
         ident = owners.get(id(record))
@@ -408,7 +415,7 @@ def team_page(idx, entity, identities):
         current_rows.append([
             player_link(ident),
             money(share),
-            "{:.1f}%".format(record["salary_cap_pct"]) if record.get("salary_cap_pct") is not None else "-",
+            _share(share, cap),
             str(record.get("age") or "-"),
             str(record.get("years_exp") if record.get("years_exp") is not None else "-"),
         ])
@@ -432,6 +439,18 @@ def team_page(idx, entity, identities):
             rank_table(
                 [("Season", "hm-who"), ("Players", "hm-num"), ("Committed", "hm-money")],
                 future_rows,
+            ),
+        ),
+        section(
+            "Most career earnings with the {}".format(entity.name),
+            "Money already paid, so a contracted season is never in it. Split "
+            "seasons are left out: a salary spread over more than one team is "
+            "a cap-sheet allocation, not money one franchise paid a player to "
+            "play for it.",
+            rank_table(
+                [("Player", "hm-who"), ("Seasons", "hm-num"),
+                 ("Earned with the team", "hm-money")],
+                _with_team_rows(idx, entity, owners, code, C.TABLE_ROWS),
             ),
         ),
         section(
@@ -529,6 +548,43 @@ def season_page(idx, entity, identities):
         ),
     ]
     return title, description, "\n".join(body)
+
+
+def _with_team_rows(idx, entity, owners, code, limit):
+    """Who has earned the most on one franchise's books, most first.
+
+    The same money the career-earnings claims count: what has been paid, so a
+    contracted season is never in it, and no split season either, because a
+    salary spread over two teams is an allocation rather than money this one
+    paid him. Ties share a rank and read alphabetically, which is what sorting
+    on the name inside the total does.
+    """
+    earned, seasons, who = {}, {}, {}
+    for record in entity.records:
+        if idx.is_contracted(record["season"]) or F.is_split_season(record):
+            continue
+        ident = owners.get(id(record))
+        if ident is None:
+            continue
+        for team, amount in F.team_amounts(record):
+            if team != code:
+                continue
+            earned[ident.key] = earned.get(ident.key, 0) + (amount or 0)
+            seasons.setdefault(ident.key, set()).add(record["season"])
+            who[ident.key] = ident
+
+    table = sorted(earned.items(), key=lambda kv: (-kv[1], who[kv[0]].name))
+    rows, place = [], 0
+    for i, (key, total) in enumerate(table[:limit]):
+        if i == 0 or total != table[i - 1][1]:
+            place = i + 1
+        mine = sorted(seasons[key], key=F.season_key)
+        rows.append([
+            player_link(who[key], rank=place),
+            "{}, {} to {}".format(len(mine), mine[0], mine[-1]),
+            money(total),
+        ])
+    return rows
 
 
 def _payroll_groups(idx, entity, owners, season, contracted):
