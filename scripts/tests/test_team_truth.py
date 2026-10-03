@@ -18,6 +18,7 @@ REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 sys.path.insert(0, REPO)
 
 import build_data as B  # noqa: E402
+import factoids as F  # noqa: E402
 
 CURRENT = "2026-27"
 
@@ -88,7 +89,9 @@ def test_a_corrected_season_loses_a_split_it_no_longer_has():
     assert "team_salaries" not in past
 
 
-def test_a_season_he_was_traded_in_is_split_by_games():
+def test_a_season_he_was_traded_in_names_both_teams_with_no_invented_split():
+    """Nothing in this build says how two teams divided a traded season, so the
+    season is marked split and carries the full salary against both names."""
     records = league(CURRENT) + [
         rec("Traded", "2023-24", "IND", salary=10000000),
         rec("Traded", CURRENT, "IND"),
@@ -97,8 +100,9 @@ def test_a_season_he_was_traded_in_is_split_by_games():
         ("Traded", "2023-24", "TOR", 30), ("Traded", "2023-24", "IND", 20)]))
     past = [r for r in records if r["season"] == "2023-24"][0]
     assert past["team"] == "TOR, IND"
-    assert past["team_salaries"] == {"TOR": 6000000, "IND": 4000000}
-    assert sum(past["team_salaries"].values()) == past["salary"]
+    assert "team_salaries" not in past
+    assert past["teams_split"] is True
+    assert past["salary"] == 10000000
 
 
 # --------------------------------------------------------------------------
@@ -190,3 +194,37 @@ def test_the_data_matches_the_report():
         rec = rows.get((row["player"], row["season"]))
         assert rec is not None, row
         assert rec["team"] == row["corrected_team"], row
+
+
+# --------------------------------------------------------------------------
+# a split season with no amounts on it
+# --------------------------------------------------------------------------
+
+
+def test_a_flagged_season_is_a_split_season_to_the_engine():
+    """Franchise records skip it, the same as a season carrying two amounts."""
+    assert F.is_split_season({"team": "TOR, IND", "teams_split": True}) is True
+    assert F.is_split_season({"team": "IND"}) is False
+
+
+def test_a_flagged_season_credits_no_team_a_figure():
+    record = {"team": "TOR, IND", "salary": 10000000, "teams_split": True}
+    assert F.team_amounts(record) == []
+
+
+def test_a_season_with_real_amounts_still_carries_them():
+    record = {"team": "TOR, IND", "salary": 10000000,
+              "team_salaries": {"TOR": 6000000, "IND": 4000000}}
+    assert dict(F.team_amounts(record)) == {"TOR": 6000000, "IND": 4000000}
+
+
+def test_a_flagged_season_still_puts_him_on_both_teams():
+    """No figure either way, but he did appear on both payrolls."""
+    record = {"team": "TOR, IND", "salary": 10000000, "teams_split": True}
+    assert F.team_codes(record) == ["TOR", "IND"]
+
+
+def test_team_codes_reads_a_real_split_biggest_share_first():
+    record = {"team": "TOR, IND", "salary": 10000000,
+              "team_salaries": {"TOR": 6000000, "IND": 4000000}}
+    assert F.team_codes(record) == ["TOR", "IND"]

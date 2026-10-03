@@ -682,15 +682,15 @@ def correct_past_season_teams(records, stats_lookup):
             rec.pop("team_salaries", None)
         else:
             # He was traded inside the season. The sheet put the whole salary on
-            # the team he finished at, which is the one fact it had; the games
-            # he played for each is the only basis this build has for dividing
-            # it, and dividing it is what marks the season as split so no
-            # franchise record claims the whole figure.
-            rec["team_salaries"] = _split_by_games(
-                rec.get("salary") or 0, stats_lookup, rec["player"], rec["season"],
-                played)
-            row["split_basis"] = "games played"
-            row["team_salaries"] = dict(rec["team_salaries"])
+            # the team he finished at, which is the one fact it had, and this
+            # build has no record of how the two teams actually divided it.
+            # Allocating it by games played would put a figure on the page that
+            # nobody paid, so the season is flagged as split and carries no
+            # per-team amounts: the teams are named with the full salary, and
+            # franchise records skip the season rather than credit either team.
+            rec.pop("team_salaries", None)
+            rec["teams_split"] = True
+            row["split_basis"] = "no allocation; season marked split"
         applied.append(row)
 
     applied.sort(key=lambda r: (r["player"], r["season"]))
@@ -698,26 +698,6 @@ def correct_past_season_teams(records, stats_lookup):
           f"salary sheet, of {seen} disagreements before {current}")
     return {"current_season": current, "applied": applied,
             "disagreements": seen, "left_alone": skipped}
-
-
-def _split_by_games(salary, stats_lookup, player, season, teams):
-    """Divide a traded season's salary across its teams by games played."""
-    games = {}
-    for row in stats_lookup.get((normalize_name(player), season)) or []:
-        team = row.get("team")
-        if team in teams:
-            games[team] = games.get(team, 0) + (row.get("gp") or 0)
-    total = sum(games.values())
-    if not total or not salary:
-        # Nothing to divide on: an even split still marks the season as split.
-        share = int(round(salary / float(len(teams)))) if salary else 0
-        return {team: share for team in teams}
-    out, spent = {}, 0
-    for team in teams[:-1]:
-        out[team] = int(round(salary * games.get(team, 0) / float(total)))
-        spent += out[team]
-    out[teams[-1]] = salary - spent
-    return out
 
 
 def process_stats(csv_data):
@@ -1508,7 +1488,11 @@ def build_data():
                 "what the one-TEAM-per-row current sheet does to a man who moved "
                 "in the summer. Disagreements of any other shape are the sheet "
                 "naming whose books paid a salary and the stats naming who he "
-                "played for, which are different facts, and are left alone."
+                "played for, which are different facts, and are left alone. "
+                "A season he was traded inside keeps both teams and its whole "
+                "salary: nothing here records how the two divided it, so "
+                "neither is given a figure, and the season is marked split so "
+                "no franchise record counts it."
             ),
             "current_season": corrections["current_season"],
             "disagreements_found": corrections["disagreements"],

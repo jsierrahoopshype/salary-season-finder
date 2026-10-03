@@ -249,7 +249,7 @@ def build_teams(idx, identities):
         ident = by_key.get((idx.canonical(record["player"]), record["season"]))
         if ident is None:
             continue
-        for code, _amount in F.team_amounts(record):
+        for code in F.team_codes(record):
             if code in idx.franchises:
                 buckets[code]["records"].append(record)
                 buckets[code]["players"].add(ident.key)
