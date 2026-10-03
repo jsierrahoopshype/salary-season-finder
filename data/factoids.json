@@ -3,7 +3,7 @@
   "AJ Dybantsa|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 296,
+    "comparison_size": 295,
     "contracted": false,
     "family": "cohort",
     "id": "3ee402d159e5350b",
@@ -16,7 +16,7 @@
      "value": 13195320
     },
     "rank": 1,
-    "scope_note": "Cohort of 252 players and 297 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 251 players and 296 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "AJ Dybantsa's $14.7 million in 2026-27 is the highest single-season salary by an undrafted player, passing Darryn Peterson's $13.2 million (2026-27).",
     "type": "sets",
     "value": 14748000
@@ -25,7 +25,7 @@
   "AJ Dybantsa|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 297,
+    "comparison_size": 296,
     "contracted": true,
     "family": "cohort",
     "id": "b9c6e0e283bda14d",
@@ -38,7 +38,7 @@
      "value": 14748000
     },
     "rank": 1,
-    "scope_note": "Cohort of 252 players and 297 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 251 players and 296 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "AJ Dybantsa's $15.5 million in 2027-28 would be the highest single-season salary by an undrafted player, breaking his own mark of $14.7 million in 2026-27.",
     "type": "sets",
     "value": 15485760
@@ -47,7 +47,7 @@
   "AJ Dybantsa|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 297,
+    "comparison_size": 296,
     "contracted": true,
     "family": "cohort",
     "id": "958aa46a33c060c9",
@@ -60,7 +60,7 @@
      "value": 14748000
     },
     "rank": 1,
-    "scope_note": "Cohort of 252 players and 297 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 251 players and 296 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "AJ Dybantsa's $16.2 million in 2028-29 would be the highest single-season salary by an undrafted player, breaking his own mark of $14.7 million in 2026-27.",
     "type": "sets",
     "value": 16223040
@@ -69,7 +69,7 @@
   "AJ Dybantsa|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 297,
+    "comparison_size": 296,
     "contracted": true,
     "family": "cohort",
     "id": "c727f5da5b4580ef",
@@ -82,7 +82,7 @@
      "value": 14748000
     },
     "rank": 1,
-    "scope_note": "Cohort of 252 players and 297 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 251 players and 296 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "AJ Dybantsa's $20.5 million in 2029-30 would be the highest single-season salary by an undrafted player, breaking his own mark of $14.7 million in 2026-27.",
     "type": "sets",
     "value": 20457253
@@ -183,7 +183,7 @@
   "Aaron Gordon|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "83890bf2534670d9",
@@ -303,7 +303,7 @@
   "Aaron Gordon|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "7f8d85a5950c1c6a",
@@ -939,7 +939,7 @@
   "Al Horford|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "5dbc3ae1e0a44a95",
@@ -1201,7 +1201,7 @@
   "Alex Caruso|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "4347e3d1ea4a8c87",
@@ -1495,7 +1495,7 @@
   "Alperen Sengun|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "e7a5ab22c664631c",
@@ -1553,7 +1553,7 @@
   "Alperen Sengun|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "be3321b126029504",
@@ -1627,7 +1627,7 @@
   "Alperen Sengun|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "a2735db9a5cfe900",
@@ -1745,7 +1745,7 @@
   "Amen Thompson|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "2339eee32a1ca211",
@@ -1783,7 +1783,7 @@
   "Amen Thompson|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "92de23b3a108eb74",
@@ -1839,7 +1839,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2202,
+    "comparison_size": 2201,
     "contracted": true,
     "family": "negative_space",
     "id": "75f9f0674ffea8c8",
@@ -1950,7 +1950,7 @@
      "value": 19317326
     },
     "rank": 1,
-    "scope_note": "Cohort of 27 players and 273 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 27 players and 272 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Andre Drummond's $22.1 million in 2016-17 was the highest single-season salary among players out of Connecticut, passing Rudy Gay's $19.3 million (2014-15).",
     "type": "sets",
     "value": 22116750
@@ -2008,7 +2008,7 @@
      "value": 22116750
     },
     "rank": 1,
-    "scope_note": "Cohort of 29 players and 273 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 29 players and 272 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Andre Drummond's $23.8 million in 2017-18 was the highest single-season salary among players out of Connecticut, breaking his own mark of $22.1 million in 2016-17.",
     "type": "sets",
     "value": 23775506
@@ -2046,7 +2046,7 @@
      "value": 23775506
     },
     "rank": 1,
-    "scope_note": "Cohort of 29 players and 273 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 29 players and 272 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Andre Drummond's $25.4 million in 2018-19 was the highest single-season salary among players out of Connecticut, breaking his own mark of $23.8 million in 2017-18.",
     "type": "sets",
     "value": 25434262
@@ -2857,7 +2857,7 @@
   "Andrew Wiggins|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "e2d9f735fccc116c",
@@ -3385,7 +3385,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 580,
+    "comparison_size": 581,
     "contracted": false,
     "family": "franchise",
     "id": "eb96ceb59916a8db",
@@ -3405,7 +3405,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 607,
+    "comparison_size": 606,
     "contracted": false,
     "family": "rank_shift",
     "id": "ee3f9c02580884c5",
@@ -3443,7 +3443,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "815a3c27a94db5d1",
@@ -3659,7 +3659,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 5943,
+    "comparison_size": 5942,
     "contracted": false,
     "family": "cohort",
     "id": "059f76a0a770ca79",
@@ -3672,7 +3672,7 @@
      "value": 62587158
     },
     "rank": 3,
-    "scope_note": "Cohort of 633 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 633 players and 5943 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Anthony Davis' $58.5 million in 2026-27 is the third-highest single-season salary by a lottery pick, behind Stephen Curry and Stephen Curry.",
     "type": "approaches",
     "value": 58456566
@@ -3719,7 +3719,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 601,
+    "comparison_size": 602,
     "contracted": false,
     "family": "franchise",
     "id": "de9828412e030ba0",
@@ -3861,7 +3861,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 5944,
+    "comparison_size": 5943,
     "contracted": true,
     "family": "cohort",
     "id": "73f380e8cb141e58",
@@ -3874,7 +3874,7 @@
      "value": 62587158
     },
     "rank": 1,
-    "scope_note": "Cohort of 633 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 633 players and 5943 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Anthony Davis' $62.8 million in 2027-28 would be the highest single-season salary by a lottery pick, passing Stephen Curry's $62.6 million (2026-27).",
     "type": "sets",
     "value": 62786682
@@ -3921,7 +3921,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 602,
+    "comparison_size": 603,
     "contracted": true,
     "family": "franchise",
     "id": "9a3b1c21aa3f4fff",
@@ -4129,7 +4129,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 556,
+    "comparison_size": 555,
     "contracted": false,
     "family": "franchise",
     "id": "7511753c843ff221",
@@ -4149,7 +4149,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 20,
+    "comparison_size": 19,
     "contracted": false,
     "family": "rank_shift",
     "id": "77cc81627fbcb698",
@@ -4158,7 +4158,7 @@
     "margin": null,
     "previous_holder": null,
     "rank": 1,
-    "scope_note": "Same franchise in consecutive seasons. Roster of 20 players with a salary on file.",
+    "scope_note": "Same franchise in consecutive seasons. Roster of 19 players with a salary on file.",
     "text": "Anthony Edwards was the Timberwolves' highest-paid player in 2025-26 after ranking second on the roster in 2024-25.",
     "type": "rank_shift",
     "value": 45550512
@@ -4167,7 +4167,7 @@
   "Anthony Edwards|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "ccc283f632feb2e0",
@@ -4263,7 +4263,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 578,
+    "comparison_size": 577,
     "contracted": false,
     "family": "franchise",
     "id": "4230b3966fb54224",
@@ -4285,7 +4285,7 @@
   "Anthony Edwards|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "1a05fb7ab95486b7",
@@ -4341,7 +4341,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 579,
+    "comparison_size": 578,
     "contracted": true,
     "family": "franchise",
     "id": "b1e43e342b0279ff",
@@ -4363,7 +4363,7 @@
   "Anthony Edwards|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "1a04a25b6a7d2d3c",
@@ -4439,7 +4439,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 579,
+    "comparison_size": 578,
     "contracted": true,
     "family": "franchise",
     "id": "228a77669b36f190",
@@ -4549,7 +4549,7 @@
   "Ausar Thompson|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "2b32006fa59beed1",
@@ -4649,7 +4649,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2202,
+    "comparison_size": 2201,
     "contracted": false,
     "family": "negative_space",
     "id": "55fc2bce26e9e40d",
@@ -4671,7 +4671,7 @@
   "Austin Reaves|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "35a90c32630b9577",
@@ -4727,7 +4727,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2872,
+    "comparison_size": 2871,
     "contracted": true,
     "family": "negative_space",
     "id": "bed34ccfa342301b",
@@ -4747,7 +4747,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2202,
+    "comparison_size": 2201,
     "contracted": true,
     "family": "negative_space",
     "id": "77c85cc22d07f14f",
@@ -4769,7 +4769,7 @@
   "Austin Reaves|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "8ef2cf713191e35b",
@@ -4845,7 +4845,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2872,
+    "comparison_size": 2871,
     "contracted": true,
     "family": "negative_space",
     "id": "6e116546f8c39710",
@@ -4865,7 +4865,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2202,
+    "comparison_size": 2201,
     "contracted": true,
     "family": "negative_space",
     "id": "61c0b9bd0051495f",
@@ -4887,7 +4887,7 @@
   "Austin Reaves|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "e62f60a545624c2a",
@@ -4963,7 +4963,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2872,
+    "comparison_size": 2871,
     "contracted": true,
     "family": "negative_space",
     "id": "7a389fe06ee0265e",
@@ -4983,7 +4983,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2202,
+    "comparison_size": 2201,
     "contracted": true,
     "family": "negative_space",
     "id": "f835ee4e96212714",
@@ -5127,7 +5127,7 @@
   "Ayo Dosunmu|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "b393799d38aef49f",
@@ -5276,7 +5276,7 @@
      "value": 15627907
     },
     "rank": 1,
-    "scope_note": "Cohort of 40 players and 325 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 40 players and 324 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Bam Adebayo's $28.1 million in 2021-22 was the highest single-season salary by a No. 14 pick, passing Marcus Morris' $15.6 million (2021-22).",
     "type": "sets",
     "value": 28103500
@@ -5319,7 +5319,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 21,
+    "comparison_size": 22,
     "contracted": false,
     "family": "rank_shift",
     "id": "ad9ee58cb7e72661",
@@ -5328,7 +5328,7 @@
     "margin": null,
     "previous_holder": null,
     "rank": 1,
-    "scope_note": "Same franchise in consecutive seasons. Roster of 21 players with a salary on file.",
+    "scope_note": "Same franchise in consecutive seasons. Roster of 22 players with a salary on file.",
     "text": "Bam Adebayo was the Heat's highest-paid player in 2025-26 after ranking second on the roster in 2024-25.",
     "type": "rank_shift",
     "value": 37096620
@@ -5337,7 +5337,7 @@
   "Bam Adebayo|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "a05a0442ba787e43",
@@ -5453,7 +5453,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 324,
+    "comparison_size": 323,
     "contracted": false,
     "family": "cohort",
     "id": "f1b0962e7f867840",
@@ -5466,14 +5466,14 @@
      "value": 40806150
     },
     "rank": 1,
-    "scope_note": "Cohort of 44 players and 325 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 44 players and 324 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Bam Adebayo's $49.5 million in 2026-27 is the highest single-season salary by a No. 14 pick, passing Michael Porter's $40.8 million (2026-27).",
     "type": "sets",
     "value": 49488300
    },
    {
     "ahead": null,
-    "comparison_size": 587,
+    "comparison_size": 588,
     "contracted": false,
     "family": "franchise",
     "id": "f4e06bb575fda80c",
@@ -5493,7 +5493,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2872,
+    "comparison_size": 2871,
     "contracted": false,
     "family": "negative_space",
     "id": "b73d3ea17b2831db",
@@ -5510,12 +5510,28 @@
     "text": "Bam Adebayo's $49.5 million in 2026-27 is the highest single-season salary for a player without an All-NBA selection, passing Jaren Jackson Jr's $49 million (2026-27).",
     "type": "sets",
     "value": 49488300
+   },
+   {
+    "ahead": null,
+    "comparison_size": 22,
+    "contracted": false,
+    "family": "rank_shift",
+    "id": "6ff33e85fba0f955",
+    "key": "team_high_ceases|Bam Adebayo|2026-27",
+    "lead": null,
+    "margin": null,
+    "previous_holder": null,
+    "rank": 2,
+    "scope_note": "Same franchise in consecutive seasons. Roster of 22 players with a salary on file.",
+    "text": "Bam Adebayo is no longer the Heat's highest-paid player in 2026-27 after holding that spot in 2025-26.",
+    "type": "rank_shift",
+    "value": 49488300
    }
   ],
   "Bam Adebayo|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "2dda7e285228192f",
@@ -5591,7 +5607,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 325,
+    "comparison_size": 324,
     "contracted": true,
     "family": "cohort",
     "id": "9f0a9ce5e673e37e",
@@ -5604,14 +5620,14 @@
      "value": 49488300
     },
     "rank": 1,
-    "scope_note": "Cohort of 44 players and 325 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 44 players and 324 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Bam Adebayo's $53.4 million in 2027-28 would be the highest single-season salary by a No. 14 pick, breaking his own mark of $49.5 million in 2026-27.",
     "type": "sets",
     "value": 53447364
    },
    {
     "ahead": null,
-    "comparison_size": 588,
+    "comparison_size": 589,
     "contracted": true,
     "family": "franchise",
     "id": "9cc4c9f15b7568f3",
@@ -5631,7 +5647,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2872,
+    "comparison_size": 2871,
     "contracted": true,
     "family": "negative_space",
     "id": "d6f732f3b0afcc78",
@@ -5653,7 +5669,7 @@
   "Bam Adebayo|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "6d00c00fea6044b5",
@@ -5729,7 +5745,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 325,
+    "comparison_size": 324,
     "contracted": true,
     "family": "cohort",
     "id": "89adc0f10fd2472c",
@@ -5742,7 +5758,7 @@
      "value": 49488300
     },
     "rank": 1,
-    "scope_note": "Cohort of 44 players and 325 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 44 players and 324 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Bam Adebayo's $57.4 million in 2028-29 would be the highest single-season salary by a No. 14 pick, breaking his own mark of $49.5 million in 2026-27.",
     "type": "sets",
     "value": 57406428
@@ -5769,7 +5785,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 588,
+    "comparison_size": 589,
     "contracted": true,
     "family": "franchise",
     "id": "4165250dae456bb7",
@@ -5789,7 +5805,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2872,
+    "comparison_size": 2871,
     "contracted": true,
     "family": "negative_space",
     "id": "64697fcac4c2bb0b",
@@ -6623,7 +6639,7 @@
   "Bobby Portis|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "6ff4ea6ec2f6b5d9",
@@ -7427,7 +7443,7 @@
   "Bradley Beal|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "15ad1b21b4523db0",
@@ -7563,7 +7579,7 @@
   "Brandon Ingram|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "584510639688b6d5",
@@ -7681,7 +7697,7 @@
   "Brandon Ingram|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "687f66b3e55661e3",
@@ -8079,6 +8095,22 @@
     "scope_note": "Cohort of 27 players and 147 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Bruce Brown's $23 million in 2024-25 was the highest single-season salary by a No. 42 pick, breaking his own mark of $22 million in 2023-24.",
     "type": "sets",
+    "value": 23000000
+   },
+   {
+    "ahead": null,
+    "comparison_size": 21,
+    "contracted": false,
+    "family": "rank_shift",
+    "id": "89daf5be2618ed29",
+    "key": "team_high_ceases|Bruce Brown|2024-25",
+    "lead": null,
+    "margin": null,
+    "previous_holder": null,
+    "rank": 3,
+    "scope_note": "Same franchise in consecutive seasons. Roster of 21 players with a salary on file.",
+    "text": "Bruce Brown was no longer the Raptors' highest-paid player in 2024-25 after holding that spot in 2023-24.",
+    "type": "rank_shift",
     "value": 23000000
    }
   ],
@@ -8479,7 +8511,7 @@
   "CJ McCollum|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "151389f4d94e919f",
@@ -8717,7 +8749,7 @@
   "Cade Cunningham|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "317d87483438705c",
@@ -8875,7 +8907,7 @@
   "Cade Cunningham|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "c8b8b796998d73b0",
@@ -8993,7 +9025,7 @@
   "Cade Cunningham|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "2105464b90ad2d52",
@@ -9009,7 +9041,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "b9c3d7d5710520e1",
@@ -9183,7 +9215,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "c5f83c62544ed448",
@@ -9299,7 +9331,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 5944,
+    "comparison_size": 5943,
     "contracted": true,
     "family": "cohort",
     "id": "449b7d51cb9c1069",
@@ -9312,7 +9344,7 @@
      "value": 62587158
     },
     "rank": 2,
-    "scope_note": "Cohort of 633 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 633 players and 5943 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Cade Cunningham's $61.2 million in 2029-30 would be the second-highest single-season salary by a lottery pick, behind Stephen Curry's $62.6 million (2026-27).",
     "type": "approaches",
     "value": 61240212
@@ -9397,7 +9429,7 @@
   "Caleb Wilson|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 296,
+    "comparison_size": 295,
     "contracted": false,
     "family": "cohort",
     "id": "df3c56179b4795cb",
@@ -9410,7 +9442,7 @@
      "value": 14748000
     },
     "rank": 4,
-    "scope_note": "Cohort of 252 players and 297 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 251 players and 296 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Caleb Wilson's $10.7 million in 2026-27 is the fourth-highest single-season salary by an undrafted player, behind AJ Dybantsa's $14.7 million (2026-27).",
     "type": "approaches",
     "value": 10683720
@@ -9419,7 +9451,7 @@
   "Caleb Wilson|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 297,
+    "comparison_size": 296,
     "contracted": true,
     "family": "cohort",
     "id": "a20cb78559f5a702",
@@ -9432,7 +9464,7 @@
      "value": 14748000
     },
     "rank": 4,
-    "scope_note": "Cohort of 252 players and 297 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 251 players and 296 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Caleb Wilson's $11.2 million in 2027-28 would be the fourth-highest single-season salary by an undrafted player, behind AJ Dybantsa's $14.7 million (2026-27).",
     "type": "approaches",
     "value": 11217960
@@ -9441,7 +9473,7 @@
   "Caleb Wilson|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 297,
+    "comparison_size": 296,
     "contracted": true,
     "family": "cohort",
     "id": "383e32a0d61c1424",
@@ -9454,7 +9486,7 @@
      "value": 14748000
     },
     "rank": 4,
-    "scope_note": "Cohort of 252 players and 297 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 251 players and 296 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Caleb Wilson's $11.8 million in 2028-29 would be the fourth-highest single-season salary by an undrafted player, behind AJ Dybantsa's $14.7 million (2026-27).",
     "type": "approaches",
     "value": 11752320
@@ -9463,7 +9495,7 @@
   "Caleb Wilson|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 297,
+    "comparison_size": 296,
     "contracted": true,
     "family": "cohort",
     "id": "87d315708b6391f6",
@@ -9476,7 +9508,7 @@
      "value": 14748000
     },
     "rank": 1,
-    "scope_note": "Cohort of 252 players and 297 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 251 players and 296 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Caleb Wilson's $14.9 million in 2029-30 would be the highest single-season salary by an undrafted player, passing AJ Dybantsa's $14.7 million (2026-27).",
     "type": "sets",
     "value": 14866685
@@ -9501,7 +9533,7 @@
   "Cameron Boozer|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 296,
+    "comparison_size": 295,
     "contracted": false,
     "family": "cohort",
     "id": "7bb102e7ff7e7211",
@@ -9514,7 +9546,7 @@
      "value": 14748000
     },
     "rank": 3,
-    "scope_note": "Cohort of 252 players and 297 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 251 players and 296 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Cameron Boozer's $11.8 million in 2026-27 is the third-highest single-season salary by an undrafted player, behind AJ Dybantsa and Darryn Peterson.",
     "type": "approaches",
     "value": 11849760
@@ -9523,7 +9555,7 @@
   "Cameron Boozer|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 297,
+    "comparison_size": 296,
     "contracted": true,
     "family": "cohort",
     "id": "6e16282feeb6003f",
@@ -9536,7 +9568,7 @@
      "value": 14748000
     },
     "rank": 3,
-    "scope_note": "Cohort of 252 players and 297 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 251 players and 296 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Cameron Boozer's $12.4 million in 2027-28 would be the third-highest single-season salary by an undrafted player, behind AJ Dybantsa and Darryn Peterson.",
     "type": "approaches",
     "value": 12441840
@@ -9545,7 +9577,7 @@
   "Cameron Boozer|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 297,
+    "comparison_size": 296,
     "contracted": true,
     "family": "cohort",
     "id": "4d1f7ac67db0e8f7",
@@ -9558,7 +9590,7 @@
      "value": 14748000
     },
     "rank": 3,
-    "scope_note": "Cohort of 252 players and 297 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 251 players and 296 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Cameron Boozer's $13 million in 2028-29 would be the third-highest single-season salary by an undrafted player, behind AJ Dybantsa and Darryn Peterson.",
     "type": "approaches",
     "value": 13034880
@@ -9583,7 +9615,7 @@
   "Cameron Boozer|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 297,
+    "comparison_size": 296,
     "contracted": true,
     "family": "cohort",
     "id": "66bf01848fd9185c",
@@ -9596,7 +9628,7 @@
      "value": 14748000
     },
     "rank": 1,
-    "scope_note": "Cohort of 252 players and 297 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 251 players and 296 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Cameron Boozer's $16.5 million in 2029-30 would be the highest single-season salary by an undrafted player, passing AJ Dybantsa's $14.7 million (2026-27).",
     "type": "sets",
     "value": 16476088
@@ -9627,7 +9659,7 @@
   "Cameron Johnson|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "6ee6935c51afee38",
@@ -9698,7 +9730,7 @@
      "value": 1378242
     },
     "rank": 1,
-    "scope_note": "Cohort of 129 players and 297 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 129 players and 296 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Cameron Whitmore's $3.4 million in 2024-25 was the highest single-season salary by an undrafted player, 2 times as much as the next undrafted player, Rade Zagorac.",
     "type": "sets",
     "value": 3379068
@@ -10307,7 +10339,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 22 players with a salary on file.",
-    "text": "Chet Holmgren is the Thunder's highest-paid player in 2026-27 after ranking fourth on the roster in 2025-26.",
+    "text": "Chet Holmgren is the Thunder's highest-paid player in 2026-27 after ranking fifth on the roster in 2025-26.",
     "type": "rank_shift",
     "value": 41240250
    }
@@ -10315,7 +10347,7 @@
   "Chet Holmgren|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "8448d766f3816b94",
@@ -10429,7 +10461,7 @@
   "Chet Holmgren|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "eafa537592f2157d",
@@ -10527,7 +10559,7 @@
   "Chet Holmgren|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "7130cc8cc5b18332",
@@ -10661,7 +10693,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "f8a87f1b38a3cba8",
@@ -11557,7 +11589,7 @@
   "Christian Braun|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "69ba3289c3b05f43",
@@ -11713,7 +11745,7 @@
   "Clint Capela|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "781298bc8562f2c9",
@@ -11789,7 +11821,7 @@
   "Coby White|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "5750e350c999bf2c",
@@ -11989,7 +12021,7 @@
   "Collin Sexton|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "14acfb56b1b9be26",
@@ -12867,7 +12899,7 @@
   "Damian Lillard|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "b6a63a98ea9f30e0",
@@ -13049,7 +13081,7 @@
   "Daniel Gafford|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "cc2b426ebd082bfc",
@@ -13343,7 +13375,7 @@
   "Darius Acuff|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 297,
+    "comparison_size": 296,
     "contracted": true,
     "family": "cohort",
     "id": "56d118935bf19e84",
@@ -13356,7 +13388,7 @@
      "value": 14748000
     },
     "rank": 4,
-    "scope_note": "Cohort of 252 players and 297 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 251 players and 296 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Darius Acuff's $11.2 million in 2029-30 would be the fourth-highest single-season salary by an undrafted player, behind AJ Dybantsa's $14.7 million (2026-27).",
     "type": "approaches",
     "value": 11205972
@@ -13585,7 +13617,7 @@
   "Darius Garland|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "40ed62772769a0cd",
@@ -13698,12 +13730,28 @@
     "text": "Darius Garland's $42.2 million in 2026-27 is the fifth-highest single-season salary by a No. 5 pick, behind De'Aaron Fox's $49.5 million (2026-27).",
     "type": "approaches",
     "value": 42166510
+   },
+   {
+    "ahead": null,
+    "comparison_size": 23,
+    "contracted": false,
+    "family": "rank_shift",
+    "id": "3f778e396c17c1d9",
+    "key": "team_high_becomes|Darius Garland|2026-27",
+    "lead": null,
+    "margin": null,
+    "previous_holder": null,
+    "rank": 1,
+    "scope_note": "Same franchise in consecutive seasons. Roster of 23 players with a salary on file.",
+    "text": "Darius Garland is the Clippers' highest-paid player in 2026-27 after ranking second on the roster in 2025-26.",
+    "type": "rank_shift",
+    "value": 42166510
    }
   ],
   "Darius Garland|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "79b997d0ebe3a2ac",
@@ -13779,7 +13827,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 582,
+    "comparison_size": 583,
     "contracted": true,
     "family": "franchise",
     "id": "447c48f6f042c402",
@@ -13799,7 +13847,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2872,
+    "comparison_size": 2871,
     "contracted": true,
     "family": "negative_space",
     "id": "8dd66ccbd2768f0c",
@@ -13821,7 +13869,7 @@
   "Darryn Peterson|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 296,
+    "comparison_size": 295,
     "contracted": false,
     "family": "cohort",
     "id": "7f51ba8c9f542858",
@@ -13834,7 +13882,7 @@
      "value": 14748000
     },
     "rank": 2,
-    "scope_note": "Cohort of 252 players and 297 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 251 players and 296 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Darryn Peterson's $13.2 million in 2026-27 is the second-highest single-season salary by an undrafted player, behind AJ Dybantsa's $14.7 million (2026-27).",
     "type": "approaches",
     "value": 13195320
@@ -13843,7 +13891,7 @@
   "Darryn Peterson|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 297,
+    "comparison_size": 296,
     "contracted": true,
     "family": "cohort",
     "id": "5813555f07c93369",
@@ -13856,7 +13904,7 @@
      "value": 14748000
     },
     "rank": 2,
-    "scope_note": "Cohort of 252 players and 297 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 251 players and 296 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Darryn Peterson's $13.9 million in 2027-28 would be the second-highest single-season salary by an undrafted player, behind AJ Dybantsa's $14.7 million (2026-27).",
     "type": "approaches",
     "value": 13855320
@@ -13865,7 +13913,7 @@
   "Darryn Peterson|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 297,
+    "comparison_size": 296,
     "contracted": true,
     "family": "cohort",
     "id": "eb79b281e2a4419a",
@@ -13878,7 +13926,7 @@
      "value": 14748000
     },
     "rank": 2,
-    "scope_note": "Cohort of 252 players and 297 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 251 players and 296 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Darryn Peterson's $14.5 million in 2028-29 would be the second-highest single-season salary by an undrafted player, behind AJ Dybantsa's $14.7 million (2026-27).",
     "type": "approaches",
     "value": 14515320
@@ -13887,7 +13935,7 @@
   "Darryn Peterson|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 297,
+    "comparison_size": 296,
     "contracted": true,
     "family": "cohort",
     "id": "8b3a2e032929ef7f",
@@ -13900,7 +13948,7 @@
      "value": 14748000
     },
     "rank": 1,
-    "scope_note": "Cohort of 252 players and 297 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 251 players and 296 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Darryn Peterson's $18.3 million in 2029-30 would be the highest single-season salary by an undrafted player, passing AJ Dybantsa's $14.7 million (2026-27).",
     "type": "sets",
     "value": 18318334
@@ -14229,7 +14277,7 @@
   "De'Aaron Fox|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "88d89a791b46ab03",
@@ -14387,7 +14435,7 @@
   "De'Aaron Fox|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "05cefa4fb309053f",
@@ -14505,7 +14553,7 @@
   "De'Aaron Fox|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "bc496d0fbeb79ea3",
@@ -14663,7 +14711,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "bc243947ec90550f",
@@ -14779,7 +14827,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 5944,
+    "comparison_size": 5943,
     "contracted": true,
     "family": "cohort",
     "id": "04ac54e7b2808692",
@@ -14792,7 +14840,7 @@
      "value": 62587158
     },
     "rank": 2,
-    "scope_note": "Cohort of 633 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 633 players and 5943 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "De'Aaron Fox's $61.4 million in 2029-30 would be the second-highest single-season salary by a lottery pick, behind Stephen Curry's $62.6 million (2026-27).",
     "type": "approaches",
     "value": 61365492
@@ -14877,7 +14925,7 @@
   "De'Andre Hunter|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "c287ded9f0574cc3",
@@ -16137,7 +16185,7 @@
   "Dejounte Murray|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "e01bbeb595f5c89e",
@@ -16741,7 +16789,7 @@
   "Derrick White|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "894c33bbf857168b",
@@ -16799,7 +16847,7 @@
   "Derrick White|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "51357fc15f611e5d",
@@ -16857,7 +16905,7 @@
   "Desmond Bane|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "621142013090df22",
@@ -16953,7 +17001,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2202,
+    "comparison_size": 2201,
     "contracted": false,
     "family": "negative_space",
     "id": "9e9417c571944efd",
@@ -16975,7 +17023,7 @@
   "Desmond Bane|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "76ed9b9645501a64",
@@ -17031,7 +17079,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2202,
+    "comparison_size": 2201,
     "contracted": true,
     "family": "negative_space",
     "id": "0198f2a397ab9f44",
@@ -17053,7 +17101,7 @@
   "Desmond Bane|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "34ad3e24c645a3c3",
@@ -17129,7 +17177,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2872,
+    "comparison_size": 2871,
     "contracted": true,
     "family": "negative_space",
     "id": "1a23c18d58aa0765",
@@ -17149,7 +17197,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2202,
+    "comparison_size": 2201,
     "contracted": true,
     "family": "negative_space",
     "id": "0cf825789e77704e",
@@ -17625,7 +17673,7 @@
   "Devin Booker|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "ca0a9eca33c6f40b",
@@ -17963,7 +18011,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 5944,
+    "comparison_size": 5943,
     "contracted": true,
     "family": "cohort",
     "id": "a9b9afd2c0f84a52",
@@ -17976,7 +18024,7 @@
      "value": 62587158
     },
     "rank": 2,
-    "scope_note": "Cohort of 633 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 633 players and 5943 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Devin Booker's $61 million in 2027-28 would be the second-highest single-season salary by a lottery pick, behind Stephen Curry's $62.6 million (2026-27).",
     "type": "approaches",
     "value": 61015192
@@ -18045,7 +18093,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "5c1c3a5327dbca57",
@@ -18161,7 +18209,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 5944,
+    "comparison_size": 5943,
     "contracted": true,
     "family": "cohort",
     "id": "3903c1014d75dfb6",
@@ -18174,7 +18222,7 @@
      "value": 62587158
     },
     "rank": 1,
-    "scope_note": "Cohort of 633 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 633 players and 5943 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Devin Booker's $69.9 million in 2028-29 would be the highest single-season salary by a lottery pick, passing Stephen Curry's $62.6 million (2026-27).",
     "type": "sets",
     "value": 69877500
@@ -18259,7 +18307,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "06275d61e35e2d62",
@@ -18375,7 +18423,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 5944,
+    "comparison_size": 5943,
     "contracted": true,
     "family": "cohort",
     "id": "445934a71ddbc890",
@@ -18388,7 +18436,7 @@
      "value": 62587158
     },
     "rank": 1,
-    "scope_note": "Cohort of 633 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 633 players and 5943 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Devin Booker's $75.5 million in 2029-30 would be the highest single-season salary by a lottery pick, passing Stephen Curry's $62.6 million (2026-27).",
     "type": "sets",
     "value": 75467700
@@ -18555,7 +18603,7 @@
   "Devin Vassell|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "8185427c3756b429",
@@ -18675,7 +18723,7 @@
   "Devin Vassell|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "19654e08ead51275",
@@ -19005,7 +19053,7 @@
   "Dillon Brooks|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "0312e2d7cfcf3eb7",
@@ -19615,7 +19663,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 16,
+    "comparison_size": 14,
     "contracted": false,
     "family": "rank_shift",
     "id": "56b70cb5ff46134e",
@@ -19624,7 +19672,7 @@
     "margin": null,
     "previous_holder": null,
     "rank": 2,
-    "scope_note": "Same franchise in consecutive seasons. Roster of 16 players with a salary on file.",
+    "scope_note": "Same franchise in consecutive seasons. Roster of 14 players with a salary on file.",
     "text": "Domantas Sabonis was no longer the Kings' highest-paid player in 2025-26 after holding that spot in 2024-25.",
     "type": "rank_shift",
     "value": 42336000
@@ -19633,7 +19681,7 @@
   "Domantas Sabonis|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "d3813328a20a9686",
@@ -19789,7 +19837,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 591,
+    "comparison_size": 589,
     "contracted": false,
     "family": "franchise",
     "id": "5c3fc09f1e9ed907",
@@ -19811,7 +19859,7 @@
   "Domantas Sabonis|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "46959a65be2e190a",
@@ -19887,7 +19935,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 592,
+    "comparison_size": 590,
     "contracted": true,
     "family": "franchise",
     "id": "4012a12d3038090d",
@@ -20241,7 +20289,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 572,
+    "comparison_size": 573,
     "contracted": false,
     "family": "franchise",
     "id": "993c2d5a564722f8",
@@ -20261,7 +20309,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 22,
+    "comparison_size": 23,
     "contracted": false,
     "family": "rank_shift",
     "id": "0a03af8168071674",
@@ -20270,7 +20318,7 @@
     "margin": null,
     "previous_holder": null,
     "rank": 1,
-    "scope_note": "Same franchise in consecutive seasons. Roster of 22 players with a salary on file.",
+    "scope_note": "Same franchise in consecutive seasons. Roster of 23 players with a salary on file.",
     "text": "Donovan Mitchell was the Cavaliers' highest-paid player in 2025-26 after ranking second on the roster in 2024-25.",
     "type": "rank_shift",
     "value": 46394100
@@ -20279,7 +20327,7 @@
   "Donovan Mitchell|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "701b93144ef37c78",
@@ -20455,7 +20503,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 594,
+    "comparison_size": 595,
     "contracted": false,
     "family": "franchise",
     "id": "38f7d19a6ca1d0dc",
@@ -20497,7 +20545,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "f0c2af6ffa04c5de",
@@ -20613,7 +20661,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 5944,
+    "comparison_size": 5943,
     "contracted": true,
     "family": "cohort",
     "id": "e7799a229e5d1cf7",
@@ -20626,7 +20674,7 @@
      "value": 62587158
     },
     "rank": 2,
-    "scope_note": "Cohort of 633 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 633 players and 5943 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Donovan Mitchell's $60.9 million in 2027-28 would be the second-highest single-season salary by a lottery pick, behind Stephen Curry's $62.6 million (2026-27).",
     "type": "approaches",
     "value": 60900000
@@ -20653,7 +20701,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 595,
+    "comparison_size": 596,
     "contracted": true,
     "family": "franchise",
     "id": "47a0951d9c465b95",
@@ -20711,7 +20759,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "47e4e277588f1340",
@@ -20827,7 +20875,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 5944,
+    "comparison_size": 5943,
     "contracted": true,
     "family": "cohort",
     "id": "fa5ec4412599c339",
@@ -20840,7 +20888,7 @@
      "value": 62587158
     },
     "rank": 1,
-    "scope_note": "Cohort of 633 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 633 players and 5943 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Donovan Mitchell's $65.8 million in 2028-29 would be the highest single-season salary by a lottery pick, passing Stephen Curry's $62.6 million (2026-27).",
     "type": "sets",
     "value": 65772000
@@ -20867,7 +20915,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 595,
+    "comparison_size": 596,
     "contracted": true,
     "family": "franchise",
     "id": "a0a9c77cf86ed0d2",
@@ -20909,7 +20957,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "f487c370eda072c0",
@@ -21025,7 +21073,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 5944,
+    "comparison_size": 5943,
     "contracted": true,
     "family": "cohort",
     "id": "aefe8f5c289622dc",
@@ -21038,7 +21086,7 @@
      "value": 62587158
     },
     "rank": 1,
-    "scope_note": "Cohort of 633 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 633 players and 5943 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Donovan Mitchell's $70.6 million in 2029-30 would be the highest single-season salary by a lottery pick, passing Stephen Curry's $62.6 million (2026-27).",
     "type": "sets",
     "value": 70644000
@@ -21065,7 +21113,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 595,
+    "comparison_size": 596,
     "contracted": true,
     "family": "franchise",
     "id": "35dffeb1d97e8ea0",
@@ -21107,7 +21155,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "1c879e4b3b3fe3e9",
@@ -21223,7 +21271,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 5944,
+    "comparison_size": 5943,
     "contracted": true,
     "family": "cohort",
     "id": "f7d932c1c3777803",
@@ -21236,7 +21284,7 @@
      "value": 62587158
     },
     "rank": 1,
-    "scope_note": "Cohort of 633 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 633 players and 5943 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Donovan Mitchell's $75.5 million in 2030-31 would be the highest single-season salary by a lottery pick, passing Stephen Curry's $62.6 million (2026-27).",
     "type": "sets",
     "value": 75516000
@@ -21263,7 +21311,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 595,
+    "comparison_size": 596,
     "contracted": true,
     "family": "franchise",
     "id": "d72491d4ac04b1da",
@@ -21307,7 +21355,7 @@
   "Dorian Finney-Smith|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "ee053c77bf9ebbf2",
@@ -21523,7 +21571,7 @@
   "Draymond Green|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "1b17ceb9b942b715",
@@ -21661,7 +21709,7 @@
   "Duncan Robinson|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "83b91d70be38f628",
@@ -22059,7 +22107,7 @@
   "Dyson Daniels|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "b59a6181b0e60dcb",
@@ -22819,7 +22867,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 572,
+    "comparison_size": 573,
     "contracted": false,
     "family": "franchise",
     "id": "8814c52aa6ce51b2",
@@ -22839,7 +22887,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 22,
+    "comparison_size": 23,
     "contracted": false,
     "family": "rank_shift",
     "id": "cb1a634fa779e0cd",
@@ -22848,7 +22896,7 @@
     "margin": null,
     "previous_holder": null,
     "rank": 1,
-    "scope_note": "Same franchise in consecutive seasons. Roster of 22 players with a salary on file.",
+    "scope_note": "Same franchise in consecutive seasons. Roster of 23 players with a salary on file.",
     "text": "Evan Mobley was the Cavaliers' highest-paid player in 2025-26 after ranking sixth on the roster in 2024-25.",
     "type": "rank_shift",
     "value": 46394100
@@ -22857,7 +22905,7 @@
   "Evan Mobley|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "621f73d801bcd871",
@@ -22953,7 +23001,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 594,
+    "comparison_size": 595,
     "contracted": false,
     "family": "franchise",
     "id": "17f09f89128e2f6b",
@@ -22991,7 +23039,7 @@
   "Evan Mobley|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "390a5adf2f27efd8",
@@ -23047,7 +23095,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 595,
+    "comparison_size": 596,
     "contracted": true,
     "family": "franchise",
     "id": "7b7ece8e1e60a048",
@@ -23069,7 +23117,7 @@
   "Evan Mobley|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "f165325506779c0e",
@@ -23165,7 +23213,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 595,
+    "comparison_size": 596,
     "contracted": true,
     "family": "franchise",
     "id": "acee299f13845c79",
@@ -23223,7 +23271,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "0513e6bf848cd5e8",
@@ -23239,7 +23287,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "d82d901912862ee8",
@@ -23335,7 +23383,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 5944,
+    "comparison_size": 5943,
     "contracted": true,
     "family": "cohort",
     "id": "e74f99887f71de52",
@@ -23348,7 +23396,7 @@
      "value": 62587158
     },
     "rank": 2,
-    "scope_note": "Cohort of 633 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 633 players and 5943 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Evan Mobley's $61.2 million in 2029-30 would be the second-highest single-season salary by a lottery pick, behind Stephen Curry's $62.6 million (2026-27).",
     "type": "approaches",
     "value": 61240212
@@ -23395,7 +23443,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 595,
+    "comparison_size": 596,
     "contracted": true,
     "family": "franchise",
     "id": "d6396dd358e53a3e",
@@ -23535,7 +23583,7 @@
   "Franz Wagner|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "fb6583302fbf38a3",
@@ -23751,7 +23799,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2202,
+    "comparison_size": 2201,
     "contracted": false,
     "family": "negative_space",
     "id": "e57243613563eb46",
@@ -23893,7 +23941,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2872,
+    "comparison_size": 2871,
     "contracted": true,
     "family": "negative_space",
     "id": "e22abec174436e7c",
@@ -23913,7 +23961,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2202,
+    "comparison_size": 2201,
     "contracted": true,
     "family": "negative_space",
     "id": "e7a6a1f881e55176",
@@ -23935,7 +23983,7 @@
   "Franz Wagner|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "1997f3c96b5459e1",
@@ -24071,7 +24119,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2872,
+    "comparison_size": 2871,
     "contracted": true,
     "family": "negative_space",
     "id": "508d61dc52b0781b",
@@ -24091,7 +24139,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2202,
+    "comparison_size": 2201,
     "contracted": true,
     "family": "negative_space",
     "id": "82cc318bd8e32b5c",
@@ -24113,7 +24161,7 @@
   "Franz Wagner|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "a89fc814ad97daad",
@@ -24249,7 +24297,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2872,
+    "comparison_size": 2871,
     "contracted": true,
     "family": "negative_space",
     "id": "efb6bf18c252d392",
@@ -24269,7 +24317,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2202,
+    "comparison_size": 2201,
     "contracted": true,
     "family": "negative_space",
     "id": "64bdf6e0e8ea6dcc",
@@ -24423,7 +24471,7 @@
   "Fred VanVleet|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "9dc224badf1263ea",
@@ -24837,7 +24885,7 @@
   "Gary Trent Jr|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "c9af6cc23a95859f",
@@ -26057,7 +26105,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 587,
+    "comparison_size": 588,
     "contracted": false,
     "family": "franchise",
     "id": "e615ad74064bfc49",
@@ -26099,7 +26147,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "754859047786028d",
@@ -26235,7 +26283,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 588,
+    "comparison_size": 589,
     "contracted": true,
     "family": "franchise",
     "id": "31abb330a9b9720a",
@@ -27863,7 +27911,7 @@
   "Herb Jones|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "f8893d2daa024aa2",
@@ -28125,7 +28173,7 @@
   "Immanuel Quickley|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "db39b0a488ffce80",
@@ -28205,7 +28253,7 @@
   "Immanuel Quickley|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "44b0968938af3f01",
@@ -28329,7 +28377,7 @@
   "Isaiah Hartenstein|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "e08f866ae3d3ae66",
@@ -28449,7 +28497,7 @@
   "Isaiah Hartenstein|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "ba0df98aa4872d1b",
@@ -28737,7 +28785,7 @@
   "Ivica Zubac|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "4133da88e8c00cd6",
@@ -29071,7 +29119,7 @@
   "Ja Morant|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "7e0321f7f0676b48",
@@ -29169,7 +29217,7 @@
   "Ja Morant|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "1e956b8a154138af",
@@ -29419,7 +29467,7 @@
   "Jabari Smith|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "59de74fe4e172109",
@@ -29479,7 +29527,7 @@
   "Jabari Smith|2030-31": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "96eab4b72f5e5b5c",
@@ -29615,7 +29663,7 @@
   "Jaden McDaniels|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "e1d14d1679968f70",
@@ -29737,7 +29785,7 @@
   "Jakob Poeltl|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "c7cdb5be2e4c9416",
@@ -29755,7 +29803,7 @@
   "Jakob Poeltl|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "e50f95b3511508d0",
@@ -29773,7 +29821,7 @@
   "Jakob Poeltl|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "e21c7a73a6681dfb",
@@ -29929,7 +29977,7 @@
   "Jalen Brunson|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "30770278a979aa30",
@@ -30169,7 +30217,7 @@
   "Jalen Brunson|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "38e945b72bac3b1e",
@@ -30287,13 +30335,33 @@
   "Jalen Duren|2026-27": [
    {
     "ahead": null,
+    "comparison_size": 31,
+    "contracted": false,
+    "family": "cohort",
+    "id": "21c06206b948f77c",
+    "key": "cohort_career|college|Memphis|Jalen Duren|2026-27",
+    "lead": null,
+    "margin": -108097987,
+    "previous_holder": {
+     "player": "Derrick Rose",
+     "season": "2023-24",
+     "value": 167733574
+    },
+    "rank": 5,
+    "scope_note": "Ranked on money already paid against 32 careers in this cohort, active players included. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. Jalen Duren is still playing, so this is his total to date.",
+    "text": "Jalen Duren will have earned $59.6 million by the end of 2026-27, the fifth-most among players out of Memphis, behind Derrick Rose's $167.7 million (2023-24).",
+    "type": "approaches",
+    "value": 59635587
+   },
+   {
+    "ahead": null,
     "comparison_size": 180,
     "contracted": false,
     "family": "cohort",
     "id": "a8cc37492b18ed27",
     "key": "cohort_season|college|Memphis|Jalen Duren|2026-27",
     "lead": null,
-    "margin": 12020748,
+    "margin": 18837391,
     "previous_holder": {
      "player": "Derrick Rose",
      "season": "2016-17",
@@ -30301,9 +30369,9 @@
     },
     "rank": 1,
     "scope_note": "Cohort of 32 players and 181 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
-    "text": "Jalen Duren's $33.3 million in 2026-27 is the highest single-season salary among players out of Memphis, passing Derrick Rose's $21.3 million (2016-17).",
+    "text": "Jalen Duren's $40.2 million in 2026-27 is the highest single-season salary among players out of Memphis, passing Derrick Rose's $21.3 million (2016-17).",
     "type": "sets",
-    "value": 33344000
+    "value": 40160643
    },
    {
     "ahead": null,
@@ -30313,7 +30381,7 @@
     "id": "bb5b8030c79bf976",
     "key": "cohort_season|draft_class|2022|Jalen Duren|2026-27",
     "lead": null,
-    "margin": -7896250,
+    "margin": -1079607,
     "previous_holder": {
      "player": "Chet Holmgren",
      "season": "2026-27",
@@ -30321,9 +30389,9 @@
     },
     "rank": 4,
     "scope_note": "Cohort of 95 players and 351 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
-    "text": "Jalen Duren's $33.3 million in 2026-27 is the fourth-highest single-season salary in the 2022 draft class, behind Chet Holmgren's $41.2 million (2026-27).",
+    "text": "Jalen Duren's $40.2 million in 2026-27 is the fourth-highest single-season salary in the 2022 draft class, behind Chet Holmgren's $41.2 million (2026-27).",
     "type": "approaches",
-    "value": 33344000
+    "value": 40160643
    },
    {
     "ahead": null,
@@ -30333,17 +30401,17 @@
     "id": "29307c5495199d84",
     "key": "franchise|DET|Jalen Duren|2026-27",
     "lead": null,
-    "margin": -16761628,
+    "margin": -9944985,
     "previous_holder": {
      "player": "Cade Cunningham",
      "season": "2026-27",
      "value": 50105628
     },
-    "rank": 4,
+    "rank": 3,
     "scope_note": "Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid.",
-    "text": "Jalen Duren's $33.3 million in 2026-27 is the fourth-highest single-season salary in Pistons history, behind Cade Cunningham's $50.1 million (2026-27).",
+    "text": "Jalen Duren's $40.2 million in 2026-27 is the third-highest single-season salary in Pistons history, behind Cade Cunningham and Cade Cunningham.",
     "type": "approaches",
-    "value": 33344000
+    "value": 40160643
    }
   ],
   "Jalen Duren|2027-28": [
@@ -30355,17 +30423,17 @@
     "id": "cdeae245bf6be671",
     "key": "cohort_season|college|Memphis|Jalen Duren|2027-28",
     "lead": null,
-    "margin": 3456000,
+    "margin": -3212851,
     "previous_holder": {
      "player": "Jalen Duren",
      "season": "2026-27",
-     "value": 33344000
+     "value": 40160643
     },
-    "rank": 1,
+    "rank": 2,
     "scope_note": "Cohort of 32 players and 181 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Jalen Duren's $36.8 million in 2027-28 would be the highest single-season salary among players out of Memphis, breaking his own mark of $33.3 million in 2026-27.",
-    "type": "sets",
-    "value": 36800000
+    "text": "Jalen Duren's $36.9 million in 2027-28 would be the second-highest single-season salary among players out of Memphis, behind his own $40.2 million (2026-27).",
+    "type": "approaches",
+    "value": 36947792
    },
    {
     "ahead": null,
@@ -30375,17 +30443,17 @@
     "id": "6f764b69bfc57c88",
     "key": "cohort_season|draft_class|2022|Jalen Duren|2027-28",
     "lead": null,
-    "margin": -4440250,
+    "margin": -4292458,
     "previous_holder": {
      "player": "Chet Holmgren",
      "season": "2026-27",
      "value": 41240250
     },
-    "rank": 4,
+    "rank": 5,
     "scope_note": "Cohort of 95 players and 351 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Jalen Duren's $36.8 million in 2027-28 would be the fourth-highest single-season salary in the 2022 draft class, behind Chet Holmgren's $41.2 million (2026-27).",
+    "text": "Jalen Duren's $36.9 million in 2027-28 would be the fifth-highest single-season salary in the 2022 draft class, behind Chet Holmgren's $41.2 million (2026-27).",
     "type": "approaches",
-    "value": 36800000
+    "value": 36947792
    },
    {
     "ahead": null,
@@ -30395,35 +30463,35 @@
     "id": "842d20743a158b90",
     "key": "franchise|DET|Jalen Duren|2027-28",
     "lead": null,
-    "margin": -13305628,
+    "margin": -13157836,
     "previous_holder": {
      "player": "Cade Cunningham",
      "season": "2026-27",
      "value": 50105628
     },
-    "rank": 3,
+    "rank": 4,
     "scope_note": "Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
-    "text": "Jalen Duren's $36.8 million in 2027-28 would be the third-highest single-season salary in Pistons history, behind Cade Cunningham and Cade Cunningham.",
+    "text": "Jalen Duren's $36.9 million in 2027-28 would be the fourth-highest single-season salary in Pistons history, behind Cade Cunningham's $50.1 million (2026-27).",
     "type": "approaches",
-    "value": 36800000
+    "value": 36947792
    }
   ],
   "Jalen Duren|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "eb3db18a6a0ca742",
     "key": "career_milestone|Jalen Duren|2028-29|100000000",
     "lead": null,
-    "margin": 29618944.0,
+    "margin": 35539203.0,
     "previous_holder": null,
     "rank": null,
     "scope_note": "Career earnings are nominal dollars. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. 231 other players had reached it.",
     "text": "Jalen Duren is on track to pass $100 million in career earnings in 2028-29 if his salaries are paid in full.",
     "type": "milestone",
-    "value": 129618944
+    "value": 135539203
    },
    {
     "ahead": null,
@@ -30433,17 +30501,17 @@
     "id": "1fc8914501f5e181",
     "key": "cohort_season|college|Memphis|Jalen Duren|2028-29",
     "lead": null,
-    "margin": 6656000,
+    "margin": -1204819,
     "previous_holder": {
      "player": "Jalen Duren",
      "season": "2026-27",
-     "value": 33344000
+     "value": 40160643
     },
-    "rank": 1,
+    "rank": 2,
     "scope_note": "Cohort of 32 players and 181 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Jalen Duren's $40 million in 2028-29 would be the highest single-season salary among players out of Memphis, breaking his own mark of $33.3 million in 2026-27.",
-    "type": "sets",
-    "value": 40000000
+    "text": "Jalen Duren's $39 million in 2028-29 would be the second-highest single-season salary among players out of Memphis, behind his own $40.2 million (2026-27).",
+    "type": "approaches",
+    "value": 38955824
    },
    {
     "ahead": null,
@@ -30453,17 +30521,17 @@
     "id": "279410502223ba36",
     "key": "cohort_season|draft_class|2022|Jalen Duren|2028-29",
     "lead": null,
-    "margin": -1240250,
+    "margin": -2284426,
     "previous_holder": {
      "player": "Chet Holmgren",
      "season": "2026-27",
      "value": 41240250
     },
-    "rank": 4,
+    "rank": 5,
     "scope_note": "Cohort of 95 players and 351 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Jalen Duren's $40 million in 2028-29 would be the fourth-highest single-season salary in the 2022 draft class, behind Chet Holmgren's $41.2 million (2026-27).",
+    "text": "Jalen Duren's $39 million in 2028-29 would be the fifth-highest single-season salary in the 2022 draft class, behind Chet Holmgren's $41.2 million (2026-27).",
     "type": "approaches",
-    "value": 40000000
+    "value": 38955824
    },
    {
     "ahead": null,
@@ -30473,35 +30541,35 @@
     "id": "200092eeb5e94b85",
     "key": "franchise|DET|Jalen Duren|2028-29",
     "lead": null,
-    "margin": -10105628,
+    "margin": -11149804,
     "previous_holder": {
      "player": "Cade Cunningham",
      "season": "2026-27",
      "value": 50105628
     },
-    "rank": 3,
+    "rank": 4,
     "scope_note": "Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
-    "text": "Jalen Duren's $40 million in 2028-29 would be the third-highest single-season salary in Pistons history, behind Cade Cunningham and Cade Cunningham.",
+    "text": "Jalen Duren's $39 million in 2028-29 would be the fourth-highest single-season salary in Pistons history, behind Cade Cunningham's $50.1 million (2026-27).",
     "type": "approaches",
-    "value": 40000000
+    "value": 38955824
    }
   ],
   "Jalen Duren|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "891de014483c1074",
     "key": "career_milestone|Jalen Duren|2029-30|150000000",
     "lead": null,
-    "margin": 22818944.0,
+    "margin": 26503059.0,
     "previous_holder": null,
     "rank": null,
     "scope_note": "Career earnings are nominal dollars. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. 119 other players had reached it.",
     "text": "Jalen Duren is on track to pass $150 million in career earnings in 2029-30 if his salaries are paid in full.",
     "type": "milestone",
-    "value": 172818944
+    "value": 176503059
    },
    {
     "ahead": null,
@@ -30511,17 +30579,17 @@
     "id": "8408f1f0c43ce7ee",
     "key": "cohort_season|college|Memphis|Jalen Duren|2029-30",
     "lead": null,
-    "margin": 9856000,
+    "margin": 803213,
     "previous_holder": {
      "player": "Jalen Duren",
      "season": "2026-27",
-     "value": 33344000
+     "value": 40160643
     },
     "rank": 1,
     "scope_note": "Cohort of 32 players and 181 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Jalen Duren's $43.2 million in 2029-30 would be the highest single-season salary among players out of Memphis, breaking his own mark of $33.3 million in 2026-27.",
+    "text": "Jalen Duren's $41 million in 2029-30 would be the highest single-season salary among players out of Memphis, breaking his own mark of $40.2 million in 2026-27.",
     "type": "sets",
-    "value": 43200000
+    "value": 40963856
    },
    {
     "ahead": null,
@@ -30531,17 +30599,17 @@
     "id": "15253ea90a27915c",
     "key": "cohort_season|draft_class|2022|Jalen Duren|2029-30",
     "lead": null,
-    "margin": 1959750,
+    "margin": -276394,
     "previous_holder": {
      "player": "Chet Holmgren",
      "season": "2026-27",
      "value": 41240250
     },
-    "rank": 1,
+    "rank": 4,
     "scope_note": "Cohort of 95 players and 351 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Jalen Duren's $43.2 million in 2029-30 would be the highest single-season salary in the 2022 draft class, passing Chet Holmgren's $41.2 million (2026-27).",
-    "type": "sets",
-    "value": 43200000
+    "text": "Jalen Duren's $41 million in 2029-30 would be the fourth-highest single-season salary in the 2022 draft class, behind Chet Holmgren's $41.2 million (2026-27).",
+    "type": "approaches",
+    "value": 40963856
    },
    {
     "ahead": null,
@@ -30551,7 +30619,7 @@
     "id": "e034ee170cd32659",
     "key": "franchise|DET|Jalen Duren|2029-30",
     "lead": null,
-    "margin": -6905628,
+    "margin": -9141772,
     "previous_holder": {
      "player": "Cade Cunningham",
      "season": "2026-27",
@@ -30559,15 +30627,15 @@
     },
     "rank": 3,
     "scope_note": "Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
-    "text": "Jalen Duren's $43.2 million in 2029-30 would be the third-highest single-season salary in Pistons history, behind Cade Cunningham and Cade Cunningham.",
+    "text": "Jalen Duren's $41 million in 2029-30 would be the third-highest single-season salary in Pistons history, behind Cade Cunningham and Cade Cunningham.",
     "type": "approaches",
-    "value": 43200000
+    "value": 40963856
    }
   ],
   "Jalen Duren|2030-31": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "d319799270e21af2",
@@ -30589,17 +30657,17 @@
     "id": "66e8f5158393aa6c",
     "key": "cohort_season|college|Memphis|Jalen Duren|2030-31",
     "lead": null,
-    "margin": 13312000,
+    "margin": 2811242,
     "previous_holder": {
      "player": "Jalen Duren",
      "season": "2026-27",
-     "value": 33344000
+     "value": 40160643
     },
     "rank": 1,
     "scope_note": "Cohort of 32 players and 181 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Jalen Duren's $46.7 million in 2030-31 would be the highest single-season salary among players out of Memphis, breaking his own mark of $33.3 million in 2026-27.",
+    "text": "Jalen Duren's $43 million in 2030-31 would be the highest single-season salary among players out of Memphis, breaking his own mark of $40.2 million in 2026-27.",
     "type": "sets",
-    "value": 46656000
+    "value": 42971885
    },
    {
     "ahead": null,
@@ -30609,7 +30677,7 @@
     "id": "7de58e8714bfd417",
     "key": "cohort_season|draft_class|2022|Jalen Duren|2030-31",
     "lead": null,
-    "margin": 5415750,
+    "margin": 1731635,
     "previous_holder": {
      "player": "Chet Holmgren",
      "season": "2026-27",
@@ -30617,9 +30685,9 @@
     },
     "rank": 1,
     "scope_note": "Cohort of 95 players and 351 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Jalen Duren's $46.7 million in 2030-31 would be the highest single-season salary in the 2022 draft class, passing Chet Holmgren's $41.2 million (2026-27).",
+    "text": "Jalen Duren's $43 million in 2030-31 would be the highest single-season salary in the 2022 draft class, passing Chet Holmgren's $41.2 million (2026-27).",
     "type": "sets",
-    "value": 46656000
+    "value": 42971885
    },
    {
     "ahead": null,
@@ -30629,17 +30697,17 @@
     "id": "ade0abafd8d20173",
     "key": "franchise|DET|Jalen Duren|2030-31",
     "lead": null,
-    "margin": -3449628,
+    "margin": -7133743,
     "previous_holder": {
      "player": "Cade Cunningham",
      "season": "2026-27",
      "value": 50105628
     },
-    "rank": 2,
+    "rank": 3,
     "scope_note": "Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
-    "text": "Jalen Duren's $46.7 million in 2030-31 would be the second-highest single-season salary in Pistons history, behind Cade Cunningham's $50.1 million (2026-27).",
+    "text": "Jalen Duren's $43 million in 2030-31 would be the third-highest single-season salary in Pistons history, behind Cade Cunningham and Cade Cunningham.",
     "type": "approaches",
-    "value": 46656000
+    "value": 42971885
    },
    {
     "ahead": null,
@@ -30655,7 +30723,7 @@
     "scope_note": "First season inside the top 10. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Jalen Duren's salary in 2030-31 would put him in the league's top 10 for the first time in his career.",
     "type": "rank_shift",
-    "value": 46656000
+    "value": 42971885
    },
    {
     "ahead": null,
@@ -30671,13 +30739,13 @@
     "scope_note": "Same franchise in consecutive seasons. Roster of 1 players with a salary on file.",
     "text": "Jalen Duren would be the Pistons' highest-paid player in 2030-31 after ranking second on the roster in 2029-30.",
     "type": "rank_shift",
-    "value": 46656000
+    "value": 42971885
    }
   ],
   "Jalen Green|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "884cf0a7044dc6d7",
@@ -30815,7 +30883,7 @@
   "Jalen Johnson|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "3c21371bbc561aa1",
@@ -30915,7 +30983,7 @@
   "Jalen Johnson|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "01d4a4975d67b740",
@@ -31039,7 +31107,7 @@
   "Jalen Suggs|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "ec1f4813ca9755c8",
@@ -31057,7 +31125,7 @@
   "Jalen Suggs|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "ac18dbd55b97151c",
@@ -31165,7 +31233,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 22 players with a salary on file.",
-    "text": "Jalen Williams is the Thunder's highest-paid player in 2026-27 after ranking seventh on the roster in 2025-26.",
+    "text": "Jalen Williams is the Thunder's highest-paid player in 2026-27 after ranking 10th on the roster in 2025-26.",
     "type": "rank_shift",
     "value": 41240250
    }
@@ -31173,7 +31241,7 @@
   "Jalen Williams|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "5f793533ae1a7842",
@@ -31251,7 +31319,7 @@
   "Jalen Williams|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "302b2c961a43c606",
@@ -31329,7 +31397,7 @@
   "Jalen Williams|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "4d227d6839579ed4",
@@ -31443,7 +31511,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "65bacbb108e11305",
@@ -31713,7 +31781,7 @@
   "Jamal Murray|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "b821afdf44fcf504",
@@ -31931,7 +31999,7 @@
   "Jamal Murray|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "37a0fcb9ae0b310c",
@@ -32619,7 +32687,7 @@
   "James Harden|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3350,
+    "comparison_size": 3349,
     "contracted": false,
     "family": "career_earnings",
     "id": "aba2012b1ec732d0",
@@ -32781,7 +32849,7 @@
   "James Harden|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "bb0e5ed8065ed27d",
@@ -32981,7 +33049,7 @@
   "Jaren Jackson Jr|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "b696b1b63dc446b6",
@@ -33097,7 +33165,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 569,
+    "comparison_size": 570,
     "contracted": false,
     "family": "franchise",
     "id": "af20a69fd776a77b",
@@ -33117,7 +33185,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2872,
+    "comparison_size": 2871,
     "contracted": false,
     "family": "negative_space",
     "id": "a31c5db028623937",
@@ -33155,7 +33223,7 @@
   "Jaren Jackson Jr|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "172521767da55be2",
@@ -33231,7 +33299,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 570,
+    "comparison_size": 571,
     "contracted": true,
     "family": "franchise",
     "id": "33f4042daf576fed",
@@ -33251,7 +33319,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2872,
+    "comparison_size": 2871,
     "contracted": true,
     "family": "negative_space",
     "id": "1c7bb0d30cf48c97",
@@ -33273,7 +33341,7 @@
   "Jaren Jackson Jr|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "6c72a040c97ce8a5",
@@ -33349,7 +33417,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 570,
+    "comparison_size": 571,
     "contracted": true,
     "family": "franchise",
     "id": "a449cb932e7b80d5",
@@ -33369,7 +33437,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2872,
+    "comparison_size": 2871,
     "contracted": true,
     "family": "negative_space",
     "id": "19fbed0726e8bb85",
@@ -33407,7 +33475,7 @@
   "Jaren Jackson Jr|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "a1e6843226e2cb14",
@@ -33483,7 +33551,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 570,
+    "comparison_size": 571,
     "contracted": true,
     "family": "franchise",
     "id": "4513fea44e63a275",
@@ -33503,7 +33571,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2872,
+    "comparison_size": 2871,
     "contracted": true,
     "family": "negative_space",
     "id": "8ba529af81fab2db",
@@ -33767,7 +33835,7 @@
   "Jarrett Allen|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "45de59c19cae7b4b",
@@ -33805,7 +33873,7 @@
   "Jarrett Allen|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "6a8b83e544536776",
@@ -34113,7 +34181,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 20,
+    "comparison_size": 19,
     "contracted": false,
     "family": "rank_shift",
     "id": "aed9c35557f15a96",
@@ -34122,7 +34190,7 @@
     "margin": null,
     "previous_holder": null,
     "rank": 2,
-    "scope_note": "Same franchise in consecutive seasons. Roster of 20 players with a salary on file.",
+    "scope_note": "Same franchise in consecutive seasons. Roster of 19 players with a salary on file.",
     "text": "Jaylen Brown was no longer the Celtics' highest-paid player in 2025-26 after holding that spot in 2024-25.",
     "type": "rank_shift",
     "value": 53142264
@@ -34131,7 +34199,7 @@
   "Jaylen Brown|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "b75c208d935494e1",
@@ -34287,7 +34355,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 5943,
+    "comparison_size": 5942,
     "contracted": false,
     "family": "cohort",
     "id": "f30d7f4067b4e759",
@@ -34300,7 +34368,7 @@
      "value": 62587158
     },
     "rank": 5,
-    "scope_note": "Cohort of 633 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 633 players and 5943 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Jaylen Brown's $57.7 million in 2026-27 is the fifth-highest single-season salary by a lottery pick, behind Stephen Curry's $62.6 million (2026-27).",
     "type": "approaches",
     "value": 57736350
@@ -34389,7 +34457,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "1435537f941ab942",
@@ -34485,7 +34553,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 5944,
+    "comparison_size": 5943,
     "contracted": true,
     "family": "cohort",
     "id": "3e98e8d2cca6945d",
@@ -34498,7 +34566,7 @@
      "value": 62587158
     },
     "rank": 2,
-    "scope_note": "Cohort of 633 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 633 players and 5943 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Jaylen Brown's $61.7 million in 2027-28 would be the second-highest single-season salary by a lottery pick, behind Stephen Curry's $62.6 million (2026-27).",
     "type": "approaches",
     "value": 61672814
@@ -34603,7 +34671,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "54fce672db9e2665",
@@ -34699,7 +34767,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 5944,
+    "comparison_size": 5943,
     "contracted": true,
     "family": "cohort",
     "id": "77fe05f955b64f94",
@@ -34712,7 +34780,7 @@
      "value": 62587158
     },
     "rank": 1,
-    "scope_note": "Cohort of 633 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 633 players and 5943 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Jaylen Brown's $65.6 million in 2028-29 would be the highest single-season salary by a lottery pick, passing Stephen Curry's $62.6 million (2026-27).",
     "type": "sets",
     "value": 65609278
@@ -34947,7 +35015,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 578,
+    "comparison_size": 577,
     "contracted": false,
     "family": "franchise",
     "id": "3309c1128e957bb7",
@@ -34967,7 +35035,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 607,
+    "comparison_size": 606,
     "contracted": false,
     "family": "rank_shift",
     "id": "cbd7913607e79537",
@@ -34983,7 +35051,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 20,
+    "comparison_size": 19,
     "contracted": false,
     "family": "rank_shift",
     "id": "b6f519bdd3d4f0b6",
@@ -34992,7 +35060,7 @@
     "margin": null,
     "previous_holder": null,
     "rank": 1,
-    "scope_note": "Same franchise in consecutive seasons. Roster of 20 players with a salary on file.",
+    "scope_note": "Same franchise in consecutive seasons. Roster of 19 players with a salary on file.",
     "text": "Jayson Tatum was the Celtics' highest-paid player in 2025-26 after ranking second on the roster in 2024-25.",
     "type": "rank_shift",
     "value": 54126450
@@ -35021,7 +35089,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "6d6f44738fc3cd56",
@@ -35197,7 +35265,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 5943,
+    "comparison_size": 5942,
     "contracted": false,
     "family": "cohort",
     "id": "97b706d8b84ee38e",
@@ -35210,7 +35278,7 @@
      "value": 62587158
     },
     "rank": 3,
-    "scope_note": "Cohort of 633 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 633 players and 5943 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Jayson Tatum's $58.5 million in 2026-27 is the third-highest single-season salary by a lottery pick, behind Stephen Curry and Stephen Curry.",
     "type": "approaches",
     "value": 58456566
@@ -35257,7 +35325,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 598,
+    "comparison_size": 597,
     "contracted": false,
     "family": "franchise",
     "id": "81faad02db12d7fd",
@@ -35299,7 +35367,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "5573fd5f5cb45173",
@@ -35415,7 +35483,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 5944,
+    "comparison_size": 5943,
     "contracted": true,
     "family": "cohort",
     "id": "7921750588f770e4",
@@ -35428,7 +35496,7 @@
      "value": 62587158
     },
     "rank": 1,
-    "scope_note": "Cohort of 633 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 633 players and 5943 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Jayson Tatum's $62.8 million in 2027-28 would be the highest single-season salary by a lottery pick, passing Stephen Curry's $62.6 million (2026-27).",
     "type": "sets",
     "value": 62786682
@@ -35475,7 +35543,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 599,
+    "comparison_size": 598,
     "contracted": true,
     "family": "franchise",
     "id": "306272630f43c5e5",
@@ -35617,7 +35685,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 5944,
+    "comparison_size": 5943,
     "contracted": true,
     "family": "cohort",
     "id": "ab0f2c5b26c3b8b5",
@@ -35630,7 +35698,7 @@
      "value": 62587158
     },
     "rank": 1,
-    "scope_note": "Cohort of 633 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 633 players and 5943 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Jayson Tatum's $67.1 million in 2028-29 would be the highest single-season salary by a lottery pick, passing Stephen Curry's $62.6 million (2026-27).",
     "type": "sets",
     "value": 67116798
@@ -35677,7 +35745,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 599,
+    "comparison_size": 598,
     "contracted": true,
     "family": "franchise",
     "id": "9515abdb2b1abeb8",
@@ -35719,7 +35787,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "e09cae620e116f75",
@@ -35835,7 +35903,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 5944,
+    "comparison_size": 5943,
     "contracted": true,
     "family": "cohort",
     "id": "93ba4c40e861ae15",
@@ -35848,7 +35916,7 @@
      "value": 62587158
     },
     "rank": 1,
-    "scope_note": "Cohort of 633 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 633 players and 5943 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Jayson Tatum's $71.4 million in 2029-30 would be the highest single-season salary by a lottery pick, passing Stephen Curry's $62.6 million (2026-27).",
     "type": "sets",
     "value": 71446914
@@ -35895,7 +35963,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 599,
+    "comparison_size": 598,
     "contracted": true,
     "family": "franchise",
     "id": "66972d42ed5dcf9d",
@@ -36153,7 +36221,7 @@
   "Jerami Grant|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "5480e5cc2afc111b",
@@ -36985,7 +37053,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 607,
+    "comparison_size": 606,
     "contracted": false,
     "family": "rank_shift",
     "id": "a6c03e0fd15f0c92",
@@ -37003,7 +37071,7 @@
   "Jimmy Butler|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "99e7c9d814661f8e",
@@ -38101,7 +38169,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 5943,
+    "comparison_size": 5942,
     "contracted": false,
     "family": "cohort",
     "id": "5b3b0975187a9c54",
@@ -38114,7 +38182,7 @@
      "value": 62587158
     },
     "rank": 5,
-    "scope_note": "Cohort of 633 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 633 players and 5943 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Joel Embiid's $57.7 million in 2026-27 is the fifth-highest single-season salary by a lottery pick, behind Stephen Curry's $62.6 million (2026-27).",
     "type": "approaches",
     "value": 57736350
@@ -38203,7 +38271,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "005816314ce9117d",
@@ -38299,7 +38367,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 5944,
+    "comparison_size": 5943,
     "contracted": true,
     "family": "cohort",
     "id": "40fcba0d730cc284",
@@ -38312,7 +38380,7 @@
      "value": 62587158
     },
     "rank": 2,
-    "scope_note": "Cohort of 633 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 633 players and 5943 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Joel Embiid's $62.4 million in 2027-28 would be the second-highest single-season salary by a lottery pick, behind Stephen Curry's $62.6 million (2026-27).",
     "type": "approaches",
     "value": 62355258
@@ -38417,7 +38485,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "2fd4d5225aa6e46e",
@@ -38513,7 +38581,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 5944,
+    "comparison_size": 5943,
     "contracted": true,
     "family": "cohort",
     "id": "9e78c51c929b21c0",
@@ -38526,7 +38594,7 @@
      "value": 62587158
     },
     "rank": 1,
-    "scope_note": "Cohort of 633 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 633 players and 5943 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Joel Embiid's $67 million in 2028-29 would be the highest single-season salary by a lottery pick, passing Stephen Curry's $62.6 million (2026-27).",
     "type": "sets",
     "value": 66974166
@@ -38665,7 +38733,7 @@
   "John Collins|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "3c8bf683ebae8f83",
@@ -40003,7 +40071,7 @@
   "Jordan Poole|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "734a6f818554bc58",
@@ -40201,7 +40269,7 @@
   "Josh Giddey|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "fc9ba512c17d9597",
@@ -40219,7 +40287,7 @@
   "Josh Hart|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "e070394eb1463559",
@@ -40766,6 +40834,22 @@
     "text": "Jrue Holiday's $34.8 million in 2026-27 is the fourth-highest single-season salary in Trail Blazers history, behind Damian Lillard's $42.5 million (2022-23).",
     "type": "approaches",
     "value": 34800000
+   },
+   {
+    "ahead": null,
+    "comparison_size": 20,
+    "contracted": false,
+    "family": "rank_shift",
+    "id": "96fa51bb861c67fb",
+    "key": "team_high_ceases|Jrue Holiday|2026-27",
+    "lead": null,
+    "margin": null,
+    "previous_holder": null,
+    "rank": 2,
+    "scope_note": "Same franchise in consecutive seasons. Roster of 20 players with a salary on file.",
+    "text": "Jrue Holiday is no longer the Trail Blazers' highest-paid player in 2026-27 after holding that spot in 2025-26.",
+    "type": "rank_shift",
+    "value": 34800000
    }
   ],
   "Jrue Holiday|2027-28": [
@@ -40971,7 +41055,7 @@
   "Julius Randle|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "a1f002731fc0c50f",
@@ -41049,7 +41133,7 @@
   "Julius Randle|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "8bda2a1efb59414a",
@@ -42103,7 +42187,7 @@
   "Karl-Anthony Towns|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "a3738b1a3a703b22",
@@ -42481,7 +42565,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "5a4a879ce9844451",
@@ -42597,7 +42681,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 5944,
+    "comparison_size": 5943,
     "contracted": true,
     "family": "cohort",
     "id": "4190604b838b935c",
@@ -42610,7 +42694,7 @@
      "value": 62587158
     },
     "rank": 2,
-    "scope_note": "Cohort of 633 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 633 players and 5943 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Karl-Anthony Towns' $61 million in 2027-28 would be the second-highest single-season salary by a lottery pick, behind Stephen Curry's $62.6 million (2026-27).",
     "type": "approaches",
     "value": 61015192
@@ -43145,7 +43229,7 @@
   "Kawhi Leonard|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 559,
+    "comparison_size": 560,
     "contracted": false,
     "family": "franchise",
     "id": "048f7cb8c8df5d5e",
@@ -43167,7 +43251,7 @@
   "Kawhi Leonard|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "0e79ce26e268a032",
@@ -43387,7 +43471,7 @@
   "Kawhi Leonard|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "dc3c6b43cc75a694",
@@ -43505,7 +43589,7 @@
   "Keaton Wagler|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 296,
+    "comparison_size": 295,
     "contracted": false,
     "family": "cohort",
     "id": "129b0102d36bb916",
@@ -43518,7 +43602,7 @@
      "value": 14748000
     },
     "rank": 5,
-    "scope_note": "Cohort of 252 players and 297 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 251 players and 296 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Keaton Wagler's $9.7 million in 2026-27 is the fifth-highest single-season salary by an undrafted player, behind AJ Dybantsa's $14.7 million (2026-27).",
     "type": "approaches",
     "value": 9674760
@@ -43527,7 +43611,7 @@
   "Keaton Wagler|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 297,
+    "comparison_size": 296,
     "contracted": true,
     "family": "cohort",
     "id": "ce65dd784959ec8a",
@@ -43540,7 +43624,7 @@
      "value": 14748000
     },
     "rank": 5,
-    "scope_note": "Cohort of 252 players and 297 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 251 players and 296 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Keaton Wagler's $10.2 million in 2027-28 would be the fifth-highest single-season salary by an undrafted player, behind AJ Dybantsa's $14.7 million (2026-27).",
     "type": "approaches",
     "value": 10158240
@@ -43549,7 +43633,7 @@
   "Keaton Wagler|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 297,
+    "comparison_size": 296,
     "contracted": true,
     "family": "cohort",
     "id": "8da2e60e2e77cd1a",
@@ -43562,7 +43646,7 @@
      "value": 14748000
     },
     "rank": 5,
-    "scope_note": "Cohort of 252 players and 297 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 251 players and 296 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Keaton Wagler's $10.6 million in 2028-29 would be the fifth-highest single-season salary by an undrafted player, behind AJ Dybantsa's $14.7 million (2026-27).",
     "type": "approaches",
     "value": 10641960
@@ -43587,7 +43671,7 @@
   "Keaton Wagler|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 297,
+    "comparison_size": 296,
     "contracted": true,
     "family": "cohort",
     "id": "bfa249fbf39f1699",
@@ -43600,7 +43684,7 @@
      "value": 14748000
     },
     "rank": 2,
-    "scope_note": "Cohort of 252 players and 297 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 251 players and 296 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Keaton Wagler's $13.5 million in 2029-30 would be the second-highest single-season salary by an undrafted player, behind AJ Dybantsa's $14.7 million (2026-27).",
     "type": "approaches",
     "value": 13483363
@@ -43781,7 +43865,7 @@
   "Keegan Murray|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "1641d8d7575b06a2",
@@ -43857,7 +43941,7 @@
   "Keegan Murray|2030-31": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "7c2ba46efe4015b0",
@@ -44108,7 +44192,7 @@
      "value": 18776860
     },
     "rank": 1,
-    "scope_note": "Cohort of 15 players and 128 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 15 players and 127 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Kemba Walker's $32.7 million in 2019-20 was the highest single-season salary among Connecticut guards, passing Ray Allen's $18.8 million (2009-10).",
     "type": "sets",
     "value": 32742000
@@ -44128,7 +44212,7 @@
      "value": 27093018
     },
     "rank": 1,
-    "scope_note": "Cohort of 29 players and 273 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 29 players and 272 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Kemba Walker's $32.7 million in 2019-20 was the highest single-season salary among players out of Connecticut, passing Andre Drummond's $27.1 million (2019-20).",
     "type": "sets",
     "value": 32742000
@@ -44226,7 +44310,7 @@
      "value": 32742000
     },
     "rank": 1,
-    "scope_note": "Cohort of 15 players and 128 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 15 players and 127 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Kemba Walker's $34.4 million in 2020-21 was the highest single-season salary among Connecticut guards, breaking his own mark of $32.7 million in 2019-20.",
     "type": "sets",
     "value": 34379100
@@ -44246,7 +44330,7 @@
      "value": 32742000
     },
     "rank": 1,
-    "scope_note": "Cohort of 30 players and 273 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 30 players and 272 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Kemba Walker's $34.4 million in 2020-21 was the highest single-season salary among players out of Connecticut, breaking his own mark of $32.7 million in 2019-20.",
     "type": "sets",
     "value": 34379100
@@ -44324,7 +44408,7 @@
      "value": 34379100
     },
     "rank": 1,
-    "scope_note": "Cohort of 16 players and 128 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 16 players and 127 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Kemba Walker's $35 million in 2021-22 was the highest single-season salary among Connecticut guards, breaking his own mark of $34.4 million in 2020-21.",
     "type": "sets",
     "value": 34967442
@@ -44344,7 +44428,7 @@
      "value": 34379100
     },
     "rank": 1,
-    "scope_note": "Cohort of 31 players and 273 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 31 players and 272 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Kemba Walker's $35 million in 2021-22 was the highest single-season salary among players out of Connecticut, breaking his own mark of $34.4 million in 2020-21.",
     "type": "sets",
     "value": 34967442
@@ -44426,7 +44510,7 @@
      "value": 34967442
     },
     "rank": 1,
-    "scope_note": "Cohort of 17 players and 128 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 17 players and 127 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Kemba Walker's $37.3 million in 2022-23 was the highest single-season salary among Connecticut guards, breaking his own mark of $35 million in 2021-22.",
     "type": "sets",
     "value": 37281261
@@ -44446,7 +44530,7 @@
      "value": 34967442
     },
     "rank": 1,
-    "scope_note": "Cohort of 32 players and 273 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 32 players and 272 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Kemba Walker's $37.3 million in 2022-23 was the highest single-season salary among players out of Connecticut, breaking his own mark of $35 million in 2021-22.",
     "type": "sets",
     "value": 37281261
@@ -44577,7 +44661,7 @@
   "Kentavious Caldwell-Pope|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "e768662f2f8c8f61",
@@ -45599,7 +45683,7 @@
   "Kevin Durant|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3350,
+    "comparison_size": 3349,
     "contracted": false,
     "family": "career_earnings",
     "id": "247311cf62e9c109",
@@ -46087,7 +46171,7 @@
   "Kevin Huerter|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "377b08c8c9034a3c",
@@ -46569,7 +46653,7 @@
   "Keyonte George|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "f41788b9360b6a50",
@@ -47167,7 +47251,7 @@
   "Khris Middleton|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "17cf60800e6fd264",
@@ -47185,7 +47269,7 @@
   "Kingston Flemings|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 297,
+    "comparison_size": 296,
     "contracted": true,
     "family": "cohort",
     "id": "e0d12da9167991ff",
@@ -47198,7 +47282,7 @@
      "value": 14748000
     },
     "rank": 5,
-    "scope_note": "Cohort of 252 players and 297 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 251 players and 296 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Kingston Flemings' $10.3 million in 2029-30 would be the fifth-highest single-season salary by an undrafted player, behind AJ Dybantsa's $14.7 million (2026-27).",
     "type": "approaches",
     "value": 10282441
@@ -47899,7 +47983,7 @@
   "Kristaps Porzingis|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "942fe12310ca79a2",
@@ -49085,7 +49169,7 @@
   "Kyrie Irving|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "a8eed3f0611074bf",
@@ -49245,7 +49329,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 24 players with a salary on file.",
-    "text": "LaMelo Ball was the Hornets' highest-paid player in 2024-25 after ranking third on the roster in 2023-24.",
+    "text": "LaMelo Ball was the Hornets' highest-paid player in 2024-25 after ranking second on the roster in 2023-24.",
     "type": "rank_shift",
     "value": 35147000
    }
@@ -49313,7 +49397,7 @@
   "LaMelo Ball|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "b347a64fe5def48f",
@@ -49349,7 +49433,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 579,
+    "comparison_size": 578,
     "contracted": true,
     "family": "franchise",
     "id": "fc8781105e389ddc",
@@ -49369,7 +49453,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2872,
+    "comparison_size": 2871,
     "contracted": true,
     "family": "negative_space",
     "id": "b7100c1df9dfd862",
@@ -49391,7 +49475,7 @@
   "LaMelo Ball|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "cae80ad4e86986b9",
@@ -49427,7 +49511,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 579,
+    "comparison_size": 578,
     "contracted": true,
     "family": "franchise",
     "id": "2b4722c3c7106d42",
@@ -49447,7 +49531,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2872,
+    "comparison_size": 2871,
     "contracted": true,
     "family": "negative_space",
     "id": "dacf336f9ca747d5",
@@ -49639,7 +49723,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 549,
+    "comparison_size": 550,
     "contracted": false,
     "family": "franchise",
     "id": "258d4c16222c8532",
@@ -49661,7 +49745,7 @@
   "Lauri Markkanen|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "76177cfacc3b285d",
@@ -49797,7 +49881,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 569,
+    "comparison_size": 570,
     "contracted": false,
     "family": "franchise",
     "id": "0fb161622ff8aabb",
@@ -49817,7 +49901,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2872,
+    "comparison_size": 2871,
     "contracted": false,
     "family": "negative_space",
     "id": "908d196dc754677a",
@@ -49855,7 +49939,7 @@
   "Lauri Markkanen|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "f47d65ba4e5419d3",
@@ -49931,7 +50015,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 570,
+    "comparison_size": 571,
     "contracted": true,
     "family": "franchise",
     "id": "6b90ce7862800679",
@@ -49951,7 +50035,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2872,
+    "comparison_size": 2871,
     "contracted": true,
     "family": "negative_space",
     "id": "85bdaf4b89fdcfe3",
@@ -49973,7 +50057,7 @@
   "Lauri Markkanen|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "9bc423c93ed96442",
@@ -50089,7 +50173,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 570,
+    "comparison_size": 571,
     "contracted": true,
     "family": "franchise",
     "id": "56e29dcc72eebb40",
@@ -50109,7 +50193,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2872,
+    "comparison_size": 2871,
     "contracted": true,
     "family": "negative_space",
     "id": "9c529bbbf0e7c4ce",
@@ -50875,7 +50959,7 @@
   "LeBron James|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3350,
+    "comparison_size": 3349,
     "contracted": false,
     "family": "career_earnings",
     "id": "c92b9197efc2f1d9",
@@ -51030,7 +51114,7 @@
      "value": 947200
     },
     "rank": 1,
-    "scope_note": "Cohort of 86 players and 297 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 86 players and 296 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Livio Jean-Charles' $1.2 million in 2016-17 was the highest single-season salary by an undrafted player, passing Frederic Weis' $947,200 (1999-00).",
     "type": "sets",
     "value": 1188840
@@ -51052,7 +51136,7 @@
      "value": 1188840
     },
     "rank": 1,
-    "scope_note": "Cohort of 97 players and 297 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 97 players and 296 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Livio Jean-Charles' $1.2 million in 2017-18 was the highest single-season salary by an undrafted player, breaking his own mark of $1.2 million in 2016-17.",
     "type": "sets",
     "value": 1242240
@@ -51296,22 +51380,6 @@
     "text": "Luka Doncic's $40.1 million in 2023-24 was the highest single-season salary in Mavericks history, passing Kyrie Irving's $38 million (2023-24).",
     "type": "sets",
     "value": 40064220
-   },
-   {
-    "ahead": null,
-    "comparison_size": 18,
-    "contracted": false,
-    "family": "rank_shift",
-    "id": "227fdcd199fa43b4",
-    "key": "team_high_becomes|Luka Doncic|2023-24",
-    "lead": null,
-    "margin": null,
-    "previous_holder": null,
-    "rank": 1,
-    "scope_note": "Same franchise in consecutive seasons. Roster of 18 players with a salary on file.",
-    "text": "Luka Doncic was the Mavericks' highest-paid player in 2023-24 after ranking second on the roster in 2022-23.",
-    "type": "rank_shift",
-    "value": 40064220
    }
   ],
   "Luka Doncic|2024-25": [
@@ -51417,7 +51485,7 @@
   "Luka Doncic|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "bc137519faef4b75",
@@ -51530,12 +51598,28 @@
     "text": "Luka Doncic's $51 million in 2026-27 is the second-highest single-season salary in Lakers history, behind LeBron James' $52.6 million (2025-26).",
     "type": "approaches",
     "value": 51033600
+   },
+   {
+    "ahead": null,
+    "comparison_size": 22,
+    "contracted": false,
+    "family": "rank_shift",
+    "id": "76ba49f9c74ce81b",
+    "key": "team_high_becomes|Luka Doncic|2026-27",
+    "lead": null,
+    "margin": null,
+    "previous_holder": null,
+    "rank": 1,
+    "scope_note": "Same franchise in consecutive seasons. Roster of 22 players with a salary on file.",
+    "text": "Luka Doncic is the Lakers' highest-paid player in 2026-27 after ranking second on the roster in 2025-26.",
+    "type": "rank_shift",
+    "value": 51033600
    }
   ],
   "Luka Doncic|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "16f07b2a5a94cfac",
@@ -51551,7 +51635,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "3de3e55e52780154",
@@ -51749,7 +51833,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 5944,
+    "comparison_size": 5943,
     "contracted": true,
     "family": "cohort",
     "id": "cc24a92c303ecd4b",
@@ -51762,7 +51846,7 @@
      "value": 62587158
     },
     "rank": 3,
-    "scope_note": "Cohort of 633 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 633 players and 5943 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Luka Doncic's $59.2 million in 2028-29 would be the third-highest single-season salary by a lottery pick, behind Stephen Curry and Stephen Curry.",
     "type": "approaches",
     "value": 59198976
@@ -52357,7 +52441,7 @@
   "Malik Monk|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "de6e2d7e0b26a950",
@@ -52919,7 +53003,7 @@
   "Marcus Smart|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "1bb502c04b0b2901",
@@ -53228,7 +53312,7 @@
      "value": 30351780
     },
     "rank": 1,
-    "scope_note": "Cohort of 41 players and 325 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 41 players and 324 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Michael Porter's $30.9 million in 2022-23 was the highest single-season salary by a No. 14 pick, passing Bam Adebayo's $30.4 million (2022-23).",
     "type": "sets",
     "value": 30913750
@@ -53270,7 +53354,7 @@
      "value": 32600060
     },
     "rank": 1,
-    "scope_note": "Cohort of 42 players and 325 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 42 players and 324 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Michael Porter's $33.4 million in 2023-24 was the highest single-season salary by a No. 14 pick, passing Bam Adebayo's $32.6 million (2023-24).",
     "type": "sets",
     "value": 33386850
@@ -53328,7 +53412,7 @@
      "value": 34848340
     },
     "rank": 1,
-    "scope_note": "Cohort of 43 players and 325 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 43 players and 324 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Michael Porter's $35.9 million in 2024-25 was the highest single-season salary by a No. 14 pick, passing Bam Adebayo's $34.8 million (2024-25).",
     "type": "sets",
     "value": 35859950
@@ -53373,7 +53457,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 316,
+    "comparison_size": 315,
     "contracted": false,
     "family": "cohort",
     "id": "c4ee21fbd6c10b7d",
@@ -53386,7 +53470,7 @@
      "value": 37096620
     },
     "rank": 1,
-    "scope_note": "Cohort of 44 players and 325 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 44 players and 324 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Michael Porter's $38.3 million in 2025-26 was the highest single-season salary by a No. 14 pick, passing Bam Adebayo's $37.1 million (2025-26).",
     "type": "sets",
     "value": 38333050
@@ -53475,7 +53559,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 324,
+    "comparison_size": 323,
     "contracted": false,
     "family": "cohort",
     "id": "3deeb074b15fca57",
@@ -53488,7 +53572,7 @@
      "value": 49488300
     },
     "rank": 2,
-    "scope_note": "Cohort of 44 players and 325 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 44 players and 324 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Michael Porter's $40.8 million in 2026-27 is the second-highest single-season salary by a No. 14 pick, behind Bam Adebayo's $49.5 million (2026-27).",
     "type": "approaches",
     "value": 40806150
@@ -53515,7 +53599,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2202,
+    "comparison_size": 2201,
     "contracted": false,
     "family": "negative_space",
     "id": "b0c3b7753077c399",
@@ -53637,7 +53721,7 @@
   "Mikal Bridges|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "54f745ba0be9fb69",
@@ -53695,7 +53779,7 @@
   "Mikal Bridges|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "baae048784f49b4f",
@@ -53753,7 +53837,7 @@
   "Mikal Bridges|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "0dc094b15a0e2dc0",
@@ -53829,7 +53913,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2202,
+    "comparison_size": 2201,
     "contracted": true,
     "family": "negative_space",
     "id": "2282377c7a0a05c9",
@@ -54333,7 +54417,7 @@
   "Mike Conley|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "2e88a1f6d134d9ef",
@@ -54451,7 +54535,7 @@
   "Mikel Brown|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 297,
+    "comparison_size": 296,
     "contracted": true,
     "family": "cohort",
     "id": "aef82e6d79fb2782",
@@ -54464,7 +54548,7 @@
      "value": 14748000
     },
     "rank": 3,
-    "scope_note": "Cohort of 252 players and 297 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 251 players and 296 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Mikel Brown's $12.3 million in 2029-30 would be the third-highest single-season salary by an undrafted player, behind AJ Dybantsa and Darryn Peterson.",
     "type": "approaches",
     "value": 12256488
@@ -54517,7 +54601,7 @@
   "Mitchell Robinson|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "5ea0554726bce29b",
@@ -54868,6 +54952,24 @@
     "value": 120507934
    }
   ],
+  "Myles Turner|2024-25": [
+   {
+    "ahead": null,
+    "comparison_size": 23,
+    "contracted": false,
+    "family": "rank_shift",
+    "id": "d9a832c63c844961",
+    "key": "team_high_ceases|Myles Turner|2024-25",
+    "lead": null,
+    "margin": null,
+    "previous_holder": null,
+    "rank": 3,
+    "scope_note": "Same franchise in consecutive seasons. Roster of 23 players with a salary on file.",
+    "text": "Myles Turner was no longer the Pacers' highest-paid player in 2024-25 after holding that spot in 2023-24.",
+    "type": "rank_shift",
+    "value": 19928500
+   }
+  ],
   "Myles Turner|2025-26": [
    {
     "ahead": null,
@@ -54951,7 +55053,7 @@
   "Myles Turner|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "9202dee20aef9851",
@@ -55113,7 +55215,7 @@
   "Naz Reid|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "6c0fea82bcc02cb2",
@@ -55147,7 +55249,7 @@
   "Naz Reid|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "ce739719f7e7f179",
@@ -55637,7 +55739,7 @@
   "Nicolas Claxton|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "7caf301ac980bb36",
@@ -56965,7 +57067,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "7c1133da8e63e4a3",
@@ -57723,7 +57825,7 @@
   "Norman Powell|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "20ee76982ce2795a",
@@ -58007,7 +58109,7 @@
   "OG Anunoby|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "cdea5b8e93ed7bfe",
@@ -58163,7 +58265,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2202,
+    "comparison_size": 2201,
     "contracted": false,
     "family": "negative_space",
     "id": "a728bb879b7750a9",
@@ -58185,7 +58287,7 @@
   "OG Anunoby|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "f0dcbc624fa99af7",
@@ -58281,7 +58383,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2872,
+    "comparison_size": 2871,
     "contracted": true,
     "family": "negative_space",
     "id": "cd7efb2c19b4c8b5",
@@ -58301,7 +58403,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2202,
+    "comparison_size": 2201,
     "contracted": true,
     "family": "negative_space",
     "id": "1dc08be2ced942e7",
@@ -58323,7 +58425,7 @@
   "OG Anunoby|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "56ffeedc605cfd90",
@@ -58419,7 +58521,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2872,
+    "comparison_size": 2871,
     "contracted": true,
     "family": "negative_space",
     "id": "fb998c0e8164922a",
@@ -58439,7 +58541,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2202,
+    "comparison_size": 2201,
     "contracted": true,
     "family": "negative_space",
     "id": "02613f45914d4252",
@@ -58801,7 +58903,7 @@
   "PJ Washington|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "13cf4e246e39e6ea",
@@ -58837,7 +58939,7 @@
   "PJ Washington|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "bf3098a1efdb8551",
@@ -59023,7 +59125,7 @@
   "Paolo Banchero|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "74323d5c5ad83d77",
@@ -59119,7 +59221,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2872,
+    "comparison_size": 2871,
     "contracted": true,
     "family": "negative_space",
     "id": "2e369dbe91580bee",
@@ -59141,7 +59243,7 @@
   "Paolo Banchero|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "aa0ae812cbff3de8",
@@ -59237,7 +59339,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2872,
+    "comparison_size": 2871,
     "contracted": true,
     "family": "negative_space",
     "id": "bc55f30299f46330",
@@ -59259,7 +59361,7 @@
   "Paolo Banchero|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "bb355b7cec31b0c8",
@@ -59355,7 +59457,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2872,
+    "comparison_size": 2871,
     "contracted": true,
     "family": "negative_space",
     "id": "5927449da6dcfcd6",
@@ -59429,7 +59531,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "fa0becda172cdde4",
@@ -59545,7 +59647,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2872,
+    "comparison_size": 2871,
     "contracted": true,
     "family": "negative_space",
     "id": "52c1ca9d21fd557e",
@@ -59999,7 +60101,7 @@
   "Pascal Siakam|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "cf3d342ceba1fb7b",
@@ -60197,7 +60299,7 @@
   "Pascal Siakam|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "90e28231568491bf",
@@ -60573,7 +60675,7 @@
   "Patrick Williams|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "15c4f8a5583f942f",
@@ -61341,7 +61443,7 @@
   "Paul George|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3350,
+    "comparison_size": 3349,
     "contracted": false,
     "family": "career_earnings",
     "id": "36718f0ed925368f",
@@ -61561,7 +61663,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 598,
+    "comparison_size": 597,
     "contracted": false,
     "family": "franchise",
     "id": "33d5c849ae9d5726",
@@ -61583,7 +61685,7 @@
   "Paul George|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "8ae2350a43ca2412",
@@ -61679,7 +61781,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 599,
+    "comparison_size": 598,
     "contracted": true,
     "family": "franchise",
     "id": "cf859cecdfd56d3c",
@@ -62546,7 +62648,7 @@
      "value": 1242240
     },
     "rank": 1,
-    "scope_note": "Cohort of 107 players and 297 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 107 players and 296 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Rade Zagorac's $1.4 million in 2018-19 was the highest single-season salary by an undrafted player, passing Livio Jean-Charles' $1.2 million (2017-18).",
     "type": "sets",
     "value": 1378242
@@ -62697,7 +62799,7 @@
   "Robert Williams|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "72ab845098e7c0fa",
@@ -63425,7 +63527,7 @@
   "Rudy Gobert|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 20,
+    "comparison_size": 19,
     "contracted": false,
     "family": "rank_shift",
     "id": "6118c547e082f7b9",
@@ -63434,7 +63536,7 @@
     "margin": null,
     "previous_holder": null,
     "rank": 2,
-    "scope_note": "Same franchise in consecutive seasons. Roster of 20 players with a salary on file.",
+    "scope_note": "Same franchise in consecutive seasons. Roster of 19 players with a salary on file.",
     "text": "Rudy Gobert was no longer the Timberwolves' highest-paid player in 2025-26 after holding that spot in 2024-25.",
     "type": "rank_shift",
     "value": 35000000
@@ -63443,7 +63545,7 @@
   "Rudy Gobert|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "c2f7d035cf4bf152",
@@ -64967,7 +65069,7 @@
   "Scottie Barnes|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "f18f188855d1c518",
@@ -65140,12 +65242,28 @@
     "text": "Scottie Barnes' $41.8 million in 2026-27 is the second-highest single-season salary in Raptors history, behind Kawhi Leonard's $50.3 million (2026-27).",
     "type": "approaches",
     "value": 41754690
+   },
+   {
+    "ahead": null,
+    "comparison_size": 21,
+    "contracted": false,
+    "family": "rank_shift",
+    "id": "7231de655e0ee26c",
+    "key": "team_high_ceases|Scottie Barnes|2026-27",
+    "lead": null,
+    "margin": null,
+    "previous_holder": null,
+    "rank": 2,
+    "scope_note": "Same franchise in consecutive seasons. Roster of 21 players with a salary on file.",
+    "text": "Scottie Barnes is no longer the Raptors' highest-paid player in 2026-27 after holding that spot in 2025-26.",
+    "type": "rank_shift",
+    "value": 41754690
    }
   ],
   "Scottie Barnes|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "c4a88bb292143fba",
@@ -65261,7 +65379,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2872,
+    "comparison_size": 2871,
     "contracted": true,
     "family": "negative_space",
     "id": "53c80a3e1845278f",
@@ -65283,7 +65401,7 @@
   "Scottie Barnes|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "5d53280c6cc31fe5",
@@ -65399,7 +65517,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2872,
+    "comparison_size": 2871,
     "contracted": true,
     "family": "negative_space",
     "id": "10d722ee8904f433",
@@ -65421,7 +65539,7 @@
   "Scottie Barnes|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "d637140833ad9fa1",
@@ -65537,7 +65655,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2872,
+    "comparison_size": 2871,
     "contracted": true,
     "family": "negative_space",
     "id": "bd3275ac6c447031",
@@ -65611,7 +65729,7 @@
   "Shaedon Sharpe|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "33f2bb9f28fad227",
@@ -65861,7 +65979,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "de13e8e3aa8f51ff",
@@ -65877,7 +65995,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "fecd15d7dd5acbb6",
@@ -65993,7 +66111,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 5944,
+    "comparison_size": 5943,
     "contracted": true,
     "family": "cohort",
     "id": "a558dcc2760cd79d",
@@ -66006,7 +66124,7 @@
      "value": 62587158
     },
     "rank": 2,
-    "scope_note": "Cohort of 633 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 633 players and 5943 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Shai Gilgeous-Alexander's $61.6 million in 2027-28 would be the second-highest single-season salary by a lottery pick, behind Stephen Curry's $62.6 million (2026-27).",
     "type": "approaches",
     "value": 61600000
@@ -66127,7 +66245,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "d67e0d52a9a9e8b6",
@@ -66243,7 +66361,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 5944,
+    "comparison_size": 5943,
     "contracted": true,
     "family": "cohort",
     "id": "8e2a11bb4deeb6f0",
@@ -66256,7 +66374,7 @@
      "value": 62587158
     },
     "rank": 1,
-    "scope_note": "Cohort of 633 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 633 players and 5943 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Shai Gilgeous-Alexander's $66.5 million in 2028-29 would be the highest single-season salary by a lottery pick, passing Stephen Curry's $62.6 million (2026-27).",
     "type": "sets",
     "value": 66528000
@@ -66445,7 +66563,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 5944,
+    "comparison_size": 5943,
     "contracted": true,
     "family": "cohort",
     "id": "580335087cc80972",
@@ -66458,7 +66576,7 @@
      "value": 62587158
     },
     "rank": 1,
-    "scope_note": "Cohort of 633 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 633 players and 5943 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Shai Gilgeous-Alexander's $71.5 million in 2029-30 would be the highest single-season salary by a lottery pick, passing Stephen Curry's $62.6 million (2026-27).",
     "type": "sets",
     "value": 71456000
@@ -66547,7 +66665,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "662512705a7c6e03",
@@ -66663,7 +66781,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 5944,
+    "comparison_size": 5943,
     "contracted": true,
     "family": "cohort",
     "id": "e0d150c6f3e8b0a6",
@@ -66676,7 +66794,7 @@
      "value": 62587158
     },
     "rank": 1,
-    "scope_note": "Cohort of 633 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 633 players and 5943 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Shai Gilgeous-Alexander's $76.4 million in 2030-31 would be the highest single-season salary by a lottery pick, passing Stephen Curry's $62.6 million (2026-27).",
     "type": "sets",
     "value": 76384000
@@ -66882,7 +67000,7 @@
      "value": 33285709
     },
     "rank": 1,
-    "scope_note": "Cohort of 521 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 521 players and 5943 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Stephen Curry's $34.7 million in 2017-18 was the highest single-season salary by a lottery pick, passing LeBron James' $33.3 million (2017-18).",
     "type": "sets",
     "value": 34682550
@@ -67092,7 +67210,7 @@
      "value": 35665000
     },
     "rank": 1,
-    "scope_note": "Cohort of 535 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 535 players and 5943 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Stephen Curry's $37.5 million in 2018-19 was the highest single-season salary by a lottery pick, passing Russell Westbrook's $35.7 million (2018-19).",
     "type": "sets",
     "value": 37457154
@@ -67270,7 +67388,7 @@
      "value": 38506482
     },
     "rank": 1,
-    "scope_note": "Cohort of 549 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 549 players and 5943 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Stephen Curry's $40.2 million in 2019-20 was the highest single-season salary by a lottery pick, passing Chris Paul's $38.5 million (2019-20).",
     "type": "sets",
     "value": 40231758
@@ -67448,7 +67566,7 @@
      "value": 41358814
     },
     "rank": 1,
-    "scope_note": "Cohort of 563 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 563 players and 5943 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Stephen Curry's $43 million in 2020-21 was the highest single-season salary by a lottery pick, passing Chris Paul's $41.4 million (2020-21).",
     "type": "sets",
     "value": 43006362
@@ -67626,7 +67744,7 @@
      "value": 44310840
     },
     "rank": 1,
-    "scope_note": "Cohort of 577 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 577 players and 5943 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Stephen Curry's $45.8 million in 2021-22 was the highest single-season salary by a lottery pick, passing James Harden's $44.3 million (2021-22).",
     "type": "sets",
     "value": 45780966
@@ -67804,7 +67922,7 @@
      "value": 47345760
     },
     "rank": 1,
-    "scope_note": "Cohort of 591 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 591 players and 5943 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Stephen Curry's $48.1 million in 2022-23 was the highest single-season salary by a lottery pick, passing John Wall's $47.3 million (2022-23).",
     "type": "sets",
     "value": 48070014
@@ -67966,7 +68084,7 @@
      "value": 48070014
     },
     "rank": 1,
-    "scope_note": "Cohort of 605 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 605 players and 5943 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Stephen Curry's $51.9 million in 2023-24 was the highest single-season salary by a lottery pick, breaking his own mark of $48.1 million in 2022-23.",
     "type": "sets",
     "value": 51915615
@@ -68144,7 +68262,7 @@
      "value": 51915615
     },
     "rank": 1,
-    "scope_note": "Cohort of 619 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 619 players and 5943 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Stephen Curry's $55.8 million in 2024-25 was the highest single-season salary by a lottery pick, breaking his own mark of $51.9 million in 2023-24.",
     "type": "sets",
     "value": 55761217
@@ -68213,7 +68331,7 @@
   "Stephen Curry|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 606,
+    "comparison_size": 605,
     "contracted": false,
     "family": "cap_context",
     "id": "b8efcdf48020b757",
@@ -68273,7 +68391,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 14219,
+    "comparison_size": 14218,
     "contracted": false,
     "family": "cohort",
     "id": "cbcd3832fd122c2d",
@@ -68293,7 +68411,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 5788,
+    "comparison_size": 5787,
     "contracted": false,
     "family": "cohort",
     "id": "43af2f8bb4eca7a1",
@@ -68306,7 +68424,7 @@
      "value": 55761217
     },
     "rank": 1,
-    "scope_note": "Cohort of 633 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 633 players and 5943 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Stephen Curry's $59.6 million in 2025-26 was the highest single-season salary by a lottery pick, breaking his own mark of $55.8 million in 2024-25.",
     "type": "sets",
     "value": 59606817
@@ -68333,7 +68451,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 7368,
+    "comparison_size": 7367,
     "contracted": false,
     "family": "cohort",
     "id": "e0c0b91365c92081",
@@ -68395,7 +68513,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "dafb3b2d7b2cf422",
@@ -68411,7 +68529,7 @@
    },
    {
     "ahead": "LeBron James and Kevin Durant",
-    "comparison_size": 3350,
+    "comparison_size": 3349,
     "contracted": false,
     "family": "career_earnings",
     "id": "a7e1ea9c74487758",
@@ -68611,7 +68729,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 5943,
+    "comparison_size": 5942,
     "contracted": false,
     "family": "cohort",
     "id": "ad701d70ef02c763",
@@ -68624,7 +68742,7 @@
      "value": 59606817
     },
     "rank": 1,
-    "scope_note": "Cohort of 633 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 633 players and 5943 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Stephen Curry's $62.6 million in 2026-27 is the highest single-season salary by a lottery pick, breaking his own mark of $59.6 million in 2025-26.",
     "type": "sets",
     "value": 62587158
@@ -68815,7 +68933,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 5944,
+    "comparison_size": 5943,
     "contracted": true,
     "family": "cohort",
     "id": "ba0ee48f19f44425",
@@ -68828,7 +68946,7 @@
      "value": 62587158
     },
     "rank": 2,
-    "scope_note": "Cohort of 633 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 633 players and 5943 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Stephen Curry's $60.2 million in 2028-29 would be the second-highest single-season salary by a lottery pick, behind his own $62.6 million (2026-27).",
     "type": "approaches",
     "value": 60156000
@@ -69343,7 +69461,7 @@
   "Steven Adams|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "c704ebac4481bd50",
@@ -69946,7 +70064,7 @@
      "value": 3379068
     },
     "rank": 1,
-    "scope_note": "Cohort of 167 players and 297 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 167 players and 296 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Thomas Sorber's $4.7 million in 2025-26 was the highest single-season salary by an undrafted player, passing Cameron Whitmore's $3.4 million (2024-25).",
     "type": "sets",
     "value": 4655040
@@ -71469,7 +71587,7 @@
   "Trae Young|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "d884f603bd03620d",
@@ -71605,7 +71723,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 601,
+    "comparison_size": 602,
     "contracted": false,
     "family": "franchise",
     "id": "d3c4e09618babaf8",
@@ -71627,7 +71745,7 @@
   "Trae Young|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "683d1b8894271639",
@@ -71703,7 +71821,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 602,
+    "comparison_size": 603,
     "contracted": true,
     "family": "franchise",
     "id": "56f7a6bd14dfad79",
@@ -71725,7 +71843,7 @@
   "Trae Young|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "d4dbd4b85ccdb212",
@@ -71801,7 +71919,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 602,
+    "comparison_size": 603,
     "contracted": true,
     "family": "franchise",
     "id": "ff8df680e4a19806",
@@ -71839,7 +71957,7 @@
   "Trae Young|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "52232c454b9ffd32",
@@ -71935,7 +72053,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 5944,
+    "comparison_size": 5943,
     "contracted": true,
     "family": "cohort",
     "id": "9f3bcd9955f3c779",
@@ -71948,7 +72066,7 @@
      "value": 62587158
     },
     "rank": 5,
-    "scope_note": "Cohort of 633 players and 5944 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 633 players and 5943 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Trae Young's $58.4 million in 2029-30 would be the fifth-highest single-season salary by a lottery pick, behind Stephen Curry's $62.6 million (2026-27).",
     "type": "approaches",
     "value": 58396194
@@ -71995,7 +72113,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 602,
+    "comparison_size": 603,
     "contracted": true,
     "family": "franchise",
     "id": "f78668a0730fa687",
@@ -72225,7 +72343,7 @@
   "Trey Murphy|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "713c796a77e7a75b",
@@ -72511,7 +72629,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 23 players with a salary on file.",
-    "text": "Tyrese Haliburton was the Pacers' highest-paid player in 2024-25 after ranking eighth on the roster in 2023-24.",
+    "text": "Tyrese Haliburton was the Pacers' highest-paid player in 2024-25 after ranking seventh on the roster in 2023-24.",
     "type": "rank_shift",
     "value": 42176400
    }
@@ -72653,7 +72771,7 @@
   "Tyrese Haliburton|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "fce554406dcca6d9",
@@ -72867,7 +72985,7 @@
   "Tyrese Haliburton|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "a11ae0fe5329dbfd",
@@ -73001,7 +73119,7 @@
   "Tyrese Haliburton|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "6af1bfb3bdd84d39",
@@ -73179,7 +73297,7 @@
   "Tyrese Maxey|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "84080ea786aa72cf",
@@ -73257,7 +73375,7 @@
   "Tyrese Maxey|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "3f557e1834d5ab97",
@@ -73315,7 +73433,7 @@
   "Tyrese Maxey|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "ec16b60d77209409",
@@ -73767,7 +73885,7 @@
   "Victor Wembanyama|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 211,
+    "comparison_size": 210,
     "contracted": false,
     "family": "cohort",
     "id": "9ac6939482d60430",
@@ -73893,7 +74011,7 @@
   "Victor Wembanyama|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "f5adb720a36d2239",
@@ -73971,7 +74089,7 @@
   "Victor Wembanyama|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "458831bef867271c",
@@ -74215,7 +74333,7 @@
   "Walker Kessler|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "349216910924199e",
@@ -74325,9 +74443,9 @@
      "season": "2026-27",
      "value": 41240250
     },
-    "rank": 4,
+    "rank": 5,
     "scope_note": "Cohort of 95 players and 351 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Walker Kessler's $34.6 million in 2029-30 would be the fourth-highest single-season salary in the 2022 draft class, behind Chet Holmgren's $41.2 million (2026-27).",
+    "text": "Walker Kessler's $34.6 million in 2029-30 would be the fifth-highest single-season salary in the 2022 draft class, behind Chet Holmgren's $41.2 million (2026-27).",
     "type": "approaches",
     "value": 34625144
    },
@@ -74355,7 +74473,7 @@
   "Wendell Carter Jr|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "c0e70a938cf5a299",
@@ -74997,7 +75115,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 570,
+    "comparison_size": 568,
     "contracted": false,
     "family": "franchise",
     "id": "d31fc3d1a6d8d50b",
@@ -75039,7 +75157,7 @@
   "Zach LaVine|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": false,
     "family": "career_earnings",
     "id": "324884b778ef2c65",
@@ -75195,7 +75313,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 591,
+    "comparison_size": 589,
     "contracted": false,
     "family": "franchise",
     "id": "9c1e400730ad642a",
@@ -75215,7 +75333,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2872,
+    "comparison_size": 2871,
     "contracted": false,
     "family": "negative_space",
     "id": "0d38a0daacf77e21",
@@ -75539,7 +75657,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 396,
+    "comparison_size": 394,
     "contracted": false,
     "family": "franchise",
     "id": "00e4ca5a975ea7c2",
@@ -75681,7 +75799,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 419,
+    "comparison_size": 417,
     "contracted": false,
     "family": "franchise",
     "id": "c5c0ebf8f71082d1",
@@ -75703,7 +75821,7 @@
   "Zion Williamson|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3351,
+    "comparison_size": 3350,
     "contracted": true,
     "family": "career_earnings",
     "id": "b3b63d3bd84658c9",
@@ -75779,7 +75897,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 420,
+    "comparison_size": 418,
     "contracted": true,
     "family": "franchise",
     "id": "53be5f82525abee2",
@@ -75799,7 +75917,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2872,
+    "comparison_size": 2871,
     "contracted": true,
     "family": "negative_space",
     "id": "0b17d8087441d51f",
@@ -75821,7 +75939,7 @@
  },
  "meta": {
   "current_season": "2026-27",
-  "factoid_count": 3817,
+  "factoid_count": 3824,
   "families": [
    "cap_context",
    "career_earnings",
@@ -75964,7 +76082,7 @@
    "split_season_records": 778,
    "truncated_careers": 359
   },
-  "record_count": 1365,
+  "record_count": 1366,
   "scope_first_season": "1990-91",
   "seasons_covered": [
    "2016-17",
