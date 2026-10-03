@@ -443,10 +443,7 @@ def team_page(idx, entity, identities):
         ),
         section(
             "Most career earnings with the {}".format(entity.name),
-            "Money already paid, so a contracted season is never in it. Split "
-            "seasons are left out: a salary spread over more than one team is "
-            "a cap-sheet allocation, not money one franchise paid a player to "
-            "play for it.",
+            _with_team_hint(idx),
             rank_table(
                 [("Player", "hm-who"), ("Seasons", "hm-num"),
                  ("Earned with the team", "hm-money")],
@@ -550,6 +547,26 @@ def season_page(idx, entity, identities):
     return title, description, "\n".join(body)
 
 
+def _with_team_hint(idx):
+    """What the career-earnings table counts, said before the table says it.
+
+    The season being played is in these totals, which is the convention the
+    career-earnings claims use, so the line says so rather than leaving a
+    reader to work out why a man with one season on the books is in the top
+    ten. The season is the one the data puts us in, never a year typed in here.
+    """
+    lead = ""
+    if idx.current_season and idx.current_season_in_progress:
+        lead = "Includes {}, the season in progress. ".format(
+            idx.current_season)
+    return lead + (
+        "Money already paid, so a contracted season is never in it. Split "
+        "seasons are left out: a salary spread over more than one team is a "
+        "cap-sheet allocation, not money one franchise paid a player to play "
+        "for it."
+    )
+
+
 def _with_team_rows(idx, entity, owners, code, limit):
     """Who has earned the most on one franchise's books, most first.
 
@@ -579,9 +596,13 @@ def _with_team_rows(idx, entity, owners, code, limit):
         if i == 0 or total != table[i - 1][1]:
             place = i + 1
         mine = sorted(seasons[key], key=F.season_key)
+        # One season is a season, not a span: "1, 2026-27 to 2026-27" says it
+        # twice and means it once.
+        span = mine[0] if len(mine) == 1 else "{} to {}".format(
+            mine[0], mine[-1])
         rows.append([
             player_link(who[key], rank=place),
-            "{}, {} to {}".format(len(mine), mine[0], mine[-1]),
+            "{}, {}".format(len(mine), span),
             money(total),
         ])
     return rows

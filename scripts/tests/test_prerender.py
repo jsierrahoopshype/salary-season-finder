@@ -1984,8 +1984,10 @@ def test_the_career_earnings_section_ranks_and_counts_its_seasons():
     assert places[0] == 1
     for row in rows:
         cells = re.findall(r"<t[hd][^>]*>(.*?)</t[hd]>", row, re.S)
-        count, first, last = re.match(
-            r"(\d+), (\S+) to (\S+)", cells[1]).groups()
+        one = re.match(r"(\d+), (\S+) to (\S+)$", cells[1])
+        count, first, last = one.groups() if one else (
+            re.match(r"(\d+), (\S+)$", cells[1]).groups() + (None,))
+        last = last or first
         assert int(count) >= 1
         assert F.season_key(first) <= F.season_key(last)
         # a count can exceed the span's length only if seasons repeat, which
@@ -2045,3 +2047,34 @@ def test_the_misspelt_barlow_is_one_career_with_the_right_one():
     html = read(os.path.join("team", "76ers", "index.html"))
     assert "Dominck Barlow" not in html
     assert "Dominick Barlow" in html
+
+
+def test_the_career_earnings_section_says_it_counts_the_season_in_progress():
+    """A man with one season on the books in the top ten needs explaining, and
+    the season comes off the data rather than out of this file."""
+    data = json.loads(read(os.path.join("data", "data.json")))
+    current = F.compute_current_season(data)
+    html = read(os.path.join("team", "76ers", "index.html"))
+    start = html.index("Most career earnings with the")
+    hint = re.search(r'hm-hint">(.*?)</p>', html[start:], re.S).group(1)
+    assert hint.startswith(
+        "Includes {}, the season in progress.".format(current))
+    # the line is built from the data, not from a year typed into the builder
+    source = read(os.path.join("scripts", "prerender", "pages.py"))
+    body = source[source.index("def _with_team_hint("):]
+    body = body[:body.index("def _with_team_rows(")]
+    code = [line for line in body.splitlines()
+            if not line.lstrip().startswith("#")]
+    assert "idx.current_season" in "\n".join(code)
+    assert not re.search(r"\d{4}-\d{2}", "\n".join(code))
+
+
+def test_one_season_with_a_team_is_not_written_as_a_span():
+    block = _with_team_block()
+    spans = re.findall(r'<td class="hm-num">(\d+), ([^<]+)</td>', block)
+    assert spans
+    for count, span in spans:
+        if count == "1":
+            assert " to " not in span, span
+        else:
+            assert " to " in span, (count, span)
