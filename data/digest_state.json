@@ -1,6 +1,15 @@
 {
- "changes_posted": 10,
- "last_commit": "52c39fd48177670098420f229adab01db60d17b0",
- "last_run": "2026-10-02T11:44:07Z",
- "readme": "The build scripts/salary_digest.py last read. Committed so that a rerun of the workflow compares against the same place and never posts a day's changes twice."
+ "changes_posted": 3,
+ "last_commit": "ae64a38b1784af718abf4f9a11c830ccbe56ab10",
+ "last_run": "2026-10-03T10:58:46Z",
+ "league_year_opened": "2026-07-01",
+ "raises": [
+  {
+   "amount": 2811242,
+   "date": "2026-10-03",
+   "player": "Jalen Duren",
+   "season": "2030-31"
+  }
+ ],
+ "readme": "The build scripts/salary_digest.py last read. Committed so that a rerun of the workflow compares against the same place and never posts a day's changes twice. raises holds every raise the digest has seen since the league year opened on July 1, which is what a raise is ranked against; entries before that date are dropped."
 }
