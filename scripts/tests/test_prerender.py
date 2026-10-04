@@ -1809,6 +1809,61 @@ def test_no_season_carries_more_than_two_events():
         assert len(events) <= TL.PER_SEASON, key
 
 
+def test_a_roster_top_event_never_sits_on_a_split_season():
+    """A season split between two teams is a cap-sheet allocation, so it
+    crowns nobody on either roster and unseats nobody. James Harden's 2021-22
+    is the case: the sheet booked the whole $44.3 million to Philadelphia for
+    a season Brooklyn paid him most of, and the sweep read that as him taking
+    over the 76ers. Neither the man on the split season nor the man he would
+    have passed carries a roster line for it."""
+    idx = F.build_index(json.loads(read(os.path.join("data", "data.json"))))
+    found = TL.build(idx)
+    split = {(idx.canonical(r["player"]), r["season"]) for r in idx.records
+             if F.is_split_season(r)}
+    assert ("James Harden", "2021-22") in split
+
+    offenders = []
+    for (player, season), events in found.items():
+        for event in events:
+            if event["kind"] not in ("top_start", "top_end"):
+                continue
+            scope = event.get("scope") or ()
+            if not scope or scope[0] != "franchise":
+                continue
+            if (player, season) in split:
+                offenders.append((player, season, scope, "on a split season"))
+            if event["kind"] == "top_end" and (event.get("to"), season) in split:
+                offenders.append((player, season, scope, "taken by a split season"))
+    assert offenders == []
+
+    # and specifically: neither side of the Harden case says anything
+    harden = [e for e in found.get(("James Harden", "2021-22"), [])
+              if (e.get("scope") or ("",))[0] == "franchise"]
+    assert harden == []
+    harris = [e for e in found.get(("Tobias Harris", "2021-22"), [])
+              if e["kind"] == "top_end" and e.get("to") == "James Harden"]
+    assert harris == []
+
+
+def test_a_cohort_top_event_still_fires_on_a_split_season():
+    """The gate is a roster gate. A split season is still his money and he is
+    still in his draft class, so the cohorts are untouched: without this the
+    fix would quietly cost every group claim on a traded season."""
+    idx = F.build_index(json.loads(read(os.path.join("data", "data.json"))))
+    found = TL.build(idx)
+    split = {(idx.canonical(r["player"]), r["season"]) for r in idx.records
+             if F.is_split_season(r)}
+    cohort = [
+        (player, season, event["kind"], event["scope"])
+        for (player, season), events in found.items()
+        if (player, season) in split
+        for event in events
+        if event["kind"] in ("top_start", "top_end")
+        and (event.get("scope") or ("",))[0] != "franchise"
+    ]
+    assert cohort, "a split season should still carry cohort standings"
+
+
 def test_two_timeline_lines_never_open_the_same_way():
     for slug in ("kyrie-irving", "giannis-antetokounmpo", "rudy-gobert",
                  "stephen-curry"):
