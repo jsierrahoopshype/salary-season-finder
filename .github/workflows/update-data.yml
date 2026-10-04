@@ -88,12 +88,15 @@ jobs:
       - name: Check for changes
         id: check_changes
         run: |
-          if git diff --quiet data/data.json 2>/dev/null; then
+          # The stats sheet counts as a change of its own. A pull that moves
+          # only rows data.json has no salary for would otherwise leave the
+          # committed copy behind again, which is the whole thing this guards.
+          if git diff --quiet data/data.json data_sources/stats.csv 2>/dev/null; then
             echo "changed=false" >> $GITHUB_OUTPUT
-            echo "No changes detected in data.json"
+            echo "No changes detected in data.json or the stats sheet"
           else
             echo "changed=true" >> $GITHUB_OUTPUT
-            echo "Changes detected in data.json"
+            echo "Changes detected in data.json or the stats sheet"
             new_size=$(wc -c < data/data.json)
             echo "New file size: $new_size bytes"
           fi
@@ -105,7 +108,16 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           # The report build_data.py writes beside the data, so the two never
           # describe different days.
-          git add data/data.json data/team_corrections_report.json
+          #
+          # The stats sheet goes with them. It is the one source file a reader
+          # of this repo has to be able to trust against the data: it is what
+          # a season's games and points come from, and a checkout holding an
+          # older copy than data.json means anything recomputed locally
+          # silently disagrees with what is published. It sat five weeks
+          # behind on 2026-10-04, where 498 records of a finished 2025-26 read
+          # 72 games against the file's 54.
+          git add data/data.json data/team_corrections_report.json \
+            data_sources/stats.csv
           git commit -m "Auto-update salary data [$(date -u +%Y-%m-%d)]"
           git push
 

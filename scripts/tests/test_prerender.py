@@ -7,6 +7,7 @@ ships. A few build small fixtures to pin a rule down on its own.
 from __future__ import annotations
 
 import collections
+import csv
 import inspect
 import json
 import os
@@ -1717,6 +1718,62 @@ def test_the_daily_build_commits_every_family_it_writes():
     wanted = {spec["dir"] for spec in C.FAMILIES.values()}
     wanted |= {spec["hub"] for spec in C.FAMILIES.values() if spec["hub"]}
     assert wanted - staged == set()
+
+
+def test_the_daily_build_commits_the_stats_sheet_it_downloaded():
+    """The checkout must not lag the data it published.
+
+    data_sources/stats.csv is where a season's games and points come from, so
+    a copy older than data.json makes anything recomputed locally disagree
+    with what is served. It is also how a replay of the stats half of the
+    build nearly rolled a finished 2025-26 back to partial numbers.
+    """
+    workflow = read(os.path.join(".github", "workflows", "update-data.yml"))
+    block = workflow[workflow.index("git add data/data.json"):]
+    block = block[:block.index("git commit")]
+    assert "data_sources/stats.csv" in block
+    # and a stats-only change still has to reach the commit
+    gate = workflow[workflow.index("if git diff --quiet data/data.json"):]
+    assert "data_sources/stats.csv" in gate[:gate.index("then")]
+
+
+def _stats_seasons():
+    """{season: total games on file} straight out of the committed sheet."""
+    path = os.path.join(REPO, "data_sources", "stats.csv")
+    if not os.path.exists(path):
+        return {}
+    games = collections.Counter()
+    with open(path, encoding="utf-8-sig") as fh:
+        for row in csv.DictReader(fh):
+            year = (row.get("YEAR") or "").strip()
+            team = (row.get("TEAM") or "").strip()
+            if not year.isdigit() or team == "TOT":
+                continue
+            season = "{}-{}".format(int(year) - 1, str(int(year))[-2:])
+            try:
+                games[season] += int(float(row.get("GP") or 0))
+            except ValueError:
+                pass
+    return games
+
+
+@pytest.mark.skipif(
+    not os.path.exists(os.path.join(REPO, "data_sources", "stats.csv")),
+    reason="the stats sheet is not in this checkout",
+)
+def test_the_stats_sheet_covers_every_season_the_data_has_stats_for():
+    """A season of play in data.json that the sheet has no rows for means the
+    committed sheet predates the data, and every stat the build would
+    recompute for that season is wrong or missing."""
+    data = json.loads(read(os.path.join("data", "data.json")))
+    played = {r["season"] for r in data["seasons"] if r.get("gp")}
+    on_file = set(_stats_seasons())
+    missing = sorted(played - on_file, key=F.season_key)
+    assert missing == [], (
+        "data.json has stats for {} that data_sources/stats.csv does not "
+        "cover; the committed sheet is behind the committed data".format(
+            ", ".join(missing))
+    )
 
 
 # --------------------------------------------------------------------------
