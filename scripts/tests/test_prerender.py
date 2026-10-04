@@ -1720,21 +1720,58 @@ def test_the_daily_build_commits_every_family_it_writes():
     assert wanted - staged == set()
 
 
-def test_the_daily_build_commits_the_stats_sheet_it_downloaded():
+#: every source file this repo tracks. The build downloads more than these;
+#: the two Cyro sheets are deliberately untracked.
+TRACKED_SOURCES = (
+    "data_sources/stats.csv",
+    "data_sources/salaries_historical.csv",
+    "data_sources/salaries_future.csv",
+    "data_sources/awards.csv",
+    "data_sources/bio.csv",
+)
+
+
+def test_the_daily_build_commits_every_source_sheet_it_tracks():
     """The checkout must not lag the data it published.
 
-    data_sources/stats.csv is where a season's games and points come from, so
-    a copy older than data.json makes anything recomputed locally disagree
-    with what is served. It is also how a replay of the stats half of the
+    These files are where a season's games, salaries, awards and bios come
+    from, so copies older than data.json make anything recomputed locally
+    disagree with what is served. It is how a replay of the stats half of the
     build nearly rolled a finished 2025-26 back to partial numbers.
+
+    Committed weekly rather than daily: stats.csv alone is 5 MB and most of
+    its rows move during the season, so daily would cost a few hundred
+    megabytes of history a year to cap the drift at a day instead of a week.
     """
     workflow = read(os.path.join(".github", "workflows", "update-data.yml"))
+    marker = "SOURCE_FILES: >-"
+    listed = workflow[workflow.index(marker) + len(marker):]
+    listed = listed[:listed.index("jobs:")]
+    for path in TRACKED_SOURCES:
+        assert path in listed, path
+    # every tracked file is in the list, and the list invents nothing
+    assert set(listed.split()) == set(TRACKED_SOURCES)
+
+    # staged on Monday, reverted otherwise, and never an empty commit
     block = workflow[workflow.index("git add data/data.json"):]
-    block = block[:block.index("git commit")]
-    assert "data_sources/stats.csv" in block
-    # and a stats-only change still has to reach the commit
+    # to the command, not to the comment that names it
+    block = block[:block.index("git commit -m")]
+    assert 'date -u +%u' in block and '= "1"' in block
+    assert "git add $SOURCE_FILES" in block
+    assert "git checkout -- $SOURCE_FILES" in block
+    assert "git diff --cached --quiet" in block
+    # a sheet-only change still counts as a change
     gate = workflow[workflow.index("if git diff --quiet data/data.json"):]
-    assert "data_sources/stats.csv" in gate[:gate.index("then")]
+    assert "$SOURCE_FILES" in gate[:gate.index("then")]
+
+
+def test_every_tracked_source_file_is_in_the_list():
+    """A source file added to the repo and not to SOURCE_FILES is a file that
+    drifts silently, which is the bug this whole guard exists for."""
+    out = subprocess.run(
+        ["git", "ls-files", "data_sources/"], cwd=REPO,
+        capture_output=True, text=True, check=True)
+    assert set(out.stdout.split()) == set(TRACKED_SOURCES)
 
 
 def _stats_seasons():
@@ -1755,6 +1792,35 @@ def _stats_seasons():
             except ValueError:
                 pass
     return games
+
+
+@pytest.mark.skipif(
+    not os.path.exists(os.path.join(REPO, "data_sources", "stats.csv")),
+    reason="the stats sheet is not in this checkout",
+)
+def test_the_stats_sheet_is_never_behind_the_data_inside_a_season():
+    """Coverage is the lag a rollover causes; this is the lag a stale pull
+    causes, and it is the one that actually bit. data.json is built from this
+    sheet, so a season holding more games in the data than in the sheet means
+    the committed sheet is older than the committed data. On 2026-10-04 that
+    was 2025-26: 25,278 games in the data against 18,854 on file.
+    """
+    data = json.loads(read(os.path.join("data", "data.json")))
+    mine = collections.Counter()
+    for record in data["seasons"]:
+        if record.get("gp"):
+            mine[record["season"]] += record["gp"]
+    on_file = _stats_seasons()
+    behind = sorted(
+        ((season, mine[season], on_file[season])
+         for season in set(mine) & set(on_file) if on_file[season] < mine[season]),
+        key=lambda row: F.season_key(row[0]),
+    )
+    assert behind == [], (
+        "data_sources/stats.csv is behind data/data.json: " + "; ".join(
+            "{} has {:,} games in the data and {:,} on file".format(*row)
+            for row in behind)
+    )
 
 
 @pytest.mark.skipif(

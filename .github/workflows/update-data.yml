@@ -14,6 +14,18 @@ on:
 permissions:
   contents: write
 
+env:
+  #: The source sheets this repo tracks, committed weekly so a checkout never
+  #: lags the data built from them. The two Cyro sheets are not in this list
+  #: because they are not tracked at all, which is why no local run can
+  #: reproduce a full build; that is a separate decision.
+  SOURCE_FILES: >-
+    data_sources/stats.csv
+    data_sources/salaries_historical.csv
+    data_sources/salaries_future.csv
+    data_sources/awards.csv
+    data_sources/bio.csv
+
 jobs:
   update-data:
     runs-on: ubuntu-latest
@@ -88,15 +100,15 @@ jobs:
       - name: Check for changes
         id: check_changes
         run: |
-          # The stats sheet counts as a change of its own. A pull that moves
-          # only rows data.json has no salary for would otherwise leave the
-          # committed copy behind again, which is the whole thing this guards.
-          if git diff --quiet data/data.json data_sources/stats.csv 2>/dev/null; then
+          # The source sheets count as a change of their own. A pull that
+          # moves only rows data.json has no salary for would otherwise leave
+          # the committed copies behind again, which is what this guards.
+          if git diff --quiet data/data.json $SOURCE_FILES 2>/dev/null; then
             echo "changed=false" >> $GITHUB_OUTPUT
-            echo "No changes detected in data.json or the stats sheet"
+            echo "No changes detected in data.json or the source sheets"
           else
             echo "changed=true" >> $GITHUB_OUTPUT
-            echo "Changes detected in data.json or the stats sheet"
+            echo "Changes detected in data.json or the source sheets"
             new_size=$(wc -c < data/data.json)
             echo "New file size: $new_size bytes"
           fi
@@ -108,16 +120,32 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           # The report build_data.py writes beside the data, so the two never
           # describe different days.
-          #
-          # The stats sheet goes with them. It is the one source file a reader
-          # of this repo has to be able to trust against the data: it is what
-          # a season's games and points come from, and a checkout holding an
-          # older copy than data.json means anything recomputed locally
-          # silently disagrees with what is published. It sat five weeks
-          # behind on 2026-10-04, where 498 records of a finished 2025-26 read
-          # 72 games against the file's 54.
-          git add data/data.json data/team_corrections_report.json \
-            data_sources/stats.csv
+          git add data/data.json data/team_corrections_report.json
+
+          # The source sheets go in once a week. A checkout holding older
+          # copies than data.json means anything recomputed locally silently
+          # disagrees with what is published: they sat five weeks behind on
+          # 2026-10-04, where 498 records of a finished 2025-26 read 72 games
+          # against the stats file's 54. Daily would keep them honest to the
+          # hour and add a few hundred megabytes of history a year for it,
+          # since stats.csv alone is 5 MB and most of its rows move during the
+          # season. Weekly caps the drift at six days and the cost at a
+          # fifty-second of it. Monday is the day; a run that fails or is
+          # skipped simply waits for the next one.
+          if [ "$(date -u +%u)" = "1" ]; then
+            echo "Monday: the source sheets go in with the data"
+            git add $SOURCE_FILES
+          else
+            echo "Not Monday: the source sheets stay as last committed"
+            git checkout -- $SOURCE_FILES 2>/dev/null || true
+          fi
+          # On a day that is not Monday, a pull that moved only a source sheet
+          # leaves nothing staged, and "git commit" on an empty index fails the
+          # step. Nothing to say is not a failure.
+          if git diff --cached --quiet; then
+            echo "Nothing staged: the data is unchanged and the sheets wait for Monday"
+            exit 0
+          fi
           git commit -m "Auto-update salary data [$(date -u +%Y-%m-%d)]"
           git push
 
