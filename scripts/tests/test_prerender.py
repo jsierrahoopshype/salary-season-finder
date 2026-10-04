@@ -1843,6 +1843,119 @@ def test_the_stats_sheet_covers_every_season_the_data_has_stats_for():
 
 
 # --------------------------------------------------------------------------
+# career earnings without an award
+# --------------------------------------------------------------------------
+
+
+def _drought(slug):
+    return read(os.path.join(slug, "index.html"))
+
+
+def test_each_drought_page_is_indexable_and_in_the_sitemap():
+    sitemap = read(C.SITEMAP_PATH)
+    for slug in ("never-all-star", "never-all-nba", "never-mvp",
+                 C.DROUGHT_HUB):
+        html = _drought(slug)
+        assert '<meta name="robots" content="index' in html, slug
+        url = "{}/{}/".format(C.TOOL_ROOT, slug)
+        assert "<loc>{}</loc>".format(url) in sitemap, slug
+        # a lastmod out of page_hashes.json, not a date typed into the page
+        block = sitemap[sitemap.index(url):]
+        assert "<lastmod>" in block[:400], slug
+
+
+def test_the_drought_pages_are_in_page_hashes():
+    hashes = json.loads(read(os.path.join("data", "page_hashes.json")))["pages"]
+    for slug in ("never-all-star", "never-all-nba", "never-mvp", C.DROUGHT_HUB):
+        assert "{}/index.html".format(slug) in hashes, slug
+
+
+def test_the_first_leader_is_worded_as_where_the_count_begins():
+    """Hot Rod Williams did not take the lead from anyone: the salary data
+    starts under him. The row says so, and two notes under the table say the
+    two things a reader would otherwise read as errors."""
+    html = _drought("never-all-star")
+    block = html[html.index("Who held No. 1"):]
+    block = block[:block.index("</table>")]
+    rows = re.findall(r"<tr>(.*?)</tr>", block, re.S)
+    first = " | ".join(re.sub(r"<[^>]+>", "", c).strip()
+                       for c in re.findall(r"<t[dh][^>]*>(.*?)</t[dh]>", rows[1], re.S))
+    assert "led when the count begins in 1990-91" in first
+    assert "Became" not in first and "Took over" not in first
+    notes = re.findall(r'<p class="hm-note">([^<]*)</p>', html)
+    assert any("earliest leaders reflect where the count begins" in n for n in notes)
+    assert any("next man up can have earned less" in n for n in notes)
+
+
+def test_a_leader_who_left_through_a_selection_says_so():
+    html = _drought("never-all-star")
+    block = html[html.index("Who held No. 1"):]
+    block = block[:block.index("</table>")]
+    # the row he is the subject of, not the one that names him as the man who
+    # passed somebody
+    rows = [r for r in re.findall(r"<tr>(.*?)</tr>", block, re.S)
+            if re.match(r'\s*<th[^>]*>\s*<a[^>]*>Mike Conley</a>', r)]
+    assert len(rows) == 1
+    assert "2018-19 to 2019-20" in rows[0]
+    assert "left on his first All-Star selection in 2020-21" in rows[0]
+
+
+def test_never_is_kept_for_retired_players():
+    """A man still playing has not run out of chances, so he is "yet to make"
+    one; "never" is a claim about a finished career."""
+    sys.path.insert(0, os.path.join(REPO, "scripts"))
+    import factoids as Fx
+    from prerender import droughts as D
+
+    idx = Fx.build_index(json.loads(read(os.path.join("data", "data.json"))))
+    built = D.build(idx)
+    # active and unselected
+    assert "yet to make an All-Star team" in D.summary_line(built, "Tobias Harris")
+    # retired and unselected
+    assert "never named an All-Star" in D.summary_line(built, "Danilo Gallinari")
+    # active, but selected since: the past tense, not a claim either way
+    assert built["all-star"]["phrase"]("Mike Conley") == \
+        "who had never been named an All-Star"
+
+
+def test_one_drought_line_per_player_naming_the_most_notable_list():
+    sys.path.insert(0, os.path.join(REPO, "scripts"))
+    import factoids as Fx
+    from prerender import droughts as D
+
+    idx = Fx.build_index(json.loads(read(os.path.join("data", "data.json"))))
+    built = D.build(idx)
+    # Harris is top three on the All-Star and All-NBA lists; All-Star wins
+    line = D.summary_line(built, "Tobias Harris")
+    assert "All-Star" in line and "All-NBA" not in line
+    # off the All-Star list through his selection, so his line is the next one
+    assert "All-NBA" in D.summary_line(built, "Mike Conley")
+    # outside every top ten
+    assert D.summary_line(built, "LeBron James") == ""
+
+
+def test_a_timeline_says_nothing_about_moves_inside_the_top_ten():
+    """Entering the top ten is said once per list and never again, and no
+    event is made for climbing or slipping inside it."""
+    sys.path.insert(0, os.path.join(REPO, "scripts"))
+    import factoids as Fx
+    from prerender import droughts as D
+
+    idx = Fx.build_index(json.loads(read(os.path.join("data", "data.json"))))
+    built = D.build(idx)
+    for key, lst in built.items():
+        seen = collections.Counter()
+        for (player, _season), events in lst["events"].items():
+            for event in events:
+                assert event["kind"] in (
+                    "drought_top10", "drought_first", "drought_passed",
+                    "drought_left"), event
+                if event["kind"] == "drought_top10":
+                    seen[player] += 1
+        assert not [p for p, n in seen.items() if n > 1], key
+
+
+# --------------------------------------------------------------------------
 # the team section of a season page: ranked, with the roster inside it
 # --------------------------------------------------------------------------
 

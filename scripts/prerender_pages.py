@@ -39,6 +39,7 @@ from prerender import render as R  # noqa: E402
 from prerender import slugs as S  # noqa: E402
 from prerender import linkify  # noqa: E402
 from prerender import seasons  # noqa: E402
+from prerender import droughts  # noqa: E402
 from prerender import timeline as TL  # noqa: E402
 from prerender.media import Media  # noqa: E402
 from prerender.phrasing import drop_mirrors, straighten  # noqa: E402
@@ -126,7 +127,7 @@ def group_factoids(factoids):
 PAST_SEASON_TYPES = frozenset({"sets", "ties", "milestone", "rank_shift"})
 
 
-def player_facts(idx, by_player_facts, ident, current_key):
+def player_facts(idx, by_player_facts, ident, current_key, droughts_built=None):
     """This man's claims, as the two to four sentences his page prints.
 
     A page for one segment of a split key carries only that segment's seasons.
@@ -149,7 +150,11 @@ def player_facts(idx, by_player_facts, ident, current_key):
     ]
     rows = [(season, dict(fact, text=straighten(fact, season)))
             for season, fact in rows]
-    return seasons.summary(idx, ident.name, rows, player=ident.data_key)
+    line = ""
+    if droughts_built:
+        line = droughts.summary_line(droughts_built, idx.canonical(ident.name))
+    return seasons.summary(idx, ident.name, rows, player=ident.data_key,
+                           drought=line)
 
 
 # --------------------------------------------------------------------------
@@ -539,8 +544,10 @@ def main(argv=None):
     # changed is a question about the seasons before it and there is no point
     # asking it 3,353 times.
     events = TL.build(idx)
+    droughts_built = droughts.build(idx)
     for ident in built["players"]:
-        facts = player_facts(idx, by_player_facts, ident, current_key)
+        facts = player_facts(idx, by_player_facts, ident, current_key,
+                             droughts_built)
         # The same gate the summary is held to: where one data key covers two
         # men and the split is unchecked, nothing is claimed about either.
         story = (TL.lines(idx, ident.records, events)
@@ -605,6 +612,37 @@ def main(argv=None):
         sitemap_rows.append((url, lastmod))
         hub_entries.append((hub_slug, C.FAMILIES[family]["label"]))
 
+    # ---- award-drought pages and their hub -------------------------------
+    # Emitted like hubs: top level, depth 1, indexable, one lastmod each out of
+    # page_hashes.json, rather than inside a family, because they are three
+    # fixed pages rather than one page per entity in the data.
+    P.register_drought_idents(built["players"])
+    drought_pages = 0
+    for key in C.DROUGHT_PAGES:
+        slug = droughts_built[key]["spec"].slug
+        title, description, body = P.drought_page(idx, droughts_built, key, linker)
+        url = "{}/{}/".format(C.TOOL_ROOT, slug)
+        html = R.page(title, description, url, 1, [
+            ("Salary Season Finder", C.TOOL_ROOT),
+            ("Career earnings without an award", R.hub_url(C.DROUGHT_HUB)),
+            (C.DROUGHT_LABELS[key], None),
+        ], body, True)
+        lastmod = writer.write("{}/index.html".format(slug), html, url=url,
+                               indexable=True, today=today)
+        sitemap_rows.append((url, lastmod))
+        drought_pages += 1
+
+    title, description, body = P.drought_hub(droughts_built)
+    url = "{}/{}/".format(C.TOOL_ROOT, C.DROUGHT_HUB)
+    html = R.page(title, description, url, 1, [
+        ("Salary Season Finder", C.TOOL_ROOT),
+        ("Career earnings without an award", None),
+    ], body, True)
+    lastmod = writer.write("{}/index.html".format(C.DROUGHT_HUB), html,
+                           url=url, indexable=True, today=today)
+    sitemap_rows.append((url, lastmod))
+    hub_entries.append((C.DROUGHT_HUB, "Career earnings without an award"))
+
     # ---- root, 404, sitemap ----------------------------------------------
     root_changed = update_tool_root(hub_entries) if not args.dry_run else False
     writer.write(C.NOT_FOUND_PATH, not_found_html(hub_entries), today=today)
@@ -663,6 +701,7 @@ def main(argv=None):
         print("  {:9s} {:>5d} pages ({})".format(
             family, counts[family],
             "indexable" if C.FAMILIES[family]["indexable"] else "noindex"))
+    print("  droughts  {:>5d} pages (indexable)".format(drought_pages))
     print("  hubs      {:>5d} pages (indexable)".format(len(hub_entries)))
     print("sitemap urls: {}".format(len(sitemap_rows)))
     print("slugs minted this run: {}".format(book.added))
