@@ -107,10 +107,10 @@ STRENGTH = {
     # second thing happen to him, and only one drought line a season survives
     # the thinning.
     "drought_left": 5, "drought_first": 6, "drought_passed": 7,
-    "top_start": 8, "top_end": 9,
-    "move_top": 10, "league_top10_first": 11,
-    "list_top": 12, "milestone": 13,
-    "drought_top10": 14,
+    "drought_peak": 8,
+    "top_start": 9, "top_end": 10,
+    "move_top": 11, "league_top10_first": 12,
+    "list_top": 13, "milestone": 14,
     "move_five": 15,
     "list_up": 16, "list_down": 17,
 }
@@ -186,8 +186,21 @@ def build(idx):
     for key, events in found.items():
         events.sort(key=lambda e: (STRENGTH[e["kind"]], -e.get("size", 0),
                                    str(e.get("scope"))))
-        found[key] = _thin(events)[:PER_SEASON]
+        # Three of the award-drought events are said once in a career and
+        # nowhere else, so they are not made to compete for a season's two
+        # slots with facts that recur every year. Being passed is a recurring
+        # fact and stays capped with the rest.
+        spared = [e for e in events if e["kind"] in SPARED]
+        rest = [e for e in events if e["kind"] not in SPARED]
+        kept = _thin(rest)[:PER_SEASON] + spared
+        kept.sort(key=lambda e: (STRENGTH[e["kind"]], -e.get("size", 0),
+                                 str(e.get("scope"))))
+        found[key] = kept
     return found
+
+
+#: Events exempt from _thin and PER_SEASON: one to a career, each.
+SPARED = frozenset({"drought_first", "drought_peak", "drought_left"})
 
 
 def _thin(events):
@@ -646,6 +659,8 @@ def _family(event):
     kind = event["kind"]
     if kind == "drought_first" and event.get("opening"):
         return "drought_first_open"
+    if kind == "drought_left" and (event.get("rank") or 0) > 1:
+        return "drought_left_down"
     if (event.get("scope") or ("", ""))[0] == "franchise" \
             and kind + "_team" in _PHRASES:
         return kind + "_team"
@@ -761,6 +776,10 @@ def _bits(idx, event, season):
         out["got"] = ("won his first {}".format(event["selection"])
                       if event.get("won")
                       else "his first {}".format(event["selection"]))
+    if "made" in event:
+        out["made"] = event["made"]
+        out["crown"] = event["crown"]
+        out["list_name"] = event["list_name"]
     return out
 
 
@@ -794,21 +813,26 @@ _PHRASES = {
         LATER: ("{name} would pass him as the highest-paid player {drought}.",
                 "Would be passed by {name} as the highest-paid player {drought}."),
     },
+    # Leaving at the head of the list is the whole story in one sentence, so
+    # it says the award and the standing together. Leaving from further down
+    # names the place he left from instead.
     "drought_left": {
-        PAST: ("Left the list as No. {rank} with {got}.",
-               "Came off the list as No. {rank} with {got}."),
-        NOW: ("Leaves the list as No. {rank} with {got}.",
-              "Comes off the list as No. {rank} with {got}."),
-        LATER: ("Would leave the list as No. {rank} with {got}.",
-                "Would come off the list as No. {rank} with {got}."),
+        PAST: ("{made} as {crown}.",),
+        NOW: ("{made} as {crown}.",),
+        LATER: ("Would make it as {crown}.",),
     },
-    "drought_top10": {
-        PAST: ("Entered the top 10 among players {drought}.",
-               "Reached the top 10 among players {drought}."),
-        NOW: ("Enters the top 10 among players {drought}.",
-              "Reaches the top 10 among players {drought}."),
-        LATER: ("Would enter the top 10 among players {drought}.",
-                "Would reach the top 10 among players {drought}."),
+    "drought_left_down": {
+        PAST: ("{made}, leaving the {list_name} at No. {rank}.",),
+        NOW: ("{made}, leaving the {list_name} at No. {rank}.",),
+        LATER: ("Would leave the {list_name} at No. {rank}.",),
+    },
+    "drought_peak": {
+        PAST: ("Peaked at No. {rank} among players {drought}.",
+               "Got as high as No. {rank} among players {drought}."),
+        NOW: ("Peaks at No. {rank} among players {drought}.",
+              "Gets as high as No. {rank} among players {drought}."),
+        LATER: ("Would peak at No. {rank} among players {drought}.",
+                "Would get as high as No. {rank} among players {drought}."),
     },
     "league_top_start": {
         PAST: ("Became the highest-paid player in the NBA.",

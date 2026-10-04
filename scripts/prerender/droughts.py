@@ -31,10 +31,10 @@ class Drought:
     """One list: its page, its award and the words it is described in."""
 
     __slots__ = ("key", "slug", "award", "labels", "heading", "never", "yet",
-                 "had_never", "selection", "won")
+                 "had_never", "selection", "won", "made", "list_name", "crown")
 
     def __init__(self, key, slug, award, labels, never, yet, had_never,
-                 selection, won=False):
+                 selection, made, crown, list_name, won=False):
         self.key = key
         self.slug = slug
         self.award = award
@@ -44,6 +44,12 @@ class Drought:
         self.had_never = had_never
         self.selection = selection
         self.won = won
+        #: "Made his first All-Star team" / "Won his first MVP"
+        self.made = made
+        #: "the highest-paid player never to have made one"
+        self.crown = crown
+        #: what the list is called in the sentence about leaving it
+        self.list_name = list_name
 
     def phrase(self, retired, selected_since):
         """How to describe a man held to this list.
@@ -71,6 +77,9 @@ LISTS = (
         yet="yet to make an All-Star team",
         had_never="who had never been named an All-Star",
         selection="All-Star selection",
+        made="Made his first All-Star team",
+        crown="the highest-paid player never to have made one",
+        list_name="never-selected list",
     ),
     Drought(
         "all-nba", "never-all-nba", "All-NBA",
@@ -80,6 +89,9 @@ LISTS = (
         yet="yet to make an All-NBA team",
         had_never="who had never been named All-NBA",
         selection="All-NBA selection",
+        made="Made his first All-NBA team",
+        crown="the highest-paid player never to have made one",
+        list_name="never-selected list",
     ),
     Drought(
         "mvp", "never-mvp", "MVP",
@@ -88,6 +100,9 @@ LISTS = (
         yet="yet to win MVP",
         had_never="who had never won MVP",
         selection="MVP",
+        made="Won his first MVP",
+        crown="the highest-paid player never to have won one",
+        list_name="never-selected list",
         won=True,
     ),
 )
@@ -135,8 +150,10 @@ def build(idx):
 
         total = collections.Counter()
         seen_in = collections.defaultdict(set)
+        peaked = {}
         reigns, events, standing = [], collections.defaultdict(list), []
-        entered, leader = set(), None
+        places_now = {}
+        leader = None
 
         for season in paid:
             for record in rows_by_season[season]:
@@ -164,18 +181,19 @@ def build(idx):
                         "kind": "drought_left", "list": spec.key,
                         "rank": min(was), "selection": spec.selection,
                         "won": spec.won, "drought": phrase(player),
+                        "made": spec.made, "list_name": spec.list_name,
+                        "crown": spec.crown,
                     })
 
             for player, place in places.items():
                 if place > TOP:
                     continue
                 seen_in[player].add(place)
-                if player not in entered:
-                    entered.add(player)
-                    events[(player, season)].append({
-                        "kind": "drought_top10", "list": spec.key,
-                        "rank": place, "drought": phrase(player),
-                    })
+                # the first season he stood at his best place on this list,
+                # which is only knowable once the sweep is over
+                best = peaked.get(player)
+                if best is None or place < best[0]:
+                    peaked[player] = (place, season)
 
             top = table[0][1] if table else None
             if top != leader:
@@ -199,6 +217,21 @@ def build(idx):
 
             if season == idx.current_season:
                 standing = table
+                places_now = dict(places)
+
+        # One line a career for how far up a list he got. No. 1 has its own
+        # event and says more, and a man still playing who is at his best
+        # right now is described by the summary rather than by his own past.
+        here = {player for player in peaked if player in active}
+        for player, (place, season) in peaked.items():
+            if place < 2 or place > TOP:
+                continue
+            if player in here and places_now.get(player) == place:
+                continue
+            events[(player, season)].append({
+                "kind": "drought_peak", "list": spec.key,
+                "rank": place, "drought": phrase(player),
+            })
 
         for i, reign in enumerate(reigns):
             later = reigns[i + 1]["player"] if i + 1 < len(reigns) else None

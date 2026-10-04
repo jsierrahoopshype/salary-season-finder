@@ -1934,9 +1934,10 @@ def test_one_drought_line_per_player_naming_the_most_notable_list():
     assert D.summary_line(built, "LeBron James") == ""
 
 
-def test_a_timeline_says_nothing_about_moves_inside_the_top_ten():
-    """Entering the top ten is said once per list and never again, and no
-    event is made for climbing or slipping inside it."""
+def test_how_high_he_got_is_said_once_and_only_between_two_and_ten():
+    """One line a career for his best place on a list. No. 1 has its own
+    event and says more, so a peak is never No. 1, and no event is made for
+    moving around inside the top ten."""
     sys.path.insert(0, os.path.join(REPO, "scripts"))
     import factoids as Fx
     from prerender import droughts as D
@@ -1948,11 +1949,58 @@ def test_a_timeline_says_nothing_about_moves_inside_the_top_ten():
         for (player, _season), events in lst["events"].items():
             for event in events:
                 assert event["kind"] in (
-                    "drought_top10", "drought_first", "drought_passed",
+                    "drought_peak", "drought_first", "drought_passed",
                     "drought_left"), event
-                if event["kind"] == "drought_top10":
+                if event["kind"] == "drought_peak":
                     seen[player] += 1
+                    assert 2 <= event["rank"] <= D.TOP, event
         assert not [p for p, n in seen.items() if n > 1], key
+
+
+def test_a_man_at_his_best_right_now_is_left_to_his_summary():
+    """His peak is his standing, and the summary says his standing. Saying it
+    twice, once as a past peak and once as a present rank, reads as two
+    different facts about the same thing."""
+    sys.path.insert(0, os.path.join(REPO, "scripts"))
+    import factoids as Fx
+    from prerender import droughts as D
+
+    idx = Fx.build_index(json.loads(read(os.path.join("data", "data.json"))))
+    built = D.build(idx)
+    active = {idx.canonical(r["player"]) for r in idx.records
+              if r["season"] == idx.current_season}
+    for lst in built.values():
+        peaks = {player for (player, _s), events in lst["events"].items()
+                 for e in events if e["kind"] == "drought_peak"}
+        for player in peaks:
+            if player in active:
+                best = min(e["rank"] for (p, _s), events in lst["events"].items()
+                           if p == player for e in events
+                           if e["kind"] == "drought_peak")
+                assert lst["places"].get(player) != best, player
+
+
+def test_leaving_the_list_reads_two_ways():
+    """At the head of the list the award and the standing are one sentence.
+    From further down, the place he left from is the fact."""
+    sys.path.insert(0, os.path.join(REPO, "scripts"))
+    import factoids as Fx
+    from prerender import droughts as D
+
+    idx = Fx.build_index(json.loads(read(os.path.join("data", "data.json"))))
+    built = D.build(idx)
+    tops = [e for lst in built.values() for events in lst["events"].values()
+            for e in events if e["kind"] == "drought_left" and e["rank"] == 1]
+    assert tops
+    assert TL._family(tops[0]) == "drought_left"
+    down = [e for lst in built.values() for events in lst["events"].values()
+            for e in events if e["kind"] == "drought_left" and e["rank"] > 1]
+    assert down
+    assert TL._family(down[0]) == "drought_left_down"
+    text = TL._PHRASES["drought_left"][TL.PAST][0].format(
+        **TL._bits(idx, tops[0], "2020-21"))
+    assert text.endswith("never to have made one.") or \
+        text.endswith("never to have won one.")
 
 
 # --------------------------------------------------------------------------
@@ -2035,14 +2083,24 @@ def test_a_timeline_carries_no_em_dash():
             assert "—" not in plain and "--" not in plain
 
 
-def test_no_season_carries_more_than_two_events():
+def test_no_season_carries_more_than_two_recurring_events():
     """Checked on the sweep rather than on the prose, where "No. 1 picks" is
-    not the end of a sentence."""
+    not the end of a sentence.
+
+    Three award-drought events are said once in a career and are not made to
+    compete for the two slots; everything that can recur year on year is.
+    """
     idx = F.build_index(json.loads(read(os.path.join("data", "data.json"))))
     found = TL.build(idx)
     assert found
     for key, events in found.items():
-        assert len(events) <= TL.PER_SEASON, key
+        recurring = [e for e in events if e["kind"] not in TL.SPARED]
+        assert len(recurring) <= TL.PER_SEASON, key
+        # and a spared kind is only ever said once a career per list
+        for kind in TL.SPARED:
+            here = [e for e in events if e["kind"] == kind]
+            lists = [e.get("list") for e in here]
+            assert len(lists) == len(set(lists)), (key, kind)
 
 
 def test_a_roster_top_event_never_sits_on_a_split_season():
