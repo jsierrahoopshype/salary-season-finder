@@ -129,6 +129,7 @@ def build(idx):
     career = collections.Counter()
     members = collections.defaultdict(set)
     held = collections.defaultdict(set)   # player -> scopes he was top of
+    split_before = {}  # player -> was the last season he appeared in a split
     ranked = collections.defaultdict(dict)  # scope -> {player: his place}
     passed = set()     # milestones each man has already crossed
     steps = {}         # scope -> the biggest round figure anyone in it crossed
@@ -140,7 +141,8 @@ def build(idx):
         paid = not idx.is_contracted(season)
         here = {idx.canonical(r["player"]): r for r in rows}
 
-        _statuses(idx, season, rows, sizes, scopes_of, held, found, here)
+        _statuses(idx, season, rows, sizes, scopes_of, held, found, here,
+                  split_before)
         if paid:
             _records(idx, season, rows, sizes, scopes_of, high, found, here)
             _thresholds(idx, season, rows, sizes, scopes_of, steps, found)
@@ -156,6 +158,8 @@ def build(idx):
             _milestones(season, rows, idx, career, passed, found)
             _lists(idx, season, rows, sizes, scopes_of, career, members, ranked, found)
 
+        for record in rows:
+            split_before[idx.canonical(record["player"])] = F.is_split_season(record)
         for record in rows:
             if paid:
                 previous[idx.canonical(record["player"])] = (
@@ -244,11 +248,20 @@ def _sizes(idx):
 
 # -- who was the highest paid, and when that started and stopped ------------
 
-def _statuses(idx, season, rows, sizes, scopes_of, held, found, here):
+def _statuses(idx, season, rows, sizes, scopes_of, held, found, here,
+              split_before):
     """The highest-paid man in each scope that season, as a status.
 
     Said once when it starts and once when it ends, and the man who took it
     named where it ended, because "lost it" without a name is half a fact.
+
+    A roster is the one scope a split season cannot speak for. The salary on a
+    season split between two teams is a cap-sheet allocation rather than money
+    one franchise paid a man to play for it, so it crowns nobody and unseats
+    nobody: the same gate the engine's rank_shift applies, and for the same
+    reason. It sinks the claim whichever season is split, this one or the one
+    his standing carried over from. The cohorts are untouched, because a
+    split season is still his money and he is still in the group.
     """
     best = {}
     for record in rows:
@@ -256,7 +269,10 @@ def _statuses(idx, season, rows, sizes, scopes_of, held, found, here):
         salary = record.get("salary") or 0
         if not salary:
             continue
+        split = F.is_split_season(record)
         for scope in scopes_of[id(record)]:
+            if split and scope[0] == "franchise":
+                continue
             if scope not in best or salary > best[scope][0]:
                 best[scope] = (salary, player)
 
@@ -267,11 +283,19 @@ def _statuses(idx, season, rows, sizes, scopes_of, held, found, here):
 
     for player, record in here.items():
         was, now = held.get(player, set()), tops.get(player, set())
+        # Either season being split sinks a roster claim: this one has no
+        # single roster its salary belongs to, and a standing carried over
+        # from a split one was never his on one team's books.
+        mute = (F.is_split_season(record) or split_before.get(player, False))
         for scope in now - was:
+            if mute and scope[0] == "franchise":
+                continue
             found[(player, season)].append({
                 "kind": "top_start", "scope": scope,
                 "size": sizes.get(scope, 0)})
         for scope in was - now:
+            if mute and scope[0] == "franchise":
+                continue
             # Leaving a team is not losing a title to anybody, so a franchise
             # he is no longer on gets no line: he did not get passed, he went.
             if scope[0] == "franchise" and scope not in scopes_of[id(record)]:
