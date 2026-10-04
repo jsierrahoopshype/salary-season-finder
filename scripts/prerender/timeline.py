@@ -924,7 +924,19 @@ _PHRASES = {
         LATER: ("Would be the first {who} paid {money} or more in a season.",
                 "Would become the first {who} paid {money} or more in a season."),
     },
+    # A cohort's top earner is the top earner in the league out of that
+    # cohort, and the line has to say so: "the highest-paid Ohio State player"
+    # alone reads as the best-paid man on some Ohio State roster. A franchise
+    # needs no such clause, so it keeps the shorter form below.
     "top_start": {
+        PAST: ("Became the highest-paid {who} in the league.",
+               "Took over as the highest-paid {who} in the league."),
+        NOW: ("Is the highest-paid {who} in the league.",
+              "Stands as the highest-paid {who} in the league."),
+        LATER: ("Would become the highest-paid {who} in the league.",
+                "Would take over as the highest-paid {who} in the league."),
+    },
+    "top_start_team": {
         PAST: ("Became the highest-paid {who}.",
                "Took over as the highest-paid {who}."),
         NOW: ("Is the highest-paid {who}.",
@@ -933,6 +945,14 @@ _PHRASES = {
                 "Would take over as the highest-paid {who}."),
     },
     "top_end": {
+        PAST: ("Lost the highest-paid {who} spot in the league to {name}.",
+               "{name} took over as the highest-paid {who} in the league."),
+        NOW: ("No longer the highest-paid {who} in the league, a spot {name} holds.",
+              "{name} is now the highest-paid {who} in the league."),
+        LATER: ("Would lose the highest-paid {who} spot in the league to {name}.",
+                "{name} would take over as the highest-paid {who} in the league."),
+    },
+    "top_end_team": {
         PAST: ("Lost the highest-paid {who} spot to {name}.",
                "{name} took over as the highest-paid {who}."),
         NOW: ("No longer the highest-paid {who}, a spot {name} holds.",

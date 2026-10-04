@@ -198,7 +198,9 @@ def _span_sentence(idx, subject, span):
         # the nickname takes an article: "the Heat's", "the 76ers'"
         who = "the {} highest-paid player".format(_possessive(team))
     else:
-        who = "the highest-paid {}".format(_noun(idx, kind, key))
+        # the top earner in the league out of that cohort, which is what the
+        # claim measures; without the clause it reads as a roster's top man
+        who = "the highest-paid {} in the league".format(_noun(idx, kind, key))
     if span["open"]:
         return "{} has been {} every season since {}.".format(
             _cap(subject), who, first)
