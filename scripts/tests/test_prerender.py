@@ -1842,6 +1842,46 @@ def test_the_stats_sheet_covers_every_season_the_data_has_stats_for():
     )
 
 
+def test_a_cohort_top_earner_line_says_it_is_the_league():
+    """"the highest-paid Ohio State player" alone reads as the best-paid man
+    on some Ohio State roster. The claim is about the league, and the line
+    says so. A franchise needs no such clause and keeps the shorter form."""
+    sys.path.insert(0, os.path.join(REPO, "scripts"))
+    from prerender import timeline as TLx
+
+    for family in ("top_start", "top_end"):
+        for forms in TLx._PHRASES[family].values():
+            for form in forms:
+                assert "in the league" in form, (family, form)
+        for forms in TLx._PHRASES[family + "_team"].values():
+            for form in forms:
+                assert "in the league" not in form, (family, form)
+
+    # and the two reach the right scopes
+    assert TLx._family({"kind": "top_start",
+                        "scope": ("franchise", "ATL")}) == "top_start_team"
+    assert TLx._family({"kind": "top_start",
+                        "scope": ("college", "Duke")}) == "top_start"
+
+
+def test_no_cohort_status_line_on_a_page_omits_the_league():
+    """Read off the built pages, not the templates: a status line about a
+    cohort that does not say "in the league" is the bug this guards."""
+    bad = []
+    for slug in TIMELINE_SLUGS:
+        for season, text in _plain_timeline(slug):
+            for part in re.split(r"(?<=\.)\s+(?=[A-Z])", text):
+                if "highest-paid" not in part:
+                    continue
+                # a franchise line names the club, which the nickname map knows
+                if re.search(r"highest-paid player on the ", part) or \
+                        re.search(r"the [A-Z][^ ]*(&#x27;|') ?s? highest-paid", part):
+                    continue
+                if "in the league" not in part and "in the NBA" not in part:
+                    bad.append((slug, season, part))
+    assert bad == []
+
+
 # --------------------------------------------------------------------------
 # career earnings without an award
 # --------------------------------------------------------------------------

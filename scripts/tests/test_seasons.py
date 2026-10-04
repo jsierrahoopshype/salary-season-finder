@@ -75,14 +75,14 @@ def test_a_run_of_seasons_becomes_one_span_sentence():
                ["2021-22", "2022-23", "2023-24", "2024-25", "2025-26", CURRENT])
     out = write(rows, name="Giannis")
     assert out[0] == ("Giannis has been the highest-paid player from the 2013 "
-                      "draft class every season since 2021-22.")
+                      "draft class in the league every season since 2021-22.")
 
 
 def test_a_span_that_has_ended_reads_in_the_past():
     rows = run("college", "Duke", ["2019-20", "2020-21", "2021-22"])
     out = write(rows, name="Kyrie")
-    assert out[0] == ("Kyrie was the highest-paid Duke player in every season "
-                      "from 2019-20 to 2021-22.")
+    assert out[0] == ("Kyrie was the highest-paid Duke player in the league in "
+                      "every season from 2019-20 to 2021-22.")
 
 
 def test_a_record_is_never_repeated_season_by_season():
