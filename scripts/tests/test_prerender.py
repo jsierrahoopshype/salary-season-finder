@@ -1900,22 +1900,82 @@ def test_a_leader_who_left_through_a_selection_says_so():
     assert "left on his first All-Star selection in 2020-21" in rows[0]
 
 
-def test_never_is_kept_for_retired_players():
-    """A man still playing has not run out of chances, so he is "yet to make"
-    one; "never" is a claim about a finished career."""
+def test_a_drought_list_is_said_in_two_tenses_and_no_others():
+    """These lists rank career earnings among men an award has not come to, so
+    the present describes anyone on a list now and the past a season before a
+    first selection. "Never" claims a career is over and "yet to" claims it is
+    not; a salary table knows neither, so neither appears."""
     sys.path.insert(0, os.path.join(REPO, "scripts"))
     import factoids as Fx
     from prerender import droughts as D
 
     idx = Fx.build_index(json.loads(read(os.path.join("data", "data.json"))))
     built = D.build(idx)
-    # active and unselected
-    assert "yet to make an All-Star team" in D.summary_line(built, "Tobias Harris")
-    # retired and unselected
-    assert "never named an All-Star" in D.summary_line(built, "Danilo Gallinari")
-    # active, but selected since: the past tense, not a claim either way
+    for spec in D.LISTS:
+        for form in (spec.present, spec.past, spec.singular, spec.one_past,
+                     spec.title_phrase):
+            assert "never" not in form.lower(), form
+            assert "yet to" not in form.lower(), form
+        assert spec.present.startswith("who have not")
+        assert spec.past.startswith("who had not")
+    # never selected: the present, whether he is still playing or not
+    assert built["all-star"]["phrase"]("Tobias Harris") == \
+        "who have not made an All-Star team"
+    assert built["all-star"]["phrase"]("Danilo Gallinari") == \
+        "who have not made an All-Star team"
+    # selected since: the past
     assert built["all-star"]["phrase"]("Mike Conley") == \
-        "who had never been named an All-Star"
+        "who had not made an All-Star team"
+
+
+def test_these_lists_never_call_anyone_the_highest_paid():
+    """They rank career earnings, so the wording says career earnings."""
+    for slug in ("never-all-star", "never-all-nba", "never-mvp", C.DROUGHT_HUB):
+        html = _drought(slug)
+        body = re.sub(r"<[^>]+>", " ", html)
+        assert "highest-paid" not in body, slug
+        assert "never named" not in body and "yet to" not in body, slug
+    sys.path.insert(0, os.path.join(REPO, "scripts"))
+    from prerender import timeline as TLx
+    for family in ("drought_first", "drought_first_open", "drought_passed",
+                   "drought_left", "drought_left_down", "drought_peak"):
+        for forms in TLx._PHRASES[family].values():
+            for form in forms:
+                assert "highest-paid" not in form, form
+
+
+def test_the_page_titles_say_what_the_lists_rank():
+    for slug, phrase in (
+        ("never-all-star", "who have not made an All-Star team"),
+        ("never-all-nba", "who have not made an All-NBA team"),
+        ("never-mvp", "who have not won MVP"),
+    ):
+        html = _drought(slug)
+        title = re.search(r"<title>(.*?)</title>", html).group(1)
+        assert title == "Most career earnings by players {} | HoopsMatic".format(
+            phrase), title
+        assert "<h1>Most career earnings by players {}</h1>".format(phrase) in html
+
+
+def test_the_rank_line_gives_the_figure_only_once_a_page():
+    sys.path.insert(0, os.path.join(REPO, "scripts"))
+    import factoids as Fx
+    from prerender import droughts as D
+
+    idx = Fx.build_index(json.loads(read(os.path.join("data", "data.json"))))
+    built = D.build(idx)
+    short, full = D.summary_line(built, "CJ McCollum")
+    assert short == ("He is second in career earnings among players who have "
+                     "not made an All-Star team.")
+    assert full.endswith("on $302.1 million paid to date.")
+    # No. 1 says it the other way and names no figure at all
+    top, top_full = D.summary_line(built, "Paul George")
+    assert top == top_full == ("He has earned more than any player who has "
+                               "not won MVP.")
+    # the page prints the short form, because the career sentence gave the money
+    page = read(os.path.join("player", "cj-mccollum", "index.html"))
+    assert "not made an All-Star team." in page
+    assert "paid to date" not in page
 
 
 def test_one_drought_line_per_player_naming_the_most_notable_list():
@@ -1925,13 +1985,10 @@ def test_one_drought_line_per_player_naming_the_most_notable_list():
 
     idx = Fx.build_index(json.loads(read(os.path.join("data", "data.json"))))
     built = D.build(idx)
-    # Harris is top three on the All-Star and All-NBA lists; All-Star wins
-    line = D.summary_line(built, "Tobias Harris")
+    line = D.summary_line(built, "Tobias Harris")[0]
     assert "All-Star" in line and "All-NBA" not in line
-    # off the All-Star list through his selection, so his line is the next one
-    assert "All-NBA" in D.summary_line(built, "Mike Conley")
-    # outside every top ten
-    assert D.summary_line(built, "LeBron James") == ""
+    assert "All-NBA" in D.summary_line(built, "Mike Conley")[0]
+    assert D.summary_line(built, "LeBron James") == ("", "")
 
 
 def test_how_high_he_got_is_said_once_and_only_between_two_and_ten():
@@ -1999,8 +2056,9 @@ def test_leaving_the_list_reads_two_ways():
     assert TL._family(down[0]) == "drought_left_down"
     text = TL._PHRASES["drought_left"][TL.PAST][0].format(
         **TL._bits(idx, tops[0], "2020-21"))
-    assert text.endswith("never to have made one.") or \
-        text.endswith("never to have won one.")
+    assert text.endswith("who had not made one.") or \
+        text.endswith("who had not won one.")
+    assert "top career earner" in text
 
 
 # --------------------------------------------------------------------------
@@ -2203,15 +2261,35 @@ def _plain_timeline(slug):
             for season, text in _timeline(slug)]
 
 
-def test_a_season_gets_one_sentence():
+#: The sentences a second one in a season is allowed to be: the three
+#: award-drought facts a man has no second chance at.
+SECOND_SENTENCE = (
+    "Became the top career earner", "Took over as the top career earner",
+    "Is the top career earner", "Stands as the top career earner",
+    "Would become the top career earner", "Would take over as the top career",
+    "Led the career earnings of players", "Leads the career earnings of players",
+    "Would lead the career earnings of players",
+    "Peaked at No.", "Got as high as No.", "Peaks at No.", "Gets as high as No.",
+    "Would peak at No.", "Would get as high as No.",
+    "Made his first", "Won his first", "Would do it",
+)
+
+
+def test_a_season_gets_one_sentence_or_a_drought_fact_beside_it():
     """Two facts that belong together are said in one breath; two that do not
-    are one fact, the stronger of them."""
+    are one fact, the stronger of them. The exception is the three
+    award-drought facts said once in a career, which get a sentence of their
+    own rather than waiting for a season that will never come again."""
+    extras = 0
     for slug in TIMELINE_SLUGS:
         for season, text in _plain_timeline(slug):
-            # the season's own figures carry full stops of their own, so a
-            # sentence is counted by a stop followed by a capital
-            assert not re.search(r"\.\s+[A-Z]", text), (slug, season, text)
             assert text.endswith(".")
+            parts = re.split(r"(?<=\.)\s+(?=[A-Z])", text)
+            assert len(parts) <= 2, (slug, season, text)
+            if len(parts) == 2:
+                extras += 1
+                assert parts[1].startswith(SECOND_SENTENCE), (slug, season, text)
+    assert extras, "no season printed a second sentence"
 
 
 def test_a_first_claim_uses_a_round_figure():
