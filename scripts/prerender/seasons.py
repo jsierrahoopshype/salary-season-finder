@@ -47,7 +47,7 @@ MIN_SPAN = 2
 HOLDING = ("sets", "ties")
 
 
-def summary(idx, name, rows, player=None, drought=""):
+def summary(idx, name, rows, player=None, drought=("", "")):
     """Two to four sentences about one man, or [] where he has nothing.
 
     ``rows`` is [(season, fact)] for him, already filtered for mirrors, and
@@ -83,9 +83,15 @@ def summary(idx, name, rows, player=None, drought=""):
     # His standing on an award-drought list goes in ahead of the filler the
     # loop below would reach for, and behind the records and the career total,
     # which are the page's own subject.
-    if drought:
-        sentences.append(drought if subject == "he" else drought.replace(
-            "He is", "{} is".format(name), 1))
+    short, full = drought if isinstance(drought, tuple) else (drought, drought)
+    if short:
+        # The figure rides along only where nothing above has given it: the
+        # career sentence usually has, and twice in a paragraph is once too
+        # many.
+        line = short if any("$" in said for said in sentences) else full
+        if subject != "he":
+            line = line.replace("He ", "{} ".format(name), 1)
+        sentences.append(line)
         subject = "he"
 
     if ahead_text:

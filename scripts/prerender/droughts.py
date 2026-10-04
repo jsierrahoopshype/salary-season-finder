@@ -28,43 +28,43 @@ import factoids as F  # noqa: E402
 
 
 class Drought:
-    """One list: its page, its award and the words it is described in."""
+    """One list: its page, its award and the words it is described in.
 
-    __slots__ = ("key", "slug", "award", "labels", "heading", "never", "yet",
-                 "had_never", "selection", "won", "made", "list_name", "crown")
+    Two forms of the group, and only two. These lists rank career earnings
+    among men an award has not come to, so the present tense describes anyone
+    on the list now and the past tense describes a season before his first
+    selection. Neither "never" nor "yet to" appears: one claims a career is
+    over and the other claims it is not, and a salary table knows neither.
+    """
 
-    def __init__(self, key, slug, award, labels, never, yet, had_never,
-                 selection, made, crown, list_name, won=False):
+    __slots__ = ("key", "slug", "award", "labels", "present", "past",
+                 "singular", "made", "one_past", "title_phrase", "selection",
+                 "won")
+
+    def __init__(self, key, slug, award, labels, present, past, singular,
+                 made, one_past, title_phrase, selection, won=False):
         self.key = key
         self.slug = slug
         self.award = award
         self.labels = labels
-        self.never = never
-        self.yet = yet
-        self.had_never = had_never
-        self.selection = selection
-        self.won = won
+        #: "who have not made an All-Star team", for anyone on the list now
+        self.present = present
+        #: "who had not made an All-Star team", for a season before he was picked
+        self.past = past
+        #: "who has not won MVP", after "more than any player"
+        self.singular = singular
         #: "Made his first All-Star team" / "Won his first MVP"
         self.made = made
-        #: "the highest-paid player never to have made one"
-        self.crown = crown
-        #: what the list is called in the sentence about leaving it
-        self.list_name = list_name
+        #: "who had not made one", where the award is already named
+        self.one_past = one_past
+        #: the page's own heading and title
+        self.title_phrase = title_phrase
+        self.selection = selection
+        self.won = won
 
-    def phrase(self, retired, selected_since):
-        """How to describe a man held to this list.
-
-        "Never" is a claim about a whole career, so it is kept for the men
-        whose careers are over. A man still playing has not run out of
-        chances, and a man who has since been selected had never been chosen
-        only in the past, which is the one of the three that is a tense rather
-        than a hedge.
-        """
-        if selected_since:
-            return self.had_never
-        if retired:
-            return self.never
-        return self.yet
+    def phrase(self, selected_ever):
+        """The group, in the tense the sentence needs."""
+        return self.past if selected_ever else self.present
 
 
 #: The three lists, in the order a tie between them is broken: a man who is on
@@ -73,36 +73,38 @@ LISTS = (
     Drought(
         "all-star", "never-all-star", "All-Star",
         frozenset({"All-Star", "All-Star MVP"}),
-        never="never named an All-Star",
-        yet="yet to make an All-Star team",
-        had_never="who had never been named an All-Star",
-        selection="All-Star selection",
+        present="who have not made an All-Star team",
+        past="who had not made an All-Star team",
+        singular="who has not made an All-Star team",
         made="Made his first All-Star team",
-        crown="the highest-paid player never to have made one",
-        list_name="never-selected list",
+        one_past="who had not made one",
+        title_phrase="Most career earnings by players who have not made an "
+                     "All-Star team",
+        selection="All-Star selection",
     ),
     Drought(
         "all-nba", "never-all-nba", "All-NBA",
         frozenset({"All-NBA First Team", "All-NBA Second Team",
                    "All-NBA Third Team"}),
-        never="never named All-NBA",
-        yet="yet to make an All-NBA team",
-        had_never="who had never been named All-NBA",
-        selection="All-NBA selection",
+        present="who have not made an All-NBA team",
+        past="who had not made an All-NBA team",
+        singular="who has not made an All-NBA team",
         made="Made his first All-NBA team",
-        crown="the highest-paid player never to have made one",
-        list_name="never-selected list",
+        one_past="who had not made one",
+        title_phrase="Most career earnings by players who have not made an "
+                     "All-NBA team",
+        selection="All-NBA selection",
     ),
     Drought(
         "mvp", "never-mvp", "MVP",
         frozenset({"Most Valuable Player"}),
-        never="never named MVP",
-        yet="yet to win MVP",
-        had_never="who had never won MVP",
-        selection="MVP",
+        present="who have not won MVP",
+        past="who had not won MVP",
+        singular="who has not won MVP",
         made="Won his first MVP",
-        crown="the highest-paid player never to have won one",
-        list_name="never-selected list",
+        one_past="who had not won one",
+        title_phrase="Most career earnings by players who have not won MVP",
+        selection="MVP",
         won=True,
     ),
 )
@@ -146,7 +148,7 @@ def build(idx):
         # spec and first are bound now, not read when the closure is called:
         # one of these is kept per list and the loop moves on.
         def phrase(player, spec=spec, first=first):
-            return spec.phrase(player not in active, player in first)
+            return spec.phrase(player in first)
 
         total = collections.Counter()
         seen_in = collections.defaultdict(set)
@@ -181,8 +183,8 @@ def build(idx):
                         "kind": "drought_left", "list": spec.key,
                         "rank": min(was), "selection": spec.selection,
                         "won": spec.won, "drought": phrase(player),
-                        "made": spec.made, "list_name": spec.list_name,
-                        "crown": spec.crown,
+                        "made": spec.made,
+                        "one_past": spec.one_past,
                     })
 
             for player, place in places.items():
@@ -269,23 +271,26 @@ def retired(idx, player):
 
 
 def summary_line(built, player):
-    """His one sentence about these lists, or "" where he is not near one.
+    """(the line, the line with his total in it), or ("", "").
 
     Top ten only, and one list per man: a player inside two of them is said to
-    be in the more notable, which is the order LISTS is written in. The rank
-    is named because second on a list of this kind is a different fact from
-    tenth on it.
+    be in the more notable, which is the order LISTS is written in. The rank is
+    named because second on a list of this kind is a different fact from tenth
+    on it. Two forms, because the figure is worth giving only where no other
+    sentence on the page has given it already.
     """
     for spec in LISTS:
         lst = built[spec.key]
         place = lst["places"].get(player)
         if not place or place > TOP:
             continue
-        where = ("the highest-paid player" if place == 1
-                 else "{} among players".format(F.ordinal(place)))
-        drought = lst["phrase"](player)
         if place == 1:
-            return "He is {} {}.".format(where, drought)
-        return "He is {} {}, on {} paid to date.".format(
-            where, drought, F.fmt_money(lst["totals"].get(player) or 0))
-    return ""
+            line = "He has earned more than any player {}.".format(spec.singular)
+            return line, line
+        short = "He is {} in career earnings among players {}.".format(
+            F.ordinal(place), spec.present)
+        full = "He is {} in career earnings among players {}, on {} paid to " \
+            "date.".format(F.ordinal(place), spec.present,
+                           F.fmt_money(lst["totals"].get(player) or 0))
+        return short, full
+    return "", ""

@@ -718,17 +718,13 @@ def drought_page(idx, built, key, linker=None):
     """
     lst = built[key]
     spec = lst["spec"]
-    title = "Most NBA Career Earnings Without an {} | HoopsMatic".format(spec.award)
-    heading = "Most career earnings without an {} selection".format(spec.award) \
-        if not spec.won else "Most career earnings without an MVP"
+    heading = spec.title_phrase
+    title = "{} | HoopsMatic".format(heading)
     leader = lst["standing"][0][1] if lst["standing"] else ""
     description = (
-        "NBA players with the most career earnings and no {} selection, "
-        "paid to date. {} leads on {}.".format(
-            spec.award, leader, money_short(lst["standing"][0][0]))
-        if leader else
-        "NBA players with the most career earnings and no {} selection.".format(
-            spec.award)
+        "{}, paid to date. {} leads on {}.".format(
+            heading, leader, money_short(lst["standing"][0][0]))
+        if leader else "{}.".format(heading)
     )
 
     rows = []
@@ -770,11 +766,10 @@ def drought_page(idx, built, key, linker=None):
     body = [
         "<h1>{}</h1>".format(esc(heading)),
         summary_block([
-            "{} has been paid {} without {}, more than anyone else on this "
-            "list.".format(leader, money_short(lst["standing"][0][0]),
-                           _drought_without(spec, lst, leader)),
+            "{} has earned {}, more than any other player {}.".format(
+                leader, money_short(lst["standing"][0][0]), spec.singular),
             "A player leaves the list from the season of his first selection, "
-            "so these are careers measured while the award had not come.",
+            "so these are careers counted while the award had not come.",
         ], linker=linker) if leader else "",
         section(
             "The list",
@@ -802,13 +797,6 @@ def drought_page(idx, built, key, linker=None):
         scope_line(),
     ]
     return title, description, "\n".join(b for b in body if b)
-
-
-def _drought_without(spec, lst, leader):
-    """"without an All-Star selection" / "without winning MVP", in a sentence."""
-    if spec.won:
-        return "winning MVP"
-    return "an {} selection".format(spec.award)
 
 
 def _drought_notes():
@@ -842,14 +830,15 @@ def register_drought_idents(identities):
 
 
 def drought_hub(built):
-    title = "NBA Career Earnings Without an Award | HoopsMatic"
+    title = "Most NBA Career Earnings Without an Award | HoopsMatic"
     lead = built["all-star"]["standing"]
     description = (
-        "The NBA's biggest career earners who have never been named an "
-        "All-Star, never been named All-NBA, or never won MVP. {} leads on "
-        "{}.".format(lead[0][1], money_short(lead[0][0])) if lead else
-        "The NBA's biggest career earners with no All-Star, All-NBA or MVP "
-        "selection."
+        "The NBA's biggest career earners among players who have not made "
+        "an All-Star team, have not made an All-NBA team, or have not won "
+        "MVP. {} leads on {}.".format(lead[0][1], money_short(lead[0][0]))
+        if lead else
+        "The NBA's biggest career earners among players an award has not "
+        "come to."
     )
     rows = []
     for key in C.DROUGHT_PAGES:
@@ -858,10 +847,10 @@ def drought_hub(built):
         rows.append((C.DROUGHT_LABELS[key], lst["spec"].slug, leader,
                      lst["standing"][0][0] if lst["standing"] else 0))
     body = [
-        "<h1>Career earnings without an award</h1>",
+        "<h1>Most career earnings without an award</h1>",
         summary_block([
-            "Three lists of what a man has been paid while the award had not "
-            "come. A player leaves a list from the season of his first "
+            "Three lists of career earnings among players an award has not "
+            "come to. A player leaves a list from the season of his first "
             "selection.",
         ]),
         section("The lists", None, rank_table(

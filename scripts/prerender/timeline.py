@@ -591,11 +591,19 @@ def lines(idx, records, events):
         if not found:
             continue
         tense = _tense(idx, season)
-        text, pattern = _merged(idx, found, tense, season, word, recent)
+        text, pattern, used = _merged(idx, found, tense, season, word, recent)
         if not text:
-            text, pattern = _single(idx, found, tense, season, word, recent)
+            text, pattern, one = _single(idx, found, tense, season, word, recent)
+            used = (one,) if one is not None else ()
         if not text:
             continue
+        # One sentence a season, with one exception: a season that also holds
+        # an award-drought event said once in a career says that too. Those
+        # are the three facts a man has no second chance at, and losing one to
+        # a salary threshold in the same season loses it for good.
+        extra = _spared_sentence(idx, found, used, tense, season, word, recent)
+        if extra:
+            text = "{} {}".format(text, extra)
         out.append((season, text))
         word = _first_word(text)
         recent = (recent + [pattern])[-2:]
@@ -632,6 +640,33 @@ def _pick(forms, kind, word, recent, *parts):
     return forms[chosen], (kind, chosen)
 
 
+def _spared_sentence(idx, found, used, tense, season, word, recent):
+    """The once-a-career drought sentence a season still owes, if any.
+
+    The first sentence already carries one event. Where a spared event is not
+    the one it carried, it gets a sentence of its own rather than waiting for
+    a season that will never come again.
+    """
+    for event in found:
+        if event["kind"] not in SPARED:
+            continue
+        # by identity, not by the words: the same event told in its other
+        # variant is still the same fact
+        if any(event is spoken for spoken in used):
+            continue
+        options = _PHRASES.get(_family(event))
+        bits = _bits(idx, event, season)
+        if not options or bits is None:
+            continue
+        forms = options.get(tense) or options.get(PAST) or ()
+        if not forms:
+            continue
+        form, _pattern = _pick(forms, _family(event), word, recent,
+                               event["kind"], season, bits.get("drought", ""))
+        return form.format(**bits)
+    return ""
+
+
 def _single(idx, found, tense, season, word, recent):
     """The strongest event a season had, on its own."""
     for event in found:
@@ -644,8 +679,8 @@ def _single(idx, found, tense, season, word, recent):
             continue
         form, pattern = _pick(forms, _family(event), word, recent,
                               event["kind"], season, bits.get("who", ""))
-        return form.format(**bits), pattern
-    return "", None
+        return form.format(**bits), pattern, event
+    return "", None, None
 
 
 def _family(event):
@@ -678,17 +713,17 @@ MERGES = (("high_set", "high_set"),
 def _merged(idx, found, tense, season, word, recent):
     """One sentence carrying both of a season's events, where they belong together."""
     if len(found) < 2:
-        return "", None
+        return "", None, ()
     first, second = found[0], found[1]
     if (first["kind"], second["kind"]) not in MERGES:
-        return "", None
+        return "", None, ()
     one, two = _bits(idx, first, season), _bits(idx, second, season)
     if one is None or two is None:
-        return "", None
+        return "", None, ()
 
     if first["kind"] == "high_set":
         if first.get("value") != second.get("value"):
-            return "", None
+            return "", None, ()
         # The cohort reads first and the team second, which is how the fact is
         # spoken: the most ever paid to an international player, and a club
         # record on top of it.
@@ -702,7 +737,7 @@ def _merged(idx, found, tense, season, word, recent):
         forms = _MERGED["high_set"].get(tense) or _MERGED["high_set"][PAST]
         form, pattern = _pick(forms, "merged_high", word, recent,
                               season, one.get("who", ""))
-        return form.format(tail=tail, **one), pattern
+        return form.format(tail=tail, **one), pattern, (first, second)
 
     place = ("the most of any {}".format(two["group"])
              if second["kind"] == "list_top"
@@ -710,7 +745,7 @@ def _merged(idx, found, tense, season, word, recent):
     forms = _MERGED["milestone"].get(tense) or _MERGED["milestone"][PAST]
     form, pattern = _pick(forms, "merged_milestone", word, recent,
                           season, one.get("money", ""))
-    return form.format(place=place, **one), pattern
+    return form.format(place=place, **one), pattern, (first, second)
 
 
 _MERGED = {
@@ -778,8 +813,7 @@ def _bits(idx, event, season):
                       else "his first {}".format(event["selection"]))
     if "made" in event:
         out["made"] = event["made"]
-        out["crown"] = event["crown"]
-        out["list_name"] = event["list_name"]
+        out["one_past"] = event["one_past"]
     return out
 
 
@@ -790,12 +824,12 @@ _PHRASES = {
     # from anybody: the salary data begins under him, and saying so is the
     # difference between a fact and an artefact.
     "drought_first": {
-        PAST: ("Became the highest-paid player {drought}.",
-               "Took over as the highest-paid player {drought}."),
-        NOW: ("Is the highest-paid player {drought}.",
-              "Stands as the highest-paid player {drought}."),
-        LATER: ("Would become the highest-paid player {drought}.",
-                "Would take over as the highest-paid player {drought}."),
+        PAST: ("Became the top career earner among players {drought}.",
+               "Took over as the top career earner among players {drought}."),
+        NOW: ("Is the top career earner among players {drought}.",
+              "Stands as the top career earner among players {drought}."),
+        LATER: ("Would become the top career earner among players {drought}.",
+                "Would take over as the top career earner among players {drought}."),
     },
     "drought_first_open": {
         PAST: ("Led the career earnings of players {drought} when the salary "
@@ -806,25 +840,25 @@ _PHRASES = {
                 "salary data begins.",),
     },
     "drought_passed": {
-        PAST: ("{name} passed him as the highest-paid player {drought}.",
-               "Was passed by {name} as the highest-paid player {drought}."),
-        NOW: ("{name} passes him as the highest-paid player {drought}.",
-              "Is passed by {name} as the highest-paid player {drought}."),
-        LATER: ("{name} would pass him as the highest-paid player {drought}.",
-                "Would be passed by {name} as the highest-paid player {drought}."),
+        PAST: ("{name} passed him as the top career earner among players {drought}.",
+               "Was passed by {name} as the top career earner among players {drought}."),
+        NOW: ("{name} passes him as the top career earner among players {drought}.",
+              "Is passed by {name} as the top career earner among players {drought}."),
+        LATER: ("{name} would pass him as the top career earner among players {drought}.",
+                "Would be passed by {name} as the top career earner among players {drought}."),
     },
-    # Leaving at the head of the list is the whole story in one sentence, so
-    # it says the award and the standing together. Leaving from further down
-    # names the place he left from instead.
+    # Leaving at the head of the list says the award and the standing in one
+    # breath; from further down, the place he left from is the fact.
     "drought_left": {
-        PAST: ("{made} as {crown}.",),
-        NOW: ("{made} as {crown}.",),
-        LATER: ("Would make it as {crown}.",),
+        PAST: ("{made} as the top career earner among players {one_past}.",),
+        NOW: ("{made} as the top career earner among players {one_past}.",),
+        LATER: ("Would do it as the top career earner among players {one_past}.",),
     },
     "drought_left_down": {
-        PAST: ("{made}, leaving the {list_name} at No. {rank}.",),
-        NOW: ("{made}, leaving the {list_name} at No. {rank}.",),
-        LATER: ("Would leave the {list_name} at No. {rank}.",),
+        PAST: ("{made} while No. {rank} in career earnings among players {one_past}.",),
+        NOW: ("{made} while No. {rank} in career earnings among players {one_past}.",),
+        LATER: ("Would do it while No. {rank} in career earnings among players "
+                "{one_past}.",),
     },
     "drought_peak": {
         PAST: ("Peaked at No. {rank} among players {drought}.",

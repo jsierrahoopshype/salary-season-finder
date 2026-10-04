@@ -150,11 +150,11 @@ def player_facts(idx, by_player_facts, ident, current_key, droughts_built=None):
     ]
     rows = [(season, dict(fact, text=straighten(fact, season)))
             for season, fact in rows]
-    line = ""
+    pair = ("", "")
     if droughts_built:
-        line = droughts.summary_line(droughts_built, idx.canonical(ident.name))
+        pair = droughts.summary_line(droughts_built, idx.canonical(ident.name))
     return seasons.summary(idx, ident.name, rows, player=ident.data_key,
-                           drought=line)
+                           drought=pair)
 
 
 # --------------------------------------------------------------------------
