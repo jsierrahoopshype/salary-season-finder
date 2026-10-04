@@ -99,6 +99,74 @@ def test_a_past_season_is_corrected_when_the_current_one_is_itself_a_split():
     }]
 
 
+def test_a_traded_season_booked_to_one_team_is_marked_split():
+    """James Harden, 2021-22. The sheet held PHI and he played for Brooklyn
+    until February, so believing it put $44.3 million of Brooklyn's money on
+    Philadelphia. Both teams are named, neither is given a figure, and the
+    season is marked split so no franchise record counts it."""
+    records = league(CURRENT) + [
+        rec("James Harden", "2021-22", "PHI", salary=44310840),
+        rec("James Harden", CURRENT, "LAC", salary=5000000),
+    ]
+    report = B.correct_past_season_teams(records, stats([
+        ("James Harden", "2021-22", "BKN", 16),
+        ("James Harden", "2021-22", "PHI", 21),
+    ]))
+
+    past = [r for r in records if r["season"] == "2021-22"][0]
+    assert past["team"] == "BKN, PHI"
+    assert past["salary"] == 44310840
+    assert past["teams_split"] is True
+    assert "team_salaries" not in past
+    assert F.is_split_season(past) is True
+    # no figure on either team: franchise records skip the season
+    assert F.team_amounts(past) == []
+    assert report["applied"] == [{
+        "player": "James Harden", "season": "2021-22",
+        "sheet_team": "PHI", "corrected_team": "BKN, PHI",
+        "split_basis": "no allocation; season marked split",
+    }]
+
+
+def test_two_teams_on_the_sheet_and_one_in_the_stats_keeps_its_amounts():
+    """Kemba Walker, 2021-22. New York played him and Oklahoma City carried
+    dead money, and the sheet knows what each paid. That apportionment is the
+    thing the traded rule has to invent, so a row that already has it is left
+    exactly as it is."""
+    records = league(CURRENT) + [
+        rec("Kemba Walker", "2021-22", "NYK, OKC", salary=34967442,
+            team_salaries={"NYK": 8151471, "OKC": 26815971}),
+        rec("Kemba Walker", CURRENT, "NYK", salary=5000000),
+    ]
+    report = B.correct_past_season_teams(records, stats([
+        ("Kemba Walker", "2021-22", "NYK", 37),
+    ]))
+
+    past = [r for r in records if r["season"] == "2021-22"][0]
+    assert past["team"] == "NYK, OKC"
+    assert past["team_salaries"] == {"NYK": 8151471, "OKC": 26815971}
+    assert "teams_split" not in past
+    assert dict(F.team_amounts(past)) == {"NYK": 8151471, "OKC": 26815971}
+    assert report["applied"] == []
+    assert report["left_alone"] == 1
+
+
+def test_a_traded_season_whose_sheet_team_never_played_is_left_alone():
+    """The sheet names a team nowhere in the stats, so it is the waived-and-
+    signed-elsewhere case, not a sheet booking a trade to one side of it."""
+    records = league(CURRENT) + [
+        rec("Stretched", "2021-22", "HOU", salary=9000000),
+        rec("Stretched", CURRENT, "SAC", salary=1000000),
+    ]
+    report = B.correct_past_season_teams(records, stats([
+        ("Stretched", "2021-22", "DEN", 40),
+        ("Stretched", "2021-22", "POR", 12),
+    ]))
+    assert [r for r in records if r["season"] == "2021-22"][0]["team"] == "HOU"
+    assert report["applied"] == []
+    assert report["left_alone"] == 1
+
+
 def test_a_past_team_he_is_not_on_now_is_still_left_alone():
     """Membership widened the rule; it did not open it. A past season naming a
     team nowhere in his current row is the sheet and the stats saying different

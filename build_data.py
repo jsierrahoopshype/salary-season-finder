@@ -638,17 +638,33 @@ def correct_past_season_teams(records, stats_lookup):
     season he had already played: after Giannis Antetokounmpo moved to Miami his
     2025-26 read MIA, a season he played in Milwaukee.
 
-    The signature is narrow on purpose. A past season is only rewritten where it
-    carries one team, that team is one of the teams he is on now, and the stats
-    disagree, which is what inheriting the row's TEAM column looks like. One OF
-    the teams rather than the whole TEAM string, because a man traded inside the
-    current season holds two of them: Kentavious Caldwell-Pope reads "MEM, PHI"
-    in 2026-27, and his 2025-26 came through as PHI, a season he played in
-    Memphis. Everywhere else the two sources
-    are saying different true things: the sheet names whose books paid the
-    salary and the stats name who he played for, and for a man waived by one
-    team while playing for another the sheet is the one a salary tool wants.
-    Those are counted in the report and left alone.
+    Two disagreements are rewritten, both of them the sheet carrying one team
+    for a season that had more than one truth in it.
+
+    INHERITED. A past season carries one team, that team is one of the teams he
+    is on now, and the stats name someone else: the row's TEAM column reaching a
+    season it should not have. One OF the teams rather than the whole TEAM
+    string, because a man traded inside the current season holds two of them:
+    Kentavious Caldwell-Pope reads "MEM, PHI" in 2026-27, and his 2025-26 came
+    through as PHI, a season he played in Memphis.
+
+    TRADED. A past season carries one team, the stats name two or more, and the
+    sheet's team is one of them. The sheet holds one row for the season and
+    books the whole salary to a single team, and it is not consistently the one
+    whose books carried it: over this dataset it names the first team he played
+    for 705 times and the last 663, which is a sheet recording the money once
+    rather than apportioning it. Believing it credits a franchise money another
+    one paid, so James Harden's whole 2021-22 sat on Philadelphia for a season
+    Brooklyn paid him most of. These take the same treatment the inherited
+    multi-team case already took: both teams named, no allocation invented, and
+    the season marked split so franchise records skip it.
+
+    Everywhere else the two sources are saying different true things: the sheet
+    names whose books paid the salary and the stats name who he played for, and
+    for a man waived by one team while playing for another the sheet is the one
+    a salary tool wants. A sheet naming a team nowhere in the stats is that man,
+    and a sheet naming two teams has the apportionment this one lacks. Those are
+    counted in the report and left alone.
     """
     current = current_season_of(records)
     current_key = season_to_year(current) or 0
@@ -675,7 +691,10 @@ def correct_past_season_teams(records, stats_lookup):
         if set(sheet) == set(played):
             continue
         seen += 1
-        if len(sheet) != 1 or sheet[0] not in now_teams.get(rec["player"], set()):
+        one = sheet[0] if len(sheet) == 1 else None
+        inherited = one is not None and one in now_teams.get(rec["player"], set())
+        traded = one is not None and len(played) > 1 and one in played
+        if not (inherited or traded):
             skipped += 1
             continue
 
@@ -692,8 +711,8 @@ def correct_past_season_teams(records, stats_lookup):
             rec.pop("team_salaries", None)
         else:
             # He was traded inside the season. The sheet put the whole salary on
-            # the team he finished at, which is the one fact it had, and this
-            # build has no record of how the two teams actually divided it.
+            # one of the teams, and this build has no record of how they
+            # actually divided it.
             # Allocating it by games played would put a figure on the page that
             # nobody paid, so the season is flagged as split and carries no
             # per-team amounts: the teams are named with the full salary, and
