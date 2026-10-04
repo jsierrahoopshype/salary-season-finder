@@ -190,6 +190,11 @@ def _span_sentence(idx, subject, span):
             _cap(subject), who, first)
     if first == last:
         return "{} was {} in {}.".format(_cap(subject), who, first)
+    if len(span["seasons"]) == 2:
+        # "every season from 2022-23 to 2023-24" is a range built for a run
+        # worth ranging over. Two seasons are a pair, and naming them is both
+        # shorter and more exact than asking a reader to expand a span of two.
+        return "{} was {} in {} and {}.".format(_cap(subject), who, first, last)
     return "{} was {} in every season from {} to {}.".format(
         _cap(subject), who, first, last)
 
