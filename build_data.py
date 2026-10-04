@@ -785,6 +785,122 @@ def process_stats(csv_data):
     return lookup
 
 
+#: The counting columns a season adds up across the teams that played it.
+#: The rates are not here: they are recomputed from these, because averaging
+#: two teams' averages weights a 26-game stint like a 36-game one.
+STAT_TOTALS = ("gp", "min", "pts", "reb", "ast", "stl", "blk")
+
+#: The per-game columns and the total they come from.
+STAT_RATES = {"ppg": "pts", "rpg": "reb", "apg": "ast",
+              "spg": "stl", "bpg": "blk"}
+
+
+def order_split_teams(records, stats_lookup):
+    """Put the team he finished a split season with last.
+
+    The table reads the teams in the order he played for them, and the stats
+    sheet carries no order at all: a row per team, no dates, and for CJ
+    McCollum's 2021-22 the New Orleans row sits above the Portland one in the
+    file although Portland came first. What the data does know is where he was
+    the following season, and a man carried into the next season by one of the
+    two teams finished with that team. Where that is decisive the finisher
+    goes last and the rest keep their order; where it is not (he left both, or
+    there is no next season) the order is left exactly as it was rather than
+    guessed at.
+    """
+    seasons_by_player = defaultdict(dict)
+    for rec in records:
+        seasons_by_player[rec["player"]][rec["season"]] = rec
+
+    moved = 0
+    for rec in records:
+        here = [t.strip() for t in (rec.get("team") or "").split(",") if t.strip()]
+        if len(here) < 2:
+            continue
+        played = stats_teams_for(stats_lookup, rec["player"], rec["season"])
+        if set(played) != set(here):
+            # The sheet is naming a payer the stats never saw play, so there
+            # is no sequence of appearances to put in order.
+            continue
+        nxt = season_to_year(rec["season"])
+        later = seasons_by_player[rec["player"]].get(year_to_season(nxt + 1) or "")
+        if not later:
+            continue
+        ahead = {t.strip() for t in (later.get("team") or "").split(",") if t.strip()}
+        finishers = [t for t in here if t in ahead]
+        if len(finishers) != 1:
+            continue
+        last = finishers[0]
+        ordered = [t for t in here if t != last] + [last]
+        if ordered != here:
+            rec["team"] = ", ".join(ordered)
+            moved += 1
+    print(f"    Split seasons ordered by where he finished: {moved}")
+    return moved
+
+
+def is_split_record(record):
+    """Whether a season's salary is spread over more than one team.
+
+    The same test factoids.is_split_season applies, kept here so the build has
+    no import of the engine: a flagged season, or per-team amounts naming two.
+    """
+    if record.get("teams_split"):
+        return True
+    return len(record.get("team_salaries") or {}) > 1
+
+
+def combine_stats(stats_list):
+    """One season's stats, whole, however many teams played it.
+
+    A traded man has a row per team and no total row, and taking the first of
+    them described a 62-game season with 26 games of counting stats beside
+    full-season averages: CJ McCollum's 2021-22 read 631 points in 26 games at
+    22.1 a game. The totals are summed and the averages recomputed from the
+    sums, never averaged from the per-team averages.
+
+    A TOT row, if this sheet ever carries one, is the source's own total and is
+    used as given. It is checked against the summed team rows, and a
+    disagreement is printed rather than silently preferred either way: the
+    sheet knowing something this cannot derive is the whole reason to read it.
+
+    Percentages stay as the row gives them. This sheet repeats the full-season
+    FG%, 3P% and FT% in later columns, which is what the parser already reads,
+    and shooting splits cannot be rebuilt from a dict with no attempts in it.
+    """
+    rows = [s for s in stats_list if s]
+    if not rows:
+        return None
+    tot = [s for s in rows if s.get("team") == "TOT"]
+    team_rows = [s for s in rows if s.get("team") != "TOT"]
+    if not team_rows:
+        return tot[0]
+    if len(team_rows) == 1 and not tot:
+        return team_rows[0]
+
+    summed = dict(team_rows[0])
+    for field in STAT_TOTALS:
+        parts = [s.get(field) for s in team_rows if s.get(field) is not None]
+        summed[field] = sum(parts) if parts else None
+    games = summed.get("gp") or 0
+    for rate, total in STAT_RATES.items():
+        value = summed.get(total)
+        summed[rate] = round(value / games, 2) if games and value is not None else None
+    summed["team"] = ", ".join(
+        s["team"] for s in team_rows if s.get("team"))
+
+    if tot:
+        given = tot[0]
+        for field in STAT_TOTALS:
+            a, b = given.get(field), summed.get(field)
+            if a is not None and b is not None and a != b:
+                print("    WARNING: {} {} TOT {} is {} and the team rows add "
+                      "to {}".format(given.get("player_original"),
+                                     given.get("team"), field, a, b))
+        return given
+    return summed
+
+
 def process_salaries_csv(csv_data):
     """Parse historical salaries. Uses column positions (0=TEAM, 1=YEAR,
     2=PLAYER, 3=SALARY) because the header row has duplicate column names
@@ -1322,11 +1438,7 @@ def build_data():
 
         # Stats
         stats_list = stats_lookup.get(sk, [])
-        stats = None
-        if stats_list:
-            tot = [s for s in stats_list if s.get("team") == "TOT"]
-            nontot = [s for s in stats_list if s.get("team") != "TOT"]
-            stats = tot[0] if tot else (nontot[0] if nontot else stats_list[0])
+        stats = combine_stats(stats_list) if stats_list else None
 
         # Team: prefer CSV salary team, then stats team
         team = ps.get("team", "")
@@ -1444,6 +1556,14 @@ def build_data():
 
     # A completed season belongs to the team he played it for
     corrections = correct_past_season_teams(final_records, stats_lookup)
+    order_split_teams(final_records, stats_lookup)
+    # The report names the team string the record ended up with, so it is read
+    # back after the ordering pass rather than before it.
+    by_key = {(r["player"], r["season"]): r for r in final_records}
+    for row in corrections["applied"]:
+        rec = by_key.get((row["player"], row["season"]))
+        if rec is not None:
+            row["corrected_team"] = rec.get("team") or row["corrected_team"]
     if corrections["applied"]:
         all_teams_set = set()
         for rec in final_records:
@@ -1461,6 +1581,13 @@ def build_data():
         indices.sort(key=lambda i: final_records[i]["salary"], reverse=True)
         for rank, idx in enumerate(indices, 1):
             final_records[idx]["salary_rank_team"] = rank
+    # A split season has no single roster to rank on. Grouping on the whole
+    # TEAM string had been giving every one of them a roster of itself and so
+    # a rank of 1, which read as the best-paid man on a team that never paid
+    # him that. No rank is the honest answer, and the table prints "-".
+    for rec in final_records:
+        if is_split_record(rec):
+            rec["salary_rank_team"] = None
 
     # Sort reference lists
     seasons_sorted = sorted(all_seasons_set, key=lambda s: season_to_year(s) or 0, reverse=True)

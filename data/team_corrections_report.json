@@ -1,7 +1,7 @@
 {
   "corrections": [
     {
-      "corrected_team": "DAL, PHX",
+      "corrected_team": "PHX, DAL",
       "player": "A.C. Green",
       "season": "1996-97",
       "sheet_team": "DAL",
@@ -35,7 +35,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DEN, ORL",
+      "corrected_team": "ORL, DEN",
       "player": "Aaron Gordon",
       "season": "2020-21",
       "sheet_team": "DEN",
@@ -63,7 +63,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DET, POR",
+      "corrected_team": "POR, DET",
       "player": "Aaron McKie",
       "season": "1996-97",
       "sheet_team": "POR",
@@ -104,7 +104,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "MIL, TOR",
+      "corrected_team": "TOR, MIL",
       "player": "Acie Earl",
       "season": "1996-97",
       "sheet_team": "TOR",
@@ -146,7 +146,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "GSW, IND",
+      "corrected_team": "IND, GSW",
       "player": "Al Harrington",
       "season": "2006-07",
       "sheet_team": "GSW",
@@ -181,7 +181,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BOS, MIL",
+      "corrected_team": "MIL, BOS",
       "player": "Alaa Abdelnaby",
       "season": "1992-93",
       "sheet_team": "BOS",
@@ -272,7 +272,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DEN, PHI",
+      "corrected_team": "PHI, DEN",
       "player": "Allen Iverson",
       "season": "2006-07",
       "sheet_team": "DEN",
@@ -293,7 +293,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BOS, MIL",
+      "corrected_team": "MIL, BOS",
       "player": "Alton Lister",
       "season": "1995-96",
       "sheet_team": "BOS",
@@ -321,7 +321,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CLE, DET",
+      "corrected_team": "DET, CLE",
       "player": "Andre Drummond",
       "season": "2019-20",
       "sheet_team": "CLE",
@@ -403,21 +403,21 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "GSW, MIN",
+      "corrected_team": "MIN, GSW",
       "player": "Andrew Wiggins",
       "season": "2019-20",
       "sheet_team": "GSW",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "MIA, GSW",
+      "corrected_team": "GSW, MIA",
       "player": "Andrew Wiggins",
       "season": "2024-25",
       "sheet_team": "GSW",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "NYK, PHX",
+      "corrected_team": "PHX, NYK",
       "player": "Anfernee Hardaway",
       "season": "2003-04",
       "sheet_team": "PHX",
@@ -430,7 +430,7 @@
       "sheet_team": "PHI"
     },
     {
-      "corrected_team": "CLE, WAS",
+      "corrected_team": "WAS, CLE",
       "player": "Antawn Jamison",
       "season": "2009-10",
       "sheet_team": "CLE",
@@ -486,7 +486,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "ATL, ORL",
+      "corrected_team": "ORL, ATL",
       "player": "Anthony Johnson",
       "season": "1999-00",
       "sheet_team": "ORL",
@@ -500,7 +500,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "ATL, DAL",
+      "corrected_team": "DAL, ATL",
       "player": "Anthony Johnson",
       "season": "2006-07",
       "sheet_team": "ATL",
@@ -542,7 +542,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "MIN, NYK",
+      "corrected_team": "NYK, MIN",
       "player": "Anthony Randolph",
       "season": "2010-11",
       "sheet_team": "MIN",
@@ -556,7 +556,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DET, PHX",
+      "corrected_team": "PHX, DET",
       "player": "Anthony Tolliver",
       "season": "2014-15",
       "sheet_team": "DET",
@@ -591,7 +591,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHI, TOR",
+      "corrected_team": "TOR, CHI",
       "player": "Antonio Davis",
       "season": "2003-04",
       "sheet_team": "CHI",
@@ -659,14 +659,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "SAS, TOR",
+      "corrected_team": "TOR, SAS",
       "player": "Austin Daye",
       "season": "2013-14",
       "sheet_team": "SAS",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "LAC, NOP",
+      "corrected_team": "NOP, LAC",
       "player": "Austin Rivers",
       "season": "2014-15",
       "sheet_team": "LAC",
@@ -701,7 +701,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DAL, DEN",
+      "corrected_team": "DEN, DAL",
       "player": "Avery Johnson",
       "season": "2001-02",
       "sheet_team": "DEN",
@@ -722,14 +722,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "GSW, NOP",
+      "corrected_team": "NOP, GSW",
       "player": "Baron Davis",
       "season": "2004-05",
       "sheet_team": "NOP",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CLE, LAC",
+      "corrected_team": "LAC, CLE",
       "player": "Baron Davis",
       "season": "2010-11",
       "sheet_team": "CLE",
@@ -805,7 +805,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "GSW, HOU",
+      "corrected_team": "HOU, GSW",
       "player": "Bill Curley",
       "season": "1999-00",
       "sheet_team": "GSW",
@@ -826,7 +826,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "GSW, MIA",
+      "corrected_team": "MIA, GSW",
       "player": "Bimbo Coles",
       "season": "1995-96",
       "sheet_team": "MIA",
@@ -840,7 +840,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DET, LAC",
+      "corrected_team": "LAC, DET",
       "player": "Blake Griffin",
       "season": "2017-18",
       "sheet_team": "DET",
@@ -861,7 +861,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHI, SAC",
+      "corrected_team": "SAC, CHI",
       "player": "Bob Hansen",
       "season": "1991-92",
       "sheet_team": "CHI",
@@ -903,7 +903,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "MEM, SAC",
+      "corrected_team": "SAC, MEM",
       "player": "Bobby Hurley",
       "season": "1997-98",
       "sheet_team": "SAC",
@@ -964,14 +964,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "MIN, LAC",
+      "corrected_team": "LAC, MIN",
       "player": "Bones Hyland",
       "season": "2024-25",
       "sheet_team": "LAC",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "MEM, POR",
+      "corrected_team": "POR, MEM",
       "player": "Bonzi Wells",
       "season": "2003-04",
       "sheet_team": "MEM",
@@ -985,7 +985,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHA, PHX",
+      "corrected_team": "PHX, CHA",
       "player": "Boris Diaw",
       "season": "2008-09",
       "sheet_team": "CHA",
@@ -1006,7 +1006,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BKN, NOP",
+      "corrected_team": "NOP, BKN",
       "player": "Bostjan Nachbar",
       "season": "2005-06",
       "sheet_team": "NOP",
@@ -1027,7 +1027,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHI, SAC",
+      "corrected_team": "SAC, CHI",
       "player": "Brad Miller",
       "season": "2008-09",
       "sheet_team": "CHI",
@@ -1088,7 +1088,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CLE, HOU",
+      "corrected_team": "HOU, CLE",
       "player": "Brandon Knight",
       "season": "2018-19",
       "sheet_team": "CLE",
@@ -1108,7 +1108,7 @@
       "sheet_team": "GSW"
     },
     {
-      "corrected_team": "DAL, WAS",
+      "corrected_team": "WAS, DAL",
       "player": "Brendan Haywood",
       "season": "2009-10",
       "sheet_team": "DAL",
@@ -1143,7 +1143,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "HOU, ORL",
+      "corrected_team": "ORL, HOU",
       "player": "Brian Cook",
       "season": "2008-09",
       "sheet_team": "HOU",
@@ -1157,7 +1157,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BKN, ORL",
+      "corrected_team": "ORL, BKN",
       "player": "Brian Evans",
       "season": "1997-98",
       "sheet_team": "ORL",
@@ -1178,7 +1178,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHA, POR",
+      "corrected_team": "POR, CHA",
       "player": "Brian Roberts",
       "season": "2015-16",
       "sheet_team": "POR",
@@ -1247,7 +1247,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "HOU, MEM",
+      "corrected_team": "MEM, HOU",
       "player": "Bruno Caboclo",
       "season": "2019-20",
       "sheet_team": "HOU",
@@ -1261,7 +1261,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "ATL, HOU",
+      "corrected_team": "HOU, ATL",
       "player": "Bruno Fernando",
       "season": "2022-23",
       "sheet_team": "ATL",
@@ -1296,7 +1296,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "IND, SAC",
+      "corrected_team": "SAC, IND",
       "player": "Buddy Hield",
       "season": "2021-22",
       "sheet_team": "IND",
@@ -1316,7 +1316,7 @@
       "sheet_team": "CHI"
     },
     {
-      "corrected_team": "NOP, POR",
+      "corrected_team": "POR, NOP",
       "player": "CJ McCollum",
       "season": "2021-22",
       "sheet_team": "NOP",
@@ -1405,14 +1405,14 @@
       "sheet_team": "DEN"
     },
     {
-      "corrected_team": "BKN, PHX",
+      "corrected_team": "PHX, BKN",
       "player": "Cameron Johnson",
       "season": "2022-23",
       "sheet_team": "BKN",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHI, OKC",
+      "corrected_team": "OKC, CHI",
       "player": "Cameron Payne",
       "season": "2016-17",
       "sheet_team": "CHI",
@@ -1426,7 +1426,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CLE, IND",
+      "corrected_team": "IND, CLE",
       "player": "Caris LeVert",
       "season": "2021-22",
       "sheet_team": "CLE",
@@ -1453,7 +1453,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "NOP, SAC",
+      "corrected_team": "SAC, NOP",
       "player": "Carl Landry",
       "season": "2010-11",
       "sheet_team": "NOP",
@@ -1474,7 +1474,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DET, UTA",
+      "corrected_team": "UTA, DET",
       "player": "Carlos Arroyo",
       "season": "2004-05",
       "sheet_team": "UTA",
@@ -1495,7 +1495,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "POR, TOR",
+      "corrected_team": "TOR, POR",
       "player": "Carlos Rogers",
       "season": "1997-98",
       "sheet_team": "TOR",
@@ -1509,7 +1509,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DAL, WAS",
+      "corrected_team": "WAS, DAL",
       "player": "Caron Butler",
       "season": "2009-10",
       "sheet_team": "DAL",
@@ -1537,7 +1537,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DAL, PHX",
+      "corrected_team": "PHX, DAL",
       "player": "Cedric Ceballos",
       "season": "1997-98",
       "sheet_team": "PHX",
@@ -1558,7 +1558,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHI, CLE",
+      "corrected_team": "CLE, CHI",
       "player": "Cedric Simmons",
       "season": "2007-08",
       "sheet_team": "CHI",
@@ -1586,14 +1586,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CLE, ORL",
+      "corrected_team": "ORL, CLE",
       "player": "Channing Frye",
       "season": "2015-16",
       "sheet_team": "CLE",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CLE, LAL",
+      "corrected_team": "LAL, CLE",
       "player": "Channing Frye",
       "season": "2017-18",
       "sheet_team": "LAL",
@@ -1642,7 +1642,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DEN, DET",
+      "corrected_team": "DET, DEN",
       "player": "Chauncey Billups",
       "season": "2008-09",
       "sheet_team": "DEN",
@@ -1691,7 +1691,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BKN, WAS",
+      "corrected_team": "WAS, BKN",
       "player": "Chris Chiozza",
       "season": "2019-20",
       "sheet_team": "BKN",
@@ -1712,7 +1712,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BKN, DAL",
+      "corrected_team": "DAL, BKN",
       "player": "Chris Gatling",
       "season": "1996-97",
       "sheet_team": "DAL",
@@ -1733,7 +1733,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHI, TOR",
+      "corrected_team": "TOR, CHI",
       "player": "Chris Jefferies",
       "season": "2003-04",
       "sheet_team": "CHI",
@@ -1768,14 +1768,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "MIA, SAC",
+      "corrected_team": "SAC, MIA",
       "player": "Chris Silva",
       "season": "2020-21",
       "sheet_team": "SAC",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "PHI, SAC",
+      "corrected_team": "SAC, PHI",
       "player": "Chris Webber",
       "season": "2004-05",
       "sheet_team": "SAC",
@@ -1810,7 +1810,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "ATL, MIN",
+      "corrected_team": "MIN, ATL",
       "player": "Christian Laettner",
       "season": "1995-96",
       "sheet_team": "MIN",
@@ -1845,7 +1845,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "MEM, WAS",
+      "corrected_team": "WAS, MEM",
       "player": "Chucky Atkins",
       "season": "2005-06",
       "sheet_team": "WAS",
@@ -1887,21 +1887,21 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "HOU, NYK",
+      "corrected_team": "NYK, HOU",
       "player": "Clarence Weatherspoon",
       "season": "2003-04",
       "sheet_team": "HOU",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BKN, GSW",
+      "corrected_team": "GSW, BKN",
       "player": "Clifford Robinson",
       "season": "2004-05",
       "sheet_team": "GSW",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "HOU, POR",
+      "corrected_team": "POR, HOU",
       "player": "Clyde Drexler",
       "season": "1994-95",
       "sheet_team": "POR",
@@ -1962,7 +1962,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "HOU, MIN",
+      "corrected_team": "MIN, HOU",
       "player": "Corey Brewer",
       "season": "2014-15",
       "sheet_team": "HOU",
@@ -1990,7 +1990,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DET, TOR",
+      "corrected_team": "TOR, DET",
       "player": "Corliss Williamson",
       "season": "2000-01",
       "sheet_team": "TOR",
@@ -2011,7 +2011,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DET, SAC",
+      "corrected_team": "SAC, DET",
       "player": "Cory Joseph",
       "season": "2020-21",
       "sheet_team": "DET",
@@ -2046,7 +2046,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DAL, NYK",
+      "corrected_team": "NYK, DAL",
       "player": "Courtney Lee",
       "season": "2018-19",
       "sheet_team": "DAL",
@@ -2080,7 +2080,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "LAL, MIN",
+      "corrected_team": "MIN, LAL",
       "player": "D'Angelo Russell",
       "season": "2022-23",
       "sheet_team": "LAL",
@@ -2115,14 +2115,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "HOU, MIL",
+      "corrected_team": "MIL, HOU",
       "player": "DJ Augustin",
       "season": "2020-21",
       "sheet_team": "HOU",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHA, OKC",
+      "corrected_team": "OKC, CHA",
       "player": "DJ White",
       "season": "2010-11",
       "sheet_team": "CHA",
@@ -2157,7 +2157,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "MIL, OKC",
+      "corrected_team": "OKC, MIL",
       "player": "Dale Ellis",
       "season": "1990-91",
       "sheet_team": "MIL",
@@ -2185,7 +2185,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "POR, TOR",
+      "corrected_team": "TOR, POR",
       "player": "Damon Stoudamire",
       "season": "1997-98",
       "sheet_team": "TOR",
@@ -2227,14 +2227,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DAL, WAS",
+      "corrected_team": "WAS, DAL",
       "player": "Daniel Gafford",
       "season": "2023-24",
       "sheet_team": "DAL",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BOS, CHI",
+      "corrected_team": "CHI, BOS",
       "player": "Daniel Theis",
       "season": "2020-21",
       "sheet_team": "CHI",
@@ -2248,7 +2248,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DEN, NYK",
+      "corrected_team": "NYK, DEN",
       "player": "Danilo Gallinari",
       "season": "2010-11",
       "sheet_team": "DEN",
@@ -2332,7 +2332,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "MIN, NYK",
+      "corrected_team": "NYK, MIN",
       "player": "Darko Milicic",
       "season": "2009-10",
       "sheet_team": "MIN",
@@ -2346,7 +2346,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DAL, NOP",
+      "corrected_team": "NOP, DAL",
       "player": "Darrell Armstrong",
       "season": "2004-05",
       "sheet_team": "DAL",
@@ -2416,14 +2416,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BKN, CHI, GSW",
+      "corrected_team": "CHI, GSW, BKN",
       "player": "David Vaughn",
       "season": "1997-98",
       "sheet_team": "GSW",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "HOU, NOP",
+      "corrected_team": "NOP, HOU",
       "player": "David Wesley",
       "season": "2004-05",
       "sheet_team": "NOP",
@@ -2444,14 +2444,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DAL, WAS",
+      "corrected_team": "WAS, DAL",
       "player": "Davis Bertans",
       "season": "2021-22",
       "sheet_team": "DAL",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHA, OKC",
+      "corrected_team": "OKC, CHA",
       "player": "Davis Bertans",
       "season": "2023-24",
       "sheet_team": "CHA",
@@ -2492,7 +2492,7 @@
       "sheet_team": "DEN"
     },
     {
-      "corrected_team": "NOP, SAC",
+      "corrected_team": "SAC, NOP",
       "player": "DeMarcus Cousins",
       "season": "2016-17",
       "sheet_team": "NOP",
@@ -2513,21 +2513,21 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHA, DAL",
+      "corrected_team": "DAL, CHA",
       "player": "DeSagana Diop",
       "season": "2008-09",
       "sheet_team": "CHA",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "ORL, UTA",
+      "corrected_team": "UTA, ORL",
       "player": "DeShawn Stevenson",
       "season": "2003-04",
       "sheet_team": "UTA",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DAL, WAS",
+      "corrected_team": "WAS, DAL",
       "player": "DeShawn Stevenson",
       "season": "2009-10",
       "sheet_team": "DAL",
@@ -2575,14 +2575,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CLE, OKC",
+      "corrected_team": "OKC, CLE",
       "player": "Delonte West",
       "season": "2007-08",
       "sheet_team": "CLE",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHI, CLE",
+      "corrected_team": "CLE, CHI",
       "player": "Demetris Nichols",
       "season": "2007-08",
       "sheet_team": "CHI",
@@ -2610,7 +2610,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BKN, TOR",
+      "corrected_team": "TOR, BKN",
       "player": "Dennis Schroeder",
       "season": "2023-24",
       "sheet_team": "BKN",
@@ -2665,14 +2665,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BKN, UTA",
+      "corrected_team": "UTA, BKN",
       "player": "Deron Williams",
       "season": "2010-11",
       "sheet_team": "BKN",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHA, NYK",
+      "corrected_team": "NYK, CHA",
       "player": "Derrick Brown",
       "season": "2010-11",
       "sheet_team": "CHA",
@@ -2707,7 +2707,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BOS, SAS",
+      "corrected_team": "SAS, BOS",
       "player": "Derrick White",
       "season": "2021-22",
       "sheet_team": "BOS",
@@ -2721,7 +2721,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "MIL, OKC",
+      "corrected_team": "OKC, MIL",
       "player": "Desmond Mason",
       "season": "2002-03",
       "sheet_team": "OKC",
@@ -2755,7 +2755,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BKN, DAL",
+      "corrected_team": "DAL, BKN",
       "player": "Devin Harris",
       "season": "2007-08",
       "sheet_team": "BKN",
@@ -2769,7 +2769,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DAL, DEN",
+      "corrected_team": "DEN, DAL",
       "player": "Devin Harris",
       "season": "2017-18",
       "sheet_team": "DEN",
@@ -2909,7 +2909,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "GSW, MIN",
+      "corrected_team": "MIN, GSW",
       "player": "Donyell Marshall",
       "season": "1994-95",
       "sheet_team": "MIN",
@@ -2930,7 +2930,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BKN, DAL",
+      "corrected_team": "DAL, BKN",
       "player": "Dorian Finney-Smith",
       "season": "2022-23",
       "sheet_team": "BKN",
@@ -2964,7 +2964,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "ORL, SAC",
+      "corrected_team": "SAC, ORL",
       "player": "Doug Christie",
       "season": "2004-05",
       "sheet_team": "SAC",
@@ -3013,7 +3013,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BKN, POR",
+      "corrected_team": "POR, BKN",
       "player": "Drazen Petrovic",
       "season": "1990-91",
       "sheet_team": "BKN",
@@ -3047,7 +3047,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHI, CLE",
+      "corrected_team": "CLE, CHI",
       "player": "Drew Gooden",
       "season": "2007-08",
       "sheet_team": "CHI",
@@ -3122,7 +3122,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "ORL, PHX",
+      "corrected_team": "PHX, ORL",
       "player": "Earl Clark",
       "season": "2010-11",
       "sheet_team": "ORL",
@@ -3136,7 +3136,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "MEM, TOR",
+      "corrected_team": "TOR, MEM",
       "player": "Ed Davis",
       "season": "2012-13",
       "sheet_team": "MEM",
@@ -3171,28 +3171,28 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "OKC, PHX",
+      "corrected_team": "PHX, OKC",
       "player": "Eddie Johnson",
       "season": "1990-91",
       "sheet_team": "OKC",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "HOU, IND",
+      "corrected_team": "IND, HOU",
       "player": "Eddie Johnson",
       "season": "1996-97",
       "sheet_team": "IND",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHA, LAL",
+      "corrected_team": "LAL, CHA",
       "player": "Eddie Jones",
       "season": "1998-99",
       "sheet_team": "CHA",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DEN, GSW",
+      "corrected_team": "GSW, DEN",
       "player": "Eduardo Najera",
       "season": "2004-05",
       "sheet_team": "GSW",
@@ -3213,7 +3213,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHA, LAL",
+      "corrected_team": "LAL, CHA",
       "player": "Elden Campbell",
       "season": "1998-99",
       "sheet_team": "CHA",
@@ -3275,7 +3275,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BKN, MIL",
+      "corrected_team": "MIL, BKN",
       "player": "Elliot Perry",
       "season": "1998-99",
       "sheet_team": "BKN",
@@ -3296,14 +3296,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "OKC, UTA",
+      "corrected_team": "UTA, OKC",
       "player": "Enes Kanter",
       "season": "2014-15",
       "sheet_team": "OKC",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "MIL, PHX",
+      "corrected_team": "PHX, MIL",
       "player": "Eric Bledsoe",
       "season": "2017-18",
       "sheet_team": "MIL",
@@ -3317,14 +3317,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHA, SAC",
+      "corrected_team": "SAC, CHA",
       "player": "Eric Leckner",
       "season": "1990-91",
       "sheet_team": "CHA",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "OKC, UTA",
+      "corrected_team": "UTA, OKC",
       "player": "Eric Maynor",
       "season": "2009-10",
       "sheet_team": "OKC",
@@ -3338,14 +3338,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "PHI, WAS",
+      "corrected_team": "WAS, PHI",
       "player": "Eric Maynor",
       "season": "2013-14",
       "sheet_team": "PHI",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "MEM, MIL",
+      "corrected_team": "MIL, MEM",
       "player": "Eric Mobley",
       "season": "1995-96",
       "sheet_team": "MEM",
@@ -3359,7 +3359,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DET, PHI",
+      "corrected_team": "PHI, DET",
       "player": "Eric Montross",
       "season": "1997-98",
       "sheet_team": "PHI",
@@ -3450,14 +3450,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "MIN, WAS",
+      "corrected_team": "WAS, MIN",
       "player": "Felipe Lopez",
       "season": "2000-01",
       "sheet_team": "WAS",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "GSW, ORL",
+      "corrected_team": "ORL, GSW",
       "player": "Felton Spencer",
       "season": "1996-97",
       "sheet_team": "GSW",
@@ -3485,7 +3485,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "HOU, SAC",
+      "corrected_team": "SAC, HOU",
       "player": "Francisco Garcia",
       "season": "2012-13",
       "sheet_team": "HOU",
@@ -3527,7 +3527,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "ATL, HOU",
+      "corrected_team": "HOU, ATL",
       "player": "Garrison Mathews",
       "season": "2022-23",
       "sheet_team": "ATL",
@@ -3561,7 +3561,7 @@
       "sheet_team": "DET"
     },
     {
-      "corrected_team": "CHA, MIL",
+      "corrected_team": "MIL, CHA",
       "player": "Gary Neal",
       "season": "2013-14",
       "sheet_team": "CHA",
@@ -3582,7 +3582,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "GSW, POR",
+      "corrected_team": "POR, GSW",
       "player": "Gary Payton II",
       "season": "2022-23",
       "sheet_team": "GSW",
@@ -3617,7 +3617,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CLE, SAC",
+      "corrected_team": "SAC, CLE",
       "player": "George Hill",
       "season": "2017-18",
       "sheet_team": "CLE",
@@ -3701,7 +3701,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BKN, POR",
+      "corrected_team": "POR, BKN",
       "player": "Gerald Wallace",
       "season": "2011-12",
       "sheet_team": "POR",
@@ -3721,7 +3721,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "ORL, WAS",
+      "corrected_team": "WAS, ORL",
       "player": "Gilbert Arenas",
       "season": "2010-11",
       "sheet_team": "ORL",
@@ -3735,14 +3735,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "HOU, PHX",
+      "corrected_team": "PHX, HOU",
       "player": "Goran Dragic",
       "season": "2010-11",
       "sheet_team": "HOU",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "MIA, PHX",
+      "corrected_team": "PHX, MIA",
       "player": "Goran Dragic",
       "season": "2014-15",
       "sheet_team": "MIA",
@@ -3777,7 +3777,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "MEM, MIN",
+      "corrected_team": "MIN, MEM",
       "player": "Gorgui Dieng",
       "season": "2019-20",
       "sheet_team": "MEM",
@@ -3797,14 +3797,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "ATL, MIA",
+      "corrected_team": "MIA, ATL",
       "player": "Grant Long",
       "season": "1994-95",
       "sheet_team": "ATL",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHA, DAL",
+      "corrected_team": "DAL, CHA",
       "player": "Grant Williams",
       "season": "2023-24",
       "sheet_team": "CHA",
@@ -3817,21 +3817,21 @@
       "sheet_team": "CHA"
     },
     {
-      "corrected_team": "BKN, DEN, MIL",
+      "corrected_team": "BKN, MIL, DEN",
       "player": "Greg Anderson",
       "season": "1990-91",
       "sheet_team": "DEN",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHI, MIL",
+      "corrected_team": "MIL, CHI",
       "player": "Greg Anthony",
       "season": "2001-02",
       "sheet_team": "CHI",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "ATL, WAS",
+      "corrected_team": "WAS, ATL",
       "player": "Greg Foster",
       "season": "1992-93",
       "sheet_team": "WAS",
@@ -3887,7 +3887,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DET, OKC",
+      "corrected_team": "OKC, DET",
       "player": "Hamidou Diallo",
       "season": "2020-21",
       "sheet_team": "DET",
@@ -3907,7 +3907,7 @@
       "sheet_team": "UTA"
     },
     {
-      "corrected_team": "HOU, MEM",
+      "corrected_team": "MEM, HOU",
       "player": "Hasheem Thabeet",
       "season": "2010-11",
       "sheet_team": "HOU",
@@ -3942,14 +3942,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "NYK, TOR",
+      "corrected_team": "TOR, NYK",
       "player": "Herb Williams",
       "season": "1995-96",
       "sheet_team": "NYK",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "ORL, PHX",
+      "corrected_team": "PHX, ORL",
       "player": "Hidayet Turkoglu",
       "season": "2010-11",
       "sheet_team": "ORL",
@@ -4019,7 +4019,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CLE, NYK",
+      "corrected_team": "NYK, CLE",
       "player": "Iman Shumpert",
       "season": "2014-15",
       "sheet_team": "CLE",
@@ -4086,7 +4086,7 @@
       "sheet_team": "MEM"
     },
     {
-      "corrected_team": "BOS, PHX",
+      "corrected_team": "PHX, BOS",
       "player": "Isaiah Thomas",
       "season": "2014-15",
       "sheet_team": "BOS",
@@ -4128,7 +4128,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "LAC, LAL",
+      "corrected_team": "LAL, LAC",
       "player": "Ivica Zubac",
       "season": "2018-19",
       "sheet_team": "LAC",
@@ -4156,7 +4156,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "POR, SAC",
+      "corrected_team": "SAC, POR",
       "player": "JJ Hickson",
       "season": "2011-12",
       "sheet_team": "SAC",
@@ -4191,7 +4191,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CLE, NYK",
+      "corrected_team": "NYK, CLE",
       "player": "JR Smith",
       "season": "2014-15",
       "sheet_team": "CLE",
@@ -4211,14 +4211,14 @@
       "sheet_team": "POR"
     },
     {
-      "corrected_team": "LAC, MEM",
+      "corrected_team": "MEM, LAC",
       "player": "JaMychal Green",
       "season": "2018-19",
       "sheet_team": "LAC",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DEN, WAS",
+      "corrected_team": "WAS, DEN",
       "player": "JaVale McGee",
       "season": "2011-12",
       "sheet_team": "WAS",
@@ -4260,7 +4260,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "NOP, PHX",
+      "corrected_team": "PHX, NOP",
       "player": "Jackson Vroman",
       "season": "2004-05",
       "sheet_team": "PHX",
@@ -4287,7 +4287,7 @@
       "sheet_team": "LAL"
     },
     {
-      "corrected_team": "BOS, PHI",
+      "corrected_team": "PHI, BOS",
       "player": "Jaden Springer",
       "season": "2023-24",
       "sheet_team": "BOS",
@@ -4301,7 +4301,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BOS, DAL",
+      "corrected_team": "DAL, BOS",
       "player": "Jae Crowder",
       "season": "2014-15",
       "sheet_team": "BOS",
@@ -4383,7 +4383,7 @@
       "sheet_team": "LAC"
     },
     {
-      "corrected_team": "CHI, IND",
+      "corrected_team": "IND, CHI",
       "player": "Jalen Rose",
       "season": "2001-02",
       "sheet_team": "IND",
@@ -4397,14 +4397,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "NYK, TOR",
+      "corrected_team": "TOR, NYK",
       "player": "Jalen Rose",
       "season": "2005-06",
       "sheet_team": "TOR",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "IND, PHX",
+      "corrected_team": "PHX, IND",
       "player": "Jalen Smith",
       "season": "2021-22",
       "sheet_team": "IND",
@@ -4473,14 +4473,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "ORL, PHI",
+      "corrected_team": "PHI, ORL",
       "player": "James Ennis",
       "season": "2019-20",
       "sheet_team": "ORL",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BKN, HOU",
+      "corrected_team": "HOU, BKN",
       "player": "James Harden",
       "season": "2020-21",
       "sheet_team": "BKN",
@@ -4543,14 +4543,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DET, GSW",
+      "corrected_team": "GSW, DET",
       "player": "James Wiseman",
       "season": "2022-23",
       "sheet_team": "DET",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BKN, MIL",
+      "corrected_team": "MIL, BKN",
       "player": "Jamie Feick",
       "season": "1998-99",
       "sheet_team": "BKN",
@@ -4571,7 +4571,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHI, LAL, TOR",
+      "corrected_team": "LAL, TOR, CHI",
       "player": "Jannero Pargo",
       "season": "2003-04",
       "sheet_team": "LAL",
@@ -4620,7 +4620,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "LAL, UTA",
+      "corrected_team": "UTA, LAL",
       "player": "Jarred Vanderbilt",
       "season": "2022-23",
       "sheet_team": "LAL",
@@ -4634,7 +4634,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "NOP, TOR",
+      "corrected_team": "TOR, NOP",
       "player": "Jarrett Jack",
       "season": "2010-11",
       "sheet_team": "NOP",
@@ -4690,7 +4690,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "ORL, PHX",
+      "corrected_team": "PHX, ORL",
       "player": "Jason Richardson",
       "season": "2010-11",
       "sheet_team": "ORL",
@@ -4800,7 +4800,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "PHI, UTA",
+      "corrected_team": "UTA, PHI",
       "player": "Jeff Malone",
       "season": "1993-94",
       "sheet_team": "UTA",
@@ -4814,7 +4814,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CLE, POR",
+      "corrected_team": "POR, CLE",
       "player": "Jeff McInnis",
       "season": "2003-04",
       "sheet_team": "POR",
@@ -4835,7 +4835,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "OKC, PHI",
+      "corrected_team": "PHI, OKC",
       "player": "Jerami Grant",
       "season": "2016-17",
       "sheet_team": "OKC",
@@ -4876,7 +4876,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "MIA, TOR",
+      "corrected_team": "TOR, MIA",
       "player": "Jermaine O'Neal",
       "season": "2008-09",
       "sheet_team": "MIA",
@@ -4932,7 +4932,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DET, PHI",
+      "corrected_team": "PHI, DET",
       "player": "Jerry Stackhouse",
       "season": "1997-98",
       "sheet_team": "PHI",
@@ -5127,7 +5127,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DEN, OKC",
+      "corrected_team": "OKC, DEN",
       "player": "Johan Petro",
       "season": "2008-09",
       "sheet_team": "DEN",
@@ -5168,7 +5168,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHI, SAC",
+      "corrected_team": "SAC, CHI",
       "player": "John Salmons",
       "season": "2008-09",
       "sheet_team": "CHI",
@@ -5238,14 +5238,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BOS, DET",
+      "corrected_team": "DET, BOS",
       "player": "Jonas Jerebko",
       "season": "2014-15",
       "sheet_team": "BOS",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "MEM, TOR",
+      "corrected_team": "TOR, MEM",
       "player": "Jonas Valanciunas",
       "season": "2018-19",
       "sheet_team": "MEM",
@@ -5285,7 +5285,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CLE, LAL",
+      "corrected_team": "LAL, CLE",
       "player": "Jordan Clarkson",
       "season": "2017-18",
       "sheet_team": "CLE",
@@ -5306,7 +5306,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BOS, WAS",
+      "corrected_team": "WAS, BOS",
       "player": "Jordan Crawford",
       "season": "2012-13",
       "sheet_team": "BOS",
@@ -5333,7 +5333,7 @@
       "sheet_team": "MEM"
     },
     {
-      "corrected_team": "HOU, NYK",
+      "corrected_team": "NYK, HOU",
       "player": "Jordan Hill",
       "season": "2009-10",
       "sheet_team": "HOU",
@@ -5361,7 +5361,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "IND, MIL",
+      "corrected_team": "MIL, IND",
       "player": "Jordan Nwora",
       "season": "2022-23",
       "sheet_team": "IND",
@@ -5395,7 +5395,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "NYK, POR",
+      "corrected_team": "POR, NYK",
       "player": "Josh Hart",
       "season": "2022-23",
       "sheet_team": "NYK",
@@ -5416,7 +5416,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHA, ORL",
+      "corrected_team": "ORL, CHA",
       "player": "Josh McRoberts",
       "season": "2012-13",
       "sheet_team": "CHA",
@@ -5492,7 +5492,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "ORL, PHX",
+      "corrected_team": "PHX, ORL",
       "player": "Jud Buechler",
       "season": "2001-02",
       "sheet_team": "ORL",
@@ -5553,7 +5553,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DAL, SAC",
+      "corrected_team": "SAC, DAL",
       "player": "Justin Jackson",
       "season": "2018-19",
       "sheet_team": "DAL",
@@ -5595,7 +5595,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DAL, WAS",
+      "corrected_team": "WAS, DAL",
       "player": "Juwan Howard",
       "season": "2000-01",
       "sheet_team": "WAS",
@@ -5623,7 +5623,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "HOU, PHI",
+      "corrected_team": "PHI, HOU",
       "player": "KJ McDaniels",
       "season": "2014-15",
       "sheet_team": "HOU",
@@ -5650,7 +5650,7 @@
       "sheet_team": "MIL"
     },
     {
-      "corrected_team": "CHA, LAL",
+      "corrected_team": "LAL, CHA",
       "player": "Kareem Rush",
       "season": "2004-05",
       "sheet_team": "CHA",
@@ -5711,14 +5711,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "MIL, NYK",
+      "corrected_team": "NYK, MIL",
       "player": "Keith Van Horn",
       "season": "2003-04",
       "sheet_team": "NYK",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DAL, MIL",
+      "corrected_team": "MIL, DAL",
       "player": "Keith Van Horn",
       "season": "2004-05",
       "sheet_team": "MIL",
@@ -5738,7 +5738,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "TOR, UTA",
+      "corrected_team": "UTA, TOR",
       "player": "Kelly Olynyk",
       "season": "2023-24",
       "sheet_team": "TOR",
@@ -5752,7 +5752,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "PHX, WAS",
+      "corrected_team": "WAS, PHX",
       "player": "Kelly Oubre",
       "season": "2018-19",
       "sheet_team": "PHX",
@@ -5772,7 +5772,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BKN, CHA",
+      "corrected_team": "CHA, BKN",
       "player": "Kendall Gill",
       "season": "1995-96",
       "sheet_team": "CHA",
@@ -5793,7 +5793,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "HOU, NYK",
+      "corrected_team": "NYK, HOU",
       "player": "Kennard Winchester",
       "season": "1991-92",
       "sheet_team": "NYK",
@@ -5807,7 +5807,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BOS, POR",
+      "corrected_team": "POR, BOS",
       "player": "Kenny Anderson",
       "season": "1997-98",
       "sheet_team": "POR",
@@ -5959,7 +5959,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "HOU, SAC",
+      "corrected_team": "SAC, HOU",
       "player": "Kevin Martin",
       "season": "2009-10",
       "sheet_team": "HOU",
@@ -6021,7 +6021,7 @@
       "sheet_team": "LAL"
     },
     {
-      "corrected_team": "BKN, CHA",
+      "corrected_team": "CHA, BKN",
       "player": "Khalid Reeves",
       "season": "1995-96",
       "sheet_team": "CHA",
@@ -6055,7 +6055,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "ATL, WAS",
+      "corrected_team": "WAS, ATL",
       "player": "Kirk Hinrich",
       "season": "2010-11",
       "sheet_team": "ATL",
@@ -6089,14 +6089,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DEN, MIN",
+      "corrected_team": "MIN, DEN",
       "player": "Kosta Koufos",
       "season": "2010-11",
       "sheet_team": "DEN",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BKN, DAL",
+      "corrected_team": "DAL, BKN",
       "player": "Kris Humphries",
       "season": "2009-10",
       "sheet_team": "BKN",
@@ -6165,14 +6165,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "MIL, WAS",
+      "corrected_team": "WAS, MIL",
       "player": "Kyle Kuzma",
       "season": "2024-25",
       "sheet_team": "WAS",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "HOU, MEM",
+      "corrected_team": "MEM, HOU",
       "player": "Kyle Lowry",
       "season": "2008-09",
       "sheet_team": "HOU",
@@ -6220,14 +6220,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "NYK, OKC",
+      "corrected_team": "OKC, NYK",
       "player": "Lance Thomas",
       "season": "2014-15",
       "sheet_team": "NYK",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "LAC, PHI",
+      "corrected_team": "PHI, LAC",
       "player": "Landry Shamet",
       "season": "2018-19",
       "sheet_team": "LAC",
@@ -6248,14 +6248,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "GSW, PHI",
+      "corrected_team": "PHI, GSW",
       "player": "Larry Hughes",
       "season": "1999-00",
       "sheet_team": "GSW",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHI, CLE",
+      "corrected_team": "CLE, CHI",
       "player": "Larry Hughes",
       "season": "2007-08",
       "sheet_team": "CHI",
@@ -6269,14 +6269,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CLE, LAL",
+      "corrected_team": "LAL, CLE",
       "player": "Larry Nance Jr",
       "season": "2017-18",
       "sheet_team": "CLE",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "NOP, POR",
+      "corrected_team": "POR, NOP",
       "player": "Larry Nance Jr",
       "season": "2021-22",
       "sheet_team": "NOP",
@@ -6303,7 +6303,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "IND, PHI",
+      "corrected_team": "PHI, IND",
       "player": "Lavoy Allen",
       "season": "2013-14",
       "sheet_team": "IND",
@@ -6407,7 +6407,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BOS, CHA, ORL",
+      "corrected_team": "CHA, ORL, BOS",
       "player": "Lorenzo Williams",
       "season": "1992-93",
       "sheet_team": "CHA",
@@ -6428,7 +6428,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "ATL, LAC",
+      "corrected_team": "LAC, ATL",
       "player": "Louis Williams",
       "season": "2020-21",
       "sheet_team": "ATL",
@@ -6442,7 +6442,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHI, MIN",
+      "corrected_team": "MIN, CHI",
       "player": "Luc Longley",
       "season": "1993-94",
       "sheet_team": "MIN",
@@ -6469,7 +6469,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "LAL, DAL",
+      "corrected_team": "DAL, LAL",
       "player": "Luka Doncic",
       "season": "2024-25",
       "sheet_team": "DAL",
@@ -6503,7 +6503,7 @@
       "sheet_team": "PHX"
     },
     {
-      "corrected_team": "BOS, CHI",
+      "corrected_team": "CHI, BOS",
       "player": "Luke Kornet",
       "season": "2020-21",
       "sheet_team": "BOS",
@@ -6517,7 +6517,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CLE, LAL",
+      "corrected_team": "LAL, CLE",
       "player": "Luke Walton",
       "season": "2011-12",
       "sheet_team": "LAL",
@@ -6538,7 +6538,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "NOP, PHX",
+      "corrected_team": "PHX, NOP",
       "player": "Maciej Lampe",
       "season": "2004-05",
       "sheet_team": "PHX",
@@ -6601,7 +6601,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "NYK, SAS",
+      "corrected_team": "SAS, NYK",
       "player": "Malik Rose",
       "season": "2004-05",
       "sheet_team": "SAS",
@@ -6671,7 +6671,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "MIA, PHX",
+      "corrected_team": "PHX, MIA",
       "player": "Marcus Banks",
       "season": "2007-08",
       "sheet_team": "MIA",
@@ -6727,7 +6727,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "LAC, NYK",
+      "corrected_team": "NYK, LAC",
       "player": "Marcus Morris",
       "season": "2019-20",
       "sheet_team": "LAC",
@@ -6740,7 +6740,7 @@
       "sheet_team": "DAL"
     },
     {
-      "corrected_team": "WAS, MEM",
+      "corrected_team": "MEM, WAS",
       "player": "Marcus Smart",
       "season": "2024-25",
       "sheet_team": "MEM",
@@ -6768,7 +6768,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "LAC, NYK",
+      "corrected_team": "NYK, LAC",
       "player": "Mardy Collins",
       "season": "2008-09",
       "sheet_team": "LAC",
@@ -6782,7 +6782,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "GSW, PHI",
+      "corrected_team": "PHI, GSW",
       "player": "Mario Elie",
       "season": "1990-91",
       "sheet_team": "GSW",
@@ -6796,7 +6796,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BOS, DEN",
+      "corrected_team": "DEN, BOS",
       "player": "Mark Blount",
       "season": "2002-03",
       "sheet_team": "DEN",
@@ -6831,7 +6831,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "NYK, TOR",
+      "corrected_team": "TOR, NYK",
       "player": "Mark Jackson",
       "season": "2000-01",
       "sheet_team": "TOR",
@@ -6915,14 +6915,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DAL, MIA",
+      "corrected_team": "MIA, DAL",
       "player": "Martin Muursepp",
       "season": "1996-97",
       "sheet_team": "MIA",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DET, SAC",
+      "corrected_team": "SAC, DET",
       "player": "Marvin Bagley",
       "season": "2021-22",
       "sheet_team": "DET",
@@ -6956,7 +6956,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DEN, POR",
+      "corrected_team": "POR, DEN",
       "player": "Mason Plumlee",
       "season": "2016-17",
       "sheet_team": "DEN",
@@ -7011,14 +7011,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CLE, MIL",
+      "corrected_team": "MIL, CLE",
       "player": "Matthew Dellavedova",
       "season": "2018-19",
       "sheet_team": "CLE",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BKN, DAL",
+      "corrected_team": "DAL, BKN",
       "player": "Maurice Ager",
       "season": "2007-08",
       "sheet_team": "BKN",
@@ -7067,7 +7067,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BKN, LAL",
+      "corrected_team": "LAL, BKN",
       "player": "Maxwell Lewis",
       "season": "2024-25",
       "sheet_team": "BKN",
@@ -7108,14 +7108,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "ORL, PHI, SAC",
+      "corrected_team": "ORL, SAC, PHI",
       "player": "Michael Bradley",
       "season": "2004-05",
       "sheet_team": "ORL",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "MIL, PHI",
+      "corrected_team": "PHI, MIL",
       "player": "Michael Carter-Williams",
       "season": "2014-15",
       "sheet_team": "MIL",
@@ -7129,7 +7129,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DAL, PHX",
+      "corrected_team": "PHX, DAL",
       "player": "Michael Finley",
       "season": "1996-97",
       "sheet_team": "DAL",
@@ -7150,21 +7150,21 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BOS, MIN",
+      "corrected_team": "MIN, BOS",
       "player": "Michael Olowokandi",
       "season": "2005-06",
       "sheet_team": "MIN",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "MEM, SAC",
+      "corrected_team": "SAC, MEM",
       "player": "Michael Smith (1972)",
       "season": "1997-98",
       "sheet_team": "SAC",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BOS, CLE",
+      "corrected_team": "CLE, BOS",
       "player": "Michael Stewart",
       "season": "2003-04",
       "sheet_team": "BOS",
@@ -7185,14 +7185,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BKN, PHX",
+      "corrected_team": "PHX, BKN",
       "player": "Mikal Bridges",
       "season": "2022-23",
       "sheet_team": "BKN",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "ATL, SAC",
+      "corrected_team": "SAC, ATL",
       "player": "Mike Bibby",
       "season": "2007-08",
       "sheet_team": "ATL",
@@ -7206,7 +7206,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "MIN, UTA",
+      "corrected_team": "UTA, MIN",
       "player": "Mike Conley",
       "season": "2022-23",
       "sheet_team": "MIN",
@@ -7220,14 +7220,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "ATL, CLE",
+      "corrected_team": "CLE, ATL",
       "player": "Mike Dunleavy",
       "season": "2016-17",
       "sheet_team": "ATL",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHA, PHI",
+      "corrected_team": "PHI, CHA",
       "player": "Mike Gminski",
       "season": "1990-91",
       "sheet_team": "CHA",
@@ -7276,7 +7276,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "MEM, ORL",
+      "corrected_team": "ORL, MEM",
       "player": "Mike Miller",
       "season": "2002-03",
       "sheet_team": "ORL",
@@ -7359,7 +7359,7 @@
       "sheet_team": "PHX"
     },
     {
-      "corrected_team": "MIL, PHX",
+      "corrected_team": "PHX, MIL",
       "player": "Miles Plumlee",
       "season": "2014-15",
       "sheet_team": "MIL",
@@ -7463,7 +7463,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "HOU, NYK",
+      "corrected_team": "NYK, HOU",
       "player": "Moochie Norris",
       "season": "2004-05",
       "sheet_team": "NYK",
@@ -7483,7 +7483,7 @@
       "sheet_team": "BKN"
     },
     {
-      "corrected_team": "ATL, ORL, SAS",
+      "corrected_team": "ORL, SAS, ATL",
       "player": "Morlon Wiley",
       "season": "1991-92",
       "sheet_team": "SAS",
@@ -7525,7 +7525,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BOS, NYK",
+      "corrected_team": "NYK, BOS",
       "player": "Nate Robinson",
       "season": "2009-10",
       "sheet_team": "BOS",
@@ -7545,7 +7545,7 @@
       "sheet_team": "CHA"
     },
     {
-      "corrected_team": "ATL, PHI",
+      "corrected_team": "PHI, ATL",
       "player": "Nazr Mohammed",
       "season": "2000-01",
       "sheet_team": "PHI",
@@ -7566,7 +7566,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHA, DET",
+      "corrected_team": "DET, CHA",
       "player": "Nazr Mohammed",
       "season": "2007-08",
       "sheet_team": "CHA",
@@ -7615,7 +7615,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DAL, PHI",
+      "corrected_team": "PHI, DAL",
       "player": "Nerlens Noel",
       "season": "2016-17",
       "sheet_team": "DAL",
@@ -7642,7 +7642,7 @@
       "sheet_team": "MIA"
     },
     {
-      "corrected_team": "DAL, DEN",
+      "corrected_team": "DEN, DAL",
       "player": "Nick Van Exel",
       "season": "2001-02",
       "sheet_team": "DEN",
@@ -7663,14 +7663,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "MIN, UTA",
+      "corrected_team": "UTA, MIN",
       "player": "Nickeil Alexander-Walker",
       "season": "2022-23",
       "sheet_team": "MIN",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "LAC, PHI",
+      "corrected_team": "PHI, LAC",
       "player": "Nicolas Batum",
       "season": "2023-24",
       "sheet_team": "PHI",
@@ -7711,7 +7711,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHI, ORL",
+      "corrected_team": "ORL, CHI",
       "player": "Nikola Vucevic",
       "season": "2020-21",
       "sheet_team": "CHI",
@@ -7759,14 +7759,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "POR, TOR",
+      "corrected_team": "TOR, POR",
       "player": "Norman Powell",
       "season": "2020-21",
       "sheet_team": "POR",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "LAC, POR",
+      "corrected_team": "POR, LAC",
       "player": "Norman Powell",
       "season": "2021-22",
       "sheet_team": "LAC",
@@ -7786,7 +7786,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "NYK, TOR",
+      "corrected_team": "TOR, NYK",
       "player": "OG Anunoby",
       "season": "2023-24",
       "sheet_team": "NYK",
@@ -7800,7 +7800,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "TOR, UTA",
+      "corrected_team": "UTA, TOR",
       "player": "Ochai Agbaji",
       "season": "2023-24",
       "sheet_team": "TOR",
@@ -7813,7 +7813,7 @@
       "sheet_team": "NYK"
     },
     {
-      "corrected_team": "LAC, OKC",
+      "corrected_team": "OKC, LAC",
       "player": "Olden Polynice",
       "season": "1990-91",
       "sheet_team": "LAC",
@@ -7834,7 +7834,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHI, NOP",
+      "corrected_team": "NOP, CHI",
       "player": "Omer Asik",
       "season": "2017-18",
       "sheet_team": "CHI",
@@ -7889,7 +7889,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHI, WAS",
+      "corrected_team": "WAS, CHI",
       "player": "Otto Porter",
       "season": "2018-19",
       "sheet_team": "CHI",
@@ -7924,7 +7924,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "LAC, PHI",
+      "corrected_team": "PHI, LAC",
       "player": "PJ Tucker",
       "season": "2023-24",
       "sheet_team": "LAC",
@@ -7945,7 +7945,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "IND, TOR",
+      "corrected_team": "TOR, IND",
       "player": "Pascal Siakam",
       "season": "2023-24",
       "sheet_team": "IND",
@@ -7994,7 +7994,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "LAL, MEM",
+      "corrected_team": "MEM, LAL",
       "player": "Pau Gasol",
       "season": "2007-08",
       "sheet_team": "LAL",
@@ -8007,7 +8007,7 @@
       "sheet_team": "BOS"
     },
     {
-      "corrected_team": "MIL, MIN",
+      "corrected_team": "MIN, MIL",
       "player": "Paul Grant",
       "season": "1998-99",
       "sheet_team": "MIL",
@@ -8076,7 +8076,7 @@
       "sheet_team": "CLE"
     },
     {
-      "corrected_team": "NYK, TOR",
+      "corrected_team": "TOR, NYK",
       "player": "Precious Achiuwa",
       "season": "2023-24",
       "sheet_team": "NYK",
@@ -8111,7 +8111,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "PHI, DAL",
+      "corrected_team": "DAL, PHI",
       "player": "Quentin Grimes",
       "season": "2024-25",
       "sheet_team": "DAL",
@@ -8172,7 +8172,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DAL, DEN",
+      "corrected_team": "DEN, DAL",
       "player": "Raef LaFrentz",
       "season": "2001-02",
       "sheet_team": "DEN",
@@ -8186,7 +8186,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHA, PHX",
+      "corrected_team": "PHX, CHA",
       "player": "Raja Bell",
       "season": "2008-09",
       "sheet_team": "CHA",
@@ -8235,7 +8235,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DET, POR",
+      "corrected_team": "POR, DET",
       "player": "Randolph Childress",
       "season": "1996-97",
       "sheet_team": "POR",
@@ -8263,7 +8263,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "ATL, DET, POR",
+      "corrected_team": "ATL, POR, DET",
       "player": "Rasheed Wallace",
       "season": "2003-04",
       "sheet_team": "POR",
@@ -8319,7 +8319,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DEN, OKC",
+      "corrected_team": "OKC, DEN",
       "player": "Reggie Evans",
       "season": "2005-06",
       "sheet_team": "OKC",
@@ -8333,7 +8333,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DET, OKC",
+      "corrected_team": "OKC, DET",
       "player": "Reggie Jackson",
       "season": "2014-15",
       "sheet_team": "DET",
@@ -8347,7 +8347,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "MIN, POR",
+      "corrected_team": "POR, MIN",
       "player": "Reggie Jordan",
       "season": "1996-97",
       "sheet_team": "POR",
@@ -8403,7 +8403,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "GSW, SAS",
+      "corrected_team": "SAS, GSW",
       "player": "Richard Jefferson",
       "season": "2011-12",
       "sheet_team": "SAS",
@@ -8438,7 +8438,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BOS, CLE",
+      "corrected_team": "CLE, BOS",
       "player": "Ricky Davis",
       "season": "2003-04",
       "sheet_team": "BOS",
@@ -8473,7 +8473,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "MIN, PHI",
+      "corrected_team": "PHI, MIN",
       "player": "Robert Covington",
       "season": "2018-19",
       "sheet_team": "MIN",
@@ -8487,7 +8487,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "LAC, POR",
+      "corrected_team": "POR, LAC",
       "player": "Robert Covington",
       "season": "2021-22",
       "sheet_team": "LAC",
@@ -8501,7 +8501,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "LAL, PHX",
+      "corrected_team": "PHX, LAL",
       "player": "Robert Horry",
       "season": "1996-97",
       "sheet_team": "PHX",
@@ -8536,7 +8536,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CLE, UTA",
+      "corrected_team": "UTA, CLE",
       "player": "Rodney Hood",
       "season": "2017-18",
       "sheet_team": "CLE",
@@ -8683,7 +8683,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BKN, ORL",
+      "corrected_team": "ORL, BKN",
       "player": "Rony Seikaly",
       "season": "1997-98",
       "sheet_team": "ORL",
@@ -8759,14 +8759,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "SAC, TOR",
+      "corrected_team": "TOR, SAC",
       "player": "Rudy Gay",
       "season": "2013-14",
       "sheet_team": "SAC",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "LAL, WAS",
+      "corrected_team": "WAS, LAL",
       "player": "Rui Hachimura",
       "season": "2022-23",
       "sheet_team": "LAL",
@@ -8793,7 +8793,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "MEM, NOP",
+      "corrected_team": "NOP, MEM",
       "player": "Russ Smith",
       "season": "2014-15",
       "sheet_team": "MEM",
@@ -8828,14 +8828,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "MEM, ORL",
+      "corrected_team": "ORL, MEM",
       "player": "Ryan Humphrey",
       "season": "2002-03",
       "sheet_team": "ORL",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "ATL, DET",
+      "corrected_team": "DET, ATL",
       "player": "Saddiq Bey",
       "season": "2022-23",
       "sheet_team": "ATL",
@@ -8849,7 +8849,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BKN, DAL, PHX",
+      "corrected_team": "DAL, PHX, BKN",
       "player": "Sam Cassell",
       "season": "1996-97",
       "sheet_team": "DAL",
@@ -8931,7 +8931,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DAL, HOU",
+      "corrected_team": "HOU, DAL",
       "player": "Scott Brooks",
       "season": "1994-95",
       "sheet_team": "HOU",
@@ -8945,7 +8945,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "MIL, PHI",
+      "corrected_team": "PHI, MIL",
       "player": "Scott Williams",
       "season": "1998-99",
       "sheet_team": "MIL",
@@ -9050,14 +9050,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BKN, PHI",
+      "corrected_team": "PHI, BKN",
       "player": "Seth Curry",
       "season": "2021-22",
       "sheet_team": "BKN",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHA, DAL",
+      "corrected_team": "DAL, CHA",
       "player": "Seth Curry",
       "season": "2023-24",
       "sheet_team": "CHA",
@@ -9141,7 +9141,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BKN, PHI",
+      "corrected_team": "PHI, BKN",
       "player": "Shawn Bradley",
       "season": "1995-96",
       "sheet_team": "BKN",
@@ -9155,7 +9155,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "MIA, PHX",
+      "corrected_team": "PHX, MIA",
       "player": "Shawn Marion",
       "season": "2007-08",
       "sheet_team": "MIA",
@@ -9211,7 +9211,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BOS, MIA",
+      "corrected_team": "MIA, BOS",
       "player": "Sherman Douglas",
       "season": "1991-92",
       "sheet_team": "MIA",
@@ -9232,14 +9232,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "POR, SAS",
+      "corrected_team": "SAS, POR",
       "player": "Sidy Cissoko",
       "season": "2024-25",
       "sheet_team": "SAS",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DET, UTA",
+      "corrected_team": "UTA, DET",
       "player": "Simone Fontecchio",
       "season": "2023-24",
       "sheet_team": "DET",
@@ -9288,7 +9288,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DAL, WAS",
+      "corrected_team": "WAS, DAL",
       "player": "Spencer Dinwiddie",
       "season": "2021-22",
       "sheet_team": "DAL",
@@ -9365,14 +9365,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "GSW, IND",
+      "corrected_team": "IND, GSW",
       "player": "Stephen Jackson",
       "season": "2006-07",
       "sheet_team": "GSW",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHA, GSW",
+      "corrected_team": "GSW, CHA",
       "player": "Stephen Jackson",
       "season": "2009-10",
       "sheet_team": "CHA",
@@ -9386,14 +9386,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BKN, MIN",
+      "corrected_team": "MIN, BKN",
       "player": "Stephon Marbury",
       "season": "1998-99",
       "sheet_team": "BKN",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "NYK, PHX",
+      "corrected_team": "PHX, NYK",
       "player": "Stephon Marbury",
       "season": "2003-04",
       "sheet_team": "PHX",
@@ -9421,7 +9421,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "NYK, ORL",
+      "corrected_team": "ORL, NYK",
       "player": "Steve Francis",
       "season": "2005-06",
       "sheet_team": "ORL",
@@ -9442,7 +9442,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "ATL, MIA",
+      "corrected_team": "MIA, ATL",
       "player": "Steve Smith",
       "season": "1994-95",
       "sheet_team": "ATL",
@@ -9456,7 +9456,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BKN, MEM",
+      "corrected_team": "MEM, BKN",
       "player": "Stromile Swift",
       "season": "2007-08",
       "sheet_team": "BKN",
@@ -9470,7 +9470,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DET, LAL",
+      "corrected_team": "LAL, DET",
       "player": "Sviatoslav Mykhailiuk",
       "season": "2018-19",
       "sheet_team": "DET",
@@ -9511,14 +9511,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DEN, ORL",
+      "corrected_team": "ORL, DEN",
       "player": "Tariq Abdul-Wahad",
       "season": "1999-00",
       "sheet_team": "DEN",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DAL, DEN",
+      "corrected_team": "DEN, DAL",
       "player": "Tariq Abdul-Wahad",
       "season": "2001-02",
       "sheet_team": "DEN",
@@ -9566,7 +9566,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "SAC, TOR",
+      "corrected_team": "TOR, SAC",
       "player": "Terence Davis",
       "season": "2020-21",
       "sheet_team": "SAC",
@@ -9594,7 +9594,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "ORL, TOR",
+      "corrected_team": "TOR, ORL",
       "player": "Terrence Ross",
       "season": "2016-17",
       "sheet_team": "ORL",
@@ -9622,7 +9622,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BKN, DEN",
+      "corrected_team": "DEN, BKN",
       "player": "Terry Mills",
       "season": "1990-91",
       "sheet_team": "BKN",
@@ -9643,7 +9643,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BKN, MIN",
+      "corrected_team": "MIN, BKN",
       "player": "Thaddeus Young",
       "season": "2014-15",
       "sheet_team": "BKN",
@@ -9720,14 +9720,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DET, MIL",
+      "corrected_team": "MIL, DET",
       "player": "Thon Maker",
       "season": "2018-19",
       "sheet_team": "DET",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "MIN, UTA",
+      "corrected_team": "UTA, MIN",
       "player": "Thurl Bailey",
       "season": "1991-92",
       "sheet_team": "MIN",
@@ -9748,7 +9748,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DAL, NYK",
+      "corrected_team": "NYK, DAL",
       "player": "Tim Hardaway Jr",
       "season": "2018-19",
       "sheet_team": "DAL",
@@ -9768,7 +9768,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DAL, UTA",
+      "corrected_team": "UTA, DAL",
       "player": "Tim Legler",
       "season": "1992-93",
       "sheet_team": "UTA",
@@ -9782,7 +9782,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "MIL, PHI",
+      "corrected_team": "PHI, MIL",
       "player": "Tim Thomas",
       "season": "1998-99",
       "sheet_team": "MIL",
@@ -9803,21 +9803,21 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHI, LAC, NYK",
+      "corrected_team": "LAC, NYK, CHI",
       "player": "Tim Thomas",
       "season": "2008-09",
       "sheet_team": "CHI",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DEN, NYK",
+      "corrected_team": "NYK, DEN",
       "player": "Timofey Mozgov",
       "season": "2010-11",
       "sheet_team": "DEN",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CLE, DEN",
+      "corrected_team": "DEN, CLE",
       "player": "Timofey Mozgov",
       "season": "2014-15",
       "sheet_team": "CLE",
@@ -9838,7 +9838,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DET, ORL",
+      "corrected_team": "ORL, DET",
       "player": "Tobias Harris",
       "season": "2015-16",
       "sheet_team": "DET",
@@ -9872,7 +9872,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BOS, MIL",
+      "corrected_team": "MIL, BOS",
       "player": "Todd Day",
       "season": "1995-96",
       "sheet_team": "BOS",
@@ -9900,7 +9900,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "GSW, MIN, WAS",
+      "corrected_team": "GSW, WAS, MIN",
       "player": "Tom Gugliotta",
       "season": "1994-95",
       "sheet_team": "GSW",
@@ -9949,7 +9949,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "ATL, PHI",
+      "corrected_team": "PHI, ATL",
       "player": "Toni Kukoc",
       "season": "2000-01",
       "sheet_team": "PHI",
@@ -9998,7 +9998,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BOS, PHX",
+      "corrected_team": "PHX, BOS",
       "player": "Tony Delk",
       "season": "2001-02",
       "sheet_team": "PHX",
@@ -10131,14 +10131,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHI, SAS",
+      "corrected_team": "SAS, CHI",
       "player": "Tre Jones",
       "season": "2024-25",
       "sheet_team": "SAS",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHA, OKC",
+      "corrected_team": "OKC, CHA",
       "player": "Tre Mann",
       "season": "2023-24",
       "sheet_team": "CHA",
@@ -10157,7 +10157,7 @@
       "sheet_team": "NOP"
     },
     {
-      "corrected_team": "BKN, DAL",
+      "corrected_team": "DAL, BKN",
       "player": "Trenton Hassell",
       "season": "2007-08",
       "sheet_team": "BKN",
@@ -10178,7 +10178,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "LAL, ORL",
+      "corrected_team": "ORL, LAL",
       "player": "Trevor Ariza",
       "season": "2007-08",
       "sheet_team": "LAL",
@@ -10212,14 +10212,14 @@
       "sheet_team": "UTA"
     },
     {
-      "corrected_team": "DAL, NYK",
+      "corrected_team": "NYK, DAL",
       "player": "Trey Burke",
       "season": "2018-19",
       "sheet_team": "DAL",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DAL, PHI",
+      "corrected_team": "PHI, DAL",
       "player": "Trey Burke",
       "season": "2019-20",
       "sheet_team": "DAL",
@@ -10260,7 +10260,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHI, WAS",
+      "corrected_team": "WAS, CHI",
       "player": "Troy Brown",
       "season": "2020-21",
       "sheet_team": "CHI",
@@ -10274,7 +10274,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHA, HOU, MIN",
+      "corrected_team": "HOU, MIN, CHA",
       "player": "Troy Daniels",
       "season": "2014-15",
       "sheet_team": "CHA",
@@ -10309,7 +10309,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "MIL, PHX",
+      "corrected_team": "PHX, MIL",
       "player": "Tyler Ennis",
       "season": "2014-15",
       "sheet_team": "MIL",
@@ -10336,7 +10336,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BKN, PHX",
+      "corrected_team": "PHX, BKN",
       "player": "Tyler Johnson",
       "season": "2019-20",
       "sheet_team": "BKN",
@@ -10357,7 +10357,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "IND, SAC",
+      "corrected_team": "SAC, IND",
       "player": "Tyrese Haliburton",
       "season": "2021-22",
       "sheet_team": "IND",
@@ -10399,7 +10399,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "ATL, HOU",
+      "corrected_team": "HOU, ATL",
       "player": "Tyronn Lue",
       "season": "2004-05",
       "sheet_team": "HOU",
@@ -10413,14 +10413,14 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHA, CHI",
+      "corrected_team": "CHI, CHA",
       "player": "Tyrus Thomas",
       "season": "2009-10",
       "sheet_team": "CHA",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHA, OKC",
+      "corrected_team": "OKC, CHA",
       "player": "Vasilije Micic",
       "season": "2023-24",
       "sheet_team": "CHA",
@@ -10455,7 +10455,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BKN, TOR",
+      "corrected_team": "TOR, BKN",
       "player": "Vince Carter",
       "season": "2004-05",
       "sheet_team": "BKN",
@@ -10490,7 +10490,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BOS, CLE",
+      "corrected_team": "CLE, BOS",
       "player": "Vitaly Potapenko",
       "season": "1998-99",
       "sheet_team": "BOS",
@@ -10511,7 +10511,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHA, LAL",
+      "corrected_team": "LAL, CHA",
       "player": "Vladimir Radmanovic",
       "season": "2008-09",
       "sheet_team": "CHA",
@@ -10545,14 +10545,14 @@
       "sheet_team": "LAL"
     },
     {
-      "corrected_team": "BOS, MIN",
+      "corrected_team": "MIN, BOS",
       "player": "Wally Szczerbiak",
       "season": "2005-06",
       "sheet_team": "MIN",
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CLE, OKC",
+      "corrected_team": "OKC, CLE",
       "player": "Wally Szczerbiak",
       "season": "2007-08",
       "sheet_team": "CLE",
@@ -10566,7 +10566,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "POR, TOR",
+      "corrected_team": "TOR, POR",
       "player": "Walt Williams",
       "season": "1997-98",
       "sheet_team": "TOR",
@@ -10657,7 +10657,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DEN, POR",
+      "corrected_team": "POR, DEN",
       "player": "Will Barton",
       "season": "2014-15",
       "sheet_team": "DEN",
@@ -10678,7 +10678,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "DAL, GSW",
+      "corrected_team": "GSW, DAL",
       "player": "Willie Cauley-Stein",
       "season": "2019-20",
       "sheet_team": "DAL",
@@ -10692,7 +10692,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "CHA, NYK",
+      "corrected_team": "NYK, CHA",
       "player": "Willy Hernangomez",
       "season": "2017-18",
       "sheet_team": "CHA",
@@ -10734,7 +10734,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "BOS, MEM",
+      "corrected_team": "MEM, BOS",
       "player": "Xavier Tillman",
       "season": "2023-24",
       "sheet_team": "BOS",
@@ -10767,7 +10767,7 @@
       "sheet_team": "DAL"
     },
     {
-      "corrected_team": "CHI, SAS",
+      "corrected_team": "SAS, CHI",
       "player": "Zach Collins",
       "season": "2024-25",
       "sheet_team": "SAS",
@@ -10795,7 +10795,7 @@
       "split_basis": "no allocation; season marked split"
     },
     {
-      "corrected_team": "GSW, PHX",
+      "corrected_team": "PHX, GSW",
       "player": "Zarko Cabarkapa",
       "season": "2004-05",
       "sheet_team": "PHX",

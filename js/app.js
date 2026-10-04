@@ -2452,9 +2452,17 @@
     };
 
     // Mid-season move: team_salaries carries what each team actually paid.
-    // Ordered by amount so the team that carried the deal reads first.
+    // Read in the order he played for them, which the record's team string
+    // carries; a payer the string does not name falls in behind, by amount.
     if (ts && Object.keys(ts).length > 1) {
-      var keys = Object.keys(ts).sort(function (a, b) { return ts[b] - ts[a]; });
+      var played = String(record.team || "").split(",").map(function (t) { return t.trim(); });
+      var keys = Object.keys(ts).sort(function (a, b) {
+        var ia = played.indexOf(a), ib = played.indexOf(b);
+        if (ia !== -1 && ib !== -1) return ia - ib;
+        if (ia !== -1) return -1;
+        if (ib !== -1) return 1;
+        return ts[b] - ts[a];
+      });
       return '<span class="ps-team-split">' + keys.map(function (t) {
         return '<span class="ps-team-part">' + wrap(t) +
           ' <span class="ps-team-amt" title="' + escAttr(fmtSalary(ts[t])) + '">' + fmtSalaryShort(ts[t]) + "</span></span>";

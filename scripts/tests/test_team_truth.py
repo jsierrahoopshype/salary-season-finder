@@ -285,6 +285,100 @@ def test_a_total_row_is_not_a_team():
 
 
 # --------------------------------------------------------------------------
+# a season's stats, whole, however many teams played it
+# --------------------------------------------------------------------------
+
+
+def _row(team, gp, pts, reb, ast, stl=0, blk=0):
+    return {"player_original": "CJ McCollum", "team": team, "gp": gp,
+            "pts": pts, "reb": reb, "ast": ast, "stl": stl, "blk": blk,
+            "ppg": 22.1, "rpg": 4.34, "apg": 5.08, "spg": 1.13, "bpg": 0.35,
+            "fg_pct": 0.46, "age": 30, "min": 0}
+
+
+def test_a_traded_season_counts_both_teams_games():
+    """CJ McCollum's 2021-22: 26 games in New Orleans and 36 in Portland. The
+    build read the first row only and printed 631 points in 26 games beside a
+    22.1 average, which is two different seasons in one line."""
+    combined = B.combine_stats([
+        _row("NOP", 26, 631, 116, 152, 34, 1),
+        _row("POR", 36, 739, 153, 163, 36, 21),
+    ])
+    assert combined["gp"] == 62
+    assert combined["pts"] == 1370
+    assert combined["reb"] == 269
+    assert combined["ast"] == 315
+    # summed totals over summed games, never the mean of two averages
+    assert combined["ppg"] == round(1370 / 62, 2) == 22.1
+    assert combined["rpg"] == round(269 / 62, 2)
+    assert combined["apg"] == round(315 / 62, 2)
+    assert combined["team"] == "NOP, POR"
+
+
+def test_a_rate_is_never_the_average_of_two_averages():
+    """The mean of the two per-team averages weights a 5-game stint like a
+    77-game one. 20 points in 5 games and 10 in 75 is 10.6 a game, not 15."""
+    combined = B.combine_stats([
+        _row("AAA", 5, 100, 10, 10), _row("BBB", 75, 750, 75, 75),
+    ])
+    assert combined["gp"] == 80
+    assert combined["ppg"] == round(850 / 80, 2) == 10.62
+
+
+def test_one_team_season_is_left_exactly_as_it_is():
+    row = _row("POR", 70, 1400, 280, 350)
+    assert B.combine_stats([row]) is row
+
+
+def test_a_total_row_is_used_as_given_and_checked(capsys):
+    """A TOT row is the source's own total. This sheet has none, so the branch
+    is defensive, and a disagreement with the team rows is printed rather than
+    quietly resolved."""
+    tot = _row("TOT", 62, 1370, 269, 315)
+    assert B.combine_stats(
+        [tot, _row("NOP", 26, 631, 116, 152), _row("POR", 36, 739, 153, 163)]
+    ) is tot
+    capsys.readouterr()
+    wrong = _row("TOT", 62, 999, 269, 315)
+    B.combine_stats([wrong, _row("NOP", 26, 631, 116, 152),
+                     _row("POR", 36, 739, 153, 163)])
+    assert "TOT pts is 999" in capsys.readouterr().out
+
+
+def test_a_split_season_carries_no_team_rank():
+    assert B.is_split_record({"teams_split": True}) is True
+    assert B.is_split_record({"team_salaries": {"A": 1, "B": 2}}) is True
+    assert B.is_split_record({"team": "POR", "team_salaries": {"POR": 1}}) is False
+
+
+def test_the_team_he_finished_with_reads_last():
+    """The stats sheet has no order in it: New Orleans sits above Portland in
+    the file for McCollum's 2021-22, although Portland came first. The next
+    season says where he finished, and that team goes last."""
+    records = [
+        rec("CJ McCollum", "2021-22", "NOP, POR", salary=30864198),
+        rec("CJ McCollum", "2022-23", "NOP", salary=33333333),
+    ]
+    B.order_split_teams(records, stats([
+        ("CJ McCollum", "2021-22", "NOP", 26),
+        ("CJ McCollum", "2021-22", "POR", 36),
+    ]))
+    assert records[0]["team"] == "POR, NOP"
+
+
+def test_an_order_with_no_evidence_is_left_alone():
+    """He left both teams, so nothing here says which came first and the
+    order stands as the sheet gave it."""
+    records = [
+        rec("Gone", "2021-22", "NOP, POR"),
+        rec("Gone", "2022-23", "MIA"),
+    ]
+    B.order_split_teams(records, stats([
+        ("Gone", "2021-22", "NOP", 26), ("Gone", "2021-22", "POR", 36)]))
+    assert records[0]["team"] == "NOP, POR"
+
+
+# --------------------------------------------------------------------------
 # the committed report
 # --------------------------------------------------------------------------
 
