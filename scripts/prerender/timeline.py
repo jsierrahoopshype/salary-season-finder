@@ -34,6 +34,7 @@ MARKS = (50000000, 100000000, 200000000, 300000000, 400000000, 500000000,
          600000000, 700000000)
 
 from . import config as C  # noqa: E402
+from . import droughts  # noqa: E402
 from .seasons import _noun  # noqa: E402
 
 #: The cohorts a timeline talks about. Each is one a reader recognises as a
@@ -98,10 +99,20 @@ STRENGTH = {
     "league_top_start": 0, "league_top_end": 1,
     "high_set": 2, "high_lost": 3,
     "threshold_first": 4,
-    "top_start": 5, "top_end": 6,
-    "move_top": 7, "league_top10_first": 8,
-    "list_top": 9, "milestone": 10, "move_five": 11,
-    "list_up": 12, "list_down": 13,
+    # The head of an award-drought list is a league-wide standing, so it reads
+    # ahead of a club's top earner; entering its top ten is a smaller fact
+    # than a career milestone and sits below one.
+    # Leaving a list reads ahead of reaching the head of one: a man who both
+    # tops one list and comes off another in the same season has had the
+    # second thing happen to him, and only one drought line a season survives
+    # the thinning.
+    "drought_left": 5, "drought_first": 6, "drought_passed": 7,
+    "top_start": 8, "top_end": 9,
+    "move_top": 10, "league_top10_first": 11,
+    "list_top": 12, "milestone": 13,
+    "drought_top10": 14,
+    "move_five": 15,
+    "list_up": 16, "list_down": 17,
 }
 
 
@@ -164,6 +175,13 @@ def build(idx):
             if paid:
                 previous[idx.canonical(record["player"])] = (
                     record.get("salary") or 0)
+
+    # The award-drought lists are swept separately, over the same records, and
+    # join here so one cap and one thinning govern every kind of event a
+    # season can carry.
+    for lst in droughts.build(idx).values():
+        for key, events in lst["events"].items():
+            found[key].extend(events)
 
     for key, events in found.items():
         events.sort(key=lambda e: (STRENGTH[e["kind"]], -e.get("size", 0),
@@ -621,9 +639,13 @@ def _family(event):
     """Which set of phrasings an event takes.
 
     A franchise says it its own way: "the Bucks single-season record" is a
-    sentence and "the player on the Bucks single-season record" is not.
+    sentence and "the player on the Bucks single-season record" is not. The
+    first man to lead an award-drought list says it another way again, because
+    he was there when the counting started rather than passing anyone.
     """
     kind = event["kind"]
+    if kind == "drought_first" and event.get("opening"):
+        return "drought_first_open"
     if (event.get("scope") or ("", ""))[0] == "franchise" \
             and kind + "_team" in _PHRASES:
         return kind + "_team"
@@ -728,12 +750,66 @@ def _bits(idx, event, season):
         out["place"] = (WORDS[place] if place < len(WORDS)
                         else F.ordinal(place))
     out["way"] = event.get("way") or ""
+    if "drought" in event:
+        out["drought"] = event["drought"]
+    if "rank" in event and event["rank"]:
+        rank = event["rank"]
+        out["rank"] = str(rank)
+        out["nth"] = WORDS[rank] if rank < len(WORDS) else F.ordinal(rank)
+    if "selection" in event:
+        out["selection"] = event["selection"]
+        out["got"] = ("won his first {}".format(event["selection"])
+                      if event.get("won")
+                      else "his first {}".format(event["selection"]))
     return out
 
 
 #: Two ways of saying each event, so no line reads like the one above it, and
 #: one set per tense, because a contracted season has not happened.
 _PHRASES = {
+    # The award-drought lists. The first man on a list did not take the lead
+    # from anybody: the salary data begins under him, and saying so is the
+    # difference between a fact and an artefact.
+    "drought_first": {
+        PAST: ("Became the highest-paid player {drought}.",
+               "Took over as the highest-paid player {drought}."),
+        NOW: ("Is the highest-paid player {drought}.",
+              "Stands as the highest-paid player {drought}."),
+        LATER: ("Would become the highest-paid player {drought}.",
+                "Would take over as the highest-paid player {drought}."),
+    },
+    "drought_first_open": {
+        PAST: ("Led the career earnings of players {drought} when the salary "
+               "data begins.",),
+        NOW: ("Leads the career earnings of players {drought} where the salary "
+              "data begins.",),
+        LATER: ("Would lead the career earnings of players {drought} where the "
+                "salary data begins.",),
+    },
+    "drought_passed": {
+        PAST: ("{name} passed him as the highest-paid player {drought}.",
+               "Was passed by {name} as the highest-paid player {drought}."),
+        NOW: ("{name} passes him as the highest-paid player {drought}.",
+              "Is passed by {name} as the highest-paid player {drought}."),
+        LATER: ("{name} would pass him as the highest-paid player {drought}.",
+                "Would be passed by {name} as the highest-paid player {drought}."),
+    },
+    "drought_left": {
+        PAST: ("Left the list as No. {rank} with {got}.",
+               "Came off the list as No. {rank} with {got}."),
+        NOW: ("Leaves the list as No. {rank} with {got}.",
+              "Comes off the list as No. {rank} with {got}."),
+        LATER: ("Would leave the list as No. {rank} with {got}.",
+                "Would come off the list as No. {rank} with {got}."),
+    },
+    "drought_top10": {
+        PAST: ("Entered the top 10 among players {drought}.",
+               "Reached the top 10 among players {drought}."),
+        NOW: ("Enters the top 10 among players {drought}.",
+              "Reaches the top 10 among players {drought}."),
+        LATER: ("Would enter the top 10 among players {drought}.",
+                "Would reach the top 10 among players {drought}."),
+    },
     "league_top_start": {
         PAST: ("Became the highest-paid player in the NBA.",
                "Took over the biggest salary in the league."),

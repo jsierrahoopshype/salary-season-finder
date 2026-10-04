@@ -197,6 +197,23 @@ TITLES = {
     "agent": ("{name}: NBA Clients and Salaries | HoopsMatic", None),
 }
 
+#: The three award-drought pages: top-level, indexable, and emitted beside the
+#: hubs rather than inside a family, because they are three fixed pages rather
+#: than one page per entity in the data.
+DROUGHT_PAGES = ("all-star", "all-nba", "mvp")
+
+DROUGHT_LABELS = {
+    "all-star": "Never an All-Star",
+    "all-nba": "Never All-NBA",
+    "mvp": "Never an MVP",
+}
+
+#: The hub that indexes them.
+DROUGHT_HUB = "never-selected"
+
+#: How far down each of those pages lists.
+PAGE_DROUGHT_ROWS = 25
+
 HUB_TITLES = {
     "regions": "NBA Salaries by Region | HoopsMatic",
     "pick-ranges": "NBA Salaries by Draft Pick Range | HoopsMatic",

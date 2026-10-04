@@ -704,3 +704,173 @@ def hub_page(hub_slug, family, entries, lead=None, family_members=None):
             roll_call(entries, family, lead=lead),
         ))
     return title, description, "\n".join(body)
+
+# --------------------------------------------------------------------------
+# the award-drought pages
+# --------------------------------------------------------------------------
+
+def drought_page(idx, built, key, linker=None):
+    """One list: who leads it now, and who has led it.
+
+    The standings are the career-earnings convention the engine's own claims
+    use: money already paid, the season being played included, a contracted
+    season never in it.
+    """
+    lst = built[key]
+    spec = lst["spec"]
+    title = "Most NBA Career Earnings Without an {} | HoopsMatic".format(spec.award)
+    heading = "Most career earnings without an {} selection".format(spec.award) \
+        if not spec.won else "Most career earnings without an MVP"
+    leader = lst["standing"][0][1] if lst["standing"] else ""
+    description = (
+        "NBA players with the most career earnings and no {} selection, "
+        "paid to date. {} leads on {}.".format(
+            spec.award, leader, money_short(lst["standing"][0][0]))
+        if leader else
+        "NBA players with the most career earnings and no {} selection.".format(
+            spec.award)
+    )
+
+    rows = []
+    place = 0
+    for i, (paid, player) in enumerate(lst["standing"][:C.PAGE_DROUGHT_ROWS]):
+        if i == 0 or paid != lst["standing"][i - 1][0]:
+            place = i + 1
+        seasons = sorted({r["season"] for r in idx.records
+                          if idx.canonical(r["player"]) == player
+                          and not idx.is_contracted(r["season"])},
+                         key=F.season_key)
+        here = idx.record(player, idx.current_season) is not None
+        rows.append([
+            _drought_name(idx, player, place),
+            "{}, {}".format(len(seasons), seasons[0] if len(seasons) == 1
+                            else "{} to {}".format(seasons[0], seasons[-1])),
+            money(paid),
+            "active" if here else "",
+        ])
+
+    held = []
+    for reign in lst["reigns"]:
+        span = reign["from"] if reign["from"] == reign["to"] else "{} to {}".format(
+            reign["from"], reign["to"])
+        if reign["opening"]:
+            why = "led when the count begins in {}".format(F.SCOPE_FIRST_SEASON)
+        elif reign["why"] == "selected":
+            why = "left on {} in {}".format(
+                "his first MVP" if spec.won else "his first {}".format(spec.selection),
+                reign["detail"])
+        elif reign["why"] == "passed":
+            why = "passed by {}".format(reign["detail"])
+        else:
+            why = "still leads"
+        held.append([_drought_name(idx, reign["player"]), span,
+                     money(reign["total"]), why])
+
+    others = [other for other in C.DROUGHT_PAGES if other != key]
+    body = [
+        "<h1>{}</h1>".format(esc(heading)),
+        summary_block([
+            "{} has been paid {} without {}, more than anyone else on this "
+            "list.".format(leader, money_short(lst["standing"][0][0]),
+                           _drought_without(spec, lst, leader)),
+            "A player leaves the list from the season of his first selection, "
+            "so these are careers measured while the award had not come.",
+        ], linker=linker) if leader else "",
+        section(
+            "The list",
+            "Money already paid, {} included. A contracted season is never "
+            "in it.".format(idx.current_season),
+            rank_table(
+                [("Player", "hm-who"), ("Seasons", "hm-num"),
+                 ("Career earnings", "hm-money"), ("", "hm-num")],
+                rows,
+            ),
+        ),
+        section(
+            "Who held No. 1",
+            None,
+            rank_table(
+                [("Player", "hm-who"), ("Seasons led", "hm-num"),
+                 ("Earned by then", "hm-money"), ("How it ended", "hm-who")],
+                held,
+            ) + _drought_notes(),
+        ),
+        section("More", None, links_row([
+            (C.DROUGHT_LABELS[other], "{}/{}/".format(C.TOOL_ROOT, built[other]["spec"].slug))
+            for other in others
+        ])),
+        scope_line(),
+    ]
+    return title, description, "\n".join(b for b in body if b)
+
+
+def _drought_without(spec, lst, leader):
+    """"without an All-Star selection" / "without winning MVP", in a sentence."""
+    if spec.won:
+        return "winning MVP"
+    return "an {} selection".format(spec.award)
+
+
+def _drought_notes():
+    """The two things a reader would otherwise read as errors."""
+    return (
+        '<p class="hm-note">{}</p><p class="hm-note">{}</p>'.format(
+            esc("Salary data starts in {}, so the earliest leaders reflect "
+                "where the count begins.".format(F.SCOPE_FIRST_SEASON)),
+            esc("When the leader leaves through a selection, the next man up "
+                "can have earned less than he had."),
+        )
+    )
+
+
+def _drought_name(idx, player, rank=None):
+    """His name, linked to his page where he has one."""
+    ident = _DROUGHT_IDENTS.get(player)
+    if ident is not None:
+        return player_link(ident, rank=rank)
+    return "{}{}".format(rank or "", esc(player))
+
+
+_DROUGHT_IDENTS = {}
+
+
+def register_drought_idents(identities):
+    _DROUGHT_IDENTS.clear()
+    for ident in identities:
+        if ident.slug:
+            _DROUGHT_IDENTS.setdefault(ident.name, ident)
+
+
+def drought_hub(built):
+    title = "NBA Career Earnings Without an Award | HoopsMatic"
+    lead = built["all-star"]["standing"]
+    description = (
+        "The NBA's biggest career earners who have never been named an "
+        "All-Star, never been named All-NBA, or never won MVP. {} leads on "
+        "{}.".format(lead[0][1], money_short(lead[0][0])) if lead else
+        "The NBA's biggest career earners with no All-Star, All-NBA or MVP "
+        "selection."
+    )
+    rows = []
+    for key in C.DROUGHT_PAGES:
+        lst = built[key]
+        leader = lst["standing"][0][1] if lst["standing"] else ""
+        rows.append((C.DROUGHT_LABELS[key], lst["spec"].slug, leader,
+                     lst["standing"][0][0] if lst["standing"] else 0))
+    body = [
+        "<h1>Career earnings without an award</h1>",
+        summary_block([
+            "Three lists of what a man has been paid while the award had not "
+            "come. A player leaves a list from the season of his first "
+            "selection.",
+        ]),
+        section("The lists", None, rank_table(
+            [("List", "hm-who"), ("Leads it now", "hm-who"),
+             ("On", "hm-money")],
+            [['<a class="hm-inline-link" href="{}/{}/">{}</a>'.format(
+                C.TOOL_ROOT, slug, esc(label)), esc(leader), money(paid)]
+             for label, slug, leader, paid in rows],
+        )),
+        scope_line(),
+    ]
+    return title, description, "\n".join(body)
