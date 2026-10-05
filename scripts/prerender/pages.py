@@ -76,7 +76,7 @@ def _season_salary_rows(idx, records, owners, limit, media=None):
             "{:.1f}%".format(record["salary_cap_pct"]) if record.get("salary_cap_pct") is not None else "-",
         ])
     return rank_table(
-        [("Player", "hm-who"), ("Season", "hm-num"), ("Team", "hm-num"),
+        [("Player", "hm-who"), ("Season", "hm-word"), ("Team", "hm-word"),
          ("Salary", "hm-money"), ("% of cap", "hm-num")],
         rows,
     )
@@ -149,8 +149,8 @@ def _career_rows(idx, entries, limit, media=None):
     # the markup, so the desktop table is untouched and the header and the
     # body cannot fall out of step.
     return rank_table(
-        [("Player", "hm-who"), ("Career", "hm-num hm-span"),
-         ("Seasons", "hm-num hm-seasons"), ("Career earnings", "hm-money")],
+        [("Player", "hm-who"), ("Career", "hm-word hm-span"),
+         ("Seasons", "hm-word hm-seasons"), ("Career earnings", "hm-money")],
         rows, table_class="hm-career-table",
     )
 
@@ -190,9 +190,9 @@ def _current_rows(idx, records, owners, limit, media=None):
             money(sum(r.get("salary") or 0 for r in future)) if future else "-",
         ])
     return rank_table(
-        [("Player", "hm-who"), ("Team", "hm-num"),
+        [("Player", "hm-who"), ("Team", "hm-word"),
          ("{} salary".format(idx.current_season), "hm-money"),
-         ("Signed through", "hm-num"), ("Contracted after", "hm-money")],
+         ("Signed through", "hm-word"), ("Contracted after", "hm-money")],
         rows,
     ), len(ordered), entries
 
@@ -445,7 +445,7 @@ def team_page(idx, entity, identities):
             "Most career earnings with the {}".format(entity.name),
             _with_team_hint(idx),
             rank_table(
-                [("Player", "hm-who"), ("Seasons", "hm-num"),
+                [("Player", "hm-who"), ("Seasons", "hm-word"),
                  ("Earned with the team", "hm-money")],
                 _with_team_rows(idx, entity, owners, code, C.TABLE_ROWS),
             ),
@@ -523,7 +523,7 @@ def season_page(idx, entity, identities):
             "Top {} of {} players on file for {}.".format(
                 min(C.TABLE_ROWS, len(ordered)), len(ordered), season),
             rank_table(
-                [("Player", "hm-who"), ("Team", "hm-num"), ("Salary", "hm-money"),
+                [("Player", "hm-who"), ("Team", "hm-word"), ("Salary", "hm-money"),
                  ("% of cap", "hm-num"), ("Age", "hm-num")],
                 rows,
             ),
@@ -776,8 +776,8 @@ def drought_page(idx, built, key, linker=None):
             "Money already paid, {} included. A contracted season is never "
             "in it.".format(idx.current_season),
             rank_table(
-                [("Player", "hm-who"), ("Seasons", "hm-num"),
-                 ("Career earnings", "hm-money"), ("", "hm-num")],
+                [("Player", "hm-who"), ("Seasons", "hm-word"),
+                 ("Career earnings", "hm-money"), ("", "hm-word")],
                 rows,
             ),
         ),
@@ -785,8 +785,8 @@ def drought_page(idx, built, key, linker=None):
             "Who held No. 1",
             None,
             rank_table(
-                [("Player", "hm-who"), ("Seasons led", "hm-num"),
-                 ("Earned by then", "hm-money"), ("How it ended", "hm-who")],
+                [("Player", "hm-who"), ("Seasons led", "hm-word"),
+                 ("Earned by then", "hm-money"), ("How it ended", "hm-text")],
                 held,
             ) + _drought_notes(),
         ),
@@ -854,7 +854,7 @@ def drought_hub(built):
             "selection.",
         ]),
         section("The lists", None, rank_table(
-            [("List", "hm-who"), ("Leads it now", "hm-who"),
+            [("List", "hm-who"), ("Leads it now", "hm-word"),
              ("On", "hm-money")],
             [['<a class="hm-inline-link" href="{}/{}/">{}</a>'.format(
                 C.TOOL_ROOT, slug, esc(label)), esc(leader), money(paid)]

@@ -981,7 +981,7 @@ table.player-season-table thead th {
   text-transform: uppercase;
   letter-spacing: .04em;
   padding: .6rem .55rem;
-  text-align: center;
+  text-align: left;
   white-space: nowrap;
   border-bottom: 1px solid var(--border);
 }
@@ -1005,7 +1005,7 @@ table.player-season-table tbody tr:hover {
 table.player-season-table td,
 table.player-season-table tbody th {
   padding: .45rem .55rem;
-  text-align: center;
+  text-align: left;
   vertical-align: middle;
   font-family: var(--mono);
   font-weight: 500;
@@ -1028,6 +1028,8 @@ table.player-season-table td.ps-career {
   color: var(--text-secondary);
 }
 
+/* the header goes with its column, not with the row of headers */
+table.player-season-table th.ps-team,
 table.player-season-table td.ps-team {
   text-align: left;
 }

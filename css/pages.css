@@ -95,7 +95,7 @@ table.hm-rank-table thead th {
   text-transform: uppercase;
   letter-spacing: .04em;
   padding: .6rem .55rem;
-  text-align: center;
+  text-align: left;
   white-space: nowrap;
   border-bottom: 1px solid var(--border);
 }
@@ -115,26 +115,44 @@ table.hm-rank-table tbody tr:nth-child(even) {
 table.hm-rank-table td,
 table.hm-rank-table tbody th {
   padding: .45rem .55rem;
-  text-align: center;
+  text-align: left;
   font-family: var(--mono);
   font-weight: 500;
   white-space: nowrap;
 }
 
-table.hm-rank-table td.hm-num {
+/* Alignment is a property of the column, not of the row, so every rule below
+   names the header and the cells together. A header centred over a column of
+   right-aligned figures sits over the middle of nothing, which is what these
+   tables used to do to every number in them. */
+table.hm-rank-table th.hm-num,
+table.hm-rank-table td.hm-num,
+table.hm-rank-table th.hm-money,
+table.hm-rank-table td.hm-money {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
 table.hm-rank-table td.hm-money {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
   font-weight: 600;
   color: var(--green);
 }
 
+table.hm-rank-table th.hm-text,
 table.hm-rank-table td.hm-text {
   text-align: left;
+}
+
+/* A short piece of text in a figure's clothing: a season, a team code, a
+   span of seasons. Left like any other text, and kept on one line and in the
+   mono face because it reads as a code rather than as prose. */
+table.hm-rank-table th.hm-word,
+table.hm-rank-table td.hm-word {
+  text-align: left;
+  white-space: nowrap;
+}
+
+table.hm-rank-table td.hm-text {
   font-family: var(--sans);
   white-space: normal;
 }
@@ -504,20 +522,29 @@ table.hm-rank-table th.hm-who {
     justify-content: flex-end;
   }
 
+  /* These two hold a span of seasons and a count beside it, which are text,
+     so they sit left on a phone exactly as they do on a desktop. The header
+     and its cells share one flex basis, which is what keeps them in a column
+     at all once the table stops being a table. */
   table.hm-career-table .hm-span {
     order: 3;
     flex: 0 0 8.5rem;
-    justify-content: flex-end;
+    justify-content: flex-start;
   }
 
   table.hm-career-table .hm-seasons {
     order: 4;
     flex: 0 0 5rem;
-    justify-content: flex-end;
+    justify-content: flex-start;
   }
 
   table.hm-career-table thead th {
     align-items: flex-end;
+  }
+
+  /* A money column is a figure, and reads right on a phone as it does wide. */
+  table.hm-career-table thead th.hm-money {
+    justify-content: flex-end;
   }
 }
 
@@ -615,5 +642,110 @@ table.hm-grouped tbody tr:nth-child(even) th.hm-who {
   .hm-timeline .hm-event {
     grid-template-columns: 1fr;
     gap: .15rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   the compact player search under the breadcrumb
+   -------------------------------------------------------------------------- */
+
+.hm-find {
+  position: relative;
+  margin: 0 0 1.1rem;
+}
+
+.hm-find-label {
+  display: block;
+  font-family: var(--mono);
+  font-size: .62rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--text-secondary);
+  margin-bottom: .3rem;
+}
+
+.hm-find-row {
+  display: flex;
+  gap: .5rem;
+  align-items: stretch;
+}
+
+.hm-find input {
+  flex: 1 1 auto;
+  min-width: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: inherit;
+  font-family: var(--sans);
+  font-size: .9rem;
+  padding: .5rem .7rem;
+}
+
+.hm-find input:focus {
+  outline: 2px solid var(--green);
+  outline-offset: -1px;
+}
+
+.hm-find-tool {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  background: var(--surface-hover);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: inherit;
+  font-family: var(--mono);
+  font-size: .72rem;
+  font-weight: 600;
+  padding: .5rem .7rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.hm-find-tool:hover {
+  border-color: var(--green);
+}
+
+.hm-find-list {
+  position: absolute;
+  z-index: 40;
+  left: 0;
+  right: 0;
+  margin: .25rem 0 0;
+  padding: 0;
+  list-style: none;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .35);
+  max-height: 17rem;
+  overflow-y: auto;
+}
+
+.hm-find-list a {
+  display: block;
+  padding: .45rem .7rem;
+  color: inherit;
+  font-size: .88rem;
+  text-decoration: none;
+}
+
+.hm-find-list a:hover,
+.hm-find-list [aria-selected="true"] a {
+  background: var(--surface-hover);
+}
+
+/* The button's label is the longest thing in the row, so on a narrow phone it
+   drops under the input rather than squeezing the field it sits beside. */
+@media (max-width: 480px) {
+  .hm-find-row {
+    flex-wrap: wrap;
+  }
+
+  .hm-find-tool {
+    flex: 1 1 100%;
+    justify-content: center;
   }
 }

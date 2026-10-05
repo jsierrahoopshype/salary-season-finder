@@ -78,11 +78,13 @@ HEAD = """<!DOCTYPE html>
 <link rel="stylesheet" href="{root}css/polymarket.css">
 <link rel="stylesheet" href="{root}css/styles.css">
 <link rel="stylesheet" href="{root}css/pages.css">
+<script src="{root}js/page-search.js" defer></script>
 <script type="application/ld+json">{breadcrumb_ld}</script>
 </head>
 <body>
 <main class="hm-page">
 {crumbs}
+{find}
 """
 
 FOOT = """</main>
@@ -127,7 +129,36 @@ def breadcrumb_ld(trail_absolute):
     )
 
 
-def page(title, description, url, depth, trail, body, indexable, og_title=None):
+def find_bar(depth, tool_link=None):
+    """One input, and on a player page a way into the tool beside it.
+
+    The suggestion index is fetched on the first focus, so a reader who came
+    for the page pays nothing for a search he never uses. ``data-root`` is how
+    the script finds data/slugs.json from whatever depth the page sits at.
+    """
+    out = ['<div class="hm-find" data-root="{}">'.format(esc(up(depth)))]
+    out.append(
+        '<label class="hm-find-label" for="hm-find-input">Find a player</label>'
+        '<div class="hm-find-row">'
+        '<input id="hm-find-input" type="search" autocomplete="off"'
+        ' role="combobox" aria-expanded="false" aria-autocomplete="list"'
+        ' aria-controls="hm-find-list" placeholder="Search players">'
+    )
+    if tool_link:
+        out.append(
+            '<a class="hm-find-tool" href="{}">Open in Salary Finder</a>'.format(
+                esc(tool_link))
+        )
+    out.append(
+        '</div><ul class="hm-find-list" id="hm-find-list" role="listbox"'
+        ' aria-label="Players" hidden></ul>'
+    )
+    out.append("</div>")
+    return "".join(out)
+
+
+def page(title, description, url, depth, trail, body, indexable, og_title=None,
+         tool_link=None):
     root = up(depth)
     # every crumb href is already absolute, so the JSON-LD is the same list
     absolute = [(label, href if href else url) for label, href in trail]
@@ -140,6 +171,7 @@ def page(title, description, url, depth, trail, body, indexable, og_title=None):
         root=root,
         breadcrumb_ld=breadcrumb_ld(absolute),
         crumbs=breadcrumbs(trail, depth),
+        find=find_bar(depth, tool_link),
     )
     return head + body + FOOT
 
@@ -170,9 +202,12 @@ def rank_table(columns, rows, table_class=""):
         '<th class="{}" scope="col">{}</th>'.format(cls, esc(label))
         for label, cls in columns
     )
+    # The first column's class comes from the column spec like every other
+    # one, so a header can never be aligned one way and its cells another.
+    first = columns[0][1] if columns else "hm-who"
     body = []
     for row in rows:
-        cells = ['<th class="hm-who" scope="row">{}</th>'.format(row[0])]
+        cells = ['<th class="{}" scope="row">{}</th>'.format(first, row[0])]
         for value, (_label, cls) in zip(row[1:], columns[1:]):
             cells.append('<td class="{}">{}</td>'.format(cls, value))
         body.append("<tr>{}</tr>".format("".join(cells)))

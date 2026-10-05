@@ -1300,7 +1300,7 @@ def test_a_hub_groups_its_family_rather_than_listing_it_twice():
 def test_the_career_table_reorders_its_columns_below_768px():
     html = read(os.path.join("college", "duke", "index.html"))
     assert 'class="hm-rank-table hm-career-table"' in html
-    for cls in ("hm-num hm-span", "hm-num hm-seasons", "hm-money"):
+    for cls in ("hm-word hm-span", "hm-word hm-seasons", "hm-money"):
         assert 'class="{}"'.format(cls) in html, cls
     css = read(os.path.join("css", "pages.css"))
     block = css[css.index("@media (max-width: 767.98px)"):]
@@ -1927,6 +1927,166 @@ def test_the_losing_season_is_spared_the_cap_between_two_arrivals():
     assert bridges
     for event in bridges:
         assert event["kind"] == "top_end"
+
+
+# --------------------------------------------------------------------------
+# table alignment: a header over its own column
+# --------------------------------------------------------------------------
+
+#: The alignment each table-cell class carries, read once out of the
+#: stylesheets below and checked against them, so this list cannot drift from
+#: the CSS it describes.
+ALIGN = {
+    "hm-who": "left", "hm-text": "left", "hm-word": "left",
+    "hm-num": "right", "hm-money": "right",
+    "ps-season": "left", "ps-team": "left", "ps-awards": "left",
+    "ps-num": "right",
+}
+
+#: Classes that only decorate: colour, weight, width, flex order.
+PLAIN = {"hm-span", "hm-seasons", "ps-salary", "ps-career"}
+
+
+def _align_rules(css):
+    """{(table, class): alignment} for every text-align rule keyed on a class."""
+    out = {}
+    for block in re.finditer(r"([^{}]+)\{([^{}]*)\}", css):
+        selector, body = block.group(1), block.group(2)
+        found = re.search(r"text-align:\s*(\w+)", body)
+        if not found:
+            continue
+        for part in selector.split(","):
+            part = part.strip()
+            hit = re.match(
+                r"table\.([\w-]+)\s+(?:thead\s+|tbody\s+)?(th|td)\.([\w-]+)$", part)
+            if hit:
+                out.setdefault((hit.group(1), hit.group(3)), set()).add(
+                    (hit.group(2), found.group(1)))
+    return out
+
+
+def test_a_header_is_aligned_the_way_its_own_column_is():
+    """A header centred over a column of right-aligned figures sits over the
+    middle of nothing. Every rule that aligns a cell class names the header
+    and the cells together, which is what keeps them one column."""
+    for name, table in (("pages.css", "hm-rank-table"),
+                        ("styles.css", "player-season-table")):
+        css = read(os.path.join("css", name))
+        rules = _align_rules(css)
+        for (which, cls), pairs in rules.items():
+            if which != table:
+                continue
+            kinds = {side for side, _align in pairs}
+            aligns = {align for _side, align in pairs}
+            assert len(aligns) == 1, (name, cls, pairs)
+            if cls in ALIGN:
+                assert aligns == {ALIGN[cls]}, (name, cls, aligns)
+            # a class that aligns at all aligns both halves of its column
+            assert kinds == {"th", "td"} or len(kinds) == 1, (name, cls, pairs)
+
+
+def test_every_column_class_is_one_the_stylesheet_aligns():
+    """A class on a cell that the CSS says nothing about inherits the table's
+    default, which is how a column ends up aligned by accident."""
+    known = set(ALIGN) | PLAIN
+    seen = set()
+    for slug in ("player/cj-mccollum", "team/76ers", "season/2026-27",
+                 "college/duke", "never-all-star", C.DROUGHT_HUB):
+        html = read(os.path.join(*(slug.split("/") + ["index.html"])))
+        for cell in re.finditer(r"<t[dh] class=\"([^\"]*)\"", html):
+            seen.update(cell.group(1).split())
+    assert seen - known == set(), sorted(seen - known)
+
+
+def test_a_header_carries_the_same_classes_as_its_column():
+    """Read off the built pages: column by column, the header's alignment
+    class is the one its cells carry. This is the check that fails if a table
+    is given a numeric header over a column of names."""
+    bad = []
+    for slug in ("player/cj-mccollum", "team/76ers", "season/2026-27",
+                 "college/duke", "country/canada", "never-all-star",
+                 "never-all-nba", "never-mvp", C.DROUGHT_HUB, "colleges"):
+        html = read(os.path.join(*(slug.split("/") + ["index.html"])))
+        for table in re.finditer(r"<table[^>]*>(.*?)</table>", html, re.S):
+            rows = re.findall(r"<tr>(.*?)</tr>", table.group(1), re.S)
+            if len(rows) < 2:
+                continue
+            def classes(row):
+                return [set(c.split()) & set(ALIGN)
+                        for c in re.findall(r'<t[dh][^>]*class="([^"]*)"', row)]
+            head = classes(rows[0])
+            for row in rows[1:]:
+                cells = classes(row)
+                if len(cells) != len(head):
+                    continue        # a group head row spans the table
+                for i, (want, got) in enumerate(zip(head, cells)):
+                    a = {ALIGN[c] for c in want}
+                    b = {ALIGN[c] for c in got}
+                    if a and b and a != b:
+                        bad.append((slug, i, sorted(want), sorted(got)))
+    assert bad == [], bad[:6]
+
+
+def test_the_first_column_stays_put_when_a_table_scrolls():
+    """On a phone these tables scroll sideways, and the column that says who
+    or when has to stay readable, over an opaque background rather than the
+    rows sliding under it."""
+    css = read(os.path.join("css", "pages.css"))
+    block = css[css.index("table.hm-rank-table th.hm-who {"):]
+    block = block[:block.index("}")]
+    assert "position: sticky" in block and "left: 0" in block
+    assert "background:" in block
+    tool = read(os.path.join("css", "styles.css"))
+    block = tool[tool.index("table.player-season-table th.ps-season {"):]
+    block = block[:block.index("}")]
+    assert "position: sticky" in block and "left: 0" in block
+    assert "background:" in block
+
+
+# --------------------------------------------------------------------------
+# the compact player search
+# --------------------------------------------------------------------------
+
+
+def test_every_family_carries_the_search_under_the_breadcrumb():
+    for slug in ("player/cj-mccollum", "team/76ers", "season/2026-27",
+                 "college/duke", "never-all-star", C.DROUGHT_HUB, "colleges"):
+        html = read(os.path.join(*(slug.split("/") + ["index.html"])))
+        assert '<div class="hm-find"' in html, slug
+        assert html.index("hm-crumbs") < html.index('class="hm-find"'), slug
+        assert 'id="hm-find-input"' in html, slug
+        # the depth the script resolves data/slugs.json against: one step up
+        # for every path segment the page sits under the tool root
+        depth = html.split('data-root="', 1)[1].split('"', 1)[0]
+        assert depth == "../" * len(slug.split("/")), (slug, depth)
+    # the index is fetched on focus, not on load
+    js = read(os.path.join("js", "page-search.js"))
+    assert 'addEventListener("focus", load)' in js
+    assert "slugs.json" in js
+    assert js.count("fetch(") == 1
+
+
+def test_only_a_player_page_offers_the_tool_button():
+    html = read(os.path.join("player", "cj-mccollum", "index.html"))
+    link = re.search(r'class="hm-find-tool" href="([^"]+)"', html)
+    assert link, "a player page offers the tool"
+    href = link.group(1).replace("&amp;", "&")
+    assert href.startswith(C.TOOL_ROOT + "#")
+    assert "player=CJ%20McCollum" in href and "player_exact=1" in href
+    # his whole career, because the tool opens on the current season
+    assert "from=2013-14" in href and "to=2026-27" in href
+    for slug in ("team/76ers", "college/duke", "never-all-star"):
+        other = read(os.path.join(*(slug.split("/") + ["index.html"])))
+        assert "hm-find-tool" not in other, slug
+
+
+def test_the_pages_do_not_carry_the_tool_filter_rail():
+    """The search is one input. The rail belongs to the tool."""
+    for slug in ("player/cj-mccollum", "team/76ers", "never-all-star"):
+        html = read(os.path.join(*(slug.split("/") + ["index.html"])))
+        for mark in ("filter-rail", "filter-drawer", "id=\"filters\"",
+                     "salaryMin", "capPctMin"):
+            assert mark not in html, (slug, mark)
 
 
 # --------------------------------------------------------------------------
@@ -2635,7 +2795,7 @@ def test_the_career_earnings_section_says_it_counts_the_season_in_progress():
 
 def test_one_season_with_a_team_is_not_written_as_a_span():
     block = _with_team_block()
-    spans = re.findall(r'<td class="hm-num">(\d+), ([^<]+)</td>', block)
+    spans = re.findall(r'<td class="hm-word">(\d+), ([^<]+)</td>', block)
     assert spans
     for count, span in spans:
         if count == "1":
