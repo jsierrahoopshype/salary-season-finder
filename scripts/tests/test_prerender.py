@@ -1849,13 +1849,16 @@ def test_a_cohort_top_earner_line_says_it_is_the_league():
     sys.path.insert(0, os.path.join(REPO, "scripts"))
     from prerender import timeline as TLx
 
-    for family in ("top_start", "top_end"):
+    for family in ("top_start", "top_start_again", "top_end"):
         for forms in TLx._PHRASES[family].values():
             for form in forms:
-                assert "in the league" in form, (family, form)
+                assert "the league's" in form, (family, form)
+                # the possessive leads; a trailing clause would land beside a
+                # season span and read as two places at once
+                assert "in the league" not in form, (family, form)
         for forms in TLx._PHRASES[family + "_team"].values():
             for form in forms:
-                assert "in the league" not in form, (family, form)
+                assert "league" not in form, (family, form)
 
     # and the two reach the right scopes
     assert TLx._family({"kind": "top_start",
@@ -1877,9 +1880,53 @@ def test_no_cohort_status_line_on_a_page_omits_the_league():
                 if re.search(r"highest-paid player on the ", part) or \
                         re.search(r"the [A-Z][^ ]*(&#x27;|') ?s? highest-paid", part):
                     continue
-                if "in the league" not in part and "in the NBA" not in part:
+                if "the league's" not in part and "in the NBA" not in part:
                     bad.append((slug, season, part))
     assert bad == []
+
+
+def test_a_status_taken_back_never_reads_as_a_first_arrival():
+    """Mike Conley took over as the league's highest-paid Ohio State player in
+    2011-12 and again in 2025-26. Either the season he lost it is on the page,
+    or the later line says he took it back. Two bare arrivals at the same
+    status with nothing between them is a career told wrong."""
+    sys.path.insert(0, os.path.join(REPO, "scripts"))
+    import factoids as Fx
+    from prerender import entities as Ex, slugs as Sx, timeline as TLx
+
+    idx = Fx.build_index(json.loads(read(os.path.join("data", "data.json"))))
+    events = TLx.build(idx)
+    built = Ex.build_all(idx, Sx.load(C.SLUGS_PATH))
+    retakes, bad = 0, []
+    for ident in built["players"]:
+        if not ident.extra.get("factoids_allowed"):
+            continue
+        printed = {season for season, _text in TLx.lines(idx, ident.records, events)}
+        who = idx.canonical(ident.name)
+        for (player, _season), found in events.items():
+            if player != who:
+                continue
+            for event in found:
+                if event["kind"] != "top_start" or not event.get("again"):
+                    continue
+                retakes += 1
+                if not event.get("retaken") and event["lost_season"] not in printed:
+                    bad.append((who, event["scope"], event["lost_season"]))
+    assert retakes, "no career in the data takes a status back"
+    assert bad == []
+
+
+def test_the_losing_season_is_spared_the_cap_between_two_arrivals():
+    sys.path.insert(0, os.path.join(REPO, "scripts"))
+    import factoids as Fx
+    from prerender import timeline as TLx
+
+    idx = Fx.build_index(json.loads(read(os.path.join("data", "data.json"))))
+    events = TLx.build(idx)
+    bridges = [e for found in events.values() for e in found if e.get("bridge")]
+    assert bridges
+    for event in bridges:
+        assert event["kind"] == "top_end"
 
 
 # --------------------------------------------------------------------------
@@ -2192,7 +2239,8 @@ def test_no_season_carries_more_than_two_recurring_events():
     found = TL.build(idx)
     assert found
     for key, events in found.items():
-        recurring = [e for e in events if e["kind"] not in TL.SPARED]
+        recurring = [e for e in events
+                     if e["kind"] not in TL.SPARED and not e.get("bridge")]
         assert len(recurring) <= TL.PER_SEASON, key
         # and a spared kind is only ever said once a career per list
         for kind in TL.SPARED:

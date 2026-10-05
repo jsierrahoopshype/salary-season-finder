@@ -199,8 +199,9 @@ def _span_sentence(idx, subject, span):
         who = "the {} highest-paid player".format(_possessive(team))
     else:
         # the top earner in the league out of that cohort, which is what the
-        # claim measures; without the clause it reads as a roster's top man
-        who = "the highest-paid {} in the league".format(_noun(idx, kind, key))
+        # claim measures; without it the line reads as a roster's top man. The
+        # possessive leads so the clause never lands beside a season span.
+        who = "the league's highest-paid {}".format(_noun(idx, kind, key))
     if span["open"]:
         return "{} has been {} every season since {}.".format(
             _cap(subject), who, first)

@@ -140,6 +140,9 @@ def build(idx):
     career = collections.Counter()
     members = collections.defaultdict(set)
     held = collections.defaultdict(set)   # player -> scopes he was top of
+    ever = set()       # (player, scope) he has been top of before
+    lost = {}          # (player, scope) -> the season he last lost it, and
+                       #                   the event that said so
     split_before = {}  # player -> was the last season he appeared in a split
     ranked = collections.defaultdict(dict)  # scope -> {player: his place}
     passed = set()     # milestones each man has already crossed
@@ -153,7 +156,7 @@ def build(idx):
         here = {idx.canonical(r["player"]): r for r in rows}
 
         _statuses(idx, season, rows, sizes, scopes_of, held, found, here,
-                  split_before)
+                  split_before, ever, lost)
         if paid:
             _records(idx, season, rows, sizes, scopes_of, high, found, here)
             _thresholds(idx, season, rows, sizes, scopes_of, steps, found)
@@ -190,8 +193,10 @@ def build(idx):
         # nowhere else, so they are not made to compete for a season's two
         # slots with facts that recur every year. Being passed is a recurring
         # fact and stays capped with the rest.
-        spared = [e for e in events if e["kind"] in SPARED]
-        rest = [e for e in events if e["kind"] not in SPARED]
+        spared = [e for e in events
+                  if e["kind"] in SPARED or e.get("bridge")]
+        rest = [e for e in events
+                if e["kind"] not in SPARED and not e.get("bridge")]
         kept = _thin(rest)[:PER_SEASON] + spared
         kept.sort(key=lambda e: (STRENGTH[e["kind"]], -e.get("size", 0),
                                  str(e.get("scope"))))
@@ -280,7 +285,7 @@ def _sizes(idx):
 # -- who was the highest paid, and when that started and stopped ------------
 
 def _statuses(idx, season, rows, sizes, scopes_of, held, found, here,
-              split_before):
+              split_before, ever, lost):
     """The highest-paid man in each scope that season, as a status.
 
     Said once when it starts and once when it ends, and the man who took it
@@ -321,9 +326,17 @@ def _statuses(idx, season, rows, sizes, scopes_of, held, found, here,
         for scope in now - was:
             if mute and scope[0] == "franchise":
                 continue
-            found[(player, season)].append({
-                "kind": "top_start", "scope": scope,
-                "size": sizes.get(scope, 0)})
+            event = {"kind": "top_start", "scope": scope,
+                     "size": sizes.get(scope, 0)}
+            # He has stood here before. The season he lost it has to say so,
+            # or this line has to say it took the spot back.
+            bridge = lost.get((player, scope))
+            if (player, scope) in ever and bridge:
+                event["again"] = True
+                event["lost_season"] = bridge[0]
+                bridge[1]["bridge"] = True
+            ever.add((player, scope))
+            found[(player, season)].append(event)
         for scope in was - now:
             if mute and scope[0] == "franchise":
                 continue
@@ -334,9 +347,10 @@ def _statuses(idx, season, rows, sizes, scopes_of, held, found, here,
             taken = best.get(scope, (0, ""))[1]
             if not taken:
                 continue
-            found[(player, season)].append({
-                "kind": "top_end", "scope": scope, "to": taken,
-                "size": sizes.get(scope, 0)})
+            ending = {"kind": "top_end", "scope": scope, "to": taken,
+                      "size": sizes.get(scope, 0)}
+            found[(player, season)].append(ending)
+            lost[(player, scope)] = (season, ending)
     for player in set(tops) | set(held):
         if player in tops:
             held[player] = tops[player]
@@ -578,13 +592,47 @@ def lines(idx, records, events):
     A season build() found nothing in gets no line. No two lines open on the
     same word, and no phrasing runs for more than two seasons together, so a
     career does not read as the same sentence forty times.
+
+    Written twice. A man who takes a status back needs the season he lost it
+    to be on the page, and whether that season found room for it is only
+    known once the whole career is written; where it did not, the second pass
+    words the arrival as a return.
     """
-    out = []
     if not records:
-        return out
+        return []
     player = idx.canonical(records[0]["player"])
     seasons = sorted({r["season"] for r in records},
                      key=F.season_key, reverse=True)
+    out, spoke = _write(idx, player, seasons, events)
+    if _retakes(player, seasons, events, spoke):
+        out, _spoke = _write(idx, player, seasons, events)
+    return out
+
+
+def _retakes(player, seasons, events, spoke):
+    """Flag every arrival whose losing season went unsaid. True if any did."""
+    changed = False
+    for season in seasons:
+        for event in events.get((player, season)) or []:
+            if event["kind"] != "top_start" or not event.get("again"):
+                continue
+            # the loss between the two arrivals, and whether the page carries it
+            said = any(
+                other["kind"] == "top_end"
+                and other.get("scope") == event.get("scope")
+                and id(other) in spoke
+                for other in events.get((player, event["lost_season"])) or []
+            )
+            if event.get("retaken", False) == (not said):
+                continue
+            event["retaken"] = not said
+            changed = True
+    return changed
+
+
+def _write(idx, player, seasons, events):
+    """One pass: the lines, and the events they spoke for."""
+    out, spoke = [], set()
     word, recent = "", []
     for season in seasons:
         found = events.get((player, season)) or []
@@ -601,13 +649,16 @@ def lines(idx, records, events):
         # an award-drought event said once in a career says that too. Those
         # are the three facts a man has no second chance at, and losing one to
         # a salary threshold in the same season loses it for good.
-        extra = _spared_sentence(idx, found, used, tense, season, word, recent)
+        extra, second = _spared_sentence(idx, found, used, tense, season,
+                                         word, recent)
         if extra:
             text = "{} {}".format(text, extra)
+            used = tuple(used) + (second,)
         out.append((season, text))
+        spoke.update(id(event) for event in used if event is not None)
         word = _first_word(text)
         recent = (recent + [pattern])[-2:]
-    return out
+    return out, spoke
 
 
 def _first_word(text):
@@ -663,8 +714,8 @@ def _spared_sentence(idx, found, used, tense, season, word, recent):
             continue
         form, _pattern = _pick(forms, _family(event), word, recent,
                                event["kind"], season, bits.get("drought", ""))
-        return form.format(**bits)
-    return ""
+        return form.format(**bits), event
+    return "", None
 
 
 def _single(idx, found, tense, season, word, recent):
@@ -696,6 +747,11 @@ def _family(event):
         return "drought_first_open"
     if kind == "drought_left" and (event.get("rank") or 0) > 1:
         return "drought_left_down"
+    if kind == "top_start" and event.get("retaken"):
+        base = "top_start_again"
+        if (event.get("scope") or ("", ""))[0] == "franchise":
+            return base + "_team"
+        return base
     if (event.get("scope") or ("", ""))[0] == "franchise" \
             and kind + "_team" in _PHRASES:
         return kind + "_team"
@@ -926,15 +982,35 @@ _PHRASES = {
     },
     # A cohort's top earner is the top earner in the league out of that
     # cohort, and the line has to say so: "the highest-paid Ohio State player"
-    # alone reads as the best-paid man on some Ohio State roster. A franchise
-    # needs no such clause, so it keeps the shorter form below.
+    # alone reads as the best-paid man on some Ohio State roster. The league
+    # takes the possessive and leads, which keeps the clause out of the way of
+    # a season span. A franchise needs no such clause and keeps the form below.
     "top_start": {
-        PAST: ("Became the highest-paid {who} in the league.",
-               "Took over as the highest-paid {who} in the league."),
-        NOW: ("Is the highest-paid {who} in the league.",
-              "Stands as the highest-paid {who} in the league."),
-        LATER: ("Would become the highest-paid {who} in the league.",
-                "Would take over as the highest-paid {who} in the league."),
+        PAST: ("Became the league's highest-paid {who}.",
+               "Took over as the league's highest-paid {who}."),
+        NOW: ("Is the league's highest-paid {who}.",
+              "Stands as the league's highest-paid {who}."),
+        LATER: ("Would become the league's highest-paid {who}.",
+                "Would take over as the league's highest-paid {who}."),
+    },
+    # He held this before and lost it. Where the losing season says so, the
+    # plain form is right; where it does not, the line has to carry the
+    # history itself or a career reads as two unconnected arrivals.
+    "top_start_again": {
+        PAST: ("Took back the league's highest-paid {who} spot.",
+               "Was the league's highest-paid {who} once again."),
+        NOW: ("Is the league's highest-paid {who} once again.",
+              "Holds the league's highest-paid {who} spot again."),
+        LATER: ("Would take back the league's highest-paid {who} spot.",
+                "Would be the league's highest-paid {who} once again."),
+    },
+    "top_start_again_team": {
+        PAST: ("Took back the highest-paid {who} spot.",
+               "Was the highest-paid {who} once again."),
+        NOW: ("Is the highest-paid {who} once again.",
+              "Holds the highest-paid {who} spot again."),
+        LATER: ("Would take back the highest-paid {who} spot.",
+                "Would be the highest-paid {who} once again."),
     },
     "top_start_team": {
         PAST: ("Became the highest-paid {who}.",
@@ -945,12 +1021,12 @@ _PHRASES = {
                 "Would take over as the highest-paid {who}."),
     },
     "top_end": {
-        PAST: ("Lost the highest-paid {who} spot in the league to {name}.",
-               "{name} took over as the highest-paid {who} in the league."),
-        NOW: ("No longer the highest-paid {who} in the league, a spot {name} holds.",
-              "{name} is now the highest-paid {who} in the league."),
-        LATER: ("Would lose the highest-paid {who} spot in the league to {name}.",
-                "{name} would take over as the highest-paid {who} in the league."),
+        PAST: ("Lost the league's highest-paid {who} spot to {name}.",
+               "{name} took over as the league's highest-paid {who}."),
+        NOW: ("No longer the league's highest-paid {who}, a spot {name} holds.",
+              "{name} is now the league's highest-paid {who}."),
+        LATER: ("Would lose the league's highest-paid {who} spot to {name}.",
+                "{name} would take over as the league's highest-paid {who}."),
     },
     "top_end_team": {
         PAST: ("Lost the highest-paid {who} spot to {name}.",
