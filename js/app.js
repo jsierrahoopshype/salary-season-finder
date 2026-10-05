@@ -58,6 +58,19 @@
     { key: "draft_year",        label: "Draft Yr",   type: "num",    default: false, sortable: true  },
   ];
 
+  /* The alignment class a column carries, on its header and on its cells
+     alike. One function answers for both, so a header can never be aligned
+     one way and the column under it another: figures right, words left. */
+  function columnClass(col) {
+    if (col.key === "rank") return "rank";
+    if (col.key === "player") return "player-name";
+    if (col.key === "awards") return "awards-cell";
+    if (col.type === "salary") return "salary";
+    if (col.type === "num" || col.type === "stat" ||
+        col.type === "pct" || col.type === "pct3") return "num";
+    return "text-cell";
+  }
+
   // Track which columns are visible
   let visibleCols = {};
 
@@ -2637,10 +2650,10 @@
       var isSorted = col.key === sortCol;
       var arrow = col.sortable ? '<span class="sort-arrow">' + (isSorted ? (sortDir === "asc" ? "\u25B2" : "\u25BC") : "\u25BC") + "</span>" : "";
       // the class names the column so the 768px rule can hide the awards one
-      var classes = [];
+      var classes = [columnClass(col)];
       if (isSorted) classes.push("sorted");
       if (col.key === "awards") classes.push("awards-header");
-      var cls = classes.length ? ' class="' + classes.join(" ") + '"' : "";
+      var cls = ' class="' + classes.join(" ") + '"';
       var clickAttr = col.sortable ? ' data-sort="' + col.key + '"' : "";
       headerRow += "<th" + cls + clickAttr + ">" + col.label + arrow + "</th>";
     });
@@ -2679,17 +2692,13 @@
         var displayTeam = record._display_team || record.team;
         activeCols.forEach(function (col) {
           if (col.key === "rank") {
-            html += '<td class="rank">' + (idx + 1) + "</td>";
+            html += '<td class="' + columnClass(col) + '">' + (idx + 1) + "</td>";
           } else {
             var val = record[col.key];
             // Override salary and team for multi-team filtered records
             if (col.key === "salary") val = displaySalary;
             if (col.key === "team") val = displayTeam;
-            var tdClass = "";
-            if (col.type === "salary") tdClass = "salary";
-            else if (col.type === "num" || col.type === "stat" || col.type === "pct" || col.type === "pct3") tdClass = "num";
-            else if (col.key === "player") tdClass = "player-name";
-            else if (col.key === "awards") tdClass = "awards-cell";
+            var tdClass = columnClass(col);
 
             // Presentation only: the mobile card layout in css/styles.css prints
             // this as the cell's label once the column headings are gone.

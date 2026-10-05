@@ -1941,6 +1941,9 @@ ALIGN = {
     "hm-num": "right", "hm-money": "right",
     "ps-season": "left", "ps-team": "left", "ps-awards": "left",
     "ps-num": "right",
+    # the tool's own results table
+    "text-cell": "left", "player-name": "left", "awards-cell": "left",
+    "num": "right", "salary": "right", "rank": "right",
 }
 
 #: Classes that only decorate: colour, weight, width, flex order.
@@ -1970,7 +1973,8 @@ def test_a_header_is_aligned_the_way_its_own_column_is():
     middle of nothing. Every rule that aligns a cell class names the header
     and the cells together, which is what keeps them one column."""
     for name, table in (("pages.css", "hm-rank-table"),
-                        ("styles.css", "player-season-table")):
+                        ("styles.css", "player-season-table"),
+                        ("styles.css", "nba-table")):
         css = read(os.path.join("css", name))
         rules = _align_rules(css)
         for (which, cls), pairs in rules.items():
@@ -1983,6 +1987,46 @@ def test_a_header_is_aligned_the_way_its_own_column_is():
                 assert aligns == {ALIGN[cls]}, (name, cls, aligns)
             # a class that aligns at all aligns both halves of its column
             assert kinds == {"th", "td"} or len(kinds) == 1, (name, cls, pairs)
+
+
+def test_the_tool_gives_a_header_and_its_cells_one_class():
+    """The results table is built in the browser, so its alignment cannot be
+    read off a file on disk. What can be is that one function answers for
+    both halves of a column: js/app.js asks columnClass(col) for the header
+    and asks it again for every cell, so the two cannot drift."""
+    js = read(os.path.join("js", "app.js"))
+    assert "function columnClass(col)" in js
+    body = js[js.index("function columnClass(col)"):]
+    body = body[:body.index("\n  }") + 4]
+    for cls in ("rank", "player-name", "awards-cell", "salary", "num",
+                "text-cell"):
+        assert '"{}"'.format(cls) in body, cls
+        assert cls in ALIGN, cls
+    # the header takes it
+    head = js[js.index("var classes = [columnClass(col)];"):]
+    assert "headerRow += \"<th\"" in head[:600]
+    # and so does every cell, by the one assignment there is
+    assert js.count("var tdClass = columnClass(col);") == 1
+    assert "'<td class=\"' + columnClass(col) + '\">'" in js
+    # nothing left that would set a class a second way
+    assert 'tdClass = "player-name"' not in js
+    assert 'tdClass = "num"' not in js
+
+
+def test_the_tool_table_aligns_only_where_it_is_a_table():
+    """Below 860px a row is a card: a label on the left, its value on the
+    right. A column rule carrying two class names would outrank that and pull
+    the values back under their labels, so the alignment rules are held above
+    the breakpoint."""
+    css = read(os.path.join("css", "styles.css"))
+    block = css[css.index("@media (min-width: 860.02px) {"):]
+    block = block[:block.index("\n}\n")]
+    for cls in ("th.num", "td.num", "th.text-cell", "td.text-cell",
+                "th.player-name", "th.awards-cell", "th.rank"):
+        assert "table.nba-table {}".format(cls) in block, cls
+    # and the card layout still says what it said
+    cards = css[css.index("@media (max-width: 860px) {"):]
+    assert "table.nba-table tbody td" in cards
 
 
 def test_every_column_class_is_one_the_stylesheet_aligns():
