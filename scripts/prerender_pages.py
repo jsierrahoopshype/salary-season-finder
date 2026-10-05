@@ -25,6 +25,7 @@ import json
 import os
 import subprocess
 import sys
+import urllib.parse
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(HERE)
@@ -155,6 +156,26 @@ def player_facts(idx, by_player_facts, ident, current_key, droughts_built=None):
         pair = droughts.summary_line(droughts_built, idx.canonical(ident.name))
     return seasons.summary(idx, ident.name, rows, player=ident.data_key,
                            drought=pair)
+
+
+def tool_filter_link(idx, ident):
+    """The tool, opened on this man alone.
+
+    The same hash the tool writes for its own state, read the other way: the
+    page-to-filter link of PR #14 in reverse. player_exact is what pins one
+    name where a substring would match two, and the season range is his whole
+    career, because the tool opens on the current season and a man who has
+    retired would otherwise arrive at an empty table.
+    """
+    seasons = sorted({r["season"] for r in ident.records}, key=F.season_key)
+    if not seasons:
+        return None
+    params = [("player", ident.name), ("player_exact", "1")]
+    if seasons[0] != idx.current_season or seasons[-1] != idx.current_season:
+        params = [("from", seasons[0]), ("to", seasons[-1])] + params
+    return "{}#{}".format(C.TOOL_ROOT, "&".join(
+        "{}={}".format(urllib.parse.quote(k), urllib.parse.quote(str(v)))
+        for k, v in params))
 
 
 # --------------------------------------------------------------------------
@@ -317,6 +338,9 @@ def not_found_html(hub_entries):
         root=C.TOOL_ROOT + "/",
         breadcrumb_ld=R.breadcrumb_ld([("Salary Season Finder", C.TOOL_ROOT)]),
         crumbs="",
+        # A 404 offers the hubs below; a search box on it would be a second
+        # way to leave a page that is only ever a dead end.
+        find="",
     )
     return head.replace('<main class="hm-page">', "<main>") + "\n".join(body) + R.FOOT
 
@@ -522,9 +546,10 @@ def main(argv=None):
     writer = Writer(hashes, dry_run=args.dry_run)
     sitemap_rows = []
 
-    def emit(entity, title, description, body, trail):
+    def emit(entity, title, description, body, trail, tool_link=None):
         html = R.page(
-            title, description, entity.url, 2, trail, body, entity.indexable
+            title, description, entity.url, 2, trail, body, entity.indexable,
+            tool_link=tool_link,
         )
         lastmod = writer.write(
             "{}/index.html".format(entity.path), html,
@@ -558,7 +583,7 @@ def main(argv=None):
         )
         emit(ident, title, description, body, [
             ("Salary Season Finder", C.TOOL_ROOT), (ident.name, None),
-        ])
+        ], tool_link=tool_filter_link(idx, ident))
 
     # ---- cohort pages ----------------------------------------------------
     relatives = cohort_relatives(idx, built["cohorts"])
