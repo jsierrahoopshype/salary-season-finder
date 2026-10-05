@@ -730,7 +730,7 @@ table.nba-table thead th {
   text-transform: uppercase;
   letter-spacing: .04em;
   padding: .6rem .55rem;
-  text-align: center;
+  text-align: left;
   white-space: nowrap;
   user-select: none;
   cursor: pointer;
@@ -785,13 +785,47 @@ table.nba-table tbody tr:hover {
 
 table.nba-table td {
   padding: .45rem .55rem;
-  text-align: center;
+  text-align: left;
   font-family: var(--mono);
   font-weight: 500;
   white-space: nowrap;
 }
 
-table.nba-table td.num {
+/* Alignment belongs to the column, so every rule names the header and the
+   cells together: a figure reads down its column against the one above it,
+   and a word reads from its left edge. js/app.js gives both halves the same
+   class, which is what makes one rule enough.
+
+   Held above 860px on purpose. Below it this table is not a table: each row
+   is a card and each cell a label on the left with its value on the right,
+   and a column rule carrying two class names would outrank the card layout's
+   own and pull those values back under their labels. */
+@media (min-width: 860.02px) {
+  table.nba-table th.num,
+  table.nba-table td.num,
+  table.nba-table th.salary,
+  table.nba-table td.salary,
+  table.nba-table th.rank,
+  table.nba-table td.rank {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  table.nba-table th.text-cell,
+  table.nba-table td.text-cell,
+  table.nba-table th.player-name,
+  table.nba-table td.player-name,
+  table.nba-table th.awards-cell,
+  table.nba-table td.awards-cell {
+    text-align: left;
+  }
+}
+
+/* tabular figures are a type choice, not a layout one, so they hold in the
+   card layout too */
+table.nba-table td.num,
+table.nba-table td.salary,
+table.nba-table td.rank {
   font-variant-numeric: tabular-nums;
 }
 
@@ -809,7 +843,6 @@ table.nba-table td.rank {
 table.nba-table td.player-name {
   font-family: var(--sans);
   font-weight: 600;
-  text-align: left;
   max-width: 13rem;
   overflow: hidden;
   text-overflow: ellipsis;
