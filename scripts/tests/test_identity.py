@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 
 import pytest
 
@@ -21,6 +22,7 @@ import build_data as B
 REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 REAL_DATA = os.path.join(REPO, "data", "data.json")
 REAL_BIO = os.path.join(REPO, "data_sources", "bio.csv")
+REAL_OVERRIDES = os.path.join(REPO, "data", "bio_overrides.json")
 
 
 def person(name, draft=None, pick=None, college="", birthday="", pos="", nat=""):
@@ -237,6 +239,184 @@ def test_an_empty_name_resolves_to_nobody():
 # --------------------------------------------------------------------------
 
 
+# --------------------------------------------------------------------------
+# stand-in bios
+# --------------------------------------------------------------------------
+
+
+def test_a_stand_in_bio_never_replaces_a_value_biocsv_carries():
+    """The one rule of data/bio_overrides.json. An entry is a stand-in for a row
+    that does not exist, so wherever bio.csv has a row the sheet wins field by
+    field, including the fields it leaves blank."""
+    index = register(person(
+        "Marcus Thornton", draft=2009, pick=43, college="LSU",
+        birthday="6/5/1987", pos="F-G", nat="United States"))
+    index.add_override("Marcus Thornton", {
+        "POS": "G", "HEIGHT": "6-4", "WEIGHT": "190",
+        "NATIONALITY": "Canada", "COLLEGE / TEAM": "William & Mary",
+        "DRAFT": "2015", "PICK": "45", "BIRTHDAY": "2/9/1993",
+    })
+    who = index.resolve("Marcus Thornton", "2010-11")
+    bio = index.bio(who)
+    assert bio["college"] == "LSU"
+    assert (bio["draft_year"], bio["draft_pick"]) == (2009, 43)
+    assert bio["pos"] == "F-G"
+    assert bio["nationality"] == "United States"
+    assert bio["birthday"] == "6/5/1987"
+    # bio.csv leaves height and weight off this row, and they stay off: a
+    # stand-in cannot fill a gap in a row that exists, only stand in for one
+    # that does not.
+    assert bio["height"] == ""
+    assert bio["weight"] is None
+    assert index.overrides_used == set()
+
+
+def test_a_stand_in_bio_reaches_a_man_biocsv_has_no_row_for():
+    """Same base name, no row for the suffix: the son resolves to a person of
+    his own, and that is the man an entry is for."""
+    index = register(person("Jameer Nelson", draft=2004, pick=20,
+                            college="St. Joseph's (PA)"))
+    index.add_override("Jameer Nelson Jr", {
+        "POS": "G", "HEIGHT": "6-1", "WEIGHT": "190",
+        "NATIONALITY": "United States", "COLLEGE / TEAM": "TCU",
+        "DRAFT": "2024", "PICK": "UND", "BIRTHDAY": "8/7/2001",
+    })
+    son = index.resolve("Jameer Nelson Jr", "2026-27")
+    father = index.resolve("Jameer Nelson", "2004-05")
+    assert son != father
+    assert index.bio(son)["college"] == "TCU"
+    assert index.bio(son)["draft_year"] == 2024
+    # the undrafted convention: the draft class is his, the pick is nobody's
+    assert index.bio(son)["draft_pick"] is None
+    assert index.bio(father)["college"] == "St. Joseph's (PA)"
+    assert index.overrides_used == {("jameer nelson", "jr", "")}
+
+
+def test_a_stand_in_bio_stops_applying_the_day_biocsv_gains_the_row():
+    index = register(
+        person("Jameer Nelson", draft=2004, pick=20, college="St. Joseph's (PA)"),
+        person("Jameer Nelson Jr", draft=2024, college="TCU", pos="G"),
+    )
+    index.add_override("Jameer Nelson Jr", {
+        "COLLEGE / TEAM": "Somewhere Else", "DRAFT": "2019", "PICK": "7",
+    })
+    son = index.resolve("Jameer Nelson Jr", "2026-27")
+    assert index.bio(son)["college"] == "TCU"
+    assert index.bio(son)["draft_year"] == 2024
+    assert index.overrides_used == set()
+
+
+def test_a_name_biocsv_has_never_heard_of_still_takes_its_stand_in():
+    index = register(person("Someone Else", draft=2001))
+    index.add_override("Nobody Known", {"COLLEGE / TEAM": "TCU", "DRAFT": "2024",
+                                        "PICK": "UND"})
+    who = index.resolve("Nobody Known", "2025-26")
+    assert index.bio(who) == {
+        "pos": "", "height": "", "weight": None, "nationality": "",
+        "college": "TCU", "draft_year": 2024, "draft_pick": None, "birthday": "",
+    }
+
+
+def test_a_bio_block_reads_a_sheet_row_the_same_way_whichever_sheet_it_is_on():
+    row = {
+        "POS": " G ", "HEIGHT": "6-4", "WEIGHT": "190",
+        "NATIONALITY": "United States", "COLLEGE / TEAM": " William & Mary ",
+        "DRAFT": "2015", "PICK": "45", "BIRTHDAY": "2/9/1993",
+    }
+    assert B.bio_block(row) == {
+        "pos": "G", "height": "6-4", "weight": 190,
+        "nationality": "United States", "college": "William & Mary",
+        "draft_year": 2015, "draft_pick": 45, "birthday": "2/9/1993",
+    }
+    assert B.bio_block({})["draft_pick"] is None
+
+
+@pytest.mark.skipif(not os.path.exists(REAL_OVERRIDES),
+                    reason="data/bio_overrides.json not present")
+def test_the_shipped_stand_in_bios_name_their_sources_and_use_the_sheets_formats():
+    entries = B.load_bio_overrides()
+    assert entries, "data/bio_overrides.json has no entries"
+    for name, entry in entries.items():
+        assert entry.get("note"), name
+        sources = entry.get("source")
+        assert isinstance(sources, list) and sources, name
+        for url in sources:
+            assert url.startswith("https://"), (name, url)
+        block = B.bio_block(entry)
+        # the sheet's own formats, read back through the sheet's own parser
+        assert block["nationality"], name
+        assert re.fullmatch(r"\d-\d{1,2}", block["height"]), (name, block["height"])
+        assert re.fullmatch(r"\d{1,2}/\d{1,2}/\d{4}", block["birthday"]), name
+        assert isinstance(block["weight"], int), name
+        assert block["draft_year"], name
+        # the undrafted convention: PICK is the literal UND, never blank, and
+        # the draft class year stays on the row
+        if entry.get("PICK") == "UND":
+            assert block["draft_pick"] is None, name
+        else:
+            assert 1 <= block["draft_pick"] <= 60, name
+
+
+@pytest.mark.skipif(not os.path.exists(REAL_OVERRIDES) or not os.path.exists(REAL_BIO),
+                    reason="data/bio_overrides.json or data_sources/bio.csv not present")
+def test_no_shipped_stand_in_bio_shadows_a_biocsv_row():
+    """Read against the real sheet: every entry has to be for a man bio.csv has
+    no row for, so none of them can be shadowing one."""
+    with open(REAL_BIO, "r", encoding="utf-8-sig") as fh:
+        index = B.PersonIndex()
+        for row in B.parse_csv_string(fh.read()):
+            index.add_person(row)
+    for name in B.load_bio_overrides():
+        base, suffix, marker = B.split_player_name(name)
+        exact = [pid for pid in index.by_base.get(base, ())
+                 if index.people[pid]["suffix"] == suffix
+                 and index.people[pid]["marker"] == marker]
+        assert not exact, (name, exact)
+
+
+@pytest.mark.skipif(not os.path.exists(REAL_OVERRIDES),
+                    reason="data/bio_overrides.json not present")
+def test_marcus_thornton_ii_is_not_filed_as_anybodys_son():
+    """The II in the salary sheet's spelling tells two unrelated men of one name
+    apart; it is not a family suffix. This one is the William & Mary guard born
+    in 1993 and taken 45th in 2015, and nothing may tie him to the 2009 LSU pick
+    the sheets spell without the II: not a shared college, not a shared draft
+    class, not a shared draft slot, and not an alias merging the two names.
+    """
+    entry = B.load_bio_overrides()["Marcus Thornton II"]
+    block = B.bio_block(entry)
+    assert block["college"] == "William & Mary"
+    assert (block["draft_year"], block["draft_pick"]) == (2015, 45)
+    assert block["birthday"] == "2/9/1993"
+    assert "not a son" in entry["note"].lower()
+
+    if not os.path.exists(REAL_BIO):
+        pytest.skip("data_sources/bio.csv not present")
+    with open(REAL_BIO, "r", encoding="utf-8-sig") as fh:
+        rows = [r for r in B.parse_csv_string(fh.read())
+                if r["PLAYER"].strip() == "Marcus Thornton"]
+    assert len(rows) == 1, rows
+    lsu = B.bio_block(rows[0])
+    assert lsu["college"] == "LSU"
+    # the three cohort keys that would put them in one another's company
+    assert block["college"] != lsu["college"]
+    assert block["draft_year"] != lsu["draft_year"]
+    assert block["draft_pick"] != lsu["draft_pick"]
+    assert block["birthday"] != lsu["birthday"]
+
+
+@pytest.mark.skipif(not os.path.exists(REAL_DATA) or not os.path.exists(REAL_OVERRIDES),
+                    reason="data/data.json or data/bio_overrides.json not present")
+def test_every_shipped_stand_in_bio_reaches_a_player_in_the_data():
+    """A stand-in that reaches nobody is silent damage: the man it was written
+    for is back to carrying no bio and nothing says so."""
+    with open(REAL_DATA, "r", encoding="utf-8") as fh:
+        data = json.load(fh)
+    keys = {B.split_player_name(name)[:3] for name in B.load_bio_overrides()}
+    seen = {B.split_player_name(name)[:3] for name in data["players"]}
+    assert keys <= seen, sorted(keys - seen)
+
+
 @pytest.mark.skipif(not os.path.exists(REAL_DATA), reason="data/data.json not present")
 def test_no_record_carries_a_draft_that_postdates_the_career_it_is_on():
     """A draft year later than a player's first season is another man's."""
@@ -335,6 +515,13 @@ def test_each_man_of_a_shared_name_carries_his_own_bio_and_nobody_elses():
             people.setdefault(base, []).append(row)
     shared = {base: rows for base, rows in people.items() if len(rows) > 1}
     assert len(shared) > 30, "bio.csv should hold dozens of shared base names"
+
+    # A man bio.csv has no row for carries his stand-in bio instead, so that
+    # counts as one of the people a key on his name may match.
+    for name, entry in B.load_bio_overrides().items():
+        base, _suffix, _marker = B.split_player_name(name)
+        if base in shared:
+            shared[base] = shared[base] + [dict(entry, PLAYER=name)]
 
     with open(REAL_DATA, "r", encoding="utf-8") as fh:
         data = json.load(fh)
