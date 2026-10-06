@@ -164,7 +164,7 @@ def audit_truncated(data, idx):
 
     rule("(c2) MERGED IDENTITIES AND CORRUPTED DRAFT METADATA (not briefed, found in audit)")
     print("draft_year later than the player's first season, which means the")
-    print("metadata belongs to a son with the same name: {}".format(
+    print("metadata belongs to another man under the same key: {}".format(
         len(idx.draft_meta_suspect)
     ))
     for player in sorted(idx.draft_meta_suspect):

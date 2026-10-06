@@ -669,16 +669,22 @@ class FactoidIndex:
     def cohorts_allowed(self, player, season):
         """Whether a record's identity fields can be trusted for cohorts.
 
-        The eleven names carrying a son's draft metadata are out by default:
-        college, nationality and position come off the same player record as the
-        draft fields, so none of them can be trusted on those names.
+        A name whose draft metadata postdates its own first season is out by
+        default: college, nationality and position come off the same player
+        record as the draft fields, so none of them can be trusted there.
+
+        This guard was written for eleven fathers who carried their son's draft
+        year, pick and college, and build_data.py has since settled every one of
+        them at the source by joining a salary to a person rather than to a
+        loose name. One name reaches it now: Corey Brewer, whose key covers two
+        men because bio.csv has a row for only one of them.
 
         A confirmed split is the exception. Once identity_splits.json says which
         seasons belong to which man, the segment whose own draft year, pick and
         college match what the key carries is the segment that metadata
-        describes, so that segment gets its cohorts back. Jaren Jackson Jr's
-        2018-19 onward seasons are Michigan State, No. 4, 2018; his father's
-        1990s seasons under the same key are not, and stay out.
+        describes, so that segment gets its cohorts back. Corey Brewer's 2007-08
+        onward seasons are Florida, No. 7, 2007; the 1999-00 season under the
+        same key is another man's, and stays out.
         """
         if player not in self.draft_meta_suspect:
             return True
@@ -1233,16 +1239,22 @@ def _flag_players(idx):
             idx.truncated.add(player)
 
         # Draft metadata that postdates the player's debut belongs to someone
-        # else (Glen Rice carrying Glen Rice Jr's 2013, and nine more).
+        # else. Eleven fathers read this way before build_data.py began joining
+        # on a person: Glen Rice carried Glen Rice Jr's 2013, Georgia Tech, No.
+        # 35, and ten more did the same. Each of them now carries his own bio,
+        # so the guard is a standing check rather than a live workaround.
         if draft_year is not None and draft_year > first_start:
             idx.draft_meta_suspect.add(player)
 
         # career_earnings is a running total, so a player's first record should
         # read exactly his first salary. Where it reads more, the total was
         # already running under someone else's name when he arrived: Glen Rice
-        # Jr's first season carries $67.2 million, which is his father's career.
-        # The figure is not his, so no career-level claim can use it, his own or
-        # anyone else's measured against it.
+        # Jr's first season read $67.2 million, which was his father's career,
+        # and fifteen more sons read the same way. build_data.py now runs the
+        # total per person, so this set is empty; it stays as the check that
+        # keeps it empty. Where it ever fills again, the figure is not his, so
+        # no career-level claim may use it, his own or anyone else's measured
+        # against it.
         first_total = first.get("career_earnings")
         first_salary = first.get("salary") or 0
         if first_total is not None and first_total > first_salary + 1:
@@ -1363,15 +1375,16 @@ def _cohorts_for(record, idx):
     out = []
     player = idx.canonical(record["player"])
 
-    # Eleven names carry draft metadata that postdates their own debut, which
-    # means it belongs to a son of the same name: Glen Rice reads draft 2013,
-    # pick 35, Georgia Tech, which is Glen Rice Jr. The draft fields are not the
-    # only ones that travel together. College, nationality and position come off
-    # the same player record, so Glen Rice's college reads Georgia Tech when he
-    # went to Michigan, and Gary Payton's reads Oregon St where Gary Payton II's
-    # is Oregon St too but for a different man. None of the five identity
-    # cohorts can be trusted on these names, so they join none of them, as
-    # subjects or as members of anyone else's comparison set.
+    # A name carrying draft metadata that postdates its own debut is carrying
+    # another man's. Eleven fathers read that way until build_data.py began
+    # joining on a person: Glen Rice read draft 2013, pick 35, Georgia Tech,
+    # which is Glen Rice Jr. The draft fields are not the only ones that travel
+    # together. College, nationality and position come off the same player
+    # record, so Glen Rice's college read Georgia Tech when he went to Michigan.
+    # None of the five identity cohorts can be trusted on such a name, so it
+    # joins none of them, as a subject or as a member of anyone else's
+    # comparison set. One name reaches here now, Corey Brewer, and only for the
+    # 1999-00 season his key covers for a second man.
     if not idx.cohorts_allowed(player, record["season"]):
         return out
 
@@ -2294,9 +2307,9 @@ def _family_cohorts(ctx, out, log):
     if not idx.cohorts_allowed(player, season):
         log.drop(
             "cohort", player, "draft_metadata_suspect",
-            "draft metadata postdates his debut, so it belongs to a son of the "
-            "same name; college, country and position come off the same record "
-            "and cannot be trusted either",
+            "draft metadata postdates his debut, so it belongs to another man "
+            "under the same key; college, country and position come off the "
+            "same record and cannot be trusted either",
         )
         return
 
