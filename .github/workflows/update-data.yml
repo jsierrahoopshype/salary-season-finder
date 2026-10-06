@@ -243,18 +243,29 @@ jobs:
 
       - name: Commit and push pages
         run: |
-          # Every family in scripts/prerender/config.py, hubs included. A
-          # family left off this list is not merely left uncommitted: its files
-          # stay unstaged, and the "git pull --rebase" below then refuses to
-          # run, so the push fails and no page lands at all. That is how
-          # region, pick-range and college-position stopped the daily pages on
-          # 2026-10-03, leaving 700 of them a build behind.
-          git add -A agent agents college colleges college-position \
-            college-positions countries country draft draft-classes pick \
-            pick-range pick-ranges picks player position positions region \
-            regions season team \
-            404.html sitemap.xml data/slugs.json data/page_hashes.json \
-            js/player-pages.js index.html
+          # No "set -e" here: the retry loop below ends in a && chain whose
+          # failure is the thing it retries, and -e would exit on the first
+          # attempt instead. The one command that must not fail quietly is
+          # checked by hand.
+          # Every path the prerender writes, read from the config it builds
+          # from rather than kept by hand here. A family left off this list is
+          # not merely left uncommitted: its files stay unstaged, and the
+          # "git pull --rebase" below then refuses to run, so the push fails
+          # and no page lands at all. That is how region, pick-range and
+          # college-position stopped the daily pages on 2026-10-03, leaving 700
+          # of them a build behind, and how the four never-* families went
+          # uncommitted from the day they were added.
+          if ! PAGE_PATHS_RAW="$(python scripts/page_paths.py)"; then
+            echo "::error::scripts/page_paths.py failed; refusing to stage a partial list"
+            exit 1
+          fi
+          mapfile -t PAGE_PATHS <<< "$PAGE_PATHS_RAW"
+          if [ "${#PAGE_PATHS[@]}" -lt 25 ]; then
+            echo "::error::page_paths.py returned ${#PAGE_PATHS[@]} paths, far too few"
+            exit 1
+          fi
+          printf '    %s\n' "${PAGE_PATHS[@]}"
+          git add -A "${PAGE_PATHS[@]}"
           if git diff --cached --quiet; then
             echo "No page changes"
             exit 0

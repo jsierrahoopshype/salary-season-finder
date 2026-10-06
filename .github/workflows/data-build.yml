@@ -145,18 +145,43 @@ jobs:
       - name: Commit the rebuilt data
         if: ${{ github.event_name == 'push' || github.event.inputs.commit == 'true' }}
         run: |
-          set -euo pipefail
+          # "set -e" is deliberately off: the retry loop below ends in a &&
+          # chain whose failure is the thing it retries, and -e would exit on
+          # the first attempt instead of trying again. Every command whose
+          # failure must stop the step is checked by hand.
+          set -uo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -A agent agents college colleges countries country draft \
-            draft-classes pick picks player position positions season team \
-            404.html sitemap.xml index.html js/player-pages.js \
-            data/data.json data/factoids.json data/slugs.json data/page_hashes.json
+          # Every path the prerender writes, read from the config it builds
+          # from. This list used to be kept by hand and was shorter than the
+          # daily workflow's: it left pick-range, pick-ranges, region, regions,
+          # college-position, college-positions and the four never-* families
+          # behind while committing the page_hashes.json that says they are
+          # current, so the next build found the stale files on disk, matched
+          # them against those hashes and called them unchanged. Nothing failed.
+          if ! PAGE_PATHS_RAW="$(python scripts/page_paths.py)"; then
+            echo "::error::scripts/page_paths.py failed; refusing to stage a partial list"
+            exit 1
+          fi
+          mapfile -t PAGE_PATHS <<< "$PAGE_PATHS_RAW"
+          if [ "${#PAGE_PATHS[@]}" -lt 25 ]; then
+            echo "::error::page_paths.py returned ${#PAGE_PATHS[@]} paths, far too few"
+            exit 1
+          fi
+          printf '    %s\n' "${PAGE_PATHS[@]}"
+          # the three the data build writes that the page build does not
+          git add -A "${PAGE_PATHS[@]}" data/data.json data/factoids.json \
+            data/team_corrections_report.json
           if git diff --cached --quiet; then
             echo "Nothing to commit"
             exit 0
           fi
-          git commit -m "Rebuild the data on the fixed identity join [$(date -u +%Y-%m-%d)]"
+          # -e is off (see above), so the one command whose failure must stop
+          # the step is checked here rather than left to the shell.
+          if ! git commit -m "Rebuild the data on the fixed identity join [$(date -u +%Y-%m-%d)]"; then
+            echo "::error::the commit failed; nothing will be pushed"
+            exit 1
+          fi
           for attempt in 1 2 3; do
             git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
             echo "push attempt $attempt failed, retrying"
