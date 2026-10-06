@@ -220,6 +220,7 @@ class PersonIndex:
         self.adopted = {}                      # pid -> a suffix bio.csv left off
         self.overrides = {}                    # (base, suffix, marker) -> bio
         self.overrides_used = set()            # the keys above that a pid hit
+        self.claims = {}                       # (base, suffix, marker, season) -> pid
         self.unknown = set()
 
     # ── building ──
@@ -250,11 +251,42 @@ class PersonIndex:
         pid, because the pid of a man the register has never heard of is minted
         on the fly. ``bio`` reads these only after ``self.people`` has come up
         empty, so an entry cannot reach a man bio.csv does carry.
+
+        An entry that names the seasons that are his is a second thing as well:
+        a person in his own right. bio.csv tells two men of one name apart by
+        putting a birth year on at least one of them, and where it carries a row
+        for only one of the two there is no spelling left for the other, so his
+        seasons read as the first man's. ``seasons`` is the hand-checked claim
+        that says which of them are not, and ``spelled`` is how the salary
+        sheets write him. He is registered under the entry's own key, so the
+        data prints "Josh Davis (1991)" beside "Josh Davis" the way it prints
+        "Mike Brown (1963)". His pid is marked ``override`` rather than ``bio``
+        so that a person bio.csv does carry is never confused with one it does
+        not, and so that nothing but an explicit claim can reach him.
         """
         base, suffix, marker = split_player_name(name)
         if not base:
             return
         self.overrides[(base, suffix, marker)] = bio_block(row)
+
+        claimed = row.get("seasons") or []
+        if not claimed:
+            return
+        spelled = row.get("spelled") or name
+        sheet_base, sheet_suffix, sheet_marker = split_player_name(spelled)
+        pid = ("override", base, suffix, marker)
+        self.people[pid] = {
+            "display": name,
+            "base": base,
+            "suffix": suffix,
+            "marker": marker,
+            "draft_year": parse_int(row.get("DRAFT")),
+            "bio": bio_block(row),
+        }
+        self.by_base[base].append(pid)
+        for season in claimed:
+            key = (sheet_base, sheet_suffix, sheet_marker, normalize_season(season))
+            self.claims[key] = pid
 
     def add_suffix_hint(self, spelling, stable_id):
         """A stable id that spells a suffix the loose spelling leaves off.
@@ -294,6 +326,16 @@ class PersonIndex:
         return pid
 
     def _resolve(self, base, suffix, marker, season, span=True):
+        # A hand-checked claim that this spelling, in this season, is this man.
+        # It comes first because it is the only thing that can reach a person
+        # bio.csv has no row for while the sheet's spelling still matches a
+        # person it does: an unmarked spelling otherwise resolves to the
+        # unmarked man every time, whatever the season.
+        if season:
+            claimed = self.claims.get((base, suffix, marker, normalize_season(season)))
+            if claimed is not None:
+                return claimed
+
         group = self.by_base.get(base) or []
         if not group:
             # A name the register has never heard of, so there is no father and
@@ -415,6 +457,8 @@ class PersonIndex:
         """
         person = self.people.get(pid)
         if person:
+            if pid[0] == "override":
+                self.overrides_used.add(pid[1:])
             return dict(person["bio"])
         key = pid[1:]
         stand_in = self.overrides.get(key)
@@ -1551,13 +1595,22 @@ def build_data():
         cost_per_point = round(salary / pts) if pts and pts > 0 and salary else None
         cost_per_game = round(salary / gp) if gp and gp > 0 and salary else None
 
-        # Age
+        # Age. Where it was read matters as much as what it says. The stats
+        # sheet's age is what that season recorded of the man who played it; an
+        # age worked out from a birth date is only what the register believes
+        # about whoever the row was filed under, so it agrees with that birth
+        # date whatever happens. A reader asking whether two spans of seasons
+        # are one man has to be able to tell the two apart, which is what
+        # age_source is for: it is written only on a computed age, so an age
+        # with no age_source beside it is one the season itself recorded.
         age = stats.get("age") if stats else None
+        age_source = None
         if not age and bio.get("birthday"):
             try:
                 bday = datetime.strptime(bio["birthday"], "%m/%d/%Y").date()
                 feb1 = date(end_year, 2, 1)
                 age = feb1.year - bday.year - ((feb1.month, feb1.day) < (bday.month, bday.day))
+                age_source = "birth_date"
             except (ValueError, TypeError):
                 pass
 
@@ -1566,6 +1619,7 @@ def build_data():
             "season": season,
             "team": team,
             "age": age,
+            "age_source": age_source,
             "salary": salary,
             "salary_cap_pct": cap_pct,
             "luxury_tax_pct": tax_pct,
@@ -1599,6 +1653,13 @@ def build_data():
             "height": bio.get("height", ""),
             "weight": bio.get("weight"),
         }
+        # Written only where the age was worked out rather than recorded, so
+        # that the common case costs the reader nothing: 16,329 of the 18,914
+        # records carry an age the stats sheet recorded and 2,156 carry one
+        # this build worked out, and a null beside every one of the first would
+        # add a third of a megabyte to a file every visitor downloads.
+        if record["age_source"] is None:
+            del record["age_source"]
         # Add per-team salary breakdown for multi-team players
         if ps.get("team_salaries"):
             record["team_salaries"] = ps["team_salaries"]
@@ -1696,6 +1757,14 @@ def build_data():
             "has_stats": bool(stats_lookup),
             "has_awards": bool(awards_lookup),
             "has_bio": bool(persons.people),
+            "age_source": (
+                "A record with an age and no age_source carries the age the "
+                "stats sheet recorded for that season. age_source 'birth_date' "
+                "means no stats line carried one and the build worked the age "
+                "out from the register's birth date, so it agrees with that "
+                "birth date whoever the season belonged to and is not evidence "
+                "of who that was."
+            ),
         },
     }
 

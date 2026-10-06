@@ -374,6 +374,80 @@ def test_no_shipped_stand_in_bio_shadows_a_biocsv_row():
         assert not exact, (name, exact)
 
 
+def test_a_stand_in_bio_that_claims_seasons_reaches_the_man_those_seasons_are():
+    """bio.csv has one Josh Davis and the sheets spell both men the same way, so
+    nothing in the register can reach the second one: an unmarked spelling goes
+    to the unmarked man in every season he could have been paid in. The claim is
+    what reaches him, and it reaches only the seasons it names."""
+    index = register(person("Josh Davis", draft=2002, college="Wyoming",
+                            birthday="8/10/1980"))
+    index.add_override("Josh Davis (1991)", {
+        "POS": "F", "HEIGHT": "6-8", "WEIGHT": "215",
+        "NATIONALITY": "United States", "COLLEGE / TEAM": "San Diego St",
+        "DRAFT": "2014", "PICK": "UND", "BIRTHDAY": "1/22/1991",
+        "spelled": "Josh Davis", "seasons": ["2014-15"],
+    })
+    claimed = index.resolve("Josh Davis", "2014-15")
+    assert index.display(claimed) == "Josh Davis (1991)"
+    assert index.bio(claimed)["college"] == "San Diego St"
+    assert index.bio(claimed)["draft_year"] == 2014
+    for season in ("2004-05", "2005-06", "2011-12", "2015-16", "2019-20"):
+        other = index.resolve("Josh Davis", season)
+        assert other != claimed, season
+        assert index.display(other) == "Josh Davis", season
+        assert index.bio(other)["college"] == "Wyoming", season
+
+
+def test_a_claim_does_not_reach_a_different_spelling():
+    index = register(person("Josh Davis", draft=2002, college="Wyoming"))
+    index.add_override("Josh Davis (1991)", {
+        "COLLEGE / TEAM": "San Diego St", "DRAFT": "2014", "PICK": "UND",
+        "spelled": "Josh Davis", "seasons": ["2014-15"],
+    })
+    assert index.display(index.resolve("Josh Davis Jr", "2014-15")) != "Josh Davis (1991)"
+
+
+def test_a_stand_in_bio_without_seasons_registers_no_person():
+    """The entries that only fill a bio must keep behaving exactly as before:
+    no person, no claim, nothing in by_base."""
+    index = register(person("Jameer Nelson", draft=2004, college="St. Joseph's (PA)"))
+    before = len(index.people), len(index.by_base["jameer nelson"])
+    index.add_override("Jameer Nelson Jr", {"COLLEGE / TEAM": "TCU",
+                                            "DRAFT": "2024", "PICK": "UND"})
+    assert (len(index.people), len(index.by_base["jameer nelson"])) == before
+    assert index.claims == {}
+
+
+def test_a_claimed_stand_in_counts_as_used():
+    index = register(person("Josh Davis", draft=2002, college="Wyoming"))
+    index.add_override("Josh Davis (1991)", {
+        "COLLEGE / TEAM": "San Diego St", "DRAFT": "2014", "PICK": "UND",
+        "spelled": "Josh Davis", "seasons": ["2014-15"],
+    })
+    assert index.overrides_used == set()
+    index.bio(index.resolve("Josh Davis", "2014-15"))
+    assert index.overrides_used == {("josh davis", "", "1991")}
+
+
+@pytest.mark.skipif(not os.path.exists(REAL_OVERRIDES),
+                    reason="data/bio_overrides.json not present")
+def test_every_shipped_claim_names_the_spelling_and_real_seasons():
+    for name, entry in B.load_bio_overrides().items():
+        claimed = entry.get("seasons")
+        if not claimed:
+            assert "spelled" not in entry, name
+            continue
+        assert entry.get("spelled"), name
+        for season in claimed:
+            assert B.normalize_season(season) == season, (name, season)
+        # a claim exists to separate two men, so the key has to be spelled
+        # apart from the sheet's spelling, which is what the birth year does
+        assert name != entry["spelled"], name
+        base, _suffix, marker = B.split_player_name(name)
+        assert marker, name
+        assert B.split_player_name(entry["spelled"])[0] == base, name
+
+
 @pytest.mark.skipif(not os.path.exists(REAL_OVERRIDES),
                     reason="data/bio_overrides.json not present")
 def test_marcus_thornton_ii_is_not_filed_as_anybodys_son():

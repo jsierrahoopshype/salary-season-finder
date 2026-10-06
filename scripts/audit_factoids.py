@@ -27,6 +27,7 @@ from factoids import (  # noqa: E402
     ALL_STAR_COUNT_MIN,
     FIRST_DRAFT_YEAR_IN_WINDOW,
     MAX_CAREER_GAP_SEASONS,
+    MIN_UNEVIDENCED_GAP,
     SEASONS_WITHOUT_ALL_STAR_GAME,
     build_index,
     is_split_season,
@@ -209,6 +210,42 @@ def audit_truncated(data, idx):
     for gap, player, first, last in sorted(worst, reverse=True)[:8]:
         print("   {:20s} {} to {}  (gap {})".format(player, first, last, gap))
     print("-> excluded from every career-level claim.")
+
+    rule("(c4) GAPS NO RECORDED AGE VOUCHES FOR")
+    print("A gap under one name is a man who went away and came back, or two")
+    print("men filed together, and the only thing in this data that tells them")
+    print("apart is the age each season recorded. Where one side of the gap")
+    print("carries an age the build worked out from a birth date instead, that")
+    print("test cannot be run: a computed age agrees with the birth date it came")
+    print("from whichever man the season belonged to. Reported, never acted on.")
+    print("")
+    rows = idx.gaps_without_observed_age
+    checked = load_identity_splits() or {}
+    print("gaps of {}+ seasons with no recorded age across them: {} on {} names".format(
+        MIN_UNEVIDENCED_GAP, len(rows), len({r[0] for r in rows})
+    ))
+    sizes = collections.Counter(r[3] for r in rows)
+    print("   by gap: {}".format(
+        ", ".join("{} seasons: {}".format(g, n) for g, n in sorted(sizes.items()))))
+    settled = [r for r in rows if r[0] in checked]
+    print("\nalready carrying an entry in identity_splits.json: {}".format(len(settled)))
+    print("their entry says one man, and the age it says so on is a computed one:")
+    for player, early, late, gap in settled:
+        entry = checked[player]
+        print("   {:22s} {} -> {}  (gap {})  confirmed={} split={}".format(
+            player, early, late, gap, bool(entry.get("confirmed")), bool(entry.get("split"))
+        ))
+    print("\nno entry yet, so nobody has looked: {}".format(len(rows) - len(settled)))
+    for player, early, late, gap in rows:
+        if player in checked:
+            continue
+        a = idx.record(player, early) or {}
+        b = idx.record(player, late) or {}
+        print("   {:22s} {} {:>4} {:>12,}  ->  {} {:>4} {:>12,}  (gap {})".format(
+            player, early, a.get("team") or "-", int(a.get("salary") or 0),
+            late, b.get("team") or "-", int(b.get("salary") or 0), gap,
+        ))
+    print("-> nothing here changes a factoid. It is the queue for checking.")
 
     rule("(c3) IDENTITY SPLITS: which gaps are two men and which are one")
     splits = load_identity_splits()

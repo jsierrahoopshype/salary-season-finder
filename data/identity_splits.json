@@ -402,8 +402,19 @@
    "split": false
   },
   "Josh Davis": {
-   "confirmed": false,
-   "evidence": "age 31 in 2011-12 continues age 25 in 2005-06",
+   "career_incomplete": true,
+   "confirmed": true,
+   "evidence": "age 31 in 2011-12 continues age 25 in 2005-06, both recorded by the stats sheet; confirmed by hand: one man, the Wyoming forward born 10 August 1980, away from this league between 2005-06 and 2011-12 and waived by Memphis in February 2012. The 2014-15 Spurs row that used to sit under this key is a second man, Josh Davis born 22 January 1991, out of San Diego State, signed to San Antonio's 2014 training camp and waived before the season: the $20,000 is that camp contract and he played no game. Its age of 34 was never recorded by any stats sheet, only worked out from the 1980 birth date this key carried, so it agreed with that birth date whoever the row belonged to and was no evidence at all. data/bio_overrides.json now claims that season for him and the build files it under 'Josh Davis (1991)', so this key is one man again and nothing is left here to split. His own 2003-04 Atlanta season, 4 games on the stats sheet, carries no salary row, so the total under his name is a part of a career rather than a career.",
+   "moved": {
+    "display_name": "Josh Davis (1991)",
+    "seasons": [
+     "2014-15"
+    ],
+    "teams": [
+     "SAS"
+    ],
+    "to": "data/bio_overrides.json"
+   },
    "people": [
     {
      "college": "Wyoming",
@@ -411,15 +422,14 @@
      "draft_pick": null,
      "draft_year": 2002,
      "first_season": "2004-05",
-     "last_season": "2014-15",
-     "seasons": 4,
+     "last_season": "2011-12",
+     "seasons": 3,
      "teams": [
       "HOU",
       "MEM",
       "MIL",
       "PHI",
-      "PHX",
-      "SAS"
+      "PHX"
      ]
     }
    ],
@@ -851,11 +861,12 @@
    "split": false
   }
  },
- "evidence_rule": "data.json carries an explicit age per record. A gap where the later age continues the earlier one is one man coming back; a gap where it jumps is two men. An age outside 17-45 is the same finding by another route: that row carries someone else's birth date. A gap with no age on either side is treated as a split until someone checks it, since printing the wrong man's name costs more than losing a factoid.",
+ "evidence_rule": "data.json carries an age per record, and where it came from decides whether it is evidence. An age the stats sheet recorded for that season is evidence: a gap where the later one continues the earlier is one man coming back, and a gap where it jumps is two men. An age carrying age_source 'birth_date' is not evidence of anything: no stats line held one, so the build worked it out from the birth date of whoever the row was filed under, and it continues that birth date whichever man the season belonged to. A gap bridged only by such an age is a gap with no age on one side and is treated as a split until someone checks it, which is how the 2014-15 Spurs row under Josh Davis read as one man for as long as nobody asked where its 34 came from. An age outside 17-45 is the same finding by another route: that row carries someone else's birth date. Two recorded ages that disagree across one season are a sheet error rather than a second man, which is what the 13 of them in this data are, Klay Thompson and Alonzo Mourning among them, so an age that jumps counts only across a gap.",
  "fields": {
   "career_incomplete": "one man, confirmed, whose seasons this data does not all hold: his seasons rank and his gap is not a second man, but the running total under his name is not his career, so no career-level claim may use it",
   "confirmed": "a human has checked this entry; false means the engine stays cautious",
   "evidence": "what the data says, from the age rule below",
+  "moved": "a second man who used to sit under this key and no longer does: the name the data now files him under, the seasons that went with him, and the file that claims them. An entry keeps this after the split stops being a split, so the history of the key is readable from the key.",
   "people": "one block per person, oldest first; display_name null means the name is unknown",
   "split": "true when the key covers more than one player"
  },

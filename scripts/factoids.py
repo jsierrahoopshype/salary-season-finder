@@ -161,6 +161,11 @@ ALL_NBA_COUNT_EXPECTED = 15
 #: says which of the two each flagged name is; see load_identity_splits.
 MAX_CAREER_GAP_SEASONS = 4
 
+# A gap of this many seasons or more is one the age has to vouch for. One
+# missing season is ordinary enough that asking it of every career would bury
+# the answer; two is where a man being away starts to look like a second man.
+MIN_UNEVIDENCED_GAP = 2
+
 #: Where identity_splits.json lives. Read by the engine only: build_data.py and
 #: data.json are untouched by it.
 IDENTITY_SPLITS_PATH = os.path.join("data", "identity_splits.json")
@@ -577,6 +582,10 @@ class FactoidIndex:
         self.draft_meta_suspect = set()
         self.career_total_carried_in = set()
         self.career_incomplete = set()
+        # (player, earlier season, later season) per gap whose ages prove
+        # nothing, because at least one of them was computed rather than
+        # recorded. Reported, never acted on: see _flag_unevidenced_gaps.
+        self.gaps_without_observed_age = []
         self.active_players = set()
         self.recently_active = set()
         self.final_season = {}
@@ -1115,6 +1124,7 @@ def build_index(data, franchises=None, identity_splits=None, college_names=None,
     idx.seasons = sorted({r["season"] for r in idx.records}, key=season_key)
 
     _flag_players(idx)
+    _flag_unevidenced_gaps(idx)
     _flag_impossible_salaries(idx)
     _index_identity_splits(idx)
     _index_awards(idx)
@@ -1273,6 +1283,60 @@ def _flag_players(idx):
             idx.active_players.add(player)
         if last_key >= idx.current_key - 1:
             idx.recently_active.add(player)
+
+
+def age_is_observed(record):
+    """Whether this record's age is the one the season recorded.
+
+    build_data.py writes age_source only where it had to work the age out from
+    a birth date, so an age with nothing beside it came off the stats sheet.
+    A record from a build that predates the field has no age_source either, and
+    reads as observed, which is the behaviour that file already had.
+    """
+    return record.get("age") is not None and not record.get("age_source")
+
+
+def gap_has_observed_age_evidence(earlier, later, gap):
+    """Whether two seasons' own recorded ages say this is one man.
+
+    Both ages have to be ones the seasons recorded, and the later has to be the
+    earlier plus the number of seasons between them. An age the build worked
+    out from a birth date is not an answer to this question: it was derived
+    from the register's belief about whoever the row was filed under, so it
+    continues that birth date whichever man the season belonged to.
+    """
+    if not (age_is_observed(earlier) and age_is_observed(later)):
+        return False
+    return later["age"] - earlier["age"] == gap
+
+
+def _flag_unevidenced_gaps(idx):
+    """Gaps in a career that no recorded age vouches for.
+
+    A missing season or two under one name is either a man who was away and
+    came back or two men filed together, and the only thing in this data that
+    tells them apart is the age each season recorded. Where one side of the gap
+    carries an age this build worked out instead, that test cannot be run: the
+    computed age agrees with the birth date it came from no matter who played,
+    so a gap it appears to bridge is a gap nothing has checked.
+
+    This is collected and reported, not acted on. The gap longer than
+    MAX_CAREER_GAP_SEASONS is still the only thing that suppresses a career,
+    because tightening the rule here would close career claims on hundreds of
+    men over a missing season nobody has looked at. The list is the queue for
+    looking.
+    """
+    for player, recs in idx.by_player.items():
+        for earlier, later in zip(recs, recs[1:]):
+            gap = season_key(later["season"]) - season_key(earlier["season"])
+            if gap < MIN_UNEVIDENCED_GAP:
+                continue
+            if gap_has_observed_age_evidence(earlier, later, gap):
+                continue
+            idx.gaps_without_observed_age.append(
+                (player, earlier["season"], later["season"], gap)
+            )
+    idx.gaps_without_observed_age.sort(key=lambda row: (-row[3], row[0]))
 
 
 def _note_first(idx, player, group, season):
