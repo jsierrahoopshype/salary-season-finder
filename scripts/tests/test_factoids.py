@@ -2059,9 +2059,11 @@ def test_shipped_aliases_merge_the_six_players_and_leave_the_fathers_alone():
     # because the canonical is his real name and neither raw spelling is it.
     # Marcus Thornton II was in here until the build began joining on a person:
     # bio.csv has one Marcus Thornton and no row for the man paid in 2017-18,
-    # so the two are not one career. Dominick Barlow is the only one of the six
-    # that is a plain misspelling rather than a suffix, and the only one whose
-    # two spellings share a season.
+    # so the two are not one career, and they are not father and son either:
+    # the II is the William & Mary guard born in 1993, no relation to the LSU
+    # pick, and data/bio_overrides.json carries his bio. Dominick Barlow is the
+    # only one of the six that is a plain misspelling rather than a suffix, and
+    # the only one whose two spellings share a season.
     canonicals = set(aliases.values())
     assert len(canonicals) == 6
     assert len(aliases) == 7

@@ -1,0 +1,40 @@
+{
+ "entries": {
+  "Jameer Nelson Jr": {
+   "BIRTHDAY": "8/7/2001",
+   "COLLEGE / TEAM": "TCU",
+   "DRAFT": "2024",
+   "HEIGHT": "6-1",
+   "NATIONALITY": "United States",
+   "PICK": "UND",
+   "POS": "G",
+   "WEIGHT": "190",
+   "note": "Son of the 2004 St. Joseph's pick, and a different man. bio.csv has one Jameer Nelson, the father, so the 2026-27 record under the son's name arrived with no bio at all once the build stopped lending him his father's.",
+   "source": [
+    "https://gleague.nba.com/player/1642392/jameer-nelson-jr",
+    "https://gleague.nba.com/news/stockton-kings-acquire-returning-player-rights-to-jameer-nelson-jr"
+   ]
+  },
+  "Marcus Thornton II": {
+   "BIRTHDAY": "2/9/1993",
+   "COLLEGE / TEAM": "William & Mary",
+   "DRAFT": "2015",
+   "HEIGHT": "6-4",
+   "NATIONALITY": "United States",
+   "PICK": "45",
+   "POS": "G",
+   "WEIGHT": "190",
+   "note": "Not a son of anyone in this data. This is the William & Mary guard born in 1993, taken 45th in 2015 by Boston, who is no relation to the 2009 LSU pick the sheets spell without the II. The II in the salary sheet's spelling is the sheet's own way of telling two unrelated men of one name apart, not a family suffix.",
+   "source": [
+    "https://gleague.nba.com/player/1626194",
+    "https://en.wikipedia.org/wiki/Marcus_Thornton_(basketball,_born_1993)"
+   ]
+  }
+ },
+ "fields": {
+  "note": "who this man is and why bio.csv has no row for him",
+  "row": "every other key is a bio.csv column, spelled and formatted exactly as that sheet spells it: BIRTHDAY as M/D/YYYY, HEIGHT as feet-inches, NATIONALITY in full, PICK as the overall pick or the literal UND for an undrafted man whose DRAFT is still his draft class year. The build reads them through the same parser bio.csv goes through, so a value here cannot take a shape a sheet value could not.",
+  "source": "the URLs the values were read off, one per line"
+ },
+ "readme": "A stand-in bio.csv row for a player bio.csv has no row for. Read by build_data.py and applied only where the register resolved a salary to a person it has never heard of, so an entry can never replace a value bio.csv carries: the moment bio.csv gains a row for one of these men, his row wins and the entry here goes unused. Without this file such a man carries no bio at all, which is the right answer when nobody has checked who he is and the wrong one once somebody has: he joins no college, draft-class, draft-slot, country or position group, and his player page prints none of them. Every entry is checked by hand against the sources listed with it."
+}

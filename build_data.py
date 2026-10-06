@@ -184,6 +184,25 @@ def split_player_name(name):
     return base, " ".join(suffix), marker
 
 
+def bio_block(row):
+    """The bio a person carries, read off one bio.csv row.
+
+    data/bio_overrides.json holds a stand-in row for a man the sheet has no row
+    for, in the sheet's own columns, so that it comes through here too and no
+    second set of formats can drift away from this one.
+    """
+    return {
+        "pos": (row.get("POS") or "").strip(),
+        "height": (row.get("HEIGHT") or "").strip(),
+        "weight": parse_int(row.get("WEIGHT")),
+        "nationality": (row.get("NATIONALITY") or "").strip(),
+        "college": (row.get("COLLEGE / TEAM") or "").strip(),
+        "draft_year": parse_int(row.get("DRAFT")),
+        "draft_pick": parse_int(row.get("PICK")),
+        "birthday": (row.get("BIRTHDAY") or "").strip(),
+    }
+
+
 class PersonIndex:
     """Who each name in the sheets is.
 
@@ -199,6 +218,8 @@ class PersonIndex:
         self.suffix_hints = defaultdict(set)   # base name -> suffixes a stable id spells
         self.spellings = defaultdict(lambda: defaultdict(int))
         self.adopted = {}                      # pid -> a suffix bio.csv left off
+        self.overrides = {}                    # (base, suffix, marker) -> bio
+        self.overrides_used = set()            # the keys above that a pid hit
         self.unknown = set()
 
     # ── building ──
@@ -218,18 +239,22 @@ class PersonIndex:
             "suffix": suffix,
             "marker": marker,
             "draft_year": parse_int(row.get("DRAFT")),
-            "bio": {
-                "pos": (row.get("POS") or "").strip(),
-                "height": (row.get("HEIGHT") or "").strip(),
-                "weight": parse_int(row.get("WEIGHT")),
-                "nationality": (row.get("NATIONALITY") or "").strip(),
-                "college": (row.get("COLLEGE / TEAM") or "").strip(),
-                "draft_year": parse_int(row.get("DRAFT")),
-                "draft_pick": parse_int(row.get("PICK")),
-                "birthday": (row.get("BIRTHDAY") or "").strip(),
-            },
+            "bio": bio_block(row),
         }
         self.by_base[base].append(pid)
+
+    def add_override(self, name, row):
+        """A stand-in bio for a man bio.csv has no row for.
+
+        Held against the three things that identify him rather than against a
+        pid, because the pid of a man the register has never heard of is minted
+        on the fly. ``bio`` reads these only after ``self.people`` has come up
+        empty, so an entry cannot reach a man bio.csv does carry.
+        """
+        base, suffix, marker = split_player_name(name)
+        if not base:
+            return
+        self.overrides[(base, suffix, marker)] = bio_block(row)
 
     def add_suffix_hint(self, spelling, stable_id):
         """A stable id that spells a suffix the loose spelling leaves off.
@@ -381,8 +406,22 @@ class PersonIndex:
         return ""
 
     def bio(self, pid):
+        """This person's bio block, or an empty one where nobody has his.
+
+        bio.csv wins wherever it has a row. ``self.people`` holds a person for
+        every pid the register minted from that sheet and for no other, so a
+        pid that misses here is a man the sheet has never heard of, and he is
+        the only man an override can reach.
+        """
         person = self.people.get(pid)
-        return dict(person["bio"]) if person else {}
+        if person:
+            return dict(person["bio"])
+        key = pid[1:]
+        stand_in = self.overrides.get(key)
+        if stand_in is None:
+            return {}
+        self.overrides_used.add(key)
+        return dict(stand_in)
 
 
 def year_to_season(year_val):
@@ -1129,6 +1168,21 @@ def load_award_overrides():
         return (json.load(fh) or {}).get("overrides") or []
 
 
+def load_bio_overrides():
+    """Stand-in bio.csv rows for players bio.csv has no row for.
+
+    One entry per man, each carrying the sources its values were read off and a
+    note on who he is. The entries are keyed by the name the salary sheets
+    spell, and applied only where the register could not place that name on a
+    bio.csv person, so an entry never replaces a value the sheet carries.
+    """
+    path = os.path.join(BASE_DIR, "data", "bio_overrides.json")
+    if not os.path.exists(path):
+        return {}
+    with open(path, "r", encoding="utf-8") as fh:
+        return (json.load(fh) or {}).get("entries") or {}
+
+
 def process_awards(csv_data, persons):
     """Awards per person-season, not per loose name.
 
@@ -1219,6 +1273,12 @@ def build_person_index(bio_csv, stats_csv):
                         hinted += len(persons.suffix_hints) - before
 
     print(f"    {hinted} names carry a suffix only their stable id spells")
+
+    overrides = load_bio_overrides()
+    for name, entry in overrides.items():
+        persons.add_override(name, entry)
+    if overrides:
+        print(f"    {len(overrides)} stand-in bios from data/bio_overrides.json")
     return persons
 
 
@@ -1557,6 +1617,19 @@ def build_data():
     # A completed season belongs to the team he played it for
     corrections = correct_past_season_teams(final_records, stats_lookup)
     order_split_teams(final_records, stats_lookup)
+
+    # A stand-in bio that reaches nobody is a name that has moved on, in the
+    # overrides file or in the sheets, and it is silent damage: the man it was
+    # written for is back to carrying no bio. Say so while the build is running.
+    if persons.overrides:
+        used = len(persons.overrides_used)
+        print(f"    {used} of {len(persons.overrides)} stand-in bios reached a player")
+        for base, suffix, marker in sorted(set(persons.overrides) - persons.overrides_used):
+            spelled = " ".join(
+                [base] + [SUFFIX_DISPLAY[s] for s in suffix.split() if s]
+                + ([f"({marker})"] if marker else []))
+            print(f"      WARNING: no player for stand-in bio {spelled!r}")
+
     # The report names the team string the record ended up with, so it is read
     # back after the ordering pass rather than before it.
     by_key = {(r["player"], r["season"]): r for r in final_records}
