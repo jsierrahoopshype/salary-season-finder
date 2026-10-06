@@ -1416,17 +1416,23 @@ def test_an_incomplete_career_is_the_gate_a_comeback_fails():
     assert F._career_gate(idx, "Returner") == "career_incomplete"
 
 
+#: Confirmed as one man, and this data does not hold all of his seasons, so his
+#: running total is a part of a career rather than a career.
+INCOMPLETE_CAREERS = {"Hot Rod Williams", "Josh Davis"}
+
+
 def test_only_the_confirmed_comeback_ranks_as_one_career():
     """A gap stays a career-level exclusion until a human confirms the entry.
-    Thirty-seven of the thirty-eight have been checked by hand; Josh Davis is
-    the one still open."""
+    All thirty-eight have now been checked by hand, Josh Davis last: his gap is
+    one man away from the league, and the 2014-15 Spurs row that made it look
+    like two is a second man the data now files under his own name."""
     with open(REAL_DATA, "r", encoding="utf-8") as fh:
         data = json.load(fh)
     entries = F.load_identity_splits()
     comebacks = [k for k, v in entries.items() if not v["split"]]
     assert len(comebacks) == 38
     open_still = {k for k in comebacks if not entries[k]["confirmed"]}
-    assert open_still == {"Josh Davis"}
+    assert open_still == set()
     idx = build_index(data, franchises=FRANCHISES)
     for key in open_still:
         assert key in idx.identity_suspect, key
@@ -1434,9 +1440,11 @@ def test_only_the_confirmed_comeback_ranks_as_one_career():
         assert idx.career_rankable(key) is False, key
     for key in set(comebacks) - open_still:
         assert key not in idx.identity_suspect, key
-        # Hot Rod Williams is one man, and his career is not all here, so
-        # confirming him opens his seasons and not his career.
-        expected = key != "Hot Rod Williams"
+        # Confirming a man whose career this data does not all hold opens his
+        # seasons and not his career: Hot Rod Williams has four seasons of
+        # thirteen, and Josh Davis played 4 games for Atlanta in 2003-04 that
+        # no salary row covers.
+        expected = key not in INCOMPLETE_CAREERS
         assert idx.career_rankable(key) is expected, key
     assert idx.career_eligible("PJ Tucker") is True
     assert idx.career_rankable("Tacko Fall") is True
@@ -1446,26 +1454,30 @@ def test_only_the_confirmed_comeback_ranks_as_one_career():
     not os.path.exists(os.path.join(REPO, "data", "identity_splits.json")),
     reason="data/identity_splits.json not present",
 )
-def test_the_one_incomplete_career_is_ranked_nowhere():
+def test_an_incomplete_career_is_ranked_nowhere():
     with open(REAL_DATA, "r", encoding="utf-8") as fh:
         data = json.load(fh)
     entries = F.load_identity_splits()
     flagged = {k for k, v in entries.items() if v.get("career_incomplete")}
-    assert flagged == {"Hot Rod Williams"}
+    assert flagged == INCOMPLETE_CAREERS
     idx = build_index(data, franchises=FRANCHISES)
     assert idx.career_incomplete == flagged
-    assert idx.career_rankable("Hot Rod Williams") is False
-    assert idx.career_eligible("Hot Rod Williams") is False
-    # his career also began before the window, which is the gate the log names
-    # first; either way no career claim reaches him
+    for name in sorted(flagged):
+        assert idx.career_rankable(name) is False, name
+        assert idx.career_eligible(name) is False, name
+        # out of every career universe, and his seasons still in the season ones
+        career = {e["player"] for e in idx.u_career.entries}
+        career |= {e["player"] for u in idx.u_cohort_career.values()
+                   for e in u.entries}
+        assert name not in career, name
+        season = {e["player"] for u in idx.u_cohort_season.values()
+                  for e in u.entries}
+        assert name in season, name
+    # Hot Rod Williams's career also began before the window, which is the gate
+    # the log names first; either way no career claim reaches him
     assert F._career_gate(idx, "Hot Rod Williams") in (
         "truncated_career", "career_incomplete")
-    # out of every career universe, and his seasons still in the season ones
-    career = {e["player"] for e in idx.u_career.entries}
-    career |= {e["player"] for u in idx.u_cohort_career.values() for e in u.entries}
-    assert "Hot Rod Williams" not in career
-    season = {e["player"] for u in idx.u_cohort_season.values() for e in u.entries}
-    assert "Hot Rod Williams" in season
+    assert F._career_gate(idx, "Josh Davis") == "career_incomplete"
 
 
 @pytest.mark.skipif(
@@ -2534,3 +2546,86 @@ def test_fourth_place_is_not_a_list_of_names():
     assert texts
     for text in texts:
         assert " and Man " not in text, text
+
+
+# --------------------------------------------------------------------------
+# a recorded age is evidence; a computed one is not
+# --------------------------------------------------------------------------
+
+
+def test_an_age_with_no_age_source_is_the_one_the_season_recorded():
+    assert F.age_is_observed({"age": 31})
+    assert not F.age_is_observed({"age": 34, "age_source": "birth_date"})
+    assert not F.age_is_observed({"age": None})
+    assert not F.age_is_observed({})
+
+
+def test_a_computed_age_vouches_for_nothing_across_a_gap():
+    """The whole point. A computed age continues the birth date it came from
+    whichever man the season belonged to, so it cannot answer the question the
+    gap asks."""
+    earlier = {"season": "2011-12", "age": 31}
+    recorded = {"season": "2014-15", "age": 34}
+    computed = {"season": "2014-15", "age": 34, "age_source": "birth_date"}
+    assert F.gap_has_observed_age_evidence(earlier, recorded, 3)
+    assert not F.gap_has_observed_age_evidence(earlier, computed, 3)
+    # and a recorded age that jumps is still not evidence of one man
+    assert not F.gap_has_observed_age_evidence(earlier, {"season": "2014-15", "age": 40}, 3)
+
+
+def test_a_gap_a_computed_age_appears_to_bridge_is_reported_not_acted_on():
+    records = [
+        {"player": "Two Men", "season": "2004-05", "salary": 1, "age": 24,
+         "career_earnings": 1, "team": "PHI"},
+        {"player": "Two Men", "season": "2007-08", "salary": 1, "age": 27,
+         "age_source": "birth_date", "career_earnings": 2, "team": "SAS"},
+    ]
+    idx = build_index({"seasons": records, "seasons_list": ["2007-08", "2004-05"]},
+                      franchises=FRANCHISES)
+    assert [row[:3] for row in idx.gaps_without_observed_age] == [
+        ("Two Men", "2004-05", "2007-08")]
+    # reported only: the gap is under MAX_CAREER_GAP_SEASONS, so nothing about
+    # what the engine will say about him has changed
+    assert "Two Men" not in idx.identity_suspect
+
+
+def test_a_gap_both_seasons_recorded_an_age_for_is_not_reported():
+    records = [
+        {"player": "One Man", "season": "2004-05", "salary": 1, "age": 24,
+         "career_earnings": 1, "team": "PHI"},
+        {"player": "One Man", "season": "2007-08", "salary": 1, "age": 27,
+         "career_earnings": 2, "team": "SAS"},
+    ]
+    idx = build_index({"seasons": records, "seasons_list": ["2007-08", "2004-05"]},
+                      franchises=FRANCHISES)
+    assert idx.gaps_without_observed_age == []
+
+
+def test_one_missing_season_is_not_asked_to_prove_itself():
+    records = [
+        {"player": "Steady", "season": "2004-05", "salary": 1, "age": 24,
+         "career_earnings": 1, "team": "PHI"},
+        {"player": "Steady", "season": "2006-07", "salary": 1, "age": 26,
+         "age_source": "birth_date", "career_earnings": 2, "team": "PHI"},
+    ]
+    idx = build_index({"seasons": records, "seasons_list": ["2006-07", "2004-05"]},
+                      franchises=FRANCHISES)
+    assert [row[3] for row in idx.gaps_without_observed_age] == [2]
+    assert F.MIN_UNEVIDENCED_GAP == 2
+
+
+@pytest.mark.skipif(
+    not os.path.exists(os.path.join(REPO, "data", "identity_splits.json")),
+    reason="data/identity_splits.json not present",
+)
+def test_the_evidence_rule_says_a_computed_age_is_not_evidence():
+    with open(os.path.join(REPO, "data", "identity_splits.json"), "r",
+              encoding="utf-8") as fh:
+        doc = json.load(fh)
+    rule = doc["evidence_rule"]
+    assert "age_source" in rule and "birth_date" in rule, rule
+    assert "moved" in doc["fields"], sorted(doc["fields"])
+    josh = doc["entries"]["Josh Davis"]
+    assert josh["confirmed"] and not josh["split"]
+    assert josh["moved"]["display_name"] == "Josh Davis (1991)"
+    assert josh["moved"]["seasons"] == ["2014-15"]

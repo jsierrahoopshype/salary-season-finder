@@ -15,6 +15,26 @@
     "https://gleague.nba.com/news/stockton-kings-acquire-returning-player-rights-to-jameer-nelson-jr"
    ]
   },
+  "Josh Davis (1991)": {
+   "BIRTHDAY": "1/22/1991",
+   "COLLEGE / TEAM": "San Diego St",
+   "DRAFT": "2014",
+   "HEIGHT": "6-8",
+   "NATIONALITY": "United States",
+   "PICK": "UND",
+   "POS": "F",
+   "WEIGHT": "215",
+   "note": "No relation to the Wyoming Josh Davis the sheets spell without a birth year. This one went undrafted in 2014 out of San Diego State, after NC State and Tulane, signed with San Antonio for training camp in September 2014 and was waived before the season, which is what the $20,000 on the 2014-15 Spurs row is. bio.csv has a row for the Wyoming man only, so without this entry that payment reads as his and gives him a Spurs season he never had.",
+   "seasons": [
+    "2014-15"
+   ],
+   "source": [
+    "https://www.nba.com/spurs/news/140926_spurs_announce_training_camp_roster",
+    "https://hoopsrumors.com/san-antonio-spurs/page/301",
+    "https://en.wikipedia.org/wiki/Josh_Davis_(basketball,_born_1991)"
+   ],
+   "spelled": "Josh Davis"
+  },
   "Marcus Thornton II": {
    "BIRTHDAY": "2/9/1993",
    "COLLEGE / TEAM": "William & Mary",
@@ -34,7 +54,9 @@
  "fields": {
   "note": "who this man is and why bio.csv has no row for him",
   "row": "every other key is a bio.csv column, spelled and formatted exactly as that sheet spells it: BIRTHDAY as M/D/YYYY, HEIGHT as feet-inches, NATIONALITY in full, PICK as the overall pick or the literal UND for an undrafted man whose DRAFT is still his draft class year. The build reads them through the same parser bio.csv goes through, so a value here cannot take a shape a sheet value could not.",
-  "source": "the URLs the values were read off, one per line"
+  "seasons": "the seasons under `spelled` that are this man's and not the other man's, checked by hand against the sources. An entry with seasons is a person in his own right as well as a bio: the build files those seasons under this entry's key, which carries a birth year the way bio.csv writes one, and leaves every other season under that spelling where it was. An entry without seasons only fills a bio and moves nothing.",
+  "source": "the URLs the values were read off, one per line",
+  "spelled": "how the salary sheets write this man, where that differs from the key. Required with seasons."
  },
- "readme": "A stand-in bio.csv row for a player bio.csv has no row for. Read by build_data.py and applied only where the register resolved a salary to a person it has never heard of, so an entry can never replace a value bio.csv carries: the moment bio.csv gains a row for one of these men, his row wins and the entry here goes unused. Without this file such a man carries no bio at all, which is the right answer when nobody has checked who he is and the wrong one once somebody has: he joins no college, draft-class, draft-slot, country or position group, and his player page prints none of them. Every entry is checked by hand against the sources listed with it."
+ "readme": "A stand-in bio.csv row for a player bio.csv has no row for. Read by build_data.py and applied only where the register resolved a salary to a person it has never heard of, so an entry can never replace a value bio.csv carries: the moment bio.csv gains a row for one of these men, his row wins and the entry here goes unused. Without this file such a man carries no bio at all, which is the right answer when nobody has checked who he is and the wrong one once somebody has: he joins no college, draft-class, draft-slot, country or position group, and his player page prints none of them. Every entry is checked by hand against the sources listed with it. Where the sheets spell two men the same way and bio.csv has a row for only one of them, an entry may also claim the seasons that are the other man's, under a key carrying his birth year in brackets, the convention bio.csv itself uses for Mike Brown (1963) and Charles Smith (1965). That claim is the only thing that can reach him, because an unmarked spelling otherwise resolves to the unmarked man in every season he could have been paid in."
 }
