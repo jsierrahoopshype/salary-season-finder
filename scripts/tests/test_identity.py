@@ -20,6 +20,7 @@ import build_data as B
 
 REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 REAL_DATA = os.path.join(REPO, "data", "data.json")
+REAL_BIO = os.path.join(REPO, "data_sources", "bio.csv")
 
 
 def person(name, draft=None, pick=None, college="", birthday="", pos="", nat=""):
@@ -272,6 +273,107 @@ def test_career_earnings_opens_on_a_players_own_first_salary():
         and rec["career_earnings"] > (rec.get("salary") or 0) + 1
     }
     assert carried == {}, carried
+
+
+@pytest.mark.skipif(not os.path.exists(REAL_DATA), reason="data/data.json not present")
+def test_career_earnings_runs_as_one_mans_total_from_first_season_to_last():
+    """The first record opening on the player's own first salary is only half of
+    it: a total that is right in 1990-91 and wrong in 1995-96 passes that check.
+    Every season has to read the running sum of the salaries above it under the
+    same name.
+
+    Corey Brewer is the one key this cannot hold for, because it covers two men:
+    bio.csv has a row for the 2007 Florida pick and none for whoever Miami paid
+    $100,000 in 1999-00, so the build cannot give the second man a name of his
+    own. identity_splits.json records the split, and factoids.py closes every
+    career-level claim on the key.
+    """
+    with open(REAL_DATA, "r", encoding="utf-8") as fh:
+        data = json.load(fh)
+    by_player = {}
+    for record in data["seasons"]:
+        by_player.setdefault(record["player"], []).append(record)
+    offenders = {}
+    for name, records in by_player.items():
+        records.sort(key=lambda r: int(str(r["season"]).split("-")[0]))
+        running = 0
+        for record in records:
+            running += record.get("salary") or 0
+            if record.get("career_earnings") != running:
+                offenders[name] = (record["season"],
+                                   record.get("career_earnings"), running)
+                break
+    assert set(offenders) == {"Corey Brewer"}, offenders
+
+    with open(os.path.join(REPO, "data", "identity_splits.json"), "r",
+              encoding="utf-8") as fh:
+        splits = json.load(fh)["entries"]
+    entry = splits.get("Corey Brewer")
+    assert entry and entry["split"] and entry["confirmed"], entry
+
+
+@pytest.mark.skipif(not os.path.exists(REAL_DATA) or not os.path.exists(REAL_BIO),
+                    reason="data/data.json or data_sources/bio.csv not present")
+def test_each_man_of_a_shared_name_carries_his_own_bio_and_nobody_elses():
+    """Where bio.csv holds more than one person under one base name, every
+    data.json key built on that name has to carry one of those people's bio
+    exactly, and it has to be a person whose career could hold the key's
+    seasons.
+
+    The draft-year and career-earnings checks above miss one shape of this. A
+    son who carries his father's bio reads a draft year *earlier* than his own
+    debut, which is what a late-starting career looks like, and his running
+    total is his own if the father was never paid inside this window. Jim Paxson
+    reading Jim Paxson Sr's 1956 draft would pass both and fail here.
+    """
+    with open(REAL_BIO, "r", encoding="utf-8-sig") as fh:
+        rows = B.parse_csv_string(fh.read())
+    people = {}
+    for row in rows:
+        base, _suffix, _marker = B.split_player_name((row.get("PLAYER") or "").strip())
+        if base:
+            people.setdefault(base, []).append(row)
+    shared = {base: rows for base, rows in people.items() if len(rows) > 1}
+    assert len(shared) > 30, "bio.csv should hold dozens of shared base names"
+
+    with open(REAL_DATA, "r", encoding="utf-8") as fh:
+        data = json.load(fh)
+    by_player = {}
+    for record in data["seasons"]:
+        by_player.setdefault(record["player"], []).append(record)
+
+    checked = 0
+    for name, records in sorted(by_player.items()):
+        base, _suffix, _marker = B.split_player_name(name)
+        if base not in shared:
+            continue
+        records.sort(key=lambda r: int(str(r["season"]).split("-")[0]))
+        stamps = {
+            (r.get("college") or "", r.get("draft_year"), r.get("draft_pick"),
+             r.get("pos") or "", r.get("height") or "", r.get("weight"))
+            for r in records
+        }
+        assert len(stamps) == 1, (name, sorted(stamps))
+        stamp = stamps.pop()
+        if stamp == ("", None, None, "", "", None):
+            # bio.csv has never heard of this spelling, so the build leaves the
+            # bio blank rather than borrowing a namesake's. Nothing to match.
+            continue
+        matches = [
+            row for row in shared[base]
+            if (row["COLLEGE / TEAM"].strip(), B.parse_int(row["DRAFT"]),
+                B.parse_int(row["PICK"])) == (stamp[0], stamp[1], stamp[2])
+        ]
+        assert len(matches) == 1, (name, stamp, len(matches))
+        drafted = B.parse_int(matches[0]["DRAFT"])
+        if drafted is not None:
+            first = int(str(records[0]["season"]).split("-")[0])
+            last = int(str(records[-1]["season"]).split("-")[0])
+            assert drafted <= first, (name, drafted, records[0]["season"])
+            assert last <= drafted + B.MAX_CAREER_SPAN, (
+                name, drafted, records[-1]["season"])
+        checked += 1
+    assert checked > 50, checked
 
 
 @pytest.mark.skipif(not os.path.exists(REAL_DATA), reason="data/data.json not present")

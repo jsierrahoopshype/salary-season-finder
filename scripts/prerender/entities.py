@@ -171,9 +171,9 @@ def _cohort_nouns(idx, family, key, name):
 def build_cohorts(idx, identities):
     """Cohort pages, with the same membership the engine ranks inside.
 
-    A record whose bio metadata belongs to a son of the same name joins nothing,
-    and a season a confirmed split cannot name is not in the data either, both
-    because ``_cohorts_for`` refuses them.
+    A record whose bio metadata belongs to another man under the same key joins
+    nothing, and a season a confirmed split cannot name is not in the data
+    either, both because ``_cohorts_for`` refuses them.
     """
     by_data_key = collections.defaultdict(list)
     for ident in identities:
