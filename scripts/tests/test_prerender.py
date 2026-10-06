@@ -23,6 +23,7 @@ import factoids as F
 from prerender import config as C
 from prerender import entities as E
 from prerender import slugs as S
+from prerender import droughts
 from prerender import timeline as TL
 
 REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -1710,14 +1711,23 @@ def test_the_daily_build_commits_every_family_it_writes():
     region, pick-range and college-position stopped the daily pages on
     2026-10-03 and left 700 of them a build behind, which no test caught
     because the drift only shows up in the next pull request.
+
+    This test used to read the hand-kept list and check it against
+    C.FAMILIES, which is why it passed all the while the four never-* families
+    went uncommitted: they are built from droughts.LISTS and were in neither
+    place. The list now comes from scripts/page_paths.py, which reads both, and
+    what is checked here is that the workflow asks it rather than keeping its
+    own answer.
     """
-    workflow = read(os.path.join(".github", "workflows", "update-data.yml"))
-    block = workflow[workflow.index("git add -A agent"):]
-    block = block[:block.index("if git diff --cached")]
-    staged = set(block.replace("\\", "").split())
+    import page_paths
+
+    body = _workflow_step("update-data.yml", "Commit and push pages")
+    assert "scripts/page_paths.py" in body
     wanted = {spec["dir"] for spec in C.FAMILIES.values()}
     wanted |= {spec["hub"] for spec in C.FAMILIES.values() if spec["hub"]}
-    assert wanted - staged == set()
+    wanted |= {spec.slug for spec in droughts.LISTS}
+    wanted.add(C.DROUGHT_HUB)
+    assert wanted - set(page_paths.all_paths()) == set()
 
 
 #: every source file this repo tracks. The build downloads more than these;
@@ -2846,3 +2856,92 @@ def test_one_season_with_a_team_is_not_written_as_a_span():
             assert " to " not in span, span
         else:
             assert " to " in span, (count, span)
+
+
+# --------------------------------------------------------------------------
+# the workflows commit every family the prerender writes
+# --------------------------------------------------------------------------
+
+WORKFLOWS = os.path.join(REPO, ".github", "workflows")
+PAGE_COMMIT_STEPS = (
+    ("update-data.yml", "Commit and push pages"),
+    ("data-build.yml", "Commit the rebuilt data"),
+)
+
+
+def _workflow_step(filename, step_name):
+    """The shell body of one named workflow step."""
+    with open(os.path.join(WORKFLOWS, filename), "r", encoding="utf-8") as fh:
+        text = fh.read()
+    marker = "- name: {}\n".format(step_name)
+    assert marker in text, (filename, step_name)
+    body = text.split(marker, 1)[1]
+    # up to the next step at the same indentation
+    end = body.find("\n      - name:")
+    return body if end < 0 else body[:end]
+
+
+def test_page_paths_covers_every_family_hub_and_drought_list():
+    import page_paths
+
+    paths = page_paths.all_paths()
+    assert len(paths) == len(set(paths)), "a path is listed twice"
+    assert paths == sorted(page_paths.page_dirs()) + sorted(page_paths.FIXED_PATHS)
+    for family in C.FAMILIES.values():
+        assert family["dir"] in paths, family
+        if family.get("hub"):
+            assert family["hub"] in paths, family
+    for spec in droughts.LISTS:
+        assert spec.slug in paths, spec.slug
+    assert C.DROUGHT_HUB in paths
+    for fixed in (C.SITEMAP_PATH, C.NOT_FOUND_PATH, C.SLUGS_PATH,
+                  C.PAGE_HASHES_PATH):
+        assert fixed in paths, fixed
+
+
+def test_page_paths_names_every_directory_the_build_actually_wrote():
+    """Read against page_hashes.json, which is what the last build wrote. A
+    family that exists and is not on the list is the bug this guards: its files
+    stay unstaged while the hashes that call them current get committed."""
+    with open(HASHES, "r", encoding="utf-8") as fh:
+        pages = json.load(fh)["pages"]
+    import page_paths
+
+    listed = set(page_paths.all_paths())
+    missing = sorted(
+        path for path in pages
+        if path not in listed and path.split("/", 1)[0] not in listed
+    )
+    assert not missing, missing
+
+
+@pytest.mark.parametrize("filename,step", PAGE_COMMIT_STEPS)
+def test_the_commit_steps_read_the_list_rather_than_keeping_one(filename, step):
+    """Neither workflow may carry the family list by hand again. Each has to
+    call scripts/page_paths.py and stage exactly what it returns."""
+    body = _workflow_step(filename, step)
+    assert "scripts/page_paths.py" in body, filename
+    assert 'git add -A "${PAGE_PATHS[@]}"' in body, filename
+    # and the hand-kept list is gone: no family named as a bare argument to
+    # git add, which is how the two lists drifted apart in the first place
+    add_lines = [line for line in body.splitlines() if "git add" in line]
+    assert add_lines, filename
+    for line in add_lines:
+        for family in C.FAMILIES.values():
+            assert " {} ".format(family["dir"]) not in line, (filename, line)
+
+
+@pytest.mark.parametrize("filename,step", PAGE_COMMIT_STEPS)
+def test_the_commit_steps_refuse_a_short_list(filename, step):
+    """A failed or truncated page_paths.py must stop the step, not stage a
+    partial list and commit page_hashes.json against it."""
+    body = _workflow_step(filename, step)
+    assert "refusing to stage a partial list" in body, filename
+    assert "far too few" in body, filename
+
+
+def test_the_data_build_also_commits_what_only_it_writes():
+    body = _workflow_step("data-build.yml", "Commit the rebuilt data")
+    for path in ("data/data.json", "data/factoids.json",
+                 "data/team_corrections_report.json"):
+        assert path in body, path
