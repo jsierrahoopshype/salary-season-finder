@@ -1564,7 +1564,11 @@ def build_data():
         # and the tab cannot, so both are named and neither is given a figure:
         # nothing here records how the money divided.
         team_str = ", ".join(sorted(teams))
-        who = persons.resolve(offer["player"], season, note=False)
+        # note=True, as everywhere else a salary row is resolved: display() reads
+        # the spellings it was told about, and a man bio.csv has no row for has
+        # no other source for his name. With note=False these rows came out with
+        # an empty player, and several of them collapsed into one nameless key.
+        who = persons.resolve(offer["player"], season)
         existing = salary_csv_lookup.get((who, season))
         if existing is None:
             salary_csv_lookup[(who, season)] = [{
@@ -2052,11 +2056,30 @@ def build_data():
             "balances": built == expected,
         }
         if built != expected:
-            # ::error:: so a run surfaces it as an annotation rather than only
-            # as a line in a log nobody reads.
+            # Naming the records is the whole point. A total that does not add up
+            # says only that something is wrong; the rows it cannot account for
+            # say what. ::error:: so a run surfaces them as annotations rather
+            # than as lines in a log nobody outside the runner can read.
+            accounted = {
+                key for key in salary_csv_lookup if key[1] == season
+            }
+            # player_season_list rather than final_records: the records that
+            # ship carry a printed name and not the person they were keyed on,
+            # and the person is what has to be matched against the sheets.
+            orphans = sorted(
+                (persons.display(ps["pid"]) or "(no name)", ps["salary"])
+                for ps in player_season_list
+                if ps["season"] == season
+                and (ps["pid"], season) not in accounted
+            )
             print(f"::error::{season} does not balance: the file holds "
                   f"{built:,} and the sheets account for {expected:,}, a "
                   f"difference of {built - expected:,}")
+            arithmetic[season]["records_the_sheets_do_not_account_for"] = [
+                {"player": name, "salary": salary} for name, salary in orphans
+            ]
+            for name, salary in orphans[:40]:
+                print(f"::error::{season} unaccounted: {name} {salary:,}")
     sources_path = os.path.join(OUT_DIR, "salary_sources_report.json")
     with open(sources_path, "w", encoding="utf-8") as f:
         json.dump({
