@@ -318,6 +318,31 @@ def cohort_page(idx, entity, identities, facts_by_cohort, media=None,
 # player pages
 # --------------------------------------------------------------------------
 
+def _career_may_predate_the_data(idx, ident):
+    """Whether the edge of the window can have cut anything off this career.
+
+    Two shapes of career can. One was already under way when the file opens: a
+    man whose first season on file is the first season on file at all was
+    almost certainly paid before it, and the page cannot say how much. The
+    other was drafted before the oldest draft class the file can hold whole, so
+    his early seasons are outside it whatever season he first appears in.
+
+    Everything else is a career the window did not touch, and there the note
+    answers a question nobody asked: the table holds every dollar he was paid.
+
+    The season the file opens in is read off the data, not named here, so a file
+    that gains an older season moves this test with it.
+    """
+    if not idx.seasons or not ident.records:
+        return True
+    opens = idx.seasons[0]
+    if ident.records[0]["season"] == opens:
+        return True
+    first_draft_in_window = int(str(opens).split("-")[0])
+    drafted = [r.get("draft_year") for r in ident.records if r.get("draft_year")]
+    return bool(drafted) and min(drafted) < first_draft_in_window
+
+
 def player_page(idx, ident, season_table_html, facts, related, linker=None,
                 timeline=()):
     title = C.TITLES["player"][0].format(name=ident.name)
@@ -352,14 +377,19 @@ def player_page(idx, ident, season_table_html, facts, related, linker=None,
     body = [
         "<h1>{}</h1>".format(esc(ident.name)),
         '<p class="hm-lede">{}</p>'.format(esc(description)),
-        scope_line(),
-        section(
-            "Season by season",
-            "Salary, share of the cap, league and team rank, and what the "
-            "contract carries beyond this season.",
-            season_table_html,
-        ),
     ]
+    # The note tells a reader what the file cannot show him. Under a career that
+    # began well inside the window it shows him nothing: every dollar the man
+    # was paid is in the table above it. It stays on every other page, where the
+    # tables rank men whose careers the window did cut.
+    if _career_may_predate_the_data(idx, ident):
+        body.append(scope_line())
+    body.append(section(
+        "Season by season",
+        "Salary, share of the cap, league and team rank, and what the "
+        "contract carries beyond this season.",
+        season_table_html,
+    ))
     if facts:
         body.append(section(
             "What the numbers say",
