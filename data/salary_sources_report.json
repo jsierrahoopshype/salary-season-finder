@@ -741,6 +741,352 @@
   ],
   "teams_filled_in": []
  },
+ "filled_from_current_sheet_missing_from_tab": {
+  "already_answered_for_by_the_tab_or_the_dead_sheet": 509,
+  "left_out_for_no_games": [
+   {
+    "player": "AK Okereke",
+    "salary": 636435,
+    "season": "2025-26"
+   },
+   {
+    "player": "Arthur Kaluma",
+    "salary": 141554,
+    "season": "2025-26"
+   },
+   {
+    "player": "Ben Simmons",
+    "salary": 636435,
+    "season": "2025-26"
+   },
+   {
+    "player": "Braden Smith",
+    "salary": 1131970,
+    "season": "2025-26"
+   },
+   {
+    "player": "Bryce Hopkins",
+    "salary": 636435,
+    "season": "2025-26"
+   },
+   {
+    "player": "Dennis Smith",
+    "salary": 321714,
+    "season": "2025-26"
+   },
+   {
+    "player": "Dillon Mitchell",
+    "salary": 490128,
+    "season": "2025-26"
+   },
+   {
+    "player": "Felix Okpara",
+    "salary": 1131970,
+    "season": "2025-26"
+   },
+   {
+    "player": "Graham Ike",
+    "salary": 405359,
+    "season": "2025-26"
+   },
+   {
+    "player": "Izaiyah Nelson",
+    "salary": 636435,
+    "season": "2025-26"
+   },
+   {
+    "player": "Jaden Akins",
+    "salary": 1131970,
+    "season": "2025-26"
+   },
+   {
+    "player": "Jaden Bradley",
+    "salary": 157640,
+    "season": "2025-26"
+   },
+   {
+    "player": "Ja'Kobi Gillespie",
+    "salary": 157640,
+    "season": "2025-26"
+   },
+   {
+    "player": "Jalen Bridges",
+    "salary": 636435,
+    "season": "2025-26"
+   },
+   {
+    "player": "James Johnson",
+    "salary": 2667947,
+    "season": "2025-26"
+   },
+   {
+    "player": "Jaron Pierre",
+    "salary": 636435,
+    "season": "2025-26"
+   },
+   {
+    "player": "John Butler",
+    "salary": 312062,
+    "season": "2025-26"
+   },
+   {
+    "player": "Josh Dix",
+    "salary": 141554,
+    "season": "2025-26"
+   },
+   {
+    "player": "KJ Martin",
+    "salary": 321714,
+    "season": "2025-26"
+   },
+   {
+    "player": "Kylan Boswell",
+    "salary": 157640,
+    "season": "2025-26"
+   },
+   {
+    "player": "Malik Dia",
+    "salary": 636435,
+    "season": "2025-26"
+   },
+   {
+    "player": "Maliq Brown",
+    "salary": 157640,
+    "season": "2025-26"
+   },
+   {
+    "player": "Mario Hezonja",
+    "salary": 113171,
+    "season": "2025-26"
+   },
+   {
+    "player": "Michael Ajayi",
+    "salary": 157640,
+    "season": "2025-26"
+   },
+   {
+    "player": "Otega Oweh",
+    "salary": 141554,
+    "season": "2025-26"
+   },
+   {
+    "player": "Quadir Copeland",
+    "salary": 157640,
+    "season": "2025-26"
+   },
+   {
+    "player": "Rafael Castro",
+    "salary": 157640,
+    "season": "2025-26"
+   },
+   {
+    "player": "Tarik Biberovic",
+    "salary": 2857143,
+    "season": "2025-26"
+   },
+   {
+    "player": "Tobi Lawal",
+    "salary": 141554,
+    "season": "2025-26"
+   },
+   {
+    "player": "Tre Donaldson",
+    "salary": 1131970,
+    "season": "2025-26"
+   },
+   {
+    "player": "Trey Lyles",
+    "salary": 3571495,
+    "season": "2025-26"
+   },
+   {
+    "player": "Tyler Bilodeau",
+    "salary": 1131970,
+    "season": "2025-26"
+   },
+   {
+    "player": "Tyler Nickel",
+    "salary": 636435,
+    "season": "2025-26"
+   },
+   {
+    "player": "Ugonna Onyenso",
+    "salary": 141554,
+    "season": "2025-26"
+   }
+  ],
+  "note": "A man the tab has no row for in a season it covers, where the current-salaries sheet has a figure for him and the stats sheet shows him playing. The tab gained 2025-26 without 52 of the men that sheet had for it, and the ones who played would otherwise carry a hole in the middle of a career and a gap in a running total. Temporary by construction: the test is whether the tab has a row for him, so the day it gains one this stops applying with nothing to edit. The team is the stats line's and not the sheet's, because the sheet carries one TEAM per player and applies it to every season in the row, which is why 2025-26 moved to the tab at all; several teams in one season are both named and given no figures. A man with no games stays out and is listed under left_out_for_no_games: those are the two-way and camp rows, and a season nobody played is not a season to put money on.",
+  "rows_filled": [
+   {
+    "games": 71,
+    "player": "Adem Bona",
+    "salary": 1955377,
+    "season": "2025-26",
+    "team": "PHI"
+   },
+   {
+    "games": 48,
+    "player": "Andre Jackson",
+    "salary": 2221677,
+    "season": "2025-26",
+    "team": "MIL"
+   },
+   {
+    "games": 55,
+    "player": "Anthony Gill",
+    "salary": 2667947,
+    "season": "2025-26",
+    "team": "WAS"
+   },
+   {
+    "games": 71,
+    "player": "Bones Hyland",
+    "salary": 2461463,
+    "season": "2025-26",
+    "team": "MIN"
+   },
+   {
+    "games": 66,
+    "player": "Brandon Williams",
+    "salary": 2270735,
+    "season": "2025-26",
+    "team": "DAL"
+   },
+   {
+    "games": 51,
+    "player": "Buddy Hield",
+    "salary": 9219512,
+    "season": "2025-26",
+    "team": "ATL"
+   },
+   {
+    "games": 64,
+    "player": "Craig Porter",
+    "salary": 2221677,
+    "season": "2025-26",
+    "team": "CLE"
+   },
+   {
+    "games": 70,
+    "player": "Dru Smith",
+    "salary": 2378870,
+    "season": "2025-26",
+    "team": "MIA"
+   },
+   {
+    "games": 26,
+    "player": "Elijah Harkless",
+    "salary": 636435,
+    "season": "2025-26",
+    "team": "UTA"
+   },
+   {
+    "games": 73,
+    "player": "Gary Payton II",
+    "salary": 3303774,
+    "season": "2025-26",
+    "team": "GSW"
+   },
+   {
+    "games": 67,
+    "player": "Guerschon Yabusele",
+    "salary": 5500000,
+    "season": "2025-26",
+    "team": "CHI"
+   },
+   {
+    "games": 82,
+    "player": "Javonte Green",
+    "salary": 2874436,
+    "season": "2025-26",
+    "team": "DET"
+   },
+   {
+    "games": 14,
+    "player": "Jeenathan Williams",
+    "salary": 176943,
+    "season": "2025-26",
+    "team": "GSW"
+   },
+   {
+    "games": 70,
+    "player": "Jordan Goodwin",
+    "salary": 2349578,
+    "season": "2025-26",
+    "team": "PHX"
+   },
+   {
+    "games": 69,
+    "player": "Justin Champagnie",
+    "salary": 2349578,
+    "season": "2025-26",
+    "team": "WAS"
+   },
+   {
+    "games": 21,
+    "player": "Kevin McCullar",
+    "salary": 636435,
+    "season": "2025-26",
+    "team": "NYK"
+   },
+   {
+    "games": 51,
+    "player": "Landry Shamet",
+    "salary": 3080921,
+    "season": "2025-26",
+    "team": "NYK"
+   },
+   {
+    "games": 69,
+    "player": "Mohamed Diawara",
+    "salary": 1272870,
+    "season": "2025-26",
+    "team": "NYK"
+   },
+   {
+    "games": 73,
+    "player": "Moussa Diabate",
+    "salary": 2270735,
+    "season": "2025-26",
+    "team": "CHA"
+   },
+   {
+    "games": 76,
+    "player": "Neemias Queta",
+    "salary": 2349578,
+    "season": "2025-26",
+    "team": "BOS"
+   },
+   {
+    "games": 70,
+    "player": "Pelle Larsson",
+    "salary": 1955377,
+    "season": "2025-26",
+    "team": "MIA"
+   },
+   {
+    "games": 65,
+    "player": "Rob Dillingham",
+    "salary": 6576120,
+    "season": "2025-26",
+    "team": "CHI"
+   },
+   {
+    "games": 64,
+    "player": "Russell Westbrook",
+    "salary": 3634153,
+    "season": "2025-26",
+    "team": "SAC"
+   },
+   {
+    "games": 60,
+    "player": "Thomas Bryant",
+    "salary": 3287409,
+    "season": "2025-26",
+    "team": "CLE"
+   }
+  ]
+ },
  "future_sheet_columns_left_to_the_tab": [],
  "historical_through": "2025-26",
  "note": "Which sheet supplied each season, and what the boundary between them left to the tab. The historical tab is authoritative for every season it holds and the two forward-looking sheets are read only past it, so the boundary is the newest season on the tab rather than a year written into the code: the owner adding a season moves it. cutover lists, per forward sheet and per season it no longer answers for, the player-seasons and dollars that sheet still offers and how many of them the tab holds under the same name. A season well before the boundary may never have been read from that sheet by any build; the boundary season itself is the one that moved. Anything under missing_from_the_historical_tab the tab does not hold at all, and is the thing to look at before trusting a rollover.",
@@ -877,217 +1223,253 @@
  "the_sums_balance": {
   "1990-91": {
    "balances": true,
+   "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 293563000,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
    "dollars_on_the_historical_tab": 293563000
   },
   "1991-92": {
    "balances": true,
+   "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 369582000,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
    "dollars_on_the_historical_tab": 369582000
   },
   "1992-93": {
    "balances": true,
+   "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 428986180,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
    "dollars_on_the_historical_tab": 428986180
   },
   "1993-94": {
    "balances": true,
+   "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 500334365,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
    "dollars_on_the_historical_tab": 500334365
   },
   "1994-95": {
    "balances": true,
+   "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 598723839,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
    "dollars_on_the_historical_tab": 598723839
   },
   "1995-96": {
    "balances": true,
+   "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 724267560,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
    "dollars_on_the_historical_tab": 724267560
   },
   "1996-97": {
    "balances": true,
+   "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 803671200,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
    "dollars_on_the_historical_tab": 803671200
   },
   "1997-98": {
    "balances": true,
+   "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 948538009,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
    "dollars_on_the_historical_tab": 948538009
   },
   "1998-99": {
    "balances": true,
+   "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 1069873239,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
    "dollars_on_the_historical_tab": 1069873239
   },
   "1999-00": {
    "balances": true,
+   "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 1314134536,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
    "dollars_on_the_historical_tab": 1314134536
   },
   "2000-01": {
    "balances": true,
+   "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 1503762690,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
    "dollars_on_the_historical_tab": 1503762690
   },
   "2001-02": {
    "balances": true,
+   "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 1558602654,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
    "dollars_on_the_historical_tab": 1558602654
   },
   "2002-03": {
    "balances": true,
+   "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 1669831797,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
    "dollars_on_the_historical_tab": 1669831797
   },
   "2003-04": {
    "balances": true,
+   "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 1672617482,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
    "dollars_on_the_historical_tab": 1672617482
   },
   "2004-05": {
    "balances": true,
+   "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 1773666037,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
    "dollars_on_the_historical_tab": 1773666037
   },
   "2005-06": {
    "balances": true,
+   "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 1897469981,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
    "dollars_on_the_historical_tab": 1897469981
   },
   "2006-07": {
    "balances": true,
+   "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 1939373647,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
    "dollars_on_the_historical_tab": 1939373647
   },
   "2007-08": {
    "balances": true,
+   "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 2063887234,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
    "dollars_on_the_historical_tab": 2063887234
   },
   "2008-09": {
    "balances": true,
+   "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 2158512738,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
    "dollars_on_the_historical_tab": 2158512738
   },
   "2009-10": {
    "balances": true,
+   "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 2113114155,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
    "dollars_on_the_historical_tab": 2113114155
   },
   "2010-11": {
    "balances": true,
+   "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 2025870243,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
    "dollars_on_the_historical_tab": 2025870243
   },
   "2011-12": {
    "balances": true,
+   "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 2016175240,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
    "dollars_on_the_historical_tab": 2016175240
   },
   "2012-13": {
    "balances": true,
+   "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 2111388890,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
    "dollars_on_the_historical_tab": 2111388890
   },
   "2013-14": {
    "balances": true,
+   "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 2118113222,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
    "dollars_on_the_historical_tab": 2118113222
   },
   "2014-15": {
    "balances": true,
+   "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 2202445594,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
    "dollars_on_the_historical_tab": 2202445594
   },
   "2015-16": {
    "balances": true,
+   "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 2354067360,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
    "dollars_on_the_historical_tab": 2354067360
   },
   "2016-17": {
    "balances": true,
+   "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 2966079443,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
    "dollars_on_the_historical_tab": 2966079443
   },
   "2017-18": {
    "balances": true,
+   "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 3356715898,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
    "dollars_on_the_historical_tab": 3356715898
   },
   "2018-19": {
    "balances": true,
+   "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 3603794806,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
    "dollars_on_the_historical_tab": 3603794806
   },
   "2019-20": {
    "balances": true,
+   "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 3564934008,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
    "dollars_on_the_historical_tab": 3564934008
   },
   "2020-21": {
    "balances": true,
+   "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 3905190611,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
    "dollars_on_the_historical_tab": 3905190611
   },
   "2021-22": {
    "balances": true,
+   "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 4121801683,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
    "dollars_on_the_historical_tab": 4121801683
   },
   "2022-23": {
    "balances": true,
+   "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 4551376845,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
    "dollars_on_the_historical_tab": 4551376845
   },
   "2023-24": {
    "balances": true,
+   "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 4931561321,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
    "dollars_on_the_historical_tab": 4931561321
   },
   "2024-25": {
    "balances": true,
+   "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 5242381836,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
    "dollars_on_the_historical_tab": 5242381836
   },
   "2025-26": {
    "balances": true,
-   "dollars_in_the_file": 5518474455,
+   "dollars_filled_from_the_current_sheet": 67651600,
+   "dollars_in_the_file": 5586126055,
    "dollars_on_dead_rows_the_tab_had_none_for": 29437504,
    "dollars_on_the_historical_tab": 5489036951
   }
