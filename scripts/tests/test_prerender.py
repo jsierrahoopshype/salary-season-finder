@@ -3017,3 +3017,236 @@ def test_a_one_season_player_page_says_in_rather_than_from_and_to():
     for path, _season in hits:
         with open(os.path.join(REPO, path), "r", encoding="utf-8") as fh:
             assert "season by season, from" not in fh.read(), path
+
+
+# --------------------------------------------------------------------------
+# a share too small to round, a name without its filing marker, and a figure
+# said once
+# --------------------------------------------------------------------------
+
+
+def read_file(path):
+    """A built page, by its absolute path, as _all_pages yields them."""
+    with open(path, "r", encoding="utf-8") as fh:
+        return fh.read()
+
+
+def _retired_pages():
+    """The pages the build no longer has data for.
+
+    A retired page keeps the body the last build with data wrote, and only its
+    robots meta is touched after that, so a rule about wording cannot reach it.
+    """
+    with open(HASHES, "r", encoding="utf-8") as fh:
+        return {
+            path for path, meta in json.load(fh)["pages"].items()
+            if meta.get("retired")
+        }
+
+
+def _live_player_pages():
+    """(path, html) for every player page the build still rebuilds."""
+    retired = _retired_pages()
+    for path in sorted(_all_pages()):
+        if os.sep + "player" + os.sep not in path:
+            continue
+        rel = os.path.relpath(path, REPO).replace(os.sep, "/")
+        if rel in retired:
+            continue
+        yield path, read_file(path)
+
+
+def test_cap_pct_keeps_a_share_too_small_to_round_visible():
+    from prerender.render import cap_pct
+
+    assert cap_pct(0.004) == "&lt;0.1%"
+    assert cap_pct(0.049) == "&lt;0.1%"
+    assert cap_pct(0.05) == "0.1%"
+    assert cap_pct(28.44) == "28.4%"
+    # zero is not hidden by the rounding, so it says so
+    assert cap_pct(0) == "0.0%"
+    assert cap_pct(None) == "-"
+
+
+def _season_table(records, current="2026-27"):
+    """One player's season table, as js/app.js's own component builds it."""
+    payload = json.dumps({
+        "currentSeason": current, "links": {},
+        "players": [{"name": "test", "records": records}],
+    })
+    result = subprocess.run(
+        ["node", os.path.join(REPO, "scripts", "prerender", "season_table.js")],
+        input=payload, capture_output=True, text=True, cwd=REPO,
+    )
+    assert result.returncode == 0, result.stderr
+    return json.loads(result.stdout)["test"]
+
+
+def test_the_tools_own_table_keeps_a_share_too_small_to_round_visible():
+    """The season table on a page is the tool's table, so the rule has to hold
+    in js/app.js too. The cell carries the entity rather than a bare "<",
+    because every caller there builds an HTML string."""
+    html = _season_table([
+        {"player": "test", "season": "2014-15", "team": "SAS",
+         "salary": 20000, "salary_cap_pct": 0.03},
+        {"player": "test", "season": "2015-16", "team": "SAS",
+         "salary": 20000000, "salary_cap_pct": 28.44},
+    ])
+    assert "&lt;0.1%" in html
+    assert "28.4%" in html
+    assert ">0.0%<" not in html
+    assert ">&lt;0.1%" in html and "><0.1%" not in html
+
+
+def test_plain_name_drops_the_birth_year_marker():
+    from prerender.render import plain_name
+
+    assert plain_name("Josh Davis (1991)") == "Josh Davis"
+    assert plain_name("Mike Brown (1963)") == "Mike Brown"
+    assert plain_name("Mike Brown") == "Mike Brown"
+    assert plain_name("") == ""
+    assert plain_name(None) == ""
+
+
+def test_the_marker_comes_off_the_words_after_the_link_is_found():
+    """The order is the whole point. The linker matches the marked name and
+    sends it to the right man's page; only then does the marker come off what a
+    reader sees. Stripping first would leave a bare "Josh Davis" pointing at the
+    other Josh Davis."""
+    from prerender.linkify import Linker
+    from prerender.render import unmark
+
+    linker = Linker()
+    linker.add("Josh Davis (1991)", "/player/josh-davis-1991/",
+               ("player", "josh-davis-1991"))
+    linker.add("Josh Davis", "/player/josh-davis/", ("player", "josh-davis"))
+    linker.compile()
+
+    out = unmark(linker.html("Josh Davis (1991) earned $20,000 in 2014-15."))
+    assert '<a class="hm-inline-link" href="/player/josh-davis-1991/">Josh Davis</a>' in out
+    assert "(1991)" not in out
+
+
+def test_unmark_leaves_a_slug_and_an_attribute_alone():
+    from prerender.render import unmark
+
+    markup = '<a href="/player/mike-brown-1963/">Mike Brown (1963)</a>'
+    assert unmark(markup) == '<a href="/player/mike-brown-1963/">Mike Brown</a>'
+
+
+#: The prose on a page: the two descriptions a search result shows, the lede,
+#: the career paragraph, a cohort page's summary and a timeline's lines.
+PROSE_BLOCKS = (
+    r'<meta name="description" content="([^"]*)"',
+    r'<meta property="og:description" content="([^"]*)"',
+    r'<p class="hm-lede">(.*?)</p>',
+    r'<p class="hm-facts">(.*?)</p>',
+    r'<div class="hm-summary">(.*?)</div>',
+    r'<dl class="hm-timeline">(.*?)</dl>',
+)
+
+MARKER = re.compile(r"\((?:18|19|20)\d{2}\)")
+
+
+@built
+def test_no_page_puts_a_birth_year_marker_in_its_prose():
+    """The marker is a filing device, not part of what anyone is called. In a
+    sentence "Josh Davis (1991) earned $20,000" reads as a citation."""
+    offenders = []
+    for path in sorted(_all_pages()):
+        text = read_file(path)
+        for pattern in PROSE_BLOCKS:
+            for match in re.finditer(pattern, text, re.S):
+                if MARKER.search(match.group(1)):
+                    offenders.append((os.path.relpath(path, REPO),
+                                      match.group(1)[:80]))
+    assert not offenders, offenders[:10]
+
+
+@built
+def test_the_marker_stays_where_a_reader_is_choosing_between_two_men():
+    html = read(os.path.join("player", "mike-brown-1963", "index.html"))
+    assert "<h1>Mike Brown (1963)</h1>" in html
+    assert "<title>Mike Brown (1963)" in html
+    assert "<span>Mike Brown (1963)</span>" in html          # the breadcrumb
+    assert '"name":"Mike Brown (1963)"' in html              # and its markup
+    assert '<p class="hm-lede">Mike Brown salary history' in html
+
+
+@built
+def test_a_prose_mention_of_a_marked_name_still_links_to_the_right_man():
+    """A link to one of the two men keeps its href and loses only the marker in
+    the words, so the sentence reads plainly and still goes to the right page."""
+    found = 0
+    for path in sorted(_all_pages()):
+        text = read_file(path)
+        for match in re.finditer(
+                r'<a class="hm-inline-link" href="[^"]*/player/[^"]*-(?:18|19|20)\d{2}/">'
+                r'([^<]*)</a>', text):
+            found += 1
+            assert not MARKER.search(match.group(1)), (path, match.group(1))
+    assert found, "no prose link to a marked name found"
+
+
+@built
+def test_a_one_season_player_page_names_no_biggest_season():
+    """A career of one season has no biggest season to pick out. "His biggest
+    paid season is $28,834 in 2013-14" under "salary history in 2013-14" names
+    the winner of a field of one, in the sentence after the one that named it."""
+    one_season, offenders = 0, []
+    for path, text in _live_player_pages():
+        if not re.search(r"salary history in \d{4}-\d{2}\.", text):
+            continue
+        one_season += 1
+        if "biggest paid season" in text:
+            offenders.append(os.path.relpath(path, REPO))
+    assert one_season, "no one-season player page found"
+    assert not offenders, offenders[:10]
+    # and a career worth comparing still gets the sentence
+    assert "biggest paid season" in read(
+        os.path.join("player", "kyrie-irving", "index.html"))
+
+
+@built
+def test_a_one_season_page_does_not_say_its_one_figure_twice():
+    """Where the whole of "What the numbers say" would be "He earned $20,000
+    through 2014-15", the section is the table above it written out in words.
+    It is dropped, and the figure stays in the table."""
+    offenders = []
+    for path, text in _live_player_pages():
+        if not re.search(r"salary history in \d{4}-\d{2}\.", text):
+            continue
+        if 'class="hm-facts"' in text:
+            offenders.append(os.path.relpath(path, REPO))
+    assert not offenders, offenders[:10]
+    # a career with something to say still has the section
+    assert 'class="hm-facts"' in read(
+        os.path.join("player", "kyrie-irving", "index.html"))
+
+
+def test_a_lone_career_total_is_dropped_only_for_a_one_season_career():
+    """The rule is about the one season, not about the one sentence. A man with
+    several seasons and nothing but a total to show still gets the paragraph:
+    there the total is a career's worth of money, not the row above it."""
+    from prerender import seasons
+
+    class Idx(object):
+        current_season = "2026-27"
+        current_key = F.season_key("2026-27")
+        current_season_in_progress = False
+        franchises = {}
+
+        def is_contracted(self, season):
+            return F.season_key(season) > self.current_key
+
+        def career_rankable(self, player):
+            return True
+
+        def paid_through(self, player):
+            return 20000, "2014-15"
+
+    idx = Idx()
+    assert seasons.summary(idx, "Josh Davis", [], player="josh davis") == [
+        "Josh Davis earned $20,000 through 2014-15."]
+    assert seasons.summary(idx, "Josh Davis", [], player="josh davis",
+                           one_season=True) == []
