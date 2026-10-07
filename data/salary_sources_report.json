@@ -640,7 +640,7 @@
  },
  "dead_money_into_the_tabs_seasons": {
   "left_alone_because_the_tab_names_a_team": 137,
-  "note": "The tab carries 2025-26 dead money as rows of dollars with an empty TEAM: the money is there and the club that owes it is not. So the dead-money sheet is still read for those seasons, for the team alone where the tab left one blank and as a row of its own where the tab has none. No figure the tab gave is changed, and where the tab names a team the tab keeps it. Where several clubs owe one man one season both are named and neither is given a figure, because nothing here records how the money divided.",
+  "note": "The tab holds the seasons it covers but not every man in them: sixteen rows of the dead-money sheet's 2025-26 have no row on the tab at all. So that sheet is still read for those seasons, as a row of its own where the tab has none and as the team for a row the tab left blank. No figure the tab gave is changed, and where the tab names a team the tab keeps it. Where several clubs owe one man one season both are named and neither is given a figure, because nothing here records how the money divided. teams_filled_in has been empty on every build so far: the teamless records that prompted that branch turned out to be the agent tracker's rather than the tab's, and the tracker no longer answers for a season a sheet holds.",
   "rows_added": [
    {
     "player": "Adam Flagler",
@@ -872,6 +872,224 @@
   "2030-31": {
    "current_and_dead": 19,
    "future": 17
+  }
+ },
+ "the_sums_balance": {
+  "1990-91": {
+   "balances": true,
+   "dollars_in_the_file": 293563000,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 293563000
+  },
+  "1991-92": {
+   "balances": true,
+   "dollars_in_the_file": 369582000,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 369582000
+  },
+  "1992-93": {
+   "balances": true,
+   "dollars_in_the_file": 428986180,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 428986180
+  },
+  "1993-94": {
+   "balances": true,
+   "dollars_in_the_file": 500334365,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 500334365
+  },
+  "1994-95": {
+   "balances": true,
+   "dollars_in_the_file": 598723839,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 598723839
+  },
+  "1995-96": {
+   "balances": true,
+   "dollars_in_the_file": 724267560,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 724267560
+  },
+  "1996-97": {
+   "balances": true,
+   "dollars_in_the_file": 803671200,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 803671200
+  },
+  "1997-98": {
+   "balances": true,
+   "dollars_in_the_file": 948538009,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 948538009
+  },
+  "1998-99": {
+   "balances": true,
+   "dollars_in_the_file": 1069873239,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 1069873239
+  },
+  "1999-00": {
+   "balances": true,
+   "dollars_in_the_file": 1314134536,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 1314134536
+  },
+  "2000-01": {
+   "balances": true,
+   "dollars_in_the_file": 1503762690,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 1503762690
+  },
+  "2001-02": {
+   "balances": true,
+   "dollars_in_the_file": 1558602654,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 1558602654
+  },
+  "2002-03": {
+   "balances": true,
+   "dollars_in_the_file": 1669831797,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 1669831797
+  },
+  "2003-04": {
+   "balances": true,
+   "dollars_in_the_file": 1672617482,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 1672617482
+  },
+  "2004-05": {
+   "balances": true,
+   "dollars_in_the_file": 1773666037,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 1773666037
+  },
+  "2005-06": {
+   "balances": true,
+   "dollars_in_the_file": 1897469981,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 1897469981
+  },
+  "2006-07": {
+   "balances": true,
+   "dollars_in_the_file": 1939373647,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 1939373647
+  },
+  "2007-08": {
+   "balances": true,
+   "dollars_in_the_file": 2063887234,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 2063887234
+  },
+  "2008-09": {
+   "balances": true,
+   "dollars_in_the_file": 2158512738,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 2158512738
+  },
+  "2009-10": {
+   "balances": true,
+   "dollars_in_the_file": 2113114155,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 2113114155
+  },
+  "2010-11": {
+   "balances": true,
+   "dollars_in_the_file": 2025870243,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 2025870243
+  },
+  "2011-12": {
+   "balances": true,
+   "dollars_in_the_file": 2016175240,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 2016175240
+  },
+  "2012-13": {
+   "balances": true,
+   "dollars_in_the_file": 2111388890,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 2111388890
+  },
+  "2013-14": {
+   "balances": true,
+   "dollars_in_the_file": 2118113222,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 2118113222
+  },
+  "2014-15": {
+   "balances": true,
+   "dollars_in_the_file": 2202445594,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 2202445594
+  },
+  "2015-16": {
+   "balances": true,
+   "dollars_in_the_file": 2354067360,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 2354067360
+  },
+  "2016-17": {
+   "balances": true,
+   "dollars_in_the_file": 2966079443,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 2966079443
+  },
+  "2017-18": {
+   "balances": true,
+   "dollars_in_the_file": 3356715898,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 3356715898
+  },
+  "2018-19": {
+   "balances": true,
+   "dollars_in_the_file": 3603794806,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 3603794806
+  },
+  "2019-20": {
+   "balances": true,
+   "dollars_in_the_file": 3564934008,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 3564934008
+  },
+  "2020-21": {
+   "balances": true,
+   "dollars_in_the_file": 3905190611,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 3905190611
+  },
+  "2021-22": {
+   "balances": true,
+   "dollars_in_the_file": 4121801683,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 4121801683
+  },
+  "2022-23": {
+   "balances": true,
+   "dollars_in_the_file": 4551376845,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 4551376845
+  },
+  "2023-24": {
+   "balances": true,
+   "dollars_in_the_file": 4931561321,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 4931561321
+  },
+  "2024-25": {
+   "balances": true,
+   "dollars_in_the_file": 5242381836,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 5242381836
+  },
+  "2025-26": {
+   "balances": true,
+   "dollars_in_the_file": 5518474455,
+   "dollars_on_dead_rows_the_tab_had_none_for": 29437504,
+   "dollars_on_the_historical_tab": 5489036951
   }
  }
 }
