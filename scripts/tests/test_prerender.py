@@ -2945,3 +2945,75 @@ def test_the_data_build_also_commits_what_only_it_writes():
     for path in ("data/data.json", "data/factoids.json",
                  "data/team_corrections_report.json"):
         assert path in body, path
+
+
+# --------------------------------------------------------------------------
+# one season is not a span
+# --------------------------------------------------------------------------
+
+
+def test_season_span_names_one_season_and_ranges_over_several():
+    from prerender.render import season_span
+
+    assert season_span("2026-27", "2026-27") == "2026-27"
+    assert season_span("2024-25", "2026-27") == "2024-25 to 2026-27"
+    assert season_span("1999-00", "1999-00") == "1999-00"
+
+
+def _all_pages():
+    """Every prerendered index.html in the repository."""
+    import page_paths
+
+    for directory in page_paths.page_dirs():
+        root = repo(directory)
+        if not os.path.isdir(root):
+            continue
+        for here, _dirs, names in os.walk(root):
+            if "index.html" in names:
+                yield os.path.join(here, "index.html")
+
+
+@built
+def test_no_live_page_prints_a_season_as_its_own_span():
+    """"2026-27 to 2026-27" asks a reader to notice both ends are the same and
+    draw the obvious conclusion, which is work the page should have done. 767
+    pages read that way: 650 player pages and 117 cohort tables.
+
+    Retired pages are out. A retired page is one whose subject has no row in the
+    data any longer, so there is nothing to rebuild its body from: the build
+    flips its robots meta to noindex and leaves the text as the last build that
+    had data wrote it. Ten of them still carry the old phrasing and always will,
+    which is the price of not inventing a page for a man the data has dropped.
+    """
+    with open(HASHES, "r", encoding="utf-8") as fh:
+        retired = {
+            path for path, meta in json.load(fh)["pages"].items()
+            if meta.get("retired")
+        }
+    pattern = re.compile(r"(\d{4}-\d{2}) to \1")
+    offenders = []
+    for path in sorted(_all_pages()):
+        rel = os.path.relpath(path, REPO).replace(os.sep, "/")
+        if rel in retired:
+            continue
+        with open(path, "r", encoding="utf-8") as fh:
+            if pattern.search(fh.read()):
+                offenders.append(rel)
+    assert not offenders, offenders[:10]
+
+
+@built
+def test_a_one_season_player_page_says_in_rather_than_from_and_to():
+    hits = []
+    for path in sorted(_all_pages()):
+        if os.sep + "player" + os.sep not in path:
+            continue
+        with open(path, "r", encoding="utf-8") as fh:
+            text = fh.read()
+        for match in re.finditer(r"salary history in (\d{4}-\d{2})\.", text):
+            hits.append((os.path.relpath(path, REPO), match.group(1)))
+    assert hits, "no one-season player page found"
+    # and none of them still carries the ranged form
+    for path, _season in hits:
+        with open(os.path.join(REPO, path), "r", encoding="utf-8") as fh:
+            assert "season by season, from" not in fh.read(), path

@@ -14,7 +14,7 @@ from . import config as C  # noqa: E402
 from .render import (  # noqa: E402
     CONTRACTED_TAG, esc, facts_summary, grouped_rank_table, links_row, money,
     money_short, more_block, page_url, player_link, rank_table, related_chips,
-    roll_call, scope_line, section, summary_block, timeline_list,
+    roll_call, scope_line, season_span, section, summary_block, timeline_list,
 )
 from .summary import cohort_summary  # noqa: E402
 
@@ -131,9 +131,9 @@ def _career_rows(idx, entries, limit, media=None):
     for i, (total, ident, last) in enumerate(entries[:limit], start=1):
         active = not idx.career_complete(ident.data_key)
         # Both ends named, active or not: "to date" leaves a reader guessing
-        # which season the total runs through.
-        span = "{} to {}".format(
-            esc(ident.records[0]["season"]), esc(last["season"]))
+        # which season the total runs through. One season is not a span, so it
+        # is printed once rather than as "2026-27 to 2026-27".
+        span = season_span(ident.records[0]["season"], last["season"])
         played = sum(
             1 for r in ident.records if not idx.is_contracted(r["season"])
         )
@@ -324,8 +324,15 @@ def player_page(idx, ident, season_table_html, facts, related, linker=None,
     paid = [r for r in ident.records if _paid(idx, r)]
     best = max(paid, key=lambda r: r.get("salary") or 0) if paid else None
 
-    bits = ["{} salary history, season by season, from {} to {}.".format(
-        ident.name, first["season"], last["season"])]
+    # One season is not a history to walk through, so it is named rather than
+    # ranged over: "salary history in 2026-27", not "season by season, from
+    # 2026-27 to 2026-27". The sentence is the page's lede and its meta
+    # description both, so the fix reaches the search result as well as the page.
+    if first["season"] == last["season"]:
+        bits = ["{} salary history in {}.".format(ident.name, first["season"])]
+    else:
+        bits = ["{} salary history, season by season, from {} to {}.".format(
+            ident.name, first["season"], last["season"])]
     if best and best.get("salary"):
         bits.append("His biggest paid season is {} in {}.".format(
             money_short(best["salary"]), best["season"]))
@@ -598,8 +605,7 @@ def _with_team_rows(idx, entity, owners, code, limit):
         mine = sorted(seasons[key], key=F.season_key)
         # One season is a season, not a span: "1, 2026-27 to 2026-27" says it
         # twice and means it once.
-        span = mine[0] if len(mine) == 1 else "{} to {}".format(
-            mine[0], mine[-1])
+        span = season_span(mine[0], mine[-1])
         rows.append([
             player_link(who[key], rank=place),
             "{}, {}".format(len(mine), span),
@@ -739,16 +745,14 @@ def drought_page(idx, built, key, linker=None):
         here = idx.record(player, idx.current_season) is not None
         rows.append([
             _drought_name(idx, player, place),
-            "{}, {}".format(len(seasons), seasons[0] if len(seasons) == 1
-                            else "{} to {}".format(seasons[0], seasons[-1])),
+            "{}, {}".format(len(seasons), season_span(seasons[0], seasons[-1])),
             money(paid),
             "active" if here else "",
         ])
 
     held = []
     for reign in lst["reigns"]:
-        span = reign["from"] if reign["from"] == reign["to"] else "{} to {}".format(
-            reign["from"], reign["to"])
+        span = season_span(reign["from"], reign["to"])
         if reign["opening"]:
             why = "led when the count begins in {}".format(F.SCOPE_FIRST_SEASON)
         elif reign["why"] == "selected":
