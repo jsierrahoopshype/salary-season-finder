@@ -1620,18 +1620,26 @@ def build_data():
     # Step 5: Build unified player-season list
     print("\n[6/7] Merging data and computing derived fields...")
 
-    # Start from agent tracker salary data (most comprehensive salary source)
-    # Key: (normalized_name, season) -> record dict
-    # NOTE: Skip seasons covered by Cyro's sheets — they have authoritative
-    # real salary data (not cap holds)
+    # Start from the agent tracker, which is the fallback for a season no salary
+    # sheet answers for. It carries cap holds rather than salaries, so wherever a
+    # sheet has the season the sheet wins, and the guard is which seasons the
+    # sheets came back with rather than the name of one of them.
+    #
+    # That guard used to read "in cyro_seasons", which was the same thing only
+    # while Cyro's sheets were the ones holding the newest season. The moment the
+    # historical tab took 2025-26 over, 667 tracker rows worth $5.9 billion
+    # became eligible for it, and the ones the tab had no row for came through as
+    # records with an empty team: Ben Simmons, Malcolm Brogdon, Bojan Bogdanovic
+    # and 95 more, none of whom played a game that season.
+    sheet_seasons = {season for (_pid, season) in salary_csv_lookup} | cyro_seasons
     ps_map = {}
     for player_name, seasons in agent_salaries.items():
         for season_raw, salary in seasons.items():
             season = normalize_season(season_raw)
             if not season:
                 continue
-            if season in cyro_seasons:
-                continue  # Cyro's data handles this season
+            if season in sheet_seasons:
+                continue  # a salary sheet answers for it
             end_year = season_to_year(season)
             if not end_year or end_year < 1991:
                 continue
