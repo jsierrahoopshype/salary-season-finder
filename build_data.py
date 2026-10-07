@@ -1130,11 +1130,19 @@ def process_cyro_salaries(current_csv, dead_csv, after_season=None):
     We combine per player-season with per-team salary breakdowns.
 
     ``after_season`` is the newest season the historical tab holds, and every
-    column at or before it is skipped: these two sheets look forward, and where
-    the tab has caught up with them the tab is the better source. It carries a
-    team per row per season, where the current sheet carries one TEAM per player
-    and applies it to every season in that row, which is what used to write a
-    summer move back onto a season already played.
+    current-salaries column at or before it is skipped: that sheet looks
+    forward, and where the tab has caught up with it the tab is the better
+    source. The tab carries a team per row per season, where the current sheet
+    carries one TEAM per player and applies it to every season in that row,
+    which is what used to write a summer move back onto a season already played.
+
+    The dead-money sheet is not replaced the same way, because the tab does not
+    hold the same thing. For 2025-26 the tab carries the dead money as 98 rows
+    of dollars with the TEAM column empty, Ben Simmons's $40,338,144 and Terry
+    Rozier's $26,643,031 among them: the money is there and the club that owes
+    it is not. So for a season the tab covers, this sheet comes back separately,
+    as the team for a row the tab left blank and as a row of its own where the
+    tab has none. It never changes a figure the tab gives.
 
     What the cutover skipped comes back with the lookup, named and totalled, so
     data/salary_sources_report.json can say what moving the boundary cost.
@@ -1144,11 +1152,20 @@ def process_cyro_salaries(current_csv, dead_csv, after_season=None):
     is_later = seasons_after(after_season)
     #: sheet -> season -> { normalised name: dollars } for the columns skipped
     dropped = {"current": {}, "dead": {}}
+    #: (nk, season) -> { "player": str, "teams": {team: dollars} } for the dead
+    #: money of a season the tab covers. Offered to the tab, never imposed.
+    dead_for_the_tab = {}
 
     def note_dropped(sheet, nk, player, season, salary):
         bucket = dropped[sheet].setdefault(season, {})
         entry = bucket.setdefault(nk, {"player": player, "salary": 0})
         entry["salary"] += salary
+
+    def offer_to_the_tab(nk, player, team_abbr, season, salary):
+        entry = dead_for_the_tab.setdefault(
+            (nk, season), {"player": player, "teams": defaultdict(int)})
+        if team_abbr:
+            entry["teams"][team_abbr] += salary
 
     
     def add_entry(nk, display_name, team_abbr, season, salary):
@@ -1253,6 +1270,7 @@ def process_cyro_salaries(current_csv, dead_csv, after_season=None):
                     if salary is None or salary == 0:
                         continue
                     note_dropped("dead", nk, player, season, salary)
+                    offer_to_the_tab(nk, player, team_abbr, season, salary)
             print(f"    Parsed {count} salary entries from dead money")
     
     # Build lookup per season, filtering out $0 players
@@ -1282,7 +1300,12 @@ def process_cyro_salaries(current_csv, dead_csv, after_season=None):
     seasons_list = sorted(seasons_found)
     print(f"    Combined into {len(lookup)} player-season records across {seasons_list}")
     print(f"    Skipped {skipped} with $0, {multi_team} multi-team")
-    return lookup, seasons_found, dropped
+    for entry in dead_for_the_tab.values():
+        entry["teams"] = dict(entry["teams"])
+    if dead_for_the_tab:
+        print(f"    {len(dead_for_the_tab)} dead-money rows offered to the "
+              f"historical tab for the seasons it covers")
+    return lookup, seasons_found, dropped, dead_for_the_tab
 
 
 def load_award_overrides():
@@ -1475,8 +1498,9 @@ def build_data():
         process_future_salaries(future_sal_csv, after_season=historical_through)
         if future_sal_csv else ({}, [])
     )
-    cyro_lookup, cyro_seasons, cyro_dropped = process_cyro_salaries(
-        sal_2526_current_csv, sal_2526_dead_csv, after_season=historical_through)
+    cyro_lookup, cyro_seasons, cyro_dropped, dead_for_the_tab = (
+        process_cyro_salaries(sal_2526_current_csv, sal_2526_dead_csv,
+                              after_season=historical_through))
     persons = build_person_index(bio_csv, stats_csv)
     awards_lookup, all_awards_set = (
         process_awards(awards_csv, persons) if awards_csv else ({}, set())
@@ -1503,6 +1527,48 @@ def build_data():
             salary_csv_lookup[k].extend(v)
         else:
             salary_csv_lookup[k] = v
+
+    # The dead-money sheet, for the seasons the historical tab covers. The tab
+    # carries this money and not the club that owes it: 98 of its 2025-26 rows
+    # have an empty TEAM. So the sheet is read for the team alone where the tab
+    # left one blank, and as a row of its own where the tab has none. No figure
+    # the tab gave is touched, and where the tab already names a team the tab
+    # keeps it.
+    dead_teams_filled, dead_rows_added, dead_left_alone = [], [], 0
+    for (nk, season), offer in sorted(dead_for_the_tab.items()):
+        teams = offer["teams"]
+        if not teams:
+            continue
+        # Several clubs owing one man one season is a thing this sheet can say
+        # and the tab cannot, so both are named and neither is given a figure:
+        # nothing here records how the money divided.
+        team_str = ", ".join(sorted(teams))
+        existing = salary_csv_lookup.get((nk, season))
+        if existing is None:
+            salary_csv_lookup[(nk, season)] = [{
+                "player_original": offer["player"],
+                "team": team_str,
+                "salary": sum(teams.values()),
+            }]
+            dead_rows_added.append({
+                "player": offer["player"], "season": season,
+                "team": team_str, "salary": sum(teams.values()),
+            })
+            continue
+        blank = [rec for rec in existing if not (rec.get("team") or "").strip()]
+        if not blank:
+            dead_left_alone += 1
+            continue
+        for rec in blank:
+            rec["team"] = team_str
+        dead_teams_filled.append({
+            "player": offer["player"], "season": season, "team": team_str,
+            "salary_on_the_tab": sum(rec["salary"] for rec in blank),
+        })
+    if dead_for_the_tab:
+        print(f"    Dead money into the tab's seasons: {len(dead_teams_filled)} "
+              f"teams filled in, {len(dead_rows_added)} rows added, "
+              f"{dead_left_alone} left alone because the tab names a team")
 
     # Re-key every salary row on the person it belongs to. Two spellings of one
     # man (Wendell Carter and Wendell Carter Jr) land together; a father and a
@@ -1920,8 +1986,8 @@ def build_data():
                 key=lambda row: (-row["salary"], row["player"]),
             )
             cutover.setdefault(sheet, {})[season] = {
-                "player_seasons_not_read": len(players),
-                "dollars_not_read": sum(e["salary"] for e in players.values()),
+                "player_seasons_offered": len(players),
+                "dollars_offered": sum(e["salary"] for e in players.values()),
                 "also_in_the_historical_tab": len(players) - len(absent),
                 "missing_from_the_historical_tab": absent,
             }
@@ -1939,22 +2005,39 @@ def build_data():
         json.dump({
             "note": (
                 "Which sheet supplied each season, and what the boundary "
-                "between them left unread. The historical tab is authoritative "
+                "between them left to the tab. The historical tab is authoritative "
                 "for every season it holds and the two forward-looking sheets "
                 "are read only past it, so the boundary is the newest season on "
                 "the tab rather than a year written into the code: the owner "
                 "adding a season moves it. cutover lists, per forward sheet and "
                 "per season it no longer answers for, the player-seasons and "
-                "dollars the build stopped reading and how many of them the tab "
-                "holds under the same name. Anything under "
-                "missing_from_the_historical_tab is money that was on a page "
-                "before and is not now, and is the thing to look at before "
-                "trusting a rollover."
+                "dollars that sheet still offers and how many of them the tab "
+                "holds under the same name. A season well before the boundary "
+                "may never have been read from that sheet by any build; the "
+                "boundary season itself is the one that moved. Anything under "
+                "missing_from_the_historical_tab the tab does not hold at all, "
+                "and is the thing to look at before trusting a rollover."
             ),
             "historical_through": historical_through,
             "future_sheet_columns_left_to_the_tab": future_dropped_cols,
             "rows_per_season_per_sheet": sources,
             "cutover": cutover,
+            "dead_money_into_the_tabs_seasons": {
+                "note": (
+                    "The tab carries 2025-26 dead money as rows of dollars with "
+                    "an empty TEAM: the money is there and the club that owes it "
+                    "is not. So the dead-money sheet is still read for those "
+                    "seasons, for the team alone where the tab left one blank "
+                    "and as a row of its own where the tab has none. No figure "
+                    "the tab gave is changed, and where the tab names a team the "
+                    "tab keeps it. Where several clubs owe one man one season "
+                    "both are named and neither is given a figure, because "
+                    "nothing here records how the money divided."
+                ),
+                "teams_filled_in": dead_teams_filled,
+                "rows_added": dead_rows_added,
+                "left_alone_because_the_tab_names_a_team": dead_left_alone,
+            },
         }, f, indent=1, sort_keys=True)
         f.write("\n")
     print(f"    Written to {sources_path}")

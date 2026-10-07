@@ -494,7 +494,7 @@ DEAD_SHEET = (
 
 
 def test_the_forward_sheets_stop_at_the_season_the_tab_reaches():
-    lookup, seasons, dropped = B.process_cyro_salaries(
+    lookup, seasons, dropped, dead_offer = B.process_cyro_salaries(
         CURRENT_SHEET, DEAD_SHEET, after_season="2025-26")
     assert seasons == {"2026-27"}
     assert ("deandre ayton", "2025-26") not in lookup
@@ -504,17 +504,22 @@ def test_the_forward_sheets_stop_at_the_season_the_tab_reaches():
     # and the build can say what it stopped reading, per sheet
     assert dropped["current"]["2025-26"]["deandre ayton"]["salary"] == 33654814
     assert dropped["dead"]["2025-26"]["chris paul"]["salary"] == 3634153
+    # the dead money comes back separately: the tab has these dollars without
+    # the club that owes them, so the sheet is kept for the team
+    assert dead_offer[("chris paul", "2025-26")]["teams"] == {"TOR": 3634153}
+    assert ("deandre ayton", "2025-26") not in dead_offer
 
 
 def test_the_forward_sheets_still_answer_where_the_tab_has_not_reached():
     """The fallback that matters on the day the tab is a season behind: nothing
     is lost, the forward sheets simply still speak for it."""
-    lookup, seasons, dropped = B.process_cyro_salaries(
+    lookup, seasons, dropped, dead_offer = B.process_cyro_salaries(
         CURRENT_SHEET, DEAD_SHEET, after_season="2024-25")
     assert seasons == {"2025-26", "2026-27"}
     assert lookup[("deandre ayton", "2025-26")][0]["salary"] == 33654814
     assert lookup[("chris paul", "2025-26")][0]["salary"] == 3634153
     assert dropped == {"current": {}, "dead": {}}
+    assert dead_offer == {}
 
 
 FUTURE_SHEET = "PLAYER,TEAM,2026,2027,2028\nDeandre Ayton,LAL,100,200,300\n"
@@ -555,12 +560,18 @@ def test_the_shipped_sources_report_names_a_boundary_and_keeps_its_books():
             assert set(sheets) <= {"historical"}, (season, sheets)
         else:
             assert "historical" not in sheets, (season, sheets)
+    dead = doc["dead_money_into_the_tabs_seasons"]
+    # the tab holds this money without the club that owes it, so every team the
+    # dead sheet filled in has to be for a season the tab covers
+    for row in dead["teams_filled_in"] + dead["rows_added"]:
+        assert not later(row["season"]), row
+        assert row["team"], row
     for sheet, by_season in doc["cutover"].items():
         for season, book in by_season.items():
             assert not later(season), (sheet, season)
             assert (book["also_in_the_historical_tab"]
                     + len(book["missing_from_the_historical_tab"])
-                    == book["player_seasons_not_read"]), (sheet, season)
+                    == book["player_seasons_offered"]), (sheet, season)
 
 
 # --------------------------------------------------------------------------
