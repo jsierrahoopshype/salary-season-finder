@@ -1,0 +1,774 @@
+{
+ "cutover": {
+  "current": {
+   "2024-25": {
+    "also_in_the_historical_tab": 458,
+    "dollars_not_read": 4970203268,
+    "missing_from_the_historical_tab": [
+     {
+      "player": "Hayden Gray",
+      "salary": 12648321
+     },
+     {
+      "player": "Mouhamadou Gueye",
+      "salary": 7975000
+     },
+     {
+      "player": "Cam Whitmore",
+      "salary": 3379080
+     },
+     {
+      "player": "Mario Hezonja",
+      "salary": 2162606
+     },
+     {
+      "player": "John Poulakidas",
+      "salary": 1157153
+     },
+     {
+      "player": "AJ Dybantsa",
+      "salary": 981902
+     },
+     {
+      "player": "Aday Mara",
+      "salary": 981902
+     },
+     {
+      "player": "Alex Karaban",
+      "salary": 981902
+     },
+     {
+      "player": "Allen Graves",
+      "salary": 981902
+     },
+     {
+      "player": "Bennett Stirtz",
+      "salary": 981902
+     },
+     {
+      "player": "Brayden Burries",
+      "salary": 981902
+     },
+     {
+      "player": "Caleb Wilson",
+      "salary": 981902
+     },
+     {
+      "player": "Cameron Boozer",
+      "salary": 981902
+     },
+     {
+      "player": "Cameron Carr",
+      "salary": 981902
+     },
+     {
+      "player": "Chris Cenac",
+      "salary": 981902
+     },
+     {
+      "player": "Christian Anderson",
+      "salary": 981902
+     },
+     {
+      "player": "Dailyn Swain",
+      "salary": 981902
+     },
+     {
+      "player": "Darius Acuff",
+      "salary": 981902
+     },
+     {
+      "player": "Darryn Peterson",
+      "salary": 981902
+     },
+     {
+      "player": "Ebuka Okorie",
+      "salary": 981902
+     },
+     {
+      "player": "Hannes Steinbach",
+      "salary": 981902
+     },
+     {
+      "player": "Jayden Quaintance",
+      "salary": 981902
+     },
+     {
+      "player": "Joshua Jefferson",
+      "salary": 981902
+     },
+     {
+      "player": "Karim Lopez",
+      "salary": 981902
+     },
+     {
+      "player": "Keaton Wagler",
+      "salary": 981902
+     },
+     {
+      "player": "Kingston Flemings",
+      "salary": 981902
+     },
+     {
+      "player": "Labaron Philon",
+      "salary": 981902
+     },
+     {
+      "player": "Markelle Fultz",
+      "salary": 981902
+     },
+     {
+      "player": "Mikel Brown",
+      "salary": 981902
+     },
+     {
+      "player": "Morez Johnson",
+      "salary": 981902
+     },
+     {
+      "player": "Nate Ament",
+      "salary": 981902
+     },
+     {
+      "player": "Sergio De Larrea",
+      "salary": 981902
+     },
+     {
+      "player": "Tarris Reed",
+      "salary": 981902
+     },
+     {
+      "player": "Zuby Ejiofor",
+      "salary": 981902
+     },
+     {
+      "player": "Bismack Biyombo",
+      "salary": 797462
+     },
+     {
+      "player": "Arthur Kaluma",
+      "salary": 596581
+     },
+     {
+      "player": "Josh Dix",
+      "salary": 596581
+     },
+     {
+      "player": "Julian Reese",
+      "salary": 596581
+     },
+     {
+      "player": "Otega Oweh",
+      "salary": 596581
+     },
+     {
+      "player": "Tobi Lawal",
+      "salary": 596581
+     },
+     {
+      "player": "Ugonna Onyenso",
+      "salary": 596581
+     },
+     {
+      "player": "CJ Huntley",
+      "salary": 578577
+     },
+     {
+      "player": "DeJon Jarreau",
+      "salary": 578577
+     },
+     {
+      "player": "Dennis Smith",
+      "salary": 578577
+     },
+     {
+      "player": "Grant Nelson",
+      "salary": 578577
+     },
+     {
+      "player": "Jahmai Mashack",
+      "salary": 578577
+     },
+     {
+      "player": "John Butler",
+      "salary": 578577
+     },
+     {
+      "player": "Leaky Black",
+      "salary": 578577
+     },
+     {
+      "player": "Lucas Williamson",
+      "salary": 578577
+     },
+     {
+      "player": "Nick Martinelli",
+      "salary": 578577
+     },
+     {
+      "player": "Omer Yurtseven",
+      "salary": 578577
+     },
+     {
+      "player": "Sharife Cooper",
+      "salary": 578577
+     },
+     {
+      "player": "Tarik Biberovic",
+      "salary": 578577
+     },
+     {
+      "player": "Tyler Nickel",
+      "salary": 578577
+     },
+     {
+      "player": "Jeenathan Williams",
+      "salary": 515881
+     },
+     {
+      "player": "Ja'Kobi Gillespie",
+      "salary": 344234
+     },
+     {
+      "player": "Jaden Bradley",
+      "salary": 344234
+     },
+     {
+      "player": "Kylan Boswell",
+      "salary": 344234
+     },
+     {
+      "player": "Maliq Brown",
+      "salary": 344234
+     },
+     {
+      "player": "Michael Ajayi",
+      "salary": 344234
+     },
+     {
+      "player": "Quadir Copeland",
+      "salary": 344234
+     },
+     {
+      "player": "Rafael Castro",
+      "salary": 344234
+     },
+     {
+      "player": "Alex Toohey",
+      "salary": 331365
+     },
+     {
+      "player": "Tony Bradley",
+      "salary": 330395
+     },
+     {
+      "player": "Ron Harper Jr",
+      "salary": 315280
+     },
+     {
+      "player": "Tolu Smith",
+      "salary": 315280
+     },
+     {
+      "player": "Javonte Cooke",
+      "salary": 302411
+     },
+     {
+      "player": "Kobe Sanders",
+      "salary": 302411
+     },
+     {
+      "player": "Jordan Goodwin",
+      "salary": 223718
+     },
+     {
+      "player": "Jahmir Young",
+      "salary": 173725
+     },
+     {
+      "player": "Alex Antetokounmpo",
+      "salary": 141554
+     },
+     {
+      "player": "Chris Youngblood",
+      "salary": 141554
+     },
+     {
+      "player": "Payton Sandfort",
+      "salary": 141554
+     },
+     {
+      "player": "Nae'Qwan Tomlin",
+      "salary": 138337
+     },
+     {
+      "player": "Jamaree Bouyea",
+      "salary": 135120
+     },
+     {
+      "player": "Tyson Etienne",
+      "salary": 131903
+     },
+     {
+      "player": "Drew Timme",
+      "salary": 113055
+     },
+     {
+      "player": "Izaiyah Nelson",
+      "salary": 100000
+     }
+    ],
+    "player_seasons_not_read": 536
+   },
+   "2025-26": {
+    "also_in_the_historical_tab": 508,
+    "dollars_not_read": 5376683139,
+    "missing_from_the_historical_tab": [
+     {
+      "player": "Buddy Hield",
+      "salary": 9219512
+     },
+     {
+      "player": "Rob Dillingham",
+      "salary": 6576120
+     },
+     {
+      "player": "Guerschon Yabusele",
+      "salary": 5500000
+     },
+     {
+      "player": "Russell Westbrook",
+      "salary": 3634153
+     },
+     {
+      "player": "Trey Lyles",
+      "salary": 3571495
+     },
+     {
+      "player": "Gary Payton II",
+      "salary": 3303774
+     },
+     {
+      "player": "Thomas Bryant",
+      "salary": 3287409
+     },
+     {
+      "player": "Landry Shamet",
+      "salary": 3080921
+     },
+     {
+      "player": "Javonte Green",
+      "salary": 2874436
+     },
+     {
+      "player": "Tarik Biberovic",
+      "salary": 2857143
+     },
+     {
+      "player": "Anthony Gill",
+      "salary": 2667947
+     },
+     {
+      "player": "James Johnson",
+      "salary": 2667947
+     },
+     {
+      "player": "Bones Hyland",
+      "salary": 2461463
+     },
+     {
+      "player": "Dru Smith",
+      "salary": 2378870
+     },
+     {
+      "player": "Jordan Goodwin",
+      "salary": 2349578
+     },
+     {
+      "player": "Justin Champagnie",
+      "salary": 2349578
+     },
+     {
+      "player": "Neemias Queta",
+      "salary": 2349578
+     },
+     {
+      "player": "Brandon Williams",
+      "salary": 2270735
+     },
+     {
+      "player": "Moussa Diabate",
+      "salary": 2270735
+     },
+     {
+      "player": "Andre Jackson",
+      "salary": 2221677
+     },
+     {
+      "player": "Craig Porter",
+      "salary": 2221677
+     },
+     {
+      "player": "Adem Bona",
+      "salary": 1955377
+     },
+     {
+      "player": "Pelle Larsson",
+      "salary": 1955377
+     },
+     {
+      "player": "Mohamed Diawara",
+      "salary": 1272870
+     },
+     {
+      "player": "Braden Smith",
+      "salary": 1131970
+     },
+     {
+      "player": "Felix Okpara",
+      "salary": 1131970
+     },
+     {
+      "player": "Jaden Akins",
+      "salary": 1131970
+     },
+     {
+      "player": "Tre Donaldson",
+      "salary": 1131970
+     },
+     {
+      "player": "Tyler Bilodeau",
+      "salary": 1131970
+     },
+     {
+      "player": "AK Okereke",
+      "salary": 636435
+     },
+     {
+      "player": "Ben Simmons",
+      "salary": 636435
+     },
+     {
+      "player": "Bryce Hopkins",
+      "salary": 636435
+     },
+     {
+      "player": "Elijah Harkless",
+      "salary": 636435
+     },
+     {
+      "player": "Izaiyah Nelson",
+      "salary": 636435
+     },
+     {
+      "player": "Jalen Bridges",
+      "salary": 636435
+     },
+     {
+      "player": "Jaron Pierre",
+      "salary": 636435
+     },
+     {
+      "player": "Kevin McCullar",
+      "salary": 636435
+     },
+     {
+      "player": "Malik Dia",
+      "salary": 636435
+     },
+     {
+      "player": "Tyler Nickel",
+      "salary": 636435
+     },
+     {
+      "player": "Dillon Mitchell",
+      "salary": 490128
+     },
+     {
+      "player": "Graham Ike",
+      "salary": 405359
+     },
+     {
+      "player": "Dennis Smith",
+      "salary": 321714
+     },
+     {
+      "player": "KJ Martin",
+      "salary": 321714
+     },
+     {
+      "player": "John Butler",
+      "salary": 312062
+     },
+     {
+      "player": "Jeenathan Williams",
+      "salary": 176943
+     },
+     {
+      "player": "Ja'Kobi Gillespie",
+      "salary": 157640
+     },
+     {
+      "player": "Jaden Bradley",
+      "salary": 157640
+     },
+     {
+      "player": "Kylan Boswell",
+      "salary": 157640
+     },
+     {
+      "player": "Maliq Brown",
+      "salary": 157640
+     },
+     {
+      "player": "Michael Ajayi",
+      "salary": 157640
+     },
+     {
+      "player": "Quadir Copeland",
+      "salary": 157640
+     },
+     {
+      "player": "Rafael Castro",
+      "salary": 157640
+     },
+     {
+      "player": "Arthur Kaluma",
+      "salary": 141554
+     },
+     {
+      "player": "Josh Dix",
+      "salary": 141554
+     },
+     {
+      "player": "Otega Oweh",
+      "salary": 141554
+     },
+     {
+      "player": "Tobi Lawal",
+      "salary": 141554
+     },
+     {
+      "player": "Ugonna Onyenso",
+      "salary": 141554
+     },
+     {
+      "player": "Charles Bassey",
+      "salary": 113171
+     },
+     {
+      "player": "Mario Hezonja",
+      "salary": 113171
+     }
+    ],
+    "player_seasons_not_read": 567
+   }
+  },
+  "dead": {
+   "2025-26": {
+    "also_in_the_historical_tab": 137,
+    "dollars_not_read": 339345854,
+    "missing_from_the_historical_tab": [
+     {
+      "player": "Terry Rozier",
+      "salary": 26643031
+     },
+     {
+      "player": "Charles Bassey",
+      "salary": 829792
+     },
+     {
+      "player": "Dominck Barlow",
+      "salary": 347451
+     },
+     {
+      "player": "Omer Yurtseven",
+      "salary": 282926
+     },
+     {
+      "player": "Tre Scott",
+      "salary": 280460
+     },
+     {
+      "player": "Keon Johnson",
+      "salary": 271614
+     },
+     {
+      "player": "DeJon Jarreau",
+      "salary": 263940
+     },
+     {
+      "player": "Skal Labissiere",
+      "salary": 153330
+     },
+     {
+      "player": "De'Andre Davis",
+      "salary": 85300
+     },
+     {
+      "player": "Yuri Collins",
+      "salary": 85300
+     },
+     {
+      "player": "Adama Bal",
+      "salary": 73153
+     },
+     {
+      "player": "Tyrese Key",
+      "salary": 51207
+     },
+     {
+      "player": "Terry Roberts",
+      "salary": 25000
+     },
+     {
+      "player": "Adam Flagler",
+      "salary": 15000
+     },
+     {
+      "player": "Augustas Marciulionis",
+      "salary": 15000
+     },
+     {
+      "player": "Emoni Bates",
+      "salary": 15000
+     }
+    ],
+    "player_seasons_not_read": 153
+   }
+  }
+ },
+ "future_sheet_columns_left_to_the_tab": [],
+ "historical_through": "2025-26",
+ "note": "Which sheet supplied each season, and what the boundary between them left unread. The historical tab is authoritative for every season it holds and the two forward-looking sheets are read only past it, so the boundary is the newest season on the tab rather than a year written into the code: the owner adding a season moves it. cutover lists, per forward sheet and per season it no longer answers for, the player-seasons and dollars the build stopped reading and how many of them the tab holds under the same name. Anything under missing_from_the_historical_tab is money that was on a page before and is not now, and is the thing to look at before trusting a rollover.",
+ "rows_per_season_per_sheet": {
+  "1990-91": {
+   "historical": 353
+  },
+  "1991-92": {
+   "historical": 384
+  },
+  "1992-93": {
+   "historical": 402
+  },
+  "1993-94": {
+   "historical": 386
+  },
+  "1994-95": {
+   "historical": 419
+  },
+  "1995-96": {
+   "historical": 453
+  },
+  "1996-97": {
+   "historical": 416
+  },
+  "1997-98": {
+   "historical": 446
+  },
+  "1998-99": {
+   "historical": 428
+  },
+  "1999-00": {
+   "historical": 517
+  },
+  "2000-01": {
+   "historical": 456
+  },
+  "2001-02": {
+   "historical": 451
+  },
+  "2002-03": {
+   "historical": 452
+  },
+  "2003-04": {
+   "historical": 455
+  },
+  "2004-05": {
+   "historical": 471
+  },
+  "2005-06": {
+   "historical": 480
+  },
+  "2006-07": {
+   "historical": 496
+  },
+  "2007-08": {
+   "historical": 471
+  },
+  "2008-09": {
+   "historical": 461
+  },
+  "2009-10": {
+   "historical": 457
+  },
+  "2010-11": {
+   "historical": 460
+  },
+  "2011-12": {
+   "historical": 464
+  },
+  "2012-13": {
+   "historical": 495
+  },
+  "2013-14": {
+   "historical": 493
+  },
+  "2014-15": {
+   "historical": 514
+  },
+  "2015-16": {
+   "historical": 501
+  },
+  "2016-17": {
+   "historical": 546
+  },
+  "2017-18": {
+   "historical": 587
+  },
+  "2018-19": {
+   "historical": 577
+  },
+  "2019-20": {
+   "historical": 516
+  },
+  "2020-21": {
+   "historical": 579
+  },
+  "2021-22": {
+   "historical": 654
+  },
+  "2022-23": {
+   "historical": 575
+  },
+  "2023-24": {
+   "historical": 614
+  },
+  "2024-25": {
+   "historical": 571
+  },
+  "2025-26": {
+   "historical": 591
+  },
+  "2026-27": {
+   "current_and_dead": 638,
+   "future": 616
+  },
+  "2027-28": {
+   "current_and_dead": 350,
+   "future": 340
+  },
+  "2028-29": {
+   "current_and_dead": 200,
+   "future": 192
+  },
+  "2029-30": {
+   "current_and_dead": 99,
+   "future": 96
+  },
+  "2030-31": {
+   "current_and_dead": 19,
+   "future": 17
+  }
+ }
+}
