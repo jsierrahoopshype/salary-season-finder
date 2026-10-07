@@ -1596,6 +1596,74 @@ def build_data():
               f"teams filled in, {len(dead_rows_added)} rows added, "
               f"{dead_left_alone} left alone because the tab names a team")
 
+    # The current-salaries sheet, for a man the tab has no row for in a season it
+    # covers. The tab gained 2025-26 without 52 of the men the current sheet had
+    # for it, and 19 of those played: Javonte Green all 82 games for Detroit,
+    # Neemias Queta 76 for Boston, Gary Payton II 73 for Golden State. A season
+    # he played with no salary row is a hole in the middle of his career and a
+    # gap in his running total, so the sheet still answers where the tab is
+    # silent.
+    #
+    # Temporary by construction. The test is "has the tab a row for this man in
+    # this season", so the day it gains one the fill stops applying to him and
+    # nothing here has to be edited.
+    #
+    # Two rules keep it honest. The team comes from the stats line and not from
+    # the sheet, because the sheet carries one TEAM per player and applies it to
+    # every season in the row, which is the whole reason 2025-26 moved to the tab
+    # in the first place. And a man with no games stays out: those are the
+    # two-way and camp rows the tab is right to omit, and inventing a season for
+    # them would put money on a page for a season nobody played.
+    # Only the season that just changed hands, which is the newest the tab holds.
+    # The sheet's older columns were never read by any build: the current sheet
+    # used to start at 2026 and its 2025 column has never answered for 2024-25,
+    # so filling from it there would not be restoring a row, it would be adding
+    # one that has never existed. Derived, not a year written down: the boundary
+    # moves and this follows it. A tab that ever jumped two seasons at once would
+    # leave the older of them unfilled, and the report's cutover block is where
+    # that would show.
+    current_rows_filled, current_no_games, current_already_covered = [], [], 0
+    for season, offers in sorted(cyro_dropped["current"].items()):
+        if season != historical_through:
+            continue
+        for nk, offer in sorted(offers.items()):
+            who = persons.resolve(offer["player"], season)
+            if salary_csv_lookup.get((who, season)) is not None:
+                # A row already answers for him: the tab's, or one the dead-money
+                # fill above just added. Either way there is nothing to fill and
+                # a second row would be the same season's money twice.
+                current_already_covered += 1
+                continue
+            played = stats_teams_for(stats_lookup, offer["player"], season)
+            games = sum(
+                row.get("gp") or 0
+                for row in (stats_lookup.get((nk, season)) or [])
+                if row.get("team") != "TOT"
+            )
+            if not (played and games):
+                current_no_games.append({
+                    "player": offer["player"], "season": season,
+                    "salary": offer["salary"],
+                })
+                continue
+            # Several teams in one season: both named, no apportionment
+            # invented, exactly as a traded season is handled elsewhere.
+            team_str = ", ".join(played)
+            salary_csv_lookup[(who, season)] = [{
+                "player_original": offer["player"],
+                "team": team_str,
+                "salary": offer["salary"],
+            }]
+            current_rows_filled.append({
+                "player": offer["player"], "season": season,
+                "team": team_str, "salary": offer["salary"], "games": games,
+            })
+    if cyro_dropped["current"]:
+        print(f"    Current sheet into the tab's seasons: "
+              f"{len(current_rows_filled)} rows filled where nothing answered "
+              f"for him and he played, {len(current_no_games)} left out for no "
+              f"games, {current_already_covered} already answered for")
+
     # Combine multi-team records in salary_csv_lookup
     # e.g. Griffin 2020-21: [{team:DET, salary:32M}, {team:BKN, salary:1.2M}]
     # becomes: [{team:"BKN, DET", salary:33.9M, team_salaries:{BKN:1.2M, DET:32M}}]
@@ -2050,16 +2118,21 @@ def build_data():
     added_per_season = defaultdict(int)
     for row in dead_rows_added:
         added_per_season[row["season"]] += row["salary"]
+    filled_per_season = defaultdict(int)
+    for row in current_rows_filled:
+        filled_per_season[row["season"]] += row["salary"]
     arithmetic = {}
     for season in sources:
         if seasons_after(historical_through)(season):
             continue
-        expected = tab_dollars[season] + added_per_season[season]
+        expected = (tab_dollars[season] + added_per_season[season]
+                    + filled_per_season[season])
         built = built_per_season[season]
         arithmetic[season] = {
             "dollars_in_the_file": built,
             "dollars_on_the_historical_tab": tab_dollars[season],
             "dollars_on_dead_rows_the_tab_had_none_for": added_per_season[season],
+            "dollars_filled_from_the_current_sheet": filled_per_season[season],
             "balances": built == expected,
         }
         if built != expected:
@@ -2110,6 +2183,30 @@ def build_data():
             "rows_per_season_per_sheet": sources,
             "cutover": cutover,
             "the_sums_balance": arithmetic,
+            "filled_from_current_sheet_missing_from_tab": {
+                "note": (
+                    "A man the tab has no row for in a season it covers, where "
+                    "the current-salaries sheet has a figure for him and the "
+                    "stats sheet shows him playing. The tab gained 2025-26 "
+                    "without 52 of the men that sheet had for it, and the ones "
+                    "who played would otherwise carry a hole in the middle of a "
+                    "career and a gap in a running total. Temporary by "
+                    "construction: the test is whether the tab has a row for "
+                    "him, so the day it gains one this stops applying with "
+                    "nothing to edit. The team is the stats line's and not the "
+                    "sheet's, because the sheet carries one TEAM per player and "
+                    "applies it to every season in the row, which is why 2025-26 "
+                    "moved to the tab at all; several teams in one season are "
+                    "both named and given no figures. A man with no games stays "
+                    "out and is listed under left_out_for_no_games: those are "
+                    "the two-way and camp rows, and a season nobody played is "
+                    "not a season to put money on."
+                ),
+                "rows_filled": current_rows_filled,
+                "left_out_for_no_games": current_no_games,
+                "already_answered_for_by_the_tab_or_the_dead_sheet":
+                    current_already_covered,
+            },
             "dead_money_into_the_tabs_seasons": {
                 "note": (
                     "The tab holds the seasons it covers but not every man in "

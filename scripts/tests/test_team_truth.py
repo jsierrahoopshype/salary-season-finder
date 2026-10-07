@@ -560,15 +560,28 @@ def test_the_shipped_sources_report_names_a_boundary_and_keeps_its_books():
             assert set(sheets) <= {"historical"}, (season, sheets)
         else:
             assert "historical" not in sheets, (season, sheets)
-    # the arithmetic the build checked: no season the tab covers may hold more
-    # money than the tab gave plus the rows the dead sheet added
+    # The arithmetic the build checked, recomputed here rather than taken on
+    # trust: a season the tab covers holds the money the tab gave, plus the rows
+    # the dead sheet had that the tab did not, plus the rows filled from the
+    # current sheet. Every term, or the check passes while money goes missing.
     assert doc["the_sums_balance"], "no season was checked"
     for season, book in doc["the_sums_balance"].items():
         assert not later(season), season
         assert book["balances"] is True, (season, book)
         assert (book["dollars_on_the_historical_tab"]
                 + book["dollars_on_dead_rows_the_tab_had_none_for"]
+                + book["dollars_filled_from_the_current_sheet"]
                 == book["dollars_in_the_file"]), (season, book)
+
+    # the current-sheet fill: a season the tab covers, a team, and games played
+    fill = doc["filled_from_current_sheet_missing_from_tab"]
+    for row in fill["rows_filled"]:
+        assert not later(row["season"]), row
+        assert row["team"], row
+        assert row["games"] > 0, row
+    for row in fill["left_out_for_no_games"]:
+        assert not later(row["season"]), row
+
     dead = doc["dead_money_into_the_tabs_seasons"]
     # the tab holds this money without the club that owes it, so every team the
     # dead sheet filled in has to be for a season the tab covers
@@ -695,3 +708,118 @@ def test_two_rows_on_one_team_in_one_season_keep_both_payments():
     assert combined["team"] == "WAS"
     # one team, so no per-team breakdown: it would say nothing new
     assert "team_salaries" not in combined
+
+
+# --------------------------------------------------------------------------
+# the current sheet, where the tab has no row and he played
+# --------------------------------------------------------------------------
+
+CURRENT_WITH_A_COVERED_SEASON = (
+    "PLAYER,x,TEAM,2026,2027\n"
+    "Gary Payton II,,MIA,\"$3,303,774\",\"$4,000,000\"\n"
+)
+
+
+def _fill_from_current(dropped, stats, tab, persons, season="2025-26"):
+    """The fill as build_data runs it, on the same inputs."""
+    filled, no_games, covered = [], [], 0
+    for nk, offer in sorted((dropped.get(season) or {}).items()):
+        who = persons.resolve(offer["player"], season)
+        if tab.get((who, season)) is not None:
+            covered += 1
+            continue
+        played = B.stats_teams_for(stats, offer["player"], season)
+        games = sum(row.get("gp") or 0
+                    for row in (stats.get((nk, season)) or [])
+                    if row.get("team") != "TOT")
+        if not (played and games):
+            no_games.append(offer["player"])
+            continue
+        tab[(who, season)] = [{"player_original": offer["player"],
+                               "team": ", ".join(played),
+                               "salary": offer["salary"]}]
+        filled.append((offer["player"], ", ".join(played), offer["salary"], games))
+    return filled, no_games, covered
+
+
+def _register(name):
+    index = B.PersonIndex()
+    index.add_person({
+        "PLAYER": name, "DRAFT": "2016", "PICK": "UND",
+        "COLLEGE / TEAM": "Oregon St", "BIRTHDAY": "", "POS": "",
+        "NATIONALITY": "", "HEIGHT": "", "WEIGHT": "",
+    })
+    return index
+
+
+def test_the_fill_takes_the_team_from_the_stats_line_not_the_sheet():
+    """The sheet carries one TEAM per player and applies it to every season in
+    the row, which is the whole reason 2025-26 moved to the tab. So the fill
+    reads the team off the stats line: the sheet says Miami and he played for
+    Golden State."""
+    _lk, _s, dropped, _dead = B.process_cyro_salaries(
+        CURRENT_WITH_A_COVERED_SEASON, None, after_season="2025-26")
+    assert dropped["current"]["2025-26"]["gary payton"]["salary"] == 3303774
+    stats = {("gary payton", "2025-26"): [{"team": "GSW", "gp": 73}]}
+    filled, no_games, covered = _fill_from_current(
+        dropped["current"], stats, {}, _register("Gary Payton II"))
+    assert filled == [("Gary Payton II", "GSW", 3303774, 73)]
+    assert (no_games, covered) == ([], 0)
+
+
+def test_a_man_with_no_games_stays_out():
+    """Two-way and camp rows. A season nobody played is not a season to put
+    money on, and the tab is right to omit them."""
+    _lk, _s, dropped, _dead = B.process_cyro_salaries(
+        "PLAYER,x,TEAM,2026,2027\nBen Simmons,,SAC,\"$636,435\",$0\n",
+        None, after_season="2025-26")
+    filled, no_games, covered = _fill_from_current(
+        dropped["current"], {}, {}, _register("Ben Simmons"))
+    assert (filled, no_games, covered) == ([], ["Ben Simmons"], 0)
+
+
+def test_the_fill_never_touches_a_row_the_tab_already_has():
+    """And the day the tab gains a row for him it stops applying to him, with
+    nothing here to edit: that is the same test, one build later."""
+    _lk, _s, dropped, _dead = B.process_cyro_salaries(
+        CURRENT_WITH_A_COVERED_SEASON, None, after_season="2025-26")
+    persons = _register("Gary Payton II")
+    who = persons.resolve("Gary Payton II", "2025-26")
+    tab = {(who, "2025-26"): [
+        {"player_original": "Gary Payton II", "team": "GSW", "salary": 999}]}
+    stats = {("gary payton", "2025-26"): [{"team": "GSW", "gp": 73}]}
+    filled, no_games, covered = _fill_from_current(
+        dropped["current"], stats, tab, persons)
+    assert (filled, no_games, covered) == ([], [], 1)
+    # the tab's figure, untouched
+    assert tab[(who, "2025-26")] == [
+        {"player_original": "Gary Payton II", "team": "GSW", "salary": 999}]
+
+
+def test_the_fill_touches_only_the_season_that_changed_hands():
+    """The sheet's older columns were never read by any build: it used to start
+    at 2026, so its 2025 column has never answered for 2024-25. Filling from it
+    there would add a row that has never existed rather than restore one."""
+    _lk, _s, dropped, _dead = B.process_cyro_salaries(
+        "PLAYER,x,TEAM,2025,2026,2027\n"
+        "Gary Payton II,,MIA,\"$1,000,000\",\"$3,303,774\",\"$4,000,000\"\n",
+        None, after_season="2025-26")
+    # both older columns come back as the tab's to answer for
+    assert set(dropped["current"]) == {"2024-25", "2025-26"}
+    stats = {("gary payton", "2024-25"): [{"team": "GSW", "gp": 60}],
+             ("gary payton", "2025-26"): [{"team": "GSW", "gp": 73}]}
+    persons = _register("Gary Payton II")
+    # only the boundary season is filled
+    filled, _no, _cov = _fill_from_current(dropped["current"], stats, {}, persons,
+                                          season="2025-26")
+    assert [row[0] for row in filled] == ["Gary Payton II"]
+    assert filled[0][2] == 3303774
+
+
+def test_the_fill_stops_at_the_boundary_like_everything_else():
+    """A season past the boundary is the current sheet's to answer for outright,
+    so nothing is 'filled' there: it is simply read."""
+    _lk, seasons, dropped, _dead = B.process_cyro_salaries(
+        CURRENT_WITH_A_COVERED_SEASON, None, after_season="2025-26")
+    assert seasons == {"2026-27"}
+    assert set(dropped["current"]) == {"2025-26"}
