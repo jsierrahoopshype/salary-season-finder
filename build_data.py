@@ -1529,11 +1529,17 @@ def build_data():
             salary_csv_lookup[k] = v
 
     # The dead-money sheet, for the seasons the historical tab covers. The tab
-    # carries this money and not the club that owes it: 98 of its 2025-26 rows
-    # have an empty TEAM. So the sheet is read for the team alone where the tab
-    # left one blank, and as a row of its own where the tab has none. No figure
-    # the tab gave is touched, and where the tab already names a team the tab
-    # keeps it.
+    # carries this money and not the club that owes it: rows of dollars with an
+    # empty TEAM. So the sheet is read for the team alone where the tab left one
+    # blank, and as a row of its own where the tab has none. No figure the tab
+    # gave is touched, and where the tab names a team the tab keeps it.
+    #
+    # Asked of the spelling, before the per-person re-key, because
+    # normalize_name already folds Jr, Sr and III away: the tab's "Terry Rozier
+    # III" and the dead sheet's "Terry Rozier" are one key here. Asking after
+    # the re-key would be worse, not better, since a suffixed spelling the
+    # register has no row for resolves to a person of its own, and the dead row
+    # would go in beside the tab's instead of filling it.
     dead_teams_filled, dead_rows_added, dead_left_alone = [], [], 0
     for (nk, season), offer in sorted(dead_for_the_tab.items()):
         teams = offer["teams"]
@@ -2032,7 +2038,9 @@ def build_data():
             "balances": built == expected,
         }
         if built != expected:
-            print(f"      WARNING: {season} does not balance: the file holds "
+            # ::error:: so a run surfaces it as an annotation rather than only
+            # as a line in a log nobody reads.
+            print(f"::error::{season} does not balance: the file holds "
                   f"{built:,} and the sheets account for {expected:,}, a "
                   f"difference of {built - expected:,}")
     sources_path = os.path.join(OUT_DIR, "salary_sources_report.json")
