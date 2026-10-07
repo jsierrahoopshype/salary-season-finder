@@ -871,3 +871,68 @@ def test_a_repeat_in_another_season_is_another_payment():
     assert lookup[("georges niang", "2024-25")][0]["salary"] == 8200000
     assert lookup[("georges niang", "2025-26")][0]["salary"] == 8200000
     assert repeats == []
+
+
+# --------------------------------------------------------------------------
+# a name a sheet spells wrong is still the man it belongs to
+# --------------------------------------------------------------------------
+
+
+def _misspellings():
+    path = os.path.join(REPO, "data", "name_aliases.json")
+    with open(path, "r", encoding="utf-8") as fh:
+        return json.load(fh)["one_mans_name_misspelled_in_a_sheet"]
+
+
+def test_every_misspelling_on_file_reads_as_the_man_it_belongs_to():
+    """The pairs live in data/name_aliases.json and the build reads them into the
+    map every name goes through, so the misspelled row lands on the real man in
+    the lookup keys and in the register alike."""
+    block = _misspellings()
+    bases, printed = B.load_misspellings()
+    assert bases, "no misspellings loaded"
+    for wrong, right in block["spellings"].items():
+        wrong_base = B.split_player_name(wrong, alias=False)[0]
+        right_base = B.split_player_name(right, alias=False)[0]
+        assert bases[wrong_base] == right_base, wrong
+        assert printed[right_base] == right, right
+
+
+def test_the_two_spellings_land_on_one_key_in_the_lookup(monkeypatch):
+    """Guerschon Yabusele was paid $5.5m by Chicago in 2025-26 and Guershon
+    Yabusele was not paid anything by anybody: there is one man and one
+    payment."""
+    bases, printed = B.load_misspellings()
+    monkeypatch.setitem(B.NAME_ALIASES, "guershon yabusele",
+                        bases["guershon yabusele"])
+    lookup, repeats = B.process_salaries_csv(
+        "TEAM,YEAR,PLAYER,SALARY\n"
+        "CHI,2026,Guershon Yabusele,\"$5,500,000\"\n"
+        "CHI,2026,Guerschon Yabusele,\"$5,500,000\"\n"
+    )
+    assert list(lookup) == [("guerschon yabusele", "2025-26")]
+    assert [r["salary"] for r in lookup[("guerschon yabusele", "2025-26")]] == [5500000]
+    assert len(repeats) == 1
+
+
+def test_a_misspelling_is_never_also_a_canonical_spelling():
+    """A chain would make the man you land on depend on the order the map is
+    read in, which is no way to decide who somebody is."""
+    spellings = _misspellings()["spellings"]
+    canonical = set(spellings.values())
+    for wrong, right in spellings.items():
+        assert wrong != right
+        assert wrong not in canonical, wrong
+        assert right not in spellings, right
+
+
+def test_every_misspelling_carries_its_evidence():
+    """A pair merged on nobody's say-so is a pair nobody can check."""
+    block = _misspellings()
+    documented = {e["misspelled"]: e for e in block["evidence"]}
+    for wrong, right in block["spellings"].items():
+        assert wrong in documented, wrong
+        entry = documented[wrong]
+        assert entry["canonical"] == right
+        assert entry["season"] and entry["team"]
+        assert entry["evidence"].strip()

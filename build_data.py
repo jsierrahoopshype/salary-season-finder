@@ -90,6 +90,14 @@ NAME_ALIASES = {
     "metta sandiford-artest": "ron artest",
 }
 
+#: The spelling to print for a man a sheet has misspelled, keyed on the base the
+#: parser reads once NAME_ALIASES has had its say. Only a man bio.csv has no row
+#: for reads this, because display() prefers bio.csv wherever it has him; the
+#: two Tyreke Key rows are such a man, and without it the name on his page is
+#: whichever of the two spellings happened to survive. Both are filled by
+#: load_misspellings at the start of a build, from data/name_aliases.json.
+MISSPELLED_PRINTED = {}
+
 
 # ── Parsing helpers ────────────────────────────────────────────────────
 def normalize_team(team_str):
@@ -156,7 +164,7 @@ SUFFIX_DISPLAY = {
 }
 
 
-def split_player_name(name):
+def split_player_name(name, alias=True):
     """Pull a name apart into the three things that identify a person.
 
     ``('Larry Nance, Jr.')`` -> ``('larry nance', 'jr', '')`` and
@@ -180,7 +188,11 @@ def split_player_name(name):
     while len(tokens) > 1 and tokens[-1] in NAME_SUFFIXES:
         suffix.insert(0, tokens.pop())
     base = " ".join(tokens)
-    base = NAME_ALIASES.get(base, base)
+    # ``alias`` is False only for the loader that fills NAME_ALIASES, which has
+    # to read a name the way this function would without consulting the map it
+    # is building.
+    if alias:
+        base = NAME_ALIASES.get(base, base)
     return base, " ".join(suffix), marker
 
 
@@ -322,7 +334,8 @@ class PersonIndex:
             return None
         pid = self._resolve(base, suffix, marker, season, span=span)
         if note:
-            self.spellings[pid][str(name).strip()] += 1
+            self.spellings[pid][
+                MISSPELLED_PRINTED.get(base) or str(name).strip()] += 1
         return pid
 
     def _resolve(self, base, suffix, marker, season, span=True):
@@ -1370,6 +1383,43 @@ def load_bio_overrides():
         return (json.load(fh) or {}).get("entries") or {}
 
 
+def load_misspellings():
+    """One man's name as a sheet spells it wrong, mapped to his own spelling.
+
+    data/name_aliases.json holds two different things under two keys. Its
+    alias_to_canonical is two spellings of one career, read after the build by
+    the factoid engine: there the halves never share a season, because a shared
+    season would mean two men. These are the other thing, a typo in a single
+    season's row, so the two spellings do share a season and the merge has to
+    happen here, in the build, or data.json carries two men.
+
+    The misspelled half is not harmless. It shows up as a player who was paid
+    and never played, with a page of its own, in its club's payroll and in the
+    season's salary ranks, and the money on it is the real man's money counted a
+    second time: $10.4 million of 2025-26 across five of these before this.
+
+    Returned as {the base the parser reads: the base it should read}, which is
+    what NAME_ALIASES holds, plus {the base it should read: the spelling to
+    print} so a man bio.csv has no row for is printed under his own name rather
+    than whichever spelling a surviving row happened to carry.
+    """
+    path = os.path.join(BASE_DIR, "data", "name_aliases.json")
+    if not os.path.exists(path):
+        return {}, {}
+    with open(path, "r", encoding="utf-8") as fh:
+        block = (json.load(fh) or {}).get(
+            "one_mans_name_misspelled_in_a_sheet") or {}
+    bases, printed = {}, {}
+    for wrong, right in (block.get("spellings") or {}).items():
+        wrong_base = split_player_name(wrong, alias=False)[0]
+        right_base = split_player_name(right, alias=False)[0]
+        if not wrong_base or not right_base or wrong_base == right_base:
+            continue
+        bases[wrong_base] = right_base
+        printed[right_base] = right
+    return bases, printed
+
+
 def process_awards(csv_data, persons):
     """Awards per person-season, not per loose name.
 
@@ -1475,6 +1525,16 @@ def build_data():
     print("HoopsMatic Salary Season Finder — Data Builder")
     print("=" * 60)
 
+    # Before anything is parsed: every name the sheets spell wrong reads as the
+    # man it belongs to from here on, in the lookup keys and in the register
+    # alike, because NAME_ALIASES is what both go through.
+    misspelled, printed = load_misspellings()
+    NAME_ALIASES.update(misspelled)
+    MISSPELLED_PRINTED.update(printed)
+    if misspelled:
+        print("  {} misspelled spellings read as the man they belong to: "
+              "{}".format(len(misspelled), ", ".join(sorted(misspelled))))
+
     mode = "auto"
     if "--local" in sys.argv:
         mode = "local"
@@ -1570,6 +1630,39 @@ def build_data():
             pid = persons.resolve(rec["player_original"], season)
             salary_by_person.setdefault((pid, season), []).append(rec)
     salary_csv_lookup = salary_by_person
+
+    # The same exact-repeat test the tab parser runs, run again now that the
+    # rows are keyed on the person rather than on a spelling. The parser can
+    # only see a repeat between two rows spelled alike; two spellings of one man
+    # come together here, and the rows under one key are summed further down, so
+    # without this the merge would double what the club owed instead of reading
+    # it once. Both Tyreke Key rows arrive that way.
+    #
+    # Here rather than after the dead sheet and the current sheet have been read
+    # for the tab's seasons: neither of those can add a row that repeats one of
+    # these, because both are read only where this lookup has no row for the man
+    # at all.
+    person_repeats = []
+    for key, recs in salary_csv_lookup.items():
+        if len(recs) <= 1:
+            continue
+        kept, seen = [], set()
+        for rec in recs:
+            mark = (rec.get("team", ""), rec.get("salary"))
+            if mark in seen:
+                person_repeats.append({
+                    "player": persons.display(key[0]) or rec["player_original"],
+                    "spelled": rec["player_original"],
+                    "season": key[1], "team": mark[0], "salary": mark[1],
+                })
+                continue
+            seen.add(mark)
+            kept.append(rec)
+        if len(kept) != len(recs):
+            salary_csv_lookup[key] = kept
+    if person_repeats:
+        print("    {} rows repeated another once two spellings became one man "
+              "and were read once".format(len(person_repeats)))
 
     # The dead-money sheet, for the seasons the historical tab covers. The tab
     # holds those seasons but not every man in them: sixteen of this sheet's
@@ -2140,12 +2233,22 @@ def build_data():
         for rec in recs:
             tab_dollars[season] += rec["salary"]
 
+    # A row dropped as a repeat once two spellings became one man is a dollar
+    # the tab gave and the file does not hold, so the tab's side of the sum
+    # below has to lose it too. In a season the tab covers, every row in the
+    # lookup at that point came off the tab: the forward sheets are read only
+    # past the tab's newest season, and the dead and current sheets are read for
+    # the tab's seasons only afterwards and only where the lookup had nothing.
+    merged_repeats_per_season = defaultdict(int)
+    for row in person_repeats:
+        merged_repeats_per_season[row["season"]] += row["salary"]
+
     # The arithmetic that says nothing was counted twice. For a season the tab
-    # covers, every dollar in the file has to be a dollar the tab gave plus a
-    # dollar on a row the dead sheet added where the tab had none. The team fill
-    # moves no money, so it cannot appear here. A build that cannot say this is
-    # a build that has started summing two sheets' versions of one salary, and
-    # it says so rather than shipping the number.
+    # covers, every dollar in the file has to be a dollar the tab gave, less any
+    # the tab wrote twice, plus a dollar on a row the dead sheet added where the
+    # tab had none. The team fill moves no money, so it cannot appear here. A
+    # build that cannot say this is a build that has started summing two sheets'
+    # versions of one salary, and it says so rather than shipping the number.
     built_per_season = defaultdict(int)
     for rec in final_records:
         built_per_season[rec["season"]] += rec.get("salary") or 0
@@ -2159,12 +2262,14 @@ def build_data():
     for season in sources:
         if seasons_after(historical_through)(season):
             continue
-        expected = (tab_dollars[season] + added_per_season[season]
-                    + filled_per_season[season])
+        expected = (tab_dollars[season] - merged_repeats_per_season[season]
+                    + added_per_season[season] + filled_per_season[season])
         built = built_per_season[season]
         arithmetic[season] = {
             "dollars_in_the_file": built,
             "dollars_on_the_historical_tab": tab_dollars[season],
+            "dollars_the_tab_gave_twice_under_two_spellings":
+                merged_repeats_per_season[season],
             "dollars_on_dead_rows_the_tab_had_none_for": added_per_season[season],
             "dollars_filled_from_the_current_sheet": filled_per_season[season],
             "balances": built == expected,
@@ -2197,6 +2302,7 @@ def build_data():
     # Grouped for the report: a count and a sum per season says at a glance
     # whether this is one season's edit or something the tab has always done.
     repeats_per_season = dict(Counter(r["season"] for r in tab_repeats))
+    merged_per_season_count = dict(Counter(r["season"] for r in person_repeats))
     repeats_dollars = {}
     for row in tab_repeats:
         repeats_dollars[row["season"]] = (
@@ -2243,6 +2349,22 @@ def build_data():
                 "rows_per_season": repeats_per_season,
                 "dollars_per_season": repeats_dollars,
                 "rows": tab_repeats,
+            },
+            "rows_that_repeated_once_two_spellings_became_one_man": {
+                "note": (
+                    "The same test, applied after every row is keyed on the "
+                    "person it belongs to rather than on a spelling. The parser "
+                    "above can only see a repeat between two rows spelled "
+                    "alike; a name data/name_aliases.json says is one man "
+                    "misspelled comes together here, and the rows under one "
+                    "player-season are summed, so reading both would double "
+                    "what the club owed. The dollars are taken off the tab's "
+                    "side of the_sums_balance, where they are listed as "
+                    "dollars_the_tab_gave_twice_under_two_spellings."
+                ),
+                "rows_per_season": merged_per_season_count,
+                "dollars_per_season": dict(merged_repeats_per_season),
+                "rows": person_repeats,
             },
             "cutover": cutover,
             "the_sums_balance": arithmetic,
