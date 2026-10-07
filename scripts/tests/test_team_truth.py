@@ -560,6 +560,15 @@ def test_the_shipped_sources_report_names_a_boundary_and_keeps_its_books():
             assert set(sheets) <= {"historical"}, (season, sheets)
         else:
             assert "historical" not in sheets, (season, sheets)
+    # the arithmetic the build checked: no season the tab covers may hold more
+    # money than the tab gave plus the rows the dead sheet added
+    assert doc["the_sums_balance"], "no season was checked"
+    for season, book in doc["the_sums_balance"].items():
+        assert not later(season), season
+        assert book["balances"] is True, (season, book)
+        assert (book["dollars_on_the_historical_tab"]
+                + book["dollars_on_dead_rows_the_tab_had_none_for"]
+                == book["dollars_in_the_file"]), (season, book)
     dead = doc["dead_money_into_the_tabs_seasons"]
     # the tab holds this money without the club that owes it, so every team the
     # dead sheet filled in has to be for a season the tab covers

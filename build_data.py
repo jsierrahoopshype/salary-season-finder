@@ -2000,6 +2000,38 @@ def build_data():
             "future": sum(1 for (_nk, s) in future_sal_lookup if s == season),
         }
         sources[season] = {k: v for k, v in rows.items() if v}
+        sources[season]["dollars_on_the_historical_tab"] = sum(
+            rec["salary"] for (_nk, s), recs in hist_sal_lookup.items()
+            if s == season for rec in recs)
+
+    # The arithmetic that says nothing was counted twice. For a season the tab
+    # covers, every dollar in the file has to be a dollar the tab gave plus a
+    # dollar on a row the dead sheet added where the tab had none. The team fill
+    # moves no money, so it cannot appear here. A build that cannot say this is
+    # a build that has started summing two sheets' versions of one salary, and
+    # it says so rather than shipping the number.
+    built_per_season = defaultdict(int)
+    for rec in final_records:
+        built_per_season[rec["season"]] += rec.get("salary") or 0
+    added_per_season = defaultdict(int)
+    for row in dead_rows_added:
+        added_per_season[row["season"]] += row["salary"]
+    arithmetic = {}
+    for season, counts in sources.items():
+        if seasons_after(historical_through)(season):
+            continue
+        expected = counts["dollars_on_the_historical_tab"] + added_per_season[season]
+        built = built_per_season[season]
+        arithmetic[season] = {
+            "dollars_in_the_file": built,
+            "dollars_on_the_historical_tab": counts["dollars_on_the_historical_tab"],
+            "dollars_on_dead_rows_the_tab_had_none_for": added_per_season[season],
+            "balances": built == expected,
+        }
+        if built != expected:
+            print(f"      WARNING: {season} does not balance: the file holds "
+                  f"{built:,} and the sheets account for {expected:,}, a "
+                  f"difference of {built - expected:,}")
     sources_path = os.path.join(OUT_DIR, "salary_sources_report.json")
     with open(sources_path, "w", encoding="utf-8") as f:
         json.dump({
@@ -2022,6 +2054,7 @@ def build_data():
             "future_sheet_columns_left_to_the_tab": future_dropped_cols,
             "rows_per_season_per_sheet": sources,
             "cutover": cutover,
+            "the_sums_balance": arithmetic,
             "dead_money_into_the_tabs_seasons": {
                 "note": (
                     "The tab carries 2025-26 dead money as rows of dollars with "
