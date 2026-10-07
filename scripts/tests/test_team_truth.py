@@ -560,16 +560,14 @@ def test_the_shipped_sources_report_names_a_boundary_and_keeps_its_books():
             assert set(sheets) <= {"historical"}, (season, sheets)
         else:
             assert "historical" not in sheets, (season, sheets)
-    # the arithmetic the build checked: no season the tab covers may hold more
-    # money than the tab gave plus the rows the dead sheet added
+    # The arithmetic the build checked, recomputed here rather than taken on
+    # trust: a season the tab covers holds the money the tab gave, plus the rows
+    # the dead sheet had that the tab did not, plus the rows filled from the
+    # current sheet. Every term, or the check passes while money goes missing.
     assert doc["the_sums_balance"], "no season was checked"
     for season, book in doc["the_sums_balance"].items():
         assert not later(season), season
         assert book["balances"] is True, (season, book)
-        assert (book["dollars_on_the_historical_tab"]
-                + book["dollars_on_dead_rows_the_tab_had_none_for"]
-                == book["dollars_in_the_file"]), (season, book)
-    for season, book in doc["the_sums_balance"].items():
         assert (book["dollars_on_the_historical_tab"]
                 + book["dollars_on_dead_rows_the_tab_had_none_for"]
                 + book["dollars_filled_from_the_current_sheet"]
@@ -796,6 +794,26 @@ def test_the_fill_never_touches_a_row_the_tab_already_has():
     # the tab's figure, untouched
     assert tab[(who, "2025-26")] == [
         {"player_original": "Gary Payton II", "team": "GSW", "salary": 999}]
+
+
+def test_the_fill_touches_only_the_season_that_changed_hands():
+    """The sheet's older columns were never read by any build: it used to start
+    at 2026, so its 2025 column has never answered for 2024-25. Filling from it
+    there would add a row that has never existed rather than restore one."""
+    _lk, _s, dropped, _dead = B.process_cyro_salaries(
+        "PLAYER,x,TEAM,2025,2026,2027\n"
+        "Gary Payton II,,MIA,\"$1,000,000\",\"$3,303,774\",\"$4,000,000\"\n",
+        None, after_season="2025-26")
+    # both older columns come back as the tab's to answer for
+    assert set(dropped["current"]) == {"2024-25", "2025-26"}
+    stats = {("gary payton", "2024-25"): [{"team": "GSW", "gp": 60}],
+             ("gary payton", "2025-26"): [{"team": "GSW", "gp": 73}]}
+    persons = _register("Gary Payton II")
+    # only the boundary season is filled
+    filled, _no, _cov = _fill_from_current(dropped["current"], stats, {}, persons,
+                                          season="2025-26")
+    assert [row[0] for row in filled] == ["Gary Payton II"]
+    assert filled[0][2] == 3303774
 
 
 def test_the_fill_stops_at_the_boundary_like_everything_else():

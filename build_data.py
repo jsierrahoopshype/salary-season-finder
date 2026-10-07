@@ -1614,8 +1614,18 @@ def build_data():
     # in the first place. And a man with no games stays out: those are the
     # two-way and camp rows the tab is right to omit, and inventing a season for
     # them would put money on a page for a season nobody played.
+    # Only the season that just changed hands, which is the newest the tab holds.
+    # The sheet's older columns were never read by any build: the current sheet
+    # used to start at 2026 and its 2025 column has never answered for 2024-25,
+    # so filling from it there would not be restoring a row, it would be adding
+    # one that has never existed. Derived, not a year written down: the boundary
+    # moves and this follows it. A tab that ever jumped two seasons at once would
+    # leave the older of them unfilled, and the report's cutover block is where
+    # that would show.
     current_rows_filled, current_no_games, current_already_covered = [], [], 0
     for season, offers in sorted(cyro_dropped["current"].items()):
+        if season != historical_through:
+            continue
         for nk, offer in sorted(offers.items()):
             who = persons.resolve(offer["player"], season)
             if salary_csv_lookup.get((who, season)) is not None:
