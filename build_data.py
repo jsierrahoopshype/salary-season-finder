@@ -2363,7 +2363,15 @@ def build_data():
                     "dollars_the_tab_gave_twice_under_two_spellings."
                 ),
                 "rows_per_season": merged_per_season_count,
-                "dollars_per_season": dict(merged_repeats_per_season),
+                # Only the seasons that had one. merged_repeats_per_season is a
+                # defaultdict the balance loop reads once per season it checks,
+                # and a read is what puts a key in one, so dict() of it listed
+                # all 36 seasons at zero.
+                "dollars_per_season": {
+                    season: dollars
+                    for season, dollars in sorted(merged_repeats_per_season.items())
+                    if dollars
+                },
                 "rows": person_repeats,
             },
             "cutover": cutover,
