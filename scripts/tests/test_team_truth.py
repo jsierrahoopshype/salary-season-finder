@@ -454,3 +454,144 @@ def test_team_codes_reads_a_real_split_biggest_share_first():
     record = {"team": "TOR, IND", "salary": 10000000,
               "team_salaries": {"TOR": 6000000, "IND": 4000000}}
     assert F.team_codes(record) == ["TOR", "IND"]
+
+
+# --------------------------------------------------------------------------
+# which sheet answers for which season
+# --------------------------------------------------------------------------
+
+
+def test_the_boundary_is_the_newest_season_the_tab_holds():
+    assert B.latest_season(["1999-00", "2025-26", "2024-25"]) == "2025-26"
+    assert B.latest_season(["1999-00", "2000-01"]) == "2000-01"
+    assert B.latest_season([]) is None
+    assert B.latest_season(["nonsense"]) is None
+
+
+def test_seasons_after_counts_by_the_year_a_season_ends_in():
+    later = B.seasons_after("2025-26")
+    assert not later("2024-25")
+    assert not later("2025-26")
+    assert later("2026-27")
+    assert later("2030-31")
+
+
+def test_with_no_tab_at_all_every_season_is_still_read():
+    """An empty or missing historical sheet must not empty the file: the
+    forward sheets keep answering for everything rather than nothing."""
+    always = B.seasons_after(None)
+    assert always("1990-91") and always("2030-31")
+
+
+CURRENT_SHEET = (
+    "PLAYER,x,TEAM,2026,2027\n"
+    "Deandre Ayton,,LAL,\"$33,654,814\",\"$35,000,000\"\n"
+)
+DEAD_SHEET = (
+    "PLAYER,a,b,TEAM,SALARY 25-26,SALARY 26-27\n"
+    "Chris Paul,,,TOR,\"$3,634,153\",\"$1,000,000\"\n"
+)
+
+
+def test_the_forward_sheets_stop_at_the_season_the_tab_reaches():
+    lookup, seasons, dropped = B.process_cyro_salaries(
+        CURRENT_SHEET, DEAD_SHEET, after_season="2025-26")
+    assert seasons == {"2026-27"}
+    assert ("deandre ayton", "2025-26") not in lookup
+    assert ("chris paul", "2025-26") not in lookup
+    assert lookup[("deandre ayton", "2026-27")][0]["salary"] == 35000000
+    assert lookup[("chris paul", "2026-27")][0]["salary"] == 1000000
+    # and the build can say what it stopped reading, per sheet
+    assert dropped["current"]["2025-26"]["deandre ayton"]["salary"] == 33654814
+    assert dropped["dead"]["2025-26"]["chris paul"]["salary"] == 3634153
+
+
+def test_the_forward_sheets_still_answer_where_the_tab_has_not_reached():
+    """The fallback that matters on the day the tab is a season behind: nothing
+    is lost, the forward sheets simply still speak for it."""
+    lookup, seasons, dropped = B.process_cyro_salaries(
+        CURRENT_SHEET, DEAD_SHEET, after_season="2024-25")
+    assert seasons == {"2025-26", "2026-27"}
+    assert lookup[("deandre ayton", "2025-26")][0]["salary"] == 33654814
+    assert lookup[("chris paul", "2025-26")][0]["salary"] == 3634153
+    assert dropped == {"current": {}, "dead": {}}
+
+
+FUTURE_SHEET = "PLAYER,TEAM,2026,2027,2028\nDeandre Ayton,LAL,100,200,300\n"
+
+
+def test_the_future_sheet_reads_every_year_column_past_the_boundary():
+    lookup, skipped = B.process_future_salaries(FUTURE_SHEET, after_season="2025-26")
+    assert skipped == ["2026"]
+    assert ("deandre ayton", "2025-26") not in lookup
+    assert lookup[("deandre ayton", "2026-27")][0]["salary"] == 200
+    assert lookup[("deandre ayton", "2027-28")][0]["salary"] == 300
+
+
+def test_the_future_sheet_needs_no_edit_when_the_boundary_moves():
+    """The columns used to be the literal list 2027 to 2031. A sheet that gains
+    a 2032 column has to be read without anyone remembering to say so."""
+    sheet = "PLAYER,TEAM,2031,2032\nSomeone,LAL,10,20\n"
+    lookup, skipped = B.process_future_salaries(sheet, after_season="2025-26")
+    assert skipped == []
+    assert lookup[("someone", "2031-32")][0]["salary"] == 20
+
+
+@pytest.mark.skipif(
+    not os.path.exists(os.path.join(REPO, "data", "salary_sources_report.json")),
+    reason="data/salary_sources_report.json not present",
+)
+def test_the_shipped_sources_report_names_a_boundary_and_keeps_its_books():
+    with open(os.path.join(REPO, "data", "salary_sources_report.json"), "r",
+              encoding="utf-8") as fh:
+        doc = json.load(fh)
+    through = doc["historical_through"]
+    assert B.normalize_season(through) == through, through
+    later = B.seasons_after(through)
+    rows = doc["rows_per_season_per_sheet"]
+    for season, sheets in rows.items():
+        if not later(season):
+            # the tab owns it, so no forward sheet may have answered for it
+            assert set(sheets) <= {"historical"}, (season, sheets)
+        else:
+            assert "historical" not in sheets, (season, sheets)
+    for sheet, by_season in doc["cutover"].items():
+        for season, book in by_season.items():
+            assert not later(season), (sheet, season)
+            assert (book["also_in_the_historical_tab"]
+                    + len(book["missing_from_the_historical_tab"])
+                    == book["player_seasons_not_read"]), (sheet, season)
+
+
+# --------------------------------------------------------------------------
+# the workflows
+# --------------------------------------------------------------------------
+
+WORKFLOWS = os.path.join(REPO, ".github", "workflows")
+
+
+def test_no_workflow_pastes_an_input_into_a_shell():
+    """A workflow input is outside content. In env: it is a string; interpolated
+    into a run: script it is one quote away from being a command."""
+    offenders = []
+    for name in sorted(os.listdir(WORKFLOWS)):
+        with open(os.path.join(WORKFLOWS, name), "r", encoding="utf-8") as fh:
+            lines = fh.read().splitlines()
+        in_run = False
+        for line in lines:
+            stripped = line.strip()
+            if stripped.startswith("run:"):
+                in_run = True
+                continue
+            if stripped.startswith("- name:") or stripped.startswith("env:"):
+                in_run = False
+            if in_run and "github.event" in line and "${{" in line:
+                offenders.append((name, stripped))
+    assert not offenders, offenders
+
+
+def test_both_workflows_commit_the_sources_report():
+    for name in ("update-data.yml", "data-build.yml"):
+        with open(os.path.join(WORKFLOWS, name), "r", encoding="utf-8") as fh:
+            body = fh.read()
+        assert "data/salary_sources_report.json" in body, name

@@ -120,7 +120,8 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           # The report build_data.py writes beside the data, so the two never
           # describe different days.
-          git add data/data.json data/team_corrections_report.json
+          git add data/data.json data/team_corrections_report.json \
+            data/salary_sources_report.json
 
           # The source sheets go in once a week. A checkout holding older
           # copies than data.json means anything recomputed locally silently
@@ -315,10 +316,15 @@ jobs:
       - name: Build the digest
         env:
           SLACK_SIGNINGS_WEBHOOK: ${{ secrets.SLACK_SIGNINGS_WEBHOOK }}
+          # Through env rather than interpolated into the script. A workflow
+          # input is outside content: pasted into the shell it is one quote away
+          # from running as a command, and nothing about this one being a
+          # checkbox today keeps it one.
+          DRY_RUN: ${{ github.event.inputs.dry_run }}
         run: |
           set -euo pipefail
           dry=""
-          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+          if [ "$DRY_RUN" = "true" ]; then
             dry="--dry-run"
           fi
           {

@@ -500,6 +500,32 @@ def season_to_year(season):
         return None
 
 
+def latest_season(seasons):
+    """The newest of these seasons, by the year it ends in."""
+    best, best_year = None, None
+    for season in seasons:
+        year = season_to_year(season)
+        if year is None:
+            continue
+        if best_year is None or year > best_year:
+            best, best_year = season, year
+    return best
+
+
+def seasons_after(season):
+    """A test for "later than this season", by end year.
+
+    The historical tab is authoritative for every season it holds, and the
+    forward-looking sheets supply only what comes after it. Where the tab holds
+    nothing the test lets everything through, so an empty or missing historical
+    sheet does not silently empty the file.
+    """
+    boundary = season_to_year(season) if season else None
+    if boundary is None:
+        return lambda _candidate: True
+    return lambda candidate: (season_to_year(candidate) or 0) > boundary
+
+
 def normalize_season(season_str):
     """Normalize various season formats to 'YYYY-YY'."""
     if not season_str:
@@ -1019,18 +1045,37 @@ def process_salaries_csv(csv_data):
     return lookup
 
 
-def process_future_salaries(csv_data):
+def process_future_salaries(csv_data, after_season=None):
     """Process future salaries sheet (one row per player-team, year columns).
     A player can appear on multiple rows (different teams), e.g. Lillard has
     one row for POR and one for MIL. We combine them per player-season with
     per-team salary breakdowns, same as 2025-26 logic.
+
+    ``after_season`` is the newest season the historical tab holds. Every year
+    column at or before it is the tab's to answer, so this sheet is read only
+    past that point. The columns used to be the literal list 2027 to 2031,
+    which was the 2026-27 boundary written down: it would have had to be edited
+    every time the tab gained a season.
     """
     rows = parse_csv_string(csv_data)
     if not rows:
-        return {}
+        return {}, []
+    is_later = seasons_after(after_season)
     # Accumulate: (nk, season) -> { "team_salaries": {team: int}, "display_name": str }
     accum = {}
-    year_cols = ["2027", "2028", "2029", "2030", "2031"]
+    year_cols, dropped_cols = [], []
+    for name in rows[0].keys():
+        col = (name or "").strip()
+        if not (col.isdigit() and len(col) == 4):
+            continue
+        season = year_to_season(int(col))
+        if not season:
+            continue
+        (year_cols if is_later(season) else dropped_cols).append(col)
+    print("    Future salaries: year cols {}{}".format(
+        year_cols,
+        ", left to the historical tab: {}".format(dropped_cols) if dropped_cols else "",
+    ))
     for row in rows:
         player = row.get("PLAYER", "").strip()
         team = row.get("TEAM", "").strip()
@@ -1072,20 +1117,39 @@ def process_future_salaries(csv_data):
         lookup[(nk, season)] = [rec]
 
     print(f"    Parsed {len(lookup)} player-seasons from future salaries ({multi_team} multi-team)")
-    return lookup
+    return lookup, dropped_cols
 
 
-def process_cyro_salaries(current_csv, dead_csv):
-    """Process Cyro's salary sheets for ALL seasons (current + dead money).
-    
+def process_cyro_salaries(current_csv, dead_csv, after_season=None):
+    """Process Cyro's salary sheets for the seasons the historical tab does not.
+
     Current salaries: year columns 2026, 2027, 2028, ... (2026 = season 2025-26).
     Dead money: columns SALARY 25-26, SALARY 26-27, SALARY 27-28, ...
-    
+
     Both sheets can have the same player on different teams (multi-team).
     We combine per player-season with per-team salary breakdowns.
+
+    ``after_season`` is the newest season the historical tab holds, and every
+    column at or before it is skipped: these two sheets look forward, and where
+    the tab has caught up with them the tab is the better source. It carries a
+    team per row per season, where the current sheet carries one TEAM per player
+    and applies it to every season in that row, which is what used to write a
+    summer move back onto a season already played.
+
+    What the cutover skipped comes back with the lookup, named and totalled, so
+    data/salary_sources_report.json can say what moving the boundary cost.
     """
     # Accumulate: (nk, season) -> { "team_salaries": {team: int}, "display_name": str }
     accum = {}
+    is_later = seasons_after(after_season)
+    #: sheet -> season -> { normalised name: dollars } for the columns skipped
+    dropped = {"current": {}, "dead": {}}
+
+    def note_dropped(sheet, nk, player, season, salary):
+        bucket = dropped[sheet].setdefault(season, {})
+        entry = bucket.setdefault(nk, {"player": player, "salary": 0})
+        entry["salary"] += salary
+
     
     def add_entry(nk, display_name, team_abbr, season, salary):
         key = (nk, season)
@@ -1103,15 +1167,20 @@ def process_cyro_salaries(current_csv, dead_csv):
             player_col = h.index("PLAYER") if "PLAYER" in h else 0
             team_col = h.index("TEAM") if "TEAM" in h else 2
             # Find all year columns
-            year_cols = {}  # { col_index: season_str }
+            year_cols = {}      # { col_index: season_str } this sheet answers
+            skipped_cols = {}   # { col_index: season_str } the tab answers
             for i, col_name in enumerate(h):
-                if col_name.isdigit() and len(col_name) == 4:
-                    yr = int(col_name)
-                    if 2026 <= yr <= 2035:
-                        season = year_to_season(yr)
-                        if season:
-                            year_cols[i] = season
-            print(f"    Current salaries: PLAYER={player_col}, TEAM={team_col}, year cols={list(year_cols.values())}")
+                if not (col_name.isdigit() and len(col_name) == 4):
+                    continue
+                season = year_to_season(int(col_name))
+                if not season:
+                    continue
+                (year_cols if is_later(season) else skipped_cols)[i] = season
+            print("    Current salaries: PLAYER={}, TEAM={}, year cols={}{}".format(
+                player_col, team_col, list(year_cols.values()),
+                ", left to the historical tab: {}".format(list(skipped_cols.values()))
+                if skipped_cols else "",
+            ))
             count = 0
             for cols in reader:
                 player = cols[player_col].strip() if len(cols) > player_col else ""
@@ -1128,6 +1197,13 @@ def process_cyro_salaries(current_csv, dead_csv):
                         continue
                     add_entry(nk, player, team_abbr, season, salary)
                     count += 1
+                for col_idx, season in skipped_cols.items():
+                    if len(cols) <= col_idx:
+                        continue
+                    salary = parse_salary(cols[col_idx])
+                    if salary is None or salary == 0:
+                        continue
+                    note_dropped("current", nk, player, season, salary)
             print(f"    Parsed {count} salary entries from current salaries")
     
     # Parse dead money — find all "SALARY XX-YY" columns
@@ -1139,7 +1215,8 @@ def process_cyro_salaries(current_csv, dead_csv):
             player_col = h.index("PLAYER") if "PLAYER" in h else 0
             team_col = h.index("TEAM") if "TEAM" in h else 3
             # Find all SALARY XX-YY columns
-            salary_cols = {}  # { col_index: season_str }
+            salary_cols = {}
+            dead_skipped = {}
             for i, col_name in enumerate(h):
                 m = re.search(r'SALARY\s+(\d{2})-(\d{2})', col_name)
                 if m:
@@ -1147,8 +1224,12 @@ def process_cyro_salaries(current_csv, dead_csv):
                     end_yr = int(m.group(2))
                     # Convert "25-26" to "2025-26"
                     season = f"20{start_yr}-{end_yr:02d}"
-                    salary_cols[i] = season
-            print(f"    Dead money: PLAYER={player_col}, TEAM={team_col}, salary cols={list(salary_cols.values())}")
+                    (salary_cols if is_later(season) else dead_skipped)[i] = season
+            print("    Dead money: PLAYER={}, TEAM={}, salary cols={}{}".format(
+                player_col, team_col, list(salary_cols.values()),
+                ", left to the historical tab: {}".format(list(dead_skipped.values()))
+                if dead_skipped else "",
+            ))
             count = 0
             for cols in reader:
                 player = cols[player_col].strip() if len(cols) > player_col else ""
@@ -1165,6 +1246,13 @@ def process_cyro_salaries(current_csv, dead_csv):
                         continue
                     add_entry(nk, player, team_abbr, season, salary)
                     count += 1
+                for col_idx, season in dead_skipped.items():
+                    if len(cols) <= col_idx:
+                        continue
+                    salary = parse_salary(cols[col_idx])
+                    if salary is None or salary == 0:
+                        continue
+                    note_dropped("dead", nk, player, season, salary)
             print(f"    Parsed {count} salary entries from dead money")
     
     # Build lookup per season, filtering out $0 players
@@ -1194,7 +1282,7 @@ def process_cyro_salaries(current_csv, dead_csv):
     seasons_list = sorted(seasons_found)
     print(f"    Combined into {len(lookup)} player-season records across {seasons_list}")
     print(f"    Skipped {skipped} with $0, {multi_team} multi-team")
-    return lookup, seasons_found
+    return lookup, seasons_found, dropped
 
 
 def load_award_overrides():
@@ -1373,8 +1461,22 @@ def build_data():
     print("\n[5/7] Parsing CSV data...")
     stats_lookup = process_stats(stats_csv) if stats_csv else {}
     hist_sal_lookup = process_salaries_csv(hist_sal_csv) if hist_sal_csv else {}
-    future_sal_lookup = process_future_salaries(future_sal_csv) if future_sal_csv else {}
-    cyro_lookup, cyro_seasons = process_cyro_salaries(sal_2526_current_csv, sal_2526_dead_csv)
+
+    # Where the historical tab now ends, read off the tab rather than written
+    # down here. It is authoritative for every season it holds; the two
+    # forward-looking sheets supply only what comes after. The owner adding a
+    # season to the tab moves this boundary on its own, which is what the old
+    # literal year lists could not do.
+    historical_through = latest_season({season for _nk, season in hist_sal_lookup})
+    print(f"    Historical salaries run through {historical_through or 'nothing'};"
+          f" the forward sheets are read only past it")
+
+    future_sal_lookup, future_dropped_cols = (
+        process_future_salaries(future_sal_csv, after_season=historical_through)
+        if future_sal_csv else ({}, [])
+    )
+    cyro_lookup, cyro_seasons, cyro_dropped = process_cyro_salaries(
+        sal_2526_current_csv, sal_2526_dead_csv, after_season=historical_through)
     persons = build_person_index(bio_csv, stats_csv)
     awards_lookup, all_awards_set = (
         process_awards(awards_csv, persons) if awards_csv else ({}, set())
@@ -1798,6 +1900,64 @@ def build_data():
             "corrections": corrections["applied"],
         }, f, indent=1, sort_keys=True)
         f.write("\n")
+
+    # Which sheet answered for which season, and what the boundary between them
+    # cost. The historical tab gaining a season silently stops two other sheets
+    # being read for it, so the build writes down what it stopped reading and
+    # whether the tab had it: a dollar dropped by one sheet and not picked up by
+    # the other is money gone off a page, and nothing else would say so.
+    hist_names = defaultdict(dict)
+    for (nk, season), recs in hist_sal_lookup.items():
+        for rec in recs:
+            hist_names[season][nk] = hist_names[season].get(nk, 0) + rec["salary"]
+    cutover = {}
+    for sheet, by_season in cyro_dropped.items():
+        for season, players in by_season.items():
+            held = hist_names.get(season) or {}
+            absent = sorted(
+                ({"player": entry["player"], "salary": entry["salary"]}
+                 for nk, entry in players.items() if nk not in held),
+                key=lambda row: (-row["salary"], row["player"]),
+            )
+            cutover.setdefault(sheet, {})[season] = {
+                "player_seasons_not_read": len(players),
+                "dollars_not_read": sum(e["salary"] for e in players.values()),
+                "also_in_the_historical_tab": len(players) - len(absent),
+                "missing_from_the_historical_tab": absent,
+            }
+    sources = {}
+    for season in sorted({s for _nk, s in hist_sal_lookup} | {s for _nk, s in cyro_lookup}
+                         | {s for _nk, s in future_sal_lookup}):
+        rows = {
+            "historical": sum(1 for (_nk, s) in hist_sal_lookup if s == season),
+            "current_and_dead": sum(1 for (_nk, s) in cyro_lookup if s == season),
+            "future": sum(1 for (_nk, s) in future_sal_lookup if s == season),
+        }
+        sources[season] = {k: v for k, v in rows.items() if v}
+    sources_path = os.path.join(OUT_DIR, "salary_sources_report.json")
+    with open(sources_path, "w", encoding="utf-8") as f:
+        json.dump({
+            "note": (
+                "Which sheet supplied each season, and what the boundary "
+                "between them left unread. The historical tab is authoritative "
+                "for every season it holds and the two forward-looking sheets "
+                "are read only past it, so the boundary is the newest season on "
+                "the tab rather than a year written into the code: the owner "
+                "adding a season moves it. cutover lists, per forward sheet and "
+                "per season it no longer answers for, the player-seasons and "
+                "dollars the build stopped reading and how many of them the tab "
+                "holds under the same name. Anything under "
+                "missing_from_the_historical_tab is money that was on a page "
+                "before and is not now, and is the thing to look at before "
+                "trusting a rollover."
+            ),
+            "historical_through": historical_through,
+            "future_sheet_columns_left_to_the_tab": future_dropped_cols,
+            "rows_per_season_per_sheet": sources,
+            "cutover": cutover,
+        }, f, indent=1, sort_keys=True)
+        f.write("\n")
+    print(f"    Written to {sources_path}")
 
     size_mb = os.path.getsize(out_path) / 1024 / 1024
     print(f"    Written to {out_path}")
