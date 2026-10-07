@@ -22,6 +22,20 @@ def esc(value):
     return html.escape("" if value is None else str(value), quote=True)
 
 
+def season_span(first, last):
+    """The seasons a run covers, escaped and ready to print.
+
+    One season is not a span. "2026-27 to 2026-27" asks a reader to notice that
+    both ends are the same and draw the obvious conclusion, which is work the
+    page should have done. Every other template that prints a run already makes
+    this distinction; the two that did not are a career-earnings table's column
+    and a player page's own lede.
+    """
+    if first == last:
+        return esc(first)
+    return "{} to {}".format(esc(first), esc(last))
+
+
 def money(value):
     if value is None:
         return "-"
