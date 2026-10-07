@@ -293,10 +293,18 @@ def test_generated_copy_has_no_em_dashes():
 
 
 @built
-def test_every_page_carries_the_scope_note():
+def test_every_page_but_a_players_carries_the_scope_note():
+    """The tables on these pages rank men whose careers the window did cut, so
+    the line belongs on all of them: teams, cohorts, seasons, the
+    never-selected lists and the hubs.
+
+    A player page is the one page where the question has an answer: his own
+    table either holds his whole career or it does not, and the note prints
+    only where it does not. That rule has its own tests below.
+    """
     for path in all_pages():
         parts = path.split(os.sep)
-        if parts[0] in ("index.html", "404.html", "js"):
+        if parts[0] in ("index.html", "404.html", "js", "player"):
             continue
         assert C.SCOPE_NOTE in read(path), path
 
@@ -935,7 +943,9 @@ def test_the_window_is_a_note_and_never_a_clause_in_a_claim():
         html = read(path)
         assert "since 1990-91" not in html, path
         assert "Since 1990-91" not in html, path
-    for path in ("college/duke", "player/joel-embiid", "countries"):
+    # Michael Jordan rather than Joel Embiid: the note now prints only where the
+    # window can have cut a career short, and Embiid was drafted in 2014.
+    for path in ("college/duke", "player/michael-jordan", "countries"):
         html = read(os.path.join(*(path.split("/") + ["index.html"])))
         assert C.SCOPE_NOTE == "Salary data starts in 1990-91."
         assert html.count(C.SCOPE_NOTE) == 1, path
@@ -3250,3 +3260,87 @@ def test_a_lone_career_total_is_dropped_only_for_a_one_season_career():
         "Josh Davis earned $20,000 through 2014-15."]
     assert seasons.summary(idx, "Josh Davis", [], player="josh davis",
                            one_season=True) == []
+
+
+# --------------------------------------------------------------------------
+# the window note goes where the window can have cut something off
+# --------------------------------------------------------------------------
+
+
+class _Ident(object):
+    def __init__(self, records):
+        self.records = records
+
+
+class _Idx(object):
+    def __init__(self, seasons):
+        self.seasons = seasons
+
+
+def _season(season, draft_year=None):
+    row = {"season": season}
+    if draft_year is not None:
+        row["draft_year"] = draft_year
+    return row
+
+
+def test_a_career_inside_the_window_needs_no_note():
+    from prerender.pages import _career_may_predate_the_data
+
+    idx = _Idx(["1990-91", "1991-92", "2014-15", "2015-16"])
+    inside = _Ident([_season("2014-15", 2014), _season("2015-16", 2014)])
+    assert not _career_may_predate_the_data(idx, inside)
+
+
+def test_a_career_the_window_can_have_cut_keeps_the_note():
+    from prerender.pages import _career_may_predate_the_data
+
+    idx = _Idx(["1990-91", "1991-92", "2014-15"])
+    # already under way when the file opens
+    assert _career_may_predate_the_data(
+        idx, _Ident([_season("1990-91", 1990), _season("1991-92", 1990)]))
+    # drafted before the oldest class the file can hold whole, whenever he
+    # first appears in it
+    assert _career_may_predate_the_data(
+        idx, _Ident([_season("1991-92", 1985)]))
+    # and a man with no draft year at all, appearing later, is inside it
+    assert not _career_may_predate_the_data(idx, _Ident([_season("1991-92")]))
+
+
+def test_the_test_moves_with_the_season_the_file_opens_in():
+    """The window's edge is read off the data. A file that gains an older
+    season moves which careers it can have cut, with nothing to edit here."""
+    from prerender.pages import _career_may_predate_the_data
+
+    ident = _Ident([_season("1990-91", 1985), _season("1991-92", 1985)])
+    assert _career_may_predate_the_data(_Idx(["1990-91", "1991-92"]), ident)
+    # the same man in a file that reaches back to 1984-85 is wholly inside it
+    assert not _career_may_predate_the_data(
+        _Idx(["1984-85", "1990-91", "1991-92"]), ident)
+
+
+@built
+def test_the_note_prints_on_a_player_page_only_where_the_window_can_have_cut():
+    """A page whose table holds every dollar a man was paid has nothing to
+    footnote. 2,950 of them stopped printing the line; 413 keep it."""
+    note = '<p class="hm-scope">'
+    kept, dropped = [], []
+    for path, text in _live_player_pages():
+        (kept if note in text else dropped).append(
+            os.path.relpath(path, REPO).replace(os.sep, "/"))
+    assert kept and dropped, (len(kept), len(dropped))
+    # drafted in 1984, first season on file 1990-91: both halves of the rule
+    assert "player/michael-jordan/index.html" in kept
+    # drafted in 1976, one season on file, which is 1990-91
+    assert "player/adrian-dantley/index.html" in kept
+    # drafted in 2003 and 2014, every season of each on file
+    assert "player/lebron-james/index.html" in dropped
+    assert "player/aaron-gordon/index.html" in dropped
+
+
+@built
+def test_the_note_names_the_season_the_data_opens_in():
+    """The note and the test that prints it read the same window. Where they
+    part, a page says the data starts in one season and footnotes another."""
+    idx = F.build_index(F.load_data())
+    assert C.SCOPE_NOTE == "Salary data starts in {}.".format(idx.seasons[0])
