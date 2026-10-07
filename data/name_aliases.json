@@ -171,5 +171,85 @@
   }
  ],
  "readme": "Two spellings of one player, merged into one identity for the engine. Read by scripts/factoids.py and reusable by the prerender script; build_data.py and data.json are untouched. Without this, each half looks like a separate short career: the older spelling looks finished and the newer one starts mid-career with the other half's running total already on it. Candidate rule and evidence below; the canonical spelling is the one the data uses most, and on a tie the one carrying the most recent season.",
- "rule": "Names that match once Jr / Sr / II / III / IV / V, full stops and apostrophes are stripped, with the same draft year (or one missing), no season in common, and seasons that run continuously together (no gap longer than 1 season). A shared season means two men; a hole in the run is a career gap, which data/identity_splits.json handles instead."
+ "rule": "Names that match once Jr / Sr / II / III / IV / V, full stops and apostrophes are stripped, with the same draft year (or one missing), no season in common, and seasons that run continuously together (no gap longer than 1 season). A shared season means two men; a hole in the run is a career gap, which data/identity_splits.json handles instead.",
+ "one_mans_name_misspelled_in_a_sheet": {
+  "note": "A sheet spelling one man's name wrong, mapped to his own spelling. Read by build_data.py, so the two rows land on one person in data.json rather than on two: these are not two spellings of one career, which alias_to_canonical above handles after the build, but a typo in a single season's row. The misspelled half shows up as a man who was paid and never played, with a player page of his own, and his money is the real man's money counted a second time.",
+  "rule": "The same man, the same season and the same club, with the same figure or within a dollar of it, where one spelling has the games and the other has none, or neither does. Deliberately not the rule above: these spellings share a season, which for two careers would mean two men, and the difference is a letter rather than a suffix. Each pair is checked by hand and the evidence is written down below. The canonical spelling is the man's real name, which is the one the stats sheet and bio.csv carry where they carry him at all.",
+  "spellings": {
+   "Dominck Barlow": "Dominick Barlow",
+   "EJ Harkless": "Elijah Harkless",
+   "Guershon Yabusele": "Guerschon Yabusele",
+   "Kevin McCullard": "Kevin McCullar",
+   "Russell Wetbrook": "Russell Westbrook",
+   "Tyrese Key": "Tyreke Key"
+  },
+  "evidence": [
+   {
+    "canonical": "Guerschon Yabusele",
+    "misspelled": "Guershon Yabusele",
+    "season": "2025-26",
+    "team": "CHI",
+    "figure": 5500000,
+    "misspelled_figure": 5500000,
+    "games": 67,
+    "misspelled_games": null,
+    "evidence": "one letter; same club, season and figure to the dollar; the misspelled row played no games"
+   },
+   {
+    "canonical": "Russell Westbrook",
+    "misspelled": "Russell Wetbrook",
+    "season": "2025-26",
+    "team": "SAC",
+    "figure": 3634153,
+    "misspelled_figure": 3634153,
+    "games": 64,
+    "misspelled_games": null,
+    "evidence": "a dropped s; same club, season and figure to the dollar; the misspelled row played no games"
+   },
+   {
+    "canonical": "Kevin McCullar",
+    "misspelled": "Kevin McCullard",
+    "season": "2025-26",
+    "team": "NYK",
+    "figure": 636435,
+    "misspelled_figure": 636435,
+    "games": 21,
+    "misspelled_games": null,
+    "evidence": "a trailing d; same club, season and figure to the dollar; the misspelled row played no games"
+   },
+   {
+    "canonical": "Elijah Harkless",
+    "misspelled": "EJ Harkless",
+    "season": "2025-26",
+    "team": "UTA",
+    "figure": 636435,
+    "misspelled_figure": 636434,
+    "games": 26,
+    "misspelled_games": null,
+    "evidence": "initials for the given name; same club and season, a dollar apart; the misspelled row played no games"
+   },
+   {
+    "canonical": "Tyreke Key",
+    "misspelled": "Tyrese Key",
+    "season": "2025-26",
+    "team": "TOR",
+    "figure": 51207,
+    "misspelled_figure": 51207,
+    "games": null,
+    "misspelled_games": null,
+    "evidence": "same surname, same club, season and figure to the dollar; neither row played a game, and no two men were paid an identical $51,207 by one club in one season"
+   },
+   {
+    "canonical": "Dominick Barlow",
+    "misspelled": "Dominck Barlow",
+    "season": "2025-26",
+    "team": "PHI",
+    "figure": 3765668,
+    "misspelled_figure": 347451,
+    "games": 71,
+    "misspelled_games": null,
+    "evidence": "a dropped i, and already in alias_to_canonical for the engine; same club and season. The figures differ, so this is a second payment of his rather than the same money twice, and it joins his row rather than being dropped"
+   }
+  ]
+ }
 }
