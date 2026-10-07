@@ -321,7 +321,7 @@
     "player_seasons_offered": 536
    },
    "2025-26": {
-    "also_in_the_historical_tab": 508,
+    "also_in_the_historical_tab": 509,
     "dollars_offered": 5376683139,
     "missing_from_the_historical_tab": [
      {
@@ -553,10 +553,6 @@
       "salary": 141554
      },
      {
-      "player": "Charles Bassey",
-      "salary": 113171
-     },
-     {
       "player": "Mario Hezonja",
       "salary": 113171
      }
@@ -566,179 +562,17 @@
   },
   "dead": {
    "2025-26": {
-    "also_in_the_historical_tab": 137,
+    "also_in_the_historical_tab": 153,
     "dollars_offered": 339345854,
-    "missing_from_the_historical_tab": [
-     {
-      "player": "Terry Rozier",
-      "salary": 26643031
-     },
-     {
-      "player": "Charles Bassey",
-      "salary": 829792
-     },
-     {
-      "player": "Dominck Barlow",
-      "salary": 347451
-     },
-     {
-      "player": "Omer Yurtseven",
-      "salary": 282926
-     },
-     {
-      "player": "Tre Scott",
-      "salary": 280460
-     },
-     {
-      "player": "Keon Johnson",
-      "salary": 271614
-     },
-     {
-      "player": "DeJon Jarreau",
-      "salary": 263940
-     },
-     {
-      "player": "Skal Labissiere",
-      "salary": 153330
-     },
-     {
-      "player": "De'Andre Davis",
-      "salary": 85300
-     },
-     {
-      "player": "Yuri Collins",
-      "salary": 85300
-     },
-     {
-      "player": "Adama Bal",
-      "salary": 73153
-     },
-     {
-      "player": "Tyrese Key",
-      "salary": 51207
-     },
-     {
-      "player": "Terry Roberts",
-      "salary": 25000
-     },
-     {
-      "player": "Adam Flagler",
-      "salary": 15000
-     },
-     {
-      "player": "Augustas Marciulionis",
-      "salary": 15000
-     },
-     {
-      "player": "Emoni Bates",
-      "salary": 15000
-     }
-    ],
+    "missing_from_the_historical_tab": [],
     "player_seasons_offered": 153
    }
   }
  },
  "dead_money_into_the_tabs_seasons": {
-  "left_alone_because_the_tab_names_a_team": 137,
+  "left_alone_because_the_tab_names_a_team": 153,
   "note": "The tab holds the seasons it covers but not every man in them: sixteen rows of the dead-money sheet's 2025-26 have no row on the tab at all. So that sheet is still read for those seasons, as a row of its own where the tab has none and as the team for a row the tab left blank. No figure the tab gave is changed, and where the tab names a team the tab keeps it. Where several clubs owe one man one season both are named and neither is given a figure, because nothing here records how the money divided. teams_filled_in has been empty on every build so far: the teamless records that prompted that branch turned out to be the agent tracker's rather than the tab's, and the tracker no longer answers for a season a sheet holds.",
-  "rows_added": [
-   {
-    "player": "Adam Flagler",
-    "salary": 15000,
-    "season": "2025-26",
-    "team": "SAS"
-   },
-   {
-    "player": "Adama Bal",
-    "salary": 73153,
-    "season": "2025-26",
-    "team": "MEM"
-   },
-   {
-    "player": "Augustas Marciulionis",
-    "salary": 15000,
-    "season": "2025-26",
-    "team": "LAL"
-   },
-   {
-    "player": "Charles Bassey",
-    "salary": 829792,
-    "season": "2025-26",
-    "team": "BOS, MEM, PHI"
-   },
-   {
-    "player": "De'Andre Davis",
-    "salary": 85300,
-    "season": "2025-26",
-    "team": "BKN"
-   },
-   {
-    "player": "DeJon Jarreau",
-    "salary": 263940,
-    "season": "2025-26",
-    "team": "MEM"
-   },
-   {
-    "player": "Dominck Barlow",
-    "salary": 347451,
-    "season": "2025-26",
-    "team": "PHI"
-   },
-   {
-    "player": "Emoni Bates",
-    "salary": 15000,
-    "season": "2025-26",
-    "team": "PHI"
-   },
-   {
-    "player": "Keon Johnson",
-    "salary": 271614,
-    "season": "2025-26",
-    "team": "BKN"
-   },
-   {
-    "player": "Omer Yurtseven",
-    "salary": 282926,
-    "season": "2025-26",
-    "team": "GSW"
-   },
-   {
-    "player": "Skal Labissiere",
-    "salary": 153330,
-    "season": "2025-26",
-    "team": "WAS"
-   },
-   {
-    "player": "Terry Roberts",
-    "salary": 25000,
-    "season": "2025-26",
-    "team": "BKN"
-   },
-   {
-    "player": "Terry Rozier",
-    "salary": 26643031,
-    "season": "2025-26",
-    "team": "MIA"
-   },
-   {
-    "player": "Tre Scott",
-    "salary": 280460,
-    "season": "2025-26",
-    "team": "BKN"
-   },
-   {
-    "player": "Tyrese Key",
-    "salary": 51207,
-    "season": "2025-26",
-    "team": "TOR"
-   },
-   {
-    "player": "Yuri Collins",
-    "salary": 85300,
-    "season": "2025-26",
-    "team": "BKN"
-   }
-  ],
+  "rows_added": [],
   "teams_filled_in": []
  },
  "filled_from_current_sheet_missing_from_tab": {
@@ -1197,7 +1031,7 @@
    "historical": 571
   },
   "2025-26": {
-   "historical": 591
+   "historical": 607
   },
   "2026-27": {
    "current_and_dead": 638,
@@ -1469,9 +1303,9 @@
   "2025-26": {
    "balances": true,
    "dollars_filled_from_the_current_sheet": 67651600,
-   "dollars_in_the_file": 5586126055,
-   "dollars_on_dead_rows_the_tab_had_none_for": 29437504,
-   "dollars_on_the_historical_tab": 5489036951
+   "dollars_in_the_file": 5896034405,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 5828382805
   }
  }
 }
