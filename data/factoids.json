@@ -3,7 +3,7 @@
   "AJ Dybantsa|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 274,
+    "comparison_size": 268,
     "contracted": false,
     "family": "cohort",
     "id": "3ee402d159e5350b",
@@ -16,7 +16,7 @@
      "value": 13195320
     },
     "rank": 1,
-    "scope_note": "Cohort of 253 players and 275 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 247 players and 269 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "AJ Dybantsa's $14.7 million in 2026-27 is the highest single-season salary by an undrafted player, passing Darryn Peterson's $13.2 million (2026-27).",
     "type": "sets",
     "value": 14748000
@@ -25,7 +25,7 @@
   "AJ Dybantsa|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 275,
+    "comparison_size": 269,
     "contracted": true,
     "family": "cohort",
     "id": "b9c6e0e283bda14d",
@@ -38,7 +38,7 @@
      "value": 14748000
     },
     "rank": 1,
-    "scope_note": "Cohort of 253 players and 275 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 247 players and 269 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "AJ Dybantsa's $15.5 million in 2027-28 would be the highest single-season salary by an undrafted player, breaking his own mark of $14.7 million in 2026-27.",
     "type": "sets",
     "value": 15485760
@@ -47,7 +47,7 @@
   "AJ Dybantsa|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 275,
+    "comparison_size": 269,
     "contracted": true,
     "family": "cohort",
     "id": "958aa46a33c060c9",
@@ -60,7 +60,7 @@
      "value": 14748000
     },
     "rank": 1,
-    "scope_note": "Cohort of 253 players and 275 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 247 players and 269 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "AJ Dybantsa's $16.2 million in 2028-29 would be the highest single-season salary by an undrafted player, breaking his own mark of $14.7 million in 2026-27.",
     "type": "sets",
     "value": 16223040
@@ -69,7 +69,7 @@
   "AJ Dybantsa|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 275,
+    "comparison_size": 269,
     "contracted": true,
     "family": "cohort",
     "id": "c727f5da5b4580ef",
@@ -82,7 +82,7 @@
      "value": 14748000
     },
     "rank": 1,
-    "scope_note": "Cohort of 253 players and 275 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 247 players and 269 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "AJ Dybantsa's $20.5 million in 2029-30 would be the highest single-season salary by an undrafted player, breaking his own mark of $14.7 million in 2026-27.",
     "type": "sets",
     "value": 20457253
@@ -183,7 +183,7 @@
   "Aaron Gordon|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "83890bf2534670d9",
@@ -303,7 +303,7 @@
   "Aaron Gordon|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "7f8d85a5950c1c6a",
@@ -939,7 +939,7 @@
   "Al Horford|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "5dbc3ae1e0a44a95",
@@ -1201,7 +1201,7 @@
   "Alex Caruso|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "4347e3d1ea4a8c87",
@@ -1495,7 +1495,7 @@
   "Alperen Sengun|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "e7a5ab22c664631c",
@@ -1553,7 +1553,7 @@
   "Alperen Sengun|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "be3321b126029504",
@@ -1627,7 +1627,7 @@
   "Alperen Sengun|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "a2735db9a5cfe900",
@@ -1745,7 +1745,7 @@
   "Amen Thompson|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "2339eee32a1ca211",
@@ -1783,7 +1783,7 @@
   "Amen Thompson|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "92de23b3a108eb74",
@@ -1839,7 +1839,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2211,
+    "comparison_size": 2206,
     "contracted": true,
     "family": "negative_space",
     "id": "75f9f0674ffea8c8",
@@ -2757,7 +2757,7 @@
   "Andrew Wiggins|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "ff8b104b611164f5",
@@ -2877,7 +2877,7 @@
   "Andrew Wiggins|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "e2d9f735fccc116c",
@@ -2895,7 +2895,7 @@
   "Anfernee Simons|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "5bf967c337c6b771",
@@ -3425,7 +3425,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 631,
+    "comparison_size": 625,
     "contracted": false,
     "family": "rank_shift",
     "id": "ee3f9c02580884c5",
@@ -3463,7 +3463,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "815a3c27a94db5d1",
@@ -4093,7 +4093,7 @@
   "Anthony Edwards|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "ebff396bc7bb718b",
@@ -4187,7 +4187,7 @@
   "Anthony Edwards|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "ccc283f632feb2e0",
@@ -4305,7 +4305,7 @@
   "Anthony Edwards|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "1a05fb7ab95486b7",
@@ -4383,7 +4383,7 @@
   "Anthony Edwards|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "1a04a25b6a7d2d3c",
@@ -4569,7 +4569,7 @@
   "Ausar Thompson|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "2b32006fa59beed1",
@@ -4669,7 +4669,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2211,
+    "comparison_size": 2206,
     "contracted": false,
     "family": "negative_space",
     "id": "55fc2bce26e9e40d",
@@ -4691,7 +4691,7 @@
   "Austin Reaves|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "35a90c32630b9577",
@@ -4747,7 +4747,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2881,
+    "comparison_size": 2876,
     "contracted": true,
     "family": "negative_space",
     "id": "bed34ccfa342301b",
@@ -4767,7 +4767,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2211,
+    "comparison_size": 2206,
     "contracted": true,
     "family": "negative_space",
     "id": "77c85cc22d07f14f",
@@ -4789,7 +4789,7 @@
   "Austin Reaves|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "8ef2cf713191e35b",
@@ -4865,7 +4865,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2881,
+    "comparison_size": 2876,
     "contracted": true,
     "family": "negative_space",
     "id": "6e116546f8c39710",
@@ -4885,7 +4885,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2211,
+    "comparison_size": 2206,
     "contracted": true,
     "family": "negative_space",
     "id": "61c0b9bd0051495f",
@@ -4907,7 +4907,7 @@
   "Austin Reaves|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "e62f60a545624c2a",
@@ -4983,7 +4983,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2881,
+    "comparison_size": 2876,
     "contracted": true,
     "family": "negative_space",
     "id": "7a389fe06ee0265e",
@@ -5003,7 +5003,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2211,
+    "comparison_size": 2206,
     "contracted": true,
     "family": "negative_space",
     "id": "f835ee4e96212714",
@@ -5147,7 +5147,7 @@
   "Ayo Dosunmu|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "b393799d38aef49f",
@@ -5341,7 +5341,7 @@
   "Bam Adebayo|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "16c03bf47ccfbf20",
@@ -5359,7 +5359,7 @@
   "Bam Adebayo|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "a05a0442ba787e43",
@@ -5515,7 +5515,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2881,
+    "comparison_size": 2876,
     "contracted": false,
     "family": "negative_space",
     "id": "b73d3ea17b2831db",
@@ -5553,7 +5553,7 @@
   "Bam Adebayo|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "2dda7e285228192f",
@@ -5669,7 +5669,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2881,
+    "comparison_size": 2876,
     "contracted": true,
     "family": "negative_space",
     "id": "d6f732f3b0afcc78",
@@ -5691,7 +5691,7 @@
   "Bam Adebayo|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "6d00c00fea6044b5",
@@ -5827,7 +5827,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2881,
+    "comparison_size": 2876,
     "contracted": true,
     "family": "negative_space",
     "id": "64697fcac4c2bb0b",
@@ -6447,7 +6447,7 @@
   "Bismack Biyombo|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "75d6457d3ae513d7",
@@ -6659,7 +6659,7 @@
   "Bobby Portis|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "6ff4ea6ec2f6b5d9",
@@ -7499,7 +7499,7 @@
   "Bradley Beal|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "15ad1b21b4523db0",
@@ -7649,7 +7649,7 @@
   "Brandon Ingram|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "f6532f50bdefc2e1",
@@ -7667,7 +7667,7 @@
   "Brandon Ingram|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "584510639688b6d5",
@@ -7785,7 +7785,7 @@
   "Brandon Ingram|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "687f66b3e55661e3",
@@ -8521,7 +8521,7 @@
   "CJ McCollum|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "151389f4d94e919f",
@@ -8759,7 +8759,7 @@
   "Cade Cunningham|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "317d87483438705c",
@@ -8917,7 +8917,7 @@
   "Cade Cunningham|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "c8b8b796998d73b0",
@@ -9035,7 +9035,7 @@
   "Cade Cunningham|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "2105464b90ad2d52",
@@ -9051,7 +9051,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "b9c3d7d5710520e1",
@@ -9225,7 +9225,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "c5f83c62544ed448",
@@ -9439,7 +9439,7 @@
   "Caleb Wilson|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 274,
+    "comparison_size": 268,
     "contracted": false,
     "family": "cohort",
     "id": "df3c56179b4795cb",
@@ -9452,7 +9452,7 @@
      "value": 14748000
     },
     "rank": 4,
-    "scope_note": "Cohort of 253 players and 275 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 247 players and 269 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Caleb Wilson's $10.7 million in 2026-27 is the fourth-highest single-season salary by an undrafted player, behind AJ Dybantsa's $14.7 million (2026-27).",
     "type": "approaches",
     "value": 10683720
@@ -9461,7 +9461,7 @@
   "Caleb Wilson|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 275,
+    "comparison_size": 269,
     "contracted": true,
     "family": "cohort",
     "id": "a20cb78559f5a702",
@@ -9474,7 +9474,7 @@
      "value": 14748000
     },
     "rank": 4,
-    "scope_note": "Cohort of 253 players and 275 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 247 players and 269 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Caleb Wilson's $11.2 million in 2027-28 would be the fourth-highest single-season salary by an undrafted player, behind AJ Dybantsa's $14.7 million (2026-27).",
     "type": "approaches",
     "value": 11217960
@@ -9483,7 +9483,7 @@
   "Caleb Wilson|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 275,
+    "comparison_size": 269,
     "contracted": true,
     "family": "cohort",
     "id": "383e32a0d61c1424",
@@ -9496,7 +9496,7 @@
      "value": 14748000
     },
     "rank": 4,
-    "scope_note": "Cohort of 253 players and 275 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 247 players and 269 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Caleb Wilson's $11.8 million in 2028-29 would be the fourth-highest single-season salary by an undrafted player, behind AJ Dybantsa's $14.7 million (2026-27).",
     "type": "approaches",
     "value": 11752320
@@ -9505,7 +9505,7 @@
   "Caleb Wilson|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 275,
+    "comparison_size": 269,
     "contracted": true,
     "family": "cohort",
     "id": "87d315708b6391f6",
@@ -9518,7 +9518,7 @@
      "value": 14748000
     },
     "rank": 1,
-    "scope_note": "Cohort of 253 players and 275 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 247 players and 269 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Caleb Wilson's $14.9 million in 2029-30 would be the highest single-season salary by an undrafted player, passing AJ Dybantsa's $14.7 million (2026-27).",
     "type": "sets",
     "value": 14866685
@@ -9543,7 +9543,7 @@
   "Cameron Boozer|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 274,
+    "comparison_size": 268,
     "contracted": false,
     "family": "cohort",
     "id": "7bb102e7ff7e7211",
@@ -9556,7 +9556,7 @@
      "value": 14748000
     },
     "rank": 3,
-    "scope_note": "Cohort of 253 players and 275 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 247 players and 269 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Cameron Boozer's $11.8 million in 2026-27 is the third-highest single-season salary by an undrafted player, behind AJ Dybantsa and Darryn Peterson.",
     "type": "approaches",
     "value": 11849760
@@ -9565,7 +9565,7 @@
   "Cameron Boozer|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 275,
+    "comparison_size": 269,
     "contracted": true,
     "family": "cohort",
     "id": "6e16282feeb6003f",
@@ -9578,7 +9578,7 @@
      "value": 14748000
     },
     "rank": 3,
-    "scope_note": "Cohort of 253 players and 275 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 247 players and 269 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Cameron Boozer's $12.4 million in 2027-28 would be the third-highest single-season salary by an undrafted player, behind AJ Dybantsa and Darryn Peterson.",
     "type": "approaches",
     "value": 12441840
@@ -9587,7 +9587,7 @@
   "Cameron Boozer|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 275,
+    "comparison_size": 269,
     "contracted": true,
     "family": "cohort",
     "id": "4d1f7ac67db0e8f7",
@@ -9600,7 +9600,7 @@
      "value": 14748000
     },
     "rank": 3,
-    "scope_note": "Cohort of 253 players and 275 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 247 players and 269 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Cameron Boozer's $13 million in 2028-29 would be the third-highest single-season salary by an undrafted player, behind AJ Dybantsa and Darryn Peterson.",
     "type": "approaches",
     "value": 13034880
@@ -9625,7 +9625,7 @@
   "Cameron Boozer|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 275,
+    "comparison_size": 269,
     "contracted": true,
     "family": "cohort",
     "id": "66bf01848fd9185c",
@@ -9638,7 +9638,7 @@
      "value": 14748000
     },
     "rank": 1,
-    "scope_note": "Cohort of 253 players and 275 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 247 players and 269 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Cameron Boozer's $16.5 million in 2029-30 would be the highest single-season salary by an undrafted player, passing AJ Dybantsa's $14.7 million (2026-27).",
     "type": "sets",
     "value": 16476088
@@ -9669,7 +9669,7 @@
   "Cameron Johnson|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "6ee6935c51afee38",
@@ -9740,7 +9740,7 @@
      "value": 1378242
     },
     "rank": 1,
-    "scope_note": "Cohort of 128 players and 275 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 128 players and 269 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Cameron Whitmore's $3.4 million in 2024-25 was the highest single-season salary by an undrafted player, 2 times as much as the next undrafted player, Rade Zagorac.",
     "type": "sets",
     "value": 3379068
@@ -9793,7 +9793,7 @@
   "Caris LeVert|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "9c4a6ba260e2f218",
@@ -10357,7 +10357,7 @@
   "Chet Holmgren|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "8448d766f3816b94",
@@ -10471,7 +10471,7 @@
   "Chet Holmgren|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "eafa537592f2157d",
@@ -10569,7 +10569,7 @@
   "Chet Holmgren|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "7130cc8cc5b18332",
@@ -10703,7 +10703,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "f8a87f1b38a3cba8",
@@ -11599,7 +11599,7 @@
   "Christian Braun|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "69ba3289c3b05f43",
@@ -11755,7 +11755,7 @@
   "Clint Capela|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "781298bc8562f2c9",
@@ -11831,7 +11831,7 @@
   "Coby White|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "5750e350c999bf2c",
@@ -12031,7 +12031,7 @@
   "Collin Sexton|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "14acfb56b1b9be26",
@@ -12891,7 +12891,7 @@
   "Damian Lillard|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "b6a63a98ea9f30e0",
@@ -13073,7 +13073,7 @@
   "Daniel Gafford|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "cc2b426ebd082bfc",
@@ -13367,7 +13367,7 @@
   "Darius Acuff|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 275,
+    "comparison_size": 269,
     "contracted": true,
     "family": "cohort",
     "id": "56d118935bf19e84",
@@ -13380,7 +13380,7 @@
      "value": 14748000
     },
     "rank": 4,
-    "scope_note": "Cohort of 253 players and 275 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 247 players and 269 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Darius Acuff's $11.2 million in 2029-30 would be the fourth-highest single-season salary by an undrafted player, behind AJ Dybantsa's $14.7 million (2026-27).",
     "type": "approaches",
     "value": 11205972
@@ -13551,7 +13551,7 @@
   "Darius Garland|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "609913d064e7202e",
@@ -13609,7 +13609,7 @@
   "Darius Garland|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "40ed62772769a0cd",
@@ -13743,7 +13743,7 @@
   "Darius Garland|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "79b997d0ebe3a2ac",
@@ -13839,7 +13839,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2881,
+    "comparison_size": 2876,
     "contracted": true,
     "family": "negative_space",
     "id": "8dd66ccbd2768f0c",
@@ -13861,7 +13861,7 @@
   "Darryn Peterson|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 274,
+    "comparison_size": 268,
     "contracted": false,
     "family": "cohort",
     "id": "7f51ba8c9f542858",
@@ -13874,7 +13874,7 @@
      "value": 14748000
     },
     "rank": 2,
-    "scope_note": "Cohort of 253 players and 275 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 247 players and 269 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Darryn Peterson's $13.2 million in 2026-27 is the second-highest single-season salary by an undrafted player, behind AJ Dybantsa's $14.7 million (2026-27).",
     "type": "approaches",
     "value": 13195320
@@ -13883,7 +13883,7 @@
   "Darryn Peterson|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 275,
+    "comparison_size": 269,
     "contracted": true,
     "family": "cohort",
     "id": "5813555f07c93369",
@@ -13896,7 +13896,7 @@
      "value": 14748000
     },
     "rank": 2,
-    "scope_note": "Cohort of 253 players and 275 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 247 players and 269 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Darryn Peterson's $13.9 million in 2027-28 would be the second-highest single-season salary by an undrafted player, behind AJ Dybantsa's $14.7 million (2026-27).",
     "type": "approaches",
     "value": 13855320
@@ -13905,7 +13905,7 @@
   "Darryn Peterson|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 275,
+    "comparison_size": 269,
     "contracted": true,
     "family": "cohort",
     "id": "eb79b281e2a4419a",
@@ -13918,7 +13918,7 @@
      "value": 14748000
     },
     "rank": 2,
-    "scope_note": "Cohort of 253 players and 275 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 247 players and 269 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Darryn Peterson's $14.5 million in 2028-29 would be the second-highest single-season salary by an undrafted player, behind AJ Dybantsa's $14.7 million (2026-27).",
     "type": "approaches",
     "value": 14515320
@@ -13927,7 +13927,7 @@
   "Darryn Peterson|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 275,
+    "comparison_size": 269,
     "contracted": true,
     "family": "cohort",
     "id": "8b3a2e032929ef7f",
@@ -13940,7 +13940,7 @@
      "value": 14748000
     },
     "rank": 1,
-    "scope_note": "Cohort of 253 players and 275 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 247 players and 269 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Darryn Peterson's $18.3 million in 2029-30 would be the highest single-season salary by an undrafted player, passing AJ Dybantsa's $14.7 million (2026-27).",
     "type": "sets",
     "value": 18318334
@@ -14237,7 +14237,7 @@
   "De'Aaron Fox|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "88d89a791b46ab03",
@@ -14395,7 +14395,7 @@
   "De'Aaron Fox|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "05cefa4fb309053f",
@@ -14513,7 +14513,7 @@
   "De'Aaron Fox|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "bc496d0fbeb79ea3",
@@ -14671,7 +14671,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "bc243947ec90550f",
@@ -14885,7 +14885,7 @@
   "De'Andre Hunter|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "c287ded9f0574cc3",
@@ -15467,7 +15467,7 @@
   "DeMar DeRozan|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "39d953ba885a51d7",
@@ -15983,7 +15983,7 @@
   "Deandre Ayton|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "b315f0cb1515e348",
@@ -16145,7 +16145,7 @@
   "Dejounte Murray|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "e01bbeb595f5c89e",
@@ -16629,7 +16629,7 @@
   "Derrick White|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "d8e84a333a08f885",
@@ -16749,7 +16749,7 @@
   "Derrick White|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "894c33bbf857168b",
@@ -16807,7 +16807,7 @@
   "Derrick White|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "51357fc15f611e5d",
@@ -16865,7 +16865,7 @@
   "Desmond Bane|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "621142013090df22",
@@ -16961,7 +16961,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2211,
+    "comparison_size": 2206,
     "contracted": false,
     "family": "negative_space",
     "id": "9e9417c571944efd",
@@ -16983,7 +16983,7 @@
   "Desmond Bane|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "76ed9b9645501a64",
@@ -17039,7 +17039,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2211,
+    "comparison_size": 2206,
     "contracted": true,
     "family": "negative_space",
     "id": "0198f2a397ab9f44",
@@ -17061,7 +17061,7 @@
   "Desmond Bane|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "34ad3e24c645a3c3",
@@ -17137,7 +17137,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2881,
+    "comparison_size": 2876,
     "contracted": true,
     "family": "negative_space",
     "id": "1a23c18d58aa0765",
@@ -17157,7 +17157,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2211,
+    "comparison_size": 2206,
     "contracted": true,
     "family": "negative_space",
     "id": "0cf825789e77704e",
@@ -17519,7 +17519,7 @@
   "Devin Booker|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "b0ac59f07690d748",
@@ -17633,7 +17633,7 @@
   "Devin Booker|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "ca0a9eca33c6f40b",
@@ -18053,7 +18053,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "5c1c3a5327dbca57",
@@ -18267,7 +18267,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "06275d61e35e2d62",
@@ -18563,7 +18563,7 @@
   "Devin Vassell|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "8185427c3756b429",
@@ -18683,7 +18683,7 @@
   "Devin Vassell|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "19654e08ead51275",
@@ -18871,7 +18871,7 @@
   "Dillon Brooks|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "99e9881680e2fed7",
@@ -19013,7 +19013,7 @@
   "Dillon Brooks|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "0312e2d7cfcf3eb7",
@@ -19567,7 +19567,7 @@
   "Domantas Sabonis|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "2dcd5ef168c3f378",
@@ -19623,7 +19623,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 20,
+    "comparison_size": 19,
     "contracted": false,
     "family": "rank_shift",
     "id": "56b70cb5ff46134e",
@@ -19632,7 +19632,7 @@
     "margin": null,
     "previous_holder": null,
     "rank": 2,
-    "scope_note": "Same franchise in consecutive seasons. Roster of 20 players with a salary on file.",
+    "scope_note": "Same franchise in consecutive seasons. Roster of 19 players with a salary on file.",
     "text": "Domantas Sabonis was no longer the Kings' highest-paid player in 2025-26 after holding that spot in 2024-25.",
     "type": "rank_shift",
     "value": 42336000
@@ -19641,7 +19641,7 @@
   "Domantas Sabonis|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "d3813328a20a9686",
@@ -19797,7 +19797,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 525,
+    "comparison_size": 524,
     "contracted": false,
     "family": "franchise",
     "id": "5c3fc09f1e9ed907",
@@ -19819,7 +19819,7 @@
   "Domantas Sabonis|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "46959a65be2e190a",
@@ -19895,7 +19895,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 526,
+    "comparison_size": 525,
     "contracted": true,
     "family": "franchise",
     "id": "4012a12d3038090d",
@@ -20193,7 +20193,7 @@
   "Donovan Mitchell|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "0eb1ae2d7104c6cb",
@@ -20287,7 +20287,7 @@
   "Donovan Mitchell|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "701b93144ef37c78",
@@ -20521,7 +20521,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "f0c2af6ffa04c5de",
@@ -20735,7 +20735,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "47e4e277588f1340",
@@ -20933,7 +20933,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "f487c370eda072c0",
@@ -21131,7 +21131,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "1c879e4b3b3fe3e9",
@@ -21331,7 +21331,7 @@
   "Dorian Finney-Smith|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "ee053c77bf9ebbf2",
@@ -21547,7 +21547,7 @@
   "Draymond Green|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "1b17ceb9b942b715",
@@ -21685,7 +21685,7 @@
   "Duncan Robinson|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "83b91d70be38f628",
@@ -22083,7 +22083,7 @@
   "Dyson Daniels|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "b59a6181b0e60dcb",
@@ -22881,7 +22881,7 @@
   "Evan Mobley|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "621f73d801bcd871",
@@ -22999,7 +22999,7 @@
   "Evan Mobley|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "390a5adf2f27efd8",
@@ -23077,7 +23077,7 @@
   "Evan Mobley|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "f165325506779c0e",
@@ -23231,7 +23231,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "0513e6bf848cd5e8",
@@ -23247,7 +23247,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "d82d901912862ee8",
@@ -23543,7 +23543,7 @@
   "Franz Wagner|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "fb6583302fbf38a3",
@@ -23759,7 +23759,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2211,
+    "comparison_size": 2206,
     "contracted": false,
     "family": "negative_space",
     "id": "e57243613563eb46",
@@ -23901,7 +23901,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2881,
+    "comparison_size": 2876,
     "contracted": true,
     "family": "negative_space",
     "id": "e22abec174436e7c",
@@ -23921,7 +23921,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2211,
+    "comparison_size": 2206,
     "contracted": true,
     "family": "negative_space",
     "id": "e7a6a1f881e55176",
@@ -23943,7 +23943,7 @@
   "Franz Wagner|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "1997f3c96b5459e1",
@@ -24079,7 +24079,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2881,
+    "comparison_size": 2876,
     "contracted": true,
     "family": "negative_space",
     "id": "508d61dc52b0781b",
@@ -24099,7 +24099,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2211,
+    "comparison_size": 2206,
     "contracted": true,
     "family": "negative_space",
     "id": "82cc318bd8e32b5c",
@@ -24121,7 +24121,7 @@
   "Franz Wagner|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "a89fc814ad97daad",
@@ -24257,7 +24257,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2881,
+    "comparison_size": 2876,
     "contracted": true,
     "family": "negative_space",
     "id": "efb6bf18c252d392",
@@ -24277,7 +24277,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2211,
+    "comparison_size": 2206,
     "contracted": true,
     "family": "negative_space",
     "id": "64bdf6e0e8ea6dcc",
@@ -24431,7 +24431,7 @@
   "Fred VanVleet|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "9dc224badf1263ea",
@@ -24851,7 +24851,7 @@
   "Gary Trent Jr|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "c9af6cc23a95859f",
@@ -25695,7 +25695,7 @@
   "Giannis Antetokounmpo|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "e2a47623fef91cca",
@@ -26075,7 +26075,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "754859047786028d",
@@ -27186,28 +27186,6 @@
     "value": 22838814
    }
   ],
-  "Guershon Yabusele|2025-26": [
-   {
-    "ahead": null,
-    "comparison_size": 164,
-    "contracted": false,
-    "family": "cohort",
-    "id": "8c6cac87f09d528f",
-    "key": "cohort_season|draft_slot|undrafted|Guershon Yabusele|2025-26",
-    "lead": null,
-    "margin": 844960,
-    "previous_holder": {
-     "player": "Thomas Sorber",
-     "season": "2025-26",
-     "value": 4655040
-    },
-    "rank": 1,
-    "scope_note": "Cohort of 148 players and 275 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
-    "text": "Guershon Yabusele's $5.5 million in 2025-26 was the highest single-season salary by an undrafted player, passing Thomas Sorber's $4.7 million (2025-26).",
-    "type": "sets",
-    "value": 5500000
-   }
-  ],
   "Harrison Barnes|2016-17": [
    {
     "ahead": null,
@@ -27841,7 +27819,7 @@
   "Herb Jones|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "f8893d2daa024aa2",
@@ -28085,7 +28063,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 22,
+    "comparison_size": 21,
     "contracted": false,
     "family": "rank_shift",
     "id": "c33289810f89854f",
@@ -28094,7 +28072,7 @@
     "margin": null,
     "previous_holder": null,
     "rank": 3,
-    "scope_note": "Same franchise in consecutive seasons. Roster of 22 players with a salary on file.",
+    "scope_note": "Same franchise in consecutive seasons. Roster of 21 players with a salary on file.",
     "text": "Immanuel Quickley was no longer the Raptors' highest-paid player in 2025-26 after holding that spot in 2024-25.",
     "type": "rank_shift",
     "value": 32500000
@@ -28103,7 +28081,7 @@
   "Immanuel Quickley|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "db39b0a488ffce80",
@@ -28183,7 +28161,7 @@
   "Immanuel Quickley|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "44b0968938af3f01",
@@ -28307,7 +28285,7 @@
   "Isaiah Hartenstein|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "e08f866ae3d3ae66",
@@ -28427,7 +28405,7 @@
   "Isaiah Hartenstein|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "ba0df98aa4872d1b",
@@ -28715,7 +28693,7 @@
   "Ivica Zubac|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "4133da88e8c00cd6",
@@ -29049,7 +29027,7 @@
   "Ja Morant|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "7e0321f7f0676b48",
@@ -29147,7 +29125,7 @@
   "Ja Morant|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "1e956b8a154138af",
@@ -29397,7 +29375,7 @@
   "Jabari Smith|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "59de74fe4e172109",
@@ -29457,7 +29435,7 @@
   "Jabari Smith|2030-31": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "96eab4b72f5e5b5c",
@@ -29593,7 +29571,7 @@
   "Jaden McDaniels|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "e1d14d1679968f70",
@@ -29733,7 +29711,7 @@
   "Jakob Poeltl|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "c7cdb5be2e4c9416",
@@ -29751,7 +29729,7 @@
   "Jakob Poeltl|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "e50f95b3511508d0",
@@ -29769,7 +29747,7 @@
   "Jakob Poeltl|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "e21c7a73a6681dfb",
@@ -29847,7 +29825,7 @@
   "Jalen Brunson|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "0fd2a5c1620f1a98",
@@ -29925,7 +29903,7 @@
   "Jalen Brunson|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "30770278a979aa30",
@@ -30143,7 +30121,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 551,
+    "comparison_size": 550,
     "contracted": true,
     "family": "franchise",
     "id": "4e8c7a95d95b6975",
@@ -30165,7 +30143,7 @@
   "Jalen Brunson|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "38e945b72bac3b1e",
@@ -30261,7 +30239,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 551,
+    "comparison_size": 550,
     "contracted": true,
     "family": "franchise",
     "id": "04afef61b2a3a8a4",
@@ -30427,7 +30405,7 @@
   "Jalen Duren|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "eb3db18a6a0ca742",
@@ -30505,7 +30483,7 @@
   "Jalen Duren|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "891de014483c1074",
@@ -30583,7 +30561,7 @@
   "Jalen Duren|2030-31": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "d319799270e21af2",
@@ -30693,7 +30671,7 @@
   "Jalen Green|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "884cf0a7044dc6d7",
@@ -30831,7 +30809,7 @@
   "Jalen Johnson|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "3c21371bbc561aa1",
@@ -30931,7 +30909,7 @@
   "Jalen Johnson|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "01d4a4975d67b740",
@@ -31055,7 +31033,7 @@
   "Jalen Suggs|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "ec1f4813ca9755c8",
@@ -31073,7 +31051,7 @@
   "Jalen Suggs|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "ac18dbd55b97151c",
@@ -31189,7 +31167,7 @@
   "Jalen Williams|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "5f793533ae1a7842",
@@ -31267,7 +31245,7 @@
   "Jalen Williams|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "302b2c961a43c606",
@@ -31345,7 +31323,7 @@
   "Jalen Williams|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "4d227d6839579ed4",
@@ -31459,7 +31437,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "65bacbb108e11305",
@@ -31691,7 +31669,7 @@
   "Jamal Murray|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "d0372ed13ca0705b",
@@ -31729,7 +31707,7 @@
   "Jamal Murray|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "b821afdf44fcf504",
@@ -31947,7 +31925,7 @@
   "Jamal Murray|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "37a0fcb9ae0b310c",
@@ -32561,7 +32539,7 @@
   "James Harden|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "b0bbe5e339245c08",
@@ -32579,7 +32557,7 @@
   "James Harden|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3359,
+    "comparison_size": 3354,
     "contracted": false,
     "family": "career_earnings",
     "id": "aba2012b1ec732d0",
@@ -32741,7 +32719,7 @@
   "James Harden|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "bb0e5ed8065ed27d",
@@ -32941,7 +32919,7 @@
   "Jaren Jackson Jr|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "b696b1b63dc446b6",
@@ -33057,7 +33035,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 546,
+    "comparison_size": 545,
     "contracted": false,
     "family": "franchise",
     "id": "af20a69fd776a77b",
@@ -33077,7 +33055,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2881,
+    "comparison_size": 2876,
     "contracted": false,
     "family": "negative_space",
     "id": "a31c5db028623937",
@@ -33115,7 +33093,7 @@
   "Jaren Jackson Jr|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "172521767da55be2",
@@ -33191,7 +33169,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 547,
+    "comparison_size": 546,
     "contracted": true,
     "family": "franchise",
     "id": "33f4042daf576fed",
@@ -33211,7 +33189,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2881,
+    "comparison_size": 2876,
     "contracted": true,
     "family": "negative_space",
     "id": "1c7bb0d30cf48c97",
@@ -33233,7 +33211,7 @@
   "Jaren Jackson Jr|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "6c72a040c97ce8a5",
@@ -33309,7 +33287,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 547,
+    "comparison_size": 546,
     "contracted": true,
     "family": "franchise",
     "id": "a449cb932e7b80d5",
@@ -33329,7 +33307,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2881,
+    "comparison_size": 2876,
     "contracted": true,
     "family": "negative_space",
     "id": "19fbed0726e8bb85",
@@ -33367,7 +33345,7 @@
   "Jaren Jackson Jr|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "a1e6843226e2cb14",
@@ -33443,7 +33421,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 547,
+    "comparison_size": 546,
     "contracted": true,
     "family": "franchise",
     "id": "4513fea44e63a275",
@@ -33463,7 +33441,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2881,
+    "comparison_size": 2876,
     "contracted": true,
     "family": "negative_space",
     "id": "8ba529af81fab2db",
@@ -33627,7 +33605,7 @@
   "Jarrett Allen|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "84de253be5aeff5c",
@@ -33727,7 +33705,7 @@
   "Jarrett Allen|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "45de59c19cae7b4b",
@@ -33765,7 +33743,7 @@
   "Jarrett Allen|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "6a8b83e544536776",
@@ -34017,7 +33995,7 @@
   "Jaylen Brown|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "8e7ce3d2644e5cdc",
@@ -34091,7 +34069,7 @@
   "Jaylen Brown|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "b75c208d935494e1",
@@ -34307,7 +34285,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 538,
+    "comparison_size": 537,
     "contracted": false,
     "family": "franchise",
     "id": "6d7e449d72e7446a",
@@ -34349,7 +34327,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "1435537f941ab942",
@@ -34505,7 +34483,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 539,
+    "comparison_size": 538,
     "contracted": true,
     "family": "franchise",
     "id": "cc4ae6b2f917eca7",
@@ -34563,7 +34541,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "54fce672db9e2665",
@@ -34719,7 +34697,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 539,
+    "comparison_size": 538,
     "contracted": true,
     "family": "franchise",
     "id": "8424d96a2cc4e5c8",
@@ -34831,7 +34809,7 @@
   "Jayson Tatum|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "357db5b983b4676c",
@@ -34927,7 +34905,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 631,
+    "comparison_size": 625,
     "contracted": false,
     "family": "rank_shift",
     "id": "cbd7913607e79537",
@@ -34981,7 +34959,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "6d6f44738fc3cd56",
@@ -35259,7 +35237,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "5573fd5f5cb45173",
@@ -35679,7 +35657,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "e09cae620e116f75",
@@ -35877,7 +35855,7 @@
   "Jeff Green|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "c1efc3936421b953",
@@ -36073,7 +36051,7 @@
   "Jerami Grant|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "1462aee8024f788b",
@@ -36131,7 +36109,7 @@
   "Jerami Grant|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "5480e5cc2afc111b",
@@ -36943,7 +36921,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 631,
+    "comparison_size": 625,
     "contracted": false,
     "family": "rank_shift",
     "id": "a6c03e0fd15f0c92",
@@ -36961,7 +36939,7 @@
   "Jimmy Butler|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "99e7c9d814661f8e",
@@ -37781,7 +37759,7 @@
   "Joel Embiid|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "3255be11263c319f",
@@ -37877,7 +37855,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 518,
+    "comparison_size": 517,
     "contracted": false,
     "family": "franchise",
     "id": "322aa281a63d0beb",
@@ -38119,7 +38097,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 538,
+    "comparison_size": 537,
     "contracted": false,
     "family": "franchise",
     "id": "43c27984d6ea4d3a",
@@ -38161,7 +38139,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "005816314ce9117d",
@@ -38317,7 +38295,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 539,
+    "comparison_size": 538,
     "contracted": true,
     "family": "franchise",
     "id": "9c8d9acef92d2eef",
@@ -38375,7 +38353,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "2fd4d5225aa6e46e",
@@ -38531,7 +38509,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 539,
+    "comparison_size": 538,
     "contracted": true,
     "family": "franchise",
     "id": "6b95407408636702",
@@ -38623,7 +38601,7 @@
   "John Collins|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "3c8bf683ebae8f83",
@@ -39407,7 +39385,7 @@
   "Jonas Valanciunas|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "b4224077c3920ab4",
@@ -39529,7 +39507,7 @@
   "Jonathan Isaac|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "0ec4873175a90218",
@@ -39997,7 +39975,7 @@
   "Jordan Poole|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "734a6f818554bc58",
@@ -40195,7 +40173,7 @@
   "Josh Giddey|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "fc9ba512c17d9597",
@@ -40213,7 +40191,7 @@
   "Josh Hart|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "e070394eb1463559",
@@ -40625,7 +40603,7 @@
   "Jrue Holiday|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "37f35896b77ed669",
@@ -40981,7 +40959,7 @@
   "Julius Randle|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "a1f002731fc0c50f",
@@ -41059,7 +41037,7 @@
   "Julius Randle|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "8bda2a1efb59414a",
@@ -41979,7 +41957,7 @@
   "Karl-Anthony Towns|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "436be3d459b29886",
@@ -42075,7 +42053,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 529,
+    "comparison_size": 528,
     "contracted": false,
     "family": "franchise",
     "id": "af7f69afb2ce04f3",
@@ -42097,7 +42075,7 @@
   "Karl-Anthony Towns|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "a3738b1a3a703b22",
@@ -42433,7 +42411,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 550,
+    "comparison_size": 549,
     "contracted": false,
     "family": "franchise",
     "id": "19ccdb64f68f5998",
@@ -42475,7 +42453,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "5a4a879ce9844451",
@@ -42691,7 +42669,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 551,
+    "comparison_size": 550,
     "contracted": true,
     "family": "franchise",
     "id": "e8139d30a134050a",
@@ -43161,7 +43139,7 @@
   "Kawhi Leonard|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "0e79ce26e268a032",
@@ -43277,7 +43255,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 474,
+    "comparison_size": 473,
     "contracted": false,
     "family": "franchise",
     "id": "d69f5a429941cd8b",
@@ -43359,7 +43337,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 475,
+    "comparison_size": 474,
     "contracted": true,
     "family": "franchise",
     "id": "a71d5650aff13da5",
@@ -43381,7 +43359,7 @@
   "Kawhi Leonard|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "dc3c6b43cc75a694",
@@ -43477,7 +43455,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 475,
+    "comparison_size": 474,
     "contracted": true,
     "family": "franchise",
     "id": "ff40c08b546cdbc0",
@@ -43499,7 +43477,7 @@
   "Keaton Wagler|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 274,
+    "comparison_size": 268,
     "contracted": false,
     "family": "cohort",
     "id": "129b0102d36bb916",
@@ -43512,7 +43490,7 @@
      "value": 14748000
     },
     "rank": 5,
-    "scope_note": "Cohort of 253 players and 275 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 247 players and 269 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Keaton Wagler's $9.7 million in 2026-27 is the fifth-highest single-season salary by an undrafted player, behind AJ Dybantsa's $14.7 million (2026-27).",
     "type": "approaches",
     "value": 9674760
@@ -43521,7 +43499,7 @@
   "Keaton Wagler|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 275,
+    "comparison_size": 269,
     "contracted": true,
     "family": "cohort",
     "id": "ce65dd784959ec8a",
@@ -43534,7 +43512,7 @@
      "value": 14748000
     },
     "rank": 5,
-    "scope_note": "Cohort of 253 players and 275 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 247 players and 269 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Keaton Wagler's $10.2 million in 2027-28 would be the fifth-highest single-season salary by an undrafted player, behind AJ Dybantsa's $14.7 million (2026-27).",
     "type": "approaches",
     "value": 10158240
@@ -43543,7 +43521,7 @@
   "Keaton Wagler|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 275,
+    "comparison_size": 269,
     "contracted": true,
     "family": "cohort",
     "id": "8da2e60e2e77cd1a",
@@ -43556,7 +43534,7 @@
      "value": 14748000
     },
     "rank": 5,
-    "scope_note": "Cohort of 253 players and 275 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 247 players and 269 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Keaton Wagler's $10.6 million in 2028-29 would be the fifth-highest single-season salary by an undrafted player, behind AJ Dybantsa's $14.7 million (2026-27).",
     "type": "approaches",
     "value": 10641960
@@ -43581,7 +43559,7 @@
   "Keaton Wagler|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 275,
+    "comparison_size": 269,
     "contracted": true,
     "family": "cohort",
     "id": "bfa249fbf39f1699",
@@ -43594,7 +43572,7 @@
      "value": 14748000
     },
     "rank": 2,
-    "scope_note": "Cohort of 253 players and 275 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 247 players and 269 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Keaton Wagler's $13.5 million in 2029-30 would be the second-highest single-season salary by an undrafted player, behind AJ Dybantsa's $14.7 million (2026-27).",
     "type": "approaches",
     "value": 13483363
@@ -43775,7 +43753,7 @@
   "Keegan Murray|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "1641d8d7575b06a2",
@@ -43851,7 +43829,7 @@
   "Keegan Murray|2030-31": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "7c2ba46efe4015b0",
@@ -44571,7 +44549,7 @@
   "Kentavious Caldwell-Pope|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "e768662f2f8c8f61",
@@ -45443,7 +45421,7 @@
   "Kevin Durant|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "5eb9bff35920e23c",
@@ -45561,7 +45539,7 @@
   "Kevin Durant|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3359,
+    "comparison_size": 3354,
     "contracted": false,
     "family": "career_earnings",
     "id": "247311cf62e9c109",
@@ -46049,7 +46027,7 @@
   "Kevin Huerter|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "377b08c8c9034a3c",
@@ -46531,7 +46509,7 @@
   "Keyonte George|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "f41788b9360b6a50",
@@ -47129,7 +47107,7 @@
   "Khris Middleton|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "17cf60800e6fd264",
@@ -47147,7 +47125,7 @@
   "Kingston Flemings|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 275,
+    "comparison_size": 269,
     "contracted": true,
     "family": "cohort",
     "id": "e0d12da9167991ff",
@@ -47160,7 +47138,7 @@
      "value": 14748000
     },
     "rank": 5,
-    "scope_note": "Cohort of 253 players and 275 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 247 players and 269 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Kingston Flemings' $10.3 million in 2029-30 would be the fifth-highest single-season salary by an undrafted player, behind AJ Dybantsa's $14.7 million (2026-27).",
     "type": "approaches",
     "value": 10282441
@@ -47417,7 +47395,7 @@
   "Klay Thompson|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "4ff6115984a51041",
@@ -47861,7 +47839,7 @@
   "Kristaps Porzingis|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "942fe12310ca79a2",
@@ -48067,7 +48045,7 @@
   "Kyle Kuzma|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "5d8ee34262aa2953",
@@ -49065,7 +49043,7 @@
   "Kyrie Irving|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "a8eed3f0611074bf",
@@ -49217,7 +49195,7 @@
   "LaMelo Ball|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "3e5e3ccb616edcfd",
@@ -49277,7 +49255,7 @@
   "LaMelo Ball|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "b347a64fe5def48f",
@@ -49333,7 +49311,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2881,
+    "comparison_size": 2876,
     "contracted": true,
     "family": "negative_space",
     "id": "b7100c1df9dfd862",
@@ -49355,7 +49333,7 @@
   "LaMelo Ball|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "cae80ad4e86986b9",
@@ -49411,7 +49389,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2881,
+    "comparison_size": 2876,
     "contracted": true,
     "family": "negative_space",
     "id": "dacf336f9ca747d5",
@@ -49547,7 +49525,7 @@
   "Lauri Markkanen|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "10f9252955d24601",
@@ -49603,7 +49581,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 526,
+    "comparison_size": 525,
     "contracted": false,
     "family": "franchise",
     "id": "258d4c16222c8532",
@@ -49625,7 +49603,7 @@
   "Lauri Markkanen|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "76177cfacc3b285d",
@@ -49761,7 +49739,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 546,
+    "comparison_size": 545,
     "contracted": false,
     "family": "franchise",
     "id": "0fb161622ff8aabb",
@@ -49781,7 +49759,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2881,
+    "comparison_size": 2876,
     "contracted": false,
     "family": "negative_space",
     "id": "908d196dc754677a",
@@ -49819,7 +49797,7 @@
   "Lauri Markkanen|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "f47d65ba4e5419d3",
@@ -49895,7 +49873,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 547,
+    "comparison_size": 546,
     "contracted": true,
     "family": "franchise",
     "id": "6b90ce7862800679",
@@ -49915,7 +49893,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2881,
+    "comparison_size": 2876,
     "contracted": true,
     "family": "negative_space",
     "id": "85bdaf4b89fdcfe3",
@@ -49937,7 +49915,7 @@
   "Lauri Markkanen|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "9bc423c93ed96442",
@@ -50053,7 +50031,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 547,
+    "comparison_size": 546,
     "contracted": true,
     "family": "franchise",
     "id": "56e29dcc72eebb40",
@@ -50073,7 +50051,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2881,
+    "comparison_size": 2876,
     "contracted": true,
     "family": "negative_space",
     "id": "9c529bbbf0e7c4ce",
@@ -50839,7 +50817,7 @@
   "LeBron James|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3359,
+    "comparison_size": 3354,
     "contracted": false,
     "family": "career_earnings",
     "id": "c92b9197efc2f1d9",
@@ -50994,7 +50972,7 @@
      "value": 947200
     },
     "rank": 1,
-    "scope_note": "Cohort of 86 players and 275 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 86 players and 269 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Livio Jean-Charles' $1.2 million in 2016-17 was the highest single-season salary by an undrafted player, passing Frederic Weis' $947,200 (1999-00).",
     "type": "sets",
     "value": 1188840
@@ -51016,7 +50994,7 @@
      "value": 1188840
     },
     "rank": 1,
-    "scope_note": "Cohort of 96 players and 275 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 96 players and 269 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Livio Jean-Charles' $1.2 million in 2017-18 was the highest single-season salary by an undrafted player, breaking his own mark of $1.2 million in 2016-17.",
     "type": "sets",
     "value": 1242240
@@ -51361,7 +51339,7 @@
   "Luka Doncic|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "bc137519faef4b75",
@@ -51495,7 +51473,7 @@
   "Luka Doncic|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "16f07b2a5a94cfac",
@@ -51511,7 +51489,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "3de3e55e52780154",
@@ -52321,7 +52299,7 @@
   "Malik Monk|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "de6e2d7e0b26a950",
@@ -52883,7 +52861,7 @@
   "Marcus Smart|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "1bb502c04b0b2901",
@@ -53301,7 +53279,7 @@
   "Michael Porter|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "c2acb33dbacb2cda",
@@ -53479,7 +53457,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2211,
+    "comparison_size": 2206,
     "contracted": false,
     "family": "negative_space",
     "id": "b0c3b7753077c399",
@@ -53501,7 +53479,7 @@
   "Mikal Bridges|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "20106ffcf1b18664",
@@ -53601,7 +53579,7 @@
   "Mikal Bridges|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "54f745ba0be9fb69",
@@ -53659,7 +53637,7 @@
   "Mikal Bridges|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "baae048784f49b4f",
@@ -53717,7 +53695,7 @@
   "Mikal Bridges|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "0dc094b15a0e2dc0",
@@ -53773,7 +53751,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 551,
+    "comparison_size": 550,
     "contracted": true,
     "family": "franchise",
     "id": "fa23706128290b04",
@@ -53793,7 +53771,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2211,
+    "comparison_size": 2206,
     "contracted": true,
     "family": "negative_space",
     "id": "2282377c7a0a05c9",
@@ -54297,7 +54275,7 @@
   "Mike Conley|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "2e88a1f6d134d9ef",
@@ -54415,7 +54393,7 @@
   "Mikel Brown|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 275,
+    "comparison_size": 269,
     "contracted": true,
     "family": "cohort",
     "id": "aef82e6d79fb2782",
@@ -54428,7 +54406,7 @@
      "value": 14748000
     },
     "rank": 3,
-    "scope_note": "Cohort of 253 players and 275 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 247 players and 269 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Mikel Brown's $12.3 million in 2029-30 would be the third-highest single-season salary by an undrafted player, behind AJ Dybantsa and Darryn Peterson.",
     "type": "approaches",
     "value": 12256488
@@ -54481,7 +54459,7 @@
   "Mitchell Robinson|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "5ea0554726bce29b",
@@ -54853,7 +54831,7 @@
   "Myles Turner|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "32143a37d8a08376",
@@ -54933,7 +54911,7 @@
   "Myles Turner|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "9202dee20aef9851",
@@ -55095,7 +55073,7 @@
   "Naz Reid|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "6c0fea82bcc02cb2",
@@ -55129,7 +55107,7 @@
   "Naz Reid|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "ce739719f7e7f179",
@@ -55655,7 +55633,7 @@
   "Nicolas Claxton|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "7caf301ac980bb36",
@@ -56447,7 +56425,7 @@
   "Nikola Jokic|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "1f35275a3142fea7",
@@ -56463,7 +56441,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "5e52e69dc820f2aa",
@@ -56983,7 +56961,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "7c1133da8e63e4a3",
@@ -57497,7 +57475,7 @@
   "Nikola Vucevic|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "7f6f8a7d90f0a57b",
@@ -57723,7 +57701,7 @@
   "Norman Powell|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "20ee76982ce2795a",
@@ -57909,7 +57887,7 @@
   "OG Anunoby|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "5211c7bbe1ea8ed3",
@@ -57985,7 +57963,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2104,
+    "comparison_size": 2099,
     "contracted": false,
     "family": "negative_space",
     "id": "ee3a0c001f96c642",
@@ -58007,7 +57985,7 @@
   "OG Anunoby|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "cdea5b8e93ed7bfe",
@@ -58143,7 +58121,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 550,
+    "comparison_size": 549,
     "contracted": false,
     "family": "franchise",
     "id": "3392d1d83198efdc",
@@ -58163,7 +58141,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2211,
+    "comparison_size": 2206,
     "contracted": false,
     "family": "negative_space",
     "id": "a728bb879b7750a9",
@@ -58185,7 +58163,7 @@
   "OG Anunoby|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "f0dcbc624fa99af7",
@@ -58261,7 +58239,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 551,
+    "comparison_size": 550,
     "contracted": true,
     "family": "franchise",
     "id": "43df59b9ebc38f19",
@@ -58281,7 +58259,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2881,
+    "comparison_size": 2876,
     "contracted": true,
     "family": "negative_space",
     "id": "cd7efb2c19b4c8b5",
@@ -58301,7 +58279,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2211,
+    "comparison_size": 2206,
     "contracted": true,
     "family": "negative_space",
     "id": "1dc08be2ced942e7",
@@ -58323,7 +58301,7 @@
   "OG Anunoby|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "56ffeedc605cfd90",
@@ -58399,7 +58377,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 551,
+    "comparison_size": 550,
     "contracted": true,
     "family": "franchise",
     "id": "bb2ad5decf229109",
@@ -58419,7 +58397,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2881,
+    "comparison_size": 2876,
     "contracted": true,
     "family": "negative_space",
     "id": "fb998c0e8164922a",
@@ -58439,7 +58417,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2211,
+    "comparison_size": 2206,
     "contracted": true,
     "family": "negative_space",
     "id": "02613f45914d4252",
@@ -58781,7 +58759,7 @@
   "PJ Washington|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "13cf4e246e39e6ea",
@@ -58817,7 +58795,7 @@
   "PJ Washington|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "bf3098a1efdb8551",
@@ -59003,7 +58981,7 @@
   "Paolo Banchero|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "74323d5c5ad83d77",
@@ -59099,7 +59077,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2881,
+    "comparison_size": 2876,
     "contracted": true,
     "family": "negative_space",
     "id": "2e369dbe91580bee",
@@ -59121,7 +59099,7 @@
   "Paolo Banchero|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "aa0ae812cbff3de8",
@@ -59217,7 +59195,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2881,
+    "comparison_size": 2876,
     "contracted": true,
     "family": "negative_space",
     "id": "bc55f30299f46330",
@@ -59239,7 +59217,7 @@
   "Paolo Banchero|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "bb355b7cec31b0c8",
@@ -59335,7 +59313,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2881,
+    "comparison_size": 2876,
     "contracted": true,
     "family": "negative_space",
     "id": "5927449da6dcfcd6",
@@ -59409,7 +59387,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "fa0becda172cdde4",
@@ -59525,7 +59503,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2881,
+    "comparison_size": 2876,
     "contracted": true,
     "family": "negative_space",
     "id": "52c1ca9d21fd557e",
@@ -59881,7 +59859,7 @@
   "Pascal Siakam|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "0e96470612994e30",
@@ -59995,7 +59973,7 @@
   "Pascal Siakam|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "cf3d342ceba1fb7b",
@@ -60209,7 +60187,7 @@
   "Pascal Siakam|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "90e28231568491bf",
@@ -60607,7 +60585,7 @@
   "Patrick Williams|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "15c4f8a5583f942f",
@@ -61297,7 +61275,7 @@
   "Paul George|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "9ee3f7dce2374fa3",
@@ -61375,7 +61353,7 @@
   "Paul George|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3359,
+    "comparison_size": 3354,
     "contracted": false,
     "family": "career_earnings",
     "id": "36718f0ed925368f",
@@ -61617,7 +61595,7 @@
   "Paul George|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "8ae2350a43ca2412",
@@ -62485,7 +62463,7 @@
   "RJ Barrett|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "8f4e94a5046230b0",
@@ -62558,7 +62536,7 @@
      "value": 1242240
     },
     "rank": 1,
-    "scope_note": "Cohort of 106 players and 275 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 106 players and 269 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Rade Zagorac's $1.4 million in 2018-19 was the highest single-season salary by an undrafted player, passing Livio Jean-Charles' $1.2 million (2017-18).",
     "type": "sets",
     "value": 1378242
@@ -62727,7 +62705,7 @@
   "Robert Williams|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "72ab845098e7c0fa",
@@ -63473,7 +63451,7 @@
   "Rudy Gobert|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "c2f7d035cf4bf152",
@@ -64959,7 +64937,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 453,
+    "comparison_size": 452,
     "contracted": false,
     "family": "franchise",
     "id": "aa581ece07118b2f",
@@ -64979,7 +64957,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 22,
+    "comparison_size": 21,
     "contracted": false,
     "family": "rank_shift",
     "id": "e6dbe2bb88aa3fd0",
@@ -64988,7 +64966,7 @@
     "margin": null,
     "previous_holder": null,
     "rank": 1,
-    "scope_note": "Same franchise in consecutive seasons. Roster of 22 players with a salary on file.",
+    "scope_note": "Same franchise in consecutive seasons. Roster of 21 players with a salary on file.",
     "text": "Scottie Barnes was the Raptors' highest-paid player in 2025-26 after ranking fifth on the roster in 2024-25.",
     "type": "rank_shift",
     "value": 38661700
@@ -64997,7 +64975,7 @@
   "Scottie Barnes|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "f18f188855d1c518",
@@ -65153,7 +65131,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 474,
+    "comparison_size": 473,
     "contracted": false,
     "family": "franchise",
     "id": "2109210e6617f024",
@@ -65191,7 +65169,7 @@
   "Scottie Barnes|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "c4a88bb292143fba",
@@ -65287,7 +65265,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 475,
+    "comparison_size": 474,
     "contracted": true,
     "family": "franchise",
     "id": "7bd1a4a80ccbf16e",
@@ -65307,7 +65285,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2881,
+    "comparison_size": 2876,
     "contracted": true,
     "family": "negative_space",
     "id": "53c80a3e1845278f",
@@ -65329,7 +65307,7 @@
   "Scottie Barnes|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "5d53280c6cc31fe5",
@@ -65425,7 +65403,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 475,
+    "comparison_size": 474,
     "contracted": true,
     "family": "franchise",
     "id": "d49b9a66851c04ef",
@@ -65445,7 +65423,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2881,
+    "comparison_size": 2876,
     "contracted": true,
     "family": "negative_space",
     "id": "10d722ee8904f433",
@@ -65467,7 +65445,7 @@
   "Scottie Barnes|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "d637140833ad9fa1",
@@ -65563,7 +65541,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 475,
+    "comparison_size": 474,
     "contracted": true,
     "family": "franchise",
     "id": "b83e2a934f38e367",
@@ -65583,7 +65561,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2881,
+    "comparison_size": 2876,
     "contracted": true,
     "family": "negative_space",
     "id": "bd3275ac6c447031",
@@ -65657,7 +65635,7 @@
   "Shaedon Sharpe|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "33f2bb9f28fad227",
@@ -65711,7 +65689,7 @@
   "Shai Gilgeous-Alexander|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "594031100294a42a",
@@ -65907,7 +65885,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "de13e8e3aa8f51ff",
@@ -65923,7 +65901,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "fecd15d7dd5acbb6",
@@ -66173,7 +66151,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "d67e0d52a9a9e8b6",
@@ -66593,7 +66571,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "662512705a7c6e03",
@@ -68259,7 +68237,7 @@
   "Stephen Curry|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 630,
+    "comparison_size": 624,
     "contracted": false,
     "family": "cap_context",
     "id": "b8efcdf48020b757",
@@ -68441,7 +68419,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "dafb3b2d7b2cf422",
@@ -68457,7 +68435,7 @@
    },
    {
     "ahead": "LeBron James and Kevin Durant",
-    "comparison_size": 3359,
+    "comparison_size": 3354,
     "contracted": false,
     "family": "career_earnings",
     "id": "a7e1ea9c74487758",
@@ -69389,7 +69367,7 @@
   "Steven Adams|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "c704ebac4481bd50",
@@ -69979,7 +69957,7 @@
   "Terry Rozier|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "88c0ef24db895eee",
@@ -70010,6 +69988,28 @@
     "text": "Thaddeus Young passed $100 million in career earnings in 2019-20.",
     "type": "milestone",
     "value": 104983742
+   }
+  ],
+  "Thomas Sorber|2025-26": [
+   {
+    "ahead": null,
+    "comparison_size": 158,
+    "contracted": false,
+    "family": "cohort",
+    "id": "0476c9e462da64b4",
+    "key": "cohort_season|draft_slot|undrafted|Thomas Sorber|2025-26",
+    "lead": null,
+    "margin": 1275972,
+    "previous_holder": {
+     "player": "Cameron Whitmore",
+     "season": "2024-25",
+     "value": 3379068
+    },
+    "rank": 1,
+    "scope_note": "Cohort of 142 players and 269 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "text": "Thomas Sorber's $4.7 million in 2025-26 was the highest single-season salary by an undrafted player, passing Cameron Whitmore's $3.4 million (2024-25).",
+    "type": "sets",
+    "value": 4655040
    }
   ],
   "Tim Duncan|2016-17": [
@@ -70825,7 +70825,7 @@
   "Tobias Harris|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "dd224da7a50fb3ee",
@@ -71409,7 +71409,7 @@
   "Trae Young|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "64d60a8b6c96e7a1",
@@ -71487,7 +71487,7 @@
   "Trae Young|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "d884f603bd03620d",
@@ -71645,7 +71645,7 @@
   "Trae Young|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "683d1b8894271639",
@@ -71743,7 +71743,7 @@
   "Trae Young|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "d4dbd4b85ccdb212",
@@ -71857,7 +71857,7 @@
   "Trae Young|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "52232c454b9ffd32",
@@ -72243,7 +72243,7 @@
   "Trey Murphy|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "713c796a77e7a75b",
@@ -72359,7 +72359,7 @@
   "Tyler Herro|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "fb304a4574653fef",
@@ -72537,7 +72537,7 @@
   "Tyrese Haliburton|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "75274e109795b056",
@@ -72655,7 +72655,7 @@
   "Tyrese Haliburton|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "fce554406dcca6d9",
@@ -72853,7 +72853,7 @@
   "Tyrese Haliburton|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "a11ae0fe5329dbfd",
@@ -72987,7 +72987,7 @@
   "Tyrese Haliburton|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "6af1bfb3bdd84d39",
@@ -73165,7 +73165,7 @@
   "Tyrese Maxey|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "84080ea786aa72cf",
@@ -73243,7 +73243,7 @@
   "Tyrese Maxey|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "3f557e1834d5ab97",
@@ -73301,7 +73301,7 @@
   "Tyrese Maxey|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "ec16b60d77209409",
@@ -73879,7 +73879,7 @@
   "Victor Wembanyama|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "f5adb720a36d2239",
@@ -73957,7 +73957,7 @@
   "Victor Wembanyama|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "458831bef867271c",
@@ -74201,7 +74201,7 @@
   "Walker Kessler|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "349216910924199e",
@@ -74341,7 +74341,7 @@
   "Wendell Carter Jr|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "c0e70a938cf5a299",
@@ -74979,7 +74979,7 @@
   "Zach LaVine|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "d413586b5253526f",
@@ -75035,7 +75035,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 505,
+    "comparison_size": 504,
     "contracted": false,
     "family": "franchise",
     "id": "d31fc3d1a6d8d50b",
@@ -75055,7 +75055,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2774,
+    "comparison_size": 2769,
     "contracted": false,
     "family": "negative_space",
     "id": "5da590e3c98f6c6d",
@@ -75077,7 +75077,7 @@
   "Zach LaVine|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": false,
     "family": "career_earnings",
     "id": "324884b778ef2c65",
@@ -75233,7 +75233,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 525,
+    "comparison_size": 524,
     "contracted": false,
     "family": "franchise",
     "id": "9c1e400730ad642a",
@@ -75253,7 +75253,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2881,
+    "comparison_size": 2876,
     "contracted": false,
     "family": "negative_space",
     "id": "0d38a0daacf77e21",
@@ -75541,7 +75541,7 @@
   "Zion Williamson|2025-26": [
    {
     "ahead": null,
-    "comparison_size": 3253,
+    "comparison_size": 3248,
     "contracted": false,
     "family": "career_earnings",
     "id": "eefdd194867b66d8",
@@ -75741,7 +75741,7 @@
   "Zion Williamson|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3360,
+    "comparison_size": 3355,
     "contracted": true,
     "family": "career_earnings",
     "id": "b3b63d3bd84658c9",
@@ -75837,7 +75837,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2881,
+    "comparison_size": 2876,
     "contracted": true,
     "family": "negative_space",
     "id": "0b17d8087441d51f",
@@ -75915,7 +75915,6 @@
     "De'Andre Davis",
     "DeJon Jarreau",
     "Doug McDermott",
-    "EJ Harkless",
     "Eli Ndiaye",
     "Emoni Bates",
     "Eric Gordon",
@@ -75923,7 +75922,6 @@
     "Garrett Temple",
     "Garrison Mathews",
     "Guerschon Yabusele",
-    "Guershon Yabusele",
     "Hunter Sallis",
     "Hunter Tyson",
     "Isaiah Livers",
@@ -75945,7 +75943,6 @@
     "Kelly Olynyk",
     "Keon Johnson",
     "Kevin Love",
-    "Kevin McCullard",
     "Kevon Harris",
     "Killian Hayes",
     "Kyle Lowry",
@@ -75978,7 +75975,6 @@
     "RJ Luis",
     "Richaun Holmes",
     "Russell Westbrook",
-    "Russell Wetbrook",
     "Seth Curry",
     "Sharife Cooper",
     "Spencer Dinwiddie",
@@ -75993,7 +75989,6 @@
     "Trevon Scott",
     "TyTy Washington",
     "Tyler Burton",
-    "Tyrese Key",
     "Tyrese Martin",
     "Tyson Etienne",
     "Vince Williams Jr",

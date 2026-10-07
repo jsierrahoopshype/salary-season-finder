@@ -321,7 +321,7 @@
     "player_seasons_offered": 536
    },
    "2025-26": {
-    "also_in_the_historical_tab": 509,
+    "also_in_the_historical_tab": 513,
     "dollars_offered": 5376683139,
     "missing_from_the_historical_tab": [
      {
@@ -331,14 +331,6 @@
      {
       "player": "Rob Dillingham",
       "salary": 6576120
-     },
-     {
-      "player": "Guerschon Yabusele",
-      "salary": 5500000
-     },
-     {
-      "player": "Russell Westbrook",
-      "salary": 3634153
      },
      {
       "player": "Trey Lyles",
@@ -453,10 +445,6 @@
       "salary": 636435
      },
      {
-      "player": "Elijah Harkless",
-      "salary": 636435
-     },
-     {
       "player": "Izaiyah Nelson",
       "salary": 636435
      },
@@ -466,10 +454,6 @@
      },
      {
       "player": "Jaron Pierre",
-      "salary": 636435
-     },
-     {
-      "player": "Kevin McCullar",
       "salary": 636435
      },
      {
@@ -576,7 +560,7 @@
   "teams_filled_in": []
  },
  "filled_from_current_sheet_missing_from_tab": {
-  "already_answered_for_by_the_tab_or_the_dead_sheet": 509,
+  "already_answered_for_by_the_tab_or_the_dead_sheet": 513,
   "left_out_for_no_games": [
    {
     "player": "AK Okereke",
@@ -808,25 +792,11 @@
     "team": "MIA"
    },
    {
-    "games": 26,
-    "player": "Elijah Harkless",
-    "salary": 636435,
-    "season": "2025-26",
-    "team": "UTA"
-   },
-   {
     "games": 73,
     "player": "Gary Payton II",
     "salary": 3303774,
     "season": "2025-26",
     "team": "GSW"
-   },
-   {
-    "games": 67,
-    "player": "Guerschon Yabusele",
-    "salary": 5500000,
-    "season": "2025-26",
-    "team": "CHI"
    },
    {
     "games": 82,
@@ -855,13 +825,6 @@
     "salary": 2349578,
     "season": "2025-26",
     "team": "WAS"
-   },
-   {
-    "games": 21,
-    "player": "Kevin McCullar",
-    "salary": 636435,
-    "season": "2025-26",
-    "team": "NYK"
    },
    {
     "games": 51,
@@ -906,13 +869,6 @@
     "team": "CHI"
    },
    {
-    "games": 64,
-    "player": "Russell Westbrook",
-    "salary": 3634153,
-    "season": "2025-26",
-    "team": "SAC"
-   },
-   {
     "games": 60,
     "player": "Thomas Bryant",
     "salary": 3287409,
@@ -926,7 +882,7 @@
  "note": "Which sheet supplied each season, and what the boundary between them left to the tab. The historical tab is authoritative for every season it holds and the two forward-looking sheets are read only past it, so the boundary is the newest season on the tab rather than a year written into the code: the owner adding a season moves it. cutover lists, per forward sheet and per season it no longer answers for, the player-seasons and dollars that sheet still offers and how many of them the tab holds under the same name. A season well before the boundary may never have been read from that sheet by any build; the boundary season itself is the one that moved. Anything under missing_from_the_historical_tab the tab does not hold at all, and is the thing to look at before trusting a rollover.",
  "rows_on_the_tab_that_repeated_another_exactly": {
   "dollars_per_season": {
-   "2025-26": 147347937
+   "2025-26": 147399144
   },
   "note": "A row naming the same man, season, team and figure to the dollar as another row of the tab is read once. The rows under one player-season are summed, so reading both doubles what that club owed him: the 2025-26 edit that put dead money on this tab gave Damian Lillard a second Milwaukee row of the figure Milwaukee stretched his contract over, and he came out owed twice it by a club he does not play for. Two separate payments of the identical amount by one club in one season would be read as one as well; that is the cost of the test, and the cheaper error. Two clubs owing one man the same figure are two debts and both count. Anything here is worth putting to the sheet's owner: a row the tab holds twice is the tab's to lose, not ours to carry.",
   "rows": [
@@ -1309,6 +1265,12 @@
     "team": "TOR"
    },
    {
+    "player": "Tyrese Key",
+    "salary": 51207,
+    "season": "2025-26",
+    "team": "TOR"
+   },
+   {
     "player": "Lonzo Ball",
     "salary": 10000000,
     "season": "2025-26",
@@ -1364,7 +1326,7 @@
    }
   ],
   "rows_per_season": {
-   "2025-26": 72
+   "2025-26": 73
   }
  },
  "rows_per_season_per_sheet": {
@@ -1474,7 +1436,7 @@
    "historical": 571
   },
   "2025-26": {
-   "historical": 607
+   "historical": 605
   },
   "2026-27": {
    "current_and_dead": 638,
@@ -1497,258 +1459,337 @@
    "future": 17
   }
  },
+ "rows_that_repeated_once_two_spellings_became_one_man": {
+  "dollars_per_season": {
+   "1990-91": 0,
+   "1991-92": 0,
+   "1992-93": 0,
+   "1993-94": 0,
+   "1994-95": 0,
+   "1995-96": 0,
+   "1996-97": 0,
+   "1997-98": 0,
+   "1998-99": 0,
+   "1999-00": 0,
+   "2000-01": 0,
+   "2001-02": 0,
+   "2002-03": 0,
+   "2003-04": 0,
+   "2004-05": 0,
+   "2005-06": 0,
+   "2006-07": 0,
+   "2007-08": 0,
+   "2008-09": 0,
+   "2009-10": 0,
+   "2010-11": 0,
+   "2011-12": 0,
+   "2012-13": 0,
+   "2013-14": 0,
+   "2014-15": 0,
+   "2015-16": 0,
+   "2016-17": 0,
+   "2017-18": 0,
+   "2018-19": 0,
+   "2019-20": 0,
+   "2020-21": 0,
+   "2021-22": 0,
+   "2022-23": 0,
+   "2023-24": 0,
+   "2024-25": 0,
+   "2025-26": 0
+  },
+  "note": "The same test, applied after every row is keyed on the person it belongs to rather than on a spelling. The parser above can only see a repeat between two rows spelled alike; a name data/name_aliases.json says is one man misspelled comes together here, and the rows under one player-season are summed, so reading both would double what the club owed. The dollars are taken off the tab's side of the_sums_balance, where they are listed as dollars_the_tab_gave_twice_under_two_spellings.",
+  "rows": [],
+  "rows_per_season": {}
+ },
  "the_sums_balance": {
   "1990-91": {
    "balances": true,
    "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 293563000,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
-   "dollars_on_the_historical_tab": 293563000
+   "dollars_on_the_historical_tab": 293563000,
+   "dollars_the_tab_gave_twice_under_two_spellings": 0
   },
   "1991-92": {
    "balances": true,
    "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 369582000,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
-   "dollars_on_the_historical_tab": 369582000
+   "dollars_on_the_historical_tab": 369582000,
+   "dollars_the_tab_gave_twice_under_two_spellings": 0
   },
   "1992-93": {
    "balances": true,
    "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 428986180,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
-   "dollars_on_the_historical_tab": 428986180
+   "dollars_on_the_historical_tab": 428986180,
+   "dollars_the_tab_gave_twice_under_two_spellings": 0
   },
   "1993-94": {
    "balances": true,
    "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 500334365,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
-   "dollars_on_the_historical_tab": 500334365
+   "dollars_on_the_historical_tab": 500334365,
+   "dollars_the_tab_gave_twice_under_two_spellings": 0
   },
   "1994-95": {
    "balances": true,
    "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 598723839,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
-   "dollars_on_the_historical_tab": 598723839
+   "dollars_on_the_historical_tab": 598723839,
+   "dollars_the_tab_gave_twice_under_two_spellings": 0
   },
   "1995-96": {
    "balances": true,
    "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 724267560,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
-   "dollars_on_the_historical_tab": 724267560
+   "dollars_on_the_historical_tab": 724267560,
+   "dollars_the_tab_gave_twice_under_two_spellings": 0
   },
   "1996-97": {
    "balances": true,
    "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 803671200,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
-   "dollars_on_the_historical_tab": 803671200
+   "dollars_on_the_historical_tab": 803671200,
+   "dollars_the_tab_gave_twice_under_two_spellings": 0
   },
   "1997-98": {
    "balances": true,
    "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 948538009,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
-   "dollars_on_the_historical_tab": 948538009
+   "dollars_on_the_historical_tab": 948538009,
+   "dollars_the_tab_gave_twice_under_two_spellings": 0
   },
   "1998-99": {
    "balances": true,
    "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 1069873239,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
-   "dollars_on_the_historical_tab": 1069873239
+   "dollars_on_the_historical_tab": 1069873239,
+   "dollars_the_tab_gave_twice_under_two_spellings": 0
   },
   "1999-00": {
    "balances": true,
    "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 1314134536,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
-   "dollars_on_the_historical_tab": 1314134536
+   "dollars_on_the_historical_tab": 1314134536,
+   "dollars_the_tab_gave_twice_under_two_spellings": 0
   },
   "2000-01": {
    "balances": true,
    "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 1503762690,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
-   "dollars_on_the_historical_tab": 1503762690
+   "dollars_on_the_historical_tab": 1503762690,
+   "dollars_the_tab_gave_twice_under_two_spellings": 0
   },
   "2001-02": {
    "balances": true,
    "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 1558602654,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
-   "dollars_on_the_historical_tab": 1558602654
+   "dollars_on_the_historical_tab": 1558602654,
+   "dollars_the_tab_gave_twice_under_two_spellings": 0
   },
   "2002-03": {
    "balances": true,
    "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 1669831797,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
-   "dollars_on_the_historical_tab": 1669831797
+   "dollars_on_the_historical_tab": 1669831797,
+   "dollars_the_tab_gave_twice_under_two_spellings": 0
   },
   "2003-04": {
    "balances": true,
    "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 1672617482,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
-   "dollars_on_the_historical_tab": 1672617482
+   "dollars_on_the_historical_tab": 1672617482,
+   "dollars_the_tab_gave_twice_under_two_spellings": 0
   },
   "2004-05": {
    "balances": true,
    "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 1773666037,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
-   "dollars_on_the_historical_tab": 1773666037
+   "dollars_on_the_historical_tab": 1773666037,
+   "dollars_the_tab_gave_twice_under_two_spellings": 0
   },
   "2005-06": {
    "balances": true,
    "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 1897469981,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
-   "dollars_on_the_historical_tab": 1897469981
+   "dollars_on_the_historical_tab": 1897469981,
+   "dollars_the_tab_gave_twice_under_two_spellings": 0
   },
   "2006-07": {
    "balances": true,
    "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 1939373647,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
-   "dollars_on_the_historical_tab": 1939373647
+   "dollars_on_the_historical_tab": 1939373647,
+   "dollars_the_tab_gave_twice_under_two_spellings": 0
   },
   "2007-08": {
    "balances": true,
    "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 2063887234,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
-   "dollars_on_the_historical_tab": 2063887234
+   "dollars_on_the_historical_tab": 2063887234,
+   "dollars_the_tab_gave_twice_under_two_spellings": 0
   },
   "2008-09": {
    "balances": true,
    "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 2158512738,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
-   "dollars_on_the_historical_tab": 2158512738
+   "dollars_on_the_historical_tab": 2158512738,
+   "dollars_the_tab_gave_twice_under_two_spellings": 0
   },
   "2009-10": {
    "balances": true,
    "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 2113114155,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
-   "dollars_on_the_historical_tab": 2113114155
+   "dollars_on_the_historical_tab": 2113114155,
+   "dollars_the_tab_gave_twice_under_two_spellings": 0
   },
   "2010-11": {
    "balances": true,
    "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 2025870243,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
-   "dollars_on_the_historical_tab": 2025870243
+   "dollars_on_the_historical_tab": 2025870243,
+   "dollars_the_tab_gave_twice_under_two_spellings": 0
   },
   "2011-12": {
    "balances": true,
    "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 2016175240,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
-   "dollars_on_the_historical_tab": 2016175240
+   "dollars_on_the_historical_tab": 2016175240,
+   "dollars_the_tab_gave_twice_under_two_spellings": 0
   },
   "2012-13": {
    "balances": true,
    "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 2111388890,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
-   "dollars_on_the_historical_tab": 2111388890
+   "dollars_on_the_historical_tab": 2111388890,
+   "dollars_the_tab_gave_twice_under_two_spellings": 0
   },
   "2013-14": {
    "balances": true,
    "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 2118113222,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
-   "dollars_on_the_historical_tab": 2118113222
+   "dollars_on_the_historical_tab": 2118113222,
+   "dollars_the_tab_gave_twice_under_two_spellings": 0
   },
   "2014-15": {
    "balances": true,
    "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 2202445594,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
-   "dollars_on_the_historical_tab": 2202445594
+   "dollars_on_the_historical_tab": 2202445594,
+   "dollars_the_tab_gave_twice_under_two_spellings": 0
   },
   "2015-16": {
    "balances": true,
    "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 2354067360,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
-   "dollars_on_the_historical_tab": 2354067360
+   "dollars_on_the_historical_tab": 2354067360,
+   "dollars_the_tab_gave_twice_under_two_spellings": 0
   },
   "2016-17": {
    "balances": true,
    "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 2966079443,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
-   "dollars_on_the_historical_tab": 2966079443
+   "dollars_on_the_historical_tab": 2966079443,
+   "dollars_the_tab_gave_twice_under_two_spellings": 0
   },
   "2017-18": {
    "balances": true,
    "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 3356715898,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
-   "dollars_on_the_historical_tab": 3356715898
+   "dollars_on_the_historical_tab": 3356715898,
+   "dollars_the_tab_gave_twice_under_two_spellings": 0
   },
   "2018-19": {
    "balances": true,
    "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 3603794806,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
-   "dollars_on_the_historical_tab": 3603794806
+   "dollars_on_the_historical_tab": 3603794806,
+   "dollars_the_tab_gave_twice_under_two_spellings": 0
   },
   "2019-20": {
    "balances": true,
    "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 3564934008,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
-   "dollars_on_the_historical_tab": 3564934008
+   "dollars_on_the_historical_tab": 3564934008,
+   "dollars_the_tab_gave_twice_under_two_spellings": 0
   },
   "2020-21": {
    "balances": true,
    "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 3905190611,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
-   "dollars_on_the_historical_tab": 3905190611
+   "dollars_on_the_historical_tab": 3905190611,
+   "dollars_the_tab_gave_twice_under_two_spellings": 0
   },
   "2021-22": {
    "balances": true,
    "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 4121801683,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
-   "dollars_on_the_historical_tab": 4121801683
+   "dollars_on_the_historical_tab": 4121801683,
+   "dollars_the_tab_gave_twice_under_two_spellings": 0
   },
   "2022-23": {
    "balances": true,
    "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 4551376845,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
-   "dollars_on_the_historical_tab": 4551376845
+   "dollars_on_the_historical_tab": 4551376845,
+   "dollars_the_tab_gave_twice_under_two_spellings": 0
   },
   "2023-24": {
    "balances": true,
    "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 4931561321,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
-   "dollars_on_the_historical_tab": 4931561321
+   "dollars_on_the_historical_tab": 4931561321,
+   "dollars_the_tab_gave_twice_under_two_spellings": 0
   },
   "2024-25": {
    "balances": true,
    "dollars_filled_from_the_current_sheet": 0,
    "dollars_in_the_file": 5242381836,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
-   "dollars_on_the_historical_tab": 5242381836
+   "dollars_on_the_historical_tab": 5242381836,
+   "dollars_the_tab_gave_twice_under_two_spellings": 0
   },
   "2025-26": {
    "balances": true,
-   "dollars_filled_from_the_current_sheet": 67651600,
-   "dollars_in_the_file": 5748686468,
+   "dollars_filled_from_the_current_sheet": 57244577,
+   "dollars_in_the_file": 5738228238,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
-   "dollars_on_the_historical_tab": 5681034868
+   "dollars_on_the_historical_tab": 5680983661,
+   "dollars_the_tab_gave_twice_under_two_spellings": 0
   }
  }
 }
