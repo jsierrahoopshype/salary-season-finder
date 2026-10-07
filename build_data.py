@@ -1615,17 +1615,24 @@ def build_data():
                 team_sals[tm] += sal
             elif sal:
                 team_sals[""] += sal
-        if len(team_sals) > 1:
-            # Multi-team: combine into one record
-            teams_sorted = sorted(t for t in team_sals.keys() if t)
-            total = sum(team_sals.values())
-            combined = {
-                "player_original": display_name,
-                "team": ", ".join(teams_sorted),
-                "salary": total,
-                "team_salaries": {t: s for t, s in team_sals.items() if t},
-            }
-            salary_csv_lookup[key] = [combined]
+        # Collapsed whether the rows name one team or several. Leaving a
+        # one-team pair uncollapsed is not harmless: the loop below that folds
+        # these into the unified list takes the first record's salary and only
+        # the others' teams, so the second payment is dropped without a word.
+        # Nothing in the tab's 1990-91 to 2024-25 does this; its 2025-26 does,
+        # once, for $153,330, which is how it came to light.
+        teams_sorted = sorted(t for t in team_sals.keys() if t)
+        combined = {
+            "player_original": display_name,
+            "team": ", ".join(teams_sorted),
+            "salary": sum(team_sals.values()),
+        }
+        if len(teams_sorted) > 1:
+            # Per-team figures only where there is more than one team to tell
+            # apart; a single team's breakdown would say nothing the record
+            # does not already say.
+            combined["team_salaries"] = {t: s for t, s in team_sals.items() if t}
+        salary_csv_lookup[key] = [combined]
 
     # Step 5: Build unified player-season list
     print("\n[6/7] Merging data and computing derived fields...")

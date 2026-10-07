@@ -664,3 +664,34 @@ def test_the_unified_merge_drops_a_second_salary_on_one_person_season():
             ps_map[key]["team"] = second["team"]
     assert ps_map[key]["salary"] == 153330, "the second salary is not added"
     assert ps_map[key]["team"] == "WAS", "only the team comes across"
+
+
+def test_two_rows_on_one_team_in_one_season_keep_both_payments():
+    """The combine used to collapse a key only when its rows named more than one
+    team. Two rows on the same team stayed two, and the loop that folds records
+    into the unified list takes the first salary and only the others' teams, so
+    the second payment vanished. $153,330 of 2025-26 went that way.
+    """
+    # columns by position, as the parser reads them: TEAM, YEAR, PLAYER, SALARY
+    lookup = B.process_salaries_csv(
+        "TEAM,YEAR,PLAYER,SALARY\n"
+        "WAS,2026,Skal Labissiere,\"$100,000\"\n"
+        "WAS,2026,Skal Labissiere,\"$53,330\"\n"
+    )
+    key = ("skal labissiere", "2025-26")
+    assert len(lookup[key]) == 2, "two rows as read off the sheet"
+
+    # the collapse, as build_data runs it
+    recs = lookup[key]
+    team_sals = {}
+    for rec in recs:
+        team_sals[rec.get("team", "")] = team_sals.get(rec.get("team", ""), 0) + rec["salary"]
+    teams_sorted = sorted(t for t in team_sals if t)
+    combined = {"team": ", ".join(teams_sorted), "salary": sum(team_sals.values())}
+    if len(teams_sorted) > 1:
+        combined["team_salaries"] = {t: s for t, s in team_sals.items() if t}
+
+    assert combined["salary"] == 153330, "both payments, not just the first"
+    assert combined["team"] == "WAS"
+    # one team, so no per-team breakdown: it would say nothing new
+    assert "team_salaries" not in combined
