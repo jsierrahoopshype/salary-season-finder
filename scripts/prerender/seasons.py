@@ -47,12 +47,18 @@ MIN_SPAN = 2
 HOLDING = ("sets", "ties")
 
 
-def summary(idx, name, rows, player=None, drought=("", "")):
+def summary(idx, name, rows, player=None, drought=("", ""), one_season=False):
     """Two to four sentences about one man, or [] where he has nothing.
 
     ``rows`` is [(season, fact)] for him, already filtered for mirrors, and
     ``player`` is the key the engine files him under, so a man with no claims at
     all still gets the one sentence his career total is worth.
+
+    ``one_season`` says he played one season and nothing else. A man with a
+    career of one season and no claim to go with it gets a paragraph that reads
+    "He earned $20,000 through 2014-15", which is the table above it written out
+    in words and the only line the section would hold. That section is dropped
+    rather than printed, and the figure stays where it belongs, in the table.
     """
     held = _by_field(idx, rows)
     spans = _spans(idx, held)
@@ -74,6 +80,9 @@ def summary(idx, name, rows, player=None, drought=("", "")):
 
     subject = "he" if sentences else name
     total, field = _career_sentence(idx, rows, subject, player, used)
+    # No field means the engine found nothing to compare the total against, so
+    # the sentence is the total and nothing more.
+    bare_total = bool(total) and field is None
     if total:
         sentences.append(total)
         if field:
@@ -106,6 +115,8 @@ def summary(idx, name, rows, player=None, drought=("", "")):
             break
         used.add(nxt["field"])
         sentences.append(_span_sentence(idx, name if not sentences else "he", nxt))
+    if one_season and bare_total and len(sentences) == 1:
+        return []
     return sentences[:MAX_SENTENCES]
 
 

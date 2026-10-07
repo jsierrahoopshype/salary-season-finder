@@ -154,8 +154,9 @@ def player_facts(idx, by_player_facts, ident, current_key, droughts_built=None):
     pair = ("", "")
     if droughts_built:
         pair = droughts.summary_line(droughts_built, idx.canonical(ident.name))
+    one_season = len({r["season"] for r in ident.records}) == 1
     return seasons.summary(idx, ident.name, rows, player=ident.data_key,
-                           drought=pair)
+                           drought=pair, one_season=one_season)
 
 
 def tool_filter_link(idx, ident):

@@ -12,9 +12,10 @@ import factoids as F  # noqa: E402
 
 from . import config as C  # noqa: E402
 from .render import (  # noqa: E402
-    CONTRACTED_TAG, esc, facts_summary, grouped_rank_table, links_row, money,
-    money_short, more_block, page_url, player_link, rank_table, related_chips,
-    roll_call, scope_line, season_span, section, summary_block, timeline_list,
+    CONTRACTED_TAG, cap_pct, esc, facts_summary, grouped_rank_table, links_row,
+    money, money_short, more_block, page_url, plain_name, player_link,
+    rank_table, related_chips, roll_call, scope_line, season_span, section,
+    summary_block, timeline_list,
 )
 from .summary import cohort_summary  # noqa: E402
 
@@ -73,7 +74,7 @@ def _season_salary_rows(idx, records, owners, limit, media=None):
             esc(record["season"]),
             esc(record.get("team") or "-"),
             money(record.get("salary")),
-            "{:.1f}%".format(record["salary_cap_pct"]) if record.get("salary_cap_pct") is not None else "-",
+            cap_pct(record.get("salary_cap_pct")),
         ])
     return rank_table(
         [("Player", "hm-who"), ("Season", "hm-word"), ("Team", "hm-word"),
@@ -323,17 +324,27 @@ def player_page(idx, ident, season_table_html, facts, related, linker=None,
     first, last = ident.records[0], ident.records[-1]
     paid = [r for r in ident.records if _paid(idx, r)]
     best = max(paid, key=lambda r: r.get("salary") or 0) if paid else None
+    one_season = len({r["season"] for r in ident.records}) == 1
+
+    # The marker a name carries to tell two men apart belongs where a reader is
+    # choosing between them, which is the heading, the title and the breadcrumb.
+    # A sentence has already made the choice: "Josh Davis (1991) salary history"
+    # reads as a filing reference rather than as prose.
+    name = plain_name(ident.name)
 
     # One season is not a history to walk through, so it is named rather than
     # ranged over: "salary history in 2026-27", not "season by season, from
     # 2026-27 to 2026-27". The sentence is the page's lede and its meta
     # description both, so the fix reaches the search result as well as the page.
-    if first["season"] == last["season"]:
-        bits = ["{} salary history in {}.".format(ident.name, first["season"])]
+    if one_season:
+        bits = ["{} salary history in {}.".format(name, first["season"])]
     else:
         bits = ["{} salary history, season by season, from {} to {}.".format(
-            ident.name, first["season"], last["season"])]
-    if best and best.get("salary"):
+            name, first["season"], last["season"])]
+    # Nor is one season a career to pick a best from. "His biggest paid season
+    # is $28,834 in 2013-14" on a page whose table holds that one row names a
+    # winner of a field of one, in the same breath as the sentence before it.
+    if best and best.get("salary") and not one_season:
         bits.append("His biggest paid season is {} in {}.".format(
             money_short(best["salary"]), best["season"]))
     description = " ".join(bits)
@@ -515,7 +526,7 @@ def season_page(idx, entity, identities):
                         tag=CONTRACTED_TAG if contracted else ""),
             esc(record.get("team") or "-"),
             money(record.get("salary")),
-            "{:.1f}%".format(record["salary_cap_pct"]) if record.get("salary_cap_pct") is not None else "-",
+            cap_pct(record.get("salary_cap_pct")),
             str(record.get("age") or "-"),
         ])
 
@@ -662,7 +673,7 @@ def _share(amount, cap):
     """What a figure took of a season's cap, where the cap is on file."""
     if not cap or not amount:
         return "-"
-    return "{:.1f}%".format(100.0 * amount / cap)
+    return cap_pct(100.0 * amount / cap)
 
 
 _TEAM_SLUGS = {}

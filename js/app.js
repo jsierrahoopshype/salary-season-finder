@@ -97,8 +97,19 @@
     return "$" + Math.round(val).toLocaleString("en-US");
   }
 
+  // A share of the cap small enough to round to nothing is not nothing. "0.0%"
+  // beside a real $20,000 reads as a missing figure or a free player; "<0.1%"
+  // says what is true, which is that the number is below what this column can
+  // show. Zero itself still prints 0.0%, because there the rounding hides
+  // nothing. The shooting columns below keep plain rounding: a man who has
+  // missed every shot took none of anything, so 0.0% is the fact there.
+  //
+  // The entity is deliberate. Both callers drop this into an HTML string, and
+  // the prerender runs this same component to write the season table into a
+  // page, where a bare "<" would open a tag that never closes.
   function fmtPct(val) {
     if (val == null) return "-";
+    if (val > 0 && val < 0.05) return "&lt;0.1%";
     return val.toFixed(1) + "%";
   }
 

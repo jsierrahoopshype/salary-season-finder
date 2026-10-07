@@ -9,6 +9,7 @@ from __future__ import annotations
 import html
 import json
 import os
+import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -34,6 +35,54 @@ def season_span(first, last):
     if first == last:
         return esc(first)
     return "{} to {}".format(esc(first), esc(last))
+
+
+#: A birth year in brackets, which is how the data tells two men of one name
+#: apart: "Mike Brown (1963)", "Josh Davis (1991)". Anchored for a name on its
+#: own, and loose for a name inside a sentence, where it follows the last letter
+#: of the name and nothing else in these pages is written that way.
+_BIRTH_YEAR_MARKER = re.compile(r"\s*\(\d{4}\)\s*$")
+_BIRTH_YEAR_IN_TEXT = re.compile(r"(?<=[\w.])\s*\(\d{4}\)")
+
+
+def plain_name(name):
+    """The name as a sentence says it, without the birth-year marker.
+
+    The marker is a filing device, not part of what anyone is called. It earns
+    its place in a heading, a title, a breadcrumb and a table row, where a
+    reader is picking one man out of two; in running prose "Josh Davis (1991)
+    earned $20,000" reads like a citation rather than a sentence. The page he is
+    on has already said which man he is.
+    """
+    return _BIRTH_YEAR_MARKER.sub("", name or "")
+
+
+def unmark(markup):
+    """The same prose with every birth-year marker taken out of it.
+
+    This runs on rendered HTML rather than on the sentence, and the order is the
+    point: the linker matches "Josh Davis (1991)" and sends it to the right
+    man's page, and only then does the marker come off the words a reader sees.
+    Stripping first would leave a bare "Josh Davis" pointing at the other one.
+    Hrefs are slugs, which carry the year without brackets, so nothing in an
+    attribute matches.
+    """
+    return _BIRTH_YEAR_IN_TEXT.sub("", markup or "")
+
+
+def cap_pct(value):
+    """A salary's share of the cap, to one decimal.
+
+    A share small enough to round to nothing is not nothing. "0.0%" beside a
+    real $20,000 reads as a missing figure or a free player; "<0.1%" says what
+    is true, which is that the number is below what this column can show. Zero
+    itself still prints 0.0%, because there the rounding is not hiding anything.
+    """
+    if value is None:
+        return "-"
+    if 0 < value < 0.05:
+        return "&lt;0.1%"
+    return "{:.1f}%".format(value)
 
 
 def money(value):
@@ -274,6 +323,16 @@ def player_link(ident, rank=None, tag="", face=""):
         prefix, face, esc(href), esc(ident.name), tag)
 
 
+def unmark_after(render):
+    """``render``, with the birth-year markers taken off what it produced.
+
+    Every paragraph of prose on these pages goes through one of three renderers
+    below, so the strip is done once here rather than at each of the places a
+    name reaches a sentence.
+    """
+    return lambda text: unmark(render(text))
+
+
 CONTRACTED_TAG = '<span class="hm-contracted">contracted</span>'
 
 
@@ -281,7 +340,7 @@ def summary_block(sentences, linker=None, url=None):
     """The written summary at the top of a cohort page."""
     if not sentences:
         return ""
-    render = (
+    render = unmark_after(
         (lambda t: linker.sentences_html(t, url)) if linker else esc
     )
     return '<div class="hm-summary">{}</div>'.format(
@@ -298,7 +357,7 @@ def facts_summary(sentences, linker=None, url=None):
     """
     if not sentences:
         return ""
-    render = (lambda t: linker.html(t, url)) if linker else esc
+    render = unmark_after((lambda t: linker.html(t, url)) if linker else esc)
     return '<p class="hm-facts">{}</p>'.format(
         " ".join(render(text) for text in sentences))
 
@@ -312,7 +371,8 @@ def timeline_list(entries, linker=None, url=None):
     """
     if not entries:
         return ""
-    render = (lambda t: linker.sentences_html(t, url)) if linker else esc
+    render = unmark_after(
+        (lambda t: linker.sentences_html(t, url)) if linker else esc)
     rows = []
     for season, text in entries:
         rows.append(
