@@ -924,6 +924,449 @@
  "future_sheet_columns_left_to_the_tab": [],
  "historical_through": "2025-26",
  "note": "Which sheet supplied each season, and what the boundary between them left to the tab. The historical tab is authoritative for every season it holds and the two forward-looking sheets are read only past it, so the boundary is the newest season on the tab rather than a year written into the code: the owner adding a season moves it. cutover lists, per forward sheet and per season it no longer answers for, the player-seasons and dollars that sheet still offers and how many of them the tab holds under the same name. A season well before the boundary may never have been read from that sheet by any build; the boundary season itself is the one that moved. Anything under missing_from_the_historical_tab the tab does not hold at all, and is the thing to look at before trusting a rollover.",
+ "rows_on_the_tab_that_repeated_another_exactly": {
+  "dollars_per_season": {
+   "2025-26": 147347937
+  },
+  "note": "A row naming the same man, season, team and figure to the dollar as another row of the tab is read once. The rows under one player-season are summed, so reading both doubles what that club owed him: the 2025-26 edit that put dead money on this tab gave Damian Lillard a second Milwaukee row of the figure Milwaukee stretched his contract over, and he came out owed twice it by a club he does not play for. Two separate payments of the identical amount by one club in one season would be read as one as well; that is the cost of the test, and the cheaper error. Two clubs owing one man the same figure are two debts and both count. Anything here is worth putting to the sheet's owner: a row the tab holds twice is the tab's to lose, not ours to carry.",
+  "rows": [
+   {
+    "player": "Duop Reath",
+    "salary": 2221677,
+    "season": "2025-26",
+    "team": "ATL"
+   },
+   {
+    "player": "N'Faly Dante",
+    "salary": 2048494,
+    "season": "2025-26",
+    "team": "ATL"
+   },
+   {
+    "player": "Nikola Djurisic",
+    "salary": 1272870,
+    "season": "2025-26",
+    "team": "ATL"
+   },
+   {
+    "player": "Eli Ndiaye",
+    "salary": 318218,
+    "season": "2025-26",
+    "team": "ATL"
+   },
+   {
+    "player": "Jacob Toppin",
+    "salary": 180160,
+    "season": "2025-26",
+    "team": "ATL"
+   },
+   {
+    "player": "Malik Williams",
+    "salary": 43870,
+    "season": "2025-26",
+    "team": "ATL"
+   },
+   {
+    "player": "Cam Thomas",
+    "salary": 5993172,
+    "season": "2025-26",
+    "team": "BKN"
+   },
+   {
+    "player": "Hunter Tyson",
+    "salary": 2221677,
+    "season": "2025-26",
+    "team": "BKN"
+   },
+   {
+    "player": "Maxwell Lewis",
+    "salary": 100000,
+    "season": "2025-26",
+    "team": "BKN"
+   },
+   {
+    "player": "David Muoka",
+    "salary": 85300,
+    "season": "2025-26",
+    "team": "BKN"
+   },
+   {
+    "player": "Grant Nelson",
+    "salary": 73153,
+    "season": "2025-26",
+    "team": "BKN"
+   },
+   {
+    "player": "Malaki Branham",
+    "salary": 4962033,
+    "season": "2025-26",
+    "team": "CHA"
+   },
+   {
+    "player": "Spencer Dinwiddie",
+    "salary": 3634153,
+    "season": "2025-26",
+    "team": "CHA"
+   },
+   {
+    "player": "Drew Peterson",
+    "salary": 209114,
+    "season": "2025-26",
+    "team": "CHA"
+   },
+   {
+    "player": "Jaden Ivey",
+    "salary": 10107163,
+    "season": "2025-26",
+    "team": "CHI"
+   },
+   {
+    "player": "Trentyn Flowers",
+    "salary": 250937,
+    "season": "2025-26",
+    "team": "CHI"
+   },
+   {
+    "player": "Luke Travers",
+    "salary": 636435,
+    "season": "2025-26",
+    "team": "CLE"
+   },
+   {
+    "player": "Chris Livingston",
+    "salary": 527611,
+    "season": "2025-26",
+    "team": "CLE"
+   },
+   {
+    "player": "Ricky Rubio",
+    "salary": 424672,
+    "season": "2025-26",
+    "team": "CLE"
+   },
+   {
+    "player": "Darius Brown",
+    "salary": 167291,
+    "season": "2025-26",
+    "team": "CLE"
+   },
+   {
+    "player": "JaVale McGee",
+    "salary": 2208856,
+    "season": "2025-26",
+    "team": "DAL"
+   },
+   {
+    "player": "Olivier-Maxence Prosper",
+    "salary": 1002360,
+    "season": "2025-26",
+    "team": "DAL"
+   },
+   {
+    "player": "Miles Kelly",
+    "salary": 636435,
+    "season": "2025-26",
+    "team": "DAL"
+   },
+   {
+    "player": "Jeremiah Robinson-Earl",
+    "salary": 141463,
+    "season": "2025-26",
+    "team": "DAL"
+   },
+   {
+    "player": "Tamar Bates",
+    "salary": 636435,
+    "season": "2025-26",
+    "team": "DEN"
+   },
+   {
+    "player": "Dario Saric",
+    "salary": 5426400,
+    "season": "2025-26",
+    "team": "DET"
+   },
+   {
+    "player": "Bobi Klintman",
+    "salary": 1955377,
+    "season": "2025-26",
+    "team": "DET"
+   },
+   {
+    "player": "Colby Jones",
+    "salary": 85300,
+    "season": "2025-26",
+    "team": "DET"
+   },
+   {
+    "player": "Alex Toohey",
+    "salary": 157640,
+    "season": "2025-26",
+    "team": "GSW"
+   },
+   {
+    "player": "Jackson Rowe",
+    "salary": 135120,
+    "season": "2025-26",
+    "team": "GSW"
+   },
+   {
+    "player": "Monte Morris",
+    "salary": 321184,
+    "season": "2025-26",
+    "team": "IND"
+   },
+   {
+    "player": "Cody Martin",
+    "salary": 165197,
+    "season": "2025-26",
+    "team": "IND"
+   },
+   {
+    "player": "Gabe McGlothan",
+    "salary": 73153,
+    "season": "2025-26",
+    "team": "IND"
+   },
+   {
+    "player": "Jahmyl Telfort",
+    "salary": 144771,
+    "season": "2025-26",
+    "team": "LAC"
+   },
+   {
+    "player": "Georges Niang",
+    "salary": 8200000,
+    "season": "2025-26",
+    "team": "MEM"
+   },
+   {
+    "player": "Cole Anthony",
+    "salary": 3700000,
+    "season": "2025-26",
+    "team": "MEM"
+   },
+   {
+    "player": "Eric Gordon",
+    "salary": 3634153,
+    "season": "2025-26",
+    "team": "MEM"
+   },
+   {
+    "player": "Mamadi Diakite",
+    "salary": 464050,
+    "season": "2025-26",
+    "team": "MEM"
+   },
+   {
+    "player": "Tyler Burton",
+    "salary": 146306,
+    "season": "2025-26",
+    "team": "MEM"
+   },
+   {
+    "player": "Kobe Bufkin",
+    "salary": 131970,
+    "season": "2025-26",
+    "team": "MEM"
+   },
+   {
+    "player": "Damian Lillard",
+    "salary": 22516603,
+    "season": "2025-26",
+    "team": "MIL"
+   },
+   {
+    "player": "Chris Livingston",
+    "salary": 2296274,
+    "season": "2025-26",
+    "team": "MIL"
+   },
+   {
+    "player": "Nigel Hayes",
+    "salary": 2048494,
+    "season": "2025-26",
+    "team": "MIL"
+   },
+   {
+    "player": "Cam Thomas",
+    "salary": 905366,
+    "season": "2025-26",
+    "team": "MIL"
+   },
+   {
+    "player": "Vasilije Micic",
+    "salary": 666667,
+    "season": "2025-26",
+    "team": "MIL"
+   },
+   {
+    "player": "Johnny Juzang",
+    "salary": 636435,
+    "season": "2025-26",
+    "team": "MIN"
+   },
+   {
+    "player": "Jules Bernard",
+    "salary": 151205,
+    "season": "2025-26",
+    "team": "MIN"
+   },
+   {
+    "player": "Jaden Springer",
+    "salary": 70732,
+    "season": "2025-26",
+    "team": "NOP"
+   },
+   {
+    "player": "Buddy Boeheim",
+    "salary": 212331,
+    "season": "2025-26",
+    "team": "OKC"
+   },
+   {
+    "player": "Orlando Robinson",
+    "salary": 636435,
+    "season": "2025-26",
+    "team": "ORL"
+   },
+   {
+    "player": "Cameron Payne",
+    "salary": 1127841,
+    "season": "2025-26",
+    "team": "PHI"
+   },
+   {
+    "player": "Hunter Sallis",
+    "salary": 209114,
+    "season": "2025-26",
+    "team": "PHI"
+   },
+   {
+    "player": "Bradley Beal",
+    "salary": 19383010,
+    "season": "2025-26",
+    "team": "PHX"
+   },
+   {
+    "player": "Nassir Little",
+    "salary": 3107143,
+    "season": "2025-26",
+    "team": "PHX"
+   },
+   {
+    "player": "Cole Anthony",
+    "salary": 2667947,
+    "season": "2025-26",
+    "team": "PHX"
+   },
+   {
+    "player": "EJ Liddell",
+    "salary": 706898,
+    "season": "2025-26",
+    "team": "PHX"
+   },
+   {
+    "player": "Javonte Cooke",
+    "salary": 636435,
+    "season": "2025-26",
+    "team": "POR"
+   },
+   {
+    "player": "Didi Louzada",
+    "salary": 268032,
+    "season": "2025-26",
+    "team": "POR"
+   },
+   {
+    "player": "DaQuan Jeffries",
+    "salary": 165197,
+    "season": "2025-26",
+    "team": "SAC"
+   },
+   {
+    "player": "Stanley Umude",
+    "salary": 363537,
+    "season": "2025-26",
+    "team": "SAS"
+   },
+   {
+    "player": "Kyle Mangas",
+    "salary": 26322,
+    "season": "2025-26",
+    "team": "SAS"
+   },
+   {
+    "player": "Chris Paul",
+    "salary": 3634153,
+    "season": "2025-26",
+    "team": "TOR"
+   },
+   {
+    "player": "Markelle Fultz",
+    "salary": 188932,
+    "season": "2025-26",
+    "team": "TOR"
+   },
+   {
+    "player": "Lonzo Ball",
+    "salary": 10000000,
+    "season": "2025-26",
+    "team": "UTA"
+   },
+   {
+    "player": "Chris Boucher",
+    "salary": 3287409,
+    "season": "2025-26",
+    "team": "UTA"
+   },
+   {
+    "player": "Vince Williams Jr",
+    "salary": 2301587,
+    "season": "2025-26",
+    "team": "UTA"
+   },
+   {
+    "player": "Mo Bamba",
+    "salary": 354128,
+    "season": "2025-26",
+    "team": "UTA"
+   },
+   {
+    "player": "Kennedy Chandler",
+    "salary": 235460,
+    "season": "2025-26",
+    "team": "UTA"
+   },
+   {
+    "player": "Andersson Garcia",
+    "salary": 73153,
+    "season": "2025-26",
+    "team": "UTA"
+   },
+   {
+    "player": "Dante Exum",
+    "salary": 3303774,
+    "season": "2025-26",
+    "team": "WAS"
+   },
+   {
+    "player": "Richaun Holmes",
+    "salary": 250000,
+    "season": "2025-26",
+    "team": "WAS"
+   },
+   {
+    "player": "Kadary Richmond",
+    "salary": 73153,
+    "season": "2025-26",
+    "team": "WAS"
+   }
+  ],
+  "rows_per_season": {
+   "2025-26": 72
+  }
+ },
  "rows_per_season_per_sheet": {
   "1990-91": {
    "historical": 353
@@ -1303,9 +1746,9 @@
   "2025-26": {
    "balances": true,
    "dollars_filled_from_the_current_sheet": 67651600,
-   "dollars_in_the_file": 5896034405,
+   "dollars_in_the_file": 5748686468,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
-   "dollars_on_the_historical_tab": 5828382805
+   "dollars_on_the_historical_tab": 5681034868
   }
  }
 }

@@ -961,15 +961,15 @@
     "id": "1e15c806b595458b",
     "key": "cohort_career|college|Florida|Al Horford|2026-27",
     "lead": null,
-    "margin": -87965391,
+    "margin": -68582381,
     "previous_holder": {
      "player": "Bradley Beal",
      "season": "2026-27",
-     "value": 389700623
+     "value": 370317613
     },
     "rank": 2,
     "scope_note": "Ranked on money already paid against 33 careers in this cohort, active players included. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. Al Horford is still playing, so this is his total to date.",
-    "text": "Al Horford will have earned $301.7 million by the end of 2026-27, the second-most among players out of Florida, behind Bradley Beal's $389.7 million (2026-27).",
+    "text": "Al Horford will have earned $301.7 million by the end of 2026-27, the second-most among players out of Florida, behind Bradley Beal's $370.3 million (2026-27).",
     "type": "approaches",
     "value": 301735232
    },
@@ -2232,6 +2232,28 @@
     "value": 118591363
    }
   ],
+  "Andrew Nembhard|2025-26": [
+   {
+    "ahead": null,
+    "comparison_size": 300,
+    "contracted": false,
+    "family": "cohort",
+    "id": "be8d6eb17d3d0db6",
+    "key": "cohort_season|draft_class|2022|Andrew Nembhard|2025-26",
+    "lead": null,
+    "margin": 2767231,
+    "previous_holder": {
+     "player": "Paolo Banchero",
+     "season": "2025-26",
+     "value": 15334769
+    },
+    "rank": 1,
+    "scope_note": "Cohort of 95 players and 357 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "text": "Andrew Nembhard's $18.1 million in 2025-26 was the highest single-season salary in the 2022 draft class, passing Paolo Banchero's $15.3 million (2025-26).",
+    "type": "sets",
+    "value": 18102000
+   }
+  ],
   "Andrew Nembhard|2026-27": [
    {
     "ahead": null,
@@ -3343,6 +3365,26 @@
    },
    {
     "ahead": null,
+    "comparison_size": 428,
+    "contracted": false,
+    "family": "cohort",
+    "id": "b7f8987bef4ee64e",
+    "key": "cohort_season|draft_class|2012|Anthony Davis|2025-26",
+    "lead": null,
+    "margin": 3922520,
+    "previous_holder": {
+     "player": "Bradley Beal",
+     "season": "2024-25",
+     "value": 50203930
+    },
+    "rank": 1,
+    "scope_note": "Cohort of 76 players and 436 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "text": "Anthony Davis' $54.1 million in 2025-26 was the highest single-season salary in the 2012 draft class, passing Bradley Beal's $50.2 million (2024-25).",
+    "type": "sets",
+    "value": 54126450
+   },
+   {
+    "ahead": null,
     "comparison_size": 502,
     "contracted": false,
     "family": "cohort",
@@ -3391,7 +3433,7 @@
     "lead": null,
     "margin": null,
     "previous_holder": null,
-    "rank": 6,
+    "rank": 5,
     "scope_note": "First season inside the top 10. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Anthony Davis' salary in 2025-26 puts him in the league's top 10 for the first time in his career.",
     "type": "rank_shift",
@@ -3483,16 +3525,16 @@
     "id": "6ffa276d7e826474",
     "key": "cohort_career|draft_class|2012|Anthony Davis|2026-27",
     "lead": null,
-    "margin": -947208,
+    "margin": 21569395,
     "previous_holder": {
      "player": "Damian Lillard",
      "season": "2026-27",
-     "value": 425051372
+     "value": 402534769
     },
-    "rank": 2,
+    "rank": 1,
     "scope_note": "Ranked on money already paid against 76 careers in this cohort, active players included. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. Anthony Davis is still playing, so this is his total to date.",
-    "text": "Anthony Davis will have earned $424.1 million by the end of 2026-27, the second-most in the 2012 draft class, behind Damian Lillard's $425.1 million (2026-27).",
-    "type": "approaches",
+    "text": "Anthony Davis will have earned $424.1 million by the end of 2026-27, more than anyone else in the 2012 draft class, passing Damian Lillard's $402.5 million (2026-27).",
+    "type": "sets",
     "value": 424104164
    },
    {
@@ -3583,16 +3625,16 @@
     "id": "eff7a1d90b3f6c93",
     "key": "cohort_season|draft_class|2012|Anthony Davis|2026-27",
     "lead": null,
-    "margin": -680640,
+    "margin": 4330116,
     "previous_holder": {
-     "player": "Damian Lillard",
+     "player": "Anthony Davis",
      "season": "2025-26",
-     "value": 59137206
+     "value": 54126450
     },
-    "rank": 2,
+    "rank": 1,
     "scope_note": "Cohort of 76 players and 436 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
-    "text": "Anthony Davis' $58.5 million in 2026-27 is the second-highest single-season salary in the 2012 draft class, behind Damian Lillard's $59.1 million (2025-26).",
-    "type": "approaches",
+    "text": "Anthony Davis' $58.5 million in 2026-27 is the highest single-season salary in the 2012 draft class, breaking his own mark of $54.1 million in 2025-26.",
+    "type": "sets",
     "value": 58456566
    },
    {
@@ -3629,9 +3671,9 @@
      "season": "2026-27",
      "value": 62587158
     },
-    "rank": 4,
+    "rank": 3,
     "scope_note": "Cohort of 2469 players and 14633 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
-    "text": "Anthony Davis' $58.5 million in 2026-27 is the fourth-highest single-season salary by a player from the United States, behind Stephen Curry's $62.6 million (2026-27).",
+    "text": "Anthony Davis' $58.5 million in 2026-27 is the third-highest single-season salary by a player from the United States, behind Stephen Curry and Stephen Curry.",
     "type": "approaches",
     "value": 58456566
    },
@@ -3649,9 +3691,9 @@
      "season": "2026-27",
      "value": 62587158
     },
-    "rank": 4,
+    "rank": 3,
     "scope_note": "Cohort of 633 players and 5949 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
-    "text": "Anthony Davis' $58.5 million in 2026-27 is the fourth-highest single-season salary by a lottery pick, behind Stephen Curry's $62.6 million (2026-27).",
+    "text": "Anthony Davis' $58.5 million in 2026-27 is the third-highest single-season salary by a lottery pick, behind Stephen Curry and Stephen Curry.",
     "type": "approaches",
     "value": 58456566
    },
@@ -3669,9 +3711,9 @@
      "season": "2026-27",
      "value": 62587158
     },
-    "rank": 4,
+    "rank": 3,
     "scope_note": "Cohort of 454 players and 4484 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
-    "text": "Anthony Davis' $58.5 million in 2026-27 is the fourth-highest single-season salary by a top-10 pick, behind Stephen Curry's $62.6 million (2026-27).",
+    "text": "Anthony Davis' $58.5 million in 2026-27 is the third-highest single-season salary by a top-10 pick, behind Stephen Curry and Stephen Curry.",
     "type": "approaches",
     "value": 58456566
    },
@@ -3785,15 +3827,15 @@
     "id": "71a10eadc1ecfa6a",
     "key": "cohort_season|draft_class|2012|Anthony Davis|2027-28",
     "lead": null,
-    "margin": 3649476,
+    "margin": 4330116,
     "previous_holder": {
-     "player": "Damian Lillard",
-     "season": "2025-26",
-     "value": 59137206
+     "player": "Anthony Davis",
+     "season": "2026-27",
+     "value": 58456566
     },
     "rank": 1,
     "scope_note": "Cohort of 76 players and 436 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Anthony Davis' $62.8 million in 2027-28 would be the highest single-season salary in the 2012 draft class, passing Damian Lillard's $59.1 million (2025-26).",
+    "text": "Anthony Davis' $62.8 million in 2027-28 would be the highest single-season salary in the 2012 draft class, breaking his own mark of $58.5 million in 2026-27.",
     "type": "sets",
     "value": 62786682
    },
@@ -4434,6 +4476,28 @@
     "text": "Anthony Edwards' $55.7 million in 2028-29 would be the highest single-season salary in Timberwolves history, breaking his own mark of $48.9 million in 2026-27.",
     "type": "sets",
     "value": 55672848
+   }
+  ],
+  "Ariel Hukporti|2026-27": [
+   {
+    "ahead": null,
+    "comparison_size": 62,
+    "contracted": false,
+    "family": "cohort",
+    "id": "0b38a387fd5dff9e",
+    "key": "cohort_season|draft_slot|58|Ariel Hukporti|2026-27",
+    "lead": null,
+    "margin": -4323000,
+    "previous_holder": {
+     "player": "Paul Reed",
+     "season": "2023-24",
+     "value": 7723000
+    },
+    "rank": 5,
+    "scope_note": "Cohort of 17 players and 63 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "text": "Ariel Hukporti's $3.4 million in 2026-27 is the fifth-highest single-season salary by a No. 58 pick, behind Paul Reed's $7.7 million (2023-24).",
+    "type": "approaches",
+    "value": 3400000
    }
   ],
   "Ausar Thompson|2026-27": [
@@ -7359,7 +7423,7 @@
     "id": "9326415068ab9a62",
     "key": "cohort_career|college_position|Florida|G|Bradley Beal|2026-27",
     "lead": "more than everyone else among Florida guards combined",
-    "margin": 290323710,
+    "margin": 270940700,
     "previous_holder": {
      "player": "Mike Miller",
      "season": "2016-17",
@@ -7367,9 +7431,9 @@
     },
     "rank": 1,
     "scope_note": "Ranked on money already paid against 16 careers in this cohort, active players included. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. Bradley Beal is still playing, so this is his total to date.",
-    "text": "Bradley Beal will have earned $389.7 million by the end of 2026-27, more than everyone else among Florida guards combined.",
+    "text": "Bradley Beal will have earned $370.3 million by the end of 2026-27, more than everyone else among Florida guards combined.",
     "type": "sets",
-    "value": 389700623
+    "value": 370317613
    },
    {
     "ahead": null,
@@ -7378,8 +7442,8 @@
     "family": "cohort",
     "id": "4d9e5f7337b39bd3",
     "key": "cohort_career|college|Florida|Bradley Beal|2026-27",
-    "lead": "26% of all the money ever paid to players out of Florida",
-    "margin": 87965391,
+    "lead": null,
+    "margin": 68582381,
     "previous_holder": {
      "player": "Al Horford",
      "season": "2026-27",
@@ -7387,65 +7451,65 @@
     },
     "rank": 1,
     "scope_note": "Ranked on money already paid against 33 careers in this cohort, active players included. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. Bradley Beal is still playing, so this is his total to date.",
-    "text": "Bradley Beal will have earned $389.7 million by the end of 2026-27, 26% of all the money ever paid to players out of Florida.",
+    "text": "Bradley Beal will have earned $370.3 million by the end of 2026-27, more than any other player out of Florida, ahead of Al Horford's $301.7 million (2026-27).",
     "type": "sets",
-    "value": 389700623
+    "value": 370317613
    },
    {
-    "ahead": "Damian Lillard and Anthony Davis",
+    "ahead": "Anthony Davis and Damian Lillard",
     "comparison_size": 75,
     "contracted": false,
     "family": "cohort",
     "id": "966e192a97c50fbb",
     "key": "cohort_career|draft_class|2012|Bradley Beal|2026-27",
     "lead": null,
-    "margin": -35350749,
+    "margin": -53786551,
     "previous_holder": {
-     "player": "Damian Lillard",
+     "player": "Anthony Davis",
      "season": "2026-27",
-     "value": 425051372
+     "value": 424104164
     },
     "rank": 3,
     "scope_note": "Ranked on money already paid against 76 careers in this cohort, active players included. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. Bradley Beal is still playing, so this is his total to date.",
-    "text": "Bradley Beal will have earned $389.7 million by the end of 2026-27, the third-most in the 2012 draft class, behind Damian Lillard and Anthony Davis.",
+    "text": "Bradley Beal will have earned $370.3 million by the end of 2026-27, the third-most in the 2012 draft class, behind Anthony Davis and Damian Lillard.",
     "type": "approaches",
-    "value": 389700623
+    "value": 370317613
    },
    {
-    "ahead": null,
+    "ahead": "James Harden and Joel Embiid",
     "comparison_size": 45,
     "contracted": false,
     "family": "cohort",
     "id": "bd95e3e624c037f4",
     "key": "cohort_career|draft_slot|3|Bradley Beal|2026-27",
     "lead": null,
-    "margin": -54503963,
+    "margin": -73886973,
     "previous_holder": {
      "player": "James Harden",
      "season": "2026-27",
      "value": 444204586
     },
-    "rank": 2,
+    "rank": 3,
     "scope_note": "Ranked on money already paid against 46 careers in this cohort, active players included. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. Bradley Beal is still playing, so this is his total to date.",
-    "text": "Bradley Beal will have earned $389.7 million by the end of 2026-27, the second-most by a No. 3 pick, behind James Harden's $444.2 million (2026-27).",
+    "text": "Bradley Beal will have earned $370.3 million by the end of 2026-27, the third-most by a No. 3 pick, behind James Harden and Joel Embiid.",
     "type": "approaches",
-    "value": 389700623
+    "value": 370317613
    }
   ],
-  "Bradley Beal|2027-28": [
+  "Bradley Beal|2028-29": [
    {
     "ahead": null,
     "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
-    "id": "fce524893f098035",
-    "key": "career_milestone|Bradley Beal|2027-28|400000000",
+    "id": "15ad1b21b4523db0",
+    "key": "career_milestone|Bradley Beal|2028-29|400000000",
     "lead": null,
     "margin": 15829673.0,
     "previous_holder": null,
     "rank": null,
     "scope_note": "Career earnings are nominal dollars. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. 10 other players had reached it.",
-    "text": "Bradley Beal is on track to pass $400 million in career earnings in 2027-28 if his salaries are paid in full.",
+    "text": "Bradley Beal is on track to pass $400 million in career earnings in 2028-29 if his salaries are paid in full.",
     "type": "milestone",
     "value": 415829673
    }
@@ -8269,15 +8333,15 @@
     "id": "0792c49b5c4d086a",
     "key": "cohort_career|draft_slot|6|Buddy Hield|2026-27",
     "lead": null,
-    "margin": -293000529,
+    "margin": -270483926,
     "previous_holder": {
      "player": "Damian Lillard",
      "season": "2026-27",
-     "value": 425051372
+     "value": 402534769
     },
     "rank": 4,
     "scope_note": "Ranked on money already paid against 45 careers in this cohort, active players included. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. Buddy Hield is still playing, so this is his total to date.",
-    "text": "Buddy Hield will have earned $132.1 million by the end of 2026-27, the fourth-most by a No. 6 pick, behind Damian Lillard's $425.1 million (2026-27).",
+    "text": "Buddy Hield will have earned $132.1 million by the end of 2026-27, the fourth-most by a No. 6 pick, behind Damian Lillard's $402.5 million (2026-27).",
     "type": "approaches",
     "value": 132050843
    }
@@ -9095,9 +9159,9 @@
      "season": "2026-27",
      "value": 62587158
     },
-    "rank": 5,
+    "rank": 4,
     "scope_note": "Cohort of 1372 players and 7642 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Cade Cunningham's $57.5 million in 2028-29 would be the fifth-highest single-season salary by a guard, behind Stephen Curry's $62.6 million (2026-27).",
+    "text": "Cade Cunningham's $57.5 million in 2028-29 would be the fourth-highest single-season salary by a guard, behind Stephen Curry's $62.6 million (2026-27).",
     "type": "approaches",
     "value": 57528684
    },
@@ -11333,7 +11397,7 @@
     "id": "c3695e655c6904f8",
     "key": "cohort_career|college|Wake Forest|Chris Paul|2025-26",
     "lead": "33% of all the money ever paid to players out of Wake Forest",
-    "margin": 161941340,
+    "margin": 158307187,
     "previous_holder": {
      "player": "Tim Duncan",
      "season": "2016-17",
@@ -11341,9 +11405,9 @@
     },
     "rank": 1,
     "scope_note": "Ranked on money already paid against 23 careers in this cohort, active players included. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. Chris Paul is still playing, so this is his total to date.",
-    "text": "Chris Paul had earned $407.9 million through 2025-26, 33% of all the money ever paid to players out of Wake Forest.",
+    "text": "Chris Paul had earned $404.3 million through 2025-26, 33% of all the money ever paid to players out of Wake Forest.",
     "type": "sets",
-    "value": 407905691
+    "value": 404271538
    },
    {
     "ahead": null,
@@ -11353,7 +11417,7 @@
     "id": "929299455a2ef5fb",
     "key": "cohort_career|draft_class|2005|Chris Paul|2025-26",
     "lead": "2.5 times as much as the next player in the 2005 draft class, Deron Williams",
-    "margin": 255878060,
+    "margin": 252243907,
     "previous_holder": {
      "player": "Deron Williams",
      "season": "2018-19",
@@ -11361,9 +11425,9 @@
     },
     "rank": 1,
     "scope_note": "Ranked on money already paid against 86 careers in this cohort, active players included. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. Chris Paul is still playing, so this is his total to date.",
-    "text": "Chris Paul had earned $407.9 million through 2025-26, 2.5 times as much as the next player in the 2005 draft class, Deron Williams.",
+    "text": "Chris Paul had earned $404.3 million through 2025-26, 2.5 times as much as the next player in the 2005 draft class, Deron Williams.",
     "type": "sets",
-    "value": 407905691
+    "value": 404271538
    },
    {
     "ahead": null,
@@ -11373,7 +11437,7 @@
     "id": "13b79f074556c832",
     "key": "cohort_career|draft_slot|4|Chris Paul|2025-26",
     "lead": null,
-    "margin": 55967992,
+    "margin": 52333839,
     "previous_holder": {
      "player": "Russell Westbrook",
      "season": "2025-26",
@@ -11381,9 +11445,9 @@
     },
     "rank": 1,
     "scope_note": "Ranked on money already paid against 43 careers in this cohort, active players included. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. Chris Paul is still playing, so this is his total to date.",
-    "text": "Chris Paul had earned $407.9 million through 2025-26, more than any other No. 4 pick, ahead of Russell Westbrook's $351.9 million (2025-26).",
+    "text": "Chris Paul had earned $404.3 million through 2025-26, more than any other No. 4 pick, ahead of Russell Westbrook's $351.9 million (2025-26).",
     "type": "sets",
-    "value": 407905691
+    "value": 404271538
    }
   ],
   "Christian Braun|2026-27": [
@@ -12824,48 +12888,6 @@
     "value": 48787676
    }
   ],
-  "Damian Lillard|2025-26": [
-   {
-    "ahead": null,
-    "comparison_size": 428,
-    "contracted": false,
-    "family": "cohort",
-    "id": "9b639877579edcb6",
-    "key": "cohort_season|draft_class|2012|Damian Lillard|2025-26",
-    "lead": null,
-    "margin": 5010756,
-    "previous_holder": {
-     "player": "Anthony Davis",
-     "season": "2025-26",
-     "value": 54126450
-    },
-    "rank": 1,
-    "scope_note": "Cohort of 76 players and 436 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
-    "text": "Damian Lillard's $59.1 million in 2025-26 was the highest single-season salary in the 2012 draft class, passing Anthony Davis' $54.1 million (2025-26).",
-    "type": "sets",
-    "value": 59137206
-   },
-   {
-    "ahead": null,
-    "comparison_size": 344,
-    "contracted": false,
-    "family": "cohort",
-    "id": "f00c462abedaa5d6",
-    "key": "cohort_season|draft_slot|6|Damian Lillard|2025-26",
-    "lead": null,
-    "margin": 10349530,
-    "previous_holder": {
-     "player": "Damian Lillard",
-     "season": "2024-25",
-     "value": 48787676
-    },
-    "rank": 1,
-    "scope_note": "Cohort of 45 players and 356 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
-    "text": "Damian Lillard's $59.1 million in 2025-26 was the highest single-season salary by a No. 6 pick, breaking his own mark of $48.8 million in 2024-25.",
-    "type": "sets",
-    "value": 59137206
-   }
-  ],
   "Damian Lillard|2026-27": [
    {
     "ahead": null,
@@ -12875,13 +12897,13 @@
     "id": "b6a63a98ea9f30e0",
     "key": "career_milestone|Damian Lillard|2026-27|400000000",
     "lead": null,
-    "margin": 25051372.0,
+    "margin": 2534769.0,
     "previous_holder": null,
     "rank": null,
     "scope_note": "Career earnings are nominal dollars. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. 2026-27 is being played: no selections are on record for it yet, so this salary is not earned in full. 9 other players had reached it.",
     "text": "Damian Lillard will pass $400 million in career earnings by the end of 2026-27.",
     "type": "milestone",
-    "value": 425051372
+    "value": 402534769
    },
    {
     "ahead": null,
@@ -12891,17 +12913,17 @@
     "id": "57a93b6ae11d9ea6",
     "key": "cohort_career|draft_class|2012|Damian Lillard|2026-27",
     "lead": null,
-    "margin": 947208,
+    "margin": -21569395,
     "previous_holder": {
      "player": "Anthony Davis",
      "season": "2026-27",
      "value": 424104164
     },
-    "rank": 1,
+    "rank": 2,
     "scope_note": "Ranked on money already paid against 76 careers in this cohort, active players included. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. Damian Lillard is still playing, so this is his total to date.",
-    "text": "Damian Lillard will have earned $425.1 million by the end of 2026-27, more than anyone else in the 2012 draft class, passing Anthony Davis' $424.1 million (2026-27).",
-    "type": "sets",
-    "value": 425051372
+    "text": "Damian Lillard will have earned $402.5 million by the end of 2026-27, the second-most in the 2012 draft class, behind Anthony Davis' $424.1 million (2026-27).",
+    "type": "approaches",
+    "value": 402534769
    },
    {
     "ahead": null,
@@ -12910,8 +12932,8 @@
     "family": "cohort",
     "id": "180c02b1a363ea4d",
     "key": "cohort_career|draft_slot|6|Damian Lillard|2026-27",
-    "lead": "2 times as much as the next No. 6 pick, Danilo Gallinari",
-    "margin": 220036496,
+    "lead": null,
+    "margin": 197519893,
     "previous_holder": {
      "player": "Danilo Gallinari",
      "season": "2023-24",
@@ -12919,48 +12941,54 @@
     },
     "rank": 1,
     "scope_note": "Ranked on money already paid against 45 careers in this cohort, active players included. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. Damian Lillard is still playing, so this is his total to date.",
-    "text": "Damian Lillard will have earned $425.1 million by the end of 2026-27, 2 times as much as the next No. 6 pick, Danilo Gallinari.",
+    "text": "Damian Lillard will have earned $402.5 million by the end of 2026-27, more than any other No. 6 pick, ahead of Danilo Gallinari's $205 million (2023-24).",
     "type": "sets",
-    "value": 425051372
+    "value": 402534769
    },
    {
-    "ahead": "Stephen Curry and James Harden",
+    "ahead": null,
     "comparison_size": 1370,
     "contracted": false,
     "family": "cohort",
     "id": "b92233349c182bfd",
     "key": "cohort_career|position|G|Damian Lillard|2026-27",
     "lead": null,
-    "margin": -110748501,
+    "margin": -133265104,
     "previous_holder": {
      "player": "Stephen Curry",
      "season": "2026-27",
      "value": 535799873
     },
-    "rank": 3,
+    "rank": 4,
     "scope_note": "Ranked on money already paid against 1371 careers in this cohort, active players included. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. Damian Lillard is still playing, so this is his total to date.",
-    "text": "Damian Lillard will have earned $425.1 million by the end of 2026-27, the third-most by a guard, behind Stephen Curry and James Harden.",
+    "text": "Damian Lillard will have earned $402.5 million by the end of 2026-27, the fourth-most by a guard, behind Stephen Curry's $535.8 million (2026-27).",
     "type": "approaches",
-    "value": 425051372
+    "value": 402534769
+   }
+  ],
+  "Damian Lillard|2027-28": [
+   {
+    "ahead": null,
+    "comparison_size": 356,
+    "contracted": true,
+    "family": "cohort",
+    "id": "0e79fb4b1900dc57",
+    "key": "cohort_season|draft_slot|6|Damian Lillard|2027-28",
+    "lead": null,
+    "margin": -12167073,
+    "previous_holder": {
+     "player": "Damian Lillard",
+     "season": "2024-25",
+     "value": 48787676
+    },
+    "rank": 5,
+    "scope_note": "Cohort of 45 players and 356 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "text": "Damian Lillard's $36.6 million in 2027-28 would be the fifth-highest single-season salary by a No. 6 pick, behind his own $48.8 million (2024-25).",
+    "type": "approaches",
+    "value": 36620603
    }
   ],
   "Damian Lillard|2029-30": [
-   {
-    "ahead": null,
-    "comparison_size": 3360,
-    "contracted": true,
-    "family": "career_earnings",
-    "id": "5be9d7202d85f0cc",
-    "key": "career_milestone|Damian Lillard|2029-30|500000000",
-    "lead": null,
-    "margin": 6705181.0,
-    "previous_holder": null,
-    "rank": null,
-    "scope_note": "Career earnings are nominal dollars. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. 3 other players had reached it.",
-    "text": "Damian Lillard is on track to pass $500 million in career earnings in 2029-30 if his salaries are paid in full.",
-    "type": "milestone",
-    "value": 506705181
-   },
    {
     "ahead": null,
     "comparison_size": 6,
@@ -14593,9 +14621,9 @@
      "season": "2026-27",
      "value": 62587158
     },
-    "rank": 5,
+    "rank": 4,
     "scope_note": "Cohort of 1372 players and 7642 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "De'Aaron Fox's $57.4 million in 2028-29 would be the fifth-highest single-season salary by a guard, behind Stephen Curry's $62.6 million (2026-27).",
+    "text": "De'Aaron Fox's $57.4 million in 2028-29 would be the fourth-highest single-season salary by a guard, behind Stephen Curry's $62.6 million (2026-27).",
     "type": "approaches",
     "value": 57406428
    },
@@ -17793,9 +17821,9 @@
      "season": "2026-27",
      "value": 62587158
     },
-    "rank": 5,
+    "rank": 4,
     "scope_note": "Cohort of 1372 players and 7642 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
-    "text": "Devin Booker's $57.1 million in 2026-27 is the fifth-highest single-season salary by a guard, behind Stephen Curry's $62.6 million (2026-27).",
+    "text": "Devin Booker's $57.1 million in 2026-27 is the fourth-highest single-season salary by a guard, behind Stephen Curry's $62.6 million (2026-27).",
     "type": "approaches",
     "value": 57078728
    },
@@ -21561,15 +21589,15 @@
     "id": "b19ffab261b785e2",
     "key": "cohort_career|draft_class|2012|Draymond Green|2026-27",
     "lead": null,
-    "margin": -168330493,
+    "margin": -167383285,
     "previous_holder": {
-     "player": "Damian Lillard",
+     "player": "Anthony Davis",
      "season": "2026-27",
-     "value": 425051372
+     "value": 424104164
     },
     "rank": 5,
     "scope_note": "Ranked on money already paid against 76 careers in this cohort, active players included. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. Draymond Green is still playing, so this is his total to date.",
-    "text": "Draymond Green will have earned $256.7 million by the end of 2026-27, the fifth-most in the 2012 draft class, behind Damian Lillard's $425.1 million (2026-27).",
+    "text": "Draymond Green will have earned $256.7 million by the end of 2026-27, the fifth-most in the 2012 draft class, behind Anthony Davis' $424.1 million (2026-27).",
     "type": "approaches",
     "value": 256720879
    },
@@ -22537,7 +22565,7 @@
     "id": "77c366c7e19b8370",
     "key": "cohort_career|college|Indiana|Eric Gordon|2025-26",
     "lead": null,
-    "margin": 53937965,
+    "margin": 50303812,
     "previous_holder": {
      "player": "OG Anunoby",
      "season": "2025-26",
@@ -22545,9 +22573,9 @@
     },
     "rank": 1,
     "scope_note": "Ranked on money already paid against 29 careers in this cohort, active players included. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. Eric Gordon is still playing, so this is his total to date.",
-    "text": "Eric Gordon had earned $192 million through 2025-26, more than any other player out of Indiana, ahead of OG Anunoby's $138 million (2025-26).",
+    "text": "Eric Gordon had earned $188.3 million through 2025-26, more than any other player out of Indiana, ahead of OG Anunoby's $138 million (2025-26).",
     "type": "sets",
-    "value": 191968267
+    "value": 188334114
    },
    {
     "ahead": null,
@@ -22556,8 +22584,8 @@
     "family": "cohort",
     "id": "969d7d39b70dfcea",
     "key": "cohort_career|nationality|Bahamas|Eric Gordon|2025-26",
-    "lead": "38% of all the money ever paid to players from the Bahamas",
-    "margin": 20545229,
+    "lead": "37% of all the money ever paid to players from the Bahamas",
+    "margin": 16911076,
     "previous_holder": {
      "player": "Deandre Ayton",
      "season": "2025-26",
@@ -22565,9 +22593,9 @@
     },
     "rank": 1,
     "scope_note": "Ranked on money already paid against 9 careers in this cohort, active players included. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. Eric Gordon is still playing, so this is his total to date.",
-    "text": "Eric Gordon had earned $192 million through 2025-26, 38% of all the money ever paid to players from the Bahamas.",
+    "text": "Eric Gordon had earned $188.3 million through 2025-26, 37% of all the money ever paid to players from the Bahamas.",
     "type": "sets",
-    "value": 191968267
+    "value": 188334114
    }
   ],
   "Evan Fournier|2016-17": [
@@ -24942,28 +24970,6 @@
     "value": 8800000
    }
   ],
-  "Georges Niang|2025-26": [
-   {
-    "ahead": null,
-    "comparison_size": 100,
-    "contracted": false,
-    "family": "cohort",
-    "id": "16b8babef2b0116f",
-    "key": "cohort_season|draft_slot|50|Georges Niang|2025-26",
-    "lead": null,
-    "margin": 7600000,
-    "previous_holder": {
-     "player": "Georges Niang",
-     "season": "2023-24",
-     "value": 8800000
-    },
-    "rank": 1,
-    "scope_note": "Cohort of 23 players and 104 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
-    "text": "Georges Niang's $16.4 million in 2025-26 was the highest single-season salary by a No. 50 pick, breaking his own mark of $8.8 million in 2023-24.",
-    "type": "sets",
-    "value": 16400000
-   }
-  ],
   "Georges Niang|2026-27": [
    {
     "ahead": null,
@@ -24972,8 +24978,8 @@
     "family": "cohort",
     "id": "776d57243c454522",
     "key": "cohort_career|draft_slot|50|Georges Niang|2026-27",
-    "lead": "2 times as much as the next No. 50 pick, Ryan Gomes",
-    "margin": 28233692,
+    "lead": "25% of all the money ever paid to No. 50 picks",
+    "margin": 20033692,
     "previous_holder": {
      "player": "Ryan Gomes",
      "season": "2013-14",
@@ -24981,9 +24987,9 @@
     },
     "rank": 1,
     "scope_note": "Ranked on money already paid against 23 careers in this cohort, active players included. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. Georges Niang is still playing, so this is his total to date.",
-    "text": "Georges Niang will have earned $50.1 million by the end of 2026-27, 2 times as much as the next No. 50 pick, Ryan Gomes.",
+    "text": "Georges Niang will have earned $41.9 million by the end of 2026-27, 25% of all the money ever paid to No. 50 picks.",
     "type": "sets",
-    "value": 50110294
+    "value": 41910294
    }
   ],
   "Giannis Antetokounmpo|2017-18": [
@@ -29225,17 +29231,17 @@
     "id": "ea9f7e39ed149947",
     "key": "cohort_career|draft_slot|18|JaVale McGee|2026-27",
     "lead": null,
-    "margin": -40761401,
+    "margin": -42970257,
     "previous_holder": {
      "player": "Eric Bledsoe",
      "season": "2024-25",
      "value": 131940553
     },
-    "rank": 4,
+    "rank": 5,
     "scope_note": "Ranked on money already paid against 44 careers in this cohort, active players included. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. JaVale McGee is still playing, so this is his total to date.",
-    "text": "JaVale McGee will have earned $91.2 million by the end of 2026-27, the fourth-most by a No. 18 pick, behind Eric Bledsoe's $131.9 million (2024-25).",
+    "text": "JaVale McGee will have earned $89 million by the end of 2026-27, the fifth-most by a No. 18 pick, behind Eric Bledsoe's $131.9 million (2024-25).",
     "type": "approaches",
-    "value": 91179152
+    "value": 88970296
    }
   ],
   "Jabari Parker|2018-19": [
@@ -29500,48 +29506,6 @@
     "text": "Jabari Smith would be the Rockets' highest-paid player in 2030-31 after ranking third on the roster in 2029-30.",
     "type": "rank_shift",
     "value": 27426355
-   }
-  ],
-  "Jaden Ivey|2025-26": [
-   {
-    "ahead": null,
-    "comparison_size": 96,
-    "contracted": false,
-    "family": "cohort",
-    "id": "e13f01e17c06df0b",
-    "key": "cohort_season|college|Purdue|Jaden Ivey|2025-26",
-    "lead": null,
-    "margin": 7964326,
-    "previous_holder": {
-     "player": "Brad Miller",
-     "season": "2009-10",
-     "value": 12250000
-    },
-    "rank": 1,
-    "scope_note": "Cohort of 18 players and 98 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
-    "text": "Jaden Ivey's $20.2 million in 2025-26 was the highest single-season salary among players out of Purdue, passing Brad Miller's $12.2 million (2009-10).",
-    "type": "sets",
-    "value": 20214326
-   },
-   {
-    "ahead": null,
-    "comparison_size": 300,
-    "contracted": false,
-    "family": "cohort",
-    "id": "d5d937a9b99dbb05",
-    "key": "cohort_season|draft_class|2022|Jaden Ivey|2025-26",
-    "lead": null,
-    "margin": 2112326,
-    "previous_holder": {
-     "player": "Andrew Nembhard",
-     "season": "2025-26",
-     "value": 18102000
-    },
-    "rank": 1,
-    "scope_note": "Cohort of 95 players and 357 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
-    "text": "Jaden Ivey's $20.2 million in 2025-26 was the highest single-season salary in the 2022 draft class, passing Andrew Nembhard's $18.1 million (2025-26).",
-    "type": "sets",
-    "value": 20214326
    }
   ],
   "Jaden McDaniels|2026-27": [
@@ -32233,9 +32197,9 @@
      "season": "2026-27",
      "value": 62587158
     },
-    "rank": 5,
+    "rank": 4,
     "scope_note": "Cohort of 1372 players and 7642 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Jamal Murray's $57.5 million in 2028-29 would be the fifth-highest single-season salary by a guard, behind Stephen Curry's $62.6 million (2026-27).",
+    "text": "Jamal Murray's $57.5 million in 2028-29 would be the fourth-highest single-season salary by a guard, behind Stephen Curry's $62.6 million (2026-27).",
     "type": "approaches",
     "value": 57528684
    },
@@ -32681,15 +32645,15 @@
     "id": "c3493f3390654996",
     "key": "cohort_career|draft_slot|3|James Harden|2026-27",
     "lead": null,
-    "margin": 54503963,
+    "margin": 64529346,
     "previous_holder": {
-     "player": "Bradley Beal",
+     "player": "Joel Embiid",
      "season": "2026-27",
-     "value": 389700623
+     "value": 379675240
     },
     "rank": 1,
     "scope_note": "Ranked on money already paid against 46 careers in this cohort, active players included. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. James Harden is still playing, so this is his total to date.",
-    "text": "James Harden will have earned $444.2 million by the end of 2026-27, more than any other No. 3 pick, ahead of Bradley Beal's $389.7 million (2026-27).",
+    "text": "James Harden will have earned $444.2 million by the end of 2026-27, more than any other No. 3 pick, ahead of Joel Embiid's $379.7 million (2026-27).",
     "type": "sets",
     "value": 444204586
    },
@@ -32845,15 +32809,15 @@
     "id": "0bb89d9ca49fa83d",
     "key": "cohort_career|college|Wake Forest|James Johnson|2026-27",
     "lead": null,
-    "margin": -313391806,
+    "margin": -309757653,
     "previous_holder": {
      "player": "Chris Paul",
      "season": "2025-26",
-     "value": 407905691
+     "value": 404271538
     },
     "rank": 5,
     "scope_note": "Ranked on money already paid against 23 careers in this cohort, active players included. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. James Johnson is still playing, so this is his total to date.",
-    "text": "James Johnson will have earned $94.5 million by the end of 2026-27, the fifth-most among players out of Wake Forest, behind Chris Paul's $407.9 million (2025-26).",
+    "text": "James Johnson will have earned $94.5 million by the end of 2026-27, the fifth-most among players out of Wake Forest, behind Chris Paul's $404.3 million (2025-26).",
     "type": "approaches",
     "value": 94513885
    },
@@ -34263,6 +34227,66 @@
    },
    {
     "ahead": null,
+    "comparison_size": 14632,
+    "contracted": false,
+    "family": "cohort",
+    "id": "4cdac6d9d8c6c065",
+    "key": "cohort_season|nationality|United States|Jaylen Brown|2026-27",
+    "lead": null,
+    "margin": -4850808,
+    "previous_holder": {
+     "player": "Stephen Curry",
+     "season": "2026-27",
+     "value": 62587158
+    },
+    "rank": 5,
+    "scope_note": "Cohort of 2469 players and 14633 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "text": "Jaylen Brown's $57.7 million in 2026-27 is the fifth-highest single-season salary by a player from the United States, behind Stephen Curry's $62.6 million (2026-27).",
+    "type": "approaches",
+    "value": 57736350
+   },
+   {
+    "ahead": null,
+    "comparison_size": 5948,
+    "contracted": false,
+    "family": "cohort",
+    "id": "f30d7f4067b4e759",
+    "key": "cohort_season|pick_range|lottery|Jaylen Brown|2026-27",
+    "lead": null,
+    "margin": -4850808,
+    "previous_holder": {
+     "player": "Stephen Curry",
+     "season": "2026-27",
+     "value": 62587158
+    },
+    "rank": 5,
+    "scope_note": "Cohort of 633 players and 5949 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "text": "Jaylen Brown's $57.7 million in 2026-27 is the fifth-highest single-season salary by a lottery pick, behind Stephen Curry's $62.6 million (2026-27).",
+    "type": "approaches",
+    "value": 57736350
+   },
+   {
+    "ahead": null,
+    "comparison_size": 4483,
+    "contracted": false,
+    "family": "cohort",
+    "id": "60c6a4a2bd0159df",
+    "key": "cohort_season|pick_range|top-10|Jaylen Brown|2026-27",
+    "lead": null,
+    "margin": -4850808,
+    "previous_holder": {
+     "player": "Stephen Curry",
+     "season": "2026-27",
+     "value": 62587158
+    },
+    "rank": 5,
+    "scope_note": "Cohort of 454 players and 4484 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "text": "Jaylen Brown's $57.7 million in 2026-27 is the fifth-highest single-season salary by a top-10 pick, behind Stephen Curry's $62.6 million (2026-27).",
+    "type": "approaches",
+    "value": 57736350
+   },
+   {
+    "ahead": null,
     "comparison_size": 7641,
     "contracted": false,
     "family": "cohort",
@@ -34275,9 +34299,9 @@
      "season": "2026-27",
      "value": 62587158
     },
-    "rank": 4,
+    "rank": 3,
     "scope_note": "Cohort of 1372 players and 7642 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
-    "text": "Jaylen Brown's $57.7 million in 2026-27 is the fourth-highest single-season salary by a guard, behind Stephen Curry's $62.6 million (2026-27).",
+    "text": "Jaylen Brown's $57.7 million in 2026-27 is the third-highest single-season salary by a guard, behind Stephen Curry and Stephen Curry.",
     "type": "approaches",
     "value": 57736350
    },
@@ -34911,7 +34935,7 @@
     "lead": null,
     "margin": null,
     "previous_holder": null,
-    "rank": 6,
+    "rank": 5,
     "scope_note": "First season inside the top 10. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Jayson Tatum's salary in 2025-26 puts him in the league's top 10 for the first time in his career.",
     "type": "rank_shift",
@@ -35125,9 +35149,9 @@
      "season": "2026-27",
      "value": 62587158
     },
-    "rank": 4,
+    "rank": 3,
     "scope_note": "Cohort of 2469 players and 14633 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
-    "text": "Jayson Tatum's $58.5 million in 2026-27 is the fourth-highest single-season salary by a player from the United States, behind Stephen Curry's $62.6 million (2026-27).",
+    "text": "Jayson Tatum's $58.5 million in 2026-27 is the third-highest single-season salary by a player from the United States, behind Stephen Curry and Stephen Curry.",
     "type": "approaches",
     "value": 58456566
    },
@@ -35145,9 +35169,9 @@
      "season": "2026-27",
      "value": 62587158
     },
-    "rank": 4,
+    "rank": 3,
     "scope_note": "Cohort of 633 players and 5949 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
-    "text": "Jayson Tatum's $58.5 million in 2026-27 is the fourth-highest single-season salary by a lottery pick, behind Stephen Curry's $62.6 million (2026-27).",
+    "text": "Jayson Tatum's $58.5 million in 2026-27 is the third-highest single-season salary by a lottery pick, behind Stephen Curry and Stephen Curry.",
     "type": "approaches",
     "value": 58456566
    },
@@ -35165,9 +35189,9 @@
      "season": "2026-27",
      "value": 62587158
     },
-    "rank": 4,
+    "rank": 3,
     "scope_note": "Cohort of 454 players and 4484 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
-    "text": "Jayson Tatum's $58.5 million in 2026-27 is the fourth-highest single-season salary by a top-10 pick, behind Stephen Curry's $62.6 million (2026-27).",
+    "text": "Jayson Tatum's $58.5 million in 2026-27 is the third-highest single-season salary by a top-10 pick, behind Stephen Curry and Stephen Curry.",
     "type": "approaches",
     "value": 58456566
    },
@@ -36927,7 +36951,7 @@
     "lead": null,
     "margin": null,
     "previous_holder": null,
-    "rank": 6,
+    "rank": 5,
     "scope_note": "First season inside the top 10. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Jimmy Butler's salary in 2025-26 puts him in the league's top 10 for the first time in his career.",
     "type": "rank_shift",
@@ -37914,7 +37938,7 @@
     "value": 379675240
    },
    {
-    "ahead": "James Harden and Bradley Beal",
+    "ahead": null,
     "comparison_size": 45,
     "contracted": false,
     "family": "cohort",
@@ -37927,9 +37951,9 @@
      "season": "2026-27",
      "value": 444204586
     },
-    "rank": 3,
+    "rank": 2,
     "scope_note": "Ranked on money already paid against 46 careers in this cohort, active players included. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. Joel Embiid is still playing, so this is his total to date.",
-    "text": "Joel Embiid will have earned $379.7 million by the end of 2026-27, the third-most by a No. 3 pick, behind James Harden and Bradley Beal.",
+    "text": "Joel Embiid will have earned $379.7 million by the end of 2026-27, the second-most by a No. 3 pick, behind James Harden's $444.2 million (2026-27).",
     "type": "approaches",
     "value": 379675240
    },
@@ -38010,6 +38034,66 @@
     "rank": 2,
     "scope_note": "Cohort of 46 players and 478 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Joel Embiid's $57.7 million in 2026-27 is the second-highest single-season salary by a No. 3 pick, behind Jayson Tatum's $58.5 million (2026-27).",
+    "type": "approaches",
+    "value": 57736350
+   },
+   {
+    "ahead": null,
+    "comparison_size": 14632,
+    "contracted": false,
+    "family": "cohort",
+    "id": "81e24bf26e575088",
+    "key": "cohort_season|nationality|United States|Joel Embiid|2026-27",
+    "lead": null,
+    "margin": -4850808,
+    "previous_holder": {
+     "player": "Stephen Curry",
+     "season": "2026-27",
+     "value": 62587158
+    },
+    "rank": 5,
+    "scope_note": "Cohort of 2469 players and 14633 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "text": "Joel Embiid's $57.7 million in 2026-27 is the fifth-highest single-season salary by a player from the United States, behind Stephen Curry's $62.6 million (2026-27).",
+    "type": "approaches",
+    "value": 57736350
+   },
+   {
+    "ahead": null,
+    "comparison_size": 5948,
+    "contracted": false,
+    "family": "cohort",
+    "id": "5b3b0975187a9c54",
+    "key": "cohort_season|pick_range|lottery|Joel Embiid|2026-27",
+    "lead": null,
+    "margin": -4850808,
+    "previous_holder": {
+     "player": "Stephen Curry",
+     "season": "2026-27",
+     "value": 62587158
+    },
+    "rank": 5,
+    "scope_note": "Cohort of 633 players and 5949 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "text": "Joel Embiid's $57.7 million in 2026-27 is the fifth-highest single-season salary by a lottery pick, behind Stephen Curry's $62.6 million (2026-27).",
+    "type": "approaches",
+    "value": 57736350
+   },
+   {
+    "ahead": null,
+    "comparison_size": 4483,
+    "contracted": false,
+    "family": "cohort",
+    "id": "6357396e7100c5bd",
+    "key": "cohort_season|pick_range|top-10|Joel Embiid|2026-27",
+    "lead": null,
+    "margin": -4850808,
+    "previous_holder": {
+     "player": "Stephen Curry",
+     "season": "2026-27",
+     "value": 62587158
+    },
+    "rank": 5,
+    "scope_note": "Cohort of 454 players and 4484 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "text": "Joel Embiid's $57.7 million in 2026-27 is the fifth-highest single-season salary by a top-10 pick, behind Stephen Curry's $62.6 million (2026-27).",
     "type": "approaches",
     "value": 57736350
    },
@@ -38561,11 +38645,11 @@
     "id": "09df9f6f1de3563a",
     "key": "cohort_career|college|Wake Forest|John Collins|2026-27",
     "lead": null,
-    "margin": -254845829,
+    "margin": -251211676,
     "previous_holder": {
      "player": "Chris Paul",
      "season": "2025-26",
-     "value": 407905691
+     "value": 404271538
     },
     "rank": 3,
     "scope_note": "Ranked on money already paid against 23 careers in this cohort, active players included. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. John Collins is still playing, so this is his total to date.",
@@ -39525,15 +39609,15 @@
     "id": "d92389d8a011c9ed",
     "key": "cohort_career|draft_slot|6|Jonathan Isaac|2026-27",
     "lead": null,
-    "margin": -299002852,
+    "margin": -276486249,
     "previous_holder": {
      "player": "Damian Lillard",
      "season": "2026-27",
-     "value": 425051372
+     "value": 402534769
     },
     "rank": 5,
     "scope_note": "Ranked on money already paid against 45 careers in this cohort, active players included. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. Jonathan Isaac is still playing, so this is his total to date.",
-    "text": "Jonathan Isaac will have earned $126 million by the end of 2026-27, the fifth-most by a No. 6 pick, behind Damian Lillard's $425.1 million (2026-27).",
+    "text": "Jonathan Isaac will have earned $126 million by the end of 2026-27, the fifth-most by a No. 6 pick, behind Damian Lillard's $402.5 million (2026-27).",
     "type": "approaches",
     "value": 126048520
    }
@@ -43365,9 +43449,9 @@
      "season": "2026-27",
      "value": 62587158
     },
-    "rank": 4,
+    "rank": 3,
     "scope_note": "Cohort of 2469 players and 14633 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Kawhi Leonard's $58.9 million in 2028-29 would be the fourth-highest single-season salary by a player from the United States, behind Stephen Curry's $62.6 million (2026-27).",
+    "text": "Kawhi Leonard's $58.9 million in 2028-29 would be the third-highest single-season salary by a player from the United States, behind Stephen Curry and Stephen Curry.",
     "type": "approaches",
     "value": 58900000
    },
@@ -46989,15 +47073,15 @@
     "id": "b4d8a1cc0fa833b3",
     "key": "cohort_career|draft_class|2012|Khris Middleton|2026-27",
     "lead": null,
-    "margin": -127069009,
+    "margin": -126121801,
     "previous_holder": {
-     "player": "Damian Lillard",
+     "player": "Anthony Davis",
      "season": "2026-27",
-     "value": 425051372
+     "value": 424104164
     },
     "rank": 4,
     "scope_note": "Ranked on money already paid against 76 careers in this cohort, active players included. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. Khris Middleton is still playing, so this is his total to date.",
-    "text": "Khris Middleton will have earned $298 million by the end of 2026-27, the fourth-most in the 2012 draft class, behind Damian Lillard's $425.1 million (2026-27).",
+    "text": "Khris Middleton will have earned $298 million by the end of 2026-27, the fourth-most in the 2012 draft class, behind Anthony Davis' $424.1 million (2026-27).",
     "type": "approaches",
     "value": 297982363
    },
@@ -47819,15 +47903,15 @@
     "id": "b2d2f758fdbb3882",
     "key": "cohort_career|draft_slot|4|Kristaps Porzingis|2026-27",
     "lead": null,
-    "margin": -151002597,
+    "margin": -147368444,
     "previous_holder": {
      "player": "Chris Paul",
      "season": "2025-26",
-     "value": 407905691
+     "value": 404271538
     },
     "rank": 4,
     "scope_note": "Ranked on money already paid against 43 careers in this cohort, active players included. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. Kristaps Porzingis is still playing, so this is his total to date.",
-    "text": "Kristaps Porzingis will have earned $256.9 million by the end of 2026-27, the fourth-most by a No. 4 pick, behind Chris Paul's $407.9 million (2025-26).",
+    "text": "Kristaps Porzingis will have earned $256.9 million by the end of 2026-27, the fourth-most by a No. 4 pick, behind Chris Paul's $404.3 million (2025-26).",
     "type": "approaches",
     "value": 256903094
    },
@@ -52783,11 +52867,11 @@
     "id": "5b21dc1791487651",
     "key": "cohort_career|draft_slot|6|Marcus Smart|2026-27",
     "lead": null,
-    "margin": -277734118,
+    "margin": -255217515,
     "previous_holder": {
      "player": "Damian Lillard",
      "season": "2026-27",
-     "value": 425051372
+     "value": 402534769
     },
     "rank": 3,
     "scope_note": "Ranked on money already paid against 45 careers in this cohort, active players included. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. Marcus Smart is still playing, so this is his total to date.",
@@ -54275,11 +54359,11 @@
     "id": "29892a29d3e4f9bb",
     "key": "cohort_career|draft_slot|4|Mike Conley|2026-27",
     "lead": null,
-    "margin": -106406643,
+    "margin": -102772490,
     "previous_holder": {
      "player": "Chris Paul",
      "season": "2025-26",
-     "value": 407905691
+     "value": 404271538
     },
     "rank": 3,
     "scope_note": "Ranked on money already paid against 43 careers in this cohort, active players included. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. Mike Conley is still playing, so this is his total to date.",
@@ -57945,15 +58029,15 @@
     "id": "67125c021ea15dd1",
     "key": "cohort_career|college|Indiana|OG Anunoby|2026-27",
     "lead": null,
-    "margin": -11437965,
+    "margin": -7803812,
     "previous_holder": {
      "player": "Eric Gordon",
      "season": "2025-26",
-     "value": 191968267
+     "value": 188334114
     },
     "rank": 2,
     "scope_note": "Ranked on money already paid against 29 careers in this cohort, active players included. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. OG Anunoby is still playing, so this is his total to date.",
-    "text": "OG Anunoby will have earned $180.5 million by the end of 2026-27, the second-most among players out of Indiana, behind Eric Gordon's $192 million (2025-26).",
+    "text": "OG Anunoby will have earned $180.5 million by the end of 2026-27, the second-most among players out of Indiana, behind Eric Gordon's $188.3 million (2025-26).",
     "type": "approaches",
     "value": 180530302
    },
@@ -61993,9 +62077,9 @@
      "season": "2023-24",
      "value": 7723000
     },
-    "rank": 3,
+    "rank": 2,
     "scope_note": "Cohort of 17 players and 63 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
-    "text": "Paul Reed's $5.6 million in 2026-27 is the third-highest single-season salary by a No. 58 pick, behind his own $7.7 million and Chris Livingston.",
+    "text": "Paul Reed's $5.6 million in 2026-27 is the second-highest single-season salary by a No. 58 pick, behind his own $7.7 million (2023-24).",
     "type": "approaches",
     "value": 5602689
    }
@@ -62627,7 +62711,7 @@
     "id": "968157a6d908a1c9",
     "key": "cohort_career|nationality|Spain|Ricky Rubio|2026-27",
     "lead": null,
-    "margin": -86215721,
+    "margin": -86640393,
     "previous_holder": {
      "player": "Pau Gasol",
      "season": "2018-19",
@@ -62635,9 +62719,9 @@
     },
     "rank": 4,
     "scope_note": "Ranked on money already paid against 18 careers in this cohort, active players included. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. Ricky Rubio is still playing, so this is his total to date.",
-    "text": "Ricky Rubio will have earned $133.6 million by the end of 2026-27, the fourth-most by a player from Spain, behind Pau Gasol's $219.8 million (2018-19).",
+    "text": "Ricky Rubio will have earned $133.1 million by the end of 2026-27, the fourth-most by a player from Spain, behind Pau Gasol's $219.8 million (2018-19).",
     "type": "approaches",
-    "value": 133568720
+    "value": 133144048
    }
   ],
   "Robert Williams|2028-29": [
@@ -68181,15 +68265,15 @@
     "id": "b8efcdf48020b757",
     "key": "cap_pct_season|Stephen Curry|2025-26",
     "lead": null,
-    "margin": 0.3,
+    "margin": 2.8,
     "previous_holder": {
-     "player": "Damian Lillard",
+     "player": "Joel Embiid",
      "season": "2025-26",
-     "value": 38.2
+     "value": 35.7
     },
     "rank": 1,
     "scope_note": "Share of the 2025-26 salary cap, ranked within that season.",
-    "text": "Stephen Curry's $59.6 million salary took up 38.5% of the 2025-26 cap, the largest share of the cap in 2025-26, ahead of Damian Lillard's 38.2% (2025-26).",
+    "text": "Stephen Curry's $59.6 million salary took up 38.5% of the 2025-26 cap, the largest share of the cap in 2025-26, ahead of Joel Embiid's 35.7% (2025-26).",
     "type": "sets",
     "value": 38.5
    },
@@ -68241,15 +68325,15 @@
     "id": "cbcd3832fd122c2d",
     "key": "cohort_season|nationality|United States|Stephen Curry|2025-26",
     "lead": null,
-    "margin": 469611,
+    "margin": 3845600,
     "previous_holder": {
-     "player": "Damian Lillard",
-     "season": "2025-26",
-     "value": 59137206
+     "player": "Stephen Curry",
+     "season": "2024-25",
+     "value": 55761217
     },
     "rank": 1,
     "scope_note": "Cohort of 2468 players and 14633 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
-    "text": "Stephen Curry's $59.6 million in 2025-26 was the highest single-season salary by a player from the United States, passing Damian Lillard's $59.1 million (2025-26).",
+    "text": "Stephen Curry's $59.6 million in 2025-26 was the highest single-season salary by a player from the United States, breaking his own mark of $55.8 million in 2024-25.",
     "type": "sets",
     "value": 59606817
    },
@@ -68261,15 +68345,15 @@
     "id": "43af2f8bb4eca7a1",
     "key": "cohort_season|pick_range|lottery|Stephen Curry|2025-26",
     "lead": null,
-    "margin": 469611,
+    "margin": 3845600,
     "previous_holder": {
-     "player": "Damian Lillard",
-     "season": "2025-26",
-     "value": 59137206
+     "player": "Stephen Curry",
+     "season": "2024-25",
+     "value": 55761217
     },
     "rank": 1,
     "scope_note": "Cohort of 633 players and 5949 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
-    "text": "Stephen Curry's $59.6 million in 2025-26 was the highest single-season salary by a lottery pick, passing Damian Lillard's $59.1 million (2025-26).",
+    "text": "Stephen Curry's $59.6 million in 2025-26 was the highest single-season salary by a lottery pick, breaking his own mark of $55.8 million in 2024-25.",
     "type": "sets",
     "value": 59606817
    },
@@ -68281,15 +68365,15 @@
     "id": "d357414b43bea07b",
     "key": "cohort_season|pick_range|top-10|Stephen Curry|2025-26",
     "lead": null,
-    "margin": 469611,
+    "margin": 3845600,
     "previous_holder": {
-     "player": "Damian Lillard",
-     "season": "2025-26",
-     "value": 59137206
+     "player": "Stephen Curry",
+     "season": "2024-25",
+     "value": 55761217
     },
     "rank": 1,
     "scope_note": "Cohort of 454 players and 4484 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
-    "text": "Stephen Curry's $59.6 million in 2025-26 was the highest single-season salary by a top-10 pick, passing Damian Lillard's $59.1 million (2025-26).",
+    "text": "Stephen Curry's $59.6 million in 2025-26 was the highest single-season salary by a top-10 pick, breaking his own mark of $55.8 million in 2024-25.",
     "type": "sets",
     "value": 59606817
    },
@@ -68301,15 +68385,15 @@
     "id": "e0c0b91365c92081",
     "key": "cohort_season|position|G|Stephen Curry|2025-26",
     "lead": null,
-    "margin": 469611,
+    "margin": 3845600,
     "previous_holder": {
-     "player": "Damian Lillard",
-     "season": "2025-26",
-     "value": 59137206
+     "player": "Stephen Curry",
+     "season": "2024-25",
+     "value": 55761217
     },
     "rank": 1,
     "scope_note": "Cohort of 1371 players and 7642 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
-    "text": "Stephen Curry's $59.6 million in 2025-26 was the highest single-season salary by a guard, passing Damian Lillard's $59.1 million (2025-26).",
+    "text": "Stephen Curry's $59.6 million in 2025-26 was the highest single-season salary by a guard, breaking his own mark of $55.8 million in 2024-25.",
     "type": "sets",
     "value": 59606817
    },
@@ -71849,6 +71933,66 @@
    },
    {
     "ahead": null,
+    "comparison_size": 14633,
+    "contracted": true,
+    "family": "cohort",
+    "id": "ca6d3b2f3778c00b",
+    "key": "cohort_season|nationality|United States|Trae Young|2029-30",
+    "lead": null,
+    "margin": -4190964,
+    "previous_holder": {
+     "player": "Stephen Curry",
+     "season": "2026-27",
+     "value": 62587158
+    },
+    "rank": 5,
+    "scope_note": "Cohort of 2469 players and 14633 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "text": "Trae Young's $58.4 million in 2029-30 would be the fifth-highest single-season salary by a player from the United States, behind Stephen Curry's $62.6 million (2026-27).",
+    "type": "approaches",
+    "value": 58396194
+   },
+   {
+    "ahead": null,
+    "comparison_size": 5949,
+    "contracted": true,
+    "family": "cohort",
+    "id": "9f3bcd9955f3c779",
+    "key": "cohort_season|pick_range|lottery|Trae Young|2029-30",
+    "lead": null,
+    "margin": -4190964,
+    "previous_holder": {
+     "player": "Stephen Curry",
+     "season": "2026-27",
+     "value": 62587158
+    },
+    "rank": 5,
+    "scope_note": "Cohort of 633 players and 5949 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "text": "Trae Young's $58.4 million in 2029-30 would be the fifth-highest single-season salary by a lottery pick, behind Stephen Curry's $62.6 million (2026-27).",
+    "type": "approaches",
+    "value": 58396194
+   },
+   {
+    "ahead": null,
+    "comparison_size": 4484,
+    "contracted": true,
+    "family": "cohort",
+    "id": "d753d99ca3922689",
+    "key": "cohort_season|pick_range|top-10|Trae Young|2029-30",
+    "lead": null,
+    "margin": -4190964,
+    "previous_holder": {
+     "player": "Stephen Curry",
+     "season": "2026-27",
+     "value": 62587158
+    },
+    "rank": 5,
+    "scope_note": "Cohort of 454 players and 4484 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "text": "Trae Young's $58.4 million in 2029-30 would be the fifth-highest single-season salary by a top-10 pick, behind Stephen Curry's $62.6 million (2026-27).",
+    "type": "approaches",
+    "value": 58396194
+   },
+   {
+    "ahead": null,
     "comparison_size": 7642,
     "contracted": true,
     "family": "cohort",
@@ -71861,9 +72005,9 @@
      "season": "2026-27",
      "value": 62587158
     },
-    "rank": 4,
+    "rank": 3,
     "scope_note": "Cohort of 1372 players and 7642 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Trae Young's $58.4 million in 2029-30 would be the fourth-highest single-season salary by a guard, behind Stephen Curry's $62.6 million (2026-27).",
+    "text": "Trae Young's $58.4 million in 2029-30 would be the third-highest single-season salary by a guard, behind Stephen Curry and Stephen Curry.",
     "type": "approaches",
     "value": 58396194
    },
@@ -72552,16 +72696,16 @@
     "family": "cohort",
     "id": "a073f1600acd8833",
     "key": "cohort_career|college|Iowa St|Tyrese Haliburton|2026-27",
-    "lead": "3 times as much as the next player out of Iowa State, Georges Niang",
-    "margin": 104420237,
+    "lead": "3 times as much as the next player out of Iowa State, Kelvin Cato",
+    "margin": 107962066,
     "previous_holder": {
-     "player": "Georges Niang",
-     "season": "2026-27",
-     "value": 50110294
+     "player": "Kelvin Cato",
+     "season": "2006-07",
+     "value": 46568465
     },
     "rank": 1,
     "scope_note": "Ranked on money already paid against 31 careers in this cohort, active players included. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. Tyrese Haliburton is still playing, so this is his total to date.",
-    "text": "Tyrese Haliburton will have earned $154.5 million by the end of 2026-27, 3 times as much as the next player out of Iowa State, Georges Niang.",
+    "text": "Tyrese Haliburton will have earned $154.5 million by the end of 2026-27, 3 times as much as the next player out of Iowa State, Kelvin Cato.",
     "type": "sets",
     "value": 154530531
    },
@@ -75715,7 +75859,7 @@
  },
  "meta": {
   "current_season": "2026-27",
-  "factoid_count": 3812,
+  "factoid_count": 3819,
   "families": [
    "cap_context",
    "career_earnings",
