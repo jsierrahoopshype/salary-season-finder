@@ -1,0 +1,1095 @@
+{
+ "cutover": {
+  "current": {
+   "2024-25": {
+    "also_in_the_historical_tab": 458,
+    "dollars_offered": 4970203268,
+    "missing_from_the_historical_tab": [
+     {
+      "player": "Hayden Gray",
+      "salary": 12648321
+     },
+     {
+      "player": "Mouhamadou Gueye",
+      "salary": 7975000
+     },
+     {
+      "player": "Cam Whitmore",
+      "salary": 3379080
+     },
+     {
+      "player": "Mario Hezonja",
+      "salary": 2162606
+     },
+     {
+      "player": "John Poulakidas",
+      "salary": 1157153
+     },
+     {
+      "player": "AJ Dybantsa",
+      "salary": 981902
+     },
+     {
+      "player": "Aday Mara",
+      "salary": 981902
+     },
+     {
+      "player": "Alex Karaban",
+      "salary": 981902
+     },
+     {
+      "player": "Allen Graves",
+      "salary": 981902
+     },
+     {
+      "player": "Bennett Stirtz",
+      "salary": 981902
+     },
+     {
+      "player": "Brayden Burries",
+      "salary": 981902
+     },
+     {
+      "player": "Caleb Wilson",
+      "salary": 981902
+     },
+     {
+      "player": "Cameron Boozer",
+      "salary": 981902
+     },
+     {
+      "player": "Cameron Carr",
+      "salary": 981902
+     },
+     {
+      "player": "Chris Cenac",
+      "salary": 981902
+     },
+     {
+      "player": "Christian Anderson",
+      "salary": 981902
+     },
+     {
+      "player": "Dailyn Swain",
+      "salary": 981902
+     },
+     {
+      "player": "Darius Acuff",
+      "salary": 981902
+     },
+     {
+      "player": "Darryn Peterson",
+      "salary": 981902
+     },
+     {
+      "player": "Ebuka Okorie",
+      "salary": 981902
+     },
+     {
+      "player": "Hannes Steinbach",
+      "salary": 981902
+     },
+     {
+      "player": "Jayden Quaintance",
+      "salary": 981902
+     },
+     {
+      "player": "Joshua Jefferson",
+      "salary": 981902
+     },
+     {
+      "player": "Karim Lopez",
+      "salary": 981902
+     },
+     {
+      "player": "Keaton Wagler",
+      "salary": 981902
+     },
+     {
+      "player": "Kingston Flemings",
+      "salary": 981902
+     },
+     {
+      "player": "Labaron Philon",
+      "salary": 981902
+     },
+     {
+      "player": "Markelle Fultz",
+      "salary": 981902
+     },
+     {
+      "player": "Mikel Brown",
+      "salary": 981902
+     },
+     {
+      "player": "Morez Johnson",
+      "salary": 981902
+     },
+     {
+      "player": "Nate Ament",
+      "salary": 981902
+     },
+     {
+      "player": "Sergio De Larrea",
+      "salary": 981902
+     },
+     {
+      "player": "Tarris Reed",
+      "salary": 981902
+     },
+     {
+      "player": "Zuby Ejiofor",
+      "salary": 981902
+     },
+     {
+      "player": "Bismack Biyombo",
+      "salary": 797462
+     },
+     {
+      "player": "Arthur Kaluma",
+      "salary": 596581
+     },
+     {
+      "player": "Josh Dix",
+      "salary": 596581
+     },
+     {
+      "player": "Julian Reese",
+      "salary": 596581
+     },
+     {
+      "player": "Otega Oweh",
+      "salary": 596581
+     },
+     {
+      "player": "Tobi Lawal",
+      "salary": 596581
+     },
+     {
+      "player": "Ugonna Onyenso",
+      "salary": 596581
+     },
+     {
+      "player": "CJ Huntley",
+      "salary": 578577
+     },
+     {
+      "player": "DeJon Jarreau",
+      "salary": 578577
+     },
+     {
+      "player": "Dennis Smith",
+      "salary": 578577
+     },
+     {
+      "player": "Grant Nelson",
+      "salary": 578577
+     },
+     {
+      "player": "Jahmai Mashack",
+      "salary": 578577
+     },
+     {
+      "player": "John Butler",
+      "salary": 578577
+     },
+     {
+      "player": "Leaky Black",
+      "salary": 578577
+     },
+     {
+      "player": "Lucas Williamson",
+      "salary": 578577
+     },
+     {
+      "player": "Nick Martinelli",
+      "salary": 578577
+     },
+     {
+      "player": "Omer Yurtseven",
+      "salary": 578577
+     },
+     {
+      "player": "Sharife Cooper",
+      "salary": 578577
+     },
+     {
+      "player": "Tarik Biberovic",
+      "salary": 578577
+     },
+     {
+      "player": "Tyler Nickel",
+      "salary": 578577
+     },
+     {
+      "player": "Jeenathan Williams",
+      "salary": 515881
+     },
+     {
+      "player": "Ja'Kobi Gillespie",
+      "salary": 344234
+     },
+     {
+      "player": "Jaden Bradley",
+      "salary": 344234
+     },
+     {
+      "player": "Kylan Boswell",
+      "salary": 344234
+     },
+     {
+      "player": "Maliq Brown",
+      "salary": 344234
+     },
+     {
+      "player": "Michael Ajayi",
+      "salary": 344234
+     },
+     {
+      "player": "Quadir Copeland",
+      "salary": 344234
+     },
+     {
+      "player": "Rafael Castro",
+      "salary": 344234
+     },
+     {
+      "player": "Alex Toohey",
+      "salary": 331365
+     },
+     {
+      "player": "Tony Bradley",
+      "salary": 330395
+     },
+     {
+      "player": "Ron Harper Jr",
+      "salary": 315280
+     },
+     {
+      "player": "Tolu Smith",
+      "salary": 315280
+     },
+     {
+      "player": "Javonte Cooke",
+      "salary": 302411
+     },
+     {
+      "player": "Kobe Sanders",
+      "salary": 302411
+     },
+     {
+      "player": "Jordan Goodwin",
+      "salary": 223718
+     },
+     {
+      "player": "Jahmir Young",
+      "salary": 173725
+     },
+     {
+      "player": "Alex Antetokounmpo",
+      "salary": 141554
+     },
+     {
+      "player": "Chris Youngblood",
+      "salary": 141554
+     },
+     {
+      "player": "Payton Sandfort",
+      "salary": 141554
+     },
+     {
+      "player": "Nae'Qwan Tomlin",
+      "salary": 138337
+     },
+     {
+      "player": "Jamaree Bouyea",
+      "salary": 135120
+     },
+     {
+      "player": "Tyson Etienne",
+      "salary": 131903
+     },
+     {
+      "player": "Drew Timme",
+      "salary": 113055
+     },
+     {
+      "player": "Izaiyah Nelson",
+      "salary": 100000
+     }
+    ],
+    "player_seasons_offered": 536
+   },
+   "2025-26": {
+    "also_in_the_historical_tab": 508,
+    "dollars_offered": 5376683139,
+    "missing_from_the_historical_tab": [
+     {
+      "player": "Buddy Hield",
+      "salary": 9219512
+     },
+     {
+      "player": "Rob Dillingham",
+      "salary": 6576120
+     },
+     {
+      "player": "Guerschon Yabusele",
+      "salary": 5500000
+     },
+     {
+      "player": "Russell Westbrook",
+      "salary": 3634153
+     },
+     {
+      "player": "Trey Lyles",
+      "salary": 3571495
+     },
+     {
+      "player": "Gary Payton II",
+      "salary": 3303774
+     },
+     {
+      "player": "Thomas Bryant",
+      "salary": 3287409
+     },
+     {
+      "player": "Landry Shamet",
+      "salary": 3080921
+     },
+     {
+      "player": "Javonte Green",
+      "salary": 2874436
+     },
+     {
+      "player": "Tarik Biberovic",
+      "salary": 2857143
+     },
+     {
+      "player": "Anthony Gill",
+      "salary": 2667947
+     },
+     {
+      "player": "James Johnson",
+      "salary": 2667947
+     },
+     {
+      "player": "Bones Hyland",
+      "salary": 2461463
+     },
+     {
+      "player": "Dru Smith",
+      "salary": 2378870
+     },
+     {
+      "player": "Jordan Goodwin",
+      "salary": 2349578
+     },
+     {
+      "player": "Justin Champagnie",
+      "salary": 2349578
+     },
+     {
+      "player": "Neemias Queta",
+      "salary": 2349578
+     },
+     {
+      "player": "Brandon Williams",
+      "salary": 2270735
+     },
+     {
+      "player": "Moussa Diabate",
+      "salary": 2270735
+     },
+     {
+      "player": "Andre Jackson",
+      "salary": 2221677
+     },
+     {
+      "player": "Craig Porter",
+      "salary": 2221677
+     },
+     {
+      "player": "Adem Bona",
+      "salary": 1955377
+     },
+     {
+      "player": "Pelle Larsson",
+      "salary": 1955377
+     },
+     {
+      "player": "Mohamed Diawara",
+      "salary": 1272870
+     },
+     {
+      "player": "Braden Smith",
+      "salary": 1131970
+     },
+     {
+      "player": "Felix Okpara",
+      "salary": 1131970
+     },
+     {
+      "player": "Jaden Akins",
+      "salary": 1131970
+     },
+     {
+      "player": "Tre Donaldson",
+      "salary": 1131970
+     },
+     {
+      "player": "Tyler Bilodeau",
+      "salary": 1131970
+     },
+     {
+      "player": "AK Okereke",
+      "salary": 636435
+     },
+     {
+      "player": "Ben Simmons",
+      "salary": 636435
+     },
+     {
+      "player": "Bryce Hopkins",
+      "salary": 636435
+     },
+     {
+      "player": "Elijah Harkless",
+      "salary": 636435
+     },
+     {
+      "player": "Izaiyah Nelson",
+      "salary": 636435
+     },
+     {
+      "player": "Jalen Bridges",
+      "salary": 636435
+     },
+     {
+      "player": "Jaron Pierre",
+      "salary": 636435
+     },
+     {
+      "player": "Kevin McCullar",
+      "salary": 636435
+     },
+     {
+      "player": "Malik Dia",
+      "salary": 636435
+     },
+     {
+      "player": "Tyler Nickel",
+      "salary": 636435
+     },
+     {
+      "player": "Dillon Mitchell",
+      "salary": 490128
+     },
+     {
+      "player": "Graham Ike",
+      "salary": 405359
+     },
+     {
+      "player": "Dennis Smith",
+      "salary": 321714
+     },
+     {
+      "player": "KJ Martin",
+      "salary": 321714
+     },
+     {
+      "player": "John Butler",
+      "salary": 312062
+     },
+     {
+      "player": "Jeenathan Williams",
+      "salary": 176943
+     },
+     {
+      "player": "Ja'Kobi Gillespie",
+      "salary": 157640
+     },
+     {
+      "player": "Jaden Bradley",
+      "salary": 157640
+     },
+     {
+      "player": "Kylan Boswell",
+      "salary": 157640
+     },
+     {
+      "player": "Maliq Brown",
+      "salary": 157640
+     },
+     {
+      "player": "Michael Ajayi",
+      "salary": 157640
+     },
+     {
+      "player": "Quadir Copeland",
+      "salary": 157640
+     },
+     {
+      "player": "Rafael Castro",
+      "salary": 157640
+     },
+     {
+      "player": "Arthur Kaluma",
+      "salary": 141554
+     },
+     {
+      "player": "Josh Dix",
+      "salary": 141554
+     },
+     {
+      "player": "Otega Oweh",
+      "salary": 141554
+     },
+     {
+      "player": "Tobi Lawal",
+      "salary": 141554
+     },
+     {
+      "player": "Ugonna Onyenso",
+      "salary": 141554
+     },
+     {
+      "player": "Charles Bassey",
+      "salary": 113171
+     },
+     {
+      "player": "Mario Hezonja",
+      "salary": 113171
+     }
+    ],
+    "player_seasons_offered": 567
+   }
+  },
+  "dead": {
+   "2025-26": {
+    "also_in_the_historical_tab": 137,
+    "dollars_offered": 339345854,
+    "missing_from_the_historical_tab": [
+     {
+      "player": "Terry Rozier",
+      "salary": 26643031
+     },
+     {
+      "player": "Charles Bassey",
+      "salary": 829792
+     },
+     {
+      "player": "Dominck Barlow",
+      "salary": 347451
+     },
+     {
+      "player": "Omer Yurtseven",
+      "salary": 282926
+     },
+     {
+      "player": "Tre Scott",
+      "salary": 280460
+     },
+     {
+      "player": "Keon Johnson",
+      "salary": 271614
+     },
+     {
+      "player": "DeJon Jarreau",
+      "salary": 263940
+     },
+     {
+      "player": "Skal Labissiere",
+      "salary": 153330
+     },
+     {
+      "player": "De'Andre Davis",
+      "salary": 85300
+     },
+     {
+      "player": "Yuri Collins",
+      "salary": 85300
+     },
+     {
+      "player": "Adama Bal",
+      "salary": 73153
+     },
+     {
+      "player": "Tyrese Key",
+      "salary": 51207
+     },
+     {
+      "player": "Terry Roberts",
+      "salary": 25000
+     },
+     {
+      "player": "Adam Flagler",
+      "salary": 15000
+     },
+     {
+      "player": "Augustas Marciulionis",
+      "salary": 15000
+     },
+     {
+      "player": "Emoni Bates",
+      "salary": 15000
+     }
+    ],
+    "player_seasons_offered": 153
+   }
+  }
+ },
+ "dead_money_into_the_tabs_seasons": {
+  "left_alone_because_the_tab_names_a_team": 137,
+  "note": "The tab holds the seasons it covers but not every man in them: sixteen rows of the dead-money sheet's 2025-26 have no row on the tab at all. So that sheet is still read for those seasons, as a row of its own where the tab has none and as the team for a row the tab left blank. No figure the tab gave is changed, and where the tab names a team the tab keeps it. Where several clubs owe one man one season both are named and neither is given a figure, because nothing here records how the money divided. teams_filled_in has been empty on every build so far: the teamless records that prompted that branch turned out to be the agent tracker's rather than the tab's, and the tracker no longer answers for a season a sheet holds.",
+  "rows_added": [
+   {
+    "player": "Adam Flagler",
+    "salary": 15000,
+    "season": "2025-26",
+    "team": "SAS"
+   },
+   {
+    "player": "Adama Bal",
+    "salary": 73153,
+    "season": "2025-26",
+    "team": "MEM"
+   },
+   {
+    "player": "Augustas Marciulionis",
+    "salary": 15000,
+    "season": "2025-26",
+    "team": "LAL"
+   },
+   {
+    "player": "Charles Bassey",
+    "salary": 829792,
+    "season": "2025-26",
+    "team": "BOS, MEM, PHI"
+   },
+   {
+    "player": "De'Andre Davis",
+    "salary": 85300,
+    "season": "2025-26",
+    "team": "BKN"
+   },
+   {
+    "player": "DeJon Jarreau",
+    "salary": 263940,
+    "season": "2025-26",
+    "team": "MEM"
+   },
+   {
+    "player": "Dominck Barlow",
+    "salary": 347451,
+    "season": "2025-26",
+    "team": "PHI"
+   },
+   {
+    "player": "Emoni Bates",
+    "salary": 15000,
+    "season": "2025-26",
+    "team": "PHI"
+   },
+   {
+    "player": "Keon Johnson",
+    "salary": 271614,
+    "season": "2025-26",
+    "team": "BKN"
+   },
+   {
+    "player": "Omer Yurtseven",
+    "salary": 282926,
+    "season": "2025-26",
+    "team": "GSW"
+   },
+   {
+    "player": "Skal Labissiere",
+    "salary": 153330,
+    "season": "2025-26",
+    "team": "WAS"
+   },
+   {
+    "player": "Terry Roberts",
+    "salary": 25000,
+    "season": "2025-26",
+    "team": "BKN"
+   },
+   {
+    "player": "Terry Rozier",
+    "salary": 26643031,
+    "season": "2025-26",
+    "team": "MIA"
+   },
+   {
+    "player": "Tre Scott",
+    "salary": 280460,
+    "season": "2025-26",
+    "team": "BKN"
+   },
+   {
+    "player": "Tyrese Key",
+    "salary": 51207,
+    "season": "2025-26",
+    "team": "TOR"
+   },
+   {
+    "player": "Yuri Collins",
+    "salary": 85300,
+    "season": "2025-26",
+    "team": "BKN"
+   }
+  ],
+  "teams_filled_in": []
+ },
+ "future_sheet_columns_left_to_the_tab": [],
+ "historical_through": "2025-26",
+ "note": "Which sheet supplied each season, and what the boundary between them left to the tab. The historical tab is authoritative for every season it holds and the two forward-looking sheets are read only past it, so the boundary is the newest season on the tab rather than a year written into the code: the owner adding a season moves it. cutover lists, per forward sheet and per season it no longer answers for, the player-seasons and dollars that sheet still offers and how many of them the tab holds under the same name. A season well before the boundary may never have been read from that sheet by any build; the boundary season itself is the one that moved. Anything under missing_from_the_historical_tab the tab does not hold at all, and is the thing to look at before trusting a rollover.",
+ "rows_per_season_per_sheet": {
+  "1990-91": {
+   "historical": 353
+  },
+  "1991-92": {
+   "historical": 384
+  },
+  "1992-93": {
+   "historical": 402
+  },
+  "1993-94": {
+   "historical": 386
+  },
+  "1994-95": {
+   "historical": 419
+  },
+  "1995-96": {
+   "historical": 453
+  },
+  "1996-97": {
+   "historical": 416
+  },
+  "1997-98": {
+   "historical": 446
+  },
+  "1998-99": {
+   "historical": 428
+  },
+  "1999-00": {
+   "historical": 517
+  },
+  "2000-01": {
+   "historical": 456
+  },
+  "2001-02": {
+   "historical": 451
+  },
+  "2002-03": {
+   "historical": 452
+  },
+  "2003-04": {
+   "historical": 455
+  },
+  "2004-05": {
+   "historical": 471
+  },
+  "2005-06": {
+   "historical": 480
+  },
+  "2006-07": {
+   "historical": 496
+  },
+  "2007-08": {
+   "historical": 471
+  },
+  "2008-09": {
+   "historical": 461
+  },
+  "2009-10": {
+   "historical": 457
+  },
+  "2010-11": {
+   "historical": 460
+  },
+  "2011-12": {
+   "historical": 464
+  },
+  "2012-13": {
+   "historical": 495
+  },
+  "2013-14": {
+   "historical": 493
+  },
+  "2014-15": {
+   "historical": 514
+  },
+  "2015-16": {
+   "historical": 501
+  },
+  "2016-17": {
+   "historical": 546
+  },
+  "2017-18": {
+   "historical": 587
+  },
+  "2018-19": {
+   "historical": 577
+  },
+  "2019-20": {
+   "historical": 516
+  },
+  "2020-21": {
+   "historical": 579
+  },
+  "2021-22": {
+   "historical": 654
+  },
+  "2022-23": {
+   "historical": 575
+  },
+  "2023-24": {
+   "historical": 614
+  },
+  "2024-25": {
+   "historical": 571
+  },
+  "2025-26": {
+   "historical": 591
+  },
+  "2026-27": {
+   "current_and_dead": 638,
+   "future": 616
+  },
+  "2027-28": {
+   "current_and_dead": 350,
+   "future": 340
+  },
+  "2028-29": {
+   "current_and_dead": 200,
+   "future": 192
+  },
+  "2029-30": {
+   "current_and_dead": 99,
+   "future": 96
+  },
+  "2030-31": {
+   "current_and_dead": 19,
+   "future": 17
+  }
+ },
+ "the_sums_balance": {
+  "1990-91": {
+   "balances": true,
+   "dollars_in_the_file": 293563000,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 293563000
+  },
+  "1991-92": {
+   "balances": true,
+   "dollars_in_the_file": 369582000,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 369582000
+  },
+  "1992-93": {
+   "balances": true,
+   "dollars_in_the_file": 428986180,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 428986180
+  },
+  "1993-94": {
+   "balances": true,
+   "dollars_in_the_file": 500334365,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 500334365
+  },
+  "1994-95": {
+   "balances": true,
+   "dollars_in_the_file": 598723839,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 598723839
+  },
+  "1995-96": {
+   "balances": true,
+   "dollars_in_the_file": 724267560,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 724267560
+  },
+  "1996-97": {
+   "balances": true,
+   "dollars_in_the_file": 803671200,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 803671200
+  },
+  "1997-98": {
+   "balances": true,
+   "dollars_in_the_file": 948538009,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 948538009
+  },
+  "1998-99": {
+   "balances": true,
+   "dollars_in_the_file": 1069873239,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 1069873239
+  },
+  "1999-00": {
+   "balances": true,
+   "dollars_in_the_file": 1314134536,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 1314134536
+  },
+  "2000-01": {
+   "balances": true,
+   "dollars_in_the_file": 1503762690,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 1503762690
+  },
+  "2001-02": {
+   "balances": true,
+   "dollars_in_the_file": 1558602654,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 1558602654
+  },
+  "2002-03": {
+   "balances": true,
+   "dollars_in_the_file": 1669831797,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 1669831797
+  },
+  "2003-04": {
+   "balances": true,
+   "dollars_in_the_file": 1672617482,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 1672617482
+  },
+  "2004-05": {
+   "balances": true,
+   "dollars_in_the_file": 1773666037,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 1773666037
+  },
+  "2005-06": {
+   "balances": true,
+   "dollars_in_the_file": 1897469981,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 1897469981
+  },
+  "2006-07": {
+   "balances": true,
+   "dollars_in_the_file": 1939373647,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 1939373647
+  },
+  "2007-08": {
+   "balances": true,
+   "dollars_in_the_file": 2063887234,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 2063887234
+  },
+  "2008-09": {
+   "balances": true,
+   "dollars_in_the_file": 2158512738,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 2158512738
+  },
+  "2009-10": {
+   "balances": true,
+   "dollars_in_the_file": 2113114155,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 2113114155
+  },
+  "2010-11": {
+   "balances": true,
+   "dollars_in_the_file": 2025870243,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 2025870243
+  },
+  "2011-12": {
+   "balances": true,
+   "dollars_in_the_file": 2016175240,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 2016175240
+  },
+  "2012-13": {
+   "balances": true,
+   "dollars_in_the_file": 2111388890,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 2111388890
+  },
+  "2013-14": {
+   "balances": true,
+   "dollars_in_the_file": 2118113222,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 2118113222
+  },
+  "2014-15": {
+   "balances": true,
+   "dollars_in_the_file": 2202445594,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 2202445594
+  },
+  "2015-16": {
+   "balances": true,
+   "dollars_in_the_file": 2354067360,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 2354067360
+  },
+  "2016-17": {
+   "balances": true,
+   "dollars_in_the_file": 2966079443,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 2966079443
+  },
+  "2017-18": {
+   "balances": true,
+   "dollars_in_the_file": 3356715898,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 3356715898
+  },
+  "2018-19": {
+   "balances": true,
+   "dollars_in_the_file": 3603794806,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 3603794806
+  },
+  "2019-20": {
+   "balances": true,
+   "dollars_in_the_file": 3564934008,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 3564934008
+  },
+  "2020-21": {
+   "balances": true,
+   "dollars_in_the_file": 3905190611,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 3905190611
+  },
+  "2021-22": {
+   "balances": true,
+   "dollars_in_the_file": 4121801683,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 4121801683
+  },
+  "2022-23": {
+   "balances": true,
+   "dollars_in_the_file": 4551376845,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 4551376845
+  },
+  "2023-24": {
+   "balances": true,
+   "dollars_in_the_file": 4931561321,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 4931561321
+  },
+  "2024-25": {
+   "balances": true,
+   "dollars_in_the_file": 5242381836,
+   "dollars_on_dead_rows_the_tab_had_none_for": 0,
+   "dollars_on_the_historical_tab": 5242381836
+  },
+  "2025-26": {
+   "balances": true,
+   "dollars_in_the_file": 5518474455,
+   "dollars_on_dead_rows_the_tab_had_none_for": 29437504,
+   "dollars_on_the_historical_tab": 5489036951
+  }
+ }
+}

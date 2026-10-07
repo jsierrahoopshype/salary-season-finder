@@ -127,7 +127,18 @@ jobs:
           tail -8 /tmp/pages.log
 
       - name: Run the test suite over the rebuilt data
-        run: python -m pytest scripts/tests/ -q
+        run: |
+          # A failure here is about data this checkout cannot hold: the two Cyro
+          # sheets are untracked, so nobody can reproduce this run locally. The
+          # names of the tests that failed are the one thing worth having, and a
+          # log nobody can read is not where they belong, so they are re-run and
+          # surfaced as annotations.
+          if python -m pytest scripts/tests/ -q; then
+            exit 0
+          fi
+          python -m pytest scripts/tests/ -q --tb=no -rf 2>&1 \
+            | sed -n 's/^FAILED /::error::FAILED /p'
+          exit 1
 
       - name: A second build over the rebuilt data writes nothing
         run: |
@@ -169,9 +180,9 @@ jobs:
             exit 1
           fi
           printf '    %s\n' "${PAGE_PATHS[@]}"
-          # the three the data build writes that the page build does not
+          # the four the data build writes that the page build does not
           git add -A "${PAGE_PATHS[@]}" data/data.json data/factoids.json \
-            data/team_corrections_report.json
+            data/team_corrections_report.json data/salary_sources_report.json
           if git diff --cached --quiet; then
             echo "Nothing to commit"
             exit 0

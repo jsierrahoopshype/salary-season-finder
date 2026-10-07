@@ -500,6 +500,32 @@ def season_to_year(season):
         return None
 
 
+def latest_season(seasons):
+    """The newest of these seasons, by the year it ends in."""
+    best, best_year = None, None
+    for season in seasons:
+        year = season_to_year(season)
+        if year is None:
+            continue
+        if best_year is None or year > best_year:
+            best, best_year = season, year
+    return best
+
+
+def seasons_after(season):
+    """A test for "later than this season", by end year.
+
+    The historical tab is authoritative for every season it holds, and the
+    forward-looking sheets supply only what comes after it. Where the tab holds
+    nothing the test lets everything through, so an empty or missing historical
+    sheet does not silently empty the file.
+    """
+    boundary = season_to_year(season) if season else None
+    if boundary is None:
+        return lambda _candidate: True
+    return lambda candidate: (season_to_year(candidate) or 0) > boundary
+
+
 def normalize_season(season_str):
     """Normalize various season formats to 'YYYY-YY'."""
     if not season_str:
@@ -1019,18 +1045,37 @@ def process_salaries_csv(csv_data):
     return lookup
 
 
-def process_future_salaries(csv_data):
+def process_future_salaries(csv_data, after_season=None):
     """Process future salaries sheet (one row per player-team, year columns).
     A player can appear on multiple rows (different teams), e.g. Lillard has
     one row for POR and one for MIL. We combine them per player-season with
     per-team salary breakdowns, same as 2025-26 logic.
+
+    ``after_season`` is the newest season the historical tab holds. Every year
+    column at or before it is the tab's to answer, so this sheet is read only
+    past that point. The columns used to be the literal list 2027 to 2031,
+    which was the 2026-27 boundary written down: it would have had to be edited
+    every time the tab gained a season.
     """
     rows = parse_csv_string(csv_data)
     if not rows:
-        return {}
+        return {}, []
+    is_later = seasons_after(after_season)
     # Accumulate: (nk, season) -> { "team_salaries": {team: int}, "display_name": str }
     accum = {}
-    year_cols = ["2027", "2028", "2029", "2030", "2031"]
+    year_cols, dropped_cols = [], []
+    for name in rows[0].keys():
+        col = (name or "").strip()
+        if not (col.isdigit() and len(col) == 4):
+            continue
+        season = year_to_season(int(col))
+        if not season:
+            continue
+        (year_cols if is_later(season) else dropped_cols).append(col)
+    print("    Future salaries: year cols {}{}".format(
+        year_cols,
+        ", left to the historical tab: {}".format(dropped_cols) if dropped_cols else "",
+    ))
     for row in rows:
         player = row.get("PLAYER", "").strip()
         team = row.get("TEAM", "").strip()
@@ -1072,20 +1117,55 @@ def process_future_salaries(csv_data):
         lookup[(nk, season)] = [rec]
 
     print(f"    Parsed {len(lookup)} player-seasons from future salaries ({multi_team} multi-team)")
-    return lookup
+    return lookup, dropped_cols
 
 
-def process_cyro_salaries(current_csv, dead_csv):
-    """Process Cyro's salary sheets for ALL seasons (current + dead money).
-    
+def process_cyro_salaries(current_csv, dead_csv, after_season=None):
+    """Process Cyro's salary sheets for the seasons the historical tab does not.
+
     Current salaries: year columns 2026, 2027, 2028, ... (2026 = season 2025-26).
     Dead money: columns SALARY 25-26, SALARY 26-27, SALARY 27-28, ...
-    
+
     Both sheets can have the same player on different teams (multi-team).
     We combine per player-season with per-team salary breakdowns.
+
+    ``after_season`` is the newest season the historical tab holds, and every
+    current-salaries column at or before it is skipped: that sheet looks
+    forward, and where the tab has caught up with it the tab is the better
+    source. The tab carries a team per row per season, where the current sheet
+    carries one TEAM per player and applies it to every season in that row,
+    which is what used to write a summer move back onto a season already played.
+
+    The dead-money sheet is not replaced the same way, because the tab does not
+    hold the same people. For 2025-26 it has no row at all for sixteen men this
+    sheet carries, from Terry Rozier's $26,643,031 down to three $15,000 camp
+    payments. So for a season the tab covers, this sheet comes back separately,
+    as a row of its own where the tab has none and as the team for a row the tab
+    left blank. It never changes a figure the tab gives.
+
+    What the cutover skipped comes back with the lookup, named and totalled, so
+    data/salary_sources_report.json can say what moving the boundary cost.
     """
     # Accumulate: (nk, season) -> { "team_salaries": {team: int}, "display_name": str }
     accum = {}
+    is_later = seasons_after(after_season)
+    #: sheet -> season -> { normalised name: dollars } for the columns skipped
+    dropped = {"current": {}, "dead": {}}
+    #: (nk, season) -> { "player": str, "teams": {team: dollars} } for the dead
+    #: money of a season the tab covers. Offered to the tab, never imposed.
+    dead_for_the_tab = {}
+
+    def note_dropped(sheet, nk, player, season, salary):
+        bucket = dropped[sheet].setdefault(season, {})
+        entry = bucket.setdefault(nk, {"player": player, "salary": 0})
+        entry["salary"] += salary
+
+    def offer_to_the_tab(nk, player, team_abbr, season, salary):
+        entry = dead_for_the_tab.setdefault(
+            (nk, season), {"player": player, "teams": defaultdict(int)})
+        if team_abbr:
+            entry["teams"][team_abbr] += salary
+
     
     def add_entry(nk, display_name, team_abbr, season, salary):
         key = (nk, season)
@@ -1103,15 +1183,20 @@ def process_cyro_salaries(current_csv, dead_csv):
             player_col = h.index("PLAYER") if "PLAYER" in h else 0
             team_col = h.index("TEAM") if "TEAM" in h else 2
             # Find all year columns
-            year_cols = {}  # { col_index: season_str }
+            year_cols = {}      # { col_index: season_str } this sheet answers
+            skipped_cols = {}   # { col_index: season_str } the tab answers
             for i, col_name in enumerate(h):
-                if col_name.isdigit() and len(col_name) == 4:
-                    yr = int(col_name)
-                    if 2026 <= yr <= 2035:
-                        season = year_to_season(yr)
-                        if season:
-                            year_cols[i] = season
-            print(f"    Current salaries: PLAYER={player_col}, TEAM={team_col}, year cols={list(year_cols.values())}")
+                if not (col_name.isdigit() and len(col_name) == 4):
+                    continue
+                season = year_to_season(int(col_name))
+                if not season:
+                    continue
+                (year_cols if is_later(season) else skipped_cols)[i] = season
+            print("    Current salaries: PLAYER={}, TEAM={}, year cols={}{}".format(
+                player_col, team_col, list(year_cols.values()),
+                ", left to the historical tab: {}".format(list(skipped_cols.values()))
+                if skipped_cols else "",
+            ))
             count = 0
             for cols in reader:
                 player = cols[player_col].strip() if len(cols) > player_col else ""
@@ -1128,6 +1213,13 @@ def process_cyro_salaries(current_csv, dead_csv):
                         continue
                     add_entry(nk, player, team_abbr, season, salary)
                     count += 1
+                for col_idx, season in skipped_cols.items():
+                    if len(cols) <= col_idx:
+                        continue
+                    salary = parse_salary(cols[col_idx])
+                    if salary is None or salary == 0:
+                        continue
+                    note_dropped("current", nk, player, season, salary)
             print(f"    Parsed {count} salary entries from current salaries")
     
     # Parse dead money — find all "SALARY XX-YY" columns
@@ -1139,7 +1231,8 @@ def process_cyro_salaries(current_csv, dead_csv):
             player_col = h.index("PLAYER") if "PLAYER" in h else 0
             team_col = h.index("TEAM") if "TEAM" in h else 3
             # Find all SALARY XX-YY columns
-            salary_cols = {}  # { col_index: season_str }
+            salary_cols = {}
+            dead_skipped = {}
             for i, col_name in enumerate(h):
                 m = re.search(r'SALARY\s+(\d{2})-(\d{2})', col_name)
                 if m:
@@ -1147,8 +1240,12 @@ def process_cyro_salaries(current_csv, dead_csv):
                     end_yr = int(m.group(2))
                     # Convert "25-26" to "2025-26"
                     season = f"20{start_yr}-{end_yr:02d}"
-                    salary_cols[i] = season
-            print(f"    Dead money: PLAYER={player_col}, TEAM={team_col}, salary cols={list(salary_cols.values())}")
+                    (salary_cols if is_later(season) else dead_skipped)[i] = season
+            print("    Dead money: PLAYER={}, TEAM={}, salary cols={}{}".format(
+                player_col, team_col, list(salary_cols.values()),
+                ", left to the historical tab: {}".format(list(dead_skipped.values()))
+                if dead_skipped else "",
+            ))
             count = 0
             for cols in reader:
                 player = cols[player_col].strip() if len(cols) > player_col else ""
@@ -1165,6 +1262,14 @@ def process_cyro_salaries(current_csv, dead_csv):
                         continue
                     add_entry(nk, player, team_abbr, season, salary)
                     count += 1
+                for col_idx, season in dead_skipped.items():
+                    if len(cols) <= col_idx:
+                        continue
+                    salary = parse_salary(cols[col_idx])
+                    if salary is None or salary == 0:
+                        continue
+                    note_dropped("dead", nk, player, season, salary)
+                    offer_to_the_tab(nk, player, team_abbr, season, salary)
             print(f"    Parsed {count} salary entries from dead money")
     
     # Build lookup per season, filtering out $0 players
@@ -1194,7 +1299,12 @@ def process_cyro_salaries(current_csv, dead_csv):
     seasons_list = sorted(seasons_found)
     print(f"    Combined into {len(lookup)} player-season records across {seasons_list}")
     print(f"    Skipped {skipped} with $0, {multi_team} multi-team")
-    return lookup, seasons_found
+    for entry in dead_for_the_tab.values():
+        entry["teams"] = dict(entry["teams"])
+    if dead_for_the_tab:
+        print(f"    {len(dead_for_the_tab)} dead-money rows offered to the "
+              f"historical tab for the seasons it covers")
+    return lookup, seasons_found, dropped, dead_for_the_tab
 
 
 def load_award_overrides():
@@ -1373,8 +1483,23 @@ def build_data():
     print("\n[5/7] Parsing CSV data...")
     stats_lookup = process_stats(stats_csv) if stats_csv else {}
     hist_sal_lookup = process_salaries_csv(hist_sal_csv) if hist_sal_csv else {}
-    future_sal_lookup = process_future_salaries(future_sal_csv) if future_sal_csv else {}
-    cyro_lookup, cyro_seasons = process_cyro_salaries(sal_2526_current_csv, sal_2526_dead_csv)
+
+    # Where the historical tab now ends, read off the tab rather than written
+    # down here. It is authoritative for every season it holds; the two
+    # forward-looking sheets supply only what comes after. The owner adding a
+    # season to the tab moves this boundary on its own, which is what the old
+    # literal year lists could not do.
+    historical_through = latest_season({season for _nk, season in hist_sal_lookup})
+    print(f"    Historical salaries run through {historical_through or 'nothing'};"
+          f" the forward sheets are read only past it")
+
+    future_sal_lookup, future_dropped_cols = (
+        process_future_salaries(future_sal_csv, after_season=historical_through)
+        if future_sal_csv else ({}, [])
+    )
+    cyro_lookup, cyro_seasons, cyro_dropped, dead_for_the_tab = (
+        process_cyro_salaries(sal_2526_current_csv, sal_2526_dead_csv,
+                              after_season=historical_through))
     persons = build_person_index(bio_csv, stats_csv)
     awards_lookup, all_awards_set = (
         process_awards(awards_csv, persons) if awards_csv else ({}, set())
@@ -1412,6 +1537,65 @@ def build_data():
             salary_by_person.setdefault((pid, season), []).append(rec)
     salary_csv_lookup = salary_by_person
 
+    # The dead-money sheet, for the seasons the historical tab covers. The tab
+    # holds those seasons but not every man in them: sixteen of this sheet's
+    # 2025-26 rows have no row on the tab at all. So it is read as a row of its
+    # own where the tab has none, and as the team for a row the tab left blank.
+    # No figure the tab gave is touched, and where the tab names a team the tab
+    # keeps it. The blank-team branch has not fired on any build yet: the 98
+    # teamless records that prompted it were the agent tracker's, not the tab's.
+    # It stays as the guard it was written to be, and the report says how often
+    # it fires so a reader need not guess.
+    #
+    # Asked of the person, not of the spelling, and so after the re-key above.
+    # Asking it of the spelling looks equivalent and is not: two spellings the
+    # register resolves to one man are two keys before the re-key and one after
+    # it. "Has the tab got him already" then answers no, a second row goes in
+    # beside the tab's, and the loop that folds these into the unified list
+    # keeps the first salary it saw and drops the second. Skal Labissiere's
+    # $153,330 went that way, and the only reason anyone noticed is that the
+    # sums below stopped adding up.
+    dead_teams_filled, dead_rows_added, dead_left_alone = [], [], 0
+    for (_nk, season), offer in sorted(dead_for_the_tab.items()):
+        teams = offer["teams"]
+        if not teams:
+            continue
+        # Several clubs owing one man one season is a thing this sheet can say
+        # and the tab cannot, so both are named and neither is given a figure:
+        # nothing here records how the money divided.
+        team_str = ", ".join(sorted(teams))
+        # note=True, as everywhere else a salary row is resolved: display() reads
+        # the spellings it was told about, and a man bio.csv has no row for has
+        # no other source for his name. With note=False these rows came out with
+        # an empty player, and several of them collapsed into one nameless key.
+        who = persons.resolve(offer["player"], season)
+        existing = salary_csv_lookup.get((who, season))
+        if existing is None:
+            salary_csv_lookup[(who, season)] = [{
+                "player_original": offer["player"],
+                "team": team_str,
+                "salary": sum(teams.values()),
+            }]
+            dead_rows_added.append({
+                "player": offer["player"], "season": season,
+                "team": team_str, "salary": sum(teams.values()),
+            })
+            continue
+        blank = [rec for rec in existing if not (rec.get("team") or "").strip()]
+        if not blank:
+            dead_left_alone += 1
+            continue
+        for rec in blank:
+            rec["team"] = team_str
+        dead_teams_filled.append({
+            "player": offer["player"], "season": season, "team": team_str,
+            "salary_on_the_tab": sum(rec["salary"] for rec in blank),
+        })
+    if dead_for_the_tab:
+        print(f"    Dead money into the tab's seasons: {len(dead_teams_filled)} "
+              f"teams filled in, {len(dead_rows_added)} rows added, "
+              f"{dead_left_alone} left alone because the tab names a team")
+
     # Combine multi-team records in salary_csv_lookup
     # e.g. Griffin 2020-21: [{team:DET, salary:32M}, {team:BKN, salary:1.2M}]
     # becomes: [{team:"BKN, DET", salary:33.9M, team_salaries:{BKN:1.2M, DET:32M}}]
@@ -1431,33 +1615,48 @@ def build_data():
                 team_sals[tm] += sal
             elif sal:
                 team_sals[""] += sal
-        if len(team_sals) > 1:
-            # Multi-team: combine into one record
-            teams_sorted = sorted(t for t in team_sals.keys() if t)
-            total = sum(team_sals.values())
-            combined = {
-                "player_original": display_name,
-                "team": ", ".join(teams_sorted),
-                "salary": total,
-                "team_salaries": {t: s for t, s in team_sals.items() if t},
-            }
-            salary_csv_lookup[key] = [combined]
+        # Collapsed whether the rows name one team or several. Leaving a
+        # one-team pair uncollapsed is not harmless: the loop below that folds
+        # these into the unified list takes the first record's salary and only
+        # the others' teams, so the second payment is dropped without a word.
+        # Nothing in the tab's 1990-91 to 2024-25 does this; its 2025-26 does,
+        # once, for $153,330, which is how it came to light.
+        teams_sorted = sorted(t for t in team_sals.keys() if t)
+        combined = {
+            "player_original": display_name,
+            "team": ", ".join(teams_sorted),
+            "salary": sum(team_sals.values()),
+        }
+        if len(teams_sorted) > 1:
+            # Per-team figures only where there is more than one team to tell
+            # apart; a single team's breakdown would say nothing the record
+            # does not already say.
+            combined["team_salaries"] = {t: s for t, s in team_sals.items() if t}
+        salary_csv_lookup[key] = [combined]
 
     # Step 5: Build unified player-season list
     print("\n[6/7] Merging data and computing derived fields...")
 
-    # Start from agent tracker salary data (most comprehensive salary source)
-    # Key: (normalized_name, season) -> record dict
-    # NOTE: Skip seasons covered by Cyro's sheets — they have authoritative
-    # real salary data (not cap holds)
+    # Start from the agent tracker, which is the fallback for a season no salary
+    # sheet answers for. It carries cap holds rather than salaries, so wherever a
+    # sheet has the season the sheet wins, and the guard is which seasons the
+    # sheets came back with rather than the name of one of them.
+    #
+    # That guard used to read "in cyro_seasons", which was the same thing only
+    # while Cyro's sheets were the ones holding the newest season. The moment the
+    # historical tab took 2025-26 over, 667 tracker rows worth $5.9 billion
+    # became eligible for it, and the ones the tab had no row for came through as
+    # records with an empty team: Ben Simmons, Malcolm Brogdon, Bojan Bogdanovic
+    # and 95 more, none of whom played a game that season.
+    sheet_seasons = {season for (_pid, season) in salary_csv_lookup} | cyro_seasons
     ps_map = {}
     for player_name, seasons in agent_salaries.items():
         for season_raw, salary in seasons.items():
             season = normalize_season(season_raw)
             if not season:
                 continue
-            if season in cyro_seasons:
-                continue  # Cyro's data handles this season
+            if season in sheet_seasons:
+                continue  # a salary sheet answers for it
             end_year = season_to_year(season)
             if not end_year or end_year < 1991:
                 continue
@@ -1798,6 +1997,142 @@ def build_data():
             "corrections": corrections["applied"],
         }, f, indent=1, sort_keys=True)
         f.write("\n")
+
+    # Which sheet answered for which season, and what the boundary between them
+    # cost. The historical tab gaining a season silently stops two other sheets
+    # being read for it, so the build writes down what it stopped reading and
+    # whether the tab had it: a dollar dropped by one sheet and not picked up by
+    # the other is money gone off a page, and nothing else would say so.
+    hist_names = defaultdict(dict)
+    for (nk, season), recs in hist_sal_lookup.items():
+        for rec in recs:
+            hist_names[season][nk] = hist_names[season].get(nk, 0) + rec["salary"]
+    cutover = {}
+    for sheet, by_season in cyro_dropped.items():
+        for season, players in by_season.items():
+            held = hist_names.get(season) or {}
+            absent = sorted(
+                ({"player": entry["player"], "salary": entry["salary"]}
+                 for nk, entry in players.items() if nk not in held),
+                key=lambda row: (-row["salary"], row["player"]),
+            )
+            cutover.setdefault(sheet, {})[season] = {
+                "player_seasons_offered": len(players),
+                "dollars_offered": sum(e["salary"] for e in players.values()),
+                "also_in_the_historical_tab": len(players) - len(absent),
+                "missing_from_the_historical_tab": absent,
+            }
+    sources = {}
+    for season in sorted({s for _nk, s in hist_sal_lookup} | {s for _nk, s in cyro_lookup}
+                         | {s for _nk, s in future_sal_lookup}):
+        rows = {
+            "historical": sum(1 for (_nk, s) in hist_sal_lookup if s == season),
+            "current_and_dead": sum(1 for (_nk, s) in cyro_lookup if s == season),
+            "future": sum(1 for (_nk, s) in future_sal_lookup if s == season),
+        }
+        sources[season] = {k: v for k, v in rows.items() if v}
+    # Kept apart from the row counts above, which read as "these sheets
+    # answered for this season" and must stay readable as exactly that.
+    tab_dollars = defaultdict(int)
+    for (_nk, season), recs in hist_sal_lookup.items():
+        for rec in recs:
+            tab_dollars[season] += rec["salary"]
+
+    # The arithmetic that says nothing was counted twice. For a season the tab
+    # covers, every dollar in the file has to be a dollar the tab gave plus a
+    # dollar on a row the dead sheet added where the tab had none. The team fill
+    # moves no money, so it cannot appear here. A build that cannot say this is
+    # a build that has started summing two sheets' versions of one salary, and
+    # it says so rather than shipping the number.
+    built_per_season = defaultdict(int)
+    for rec in final_records:
+        built_per_season[rec["season"]] += rec.get("salary") or 0
+    added_per_season = defaultdict(int)
+    for row in dead_rows_added:
+        added_per_season[row["season"]] += row["salary"]
+    arithmetic = {}
+    for season in sources:
+        if seasons_after(historical_through)(season):
+            continue
+        expected = tab_dollars[season] + added_per_season[season]
+        built = built_per_season[season]
+        arithmetic[season] = {
+            "dollars_in_the_file": built,
+            "dollars_on_the_historical_tab": tab_dollars[season],
+            "dollars_on_dead_rows_the_tab_had_none_for": added_per_season[season],
+            "balances": built == expected,
+        }
+        if built != expected:
+            # Naming the records is the whole point. A total that does not add up
+            # says only that something is wrong; the rows it cannot account for
+            # say what. ::error:: so a run surfaces them as annotations rather
+            # than as lines in a log nobody outside the runner can read.
+            accounted = {
+                key for key in salary_csv_lookup if key[1] == season
+            }
+            # player_season_list rather than final_records: the records that
+            # ship carry a printed name and not the person they were keyed on,
+            # and the person is what has to be matched against the sheets.
+            orphans = sorted(
+                (persons.display(ps["pid"]) or "(no name)", ps["salary"])
+                for ps in player_season_list
+                if ps["season"] == season
+                and (ps["pid"], season) not in accounted
+            )
+            print(f"::error::{season} does not balance: the file holds "
+                  f"{built:,} and the sheets account for {expected:,}, a "
+                  f"difference of {built - expected:,}")
+            arithmetic[season]["records_the_sheets_do_not_account_for"] = [
+                {"player": name, "salary": salary} for name, salary in orphans
+            ]
+            for name, salary in orphans[:40]:
+                print(f"::error::{season} unaccounted: {name} {salary:,}")
+    sources_path = os.path.join(OUT_DIR, "salary_sources_report.json")
+    with open(sources_path, "w", encoding="utf-8") as f:
+        json.dump({
+            "note": (
+                "Which sheet supplied each season, and what the boundary "
+                "between them left to the tab. The historical tab is authoritative "
+                "for every season it holds and the two forward-looking sheets "
+                "are read only past it, so the boundary is the newest season on "
+                "the tab rather than a year written into the code: the owner "
+                "adding a season moves it. cutover lists, per forward sheet and "
+                "per season it no longer answers for, the player-seasons and "
+                "dollars that sheet still offers and how many of them the tab "
+                "holds under the same name. A season well before the boundary "
+                "may never have been read from that sheet by any build; the "
+                "boundary season itself is the one that moved. Anything under "
+                "missing_from_the_historical_tab the tab does not hold at all, "
+                "and is the thing to look at before trusting a rollover."
+            ),
+            "historical_through": historical_through,
+            "future_sheet_columns_left_to_the_tab": future_dropped_cols,
+            "rows_per_season_per_sheet": sources,
+            "cutover": cutover,
+            "the_sums_balance": arithmetic,
+            "dead_money_into_the_tabs_seasons": {
+                "note": (
+                    "The tab holds the seasons it covers but not every man in "
+                    "them: sixteen rows of the dead-money sheet's 2025-26 have "
+                    "no row on the tab at all. So that sheet is still read for "
+                    "those seasons, as a row of its own where the tab has none "
+                    "and as the team for a row the tab left blank. No figure the "
+                    "tab gave is changed, and where the tab names a team the tab "
+                    "keeps it. Where several clubs owe one man one season both "
+                    "are named and neither is given a figure, because nothing "
+                    "here records how the money divided. teams_filled_in has "
+                    "been empty on every build so far: the teamless records that "
+                    "prompted that branch turned out to be the agent tracker's "
+                    "rather than the tab's, and the tracker no longer answers "
+                    "for a season a sheet holds."
+                ),
+                "teams_filled_in": dead_teams_filled,
+                "rows_added": dead_rows_added,
+                "left_alone_because_the_tab_names_a_team": dead_left_alone,
+            },
+        }, f, indent=1, sort_keys=True)
+        f.write("\n")
+    print(f"    Written to {sources_path}")
 
     size_mb = os.path.getsize(out_path) / 1024 / 1024
     print(f"    Written to {out_path}")

@@ -454,3 +454,244 @@ def test_team_codes_reads_a_real_split_biggest_share_first():
     record = {"team": "TOR, IND", "salary": 10000000,
               "team_salaries": {"TOR": 6000000, "IND": 4000000}}
     assert F.team_codes(record) == ["TOR", "IND"]
+
+
+# --------------------------------------------------------------------------
+# which sheet answers for which season
+# --------------------------------------------------------------------------
+
+
+def test_the_boundary_is_the_newest_season_the_tab_holds():
+    assert B.latest_season(["1999-00", "2025-26", "2024-25"]) == "2025-26"
+    assert B.latest_season(["1999-00", "2000-01"]) == "2000-01"
+    assert B.latest_season([]) is None
+    assert B.latest_season(["nonsense"]) is None
+
+
+def test_seasons_after_counts_by_the_year_a_season_ends_in():
+    later = B.seasons_after("2025-26")
+    assert not later("2024-25")
+    assert not later("2025-26")
+    assert later("2026-27")
+    assert later("2030-31")
+
+
+def test_with_no_tab_at_all_every_season_is_still_read():
+    """An empty or missing historical sheet must not empty the file: the
+    forward sheets keep answering for everything rather than nothing."""
+    always = B.seasons_after(None)
+    assert always("1990-91") and always("2030-31")
+
+
+CURRENT_SHEET = (
+    "PLAYER,x,TEAM,2026,2027\n"
+    "Deandre Ayton,,LAL,\"$33,654,814\",\"$35,000,000\"\n"
+)
+DEAD_SHEET = (
+    "PLAYER,a,b,TEAM,SALARY 25-26,SALARY 26-27\n"
+    "Chris Paul,,,TOR,\"$3,634,153\",\"$1,000,000\"\n"
+)
+
+
+def test_the_forward_sheets_stop_at_the_season_the_tab_reaches():
+    lookup, seasons, dropped, dead_offer = B.process_cyro_salaries(
+        CURRENT_SHEET, DEAD_SHEET, after_season="2025-26")
+    assert seasons == {"2026-27"}
+    assert ("deandre ayton", "2025-26") not in lookup
+    assert ("chris paul", "2025-26") not in lookup
+    assert lookup[("deandre ayton", "2026-27")][0]["salary"] == 35000000
+    assert lookup[("chris paul", "2026-27")][0]["salary"] == 1000000
+    # and the build can say what it stopped reading, per sheet
+    assert dropped["current"]["2025-26"]["deandre ayton"]["salary"] == 33654814
+    assert dropped["dead"]["2025-26"]["chris paul"]["salary"] == 3634153
+    # the dead money comes back separately: the tab has these dollars without
+    # the club that owes them, so the sheet is kept for the team
+    assert dead_offer[("chris paul", "2025-26")]["teams"] == {"TOR": 3634153}
+    assert ("deandre ayton", "2025-26") not in dead_offer
+
+
+def test_the_forward_sheets_still_answer_where_the_tab_has_not_reached():
+    """The fallback that matters on the day the tab is a season behind: nothing
+    is lost, the forward sheets simply still speak for it."""
+    lookup, seasons, dropped, dead_offer = B.process_cyro_salaries(
+        CURRENT_SHEET, DEAD_SHEET, after_season="2024-25")
+    assert seasons == {"2025-26", "2026-27"}
+    assert lookup[("deandre ayton", "2025-26")][0]["salary"] == 33654814
+    assert lookup[("chris paul", "2025-26")][0]["salary"] == 3634153
+    assert dropped == {"current": {}, "dead": {}}
+    assert dead_offer == {}
+
+
+FUTURE_SHEET = "PLAYER,TEAM,2026,2027,2028\nDeandre Ayton,LAL,100,200,300\n"
+
+
+def test_the_future_sheet_reads_every_year_column_past_the_boundary():
+    lookup, skipped = B.process_future_salaries(FUTURE_SHEET, after_season="2025-26")
+    assert skipped == ["2026"]
+    assert ("deandre ayton", "2025-26") not in lookup
+    assert lookup[("deandre ayton", "2026-27")][0]["salary"] == 200
+    assert lookup[("deandre ayton", "2027-28")][0]["salary"] == 300
+
+
+def test_the_future_sheet_needs_no_edit_when_the_boundary_moves():
+    """The columns used to be the literal list 2027 to 2031. A sheet that gains
+    a 2032 column has to be read without anyone remembering to say so."""
+    sheet = "PLAYER,TEAM,2031,2032\nSomeone,LAL,10,20\n"
+    lookup, skipped = B.process_future_salaries(sheet, after_season="2025-26")
+    assert skipped == []
+    assert lookup[("someone", "2031-32")][0]["salary"] == 20
+
+
+@pytest.mark.skipif(
+    not os.path.exists(os.path.join(REPO, "data", "salary_sources_report.json")),
+    reason="data/salary_sources_report.json not present",
+)
+def test_the_shipped_sources_report_names_a_boundary_and_keeps_its_books():
+    with open(os.path.join(REPO, "data", "salary_sources_report.json"), "r",
+              encoding="utf-8") as fh:
+        doc = json.load(fh)
+    through = doc["historical_through"]
+    assert B.normalize_season(through) == through, through
+    later = B.seasons_after(through)
+    rows = doc["rows_per_season_per_sheet"]
+    for season, sheets in rows.items():
+        if not later(season):
+            # the tab owns it, so no forward sheet may have answered for it
+            assert set(sheets) <= {"historical"}, (season, sheets)
+        else:
+            assert "historical" not in sheets, (season, sheets)
+    # the arithmetic the build checked: no season the tab covers may hold more
+    # money than the tab gave plus the rows the dead sheet added
+    assert doc["the_sums_balance"], "no season was checked"
+    for season, book in doc["the_sums_balance"].items():
+        assert not later(season), season
+        assert book["balances"] is True, (season, book)
+        assert (book["dollars_on_the_historical_tab"]
+                + book["dollars_on_dead_rows_the_tab_had_none_for"]
+                == book["dollars_in_the_file"]), (season, book)
+    dead = doc["dead_money_into_the_tabs_seasons"]
+    # the tab holds this money without the club that owes it, so every team the
+    # dead sheet filled in has to be for a season the tab covers
+    for row in dead["teams_filled_in"] + dead["rows_added"]:
+        assert not later(row["season"]), row
+        assert row["team"], row
+    for sheet, by_season in doc["cutover"].items():
+        for season, book in by_season.items():
+            assert not later(season), (sheet, season)
+            assert (book["also_in_the_historical_tab"]
+                    + len(book["missing_from_the_historical_tab"])
+                    == book["player_seasons_offered"]), (sheet, season)
+
+
+# --------------------------------------------------------------------------
+# the workflows
+# --------------------------------------------------------------------------
+
+WORKFLOWS = os.path.join(REPO, ".github", "workflows")
+
+
+def test_no_workflow_pastes_an_input_into_a_shell():
+    """A workflow input is outside content. In env: it is a string; interpolated
+    into a run: script it is one quote away from being a command."""
+    offenders = []
+    for name in sorted(os.listdir(WORKFLOWS)):
+        with open(os.path.join(WORKFLOWS, name), "r", encoding="utf-8") as fh:
+            lines = fh.read().splitlines()
+        in_run = False
+        for line in lines:
+            stripped = line.strip()
+            if stripped.startswith("run:"):
+                in_run = True
+                continue
+            if stripped.startswith("- name:") or stripped.startswith("env:"):
+                in_run = False
+            if in_run and "github.event" in line and "${{" in line:
+                offenders.append((name, stripped))
+    assert not offenders, offenders
+
+
+def test_both_workflows_commit_the_sources_report():
+    for name in ("update-data.yml", "data-build.yml"):
+        with open(os.path.join(WORKFLOWS, name), "r", encoding="utf-8") as fh:
+            body = fh.read()
+        assert "data/salary_sources_report.json" in body, name
+
+
+def test_the_dead_money_offer_asks_about_the_person_not_the_spelling():
+    """Two spellings the register resolves to one man are two keys before the
+    per-person re-key and one after it. Asked of the spelling, "has the tab got
+    him already" answers no, a second row goes in beside the tab's, and the loop
+    that folds records into the unified list keeps the first salary it saw and
+    drops the second. The money disappears without a word. Asked of the person,
+    the tab's row is found and only its blank team is filled.
+    """
+    index = B.PersonIndex()
+    index.add_person({
+        "PLAYER": "Skal Labissiere", "DRAFT": "2016", "PICK": "28",
+        "COLLEGE / TEAM": "Kentucky", "BIRTHDAY": "", "POS": "",
+        "NATIONALITY": "", "HEIGHT": "", "WEIGHT": "",
+    })
+    # whatever the two sheets spell, both are this man
+    tab_spelling, dead_spelling = "Skal Labissiere", "Skal Labissiere"
+    who = index.resolve(dead_spelling, "2025-26", note=False)
+    by_person = {(index.resolve(tab_spelling, "2025-26", note=False), "2025-26"): [
+        {"player_original": tab_spelling, "team": "", "salary": 153330}]}
+
+    existing = by_person.get((who, "2025-26"))
+    assert existing is not None, "the person is the key that finds him"
+    blank = [rec for rec in existing if not (rec.get("team") or "").strip()]
+    for rec in blank:
+        rec["team"] = "WAS"
+    assert len(by_person) == 1
+    rows = by_person[(who, "2025-26")]
+    assert len(rows) == 1 and rows[0]["team"] == "WAS"
+    # the figure is the tab's, once, and no second row was created to be dropped
+    assert rows[0]["salary"] == 153330
+
+
+def test_the_unified_merge_drops_a_second_salary_on_one_person_season():
+    """Why the question above has to be asked of the person: this is the loop
+    that would have swallowed the answer. A second record on the same
+    (person, season) contributes its team and never its money."""
+    ps_map = {("p1", "2025-26"): {
+        "pid": "p1", "season": "2025-26", "salary": 153330,
+        "end_year": 2026, "team": ""}}
+    second = {"player_original": "same man, other spelling", "team": "WAS",
+              "salary": 153330}
+    key = ("p1", "2025-26")
+    if key in ps_map:
+        if second.get("team") and not ps_map[key]["team"]:
+            ps_map[key]["team"] = second["team"]
+    assert ps_map[key]["salary"] == 153330, "the second salary is not added"
+    assert ps_map[key]["team"] == "WAS", "only the team comes across"
+
+
+def test_two_rows_on_one_team_in_one_season_keep_both_payments():
+    """The combine used to collapse a key only when its rows named more than one
+    team. Two rows on the same team stayed two, and the loop that folds records
+    into the unified list takes the first salary and only the others' teams, so
+    the second payment vanished. $153,330 of 2025-26 went that way.
+    """
+    # columns by position, as the parser reads them: TEAM, YEAR, PLAYER, SALARY
+    lookup = B.process_salaries_csv(
+        "TEAM,YEAR,PLAYER,SALARY\n"
+        "WAS,2026,Skal Labissiere,\"$100,000\"\n"
+        "WAS,2026,Skal Labissiere,\"$53,330\"\n"
+    )
+    key = ("skal labissiere", "2025-26")
+    assert len(lookup[key]) == 2, "two rows as read off the sheet"
+
+    # the collapse, as build_data runs it
+    recs = lookup[key]
+    team_sals = {}
+    for rec in recs:
+        team_sals[rec.get("team", "")] = team_sals.get(rec.get("team", ""), 0) + rec["salary"]
+    teams_sorted = sorted(t for t in team_sals if t)
+    combined = {"team": ", ".join(teams_sorted), "salary": sum(team_sals.values())}
+    if len(teams_sorted) > 1:
+        combined["team_salaries"] = {t: s for t, s in team_sals.items() if t}
+
+    assert combined["salary"] == 153330, "both payments, not just the first"
+    assert combined["team"] == "WAS"
+    # one team, so no per-team breakdown: it would say nothing new
+    assert "team_salaries" not in combined
