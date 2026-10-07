@@ -321,26 +321,29 @@ def cohort_page(idx, entity, identities, facts_by_cohort, media=None,
 def _career_may_predate_the_data(idx, ident):
     """Whether the edge of the window can have cut anything off this career.
 
-    Two shapes of career can. One was already under way when the file opens: a
-    man whose first season on file is the first season on file at all was
-    almost certainly paid before it, and the page cannot say how much. The
-    other was drafted before the oldest draft class the file can hold whole, so
-    his early seasons are outside it whatever season he first appears in.
+    This is the engine's own truncation test rather than a second copy of it.
+    ``idx.truncated`` holds the men whose careers the window can have cut, and
+    it draws the line in the one place a looser reading gets wrong: a man
+    drafted in the first class the file can hold whole, whose first season on
+    file is the file's own first season, is a rookie that season. Nothing of his
+    is outside the window, so his page needs no note. Dennis Scott and 53 others
+    read that way.
+
+    What stays on the truncated side is a man drafted before that class, whose
+    early seasons are outside the file whatever season he first appears in, and
+    a man whose career opens in the file's first season without the draft year
+    to match, who was being paid before it and the page cannot say how much.
 
     Everything else is a career the window did not touch, and there the note
     answers a question nobody asked: the table holds every dollar he was paid.
 
-    The season the file opens in is read off the data, not named here, so a file
-    that gains an older season moves this test with it.
+    A page for one segment of a split name asks about the whole key, which is
+    the only thing the engine flags: a split is one man's rows divided, so what
+    the window did to the career it did to the key.
     """
-    if not idx.seasons or not ident.records:
+    if not ident.records:
         return True
-    opens = idx.seasons[0]
-    if ident.records[0]["season"] == opens:
-        return True
-    first_draft_in_window = int(str(opens).split("-")[0])
-    drafted = [r.get("draft_year") for r in ident.records if r.get("draft_year")]
-    return bool(drafted) and min(drafted) < first_draft_in_window
+    return ident.data_key in idx.truncated
 
 
 def player_page(idx, ident, season_table_html, facts, related, linker=None,
