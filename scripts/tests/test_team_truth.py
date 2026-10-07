@@ -686,11 +686,13 @@ def test_two_rows_on_one_team_in_one_season_keep_both_payments():
     the second payment vanished. $153,330 of 2025-26 went that way.
     """
     # columns by position, as the parser reads them: TEAM, YEAR, PLAYER, SALARY
-    lookup = B.process_salaries_csv(
+    lookup, repeats = B.process_salaries_csv(
         "TEAM,YEAR,PLAYER,SALARY\n"
         "WAS,2026,Skal Labissiere,\"$100,000\"\n"
         "WAS,2026,Skal Labissiere,\"$53,330\"\n"
     )
+    # two payments, not one written twice: the figures differ
+    assert repeats == []
     key = ("skal labissiere", "2025-26")
     assert len(lookup[key]) == 2, "two rows as read off the sheet"
 
@@ -823,3 +825,49 @@ def test_the_fill_stops_at_the_boundary_like_everything_else():
         CURRENT_WITH_A_COVERED_SEASON, None, after_season="2025-26")
     assert seasons == {"2026-27"}
     assert set(dropped["current"]) == {"2025-26"}
+
+
+def test_a_row_that_repeats_another_exactly_is_read_once():
+    """The 2025-26 edit that put dead money on the historical tab gave 72 men a
+    second row naming the same club for the same figure to the dollar. The rows
+    under one player-season are summed, so reading both doubled what the club
+    owed: Damian Lillard came out owed $45,033,206 by Milwaukee, twice the
+    $22,516,603 it stretched his contract over.
+    """
+    lookup, repeats = B.process_salaries_csv(
+        "TEAM,YEAR,PLAYER,SALARY\n"
+        "MIL,2026,Damian Lillard,\"$22,516,603\"\n"
+        "POR,2026,Damian Lillard,\"$14,104,000\"\n"
+        "MIL,2026,Damian Lillard,\"$22,516,603\"\n"
+    )
+    key = ("damian lillard", "2025-26")
+    assert [(r["team"], r["salary"]) for r in lookup[key]] == [
+        ("MIL", 22516603), ("POR", 14104000)]
+    assert repeats == [{"player": "Damian Lillard", "season": "2025-26",
+                        "team": "MIL", "salary": 22516603}]
+
+
+def test_two_clubs_owing_one_man_the_same_figure_both_count():
+    """The test is the pair, not the figure. Two clubs owing a man the identical
+    amount in one season are two debts, and the money is not the same money."""
+    lookup, repeats = B.process_salaries_csv(
+        "TEAM,YEAR,PLAYER,SALARY\n"
+        "CHA,2026,Spencer Dinwiddie,\"$3,634,153\"\n"
+        "TOR,2026,Spencer Dinwiddie,\"$3,634,153\"\n"
+    )
+    key = ("spencer dinwiddie", "2025-26")
+    assert sum(r["salary"] for r in lookup[key]) == 7268306
+    assert repeats == []
+
+
+def test_a_repeat_in_another_season_is_another_payment():
+    """A man paid the same figure by the same club in two seasons is paid twice.
+    The season is part of what makes a repeat a repeat."""
+    lookup, repeats = B.process_salaries_csv(
+        "TEAM,YEAR,PLAYER,SALARY\n"
+        "MEM,2025,Georges Niang,\"$8,200,000\"\n"
+        "MEM,2026,Georges Niang,\"$8,200,000\"\n"
+    )
+    assert lookup[("georges niang", "2024-25")][0]["salary"] == 8200000
+    assert lookup[("georges niang", "2025-26")][0]["salary"] == 8200000
+    assert repeats == []
