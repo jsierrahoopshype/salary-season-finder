@@ -17,7 +17,7 @@ import re
 import sys
 import io
 import unicodedata
-from collections import defaultdict
+from collections import Counter, defaultdict
 from datetime import datetime, date
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -1013,14 +1013,35 @@ def combine_stats(stats_list):
 def process_salaries_csv(csv_data):
     """Parse historical salaries. Uses column positions (0=TEAM, 1=YEAR,
     2=PLAYER, 3=SALARY) because the header row has duplicate column names
-    from extra spreadsheet sections embedded in the same sheet."""
+    from extra spreadsheet sections embedded in the same sheet.
+
+    A row that repeats another one of this man's rows in this season exactly,
+    the same team and the same figure to the dollar, is read as one payment
+    written down twice rather than two payments that happen to match. The rows
+    under one player-season are summed, so the alternative is to double his
+    salary: the 2025-26 edit that put dead money on this tab gave Damian Lillard
+    a second Milwaukee row of $22,516,603, the figure Milwaukee stretched his
+    contract over, and he came out owed $45,033,206 by a club he does not play
+    for. 72 men read that way.
+
+    Two genuinely separate payments of the identical amount by one club in one
+    season, two ten-day contracts at the same proration, would be read as one as
+    well. That is the cost, and it is the cheaper error: the tab's 1990-91 to
+    2024-25 holds no two rows naming one team for one man at all, so nothing
+    before this edit is touched, and what is dropped is listed in
+    data/salary_sources_report.json rather than taken quietly.
+
+    Returns (lookup, the rows dropped).
+    """
     if not csv_data:
-        return {}
+        return {}, []
     reader = csv.reader(io.StringIO(csv_data))
     header = next(reader, None)
     if not header:
-        return {}
+        return {}, []
     lookup = {}
+    seen = {}
+    repeats = []
     for cols in reader:
         if len(cols) < 4:
             continue
@@ -1034,15 +1055,27 @@ def process_salaries_csv(csv_data):
         if not season:
             continue
         key = (normalize_name(player), season)
-        if key not in lookup:
-            lookup[key] = []
-        lookup[key].append({
+        row = {
             "player_original": player,
             "team": normalize_team(team),
             "salary": salary,
-        })
+        }
+        mark = (row["team"], salary)
+        if mark in seen.setdefault(key, set()):
+            repeats.append({"player": player, "season": season,
+                            "team": row["team"], "salary": salary})
+            continue
+        seen[key].add(mark)
+        if key not in lookup:
+            lookup[key] = []
+        lookup[key].append(row)
     print(f"    Parsed {len(lookup)} player-seasons from historical salaries")
-    return lookup
+    if repeats:
+        by_season = Counter(r["season"] for r in repeats)
+        print("    {} rows repeated another exactly and were read once: {}".format(
+            len(repeats),
+            ", ".join("{} {}".format(s, n) for s, n in sorted(by_season.items()))))
+    return lookup, repeats
 
 
 def process_future_salaries(csv_data, after_season=None):
@@ -1482,7 +1515,8 @@ def build_data():
     # Step 4: Parse
     print("\n[5/7] Parsing CSV data...")
     stats_lookup = process_stats(stats_csv) if stats_csv else {}
-    hist_sal_lookup = process_salaries_csv(hist_sal_csv) if hist_sal_csv else {}
+    hist_sal_lookup, tab_repeats = (
+        process_salaries_csv(hist_sal_csv) if hist_sal_csv else ({}, []))
 
     # Where the historical tab now ends, read off the tab rather than written
     # down here. It is authoritative for every season it holds; the two
@@ -2160,6 +2194,14 @@ def build_data():
             ]
             for name, salary in orphans[:40]:
                 print(f"::error::{season} unaccounted: {name} {salary:,}")
+    # Grouped for the report: a count and a sum per season says at a glance
+    # whether this is one season's edit or something the tab has always done.
+    repeats_per_season = dict(Counter(r["season"] for r in tab_repeats))
+    repeats_dollars = {}
+    for row in tab_repeats:
+        repeats_dollars[row["season"]] = (
+            repeats_dollars.get(row["season"], 0) + row["salary"])
+
     sources_path = os.path.join(OUT_DIR, "salary_sources_report.json")
     with open(sources_path, "w", encoding="utf-8") as f:
         json.dump({
@@ -2181,6 +2223,27 @@ def build_data():
             "historical_through": historical_through,
             "future_sheet_columns_left_to_the_tab": future_dropped_cols,
             "rows_per_season_per_sheet": sources,
+            "rows_on_the_tab_that_repeated_another_exactly": {
+                "note": (
+                    "A row naming the same man, season, team and figure to the "
+                    "dollar as another row of the tab is read once. The rows "
+                    "under one player-season are summed, so reading both doubles "
+                    "what that club owed him: the 2025-26 edit that put dead "
+                    "money on this tab gave Damian Lillard a second Milwaukee "
+                    "row of the figure Milwaukee stretched his contract over, "
+                    "and he came out owed twice it by a club he does not play "
+                    "for. Two separate payments of the identical amount by one "
+                    "club in one season would be read as one as well; that is "
+                    "the cost of the test, and the cheaper error. Two clubs "
+                    "owing one man the same figure are two debts and both count. "
+                    "Anything here is worth putting to the sheet's owner: a row "
+                    "the tab holds twice is the tab's to lose, not ours to "
+                    "carry."
+                ),
+                "rows_per_season": repeats_per_season,
+                "dollars_per_season": repeats_dollars,
+                "rows": tab_repeats,
+            },
             "cutover": cutover,
             "the_sums_balance": arithmetic,
             "filled_from_current_sheet_missing_from_tab": {
