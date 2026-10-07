@@ -3268,74 +3268,65 @@ def test_a_lone_career_total_is_dropped_only_for_a_one_season_career():
 
 
 class _Ident(object):
-    def __init__(self, records):
-        self.records = records
+    def __init__(self, data_key, records=(None,)):
+        self.data_key = data_key
+        self.records = list(records)
 
 
 class _Idx(object):
-    def __init__(self, seasons):
-        self.seasons = seasons
+    def __init__(self, truncated):
+        self.truncated = set(truncated)
 
 
-def _season(season, draft_year=None):
-    row = {"season": season}
-    if draft_year is not None:
-        row["draft_year"] = draft_year
-    return row
-
-
-def test_a_career_inside_the_window_needs_no_note():
+def test_the_note_follows_the_engines_own_truncation_flag():
+    """One test for a truncated career, not two. The engine already works out
+    whose career the window can have cut, and a second copy of the rule in the
+    page writer is a second rule to keep in step."""
     from prerender.pages import _career_may_predate_the_data
 
-    idx = _Idx(["1990-91", "1991-92", "2014-15", "2015-16"])
-    inside = _Ident([_season("2014-15", 2014), _season("2015-16", 2014)])
-    assert not _career_may_predate_the_data(idx, inside)
+    idx = _Idx({"Michael Jordan"})
+    assert _career_may_predate_the_data(idx, _Ident("Michael Jordan"))
+    assert not _career_may_predate_the_data(idx, _Ident("Aaron Gordon"))
+    # a page with no rows to read is footnoted rather than guessed at
+    assert _career_may_predate_the_data(idx, _Ident("Aaron Gordon", []))
 
 
-def test_a_career_the_window_can_have_cut_keeps_the_note():
-    from prerender.pages import _career_may_predate_the_data
+def test_a_rookie_of_the_first_class_on_file_needs_no_note():
+    """The finer line, and the reason for taking the engine's flag. A man
+    drafted in the first class the file can hold whole, whose first season is
+    the file's first season, was a rookie that season: nothing of his is outside
+    the window. 54 pages read that way, Dennis Scott's among them."""
+    idx = F.build_index(F.load_data())
 
-    idx = _Idx(["1990-91", "1991-92", "2014-15"])
-    # already under way when the file opens
-    assert _career_may_predate_the_data(
-        idx, _Ident([_season("1990-91", 1990), _season("1991-92", 1990)]))
-    # drafted before the oldest class the file can hold whole, whenever he
-    # first appears in it
-    assert _career_may_predate_the_data(
-        idx, _Ident([_season("1991-92", 1985)]))
-    # and a man with no draft year at all, appearing later, is inside it
-    assert not _career_may_predate_the_data(idx, _Ident([_season("1991-92")]))
-
-
-def test_the_test_moves_with_the_season_the_file_opens_in():
-    """The window's edge is read off the data. A file that gains an older
-    season moves which careers it can have cut, with nothing to edit here."""
-    from prerender.pages import _career_may_predate_the_data
-
-    ident = _Ident([_season("1990-91", 1985), _season("1991-92", 1985)])
-    assert _career_may_predate_the_data(_Idx(["1990-91", "1991-92"]), ident)
-    # the same man in a file that reaches back to 1984-85 is wholly inside it
-    assert not _career_may_predate_the_data(
-        _Idx(["1984-85", "1990-91", "1991-92"]), ident)
+    assert "Dennis Scott" not in idx.truncated
+    assert "Bimbo Coles" not in idx.truncated
+    # drafted 1985 and first seen in 1990-91, so five seasons are missing
+    assert "Michael Jordan" in idx.truncated
+    assert "A.C. Green" in idx.truncated
+    # drafted 1987 but first seen in 1990-91: the draft year does not match the
+    # season, so the career was already under way
+    assert "A.J. Wynder" in idx.truncated
 
 
 @built
 def test_the_note_prints_on_a_player_page_only_where_the_window_can_have_cut():
     """A page whose table holds every dollar a man was paid has nothing to
-    footnote. 2,950 of them stopped printing the line; 413 keep it."""
+    footnote. 3,004 of them do not print the line; 359 keep it."""
     note = '<p class="hm-scope">'
     kept, dropped = [], []
     for path, text in _live_player_pages():
         (kept if note in text else dropped).append(
             os.path.relpath(path, REPO).replace(os.sep, "/"))
     assert kept and dropped, (len(kept), len(dropped))
-    # drafted in 1984, first season on file 1990-91: both halves of the rule
+    # drafted in 1984, first seen in 1990-91, so five seasons are missing
     assert "player/michael-jordan/index.html" in kept
     # drafted in 1976, one season on file, which is 1990-91
     assert "player/adrian-dantley/index.html" in kept
     # drafted in 2003 and 2014, every season of each on file
     assert "player/lebron-james/index.html" in dropped
     assert "player/aaron-gordon/index.html" in dropped
+    # drafted in 1990 and first seen in 1990-91, so he was a rookie that season
+    assert "player/dennis-scott/index.html" in dropped
 
 
 @built
