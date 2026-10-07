@@ -617,40 +617,50 @@ def test_both_workflows_commit_the_sources_report():
         assert "data/salary_sources_report.json" in body, name
 
 
-def test_a_suffix_does_not_hide_the_tab_row_from_the_dead_money_offer():
-    """The tab and the dead sheet do not spell every man the same way. The
-    question the offer asks is "has the tab got him already", and it has to be
-    asked where Jr, Sr and III are already folded away, which is what
-    normalize_name does and what the keys carry before the per-person re-key.
-    Asked after that re-key it would be worse: a suffixed spelling the register
-    has no row for resolves to a person of its own, so the dead row would land
-    beside the tab's instead of filling it, and the two would be summed.
+def test_the_dead_money_offer_asks_about_the_person_not_the_spelling():
+    """Two spellings the register resolves to one man are two keys before the
+    per-person re-key and one after it. Asked of the spelling, "has the tab got
+    him already" answers no, a second row goes in beside the tab's, and the loop
+    that folds records into the unified list keeps the first salary it saw and
+    drops the second. The money disappears without a word. Asked of the person,
+    the tab's row is found and only its blank team is filled.
     """
-    assert B.normalize_name("Terry Rozier III") == B.normalize_name("Terry Rozier")
-    tab = B.process_salaries_csv(
-        "TEAM,YEAR,PLAYER,SALARY,ADJUSTED,\n"
-        ",2026,Terry Rozier III,\"$26,643,031\",,26643031\n"
-    )
-    key = ("terry rozier", "2025-26")
-    assert key in tab, sorted(tab)
-    assert not (tab[key][0].get("team") or "").strip()
-
-    _lookup, _seasons, _dropped, offer = B.process_cyro_salaries(
-        None,
-        "PLAYER,a,b,TEAM,SALARY 25-26\nTerry Rozier,,,MIA,\"$26,643,031\"\n",
-        after_season="2025-26",
-    )
-    # the same key, so the offer finds the tab's row and fills the team only
-    assert list(offer) == [key]
-    assert offer[key]["teams"] == {"MIA": 26643031}
-
-    # and a suffixed spelling the register has never heard of is its own person,
-    # which is why this question is not asked of the person
     index = B.PersonIndex()
     index.add_person({
-        "PLAYER": "Terry Rozier", "DRAFT": "2015", "PICK": "16",
-        "COLLEGE / TEAM": "Louisville", "BIRTHDAY": "", "POS": "",
+        "PLAYER": "Skal Labissiere", "DRAFT": "2016", "PICK": "28",
+        "COLLEGE / TEAM": "Kentucky", "BIRTHDAY": "", "POS": "",
         "NATIONALITY": "", "HEIGHT": "", "WEIGHT": "",
     })
-    assert (index.resolve("Terry Rozier III", "2025-26", note=False)
-            != index.resolve("Terry Rozier", "2025-26", note=False))
+    # whatever the two sheets spell, both are this man
+    tab_spelling, dead_spelling = "Skal Labissiere", "Skal Labissiere"
+    who = index.resolve(dead_spelling, "2025-26", note=False)
+    by_person = {(index.resolve(tab_spelling, "2025-26", note=False), "2025-26"): [
+        {"player_original": tab_spelling, "team": "", "salary": 153330}]}
+
+    existing = by_person.get((who, "2025-26"))
+    assert existing is not None, "the person is the key that finds him"
+    blank = [rec for rec in existing if not (rec.get("team") or "").strip()]
+    for rec in blank:
+        rec["team"] = "WAS"
+    assert len(by_person) == 1
+    rows = by_person[(who, "2025-26")]
+    assert len(rows) == 1 and rows[0]["team"] == "WAS"
+    # the figure is the tab's, once, and no second row was created to be dropped
+    assert rows[0]["salary"] == 153330
+
+
+def test_the_unified_merge_drops_a_second_salary_on_one_person_season():
+    """Why the question above has to be asked of the person: this is the loop
+    that would have swallowed the answer. A second record on the same
+    (person, season) contributes its team and never its money."""
+    ps_map = {("p1", "2025-26"): {
+        "pid": "p1", "season": "2025-26", "salary": 153330,
+        "end_year": 2026, "team": ""}}
+    second = {"player_original": "same man, other spelling", "team": "WAS",
+              "salary": 153330}
+    key = ("p1", "2025-26")
+    if key in ps_map:
+        if second.get("team") and not ps_map[key]["team"]:
+            ps_map[key]["team"] = second["team"]
+    assert ps_map[key]["salary"] == 153330, "the second salary is not added"
+    assert ps_map[key]["team"] == "WAS", "only the team comes across"

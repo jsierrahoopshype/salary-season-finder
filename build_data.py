@@ -1137,12 +1137,11 @@ def process_cyro_salaries(current_csv, dead_csv, after_season=None):
     which is what used to write a summer move back onto a season already played.
 
     The dead-money sheet is not replaced the same way, because the tab does not
-    hold the same thing. For 2025-26 the tab carries the dead money as 98 rows
-    of dollars with the TEAM column empty, Ben Simmons's $40,338,144 and Terry
-    Rozier's $26,643,031 among them: the money is there and the club that owes
-    it is not. So for a season the tab covers, this sheet comes back separately,
-    as the team for a row the tab left blank and as a row of its own where the
-    tab has none. It never changes a figure the tab gives.
+    hold the same people. For 2025-26 it has no row at all for sixteen men this
+    sheet carries, from Terry Rozier's $26,643,031 down to three $15,000 camp
+    payments. So for a season the tab covers, this sheet comes back separately,
+    as a row of its own where the tab has none and as the team for a row the tab
+    left blank. It never changes a figure the tab gives.
 
     What the cutover skipped comes back with the lookup, named and totalled, so
     data/salary_sources_report.json can say what moving the boundary cost.
@@ -1528,20 +1527,36 @@ def build_data():
         else:
             salary_csv_lookup[k] = v
 
+    # Re-key every salary row on the person it belongs to. Two spellings of one
+    # man (Wendell Carter and Wendell Carter Jr) land together; a father and a
+    # son who share a loose name (Gary Payton and Gary Payton II) come apart.
+    salary_by_person = {}
+    for (nk, season), recs in salary_csv_lookup.items():
+        for rec in recs:
+            pid = persons.resolve(rec["player_original"], season)
+            salary_by_person.setdefault((pid, season), []).append(rec)
+    salary_csv_lookup = salary_by_person
+
     # The dead-money sheet, for the seasons the historical tab covers. The tab
-    # carries this money and not the club that owes it: rows of dollars with an
-    # empty TEAM. So the sheet is read for the team alone where the tab left one
-    # blank, and as a row of its own where the tab has none. No figure the tab
-    # gave is touched, and where the tab names a team the tab keeps it.
+    # holds those seasons but not every man in them: sixteen of this sheet's
+    # 2025-26 rows have no row on the tab at all. So it is read as a row of its
+    # own where the tab has none, and as the team for a row the tab left blank.
+    # No figure the tab gave is touched, and where the tab names a team the tab
+    # keeps it. The blank-team branch has not fired on any build yet: the 98
+    # teamless records that prompted it were the agent tracker's, not the tab's.
+    # It stays as the guard it was written to be, and the report says how often
+    # it fires so a reader need not guess.
     #
-    # Asked of the spelling, before the per-person re-key, because
-    # normalize_name already folds Jr, Sr and III away: the tab's "Terry Rozier
-    # III" and the dead sheet's "Terry Rozier" are one key here. Asking after
-    # the re-key would be worse, not better, since a suffixed spelling the
-    # register has no row for resolves to a person of its own, and the dead row
-    # would go in beside the tab's instead of filling it.
+    # Asked of the person, not of the spelling, and so after the re-key above.
+    # Asking it of the spelling looks equivalent and is not: two spellings the
+    # register resolves to one man are two keys before the re-key and one after
+    # it. "Has the tab got him already" then answers no, a second row goes in
+    # beside the tab's, and the loop that folds these into the unified list
+    # keeps the first salary it saw and drops the second. Skal Labissiere's
+    # $153,330 went that way, and the only reason anyone noticed is that the
+    # sums below stopped adding up.
     dead_teams_filled, dead_rows_added, dead_left_alone = [], [], 0
-    for (nk, season), offer in sorted(dead_for_the_tab.items()):
+    for (_nk, season), offer in sorted(dead_for_the_tab.items()):
         teams = offer["teams"]
         if not teams:
             continue
@@ -1549,9 +1564,10 @@ def build_data():
         # and the tab cannot, so both are named and neither is given a figure:
         # nothing here records how the money divided.
         team_str = ", ".join(sorted(teams))
-        existing = salary_csv_lookup.get((nk, season))
+        who = persons.resolve(offer["player"], season, note=False)
+        existing = salary_csv_lookup.get((who, season))
         if existing is None:
-            salary_csv_lookup[(nk, season)] = [{
+            salary_csv_lookup[(who, season)] = [{
                 "player_original": offer["player"],
                 "team": team_str,
                 "salary": sum(teams.values()),
@@ -1575,16 +1591,6 @@ def build_data():
         print(f"    Dead money into the tab's seasons: {len(dead_teams_filled)} "
               f"teams filled in, {len(dead_rows_added)} rows added, "
               f"{dead_left_alone} left alone because the tab names a team")
-
-    # Re-key every salary row on the person it belongs to. Two spellings of one
-    # man (Wendell Carter and Wendell Carter Jr) land together; a father and a
-    # son who share a loose name (Gary Payton and Gary Payton II) come apart.
-    salary_by_person = {}
-    for (nk, season), recs in salary_csv_lookup.items():
-        for rec in recs:
-            pid = persons.resolve(rec["player_original"], season)
-            salary_by_person.setdefault((pid, season), []).append(rec)
-    salary_csv_lookup = salary_by_person
 
     # Combine multi-team records in salary_csv_lookup
     # e.g. Griffin 2020-21: [{team:DET, salary:32M}, {team:BKN, salary:1.2M}]
@@ -2076,15 +2082,19 @@ def build_data():
             "the_sums_balance": arithmetic,
             "dead_money_into_the_tabs_seasons": {
                 "note": (
-                    "The tab carries 2025-26 dead money as rows of dollars with "
-                    "an empty TEAM: the money is there and the club that owes it "
-                    "is not. So the dead-money sheet is still read for those "
-                    "seasons, for the team alone where the tab left one blank "
-                    "and as a row of its own where the tab has none. No figure "
-                    "the tab gave is changed, and where the tab names a team the "
-                    "tab keeps it. Where several clubs owe one man one season "
-                    "both are named and neither is given a figure, because "
-                    "nothing here records how the money divided."
+                    "The tab holds the seasons it covers but not every man in "
+                    "them: sixteen rows of the dead-money sheet's 2025-26 have "
+                    "no row on the tab at all. So that sheet is still read for "
+                    "those seasons, as a row of its own where the tab has none "
+                    "and as the team for a row the tab left blank. No figure the "
+                    "tab gave is changed, and where the tab names a team the tab "
+                    "keeps it. Where several clubs owe one man one season both "
+                    "are named and neither is given a figure, because nothing "
+                    "here records how the money divided. teams_filled_in has "
+                    "been empty on every build so far: the teamless records that "
+                    "prompted that branch turned out to be the agent tracker's "
+                    "rather than the tab's, and the tracker no longer answers "
+                    "for a season a sheet holds."
                 ),
                 "teams_filled_in": dead_teams_filled,
                 "rows_added": dead_rows_added,
