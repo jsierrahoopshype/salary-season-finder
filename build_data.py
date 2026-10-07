@@ -2000,9 +2000,12 @@ def build_data():
             "future": sum(1 for (_nk, s) in future_sal_lookup if s == season),
         }
         sources[season] = {k: v for k, v in rows.items() if v}
-        sources[season]["dollars_on_the_historical_tab"] = sum(
-            rec["salary"] for (_nk, s), recs in hist_sal_lookup.items()
-            if s == season for rec in recs)
+    # Kept apart from the row counts above, which read as "these sheets
+    # answered for this season" and must stay readable as exactly that.
+    tab_dollars = defaultdict(int)
+    for (_nk, season), recs in hist_sal_lookup.items():
+        for rec in recs:
+            tab_dollars[season] += rec["salary"]
 
     # The arithmetic that says nothing was counted twice. For a season the tab
     # covers, every dollar in the file has to be a dollar the tab gave plus a
@@ -2017,14 +2020,14 @@ def build_data():
     for row in dead_rows_added:
         added_per_season[row["season"]] += row["salary"]
     arithmetic = {}
-    for season, counts in sources.items():
+    for season in sources:
         if seasons_after(historical_through)(season):
             continue
-        expected = counts["dollars_on_the_historical_tab"] + added_per_season[season]
+        expected = tab_dollars[season] + added_per_season[season]
         built = built_per_season[season]
         arithmetic[season] = {
             "dollars_in_the_file": built,
-            "dollars_on_the_historical_tab": counts["dollars_on_the_historical_tab"],
+            "dollars_on_the_historical_tab": tab_dollars[season],
             "dollars_on_dead_rows_the_tab_had_none_for": added_per_season[season],
             "balances": built == expected,
         }
