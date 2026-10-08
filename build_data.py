@@ -1519,6 +1519,279 @@ def build_person_index(bio_csv, stats_csv):
     return persons
 
 
+# ── Abbreviated names ──────────────────────────────────────────────────
+# HoopsHype prints a first name as its initial, "G. Antetokounmpo" and
+# "N. Alexander-Walker", and rows copied from it carry that spelling onto the
+# historical tab. The register has no man called that, so before this step the
+# row became a person of its own: a second Giannis with a page, a salary and no
+# games, and the real one left without the season. This turns the initial back
+# into the man it stands for, and only where exactly one man fits.
+
+def initials_and_surname(base):
+    """('g antetokounmpo') -> ('g', 'antetokounmpo'); None for a full name.
+
+    Several leading initials ('c j mccollum', a spelling of "C. J. McCollum")
+    come back joined, 'cj', because that is how the register spells such a
+    first name.
+    """
+    tokens = base.split()
+    lead = []
+    while tokens and len(tokens[0]) == 1:
+        lead.append(tokens.pop(0))
+    if not lead or not tokens:
+        return None
+    return "".join(lead), " ".join(tokens)
+
+
+class AbbreviationMatcher:
+    """The full spelling an initial-and-surname spelling stands for.
+
+    Asked only of a spelling the register does not know as it stands, so a man
+    whose real first name is a single letter, or a name already on file, is
+    never touched. The candidates are the register's people and the names the
+    stats sheet carries for that season, which covers a man bio.csv has no row
+    for yet. More than one candidate is narrowed by who played that season, then
+    by the club the row names; anything still ambiguous is not guessed at.
+    """
+
+    def __init__(self, persons, stats_lookup):
+        self.persons = persons
+        self.stats_lookup = stats_lookup
+        self.stats_names = defaultdict(dict)   # season -> base -> printed name
+        for (_nk, season), rows in stats_lookup.items():
+            for row in rows:
+                printed = row.get("player_original") or ""
+                base = split_player_name(printed)[0]
+                if base:
+                    self.stats_names[season].setdefault(base, printed)
+        self.cache = {}
+
+    def expand(self, name, season, teams=()):
+        """(full spelling, None) on a match, (None, reason) on a miss, and
+        (None, None) for a spelling that is not an abbreviation at all."""
+        key = (name, season, tuple(sorted(teams)))
+        if key not in self.cache:
+            self.cache[key] = self._expand(name, season, set(teams))
+        return self.cache[key]
+
+    def _expand(self, name, season, teams):
+        persons = self.persons
+        base, suffix, marker = split_player_name(name)
+        if not base or base in persons.by_base:
+            return None, None
+        if season and (base, suffix, marker, normalize_season(season)) in persons.claims:
+            return None, None
+        parsed = initials_and_surname(base)
+        if parsed is None:
+            return None, None
+        lead, surname = parsed
+
+        def fits(full):
+            if full == base or initials_and_surname(full) is not None:
+                return False
+            if len(lead) > 1:
+                return full == "{} {}".format(lead, surname)
+            first = full[: -len(surname) - 1] if full.endswith(" " + surname) else ""
+            return bool(first) and first.startswith(lead)
+
+        start = None
+        try:
+            start = int(str(season).split("-")[0])
+        except (ValueError, TypeError):
+            pass
+
+        # spelling -> base, one entry per man
+        found = {}
+        for full, pids in persons.by_base.items():
+            if not fits(full):
+                continue
+            for pid in pids:
+                person = persons.people[pid]
+                if suffix and person["suffix"] != suffix:
+                    continue
+                drafted = person["draft_year"]
+                if start is not None and drafted is not None and not (
+                        drafted <= start <= drafted + MAX_CAREER_SPAN):
+                    continue
+                found[persons.display(pid)] = full
+        for full, printed in self.stats_names.get(season, {}).items():
+            if fits(full) and full not in found.values():
+                found[printed] = full
+        if not found:
+            return None, "no player with that initial and surname"
+        if len(found) == 1:
+            return next(iter(found)), None
+
+        def stats_teams(spelling):
+            return {
+                row.get("team") for row in
+                self.stats_lookup.get((normalize_name(spelling), season)) or []
+                if row.get("team") and row.get("team") != "TOT"
+            }
+
+        played = [s for s in sorted(found) if stats_teams(s)]
+        if len(played) == 1:
+            return played[0], None
+        if teams:
+            here = [s for s in (played or sorted(found)) if stats_teams(s) & teams]
+            if len(here) == 1:
+                return here[0], None
+        return None, "more than one player fits: {}".format(", ".join(sorted(found)))
+
+
+# ── Rows the historical tab holds twice ────────────────────────────────
+#: The season whose repeated rows go to reports/, for the sheet's owner to
+#: delete the extra copies. Named in the file, so written down here.
+DUPLICATES_SEASON = "2025-26"
+DUPLICATES_PATH = os.path.join(
+    BASE_DIR, "reports", "historical_duplicates_{}.csv".format(DUPLICATES_SEASON))
+
+
+def tab_rows_with_numbers(csv_data):
+    """Every salary row of the historical tab with the row number the sheet
+    shows for it: the header is row 1, so the first record is row 2.
+
+    The same columns and the same skips as process_salaries_csv, which is left
+    exactly as it is; this only reads the tab a second time to say where each
+    row sits.
+    """
+    out = []
+    if not csv_data:
+        return out
+    reader = csv.reader(io.StringIO(csv_data))
+    if next(reader, None) is None:
+        return out
+    for number, cols in enumerate(reader, start=2):
+        if len(cols) < 4:
+            continue
+        player = cols[2].strip()
+        salary = parse_salary(cols[3])
+        season = normalize_season(cols[1].strip())
+        if not player or salary is None or not season:
+            continue
+        out.append({
+            "row": number, "player": player, "season": season,
+            "team_on_sheet": cols[0].strip(), "team": normalize_team(cols[0]),
+            "salary": salary,
+        })
+    return out
+
+
+def tab_duplicate_groups(tab_rows, season, who):
+    """The rows of one season that name one man, one club and one figure to the
+    dollar more than once: the rows the build reads once.
+
+    ``who`` turns a spelling into the person it belongs to, so a row written
+    "G. Antetokounmpo" and a row written "Giannis Antetokounmpo" for the same
+    money are one group, as they are in the build.
+    """
+    groups = defaultdict(list)
+    for row in tab_rows:
+        if row["season"] != season:
+            continue
+        groups[(who(row["player"], season), row["team"], row["salary"])].append(row)
+    out = []
+    for (_pid, team, salary), rows in groups.items():
+        if len(rows) < 2:
+            continue
+        spellings = []
+        for row in rows:
+            if row["player"] not in spellings:
+                spellings.append(row["player"])
+        out.append({
+            "player": " / ".join(spellings),
+            "season": season,
+            "team": rows[0]["team_on_sheet"] or team,
+            "amount": salary,
+            "sheet_rows": [row["row"] for row in rows],
+        })
+    out.sort(key=lambda g: g["sheet_rows"][0])
+    return out
+
+
+def write_tab_duplicates(groups, path=DUPLICATES_PATH):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8", newline="") as f:
+        writer = csv.writer(f, lineterminator="\n")
+        writer.writerow(["player", "season", "team", "amount", "sheet_row_numbers"])
+        for g in groups:
+            writer.writerow([
+                g["player"], g["season"], g["team"], g["amount"],
+                "; ".join(str(n) for n in g["sheet_rows"]),
+            ])
+
+
+# ── Figures checked by hand ────────────────────────────────────────────
+def load_spot_checks():
+    """data/salary_spot_checks.json: figures the sheet's owner has checked by
+    hand, and names that must come out as one man in one record."""
+    path = os.path.join(BASE_DIR, "data", "salary_spot_checks.json")
+    if not os.path.exists(path):
+        return {}
+    with open(path, "r", encoding="utf-8") as fh:
+        return json.load(fh) or {}
+
+
+def run_spot_checks(checks, final_records, tab_rows):
+    """Each checked figure against the record the build wrote for him.
+
+    Matched on the name with the suffix and any marker off, so "Craig Porter"
+    finds "Craig Porter Jr". A miss names the tab rows behind the figure, with
+    their sheet row numbers, because the rows are what the owner has to look at.
+    """
+    season = checks.get("season")
+    if not season:
+        return {}
+    in_season = [r for r in final_records if r.get("season") == season]
+
+    def base(name):
+        return split_player_name(name)[0]
+
+    def tab_rows_for(name):
+        b = base(name)
+        return [
+            {"row": r["row"], "player": r["player"], "team": r["team_on_sheet"],
+             "salary": r["salary"]}
+            for r in tab_rows if r["season"] == season and base(r["player"]) == b
+        ]
+
+    amounts = []
+    for name, expected in sorted((checks.get("amounts") or {}).items()):
+        found = [r for r in in_season if base(r["player"]) == base(name)]
+        entry = {"player": name, "expected": expected,
+                 "built": [{"player": r["player"], "team": r.get("team", ""),
+                            "salary": r["salary"]} for r in found]}
+        if len(found) == 1 and found[0]["salary"] == expected:
+            entry["result"] = "ok"
+        else:
+            entry["result"] = ("missing" if not found else
+                               "more than one record" if len(found) > 1 else
+                               "mismatch")
+            entry["tab_rows"] = tab_rows_for(name)
+        amounts.append(entry)
+
+    # One record, printed under his own spelling. base() reads a misspelling on
+    # file as the man it belongs to, so a record left over under the old wrong
+    # name counts here as a second record of his; the alias-free spelling is
+    # what says which name it was printed under.
+    once = []
+    for name in checks.get("appear_once") or []:
+        mine = [r["player"] for r in in_season if base(r["player"]) == base(name)]
+        own = split_player_name(name, alias=False)[0]
+        ok = len(mine) == 1 and split_player_name(mine[0], alias=False)[0] == own
+        rows = tab_rows_for(name)
+        once.append({
+            "player": name,
+            "records": mine,
+            "result": "ok" if ok else "check",
+            "tab_rows": rows,
+            "tab_rows_under_another_spelling": [
+                r for r in rows if split_player_name(r["player"], alias=False)[0] != own
+            ],
+        })
+    return {"season": season, "amounts": amounts, "appear_once": once}
+
+
 # ── Main build ─────────────────────────────────────────────────────────
 def build_data():
     print("=" * 60)
@@ -1577,6 +1850,9 @@ def build_data():
     stats_lookup = process_stats(stats_csv) if stats_csv else {}
     hist_sal_lookup, tab_repeats = (
         process_salaries_csv(hist_sal_csv) if hist_sal_csv else ({}, []))
+    # Which rows came off the tab, for the unmatched-name log: the merge below
+    # extends the tab's lists with the other sheets' rows in place.
+    tab_row_ids = {id(rec) for recs in hist_sal_lookup.values() for rec in recs}
 
     # Where the historical tab now ends, read off the tab rather than written
     # down here. It is authoritative for every season it holds; the two
@@ -1624,12 +1900,56 @@ def build_data():
     # Re-key every salary row on the person it belongs to. Two spellings of one
     # man (Wendell Carter and Wendell Carter Jr) land together; a father and a
     # son who share a loose name (Gary Payton and Gary Payton II) come apart.
+    #
+    # A spelling HoopsHype abbreviates, "G. Antetokounmpo", is first turned back
+    # into the man it stands for. One that cannot be, and any tab name that
+    # matches nobody in bio.csv or the stats sheet, is logged in
+    # data/salary_sources_report.json rather than becoming a man of its own
+    # without a word.
+    abbreviations = AbbreviationMatcher(persons, stats_lookup)
+    abbreviations_matched, abbreviations_not_matched = {}, {}
+    names_not_matched = {}
     salary_by_person = {}
     for (nk, season), recs in salary_csv_lookup.items():
         for rec in recs:
-            pid = persons.resolve(rec["player_original"], season)
+            spelled = rec["player_original"]
+            teams = {t.strip() for t in (rec.get("team") or "").split(",") if t.strip()}
+            full, why = abbreviations.expand(spelled, season, teams)
+            if full:
+                abbreviations_matched.setdefault((spelled, season), {
+                    "spelled": spelled, "season": season, "matched": full,
+                    "team": rec.get("team", "")})
+            elif why:
+                abbreviations_not_matched.setdefault((spelled, season), {
+                    "spelled": spelled, "season": season, "reason": why,
+                    "team": rec.get("team", ""), "salary": 0})["salary"] += rec["salary"]
+            pid = persons.resolve(full or spelled, season)
+            if (pid[0] == "new" and id(rec) in tab_row_ids and not why
+                    and not stats_lookup.get((normalize_name(full or spelled), season))):
+                names_not_matched.setdefault((spelled, season), {
+                    "spelled": spelled, "season": season,
+                    "team": rec.get("team", ""), "salary": 0})["salary"] += rec["salary"]
             salary_by_person.setdefault((pid, season), []).append(rec)
     salary_csv_lookup = salary_by_person
+    abbreviations_matched = sorted(
+        abbreviations_matched.values(), key=lambda r: (r["season"], r["spelled"]))
+    abbreviations_not_matched = sorted(
+        abbreviations_not_matched.values(), key=lambda r: (r["season"], r["spelled"]))
+    names_not_matched = sorted(
+        names_not_matched.values(), key=lambda r: (r["season"], r["spelled"]))
+    print("    Abbreviated names: {} matched to a player, {} not".format(
+        len(abbreviations_matched), len(abbreviations_not_matched)))
+    for row in abbreviations_matched:
+        print("      {} {} -> {}".format(row["season"], row["spelled"], row["matched"]))
+    for row in abbreviations_not_matched:
+        print("::warning::{} {} matched nobody: {}".format(
+            row["season"], row["spelled"], row["reason"]))
+    newest_unmatched = [r for r in names_not_matched if r["season"] == historical_through]
+    print("    {} tab names match nobody in bio.csv or the stats sheet, {} of them "
+          "in {}".format(len(names_not_matched), len(newest_unmatched), historical_through))
+    for row in newest_unmatched:
+        print("::warning::{} {} ({}) matches nobody in bio.csv or the stats "
+              "sheet".format(row["season"], row["spelled"], row["team"]))
 
     # The same exact-repeat test the tab parser runs, run again now that the
     # rows are keyed on the person rather than on a spelling. The parser can
@@ -1790,6 +2110,9 @@ def build_data():
               f"{len(current_rows_filled)} rows filled where nothing answered "
               f"for him and he played, {len(current_no_games)} left out for no "
               f"games, {current_already_covered} already answered for")
+        for row in current_rows_filled:
+            print(f"      still on the current-sheet fill: {row['player']} "
+                  f"{row['season']} {row['team']} {row['salary']:,}")
 
     # Combine multi-team records in salary_csv_lookup
     # e.g. Griffin 2020-21: [{team:DET, salary:32M}, {team:BKN, salary:1.2M}]
@@ -2308,6 +2631,39 @@ def build_data():
         repeats_dollars[row["season"]] = (
             repeats_dollars.get(row["season"], 0) + row["salary"])
 
+    # The tab's repeated rows, with their sheet row numbers, for the sheet's
+    # owner to delete the extra copies. Grouped on the person, the club and the
+    # figure, the way the build reads them once; the reading itself is the
+    # de-duplication above and is not changed by this.
+    tab_rows = tab_rows_with_numbers(hist_sal_csv)
+
+    def tab_person(name, season):
+        full, _why = abbreviations.expand(name, season)
+        return persons.resolve(full or name, season, note=False)
+
+    duplicate_groups = tab_duplicate_groups(tab_rows, DUPLICATES_SEASON, tab_person)
+    write_tab_duplicates(duplicate_groups)
+    print(f"    {len(duplicate_groups)} {DUPLICATES_SEASON} rows the tab holds more "
+          f"than once, written to {os.path.relpath(DUPLICATES_PATH, BASE_DIR)}")
+
+    spot_checks = run_spot_checks(load_spot_checks(), final_records, tab_rows)
+    for entry in spot_checks.get("amounts", []):
+        if entry["result"] != "ok":
+            print("::warning::{} {}: expected {:,}, built {}".format(
+                spot_checks["season"], entry["player"], entry["expected"],
+                ", ".join("{} {} {:,}".format(b["player"], b["team"], b["salary"])
+                          for b in entry["built"]) or "nothing"))
+    for entry in spot_checks.get("appear_once", []):
+        if entry["result"] != "ok":
+            print("::warning::{} {}: records {}".format(
+                spot_checks["season"], entry["player"], entry["records"]))
+    if spot_checks:
+        print("    Spot checks: {} of {} figures match, {} of {} names appear once".format(
+            sum(e["result"] == "ok" for e in spot_checks["amounts"]),
+            len(spot_checks["amounts"]),
+            sum(e["result"] == "ok" for e in spot_checks["appear_once"]),
+            len(spot_checks["appear_once"])))
+
     sources_path = os.path.join(OUT_DIR, "salary_sources_report.json")
     with open(sources_path, "w", encoding="utf-8") as f:
         json.dump({
@@ -2350,6 +2706,36 @@ def build_data():
                 "dollars_per_season": repeats_dollars,
                 "rows": tab_repeats,
             },
+            "tab_duplicates_with_sheet_rows": {
+                "note": (
+                    "Every group of " + DUPLICATES_SEASON + " rows on the tab "
+                    "naming one man, one club and one figure to the dollar, "
+                    "with the row numbers the sheet shows for them (the header "
+                    "is row 1). The same groups are written to "
+                    + os.path.relpath(DUPLICATES_PATH, BASE_DIR) + " for the "
+                    "sheet's owner to delete the extra copies. Two spellings "
+                    "of one man, an abbreviation and the full name, are one "
+                    "group, as they are in the build."
+                ),
+                "season": DUPLICATES_SEASON,
+                "groups": duplicate_groups,
+            },
+            "names": {
+                "note": (
+                    "abbreviations_matched: a spelling with an initial for a "
+                    "first name, the way HoopsHype prints one, read as the one "
+                    "player it fits. abbreviations_not_matched: one that fits "
+                    "nobody or more than one man, left under its own spelling, "
+                    "which makes it a player of its own until the sheet or "
+                    "data/name_aliases.json says who it is. "
+                    "tab_names_matching_nobody: a historical-tab name that is "
+                    "neither in bio.csv nor on the stats sheet for that season."
+                ),
+                "abbreviations_matched": abbreviations_matched,
+                "abbreviations_not_matched": abbreviations_not_matched,
+                "tab_names_matching_nobody": names_not_matched,
+            },
+            "spot_checks": spot_checks,
             "rows_that_repeated_once_two_spellings_became_one_man": {
                 "note": (
                     "The same test, applied after every row is keyed on the "

@@ -103,7 +103,11 @@ jobs:
           # The source sheets count as a change of their own. A pull that
           # moves only rows data.json has no salary for would otherwise leave
           # the committed copies behind again, which is what this guards.
-          if git diff --quiet data/data.json $SOURCE_FILES 2>/dev/null; then
+          # reports/ too: the tab's duplicate rows can be deleted without
+          # data.json moving, since the build already reads them once, and the
+          # list of them would otherwise go stale.
+          if git diff --quiet data/data.json $SOURCE_FILES 2>/dev/null \
+             && [ -z "$(git status --porcelain reports/)" ]; then
             echo "changed=false" >> $GITHUB_OUTPUT
             echo "No changes detected in data.json or the source sheets"
           else
@@ -121,7 +125,7 @@ jobs:
           # The report build_data.py writes beside the data, so the two never
           # describe different days.
           git add data/data.json data/team_corrections_report.json \
-            data/salary_sources_report.json
+            data/salary_sources_report.json reports/
 
           # The source sheets go in once a week. A checkout holding older
           # copies than data.json means anything recomputed locally silently

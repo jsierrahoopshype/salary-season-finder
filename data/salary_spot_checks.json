@@ -1,0 +1,38 @@
+{
+ "note": "2025-26 figures the historical tab's owner checked by hand, and names that must come out as one man in one record of that season with no leftover from an old wrong spelling. build_data.py compares the records it writes against these on every build and reports the result under spot_checks in data/salary_sources_report.json; a miss is a warning, never a failed build.",
+ "season": "2025-26",
+ "amounts": {
+  "Adem Bona": 1955377,
+  "Andre Jackson": 2221677,
+  "Anthony Gill": 2667947,
+  "Bones Hyland": 2461463,
+  "Brandon Williams": 2270735,
+  "Buddy Hield": 9219512,
+  "Craig Porter": 2221677,
+  "Dru Smith": 2378870,
+  "Elijah Harkless": 636435,
+  "Gary Payton II": 3303774,
+  "Guerschon Yabusele": 5500000,
+  "Javonte Green": 2874436,
+  "Jeenathan Williams": 176943,
+  "Jordan Goodwin": 2349578,
+  "Justin Champagnie": 2349578,
+  "Kevin McCullar": 636435,
+  "Landry Shamet": 3080921,
+  "Mohamed Diawara": 1272870,
+  "Moussa Diabate": 2270735,
+  "Neemias Queta": 2349578,
+  "Pelle Larsson": 1955377,
+  "Rob Dillingham": 6576120,
+  "Russell Westbrook": 3634153,
+  "Thomas Bryant": 3287409
+ },
+ "appear_once": [
+  "Guerschon Yabusele",
+  "Russell Westbrook",
+  "Elijah Harkless",
+  "Tyreke Key",
+  "Dominick Barlow",
+  "Kevin McCullar"
+ ]
+}
