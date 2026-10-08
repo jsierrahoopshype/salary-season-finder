@@ -14,6 +14,7 @@ on:
   pull_request:
     paths:
       - build_data.py
+      - data/salary_spot_checks.json
       - scripts/identity_diff.py
       - .github/workflows/data-build.yml
   workflow_dispatch:
@@ -182,7 +183,8 @@ jobs:
           printf '    %s\n' "${PAGE_PATHS[@]}"
           # the four the data build writes that the page build does not
           git add -A "${PAGE_PATHS[@]}" data/data.json data/factoids.json \
-            data/team_corrections_report.json data/salary_sources_report.json
+            data/team_corrections_report.json data/salary_sources_report.json \
+            reports/
           if git diff --cached --quiet; then
             echo "Nothing to commit"
             exit 0

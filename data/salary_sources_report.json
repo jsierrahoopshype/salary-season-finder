@@ -658,6 +658,967 @@
  },
  "future_sheet_columns_left_to_the_tab": [],
  "historical_through": "2025-26",
+ "names": {
+  "abbreviations_matched": [],
+  "abbreviations_not_matched": [],
+  "note": "abbreviations_matched: a spelling with an initial for a first name, the way HoopsHype prints one, read as the one player it fits. abbreviations_not_matched: one that fits nobody or more than one man, left under its own spelling, which makes it a player of its own until the sheet or data/name_aliases.json says who it is. tab_names_matching_nobody: a historical-tab name that is neither in bio.csv nor on the stats sheet for that season.",
+  "tab_names_matching_nobody": [
+   {
+    "salary": 50000,
+    "season": "1990-91",
+    "spelled": "Alan Bannister",
+    "team": "UTA"
+   },
+   {
+    "salary": 250000,
+    "season": "1991-92",
+    "spelled": "Mark Hughes",
+    "team": "DET"
+   },
+   {
+    "salary": 25000,
+    "season": "1992-93",
+    "spelled": "Curtis Blair",
+    "team": "HOU"
+   },
+   {
+    "salary": 11000,
+    "season": "1992-93",
+    "spelled": "Reggie Fox",
+    "team": "MIN"
+   },
+   {
+    "salary": 150000,
+    "season": "1994-95",
+    "spelled": "Damon Bailey",
+    "team": "IND"
+   },
+   {
+    "salary": 5000,
+    "season": "1994-95",
+    "spelled": "Kenny Harris",
+    "team": "CHI"
+   },
+   {
+    "salary": 11404,
+    "season": "1994-95",
+    "spelled": "Kevin Rankin",
+    "team": "CHI"
+   },
+   {
+    "salary": 150000,
+    "season": "1994-95",
+    "spelled": "Melvin Robinson",
+    "team": "MIN"
+   },
+   {
+    "salary": 150000,
+    "season": "1994-95",
+    "spelled": "Rodney Dent",
+    "team": "ORL"
+   },
+   {
+    "salary": 168000,
+    "season": "1994-95",
+    "spelled": "Sergei Bazarevich",
+    "team": "ATL"
+   },
+   {
+    "salary": 15000,
+    "season": "1995-96",
+    "spelled": "Constantin Popa",
+    "team": "LAC"
+   },
+   {
+    "salary": 250000,
+    "season": "1995-96",
+    "spelled": "Damon Bailey",
+    "team": "IND"
+   },
+   {
+    "salary": 25000,
+    "season": "1995-96",
+    "spelled": "Grady Livingston",
+    "team": "BKN"
+   },
+   {
+    "salary": 40000,
+    "season": "1995-96",
+    "spelled": "Kareem Townes",
+    "team": "LAL"
+   },
+   {
+    "salary": 15000,
+    "season": "1995-96",
+    "spelled": "Nate Higgs",
+    "team": "MEM"
+   },
+   {
+    "salary": 225000,
+    "season": "1995-96",
+    "spelled": "Rodney Dent",
+    "team": "MEM"
+   },
+   {
+    "salary": 200000,
+    "season": "1995-96",
+    "spelled": "Rodney Zimmerman",
+    "team": "DET"
+   },
+   {
+    "salary": 220000,
+    "season": "1996-97",
+    "spelled": "Carlos Strong",
+    "team": "CHA"
+   },
+   {
+    "salary": 220000,
+    "season": "1996-97",
+    "spelled": "Marcus Mann",
+    "team": "GSW"
+   },
+   {
+    "salary": 220000,
+    "season": "1996-97",
+    "spelled": "Virginijus Praskevicius",
+    "team": "MIN"
+   },
+   {
+    "salary": 242000,
+    "season": "1997-98",
+    "spelled": "Adrian Custis",
+    "team": "DAL"
+   },
+   {
+    "salary": 242000,
+    "season": "1997-98",
+    "spelled": "Malcolm Huckaby",
+    "team": "MIA"
+   },
+   {
+    "salary": 25000,
+    "season": "1997-98",
+    "spelled": "Patrick Savoy",
+    "team": "MIA"
+   },
+   {
+    "salary": 242000,
+    "season": "1997-98",
+    "spelled": "Serge Zwikker",
+    "team": "HOU"
+   },
+   {
+    "salary": 15000,
+    "season": "1997-98",
+    "spelled": "Todd Lindeman",
+    "team": "IND"
+   },
+   {
+    "salary": 287500,
+    "season": "1998-99",
+    "spelled": "Jeffrey Sheppard",
+    "team": "ATL"
+   },
+   {
+    "salary": 287500,
+    "season": "1998-99",
+    "spelled": "Mate Skelin",
+    "team": "IND"
+   },
+   {
+    "salary": 287500,
+    "season": "1998-99",
+    "spelled": "Nikita Morgunov",
+    "team": "POR"
+   },
+   {
+    "salary": 287500,
+    "season": "1998-99",
+    "spelled": "Paul Rogers",
+    "team": "TOR"
+   },
+   {
+    "salary": 31706,
+    "season": "1999-00",
+    "spelled": "Bakari Hendrix",
+    "team": "UTA"
+   },
+   {
+    "salary": 20000,
+    "season": "1999-00",
+    "spelled": "Brett Robisch",
+    "team": "CHI"
+   },
+   {
+    "salary": 100000,
+    "season": "1999-00",
+    "spelled": "Corey Brewer",
+    "team": "MIA"
+   },
+   {
+    "salary": 947200,
+    "season": "1999-00",
+    "spelled": "Frederic Weis",
+    "team": "NYK"
+   },
+   {
+    "salary": 385000,
+    "season": "1999-00",
+    "spelled": "Jeffrey Sheppard",
+    "team": "ATL"
+   },
+   {
+    "salary": 100000,
+    "season": "1999-00",
+    "spelled": "Jermaine Walker",
+    "team": "MIA"
+   },
+   {
+    "salary": 25000,
+    "season": "1999-00",
+    "spelled": "LaMarcus Golden",
+    "team": "PHX"
+   },
+   {
+    "salary": 10000,
+    "season": "1999-00",
+    "spelled": "Louis Bullock",
+    "team": "ORL"
+   },
+   {
+    "salary": 385000,
+    "season": "1999-00",
+    "spelled": "Mate Skelin",
+    "team": "IND"
+   },
+   {
+    "salary": 385000,
+    "season": "1999-00",
+    "spelled": "Nikita Morgunov",
+    "team": "POR"
+   },
+   {
+    "salary": 301875,
+    "season": "1999-00",
+    "spelled": "Shannon Smith",
+    "team": "IND"
+   },
+   {
+    "salary": 37290,
+    "season": "1999-00",
+    "spelled": "Tyrone Grant",
+    "team": "CHA"
+   },
+   {
+    "salary": 316969,
+    "season": "2000-01",
+    "spelled": "Ademola Okulaja",
+    "team": "PHI"
+   },
+   {
+    "salary": 316969,
+    "season": "2000-01",
+    "spelled": "Chris Carrawell",
+    "team": "SAS"
+   },
+   {
+    "salary": 50000,
+    "season": "2000-01",
+    "spelled": "Mark Karcher",
+    "team": "PHI"
+   },
+   {
+    "salary": 316969,
+    "season": "2000-01",
+    "spelled": "Pete Mickeal",
+    "team": "NYK"
+   },
+   {
+    "salary": 136374,
+    "season": "2002-03",
+    "spelled": "Pete Mickeal",
+    "team": "HOU"
+   },
+   {
+    "salary": 349458,
+    "season": "2002-03",
+    "spelled": "Sam Clancy",
+    "team": "PHI"
+   },
+   {
+    "salary": 366931,
+    "season": "2003-04",
+    "spelled": "Jon Stefansson",
+    "team": "DAL"
+   },
+   {
+    "salary": 366931,
+    "season": "2003-04",
+    "spelled": "Josh Moore",
+    "team": "LAC"
+   },
+   {
+    "salary": 563679,
+    "season": "2003-04",
+    "spelled": "Sam Clancy",
+    "team": "PHI"
+   },
+   {
+    "salary": 385277,
+    "season": "2004-05",
+    "spelled": "Arthur Johnson",
+    "team": "DEN"
+   },
+   {
+    "salary": 385277,
+    "season": "2004-05",
+    "spelled": "Romain Sato",
+    "team": "SAS"
+   },
+   {
+    "salary": 32890,
+    "season": "2004-05",
+    "spelled": "Tim Pickett",
+    "team": "NOP"
+   },
+   {
+    "salary": 620046,
+    "season": "2004-05",
+    "spelled": "Tommy Smith",
+    "team": "CHI"
+   },
+   {
+    "salary": 4863,
+    "season": "2005-06",
+    "spelled": "Lucas Tischer",
+    "team": "PHX"
+   },
+   {
+    "salary": 682051,
+    "season": "2005-06",
+    "spelled": "Romain Sato",
+    "team": "SAS"
+   },
+   {
+    "salary": 150751,
+    "season": "2005-06",
+    "spelled": "Sean Banks",
+    "team": "NOP"
+   },
+   {
+    "salary": 412718,
+    "season": "2006-07",
+    "spelled": "Brian Chase",
+    "team": "UTA"
+   },
+   {
+    "salary": 75000,
+    "season": "2006-07",
+    "spelled": "Daniel Horton",
+    "team": "MIA"
+   },
+   {
+    "salary": 75000,
+    "season": "2006-07",
+    "spelled": "Jefferson Sobral",
+    "team": "DEN"
+   },
+   {
+    "salary": 100000,
+    "season": "2006-07",
+    "spelled": "Jimmie Hunter",
+    "team": "IND"
+   },
+   {
+    "salary": 50000,
+    "season": "2006-07",
+    "spelled": "Kevin Pittsnogle",
+    "team": "BOS"
+   },
+   {
+    "salary": 150000,
+    "season": "2006-07",
+    "spelled": "Mike Gansey",
+    "team": "MIA"
+   },
+   {
+    "salary": 110000,
+    "season": "2006-07",
+    "spelled": "Pat Carroll",
+    "team": "DAL"
+   },
+   {
+    "salary": 100000,
+    "season": "2006-07",
+    "spelled": "Paul Miller",
+    "team": "NYK"
+   },
+   {
+    "salary": 70000,
+    "season": "2006-07",
+    "spelled": "Vincent Grier",
+    "team": "MIA"
+   },
+   {
+    "salary": 427163,
+    "season": "2007-08",
+    "spelled": "Adam Haluska",
+    "team": "HOU"
+   },
+   {
+    "salary": 130819,
+    "season": "2007-08",
+    "spelled": "Brandon Wallace",
+    "team": "BOS"
+   },
+   {
+    "salary": 427163,
+    "season": "2007-08",
+    "spelled": "Herbert Hill",
+    "team": "PHI"
+   },
+   {
+    "salary": 57215,
+    "season": "2008-09",
+    "spelled": "Richard Hendrix",
+    "team": "GSW"
+   },
+   {
+    "salary": 473604,
+    "season": "2010-11",
+    "spelled": "Da'Sean Butler",
+    "team": "MIA"
+   },
+   {
+    "salary": 58504,
+    "season": "2010-11",
+    "spelled": "Matt Janning",
+    "team": "PHX"
+   },
+   {
+    "salary": 473604,
+    "season": "2010-11",
+    "spelled": "Terrico White",
+    "team": "DET"
+   },
+   {
+    "salary": 300000,
+    "season": "2012-13",
+    "spelled": "Micheal Eric",
+    "team": "CLE"
+   },
+   {
+    "salary": 507336,
+    "season": "2014-15",
+    "spelled": "Patric Young",
+    "team": "NOP"
+   },
+   {
+    "salary": 11938,
+    "season": "2014-15",
+    "spelled": "Ronald Roberts",
+    "team": "PHI"
+   },
+   {
+    "salary": 100000,
+    "season": "2015-16",
+    "spelled": "Jonathan Holmes",
+    "team": "LAL"
+   },
+   {
+    "salary": 200000,
+    "season": "2015-16",
+    "spelled": "Scottie Wilbekin",
+    "team": "PHI"
+   },
+   {
+    "salary": 45000,
+    "season": "2016-17",
+    "spelled": "Beau Beech",
+    "team": "BKN"
+   },
+   {
+    "salary": 56500,
+    "season": "2016-17",
+    "spelled": "Brady Heslip",
+    "team": "TOR"
+   },
+   {
+    "salary": 50000,
+    "season": "2016-17",
+    "spelled": "EJ Singler",
+    "team": "TOR"
+   },
+   {
+    "salary": 100000,
+    "season": "2016-17",
+    "spelled": "Egidijus Mockevicius",
+    "team": "BKN"
+   },
+   {
+    "salary": 50000,
+    "season": "2016-17",
+    "spelled": "Elgin Cook",
+    "team": "GSW"
+   },
+   {
+    "salary": 100000,
+    "season": "2016-17",
+    "spelled": "Isaiah Cousins",
+    "team": "SAC"
+   },
+   {
+    "salary": 100000,
+    "season": "2016-17",
+    "spelled": "JP Tokoto",
+    "team": "NYK"
+   },
+   {
+    "salary": 75000,
+    "season": "2016-17",
+    "spelled": "Kaleb Tarczewski",
+    "team": "OKC"
+   },
+   {
+    "salary": 1188840,
+    "season": "2016-17",
+    "spelled": "Livio Jean-Charles",
+    "team": "SAS"
+   },
+   {
+    "salary": 25000,
+    "season": "2016-17",
+    "spelled": "Nick Zeisloft",
+    "team": "IND"
+   },
+   {
+    "salary": 30000,
+    "season": "2016-17",
+    "spelled": "Nikola Jovanovic",
+    "team": "DET"
+   },
+   {
+    "salary": 77250,
+    "season": "2016-17",
+    "spelled": "Prince Ibeh",
+    "team": "BKN"
+   },
+   {
+    "salary": 75000,
+    "season": "2016-17",
+    "spelled": "Quincy Ford",
+    "team": "UTA"
+   },
+   {
+    "salary": 50000,
+    "season": "2016-17",
+    "spelled": "Scott Wood",
+    "team": "GSW"
+   },
+   {
+    "salary": 100000,
+    "season": "2016-17",
+    "spelled": "Stefan Jankovic",
+    "team": "MIA"
+   },
+   {
+    "salary": 69500,
+    "season": "2016-17",
+    "spelled": "Thomas Walkup",
+    "team": "CHI"
+   },
+   {
+    "salary": 60000,
+    "season": "2016-17",
+    "spelled": "Zach Auguste",
+    "team": "LAL"
+   },
+   {
+    "salary": 50000,
+    "season": "2017-18",
+    "spelled": "Bronson Koenig",
+    "team": "MIL"
+   },
+   {
+    "salary": 82943,
+    "season": "2017-18",
+    "spelled": "CJ Fair",
+    "team": "CHI"
+   },
+   {
+    "salary": 77250,
+    "season": "2017-18",
+    "spelled": "Eric Griffin",
+    "team": "UTA"
+   },
+   {
+    "salary": 87551,
+    "season": "2017-18",
+    "spelled": "Jaylen Johnson",
+    "team": "CHI"
+   },
+   {
+    "salary": 50000,
+    "season": "2017-18",
+    "spelled": "Landry Nnoko",
+    "team": "DET"
+   },
+   {
+    "salary": 1242240,
+    "season": "2017-18",
+    "spelled": "Livio Jean-Charles",
+    "team": "SAS"
+   },
+   {
+    "salary": 46079,
+    "season": "2017-18",
+    "spelled": "Marcus Thornton II",
+    "team": "CLE"
+   },
+   {
+    "salary": 77250,
+    "season": "2017-18",
+    "spelled": "Michael Young",
+    "team": "WAS"
+   },
+   {
+    "salary": 950000,
+    "season": "2017-18",
+    "spelled": "Rade Zagorac",
+    "team": "MEM"
+   },
+   {
+    "salary": 50000,
+    "season": "2017-18",
+    "spelled": "VJ Beachem",
+    "team": "LAL"
+   },
+   {
+    "salary": 77250,
+    "season": "2017-18",
+    "spelled": "Yakuba Ouattara",
+    "team": "BKN"
+   },
+   {
+    "salary": 77250,
+    "season": "2018-19",
+    "spelled": "Billy Preston",
+    "team": "CLE"
+   },
+   {
+    "salary": 47370,
+    "season": "2018-19",
+    "spelled": "Cody Demps",
+    "team": "SAC"
+   },
+   {
+    "salary": 92159,
+    "season": "2018-19",
+    "spelled": "Justin Bibbs",
+    "team": "LAC"
+   },
+   {
+    "salary": 77250,
+    "season": "2018-19",
+    "spelled": "Keenan Evans",
+    "team": "DET"
+   },
+   {
+    "salary": 47370,
+    "season": "2018-19",
+    "spelled": "Mitchell Creek",
+    "team": "BKN"
+   },
+   {
+    "salary": 20000,
+    "season": "2018-19",
+    "spelled": "Nuni Omot",
+    "team": "BKN"
+   },
+   {
+    "salary": 1378242,
+    "season": "2018-19",
+    "spelled": "Rade Zagorac",
+    "team": "MEM"
+   },
+   {
+    "salary": 47370,
+    "season": "2018-19",
+    "spelled": "Richard Solomon",
+    "team": "OKC"
+   },
+   {
+    "salary": 47370,
+    "season": "2018-19",
+    "spelled": "Stephan Hicks",
+    "team": "IND"
+   },
+   {
+    "salary": 47370,
+    "season": "2018-19",
+    "spelled": "Tarik Phillip",
+    "team": "WAS"
+   },
+   {
+    "salary": 77250,
+    "season": "2018-19",
+    "spelled": "Trevon Bluiett",
+    "team": "NOP"
+   },
+   {
+    "salary": 79568,
+    "season": "2019-20",
+    "spelled": "Kenny Wooten",
+    "team": "NYK"
+   },
+   {
+    "salary": 50752,
+    "season": "2019-20",
+    "spelled": "Sir'Dominic Pointer",
+    "team": "CLE"
+   },
+   {
+    "salary": 20000,
+    "season": "2020-21",
+    "spelled": "Caleb Homesley",
+    "team": "WAS"
+   },
+   {
+    "salary": 53176,
+    "season": "2021-22",
+    "spelled": "Aric Holman",
+    "team": "MIA"
+   },
+   {
+    "salary": 101034,
+    "season": "2021-22",
+    "spelled": "DJ Stewart",
+    "team": "SAS"
+   },
+   {
+    "salary": 167504,
+    "season": "2021-22",
+    "spelled": "Daulton Hommes",
+    "team": "NOP"
+   },
+   {
+    "salary": 53176,
+    "season": "2021-22",
+    "spelled": "Justin Tillman",
+    "team": "ATL"
+   },
+   {
+    "salary": 53176,
+    "season": "2021-22",
+    "spelled": "Malik Ellison",
+    "team": "ATL"
+   },
+   {
+    "salary": 462629,
+    "season": "2021-22",
+    "spelled": "Sean Chris Smith",
+    "team": "DET"
+   },
+   {
+    "salary": 50000,
+    "season": "2022-23",
+    "spelled": "DJ Steward",
+    "team": "SAC"
+   },
+   {
+    "salary": 102363,
+    "season": "2022-23",
+    "spelled": "Justin Lewis",
+    "team": "CHI"
+   },
+   {
+    "salary": 215548,
+    "season": "2023-24",
+    "spelled": "Charles Bediako",
+    "team": "SAS"
+   },
+   {
+    "salary": 141554,
+    "season": "2023-24",
+    "spelled": "Jaylin Galloway",
+    "team": "MIL"
+   },
+   {
+    "salary": 173725,
+    "season": "2023-24",
+    "spelled": "Justin Lewis",
+    "team": "CHI"
+   },
+   {
+    "salary": 559782,
+    "season": "2023-24",
+    "spelled": "Nate Williams",
+    "team": "HOU"
+   },
+   {
+    "salary": 75000,
+    "season": "2023-24",
+    "spelled": "Omari Moore",
+    "team": "TOR"
+   },
+   {
+    "salary": 167291,
+    "season": "2023-24",
+    "spelled": "Sir'Jabari Rice",
+    "team": "SAS"
+   },
+   {
+    "salary": 64343,
+    "season": "2023-24",
+    "spelled": "Taevion Kinsey",
+    "team": "UTA"
+   },
+   {
+    "salary": 143308,
+    "season": "2024-25",
+    "spelled": "Boo Buie",
+    "team": "NYK"
+   },
+   {
+    "salary": 3379068,
+    "season": "2024-25",
+    "spelled": "Cameron Whitmore",
+    "team": "HOU"
+   },
+   {
+    "salary": 176943,
+    "season": "2024-25",
+    "spelled": "Cui Yongxi",
+    "team": "BKN"
+   },
+   {
+    "salary": 215548,
+    "season": "2024-25",
+    "spelled": "DJ Steward",
+    "team": "CHI"
+   },
+   {
+    "salary": 32596,
+    "season": "2024-25",
+    "spelled": "Javante McCoy",
+    "team": "DET"
+   },
+   {
+    "salary": 77500,
+    "season": "2024-25",
+    "spelled": "Jaylin Galloway",
+    "team": "MIL"
+   },
+   {
+    "salary": 1157153,
+    "season": "2024-25",
+    "spelled": "KJ Jones",
+    "team": "BKN"
+   },
+   {
+    "salary": 578577,
+    "season": "2024-25",
+    "spelled": "Nate Williams",
+    "team": "HOU"
+   },
+   {
+    "salary": 77500,
+    "season": "2024-25",
+    "spelled": "Taevion Kinsey",
+    "team": "UTA"
+   },
+   {
+    "salary": 157640,
+    "season": "2025-26",
+    "spelled": "Alex Toohey",
+    "team": "GSW"
+   },
+   {
+    "salary": 15000,
+    "season": "2025-26",
+    "spelled": "Augustas Marciulionis",
+    "team": "LAC"
+   },
+   {
+    "salary": 85300,
+    "season": "2025-26",
+    "spelled": "David Muoka",
+    "team": "BKN"
+   },
+   {
+    "salary": 85300,
+    "season": "2025-26",
+    "spelled": "De'Andre Davis",
+    "team": "BKN"
+   },
+   {
+    "salary": 318218,
+    "season": "2025-26",
+    "spelled": "Eli Ndiaye",
+    "team": "ATL"
+   },
+   {
+    "salary": 73153,
+    "season": "2025-26",
+    "spelled": "Gabe McGlothan",
+    "team": "IND"
+   },
+   {
+    "salary": 26322,
+    "season": "2025-26",
+    "spelled": "Kyle Mangas",
+    "team": "SAS"
+   },
+   {
+    "salary": 176943,
+    "season": "2025-26",
+    "spelled": "Nate Williams",
+    "team": "GSW"
+   },
+   {
+    "salary": 1272870,
+    "season": "2025-26",
+    "spelled": "Nikola Djurisic",
+    "team": "ATL"
+   },
+   {
+    "salary": 85300,
+    "season": "2025-26",
+    "spelled": "RJ Luis",
+    "team": "BOS"
+   },
+   {
+    "salary": 636435,
+    "season": "2025-26",
+    "spelled": "Tamar Bates",
+    "team": "DEN"
+   },
+   {
+    "salary": 25000,
+    "season": "2025-26",
+    "spelled": "Terry Roberts",
+    "team": "BKN"
+   },
+   {
+    "salary": 4655040,
+    "season": "2025-26",
+    "spelled": "Thomas Sorber",
+    "team": "OKC"
+   },
+   {
+    "salary": 129503,
+    "season": "2025-26",
+    "spelled": "Trevon Scott",
+    "team": "BKN"
+   },
+   {
+    "salary": 51207,
+    "season": "2025-26",
+    "spelled": "Tyreke Key",
+    "team": "TOR"
+   }
+  ]
+ },
  "note": "Which sheet supplied each season, and what the boundary between them left to the tab. The historical tab is authoritative for every season it holds and the two forward-looking sheets are read only past it, so the boundary is the newest season on the tab rather than a year written into the code: the owner adding a season moves it. cutover lists, per forward sheet and per season it no longer answers for, the player-seasons and dollars that sheet still offers and how many of them the tab holds under the same name. A season well before the boundary may never have been read from that sheet by any build; the boundary season itself is the one that moved. Anything under missing_from_the_historical_tab the tab does not hold at all, and is the thing to look at before trusting a rollover.",
  "rows_on_the_tab_that_repeated_another_exactly": {
   "dollars_per_season": {
@@ -835,6 +1796,503 @@
   "note": "The same test, applied after every row is keyed on the person it belongs to rather than on a spelling. The parser above can only see a repeat between two rows spelled alike; a name data/name_aliases.json says is one man misspelled comes together here, and the rows under one player-season are summed, so reading both would double what the club owed. The dollars are taken off the tab's side of the_sums_balance, where they are listed as dollars_the_tab_gave_twice_under_two_spellings.",
   "rows": [],
   "rows_per_season": {}
+ },
+ "spot_checks": {
+  "amounts": [
+   {
+    "built": [
+     {
+      "player": "Adem Bona",
+      "salary": 1955377,
+      "team": "PHI"
+     }
+    ],
+    "expected": 1955377,
+    "player": "Adem Bona",
+    "result": "ok"
+   },
+   {
+    "built": [
+     {
+      "player": "Andre Jackson Jr",
+      "salary": 2221677,
+      "team": "MIL"
+     }
+    ],
+    "expected": 2221677,
+    "player": "Andre Jackson",
+    "result": "ok"
+   },
+   {
+    "built": [
+     {
+      "player": "Anthony Gill",
+      "salary": 2667947,
+      "team": "WAS"
+     }
+    ],
+    "expected": 2667947,
+    "player": "Anthony Gill",
+    "result": "ok"
+   },
+   {
+    "built": [
+     {
+      "player": "Bones Hyland",
+      "salary": 2461463,
+      "team": "MIN"
+     }
+    ],
+    "expected": 2461463,
+    "player": "Bones Hyland",
+    "result": "ok"
+   },
+   {
+    "built": [
+     {
+      "player": "Brandon Williams",
+      "salary": 2270735,
+      "team": "DAL"
+     }
+    ],
+    "expected": 2270735,
+    "player": "Brandon Williams",
+    "result": "ok"
+   },
+   {
+    "built": [
+     {
+      "player": "Buddy Hield",
+      "salary": 9219512,
+      "team": "ATL"
+     }
+    ],
+    "expected": 9219512,
+    "player": "Buddy Hield",
+    "result": "ok"
+   },
+   {
+    "built": [
+     {
+      "player": "Craig Porter",
+      "salary": 2221677,
+      "team": "CLE"
+     }
+    ],
+    "expected": 2221677,
+    "player": "Craig Porter",
+    "result": "ok"
+   },
+   {
+    "built": [
+     {
+      "player": "Dru Smith",
+      "salary": 2378870,
+      "team": "MIA"
+     }
+    ],
+    "expected": 2378870,
+    "player": "Dru Smith",
+    "result": "ok"
+   },
+   {
+    "built": [
+     {
+      "player": "Elijah Harkless",
+      "salary": 1272869,
+      "team": "UTA"
+     }
+    ],
+    "expected": 636435,
+    "player": "Elijah Harkless",
+    "result": "mismatch",
+    "tab_rows": [
+     {
+      "player": "Elijah Harkless",
+      "row": 18410,
+      "salary": 636434,
+      "team": "UTA"
+     },
+     {
+      "player": "Elijah Harkless",
+      "row": 18486,
+      "salary": 636435,
+      "team": "UTA"
+     }
+    ]
+   },
+   {
+    "built": [
+     {
+      "player": "Gary Payton II",
+      "salary": 3303774,
+      "team": "GSW"
+     }
+    ],
+    "expected": 3303774,
+    "player": "Gary Payton II",
+    "result": "ok"
+   },
+   {
+    "built": [
+     {
+      "player": "Guerschon Yabusele",
+      "salary": 5500000,
+      "team": "CHI"
+     }
+    ],
+    "expected": 5500000,
+    "player": "Guerschon Yabusele",
+    "result": "ok"
+   },
+   {
+    "built": [
+     {
+      "player": "Javonte Green",
+      "salary": 2874436,
+      "team": "DET"
+     }
+    ],
+    "expected": 2874436,
+    "player": "Javonte Green",
+    "result": "ok"
+   },
+   {
+    "built": [
+     {
+      "player": "Jeenathan Williams",
+      "salary": 176943,
+      "team": "GSW"
+     }
+    ],
+    "expected": 176943,
+    "player": "Jeenathan Williams",
+    "result": "ok"
+   },
+   {
+    "built": [
+     {
+      "player": "Jordan Goodwin",
+      "salary": 2349578,
+      "team": "PHX"
+     }
+    ],
+    "expected": 2349578,
+    "player": "Jordan Goodwin",
+    "result": "ok"
+   },
+   {
+    "built": [
+     {
+      "player": "Justin Champagnie",
+      "salary": 2349578,
+      "team": "WAS"
+     }
+    ],
+    "expected": 2349578,
+    "player": "Justin Champagnie",
+    "result": "ok"
+   },
+   {
+    "built": [
+     {
+      "player": "Kevin McCullar",
+      "salary": 636435,
+      "team": "NYK"
+     }
+    ],
+    "expected": 636435,
+    "player": "Kevin McCullar",
+    "result": "ok"
+   },
+   {
+    "built": [
+     {
+      "player": "Landry Shamet",
+      "salary": 3080921,
+      "team": "NYK"
+     }
+    ],
+    "expected": 3080921,
+    "player": "Landry Shamet",
+    "result": "ok"
+   },
+   {
+    "built": [
+     {
+      "player": "Mohamed Diawara",
+      "salary": 1272870,
+      "team": "CHA"
+     }
+    ],
+    "expected": 1272870,
+    "player": "Mohamed Diawara",
+    "result": "ok"
+   },
+   {
+    "built": [
+     {
+      "player": "Moussa Diabate",
+      "salary": 2270735,
+      "team": "CHA"
+     }
+    ],
+    "expected": 2270735,
+    "player": "Moussa Diabate",
+    "result": "ok"
+   },
+   {
+    "built": [
+     {
+      "player": "Neemias Queta",
+      "salary": 2349578,
+      "team": "BOS"
+     }
+    ],
+    "expected": 2349578,
+    "player": "Neemias Queta",
+    "result": "ok"
+   },
+   {
+    "built": [
+     {
+      "player": "Pelle Larsson",
+      "salary": 1955377,
+      "team": "MIA"
+     }
+    ],
+    "expected": 1955377,
+    "player": "Pelle Larsson",
+    "result": "ok"
+   },
+   {
+    "built": [
+     {
+      "player": "Rob Dillingham",
+      "salary": 6576120,
+      "team": "CHI"
+     }
+    ],
+    "expected": 6576120,
+    "player": "Rob Dillingham",
+    "result": "ok"
+   },
+   {
+    "built": [
+     {
+      "player": "Russell Westbrook",
+      "salary": 3634153,
+      "team": "SAC"
+     }
+    ],
+    "expected": 3634153,
+    "player": "Russell Westbrook",
+    "result": "ok"
+   },
+   {
+    "built": [
+     {
+      "player": "Thomas Bryant",
+      "salary": 3287409,
+      "team": "CLE"
+     }
+    ],
+    "expected": 3287409,
+    "player": "Thomas Bryant",
+    "result": "ok"
+   }
+  ],
+  "appear_once": [
+   {
+    "player": "Guerschon Yabusele",
+    "records": [
+     "Guerschon Yabusele"
+    ],
+    "result": "ok",
+    "tab_rows": [
+     {
+      "player": "Guerschon Yabusele",
+      "row": 18370,
+      "salary": 5500000,
+      "team": "CHI"
+     },
+     {
+      "player": "Guerschon Yabusele",
+      "row": 18489,
+      "salary": 5500000,
+      "team": "CHI"
+     }
+    ],
+    "tab_rows_under_another_spelling": []
+   },
+   {
+    "player": "Russell Westbrook",
+    "records": [
+     "Russell Westbrook"
+    ],
+    "result": "ok",
+    "tab_rows": [
+     {
+      "player": "Russell Westbrook",
+      "row": 17765,
+      "salary": 3634153,
+      "team": "SAC"
+     },
+     {
+      "player": "Russell Westbrook",
+      "row": 18490,
+      "salary": 3634153,
+      "team": "SAC"
+     }
+    ],
+    "tab_rows_under_another_spelling": []
+   },
+   {
+    "player": "Elijah Harkless",
+    "records": [
+     "Elijah Harkless"
+    ],
+    "result": "ok",
+    "tab_rows": [
+     {
+      "player": "Elijah Harkless",
+      "row": 18410,
+      "salary": 636434,
+      "team": "UTA"
+     },
+     {
+      "player": "Elijah Harkless",
+      "row": 18486,
+      "salary": 636435,
+      "team": "UTA"
+     }
+    ],
+    "tab_rows_under_another_spelling": []
+   },
+   {
+    "player": "Tyreke Key",
+    "records": [
+     "Tyreke Key"
+    ],
+    "result": "ok",
+    "tab_rows": [
+     {
+      "player": "Tyreke Key",
+      "row": 18459,
+      "salary": 51207,
+      "team": "TOR"
+     },
+     {
+      "player": "Tyreke Key",
+      "row": 18468,
+      "salary": 51207,
+      "team": "TOR"
+     }
+    ],
+    "tab_rows_under_another_spelling": []
+   },
+   {
+    "player": "Dominick Barlow",
+    "records": [
+     "Dominick Barlow"
+    ],
+    "result": "ok",
+    "tab_rows": [
+     {
+      "player": "Dominick Barlow",
+      "row": 18162,
+      "salary": 3765668,
+      "team": "PHI"
+     },
+     {
+      "player": "Dominick Barlow",
+      "row": 18467,
+      "salary": 347451,
+      "team": "PHI"
+     }
+    ],
+    "tab_rows_under_another_spelling": []
+   },
+   {
+    "player": "Kevin McCullar",
+    "records": [
+     "Kevin McCullar"
+    ],
+    "result": "ok",
+    "tab_rows": [
+     {
+      "player": "Kevin McCullar",
+      "row": 18427,
+      "salary": 636435,
+      "team": "NYK"
+     },
+     {
+      "player": "Kevin McCullar",
+      "row": 18487,
+      "salary": 636435,
+      "team": "NYK"
+     }
+    ],
+    "tab_rows_under_another_spelling": []
+   }
+  ],
+  "season": "2025-26"
+ },
+ "tab_duplicates_with_sheet_rows": {
+  "groups": [
+   {
+    "amount": 3634153,
+    "player": "Russell Westbrook",
+    "season": "2025-26",
+    "sheet_rows": [
+     17765,
+     18490
+    ],
+    "team": "SAC"
+   },
+   {
+    "amount": 1002360,
+    "player": "Olivier-Maxence Prosper / Olivier Maxence-Prosper",
+    "season": "2025-26",
+    "sheet_rows": [
+     18175,
+     18265
+    ],
+    "team": "DAL"
+   },
+   {
+    "amount": 5500000,
+    "player": "Guerschon Yabusele",
+    "season": "2025-26",
+    "sheet_rows": [
+     18370,
+     18489
+    ],
+    "team": "CHI"
+   },
+   {
+    "amount": 636435,
+    "player": "Kevin McCullar",
+    "season": "2025-26",
+    "sheet_rows": [
+     18427,
+     18487
+    ],
+    "team": "NYK"
+   },
+   {
+    "amount": 51207,
+    "player": "Tyreke Key",
+    "season": "2025-26",
+    "sheet_rows": [
+     18459,
+     18468
+    ],
+    "team": "TOR"
+   }
+  ],
+  "note": "Every group of 2025-26 rows on the tab naming one man, one club and one figure to the dollar, with the row numbers the sheet shows for them (the header is row 1). The same groups are written to reports/historical_duplicates_2025-26.csv for the sheet's owner to delete the extra copies. Two spellings of one man, an abbreviation and the full name, are one group, as they are in the build.",
+  "season": "2025-26"
  },
  "the_sums_balance": {
   "1990-91": {
