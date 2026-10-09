@@ -2,7 +2,7 @@
  "cutover": {
   "current": {
    "2024-25": {
-    "also_in_the_historical_tab": 457,
+    "also_in_the_historical_tab": 458,
     "dollars_offered": 4969624691,
     "missing_from_the_historical_tab": [
      {
@@ -178,10 +178,6 @@
       "salary": 578577
      },
      {
-      "player": "Dennis Smith",
-      "salary": 578577
-     },
-     {
       "player": "Grant Nelson",
       "salary": 578577
      },
@@ -199,6 +195,10 @@
      },
      {
       "player": "Lucas Williamson",
+      "salary": 578577
+     },
+     {
+      "player": "Mohamed Wague",
       "salary": 578577
      },
      {
@@ -220,10 +220,6 @@
      {
       "player": "Tyler Nickel",
       "salary": 578577
-     },
-     {
-      "player": "Jeenathan Williams",
-      "salary": 515881
      },
      {
       "player": "Ja'Kobi Gillespie",
@@ -397,11 +393,11 @@
       "salary": 405359
      },
      {
-      "player": "Dennis Smith",
+      "player": "KJ Martin",
       "salary": 321714
      },
      {
-      "player": "KJ Martin",
+      "player": "Mohamed Wague",
       "salary": 321714
      },
      {
@@ -508,11 +504,6 @@
     "season": "2025-26"
    },
    {
-    "player": "Dennis Smith",
-    "salary": 321714,
-    "season": "2025-26"
-   },
-   {
     "player": "Dillon Mitchell",
     "salary": 490128,
     "season": "2025-26"
@@ -600,6 +591,11 @@
    {
     "player": "Michael Ajayi",
     "salary": 157640,
+    "season": "2025-26"
+   },
+   {
+    "player": "Mohamed Wague",
+    "salary": 321714,
     "season": "2025-26"
    },
    {
@@ -1450,12 +1446,6 @@
     "team": "CHI"
    },
    {
-    "salary": 559782,
-    "season": "2023-24",
-    "spelled": "Nate Williams",
-    "team": "HOU"
-   },
-   {
     "salary": 75000,
     "season": "2023-24",
     "spelled": "Omari Moore",
@@ -1516,12 +1506,6 @@
     "team": "BKN"
    },
    {
-    "salary": 578577,
-    "season": "2024-25",
-    "spelled": "Nate Williams",
-    "team": "HOU"
-   },
-   {
     "salary": 77500,
     "season": "2024-25",
     "spelled": "Taevion Kinsey",
@@ -1570,12 +1554,6 @@
     "team": "SAS"
    },
    {
-    "salary": 176943,
-    "season": "2025-26",
-    "spelled": "Nate Williams",
-    "team": "GSW"
-   },
-   {
     "salary": 1272870,
     "season": "2025-26",
     "spelled": "Nikola Djurisic",
@@ -1622,7 +1600,7 @@
  "note": "Which sheet supplied each season, and what the boundary between them left to the tab. The historical tab is authoritative for every season it holds and the two forward-looking sheets are read only past it, so the boundary is the newest season on the tab rather than a year written into the code: the owner adding a season moves it. cutover lists, per forward sheet and per season it no longer answers for, the player-seasons and dollars that sheet still offers and how many of them the tab holds under the same name. A season well before the boundary may never have been read from that sheet by any build; the boundary season itself is the one that moved. Anything under missing_from_the_historical_tab the tab does not hold at all, and is the thing to look at before trusting a rollover.",
  "rows_on_the_tab_that_repeated_another_exactly": {
   "dollars_per_season": {
-   "2025-26": 10824155
+   "2025-26": 1179303
   },
   "note": "A row naming the same man, season, team and figure to the dollar as another row of the tab is read once. The rows under one player-season are summed, so reading both doubles what that club owed him: the 2025-26 edit that put dead money on this tab gave Damian Lillard a second Milwaukee row of the figure Milwaukee stretched his contract over, and he came out owed twice it by a club he does not play for. Two separate payments of the identical amount by one club in one season would be read as one as well; that is the cost of the test, and the cheaper error. Two clubs owing one man the same figure are two debts and both count. Anything here is worth putting to the sheet's owner: a row the tab holds twice is the tab's to lose, not ours to carry.",
   "rows": [
@@ -1633,32 +1611,14 @@
     "team": "DAL"
    },
    {
-    "player": "Tyreke Key",
-    "salary": 51207,
+    "player": "Jeenathan Williams",
+    "salary": 176943,
     "season": "2025-26",
-    "team": "TOR"
-   },
-   {
-    "player": "Kevin McCullar",
-    "salary": 636435,
-    "season": "2025-26",
-    "team": "NYK"
-   },
-   {
-    "player": "Guerschon Yabusele",
-    "salary": 5500000,
-    "season": "2025-26",
-    "team": "CHI"
-   },
-   {
-    "player": "Russell Westbrook",
-    "salary": 3634153,
-    "season": "2025-26",
-    "team": "SAC"
+    "team": "GSW"
    }
   ],
   "rows_per_season": {
-   "2025-26": 5
+   "2025-26": 2
   }
  },
  "rows_per_season_per_sheet": {
@@ -1768,7 +1728,7 @@
    "historical": 571
   },
   "2025-26": {
-   "historical": 625
+   "historical": 624
   },
   "2026-27": {
    "current_and_dead": 638,
@@ -1899,27 +1859,13 @@
     "built": [
      {
       "player": "Elijah Harkless",
-      "salary": 1272869,
+      "salary": 636435,
       "team": "UTA"
      }
     ],
     "expected": 636435,
     "player": "Elijah Harkless",
-    "result": "mismatch",
-    "tab_rows": [
-     {
-      "player": "Elijah Harkless",
-      "row": 18410,
-      "salary": 636434,
-      "team": "UTA"
-     },
-     {
-      "player": "Elijah Harkless",
-      "row": 18486,
-      "salary": 636435,
-      "team": "UTA"
-     }
-    ]
+    "result": "ok"
    },
    {
     "built": [
@@ -2112,13 +2058,7 @@
     "tab_rows": [
      {
       "player": "Guerschon Yabusele",
-      "row": 18370,
-      "salary": 5500000,
-      "team": "CHI"
-     },
-     {
-      "player": "Guerschon Yabusele",
-      "row": 18489,
+      "row": 18369,
       "salary": 5500000,
       "team": "CHI"
      }
@@ -2137,12 +2077,6 @@
       "row": 17765,
       "salary": 3634153,
       "team": "SAC"
-     },
-     {
-      "player": "Russell Westbrook",
-      "row": 18490,
-      "salary": 3634153,
-      "team": "SAC"
      }
     ],
     "tab_rows_under_another_spelling": []
@@ -2156,13 +2090,7 @@
     "tab_rows": [
      {
       "player": "Elijah Harkless",
-      "row": 18410,
-      "salary": 636434,
-      "team": "UTA"
-     },
-     {
-      "player": "Elijah Harkless",
-      "row": 18486,
+      "row": 18483,
       "salary": 636435,
       "team": "UTA"
      }
@@ -2178,13 +2106,7 @@
     "tab_rows": [
      {
       "player": "Tyreke Key",
-      "row": 18459,
-      "salary": 51207,
-      "team": "TOR"
-     },
-     {
-      "player": "Tyreke Key",
-      "row": 18468,
+      "row": 18465,
       "salary": 51207,
       "team": "TOR"
      }
@@ -2206,7 +2128,7 @@
      },
      {
       "player": "Dominick Barlow",
-      "row": 18467,
+      "row": 18464,
       "salary": 347451,
       "team": "PHI"
      }
@@ -2222,13 +2144,7 @@
     "tab_rows": [
      {
       "player": "Kevin McCullar",
-      "row": 18427,
-      "salary": 636435,
-      "team": "NYK"
-     },
-     {
-      "player": "Kevin McCullar",
-      "row": 18487,
+      "row": 18425,
       "salary": 636435,
       "team": "NYK"
      }
@@ -2241,54 +2157,24 @@
  "tab_duplicates_with_sheet_rows": {
   "groups": [
    {
-    "amount": 3634153,
-    "player": "Russell Westbrook",
-    "season": "2025-26",
-    "sheet_rows": [
-     17765,
-     18490
-    ],
-    "team": "SAC"
-   },
-   {
     "amount": 1002360,
     "player": "Olivier-Maxence Prosper / Olivier Maxence-Prosper",
     "season": "2025-26",
     "sheet_rows": [
      18175,
-     18265
+     18264
     ],
     "team": "DAL"
    },
    {
-    "amount": 5500000,
-    "player": "Guerschon Yabusele",
+    "amount": 176943,
+    "player": "Jeenathan Williams",
     "season": "2025-26",
     "sheet_rows": [
-     18370,
-     18489
+     18202,
+     18486
     ],
-    "team": "CHI"
-   },
-   {
-    "amount": 636435,
-    "player": "Kevin McCullar",
-    "season": "2025-26",
-    "sheet_rows": [
-     18427,
-     18487
-    ],
-    "team": "NYK"
-   },
-   {
-    "amount": 51207,
-    "player": "Tyreke Key",
-    "season": "2025-26",
-    "sheet_rows": [
-     18459,
-     18468
-    ],
-    "team": "TOR"
+    "team": "GSW"
    }
   ],
   "note": "Every group of 2025-26 rows on the tab naming one man, one club and one figure to the dollar, with the row numbers the sheet shows for them (the header is row 1). The same groups are written to reports/historical_duplicates_2025-26.csv for the sheet's owner to delete the extra copies. Two spellings of one man, an abbreviation and the full name, are one group, as they are in the build.",
@@ -2578,9 +2464,9 @@
   "2025-26": {
    "balances": true,
    "dollars_filled_from_the_current_sheet": 0,
-   "dollars_in_the_file": 5738864673,
+   "dollars_in_the_file": 5737089103,
    "dollars_on_dead_rows_the_tab_had_none_for": 0,
-   "dollars_on_the_historical_tab": 5738864673,
+   "dollars_on_the_historical_tab": 5737089103,
    "dollars_the_tab_gave_twice_under_two_spellings": 0
   }
  }
