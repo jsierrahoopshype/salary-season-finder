@@ -222,6 +222,10 @@
       "salary": 578577
      },
      {
+      "player": "Dion Brown",
+      "salary": 344234
+     },
+     {
       "player": "Ja'Kobi Gillespie",
       "salary": 344234
      },
@@ -243,10 +247,6 @@
      },
      {
       "player": "Quadir Copeland",
-      "salary": 344234
-     },
-     {
-      "player": "Rafael Castro",
       "salary": 344234
      },
      {
@@ -405,6 +405,10 @@
       "salary": 312062
      },
      {
+      "player": "Dion Brown",
+      "salary": 157640
+     },
+     {
       "player": "Ja'Kobi Gillespie",
       "salary": 157640
      },
@@ -426,10 +430,6 @@
      },
      {
       "player": "Quadir Copeland",
-      "salary": 157640
-     },
-     {
-      "player": "Rafael Castro",
       "salary": 157640
      },
      {
@@ -506,6 +506,11 @@
    {
     "player": "Dillon Mitchell",
     "salary": 490128,
+    "season": "2025-26"
+   },
+   {
+    "player": "Dion Brown",
+    "salary": 157640,
     "season": "2025-26"
    },
    {
@@ -605,11 +610,6 @@
    },
    {
     "player": "Quadir Copeland",
-    "salary": 157640,
-    "season": "2025-26"
-   },
-   {
-    "player": "Rafael Castro",
     "salary": 157640,
     "season": "2025-26"
    },
@@ -1731,8 +1731,8 @@
    "historical": 624
   },
   "2026-27": {
-   "current_and_dead": 638,
-   "future": 616
+   "current_and_dead": 640,
+   "future": 618
   },
   "2027-28": {
    "current_and_dead": 350,
