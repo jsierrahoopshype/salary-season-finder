@@ -343,18 +343,25 @@ def test_the_shipped_stand_in_bios_name_their_sources_and_use_the_sheets_formats
         for url in sources:
             assert url.startswith("https://"), (name, url)
         block = B.bio_block(entry)
-        # the sheet's own formats, read back through the sheet's own parser
-        assert block["nationality"], name
-        assert re.fullmatch(r"\d-\d{1,2}", block["height"]), (name, block["height"])
-        assert re.fullmatch(r"\d{1,2}/\d{1,2}/\d{4}", block["birthday"]), name
-        assert isinstance(block["weight"], int), name
-        assert block["draft_year"], name
-        # the undrafted convention: PICK is the literal UND, never blank, and
-        # the draft class year stays on the row
+        # A field nobody could confirm is left blank rather than guessed, the
+        # way bio.csv leaves one. What is filled has to be in the sheet's own
+        # format, read back through the sheet's own parser.
+        assert any(block[k] for k in ("birthday", "nationality", "college",
+                                      "draft_year", "height")), name
+        if block["height"]:
+            assert re.fullmatch(r"\d-\d{1,2}", block["height"]), (name, block["height"])
+        if block["birthday"]:
+            assert re.fullmatch(r"\d{1,2}/\d{1,2}/\d{4}", block["birthday"]), name
+        if (entry.get("WEIGHT") or "").strip():
+            assert isinstance(block["weight"], int), name
+        if block["pos"]:
+            assert block["pos"] in ("G", "F", "C", "G-F", "F-G", "F-C", "C-F"), name
+        # the undrafted convention: PICK is the literal UND, and the draft class
+        # year stays on the row
         if entry.get("PICK") == "UND":
-            assert block["draft_pick"] is None, name
-        else:
-            assert 1 <= block["draft_pick"] <= 60, name
+            assert block["draft_pick"] is None and block["draft_year"], name
+        elif (entry.get("PICK") or "").strip():
+            assert block["draft_year"] and 1 <= block["draft_pick"] <= 60, name
 
 
 @pytest.mark.skipif(not os.path.exists(REAL_OVERRIDES) or not os.path.exists(REAL_BIO),
@@ -775,3 +782,38 @@ def test_the_real_awards_sit_on_the_right_man():
     # and the join keeps his father's honours off the son
     assert "NBA Top-75" not in awards.get(("Gary Payton II", "2020-21"), set())
     assert "HoopsHype Top-78" not in awards.get(("Gary Payton II", "2022-23"), set())
+
+
+def _publisher(url):
+    """Who published a page: nba.com and every site under it are one."""
+    host = re.sub(r"^https?://", "", url).split("/", 1)[0].lower()
+    labels = host.split(".")
+    if host == "nba.com" or host.endswith(".nba.com"):
+        return "nba.com"
+    if len(labels) >= 3 and labels[-2] in ("com", "co", "org", "net") \
+            and len(labels[-1]) == 2:
+        return ".".join(labels[-3:])
+    return ".".join(labels[-2:])
+
+
+@pytest.mark.skipif(not os.path.exists(REAL_OVERRIDES),
+                    reason="data/bio_overrides.json not present")
+def test_every_sourced_field_rests_on_two_publishers():
+    """An entry that records its sources field by field fills a field only
+    where two independent publishers state it, and fills nothing it cannot
+    source. Undrafted is a blank DRAFT and PICK, never a 0."""
+    for name, entry in B.load_bio_overrides().items():
+        per_field = entry.get("field_sources")
+        if per_field is None:
+            continue
+        for column in ("BIRTHDAY", "POS", "HEIGHT", "WEIGHT", "NATIONALITY",
+                       "COLLEGE / TEAM", "DRAFT", "PICK"):
+            value = (entry.get(column) or "").strip()
+            assert value not in ("0", "UND"), (name, column, value)
+            if not value:
+                continue
+            urls = per_field.get(column) or []
+            assert len({_publisher(u) for u in urls}) >= 2, (name, column, urls)
+        for column, urls in per_field.items():
+            assert (entry.get(column) or "").strip(), (name, column)
+            assert all(u in entry["source"] for u in urls), (name, column)

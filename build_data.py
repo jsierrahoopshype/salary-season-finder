@@ -1924,7 +1924,10 @@ def build_data():
                     "spelled": spelled, "season": season, "reason": why,
                     "team": rec.get("team", ""), "salary": 0})["salary"] += rec["salary"]
             pid = persons.resolve(full or spelled, season)
+            # A stand-in bio in data/bio_overrides.json is a match: somebody
+            # has checked who he is, which is what this log asks for.
             if (pid[0] == "new" and id(rec) in tab_row_ids and not why
+                    and pid[1:] not in persons.overrides
                     and not stats_lookup.get((normalize_name(full or spelled), season))):
                 names_not_matched.setdefault((spelled, season), {
                     "spelled": spelled, "season": season,
@@ -1945,11 +1948,11 @@ def build_data():
         print("::warning::{} {} matched nobody: {}".format(
             row["season"], row["spelled"], row["reason"]))
     newest_unmatched = [r for r in names_not_matched if r["season"] == historical_through]
-    print("    {} tab names match nobody in bio.csv or the stats sheet, {} of them "
-          "in {}".format(len(names_not_matched), len(newest_unmatched), historical_through))
+    print("    {} tab names match nobody in bio.csv, data/bio_overrides.json or "
+          "the stats sheet, {} of them in {}".format(len(names_not_matched), len(newest_unmatched), historical_through))
     for row in newest_unmatched:
-        print("::warning::{} {} ({}) matches nobody in bio.csv or the stats "
-              "sheet".format(row["season"], row["spelled"], row["team"]))
+        print("::warning::{} {} ({}) matches nobody in bio.csv, "
+              "data/bio_overrides.json or the stats sheet".format(row["season"], row["spelled"], row["team"]))
 
     # The same exact-repeat test the tab parser runs, run again now that the
     # rows are keyed on the person rather than on a spelling. The parser can
@@ -2729,7 +2732,9 @@ def build_data():
                     "which makes it a player of its own until the sheet or "
                     "data/name_aliases.json says who it is. "
                     "tab_names_matching_nobody: a historical-tab name that is "
-                    "neither in bio.csv nor on the stats sheet for that season."
+                    "not in bio.csv, has no stand-in bio in "
+                    "data/bio_overrides.json and is not on the stats sheet for "
+                    "that season."
                 ),
                 "abbreviations_matched": abbreviations_matched,
                 "abbreviations_not_matched": abbreviations_not_matched,

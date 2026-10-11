@@ -644,7 +644,7 @@
  "names": {
   "abbreviations_matched": [],
   "abbreviations_not_matched": [],
-  "note": "abbreviations_matched: a spelling with an initial for a first name, the way HoopsHype prints one, read as the one player it fits. abbreviations_not_matched: one that fits nobody or more than one man, left under its own spelling, which makes it a player of its own until the sheet or data/name_aliases.json says who it is. tab_names_matching_nobody: a historical-tab name that is neither in bio.csv nor on the stats sheet for that season.",
+  "note": "abbreviations_matched: a spelling with an initial for a first name, the way HoopsHype prints one, read as the one player it fits. abbreviations_not_matched: one that fits nobody or more than one man, left under its own spelling, which makes it a player of its own until the sheet or data/name_aliases.json says who it is. tab_names_matching_nobody: a historical-tab name that is not in bio.csv, has no stand-in bio in data/bio_overrides.json and is not on the stats sheet for that season.",
   "tab_names_matching_nobody": [
    {
     "salary": 50000,
@@ -1253,12 +1253,6 @@
     "team": "SAS"
    },
    {
-    "salary": 46079,
-    "season": "2017-18",
-    "spelled": "Marcus Thornton II",
-    "team": "CLE"
-   },
-   {
     "salary": 77250,
     "season": "2017-18",
     "spelled": "Michael Young",
@@ -1497,110 +1491,15 @@
     "season": "2024-25",
     "spelled": "Taevion Kinsey",
     "team": "UTA"
-   },
-   {
-    "salary": 157640,
-    "season": "2025-26",
-    "spelled": "Alex Toohey",
-    "team": "GSW"
-   },
-   {
-    "salary": 15000,
-    "season": "2025-26",
-    "spelled": "Augustas Marciulionis",
-    "team": "LAC"
-   },
-   {
-    "salary": 85300,
-    "season": "2025-26",
-    "spelled": "David Muoka",
-    "team": "BKN"
-   },
-   {
-    "salary": 85300,
-    "season": "2025-26",
-    "spelled": "De'Andre Davis",
-    "team": "BKN"
-   },
-   {
-    "salary": 318218,
-    "season": "2025-26",
-    "spelled": "Eli Ndiaye",
-    "team": "ATL"
-   },
-   {
-    "salary": 73153,
-    "season": "2025-26",
-    "spelled": "Gabe McGlothan",
-    "team": "IND"
-   },
-   {
-    "salary": 26322,
-    "season": "2025-26",
-    "spelled": "Kyle Mangas",
-    "team": "SAS"
-   },
-   {
-    "salary": 1272870,
-    "season": "2025-26",
-    "spelled": "Nikola Djurisic",
-    "team": "ATL"
-   },
-   {
-    "salary": 85300,
-    "season": "2025-26",
-    "spelled": "RJ Luis",
-    "team": "BOS"
-   },
-   {
-    "salary": 636435,
-    "season": "2025-26",
-    "spelled": "Tamar Bates",
-    "team": "DEN"
-   },
-   {
-    "salary": 25000,
-    "season": "2025-26",
-    "spelled": "Terry Roberts",
-    "team": "BKN"
-   },
-   {
-    "salary": 4655040,
-    "season": "2025-26",
-    "spelled": "Thomas Sorber",
-    "team": "OKC"
-   },
-   {
-    "salary": 129503,
-    "season": "2025-26",
-    "spelled": "Trevon Scott",
-    "team": "BKN"
-   },
-   {
-    "salary": 51207,
-    "season": "2025-26",
-    "spelled": "Tyreke Key",
-    "team": "TOR"
    }
   ]
  },
  "note": "Which sheet supplied each season, and what the boundary between them left to the tab. The historical tab is authoritative for every season it holds and the two forward-looking sheets are read only past it, so the boundary is the newest season on the tab rather than a year written into the code: the owner adding a season moves it. cutover lists, per forward sheet and per season it no longer answers for, the player-seasons and dollars that sheet still offers and how many of them the tab holds under the same name. A season well before the boundary may never have been read from that sheet by any build; the boundary season itself is the one that moved. Anything under missing_from_the_historical_tab the tab does not hold at all, and is the thing to look at before trusting a rollover.",
  "rows_on_the_tab_that_repeated_another_exactly": {
-  "dollars_per_season": {
-   "2025-26": 1002360
-  },
+  "dollars_per_season": {},
   "note": "A row naming the same man, season, team and figure to the dollar as another row of the tab is read once. The rows under one player-season are summed, so reading both doubles what that club owed him: the 2025-26 edit that put dead money on this tab gave Damian Lillard a second Milwaukee row of the figure Milwaukee stretched his contract over, and he came out owed twice it by a club he does not play for. Two separate payments of the identical amount by one club in one season would be read as one as well; that is the cost of the test, and the cheaper error. Two clubs owing one man the same figure are two debts and both count. Anything here is worth putting to the sheet's owner: a row the tab holds twice is the tab's to lose, not ours to carry.",
-  "rows": [
-   {
-    "player": "Olivier Maxence-Prosper",
-    "salary": 1002360,
-    "season": "2025-26",
-    "team": "DAL"
-   }
-  ],
-  "rows_per_season": {
-   "2025-26": 1
-  }
+  "rows": [],
+  "rows_per_season": {}
  },
  "rows_per_season_per_sheet": {
   "1990-91": {
@@ -2039,7 +1938,7 @@
     "tab_rows": [
      {
       "player": "Guerschon Yabusele",
-      "row": 18369,
+      "row": 18368,
       "salary": 5500000,
       "team": "CHI"
      }
@@ -2071,7 +1970,7 @@
     "tab_rows": [
      {
       "player": "Elijah Harkless",
-      "row": 18483,
+      "row": 18482,
       "salary": 636435,
       "team": "UTA"
      }
@@ -2087,7 +1986,7 @@
     "tab_rows": [
      {
       "player": "Tyreke Key",
-      "row": 18465,
+      "row": 18464,
       "salary": 51207,
       "team": "TOR"
      }
@@ -2109,7 +2008,7 @@
      },
      {
       "player": "Dominick Barlow",
-      "row": 18464,
+      "row": 18463,
       "salary": 347451,
       "team": "PHI"
      }
@@ -2125,7 +2024,7 @@
     "tab_rows": [
      {
       "player": "Kevin McCullar",
-      "row": 18425,
+      "row": 18424,
       "salary": 636435,
       "team": "NYK"
      }
@@ -2136,18 +2035,7 @@
   "season": "2025-26"
  },
  "tab_duplicates_with_sheet_rows": {
-  "groups": [
-   {
-    "amount": 1002360,
-    "player": "Olivier-Maxence Prosper / Olivier Maxence-Prosper",
-    "season": "2025-26",
-    "sheet_rows": [
-     18175,
-     18264
-    ],
-    "team": "DAL"
-   }
-  ],
+  "groups": [],
   "note": "Every group of 2025-26 rows on the tab naming one man, one club and one figure to the dollar, with the row numbers the sheet shows for them (the header is row 1). The same groups are written to reports/historical_duplicates_2025-26.csv for the sheet's owner to delete the extra copies. Two spellings of one man, an abbreviation and the full name, are one group, as they are in the build.",
   "season": "2025-26"
  },
