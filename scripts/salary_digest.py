@@ -92,10 +92,10 @@ KIND_ORDER = ("new", "extension", "salary", "team", "gone")
 #: number is in none of them: it is one short line, and a correction to a
 #: minimum salary is as worth reading as any other.
 COLLAPSE_LABEL = {
-    "added_now": "minimum salaries added for {season}",
-    "added_later": "minimum salaries added for later seasons",
-    "moved": "minimum salaries moved to another team",
-    "removed": "minimum salaries removed",
+    "added_now": "New at the minimum for {season}",
+    "added_later": "New at the minimum for {season}",
+    "moved": "On a new team's books at the minimum for {season}",
+    "removed": "Off the {season} books",
 }
 
 #: The order those lines are read in: this season, then the ones after it, then
@@ -194,9 +194,13 @@ def load_cohort_slugs(path=SLUGS_PATH):
 
 
 def load_team_names(path=FRANCHISES_PATH, codes=False):
-    """Team code -> the city a sentence names, from data/franchises.json.
+    """Team code -> the nickname a sentence names, from data/franchises.json.
 
-    With codes, the map the link pass wants instead: code -> page slug.
+    The nickname and never the city: "Los Angeles" is two teams, and a line
+    pasted onto the Rumors page reads "the Clippers" the way the rest of it
+    does. team_name() puts the article on.
+
+    With codes, the map the page URLs want instead: code -> page slug.
     """
     if not os.path.exists(path):
         return {}
@@ -206,12 +210,10 @@ def load_team_names(path=FRANCHISES_PATH, codes=False):
         payload = (json.load(fh) or {}).get("franchises") or {}
     out = {}
     for code, entry in payload.items():
-        full = (entry.get("full_name") or "").strip()
         nickname = (entry.get("name") or "").strip()
-        if full and nickname and full.endswith(nickname):
-            out[code] = full[: -len(nickname)].strip() or full
-        elif full:
-            out[code] = full
+        full = (entry.get("full_name") or "").strip()
+        if nickname or full:
+            out[code] = nickname or full
     return out
 
 
@@ -222,33 +224,85 @@ def load_player_slugs(path=SLUGS_PATH):
         return ((json.load(fh) or {}).get("slugs") or {}).get("player") or {}
 
 
-def link(text, url):
-    """Slack mrkdwn. A link is the only place the digest spends a URL."""
-    if not url:
-        return text
-    return "<{}|{}>".format(url, text)
+# ── the pages under each item ─────────────────────────────────────────
+# The sentences are plain text: no name in them is a link. The page an item is
+# about goes on a line of its own under it, as a bare URL, so that the block
+# (text and URLs) can be copied onto the HoopsHype Rumors page as one unit.
+# Only a page the built site has is ever printed; a URL nobody can open is
+# worse than none.
 
 
-def apply_links(text, links):
-    """Turn each named entity in a sentence into a link, once.
+def page_exists(url, site_root=REPO):
+    """Whether the built site has the page this URL names.
 
-    Longest surface first, so linking a player never cuts a team name in half,
-    and on a word boundary, so "Arizona St" cannot swallow the first half of
-    "Arizona State". A surface already inside a link is left alone.
+    The site is the prerendered tree in this repository, served under
+    TOOL_ROOT, so /player/johni-broome/ is player/johni-broome/index.html.
     """
-    done = []
-    for surface, url in sorted(links, key=lambda pair: -len(pair[0])):
-        if not surface or not url:
-            continue
-        if any(surface in seen for seen in done):
-            continue
-        pattern = r"(?<![\w<|/-]){}(?![\w-])".format(re.escape(surface))
-        found = re.search(pattern, text)
-        if not found:
-            continue
-        text = text[:found.start()] + link(surface, url) + text[found.end():]
-        done.append(surface)
-    return text
+    if not url or not url.startswith(TOOL_ROOT):
+        return False
+    rest = url[len(TOOL_ROOT):].split("#", 1)[0].split("?", 1)[0].strip("/")
+    parts = [p for p in rest.split("/") if p]
+    if any(p in (".", "..") for p in parts):
+        return False
+    return os.path.isfile(os.path.join(site_root, *(parts + ["index.html"])))
+
+
+def season_url(season):
+    return "{}/season/{}/".format(TOOL_ROOT, season) if season else ""
+
+
+def existing(urls, context):
+    """The URLs whose pages exist, in order, each once."""
+    exists = (context or {}).get("page_exists") or page_exists
+    out = []
+    for url in urls:
+        if url and url not in out and exists(url):
+            out.append(url)
+    return out
+
+
+def first_existing(urls, context):
+    """The first of these with a page, as a one-item list, or nothing."""
+    found = existing(urls, context)
+    return found[:1]
+
+
+def fallback_urls(seasons, context):
+    """Where an item points when its own page is missing: the season, else the
+    tool itself. Every item gets at least one URL a reader can open."""
+    return first_existing(
+        [season_url(s) for s in seasons] + [TOOL_ROOT + "/"], context)
+
+
+def item_urls(item, context):
+    """The page under a player item: his, or failing that the nearest that is."""
+    slugs, teams = context.get("slugs") or {}, context.get("teams") or {}
+    mine = first_existing([player_url(slugs, item["player"])], context)
+    if mine:
+        return mine
+    codes = []
+    for source in [item] + list(item.get("members") or []):
+        for code in (source.get("team") or "").split(","):
+            if code.strip() and code.strip() not in codes:
+                codes.append(code.strip())
+    return (first_existing([team_url(teams, c) for c in codes], context)
+            or fallback_urls([item.get("season")], context))
+
+
+def players_urls(players, seasons, context):
+    """One URL per player with a page, in the order the line names them."""
+    slugs = context.get("slugs") or {}
+    out = []
+    for player in players:
+        for url in existing([player_url(slugs, player)], context):
+            if url not in out:
+                out.append(url)
+    return out or fallback_urls(seasons, context)
+
+
+def with_urls(text, urls):
+    """A block: the text, then each URL on its own line."""
+    return "\n".join([text] + list(urls))
 
 
 def team_url(teams, code):
@@ -569,41 +623,54 @@ def is_minimum(item, scale, tolerance):
 
 # ── writing it ─────────────────────────────────────────────────────────
 def team_name(code, names=None):
-    """What a sentence calls a team, including a two-team season."""
+    """What a sentence calls a team, including a two-team season.
+
+    "the Bucks", "the Clippers and the Bucks": the nickname with its article,
+    never the city.
+    """
     names = names or {}
     parts = [p.strip() for p in (code or "").split(",") if p.strip()]
     if not parts:
         return "nobody"
-    spelled = [names.get(p, p) for p in parts]
+    spelled = ["the " + names.get(p, p) for p in parts]
     if len(spelled) == 1:
         return spelled[0]
     return "{} and {}".format(", ".join(spelled[:-1]), spelled[-1])
 
 
+#: Nicknames that take a singular verb: "the Magic has", "the Bucks have".
+SINGULAR_NICKNAMES = ("Heat", "Jazz", "Magic", "Thunder")
+
+
+def has_verb(name):
+    """"has" or "have", to agree with what team_name() returned."""
+    if " and " in name:
+        return "have"
+    return "has" if name.split()[-1] in SINGULAR_NICKNAMES else "have"
+
+
+def capitalized(text):
+    return text[:1].upper() + text[1:]
+
+
 def possessive(name):
-    """AP style: Dallas' books, Memphis' books, Atlanta's books."""
+    """AP style: the Bucks' books, the Jazz's books, Johni Broome's books.
+
+    Two teams each take their own: the Mavericks' and the Nuggets' books.
+    """
+    if name.startswith("the ") and " and the " in name:
+        parts = re.split(r"(, | and )", name)
+        return "".join(part if part in (", ", " and ") else possessive(part)
+                       for part in parts)
     return name + ("'" if name.endswith("s") else "'s")
 
 
 def lead(item, names=None, teams=None, slugs=None):
-    """The first sentence, with every entity it names linked.
+    """The first sentence, as plain text.
 
-    A day with several clauses can name several teams, so every team any of
-    them puts him on is linked, not only the one the item leads with.
+    No name in it is a link: the page it is about goes under the block.
     """
-    text = sentence(item, names)
-    links = [(item["player"], player_url(slugs or {}, item["player"]))]
-    sources = [item] + list(item.get("members") or [])
-    seen = set()
-    for source in sources:
-        for code in (source.get("team") or "").split(","):
-            code = code.strip()
-            if code and code not in seen:
-                seen.add(code)
-                spelled = (names or {}).get(code, code)
-                links.append((spelled, team_url(teams, code)))
-    # was_team is deliberately absent from every sentence, so it gets no link.
-    return apply_links(text, links)
+    return sentence(item, names)
 
 
 #: How a salary moved, in a verb a reader feels. The multiples first, because
@@ -686,7 +753,21 @@ def sentence(item, names=None):
                                      item.get("members") or [item])]
     clauses = []
     said = {"seasons": set(), "teams": set()}
-    for place, (kind, members) in enumerate(groups):
+    # A season whose money now sits on two teams' books is said first and on
+    # its own: each team's figure, then what the season comes to. Read as a
+    # changed number it was a summed "raise", which it is not.
+    split = split_seasons(item)
+    for season, members in split.items():
+        clauses.append(_split_clause(
+            season, members, names, item["player"] if not clauses else "he"))
+        said["seasons"].add(season)
+        said["teams"].update(
+            (members[-1].get("record") or {}).get("team_salaries") or {})
+    groups = [(kind, [m for m in members if m["season"] not in split])
+              for kind, members in groups]
+    groups = [(kind, members) for kind, members in groups if members]
+    for kind, members in groups:
+        place = len(clauses)
         group = _group_item(kind, members, item)
         text = _clause(group, names,
                        item["player"] if not place else "he",
@@ -713,6 +794,57 @@ def sentence(item, names=None):
     if any(_crowded(text) for text in clauses):
         return "; ".join(clauses) + "."
     return "{}, and {}.".format(", ".join(clauses[:-1]), clauses[-1])
+
+
+def split_seasons(item):
+    """{season: his changes in it} for each season whose money now sits on
+    more than one team's books, as the record's team_salaries says."""
+    out = collections.OrderedDict()
+    for member in item.get("members") or [item]:
+        if member["kind"].replace("_run", "") == "gone":
+            continue
+        record = member.get("record") or {}
+        paid = [code for code, amount in (record.get("team_salaries") or {}).items()
+                if amount]
+        if len(paid) > 1:
+            out.setdefault(member["season"], []).append(member)
+    return out
+
+
+def _split_clause(season, members, names, who):
+    """"Johni Broome now has 2026-27 money on two teams' books, $2.2 million
+    with the Clippers and $2.2 million with the Bucks, and his total for the
+    season rises to $4.3 million from $2.2 million".
+
+    Each team's figure on its own; the total only as what the season comes to.
+    The team that already held the money is named first, without saying it was
+    his team: the sentence is about whose books the money is on now.
+    """
+    record = members[-1].get("record") or {}
+    paid = {code: amount for code, amount
+            in (record.get("team_salaries") or {}).items() if amount}
+    held = []
+    for member in members:
+        for code in (member.get("was_team") or "").split(","):
+            code = code.strip()
+            if code in paid and code not in held:
+                held.append(code)
+    order = held + sorted((c for c in paid if c not in held),
+                          key=lambda c: (-paid[c], c))
+    amounts = _join_and(["{} with {}".format(F.fmt_money(paid[c]),
+                                             team_name(c, names))
+                         for c in order])
+    total = record.get("salary") or sum(paid.values())
+    text = "{} now has {} money on {} teams' books, {}".format(
+        who, season, _spell(len(order)), amounts)
+    was = next((m.get("was") for m in members if m.get("was")), None)
+    if was and was != total:
+        return "{}, and his total for the season {} to {} from {}".format(
+            text, "rises" if total > was else "falls",
+            F.fmt_money(total), F.fmt_money(was))
+    if not any(m["kind"] == "team" for m in members):
+        return "{}, {} in all".format(text, F.fmt_money(total))
+    return text
 
 
 def _crowded(text):
@@ -745,7 +877,8 @@ def _clause(item, names, who, whose, said=None):
     if kind in ("new", "new_run", "extension", "extension_run"):
         if verb and now:
             # The clause has named him already, so the money takes a pronoun.
-            where = "{} has him at".format(team) if team else "he is due"
+            where = "{} {} him at".format(capitalized(team), has_verb(team)) \
+                if team else "he is due"
             lead = "{} salary {} in {}".format(
                 whose, verb, item.get("first_season") or season)
             body = "{} {}".format(where, _run_money(item))
@@ -1001,28 +1134,14 @@ def _run_money(item):
 
 def nugget_sentence(nuggets, item, names=None, teams=None, slugs=None,
                     context_idx=None):
-    """The second sentence: the strongest thing the money means, linked.
+    """The second sentence: the strongest thing the money means, plain text.
 
     One nugget, never two. An item is the lead and this, and a reader carries
     away one fact about a man and not a stat list.
     """
     if not nuggets:
         return ""
-    used = nuggets[:1]
-    text = used[0]["opener"].rstrip(".") + "."
-
-    links = []
-    for nugget in used:
-        for kind, key in nugget.get("entities") or []:
-            if kind == "player":
-                links.append((key, player_url(slugs or {}, key)))
-            else:
-                links.append((cohort_label(context_idx, kind, key),
-                              cohort_url(slugs or {}, kind, key)))
-        spec = nugget.get("peer_link")
-        if spec and nugget.get("link_phrase"):
-            links.append((nugget["link_phrase"], peer_url(spec)))
-    return apply_links(text, links)
+    return nuggets[0]["opener"].rstrip(".") + "."
 
 
 #: Kinds where new money arrives, which is the only place a raise can be.
@@ -1041,9 +1160,13 @@ def raise_amount(idx, item):
     current = now.get("salary") or 0
     # One item now carries every kind of change he had, so the raise is read off
     # the seasons that brought new money and not off the ones that moved team.
+    # A season split across two teams' books is not a raise either: what
+    # changed is that a second team owes him, and the sum is no one's salary.
+    split = split_seasons(item)
     amounts = [
         (m.get("salary") or 0) for m in (item.get("members") or [item])
         if m["kind"].replace("_run", "") in RAISE_KINDS
+        and m["season"] not in split
     ]
     if not amounts:
         return 0
@@ -1111,7 +1234,7 @@ def attach_nuggets(items, idx, data, factoids, raises, opened, before=None):
 
 
 def block(item, context):
-    """One change, as at most two sentences with their links inside them."""
+    """One change: at most two sentences, then the page it is about."""
     names, teams, slugs = context["names"], context["teams"], context["slugs"]
     out = [lead(item, names, teams, slugs)]
     second = nugget_sentence(
@@ -1119,7 +1242,12 @@ def block(item, context):
         context_idx=context.get("idx"))
     if second:
         out.append(second)
-    return " ".join(out)
+    return with_urls(" ".join(out), item_urls(item, context))
+
+
+def collapse_season(item):
+    """The season a closing line names for this item: the first it touched."""
+    return item.get("first_season") or item["season"]
 
 
 def collapse_bucket(item, idx):
@@ -1147,11 +1275,15 @@ def collapse_bucket(item, idx):
     return None
 
 
-def collapsed_line(bucket, players, season=""):
-    """The one line a day's minimum salaries of one shape come to."""
+def collapsed_line(bucket, players, season="", context=None):
+    """The one line a day's minimum salaries of one shape and season come to,
+    with one URL per player under it, in the order the line names them."""
     who = sorted(players)
-    return "Also: {}: {}.".format(
-        COLLAPSE_LABEL[bucket].format(season=season), ", ".join(who))
+    text = "{}: {}.".format(
+        COLLAPSE_LABEL[bucket].format(season=season), _join_and(who))
+    if context is None:
+        return text
+    return with_urls(text, players_urls(who, [season], context))
 
 
 #: How far a number has to move to be worth an item of its own. Under this the
@@ -1229,6 +1361,10 @@ def has_story(item):
     """
     if item.get("has_record") or item.get("has_peers"):
         return True
+    # Money landing on a second team's books is news by itself, and its
+    # summed figure is not a move to be measured.
+    if split_seasons(item):
+        return True
     for nugget in item.get("nuggets") or []:
         if nugget["kind"] in ("record", "peers"):
             return True
@@ -1248,7 +1384,7 @@ def has_story(item):
 
 
 def also_line(items, context):
-    """The one line the day's quiet items come to, with every name linked.
+    """The one line the day's quiet items come to, one URL per man under it.
 
     One entry a man, however many of his seasons were quiet: his name twice in
     the same line is the thing this line exists to avoid.
@@ -1258,7 +1394,7 @@ def also_line(items, context):
     for item in sorted(items, key=lambda i: (-(i.get("salary") or 0), i["player"])):
         by_player.setdefault(item["player"], []).append(item)
 
-    parts, links = [], []
+    parts = []
     for player, mine in by_player.items():
         mine.sort(key=lambda i: F.season_key(i["season"]))
         spelled = {team_name(i["team"], names) for i in mine if i.get("team")}
@@ -1272,14 +1408,9 @@ def also_line(items, context):
         else:
             inside = _join_and([_also_money(i) for i in mine])
         parts.append("{} ({})".format(player, inside))
-        links.append((player, player_url(slugs or {}, player)))
-        for item in mine:
-            for code in (item.get("team") or "").split(","):
-                code = code.strip()
-                if code:
-                    links.append(((names or {}).get(code, code),
-                                  team_url(teams, code)))
-    return apply_links("Also on the books: {}.".format(", ".join(parts)), links)
+    seasons = [i["season"] for i in items]
+    return with_urls("Also on the books: {}.".format(", ".join(parts)),
+                     players_urls(list(by_player), seasons, context))
 
 
 def _also_money(item):
@@ -1306,28 +1437,28 @@ def _join_and(parts):
 
 
 def team_lines(context):
-    """The committed-money lines a day earned, each with its names linked."""
+    """The committed-money lines a day earned, each with the team's page."""
     out = []
-    names, teams, slugs = context["names"], context["teams"], context["slugs"]
+    names, teams = context["names"], context["teams"]
     for entry in context.get("commitments") or ():
         name = team_name(entry["team"], names)
-        text = T.line(entry, name, F.fmt_money)
-        links = [(name, team_url(teams, entry["team"]))]
-        links += [(player, player_url(slugs, player))
-                  for player, _amount in entry["top"]]
-        out.append(apply_links(text, links))
+        text = T.line(entry, capitalized(name), F.fmt_money, verb=has_verb(name))
+        urls = (first_existing([team_url(teams, entry["team"])], context)
+                or fallback_urls([entry.get("season")], context))
+        out.append(with_urls(text, urls))
     return out
 
 
 def render(items, when, scale, tolerance, context):
     """The digest, as the posts it takes."""
-    header = "Salary data changes, {}".format(ap_date(when))
+    header = "Salary changes, {}".format(ap_date(when))
     commitments = team_lines(context)
     if not items and not commitments:
         return ["{}: none today.".format(header)]
 
     idx = context.get("idx")
     blocks = []
+    #: (bucket, season) -> the players on that line
     collapsed = collections.defaultdict(set)
     quiet = []
     for item in items:
@@ -1346,18 +1477,17 @@ def render(items, when, scale, tolerance, context):
         elif not rescued and is_minimum(item, scale, tolerance):
             bucket = collapse_bucket(item, idx)
             if bucket:
-                collapsed[bucket].add(item["player"])
+                collapsed[(bucket, collapse_season(item))].add(item["player"])
                 continue
         if item["kind"].replace("_run", "") in ALSO_KINDS \
                 and not has_story(item):
             quiet.append(item)
             continue
         blocks.append(block(item, context))
-    for bucket in COLLAPSE_ORDER:
-        if collapsed.get(bucket):
-            blocks.append(collapsed_line(
-                bucket, collapsed[bucket],
-                getattr(idx, "current_season", "")))
+    for (bucket, season) in sorted(collapsed, key=lambda key: (
+            COLLAPSE_ORDER.index(key[0]), F.season_key(key[1]))):
+        blocks.append(collapsed_line(
+            bucket, collapsed[(bucket, season)], season, context))
     if quiet:
         blocks.append(also_line(quiet, context))
     blocks.extend(commitments)
@@ -1389,12 +1519,11 @@ def render(items, when, scale, tolerance, context):
 def payload(text):
     """What goes on the wire, as the dict Slack reads it from.
 
-    ``mrkdwn`` is what makes Slack parse <url|text>; without it the post
-    arrives with the angle brackets in it. Markdown is not an option on either
-    setting, which is why every link in this file is built by link() and why
-    no_markdown_links() refuses a post that carries one.
+    The sentences carry no links; each page is a bare URL on its own line,
+    which Slack makes clickable by itself. check_post() refuses a post with
+    link markup in a sentence or an item with no URL under it.
 
-    Slack unfurls every link in a post by default, which on a digest of ten
+    Slack unfurls every URL in a post by default, which on a digest of ten
     items is ten preview cards nobody asked for.
     """
     return {
@@ -1417,8 +1546,37 @@ def no_markdown_links(text):
     return text
 
 
+#: Link markup of any kind inside a sentence: Slack's <url|text>, a bare URL
+#: or a Markdown link. The URLs belong on their own lines.
+SENTENCE_LINK = re.compile(r"<https?:|https?://|\]\(")
+
+
+def check_post(text):
+    """Raise rather than post a digest that breaks the format.
+
+    Every block after the header is one item: its text, then at least one line
+    that is nothing but a hoopsmatic.com URL. No sentence carries a link.
+    """
+    no_markdown_links(text)
+    chunks = text.split("\n\n")
+    for chunk in chunks[1:]:
+        lines = chunk.split("\n")
+        urls = [line for line in lines if line.startswith(TOOL_ROOT)]
+        sentences = [line for line in lines if not line.startswith(TOOL_ROOT)]
+        if not urls:
+            raise ValueError("an item has no URL under it: {}".format(chunk[:120]))
+        if any(" " in url for url in urls):
+            raise ValueError("a URL line carries more than a URL: {}".format(urls))
+        for line in sentences:
+            if SENTENCE_LINK.search(line):
+                raise ValueError("a link inside a sentence: {}".format(line[:120]))
+        if lines.index(urls[0]) != len(sentences):
+            raise ValueError("text after a URL line: {}".format(chunk[:120]))
+    return text
+
+
 def post(url, text):
-    body = json.dumps(payload(no_markdown_links(text))).encode("utf-8")
+    body = json.dumps(payload(check_post(text))).encode("utf-8")
     request = urllib.request.Request(
         url, data=body, headers={"Content-Type": "application/json"})
     with urllib.request.urlopen(request, timeout=30) as response:
@@ -1496,10 +1654,11 @@ def main(argv=None):
     context["slugs"] = {"player": context["slugs"]}
     context["slugs"].update(load_cohort_slugs())
     posts = render(items, today, scale, tolerance, context)
-    # Checked before a word of it goes out, and in a dry run too, so a
-    # Markdown link is caught where it is cheap rather than in Slack.
+    # Checked before a word of it goes out, and in a dry run too, so a link in
+    # a sentence or an item without a page is caught where it is cheap rather
+    # than in Slack.
     for text in posts:
-        no_markdown_links(text)
+        check_post(text)
 
     for text in posts:
         print("\n" + "-" * 60)

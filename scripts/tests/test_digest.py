@@ -50,10 +50,24 @@ SCALE = {
 }
 TOLERANCE = 0.03
 
-NAMES = {"ATL": "Atlanta", "MEM": "Memphis", "DAL": "Dallas", "DEN": "Denver"}
+NAMES = {"ATL": "Hawks", "MEM": "Grizzlies", "DAL": "Mavericks", "DEN": "Nuggets"}
 
 
 OPENED = datetime.date(2026, 7, 1)
+
+
+def fixture_pages(families):
+    """A page_exists for fixtures: the slugs the test handed in, the season
+    pages and the tool root are the built site."""
+    built = {D.TOOL_ROOT + "/"}
+    for slug in (families.get("player") or {}).values():
+        built.add("{}/player/{}/".format(D.TOOL_ROOT, slug))
+    for slug in (families.get("team") or {}).values():
+        built.add("{}/team/{}/".format(D.TOOL_ROOT, slug))
+
+    def exists(url):
+        return url in built or "/season/" in url
+    return exists
 
 
 def context_for(new, slugs=None, teams=None, old=None):
@@ -61,7 +75,11 @@ def context_for(new, slugs=None, teams=None, old=None):
     families = {"player": dict(slugs or {})}
     families.update(teams or {})
     out = {"names": NAMES, "teams": (teams or {}).get("team") or {},
-           "slugs": families, "idx": F.build_index(new)}
+           "slugs": families, "idx": F.build_index(new),
+           # The fixtures' players have no pages on disk; a page exists here
+           # when its slug was handed in, and the tool root and season pages
+           # always do. test_only_built_pages_are_printed covers the disk check.
+           "page_exists": fixture_pages(families)}
     if old is not None:
         # The world before the change, which is what says whether a record a
         # nudge would print was already his.
@@ -94,7 +112,11 @@ def spoken(old, new, factoids=None, slugs=None, raises=None, teams=None):
     context = context_for(new, slugs, teams)
     D.attach_nuggets(items, context["idx"], new, factoids or {},
                      raises or [], OPENED, before=_before(context))
-    return "\n".join(D.block(item, context) for item in items)
+    # The wording only: the URL lines under each block are tested on their own.
+    return "\n".join(
+        "\n".join(line for line in D.block(item, context).split("\n")
+                  if not line.startswith(D.TOOL_ROOT))
+        for item in items)
 
 
 # --------------------------------------------------------------------------
@@ -161,7 +183,7 @@ def test_nothing_changing_is_no_changes():
     one = payload([rec("Steady Man", CURRENT, 10000000)])
     items, posts = digest(one, payload([rec("Steady Man", CURRENT, 10000000)]))
     assert items == []
-    assert posts == ["Salary data changes, Oct. 1, 2026: none today."]
+    assert posts == ["Salary changes, Oct. 1, 2026: none today."]
 
 
 def test_the_biggest_money_of_each_kind_comes_first():
@@ -183,9 +205,9 @@ def test_each_kind_has_its_own_sentence():
     new = payload([rec("Traded Man", CURRENT, 10000000, team="MEM"),
                    rec("Signed Man", CURRENT, 9000000, team="DAL")])
     text = spoken(old, new)
-    assert "Signed Man is on Dallas' books at $9 million for 2026-27." in text
-    assert "Traded Man is on Memphis' books at $10 million for 2026-27." in text
-    assert ("Waived Man is no longer on Atlanta's 2026-27 books, a $8 million "
+    assert "Signed Man is on the Mavericks' books at $9 million for 2026-27." in text
+    assert "Traded Man is on the Grizzlies' books at $10 million for 2026-27." in text
+    assert ("Waived Man is no longer on the Hawks' 2026-27 books, a $8 million "
             "salary.") in text
 
 
@@ -203,14 +225,14 @@ def test_money_follows_ap_style():
 def test_a_two_team_season_names_both():
     old = payload([])
     new = payload([rec("Split Man", CURRENT, 9000000, team="DAL, DEN")])
-    assert "on Dallas and Denver's books" in spoken(old, new)
+    assert "on the Mavericks' and the Nuggets' books" in spoken(old, new)
 
 
 def test_an_extension_names_the_season_it_adds():
     old = payload([rec("Extended Man", CURRENT, 30000000, team="MEM")])
     new = payload([rec("Extended Man", CURRENT, 30000000, team="MEM"),
                    rec("Extended Man", "2027-28", 32000000, team="MEM")])
-    assert "Extended Man is on Memphis' books at $32 million for 2027-28." \
+    assert "Extended Man is on the Grizzlies' books at $32 million for 2027-28." \
         in spoken(old, new)
 
 
@@ -226,11 +248,11 @@ def test_no_em_dash_reaches_the_digest():
 def test_the_header_carries_the_date():
     old, new = payload([]), payload([rec("Signed Man", CURRENT, 9000000)])
     _items, posts = digest(old, new)
-    assert posts[0].startswith("Salary data changes, Oct. 1, 2026\n")
+    assert posts[0].startswith("Salary changes, Oct. 1, 2026\n")
 
 
 def test_a_record_and_a_link_ride_with_the_change():
-    """One record per change, and the man's name is the link to his page."""
+    """One record per change, and his page on its own line under it."""
     old, new = payload([]), payload([rec("Famous Man", CURRENT, 40000000)])
     factoids = {
         "Famous Man|2026-27": [
@@ -242,8 +264,10 @@ def test_a_record_and_a_link_ride_with_the_change():
     _items, posts = digest(old, new, factoids=factoids, slugs=slugs)
     assert "First thing." in posts[0]
     assert "Second thing." not in posts[0]
-    assert ("<https://hoopsmatic.com/salary-season-finder/player/famous-man/"
-            "|Famous Man>") in posts[0]
+    assert ("Famous Man is on the Hawks' books at $40 million for 2026-27. "
+            "First thing.\n"
+            "https://hoopsmatic.com/salary-season-finder/player/famous-man/") \
+        in posts[0]
 
 
 def test_a_factoid_outside_the_top_three_is_not_a_record():
@@ -281,11 +305,10 @@ def test_minimum_deals_come_to_one_line():
                    rec("Min Two", CURRENT, 2553508),
                    rec("Paid Man", CURRENT, 20000000)])
     _items, posts = digest(old, new)
-    assert "Also: minimum salaries added for 2026-27: Min One, Min Two." \
-        in posts[0]
+    assert "New at the minimum for 2026-27: Min One and Min Two." in posts[0]
     assert "Min One is on" not in posts[0]
     assert "Paid Man" in posts[0]
-    assert "Paid Man is on Atlanta's books at $20 million" in spoken(old, new)
+    assert "Paid Man is on the Hawks' books at $20 million" in spoken(old, new)
 
 
 def test_a_minimum_deal_with_a_factoid_is_printed_in_full():
@@ -293,9 +316,9 @@ def test_a_minimum_deal_with_a_factoid_is_printed_in_full():
     new = payload([rec("Min Man", CURRENT, 2553508)])
     factoids = {"Min Man|2026-27": [{"text": "Worth saying.", "rank": 1}]}
     _items, posts = digest(old, new, factoids=factoids)
-    assert "Min Man is on Atlanta's books at $2.6 million" in posts[0]
+    assert "Min Man is on the Hawks' books at $2.6 million" in posts[0]
     assert "Worth saying." in posts[0]
-    assert "Also:" not in posts[0]
+    assert "at the minimum for" not in posts[0]
 
 
 def test_a_scale_amount_is_the_minimum_whatever_the_service_says():
@@ -315,7 +338,7 @@ def test_a_salary_change_is_never_collapsed():
     _items, posts = digest(old, new)
     assert "Min Man's 2026-27 salary drops to $1.8 million from $2.6 million." \
         in posts[0]
-    assert "Also:" not in posts[0]
+    assert "at the minimum for" not in posts[0]
 
 
 def test_a_season_the_scale_does_not_cover_collapses_nothing():
@@ -339,7 +362,7 @@ def test_a_long_day_splits_into_several_posts():
     _items, posts = digest(old, new)
     assert len(posts) > 1
     for i, post in enumerate(posts, 1):
-        assert post.startswith("Salary data changes, Oct. 1, 2026 ({} of {})".format(
+        assert post.startswith("Salary changes, Oct. 1, 2026 ({} of {})".format(
             i, len(posts)))
         assert len(post) <= D.POST_LIMIT
 
@@ -409,7 +432,7 @@ def test_the_first_run_writes_the_baseline_and_says_nothing(tmp_path, capsys):
     assert D.main(["--state", path]) == 0
     printed = capsys.readouterr().out
     assert "writing the baseline and saying nothing" in printed
-    assert "Salary data changes" not in printed
+    assert "Salary changes" not in printed
     assert D.load_state(path)["last_commit"]
 
 
@@ -460,7 +483,7 @@ def test_a_contract_that_adds_three_seasons_is_one_sentence():
     ])
     items, posts = digest(old, new)
     assert [i["kind"] for i in items] == ["extension_run"]
-    assert ("Jamal Shead's salary rises 60% in 2027-28: Memphis has him at "
+    assert ("Jamal Shead's salary rises 60% in 2027-28: The Grizzlies have him at "
             "$8 million a year through 2029-30, up from $5 million now.") in posts[0]
     assert posts[0].count("Jamal Shead") == 1
 
@@ -472,7 +495,7 @@ def test_a_rising_run_gives_the_first_and_the_last():
                    rec("Climber", "2028-29", 8600000, team="MEM"),
                    rec("Climber", "2029-30", 9200000, team="MEM")])
     _items, posts = digest(old, new)
-    assert ("Climber's salary rises 84% in 2027-28: Memphis has him at "
+    assert ("Climber's salary rises 84% in 2027-28: The Grizzlies have him at "
             "$8 million, rising to $9.2 million through 2029-30, up from "
             "$5 million now.") in posts[0]
 
@@ -528,8 +551,8 @@ def test_a_run_of_minimum_seasons_collapses_with_the_single_ones():
         rec("Min Two", "2027-28", 2680000),
     ])
     _items, posts = digest(old, new)
-    assert ("Also: minimum salaries added for later seasons: "
-            "Min One, Min Run, Min Two.") in posts[0]
+    assert ("New at the minimum for 2027-28: "
+            "Min One, Min Run and Min Two.") in posts[0]
     assert "Min Run's deal" not in posts[0]
 
 
@@ -540,7 +563,7 @@ def test_a_run_is_not_a_minimum_run_when_one_season_is_above_it():
                    rec("Mixed", "2028-29", 20000000)])
     _items, posts = digest(old, new)
     assert "Mixed's salary more than triples in 2027-28" in posts[0]
-    assert "Also:" not in posts[0]
+    assert "at the minimum for" not in posts[0]
 
 
 def test_a_run_takes_its_record_from_the_paid_season_it_covers():
@@ -566,7 +589,7 @@ def test_a_signing_that_arrives_as_four_seasons_is_one_sentence():
                    rec("Rookie", "2028-29", 6800000, team="MEM")])
     items, posts = digest(old, new)
     assert [i["kind"] for i in items] == ["new_run"]
-    assert ("Rookie's salary rises 62% in 2026-27: Memphis has him at "
+    assert ("Rookie's salary rises 62% in 2026-27: The Grizzlies have him at "
             "$4.2 million, rising to $6.8 million through 2028-29.") in posts[0]
 
 
@@ -580,8 +603,8 @@ def test_two_teams_in_one_day_are_two_clauses_of_one_sentence():
     items, _posts = digest(old, new)
     assert len(items) == 1
     assert D.sentence(items[0], NAMES) == (
-        "Moved is on Denver's books at $11 million for 2027-28, and he is on "
-        "Memphis' books at $10 million for 2026-27.")
+        "Moved is on the Nuggets' books at $11 million for 2027-28, and he is on "
+        "the Grizzlies' books at $10 million for 2026-27.")
 
 
 # --------------------------------------------------------------------------
@@ -737,14 +760,14 @@ def test_the_peer_link_returns_exactly_the_band():
     assert len(found) == spec["count"]
 
 
-def test_the_peer_phrase_is_the_link_in_the_sentence():
+def test_the_peer_phrase_is_plain_text_in_the_sentence():
     nugget, _data = peer_nugget_for(
         (7.4, 5.2), [(7.1, 5.0), (7.9, 5.9), (7.2, 5.5), (7.6, 5.1), (7.3, 5.7)])
     item = {"player": "Peer Man", "season": CURRENT, "kind": "salary"}
     text = D.nugget_sentence([nugget], item, NAMES, {}, {"player": {}})
-    assert "<https://hoopsmatic.com/salary-season-finder#from=2025-26" in text
-    assert "|Guards who averaged 7 to 8 points and 5 to 6 assists last season>" \
-        in text
+    assert text.startswith(
+        "Guards who averaged 7 to 8 points and 5 to 6 assists last season")
+    assert "http" not in text and "<" not in text
 
 
 # --------------------------------------------------------------------------
@@ -1062,7 +1085,7 @@ def test_an_item_is_two_sentences_at_most():
         "text": "That is the biggest salary in Grizzlies history.", "rank": 1,
         "key": "franchise|MEM|Famous Man|2026-27"}]}
     _items, posts = digest(old, new, factoids=factoids)
-    body = posts[0].split("\n\n")[1]
+    body = posts[0].split("\n\n")[1].split("\n")[0]
     assert body.count(". ") == 1
     assert body.endswith(".")
 
@@ -1072,40 +1095,18 @@ def test_an_item_is_two_sentences_at_most():
 # --------------------------------------------------------------------------
 
 
-def test_a_link_is_slack_mrkdwn():
-    assert D.link("Atlanta", "https://x/") == "<https://x/|Atlanta>"
-    assert D.link("Atlanta", "") == "Atlanta"
+def test_no_sentence_carries_a_link():
+    """The page goes on its own line; a name in a sentence is plain text."""
+    assert not hasattr(D, "link") and not hasattr(D, "apply_links")
 
 
-def test_a_surface_is_linked_once():
-    text = D.apply_links("Atlanta beat Atlanta.", [("Atlanta", "https://x/")])
-    assert text == "<https://x/|Atlanta> beat Atlanta."
-
-
-def test_a_link_stops_at_a_word_boundary():
-    """"Arizona St" must not swallow the first half of "Arizona State"."""
-    text = D.apply_links(
-        "the most of any Arizona State player",
-        [("Arizona St", "https://x/"), ("Arizona State", "https://y/")])
-    assert text == "the most of any <https://y/|Arizona State> player"
-
-
-def test_the_longer_surface_wins():
-    text = D.apply_links(
-        "Jaren Jackson Jr is paid.",
-        [("Jaren Jackson", "https://x/"), ("Jaren Jackson Jr", "https://y/")])
-    assert text == "<https://y/|Jaren Jackson Jr> is paid."
-
-
-def test_every_team_the_first_sentence_names_is_linked():
+def test_the_first_sentence_is_plain_text():
     item = {"player": "Moved Man", "season": CURRENT, "kind": "team",
             "salary": 20000000, "team": "MEM", "was_team": "DAL",
             "members": []}
     teams = {"MEM": "memphis-grizzlies", "DAL": "dallas-mavericks"}
     text = D.lead(item, NAMES, teams, {"player": {"Moved Man": "moved-man"}})
-    assert "<https://hoopsmatic.com/salary-season-finder/player/moved-man/" \
-        "|Moved Man>" in text
-    assert "/team/memphis-grizzlies/|Memphis>" in text
+    assert text == "Moved Man is on the Grizzlies' books at $20 million for 2026-27."
 
 
 def test_a_team_change_never_names_the_team_it_left():
@@ -1113,13 +1114,13 @@ def test_a_team_change_never_names_the_team_it_left():
     old = payload([rec("Moved Man", CURRENT, 20000000, team="DAL")])
     new = payload([rec("Moved Man", CURRENT, 20000000, team="MEM")])
     text = spoken(old, new)
-    assert "Moved Man is on Memphis' books at $20 million for 2026-27." in text
-    assert "Dallas" not in text
+    assert "Moved Man is on the Grizzlies' books at $20 million for 2026-27." in text
+    assert "Mavericks" not in text and "Dallas" not in text
     _items, posts = digest(old, new)
-    assert "Dallas" not in posts[0]
+    assert "Mavericks" not in posts[0] and "Dallas" not in posts[0]
 
 
-def test_a_cohort_a_record_names_is_linked_to_its_page():
+def test_a_cohort_a_record_names_is_plain_text():
     item = {"player": "College Man", "season": CURRENT, "kind": "new"}
     nuggets = [{
         "kind": "record",
@@ -1128,10 +1129,11 @@ def test_a_cohort_a_record_names_is_linked_to_its_page():
     }]
     slugs = {"player": {}, "college": {"Arizona State": "arizona-state"}}
     text = D.nugget_sentence(nuggets, item, NAMES, {}, slugs)
-    assert "/college/arizona-state/|Arizona State>" in text
+    assert text == "The most any Arizona State player has been paid in a season." \
+        or text == "the most any Arizona State player has been paid in a season."
 
 
-def test_a_legend_named_in_a_career_nugget_is_linked():
+def test_a_legend_named_in_a_career_nugget_is_plain_text():
     item = {"player": "Rich Man", "season": CURRENT, "kind": "new"}
     nuggets = [{
         "kind": "career",
@@ -1141,7 +1143,8 @@ def test_a_legend_named_in_a_career_nugget_is_linked():
     }]
     slugs = {"player": {"Ben Wallace": "ben-wallace"}}
     text = D.nugget_sentence(nuggets, item, NAMES, {}, slugs)
-    assert "/player/ben-wallace/|Ben Wallace>" in text
+    assert text.endswith("past Ben Wallace on the way.")
+    assert "http" not in text
 
 
 def test_each_cohort_kind_knows_its_directory():
@@ -1165,14 +1168,15 @@ def test_a_cohort_with_no_page_gets_no_link():
     assert D.cohort_url({"college": {}}, "college", "Nowhere State") == ""
 
 
-def test_the_digest_spends_no_bare_urls():
+def test_a_url_is_only_ever_a_line_of_its_own():
     old, new = payload([]), payload([rec("Linked Man", CURRENT, 40000000)])
     slugs = {"Linked Man": "linked-man"}
     _items, posts = digest(old, new, slugs=slugs)
     for post in posts:
-        for word in post.split():
-            if word.startswith("http"):
-                assert word.startswith("<http"), word
+        for line in post.split("\n"):
+            if "http" in line:
+                assert line == line.strip() and " " not in line, line
+                assert line.startswith(D.TOOL_ROOT + "/"), line
 
 
 def test_slack_is_told_not_to_unfurl(monkeypatch):
@@ -1585,7 +1589,7 @@ def test_a_career_nugget_with_no_legend_still_takes_one():
     assert "career earnings" in D.nugget_sentence(nuggets, item)
 
 
-def test_every_man_named_ahead_of_him_is_linked():
+def test_every_man_named_ahead_of_him_is_plain_text():
     old, new = payload([]), payload([rec("Third Man", CURRENT, 4000000)])
     factoids = {"Third Man|2026-27": [{
         "text": "Third Man has earned the third-most among players out of "
@@ -1603,8 +1607,10 @@ def test_every_man_named_ahead_of_him_is_linked():
     context = context_for(new, slugs["player"], {"college": slugs["college"]})
     D.attach_nuggets(items, context["idx"], new, factoids, [], OPENED)
     text = D.block(items[0], context)
-    assert "/player/brook-lopez/|Brook Lopez>" in text
-    assert "/player/robin-lopez/|Robin Lopez>" in text
+    assert "behind Brook Lopez and Robin Lopez." in text
+    # the item's own page, not the men it names
+    assert text.split("\n")[1:] == [
+        "https://hoopsmatic.com/salary-season-finder/player/third-man/"]
 
 
 # --------------------------------------------------------------------------
@@ -1823,8 +1829,8 @@ def test_items_with_no_story_come_to_one_line():
     new = payload([rec("Quiet Man", "2027-28", 8800000, team="MEM"),
                    rec("Other Man", "2027-28", 4000000, team="DAL")])
     _items, posts = digest(old, new)
-    assert ("Also on the books: Quiet Man (Memphis, $8.8 million in 2027-28), "
-            "Other Man (Dallas, $4 million in 2027-28).") in posts[0]
+    assert ("Also on the books: Quiet Man (the Grizzlies, $8.8 million in 2027-28), "
+            "Other Man (the Mavericks, $4 million in 2027-28).") in posts[0]
     assert "Quiet Man is on" not in posts[0]
 
 
@@ -1833,7 +1839,7 @@ def test_a_quiet_run_is_named_by_what_it_is_worth():
     new = payload([rec("Quiet Man", "2027-28", 8800000, team="MEM"),
                    rec("Quiet Man", "2028-29", 9200000, team="MEM")])
     _items, posts = digest(old, new)
-    assert ("Also on the books: Quiet Man (Memphis, $18 million over two "
+    assert ("Also on the books: Quiet Man (the Grizzlies, $18 million over two "
             "seasons).") in posts[0]
 
 
@@ -1842,7 +1848,7 @@ def test_a_raise_of_a_quarter_keeps_its_own_entry():
     new = payload([rec("Raised Man", CURRENT, 10000000, team="MEM"),
                    rec("Raised Man", "2027-28", 14000000, team="MEM")])
     _items, posts = digest(old, new)
-    assert ("Raised Man's salary rises 40% in 2027-28: Memphis has him at "
+    assert ("Raised Man's salary rises 40% in 2027-28: The Grizzlies have him at "
             "$14 million, up from $10 million now.") in posts[0]
     assert "Also on the books" not in posts[0]
 
@@ -1852,7 +1858,7 @@ def test_a_record_keeps_a_quiet_item_out_of_the_line():
     new = payload([rec("Quiet Man", CURRENT, 8800000, team="MEM")])
     factoids = {"Quiet Man|2026-27": [{"text": "Worth saying.", "rank": 1}]}
     _items, posts = digest(old, new, factoids=factoids)
-    assert "Quiet Man is on Memphis' books at $8.8 million for 2026-27." \
+    assert "Quiet Man is on the Grizzlies' books at $8.8 million for 2026-27." \
         in posts[0]
     assert "Worth saying." in posts[0]
     assert "Also on the books" not in posts[0]
@@ -1863,18 +1869,22 @@ def test_a_season_off_the_books_keeps_its_own_entry():
     old = payload([rec("Waived Man", CURRENT, 8000000)])
     new = payload([])
     _items, posts = digest(old, new)
-    assert "Waived Man is no longer on Atlanta's 2026-27 books" in posts[0]
+    assert "Waived Man is no longer on the Hawks' 2026-27 books" in posts[0]
     assert "Also on the books" not in posts[0]
 
 
-def test_the_quiet_line_links_every_name_in_it():
+def test_the_quiet_line_lists_a_page_for_every_name_in_it():
     old = payload([])
-    new = payload([rec("Quiet Man", "2027-28", 8800000, team="MEM")])
+    new = payload([rec("Quiet Man", "2027-28", 8800000, team="MEM"),
+                   rec("Other Man", "2027-28", 4000000, team="DAL")])
     _items, posts = digest(
-        old, new, slugs={"Quiet Man": "quiet-man"},
+        old, new, slugs={"Quiet Man": "quiet-man", "Other Man": "other-man"},
         teams={"team": {"MEM": "memphis-grizzlies"}})
-    assert "/player/quiet-man/|Quiet Man>" in posts[0]
-    assert "/team/memphis-grizzlies/|Memphis>" in posts[0]
+    assert ("Also on the books: Quiet Man (the Grizzlies, $8.8 million in "
+            "2027-28), Other Man (the Mavericks, $4 million in 2027-28).\n"
+            "https://hoopsmatic.com/salary-season-finder/player/quiet-man/\n"
+            "https://hoopsmatic.com/salary-season-finder/player/other-man/") \
+        in posts[0]
 
 
 # --------------------------------------------------------------------------
@@ -1967,7 +1977,7 @@ def test_the_quiet_line_names_a_man_once():
     new = payload([rec("Quiet Man", "2027-28", 6900000, team="MEM"),
                    rec("Quiet Man", "2028-29", 8800000, team="MEM")])
     _items, posts = digest(old, new)
-    assert ("Also on the books: Quiet Man (Memphis, $15.7 million over two "
+    assert ("Also on the books: Quiet Man (the Grizzlies, $15.7 million over two "
             "seasons).") in posts[0]
 
 
@@ -1977,7 +1987,7 @@ def test_two_quiet_team_changes_for_one_man_are_one_entry():
     new = payload([rec("Moved Man", CURRENT, 6900000, team="MEM"),
                    rec("Moved Man", "2027-28", 8800000, team="MEM")])
     _items, posts = digest(old, new)
-    assert ("Also on the books: Moved Man (Memphis, $15.7 million over two "
+    assert ("Also on the books: Moved Man (the Grizzlies, $15.7 million over two "
             "seasons).") in posts[0]
     assert posts[0].count("Moved Man") == 1
 
@@ -1998,7 +2008,7 @@ def test_every_kind_he_had_is_a_clause_of_one_sentence():
     text = D.sentence(items[0], NAMES)
     assert text.count(".") == 1
     assert "Busy Man" in text and text.count("Busy Man") == 1
-    assert "he is on Dallas' books at $21 million for 2027-28" in text
+    assert "he is on the Mavericks' books at $21 million for 2027-28" in text
     assert "his 2026-27 salary jumps to $28 million from $20 million" in text
 
 
@@ -2009,7 +2019,7 @@ def test_a_season_already_named_is_not_named_twice():
     items, _posts = digest(old, new)
     assert D.sentence(items[0], NAMES) == (
         "Busy Man's 2026-27 salary jumps to $7.6 million from $5.2 million, "
-        "and it is now on Memphis' books.")
+        "and it is now on the Grizzlies' books.")
 
 
 def test_a_team_already_named_is_not_named_twice():
@@ -2018,7 +2028,7 @@ def test_a_team_already_named_is_not_named_twice():
                    rec("Busy Man", "2027-28", 10100000, team="MEM")])
     items, _posts = digest(old, new)
     assert D.sentence(items[0], NAMES) == (
-        "Busy Man is on Memphis' books at $10.1 million for 2027-28, and "
+        "Busy Man is on the Grizzlies' books at $10.1 million for 2027-28, and "
         "$9.7 million for 2026-27.")
 
 
@@ -2032,18 +2042,20 @@ def test_a_clause_with_an_and_of_its_own_takes_a_semicolon():
     items, _posts = digest(old, new)
     text = D.sentence(items[0], NAMES)
     assert ("adding $24 million to what he's owed through 2028-29, and it is "
-            "now on Dallas' books.") in text
+            "now on the Mavericks' books.") in text
     assert text.count(".") == 1
 
 
-def test_every_team_a_merged_lead_names_is_linked():
+def test_a_merged_lead_lists_his_page_once():
     old = payload([rec("Busy Man", CURRENT, 20000000, team="MEM")])
     new = payload([rec("Busy Man", CURRENT, 28000000, team="MEM"),
                    rec("Busy Man", "2027-28", 30000000, team="DAL")])
     _items, posts = digest(
         old, new, slugs={"Busy Man": "busy-man"},
         teams={"team": {"MEM": "memphis-grizzlies", "DAL": "dallas-mavericks"}})
-    assert "/team/dallas-mavericks/|Dallas>" in posts[0]
+    block = posts[0].split("\n\n")[1]
+    assert block.split("\n")[1:] == [
+        "https://hoopsmatic.com/salary-season-finder/player/busy-man/"]
 
 
 def test_a_merged_item_reads_every_season_for_its_nugget():
@@ -2064,7 +2076,7 @@ def test_a_merged_item_reads_every_season_for_its_nugget():
 # --------------------------------------------------------------------------
 
 
-def test_the_closing_lines_say_neither_deals_nor_off_the_books():
+def test_the_closing_lines_say_no_deals_and_name_the_season():
     old = payload([rec("Min Gone", CURRENT, 2553508, team="ATL"),
                    rec("Min Moved", CURRENT, 2553508, team="ATL")])
     new = payload([rec("Min Moved", CURRENT, 2553508, team="MEM"),
@@ -2072,11 +2084,13 @@ def test_the_closing_lines_say_neither_deals_nor_off_the_books():
                    rec("Min Later", "2027-28", 2680000, team="ATL")])
     _items, posts = digest(old, new)
     assert "deal" not in posts[0]
-    assert "off the books" not in posts[0]
-    assert "Also: minimum salaries added for 2026-27: Min Added." in posts[0]
-    assert "Also: minimum salaries added for later seasons: Min Later." in posts[0]
-    assert "Also: minimum salaries moved to another team: Min Moved." in posts[0]
-    assert "Also: minimum salaries removed: Min Gone." in posts[0]
+    assert "New at the minimum for 2026-27: Min Added." in posts[0]
+    assert "New at the minimum for 2027-28: Min Later." in posts[0]
+    assert "On a new team's books at the minimum for 2026-27: Min Moved." \
+        in posts[0]
+    assert "Off the 2026-27 books: Min Gone." in posts[0]
+    # never the team he left
+    assert "Hawks" not in posts[0]
 
 
 def test_the_closing_lines_carry_no_head_count():
@@ -2084,8 +2098,7 @@ def test_the_closing_lines_carry_no_head_count():
     new = payload([rec("Min One", CURRENT, 2553508),
                    rec("Min Two", CURRENT, 2553508)])
     _items, posts = digest(old, new)
-    assert "Also: minimum salaries added for 2026-27: Min One, Min Two." \
-        in posts[0]
+    assert "New at the minimum for 2026-27: Min One and Min Two." in posts[0]
     assert "2 players" not in posts[0]
 
 
@@ -2097,7 +2110,7 @@ def test_a_changed_number_keeps_a_day_off_the_minimum_line():
                    rec("Min Man", "2027-28", 2680000, years=1),
                    rec("Min Man", "2028-29", 2814000, years=1)])
     _items, posts = digest(old, new)
-    assert "Also: minimum salaries" not in posts[0]
+    assert "at the minimum for" not in posts[0]
     assert "his 2026-27 salary more than doubles to $1.4 million" in posts[0]
 
 
@@ -2107,7 +2120,8 @@ def test_a_changed_number_keeps_a_day_off_the_minimum_line():
 
 
 def test_a_link_is_never_markdown():
-    """Slack prints [text](url) verbatim. Every link in the digest is mrkdwn."""
+    """Slack prints [text](url) verbatim. The digest has no links in its
+    sentences at all, only URLs on lines of their own."""
     old = payload([rec("Moved Man", CURRENT, 20000000, team="DAL")])
     new = payload([rec("Moved Man", CURRENT, 20000000, team="MEM"),
                    rec("Quiet Man", "2027-28", 8800000, team="DAL")])
@@ -2120,7 +2134,8 @@ def test_a_link_is_never_markdown():
     assert posts
     for post in posts:
         assert "](" not in post
-        assert "<https://" in post
+        assert "<https://" not in post
+        assert D.check_post(post) is post
 
 
 def test_a_markdown_link_is_refused_rather_than_posted():
@@ -2172,7 +2187,7 @@ def test_a_record_keeps_its_entry_even_when_the_milestone_prints():
     items, posts = digest(old, new, factoids=factoids)
     assert items[0]["has_record"] is True
     assert "Also on the books" not in posts[0]
-    assert "Famous Man is on Dallas' books at $40 million for 2026-27." \
+    assert "Famous Man is on the Mavericks' books at $40 million for 2026-27." \
         in posts[0]
 
 
@@ -2189,3 +2204,174 @@ def test_a_peer_line_keeps_its_entry_even_when_something_outranks_it():
     assert "Peer Man" in posts[0]
     assert "Also on the books: Peer Man" not in posts[0]
     assert base  # the fixture built what the comparison reads
+
+
+# --------------------------------------------------------------------------
+# the format the Rumors page takes: plain sentences, a URL line per page
+# --------------------------------------------------------------------------
+
+
+def test_a_season_on_two_teams_books_lists_each_teams_figure():
+    """Johni Broome, Oct. 7: his 2026-27 money landed on a second team's books.
+    That is not a raise, so it is said as each team's figure and the total the
+    season comes to, and it never enters the raise pool."""
+    old = payload([rec("Johni Broome", CURRENT, 2150917, team="LAC")])
+    split = rec("Johni Broome", CURRENT, 4336033, team="LAC, MIL")
+    split["team_salaries"] = {"MIL": 2185116, "LAC": 2150917}
+    new = payload([split])
+    names = dict(NAMES, LAC="Clippers", MIL="Bucks")
+    items = D.changes(old, new, CURRENT)
+    assert D.sentence(items[0], names) == (
+        "Johni Broome now has 2026-27 money on two teams' books, $2.2 million "
+        "with the Clippers and $2.2 million with the Bucks, and his total for "
+        "the season rises to $4.3 million from $2.2 million.")
+    context = context_for(new, {"Johni Broome": "johni-broome"})
+    pool = D.attach_nuggets(items, context["idx"], new, {}, [], OPENED)
+    assert items[0]["raise_amount"] == 0
+    assert all(entry["player"] != "Johni Broome" for entry in pool)
+    assert D.has_story(items[0])
+
+
+def test_a_new_season_split_across_two_teams_gives_the_sum_as_all():
+    split = rec("Split Man", CURRENT, 9000000, team="DAL, DEN")
+    split["team_salaries"] = {"DAL": 5000000, "DEN": 4000000}
+    text = spoken(payload([]), payload([split]))
+    assert text == ("Split Man now has 2026-27 money on two teams' books, "
+                    "$5 million with the Mavericks and $4 million with the "
+                    "Nuggets, $9 million in all.")
+
+
+def test_team_names_are_nicknames_never_cities():
+    names = D.load_team_names()
+    assert len(names) == 30
+    cities = ("Atlanta", "Boston", "Los Angeles", "Golden State", "New York",
+              "Oklahoma City", "San Antonio", "Milwaukee", "Charlotte")
+    for code, name in names.items():
+        assert not any(city in name for city in cities), (code, name)
+    assert names["LAC"] == "Clippers" and names["LAL"] == "Lakers"
+    assert D.team_name("LAC, MIL", names) == "the Clippers and the Bucks"
+
+
+def test_a_team_takes_the_verb_its_nickname_does():
+    assert D.has_verb("the Bucks") == "have"
+    assert D.has_verb("the Magic") == "has"
+    assert D.has_verb("the Jazz") == "has"
+    assert D.possessive("the Jazz") == "the Jazz's"
+    assert D.possessive("the Bucks") == "the Bucks'"
+
+
+def test_a_minimum_line_lists_one_url_per_player_in_name_order():
+    old = payload([rec("Terrell Brown", CURRENT, 2553508),
+                   rec("Fletcher Loyer", CURRENT, 2553508),
+                   rec("John Butler", CURRENT, 2553508),
+                   rec("Robert McCray", CURRENT, 2553508)])
+    slugs = {"Terrell Brown": "terrell-brown", "Fletcher Loyer": "fletcher-loyer",
+             "John Butler": "john-butler", "Robert McCray": "robert-mccray"}
+    _items, posts = digest(old, payload([]), slugs=slugs)
+    assert posts[0] == (
+        "Salary changes, Oct. 1, 2026\n\n"
+        "Off the 2026-27 books: Fletcher Loyer, John Butler, Robert McCray "
+        "and Terrell Brown.\n"
+        "https://hoopsmatic.com/salary-season-finder/player/fletcher-loyer/\n"
+        "https://hoopsmatic.com/salary-season-finder/player/john-butler/\n"
+        "https://hoopsmatic.com/salary-season-finder/player/robert-mccray/\n"
+        "https://hoopsmatic.com/salary-season-finder/player/terrell-brown/")
+
+
+def test_a_player_with_no_page_gets_no_url_of_his_own():
+    """Never a URL nobody can open: a man without a page points at the season,
+    and a line of several names lists only the pages that exist."""
+    old = payload([rec("Lone Man", "2027-28", 40000000)])
+    new = payload([rec("Has Page", CURRENT, 2553508),
+                   rec("No Page", CURRENT, 2553508)])
+    _items, posts = digest(old, new, slugs={"Has Page": "has-page"})
+    assert ("New at the minimum for 2026-27: Has Page and No Page.\n"
+            "https://hoopsmatic.com/salary-season-finder/player/has-page/\n\n") \
+        in posts[0] + "\n\n"
+    assert "no-page" not in posts[0]
+    lone = [b for b in posts[0].split("\n\n") if b.startswith("Lone Man")][0]
+    assert lone.split("\n")[1:] == [
+        "https://hoopsmatic.com/salary-season-finder/season/2027-28/"]
+
+
+def test_every_item_has_a_url_and_no_sentence_a_link():
+    """Every shape the digest writes: a lead, a nugget, the minimum lines, the
+    quiet line and the team lines."""
+    old = payload([rec("Gone Man", CURRENT, 8000000, team="ATL"),
+                   rec("Cut Man", CURRENT, 30000000, team="MEM"),
+                   rec("Moved Man", CURRENT, 20000000, team="DAL"),
+                   rec("Min Gone", CURRENT, 2553508)])
+    new = payload([rec("Cut Man", CURRENT, 20000000, team="MEM"),
+                   rec("Cut Man", "2027-28", 21000000, team="MEM"),
+                   rec("Moved Man", CURRENT, 20000000, team="MEM"),
+                   rec("Signed Man", CURRENT, 9000000, team="DEN"),
+                   rec("Quiet Man", "2027-28", 8800000, team="DAL"),
+                   rec("Min Man", CURRENT, 2553508, team="DEN")])
+    slugs = {name: name.lower().replace(" ", "-")
+             for name in ("Gone Man", "Cut Man", "Moved Man", "Signed Man")}
+    _items, posts = digest(old, new, slugs=slugs)
+    assert posts
+    for post in posts:
+        assert D.check_post(post) is post
+        for chunk in post.split("\n\n")[1:]:
+            lines = chunk.split("\n")
+            assert lines[0] and not lines[0].startswith("http")
+            assert all(line.startswith(D.TOOL_ROOT + "/") for line in lines[1:])
+            assert len(lines) >= 2, chunk
+
+
+def test_check_post_refuses_a_link_or_a_missing_url():
+    header = "Salary changes, Oct. 1, 2026\n\n"
+    ok = header + "Man is paid.\n" + D.TOOL_ROOT + "/player/man/"
+    assert D.check_post(ok) == ok
+    for bad in (
+            header + "Man is paid.",
+            header + "<https://x/|Man> is paid.\n" + D.TOOL_ROOT + "/player/man/",
+            header + "[Man](https://x/) is paid.\n" + D.TOOL_ROOT + "/",
+            header + "Man https://x/ is paid.\n" + D.TOOL_ROOT + "/",
+            header + D.TOOL_ROOT + "/\nMan is paid."):
+        with pytest.raises(ValueError):
+            D.check_post(bad)
+
+
+def test_page_exists_reads_the_built_site():
+    built = sorted(os.listdir(os.path.join(REPO, "player")))[0]
+    assert D.page_exists("{}/player/{}/".format(D.TOOL_ROOT, built))
+    assert D.page_exists(D.TOOL_ROOT + "/")
+    assert not D.page_exists(D.TOOL_ROOT + "/player/nobody-of-this-name/")
+    assert not D.page_exists(D.TOOL_ROOT + "/player/../index.html")
+    assert not D.page_exists("https://example.com/player/x/")
+
+
+def test_a_real_day_prints_only_pages_the_site_has():
+    """The committed data, with a day's worth of changes made to it, rendered
+    the way main() renders it: every URL is a page on disk."""
+    with open(os.path.join(REPO, "data", "data.json"), encoding="utf-8") as fh:
+        new = json.load(fh)
+    current = F.compute_current_season(new)
+    mine = [r for r in new["seasons"] if r["season"] == current]
+    mine.sort(key=lambda r: (-(r.get("salary") or 0), r["player"]))
+    big, raised, small = mine[0], mine[1], mine[-3:]
+    old = dict(new)
+    old_rows = [dict(r) for r in new["seasons"] if r is not big]
+    for r in old_rows:
+        if r["player"] == raised["player"] and r["season"] == current:
+            r["salary"] = int(r["salary"] * 0.6)
+    old_rows += [dict(r, player=r["player"] + " Gone") for r in small]
+    old["seasons"] = old_rows
+    idx = F.build_index(new)
+    items = D.drop_impossible(D.changes(old, new, current), idx)
+    assert items
+    D.attach_nuggets(items, idx, new, {}, [], OPENED,
+                     before={"old": old, "old_idx": F.build_index(old)})
+    slugs = {"player": D.load_player_slugs()}
+    slugs.update(D.load_cohort_slugs())
+    context = {"names": D.load_team_names(), "teams": D.load_team_names(codes=True),
+               "slugs": slugs, "idx": idx}
+    scale, tolerance = D.load_min_scale()
+    posts = D.render(items, WHEN, scale, tolerance, context)
+    for post in posts:
+        D.check_post(post)
+        for line in post.split("\n"):
+            if line.startswith("http"):
+                assert D.page_exists(line), line
