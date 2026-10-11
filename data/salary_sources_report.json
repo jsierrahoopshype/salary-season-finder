@@ -3,7 +3,7 @@
   "current": {
    "2024-25": {
     "also_in_the_historical_tab": 458,
-    "dollars_offered": 4969624691,
+    "dollars_offered": 4969046114,
     "missing_from_the_historical_tab": [
      {
       "player": "Hayden Gray",
@@ -186,10 +186,6 @@
       "salary": 578577
      },
      {
-      "player": "John Butler",
-      "salary": 578577
-     },
-     {
       "player": "Leaky Black",
       "salary": 578577
      },
@@ -314,11 +310,11 @@
       "salary": 100000
      }
     ],
-    "player_seasons_offered": 535
+    "player_seasons_offered": 534
    },
    "2025-26": {
     "also_in_the_historical_tab": 532,
-    "dollars_offered": 5376046704,
+    "dollars_offered": 5375734642,
     "missing_from_the_historical_tab": [
      {
       "player": "Trey Lyles",
@@ -401,10 +397,6 @@
       "salary": 321714
      },
      {
-      "player": "John Butler",
-      "salary": 312062
-     },
-     {
       "player": "Dion Brown",
       "salary": 157640
      },
@@ -457,7 +449,7 @@
       "salary": 113171
      }
     ],
-    "player_seasons_offered": 566
+    "player_seasons_offered": 565
    }
   },
   "dead": {
@@ -556,11 +548,6 @@
    {
     "player": "Jaron Pierre",
     "salary": 636435,
-    "season": "2025-26"
-   },
-   {
-    "player": "John Butler",
-    "salary": 312062,
     "season": "2025-26"
    },
    {
@@ -1731,24 +1718,24 @@
    "historical": 624
   },
   "2026-27": {
-   "current_and_dead": 640,
-   "future": 618
+   "current_and_dead": 641,
+   "future": 619
   },
   "2027-28": {
-   "current_and_dead": 350,
-   "future": 340
+   "current_and_dead": 351,
+   "future": 341
   },
   "2028-29": {
-   "current_and_dead": 200,
-   "future": 192
+   "current_and_dead": 201,
+   "future": 193
   },
   "2029-30": {
-   "current_and_dead": 99,
-   "future": 96
+   "current_and_dead": 100,
+   "future": 97
   },
   "2030-31": {
-   "current_and_dead": 19,
-   "future": 17
+   "current_and_dead": 20,
+   "future": 18
   }
  },
  "rows_that_repeated_once_two_spellings_became_one_man": {
