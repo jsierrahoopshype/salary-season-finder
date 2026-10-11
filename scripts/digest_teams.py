@@ -98,7 +98,7 @@ def crossings(before, after, idx, touched):
     return out
 
 
-def line(entry, name, money, link=None, top_n=TOP_N):
+def line(entry, name, money, link=None, top_n=TOP_N, verb="has"):
     """The one sentence a crossing is worth.
 
     "so far", always: a future season's books are not closed, and today's
@@ -107,8 +107,8 @@ def line(entry, name, money, link=None, top_n=TOP_N):
     who = _join([player for player, _amount in entry["top"]])
     if link:
         who = _join([link(player) for player, _amount in entry["top"]])
-    opening = "{} now has {} committed to {} for {}".format(
-        name, money(entry["total"]), who, entry["season"])
+    opening = "{} now {} {} committed to {} for {}".format(
+        name, verb, money(entry["total"]), who, entry["season"])
     if entry["reason"] == "league_high":
         return "{}, the most any team has tied up in {} players for that " \
             "season so far.".format(opening, _spell(top_n))
