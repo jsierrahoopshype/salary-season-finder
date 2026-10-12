@@ -831,9 +831,9 @@ def _split_clause(season, members, names, who):
                 held.append(code)
     order = held + sorted((c for c in paid if c not in held),
                           key=lambda c: (-paid[c], c))
-    amounts = _join_and(["{} with {}".format(F.fmt_money(paid[c]),
-                                             team_name(c, names))
-                         for c in order])
+    figures = _distinct_money([paid[c] for c in order])
+    amounts = _join_and(["{} with {}".format(figure, team_name(c, names))
+                         for figure, c in zip(figures, order)])
     total = record.get("salary") or sum(paid.values())
     text = "{} now has {} money on {} teams' books, {}".format(
         who, season, _spell(len(order)), amounts)
@@ -845,6 +845,24 @@ def _split_clause(season, members, names, who):
     if not any(m["kind"] == "team" for m in members):
         return "{}, {} in all".format(text, F.fmt_money(total))
     return text
+
+
+def _distinct_money(amounts):
+    """Each amount as the digest writes money, but never two alike for two
+    different figures: where one decimal would make them read the same, two
+    decimals ("$2.15 million with the Clippers and $2.19 million with the
+    Bucks"), and where even that would, the full figure."""
+    plain = [F.fmt_money(a) for a in amounts]
+    if len(set(plain)) == len(set(amounts)):
+        return plain
+    out = []
+    for amount, text in zip(amounts, plain):
+        if plain.count(text) > 1 and amount >= 1000000:
+            text = "${:.2f} million".format(amount / 1000000.0)
+        out.append(text)
+    if len(set(out)) != len(set(amounts)):
+        return ["${:,}".format(a) for a in amounts]
+    return out
 
 
 def _crowded(text):
@@ -881,17 +899,16 @@ def _clause(item, names, who, whose, said=None):
                 if team else "he is due"
             lead = "{} salary {} in {}".format(
                 whose, verb, item.get("first_season") or season)
+            # The lead has already named the season the run opens on.
             body = "{} {}".format(where, _run_money(item))
-            if through:
-                body += " through {}".format(season)
             # "up from $4.2 million now" says nothing when the run opens on that
             # same figure: the climb inside it is the whole story.
             if item.get("first_salary") == now:
                 return "{}: {}".format(lead, body)
             return "{}: {}, up from {} now".format(lead, body, F.fmt_money(now))
         if through:
-            return "{} is due {} through {}{}".format(
-                who, _run_money(item), season,
+            return "{} is due {}{}".format(
+                who, _run_money(item, opening=True),
                 " on {} books".format(possessive(team)) if team else "")
         if team:
             if repeats_team:
@@ -1120,16 +1137,27 @@ def _way(difference):
     return -1 if difference < 0 else 0
 
 
-def _run_money(item):
-    """What a run of seasons is worth: one figure a year, or the climb."""
+def _run_money(item, opening=False):
+    """What a run of seasons is worth: one figure a year, or the climb.
+
+    Every figure says which season it is. "Rising to $48.6 million through
+    2030-31" could be read as a total, so the climb names the season its last
+    figure is paid in: "$18.9 million, rising to $48.6 million in 2030-31".
+    ``opening`` names the season the first figure is paid in as well, for a
+    clause whose lead has not already said it.
+    """
     first, last = item.get("first_salary"), item.get("last_salary")
     if first is None:
         return F.fmt_money(item.get("salary"))
     if len(item.get("members") or []) < 2:
         return F.fmt_money(first)
+    start, end = item.get("first_season") or "", item.get("season") or ""
     if first == last:
-        return "{} a year".format(F.fmt_money(first))
-    return "{}, rising to {}".format(F.fmt_money(first), F.fmt_money(last))
+        return "{} a year from {} through {}".format(F.fmt_money(first), start, end) \
+            if opening else "{} a year through {}".format(F.fmt_money(first), end)
+    return "{}{}, {} to {} in {}".format(
+        F.fmt_money(first), " in {}".format(start) if opening else "",
+        "rising" if last > first else "falling", F.fmt_money(last), end)
 
 
 def nugget_sentence(nuggets, item, names=None, teams=None, slugs=None,
