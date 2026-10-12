@@ -12,6 +12,7 @@ from __future__ import annotations
 import json
 import os
 import re
+from html import escape
 
 import pytest
 
@@ -141,7 +142,7 @@ def test_a_draft_class_lists_its_undrafted_men_below_the_drafted():
         for name in names:
             # a name may still appear above in a sentence about someone else's
             # page link, but never as a row of the drafted tables
-            assert ">{}</a>".format(name) not in drafted_part, (year, name)
+            assert ">{}</a>".format(escape(name)) not in drafted_part, (year, name)
         checked += 1
     if went:
         assert checked, "no draft-class page carries an undrafted man"
@@ -153,7 +154,7 @@ def test_every_flagged_man_is_on_the_undrafted_page():
     path = os.path.join(REPO, "pick", "undrafted", "index.html")
     html = open(path, encoding="utf-8").read()
     flagged = {r["player"] for r in data["seasons"] if r.get("undrafted")}
-    missing = sorted(n for n in flagged if ">{}</a>".format(n) not in html)
+    missing = sorted(n for n in flagged if ">{}</a>".format(escape(n)) not in html)
     # a name the engine keeps out of every cohort (Corey Brewer) is the only
     # kind of miss there can be
     assert len(missing) <= 1, missing[:20]
