@@ -9,6 +9,7 @@ from __future__ import annotations
 import datetime
 import json
 import os
+import re
 import subprocess
 
 import pytest
@@ -496,7 +497,7 @@ def test_a_rising_run_gives_the_first_and_the_last():
                    rec("Climber", "2029-30", 9200000, team="MEM")])
     _items, posts = digest(old, new)
     assert ("Climber's salary rises 84% in 2027-28: The Grizzlies have him at "
-            "$8 million, rising to $9.2 million through 2029-30, up from "
+            "$8 million, rising to $9.2 million in 2029-30, up from "
             "$5 million now.") in posts[0]
 
 
@@ -590,7 +591,7 @@ def test_a_signing_that_arrives_as_four_seasons_is_one_sentence():
     items, posts = digest(old, new)
     assert [i["kind"] for i in items] == ["new_run"]
     assert ("Rookie's salary rises 62% in 2026-27: The Grizzlies have him at "
-            "$4.2 million, rising to $6.8 million through 2028-29.") in posts[0]
+            "$4.2 million, rising to $6.8 million in 2028-29.") in posts[0]
 
 
 def test_two_teams_in_one_day_are_two_clauses_of_one_sentence():
@@ -2222,8 +2223,8 @@ def test_a_season_on_two_teams_books_lists_each_teams_figure():
     names = dict(NAMES, LAC="Clippers", MIL="Bucks")
     items = D.changes(old, new, CURRENT)
     assert D.sentence(items[0], names) == (
-        "Johni Broome now has 2026-27 money on two teams' books, $2.2 million "
-        "with the Clippers and $2.2 million with the Bucks, and his total for "
+        "Johni Broome now has 2026-27 money on two teams' books, $2.15 million "
+        "with the Clippers and $2.19 million with the Bucks, and his total for "
         "the season rises to $4.3 million from $2.2 million.")
     context = context_for(new, {"Johni Broome": "johni-broome"})
     pool = D.attach_nuggets(items, context["idx"], new, {}, [], OPENED)
@@ -2375,3 +2376,66 @@ def test_a_real_day_prints_only_pages_the_site_has():
         for line in post.split("\n"):
             if line.startswith("http"):
                 assert D.page_exists(line), line
+
+
+def test_a_climb_names_the_season_its_last_figure_is_paid_in():
+    """"Rising to $48.6 million through 2030-31" reads like a total. The figure
+    is his 2030-31 salary, so the line says so (Brandin Podziemski, Oct. 11)."""
+    old = payload([rec("Brandin Podziemski", CURRENT, 5700000, team="GSW")])
+    new = payload([rec("Brandin Podziemski", CURRENT, 5700000, team="GSW")] + [
+        rec("Brandin Podziemski", season, salary, team="GSW")
+        for season, salary in (("2027-28", 18900000), ("2028-29", 29000000),
+                               ("2029-30", 38800000), ("2030-31", 48600000))])
+    names = dict(NAMES, GSW="Warriors")
+    items = D.changes(old, new, CURRENT)
+    context = context_for(new)
+    D.attach_nuggets(items, context["idx"], new, {}, [], OPENED)
+    text = D.sentence(items[0], names)
+    assert ("The Warriors have him at $18.9 million, rising to $48.6 million "
+            "in 2030-31, up from $5.7 million now.") in text
+    assert "through 2030-31" not in text
+
+
+def test_a_flat_run_still_reads_a_year_through():
+    item = {"first_salary": 8000000, "last_salary": 8000000, "salary": 8000000,
+            "first_season": "2027-28", "season": "2029-30",
+            "members": [{}, {}, {}]}
+    assert D._run_money(item) == "$8 million a year through 2029-30"
+    assert D._run_money(item, opening=True) == \
+        "$8 million a year from 2027-28 through 2029-30"
+
+
+def test_a_run_with_no_lead_names_both_ends_and_falls_when_it_falls():
+    item = {"first_salary": 9000000, "last_salary": 6000000, "salary": 9000000,
+            "first_season": "2027-28", "season": "2029-30",
+            "members": [{}, {}, {}]}
+    assert D._run_money(item, opening=True) == \
+        "$9 million in 2027-28, falling to $6 million in 2029-30"
+    assert "rising" not in D._run_money(item)
+
+
+def test_no_run_figure_is_left_to_read_as_a_total():
+    """A climb never ends on "through": the last figure is a season's salary,
+    and "through" is kept for "a year through" and "in all" totals."""
+    old = payload([rec("Rookie", CURRENT, 4200000, team="MEM")])
+    new = payload([rec("Rookie", CURRENT, 4200000, team="MEM"),
+                   rec("Rookie", "2027-28", 5500000, team="MEM"),
+                   rec("Rookie", "2028-29", 6800000, team="MEM"),
+                   rec("Signed", "2027-28", 3000000, team="DAL"),
+                   rec("Signed", "2028-29", 3600000, team="DAL")])
+    text = spoken(old, new)
+    assert "rising to $6.8 million in 2028-29" in text
+    assert "Signed is due $3 million in 2027-28, rising to $3.6 million in " \
+        "2028-29" in text
+    assert not re.search(r"(rising|falling) to \$[\d.,]+( million)? through", text)
+
+
+def test_two_teams_figures_that_round_alike_get_two_decimals():
+    assert D._distinct_money([2150917, 2185116]) == [
+        "$2.15 million", "$2.19 million"]
+    # one decimal where it already tells them apart
+    assert D._distinct_money([5000000, 4000000]) == ["$5 million", "$4 million"]
+    # full figures where even two decimals would not
+    assert D._distinct_money([2150917, 2152000]) == ["$2,150,917", "$2,152,000"]
+    # the same figure twice is the same figure, and reads the same
+    assert D._distinct_money([636435, 636435]) == ["$636,435", "$636,435"]

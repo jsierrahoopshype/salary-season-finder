@@ -357,9 +357,11 @@ def test_the_shipped_stand_in_bios_name_their_sources_and_use_the_sheets_formats
         if block["pos"]:
             assert block["pos"] in ("G", "F", "C", "G-F", "F-G", "F-C", "C-F"), name
         # the undrafted convention: PICK is the literal UND, and the draft class
-        # year stays on the row
+        # year stays on the row, or is left blank where a searched entry could
+        # not find two publishers stating it
         if entry.get("PICK") == "UND":
-            assert block["draft_pick"] is None and block["draft_year"], name
+            assert block["draft_pick"] is None, name
+            assert block["draft_year"] or entry.get("field_sources") is not None, name
         elif (entry.get("PICK") or "").strip():
             assert block["draft_year"] and 1 <= block["draft_pick"] <= 60, name
 
@@ -800,8 +802,9 @@ def _publisher(url):
                     reason="data/bio_overrides.json not present")
 def test_every_sourced_field_rests_on_two_publishers():
     """An entry that records its sources field by field fills a field only
-    where two independent publishers state it, and fills nothing it cannot
-    source. Undrafted is a blank DRAFT and PICK, never a 0."""
+    where two independent publishers state it on a current listing, and fills
+    nothing it cannot source. Undrafted is PICK UND, the way bio.csv writes
+    it, never a 0; a college roster or a pre-draft profile is never a source."""
     for name, entry in B.load_bio_overrides().items():
         per_field = entry.get("field_sources")
         if per_field is None:
@@ -809,11 +812,17 @@ def test_every_sourced_field_rests_on_two_publishers():
         for column in ("BIRTHDAY", "POS", "HEIGHT", "WEIGHT", "NATIONALITY",
                        "COLLEGE / TEAM", "DRAFT", "PICK"):
             value = (entry.get(column) or "").strip()
-            assert value not in ("0", "UND"), (name, column, value)
+            assert value != "0", (name, column, value)
+            if column == "PICK" and value != "UND":
+                assert value.isdigit(), (name, value)
             if not value:
                 continue
             urls = per_field.get(column) or []
             assert len({_publisher(u) for u in urls}) >= 2, (name, column, urls)
+            for url in urls:
+                assert not re.search(
+                    r"/draft/\d{4}/prospects/|/roster/|sports-reference\.com/cbb"
+                    r"|/summer-league/|/wiretap/", url), (name, column, url)
         for column, urls in per_field.items():
             assert (entry.get(column) or "").strip(), (name, column)
             assert all(u in entry["source"] for u in urls), (name, column)

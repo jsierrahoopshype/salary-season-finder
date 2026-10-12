@@ -4,7 +4,7 @@
    "BIRTHDAY": "5/5/2004",
    "COLLEGE / TEAM": "Sydney Kings",
    "DRAFT": "2025",
-   "HEIGHT": "",
+   "HEIGHT": "6-8",
    "NATIONALITY": "Australia",
    "PICK": "52",
    "POS": "F",
@@ -24,8 +24,14 @@
     "DRAFT": [
      "https://basketball.realgm.com/player/Alex-Toohey/Summary/177212",
      "https://en.wikipedia.org/wiki/Alex_Toohey",
+     "https://www.basketball-reference.com/players/t/tooheal01.html"
+    ],
+    "HEIGHT": [
+     "https://basketball.realgm.com/player/Alex-Toohey/Summary/177212",
+     "https://en.wikipedia.org/wiki/Alex_Toohey",
+     "https://gleague.nba.com/player/1642893/alex-toohey",
      "https://www.basketball-reference.com/players/t/tooheal01.html",
-     "https://www.nba.com/draft/2025/prospects/alex-toohey"
+     "https://www.nba.com/player/1642893/alex-toohey"
     ],
     "NATIONALITY": [
      "https://basketball.realgm.com/player/Alex-Toohey/Summary/177212",
@@ -34,8 +40,7 @@
     "PICK": [
      "https://basketball.realgm.com/player/Alex-Toohey/Summary/177212",
      "https://en.wikipedia.org/wiki/Alex_Toohey",
-     "https://www.basketball-reference.com/players/t/tooheal01.html",
-     "https://www.nba.com/draft/2025/prospects/alex-toohey"
+     "https://www.basketball-reference.com/players/t/tooheal01.html"
     ],
     "POS": [
      "https://basketball.realgm.com/player/Alex-Toohey/Summary/177212",
@@ -51,26 +56,26 @@
      "https://www.nba.com/player/1642893/alex-toohey"
     ]
    },
-   "note": "Australian forward from the NBL's Sydney Kings, taken 52nd by Phoenix in 2025, whose rights went to Golden State in July 2025. The Warriors signed him to a two-way contract on Sept. 30, 2025 and waived him on Dec. 8, 2025, which is the 2025-26 row. COLLEGE / TEAM: RealGM writes the pre-draft team as Sydney.",
+   "note": "Australian forward from the NBL's Sydney Kings, taken 52nd by Phoenix in 2025, whose rights went to Golden State in July 2025. The Warriors signed him to a two-way contract on Sept. 30, 2025 and waived him on Dec. 8, 2025, which is the 2025-26 row. COLLEGE / TEAM: RealGM writes the pre-draft team as Sydney. Not counted, as superseded by current listings: HEIGHT: 6-7 (Basketball-Reference's international-career page, not his current NBA profile); DRAFT: 2025 (the 2025 pre-draft profile); PICK: 52 (the 2025 pre-draft profile).",
    "source": [
     "https://basketball.realgm.com/player/Alex-Toohey/Summary/177212",
     "https://en.wikipedia.org/wiki/2025_NBA_draft",
     "https://en.wikipedia.org/wiki/Alex_Toohey",
+    "https://gleague.nba.com/player/1642893/alex-toohey",
     "https://www.basketball-reference.com/international/players/alex-toohey-1.html",
     "https://www.basketball-reference.com/players/t/tooheal01.html",
-    "https://www.nba.com/draft/2025/prospects/alex-toohey",
     "https://www.nba.com/player/1642893/alex-toohey"
    ]
   },
   "Augustas Marciulionis": {
    "BIRTHDAY": "3/21/2002",
    "COLLEGE / TEAM": "Saint Mary's",
-   "DRAFT": "",
+   "DRAFT": "2025",
    "HEIGHT": "6-4",
    "NATIONALITY": "Lithuania",
-   "PICK": "",
+   "PICK": "UND",
    "POS": "G",
-   "WEIGHT": "",
+   "WEIGHT": "200",
    "field_sources": {
     "BIRTHDAY": [
      "https://basketball.realgm.com/player/Augustas-Marciulionis/Summary/129598",
@@ -84,10 +89,13 @@
      "https://www.basketball-reference.com/players/m/marciau01.html",
      "https://www.nba.com/player/1643051/augustas-marciulionis"
     ],
+    "DRAFT": [
+     "https://basketball.realgm.com/player/Augustas-Marciulionis/Summary/129598",
+     "https://en.wikipedia.org/wiki/Augustas_Mar%C4%8Diulionis"
+    ],
     "HEIGHT": [
      "https://basketball.realgm.com/player/Augustas-Marciulionis/Summary/129598",
      "https://en.wikipedia.org/wiki/Augustas_Mar%C4%8Diulionis",
-     "https://smcgaels.com/sports/mens-basketball/roster/augustas-marciulionis/5920",
      "https://www.basketball-reference.com/players/m/marciau01.html",
      "https://www.nba.com/player/1643051/augustas-marciulionis"
     ],
@@ -95,18 +103,27 @@
      "https://basketball.realgm.com/player/Augustas-Marciulionis/Summary/129598",
      "https://www.nba.com/player/1643051/augustas-marciulionis"
     ],
+    "PICK": [
+     "https://basketball.realgm.com/player/Augustas-Marciulionis/Summary/129598",
+     "https://en.wikipedia.org/wiki/Augustas_Mar%C4%8Diulionis",
+     "https://www.nba.com/player/1643051/augustas-marciulionis"
+    ],
     "POS": [
      "https://basketball.realgm.com/player/Augustas-Marciulionis/Summary/129598",
      "https://en.wikipedia.org/wiki/Augustas_Mar%C4%8Diulionis",
      "https://www.basketball-reference.com/players/m/marciau01.html",
      "https://www.nba.com/player/1643051/augustas-marciulionis"
+    ],
+    "WEIGHT": [
+     "https://basketball.realgm.com/player/Augustas-Marciulionis/Summary/129598",
+     "https://en.wikipedia.org/wiki/Augustas_Mar%C4%8Diulionis",
+     "https://www.nba.com/player/1643051/augustas-marciulionis"
     ]
    },
-   "note": "Lithuanian guard, son of Sarunas Marciulionis, who played at Saint Mary's and went undrafted in 2025. The sources have him on an Exhibit 10 deal with the Lakers (signed July 26, 2025, waived Oct. 18, 2025); none ties him to the Clippers, whom the sheet's 2025-26 row names for the $15,000. Undrafted per https://www.nba.com/player/1643051/augustas-marciulionis, https://basketball.realgm.com/player/Augustas-Marciulionis/Summary/129598, https://en.wikipedia.org/wiki/Augustas_Mar%C4%8Diulionis; DRAFT and PICK are left blank. COLLEGE / TEAM: NBA.com writes St. Mary's College.",
+   "note": "Lithuanian guard, son of Sarunas Marciulionis, who played at Saint Mary's and went undrafted in 2025. The sources have him on an Exhibit 10 deal with the Lakers (signed July 26, 2025, waived Oct. 18, 2025); none ties him to the Clippers, whom the sheet's 2025-26 row names for the $15,000. Undrafted per https://www.nba.com/player/1643051/augustas-marciulionis, https://basketball.realgm.com/player/Augustas-Marciulionis/Summary/129598, https://en.wikipedia.org/wiki/Augustas_Mar%C4%8Diulionis. COLLEGE / TEAM: NBA.com writes St. Mary's College. Not counted, as superseded by current listings: HEIGHT: 6-4 (his Saint Mary's college roster); WEIGHT: 195 (comparison page) (a RealGM comparison page, not the current profile); WEIGHT: 200 (his Saint Mary's college roster); WEIGHT: 195 (the 2021-22 Saint Mary's roster).",
    "source": [
     "https://basketball.realgm.com/player/Augustas-Marciulionis/Summary/129598",
     "https://en.wikipedia.org/wiki/Augustas_Mar%C4%8Diulionis",
-    "https://smcgaels.com/sports/mens-basketball/roster/augustas-marciulionis/5920",
     "https://www.basketball-reference.com/players/m/marciau01.html",
     "https://www.nba.com/player/1643051/augustas-marciulionis"
    ]
@@ -114,12 +131,12 @@
   "David Muoka": {
    "BIRTHDAY": "12/14/2000",
    "COLLEGE / TEAM": "UNLV",
-   "DRAFT": "",
-   "HEIGHT": "",
+   "DRAFT": "2024",
+   "HEIGHT": "6-10",
    "NATIONALITY": "",
-   "PICK": "",
+   "PICK": "UND",
    "POS": "",
-   "WEIGHT": "",
+   "WEIGHT": "235",
    "field_sources": {
     "BIRTHDAY": [
      "https://basketball.realgm.com/player/David-Muoka/Summary/152615",
@@ -131,9 +148,30 @@
      "https://en.wikipedia.org/wiki/David_Muoka",
      "https://www.basketball-reference.com/players/m/muokada01.html",
      "https://www.nba.com/player/1641987/david-muoka"
+    ],
+    "DRAFT": [
+     "https://basketball.realgm.com/player/David-Muoka/Summary/152615",
+     "https://en.wikipedia.org/wiki/David_Muoka"
+    ],
+    "HEIGHT": [
+     "https://basketball.realgm.com/player/David-Muoka/Summary/152615",
+     "https://en.wikipedia.org/wiki/David_Muoka",
+     "https://www.basketball-reference.com/players/m/muokada01.html",
+     "https://www.nba.com/player/1641987/david-muoka"
+    ],
+    "PICK": [
+     "https://basketball.realgm.com/player/David-Muoka/Summary/152615",
+     "https://en.wikipedia.org/wiki/David_Muoka",
+     "https://www.nba.com/player/1641987/david-muoka"
+    ],
+    "WEIGHT": [
+     "https://basketball.realgm.com/player/David-Muoka/Summary/152615",
+     "https://en.wikipedia.org/wiki/David_Muoka",
+     "https://www.basketball-reference.com/players/m/muokada01.html",
+     "https://www.nba.com/player/1641987/david-muoka"
     ]
    },
-   "note": "Center born in Hong Kong who played at Lamar and UNLV and went undrafted in 2024. Brooklyn signed him on Sept. 15, 2025 and waived him the next day, the $85,300 on the 2025-26 row. Undrafted per https://www.nba.com/player/1641987/david-muoka, https://basketball.realgm.com/player/David-Muoka/Summary/152615, https://en.wikipedia.org/wiki/David_Muoka; DRAFT and PICK are left blank.",
+   "note": "Center born in Hong Kong who played at Lamar and UNLV and went undrafted in 2024. Brooklyn signed him on Sept. 15, 2025 and waived him the next day, the $85,300 on the 2025-26 row. Undrafted per https://www.nba.com/player/1641987/david-muoka, https://basketball.realgm.com/player/David-Muoka/Summary/152615, https://en.wikipedia.org/wiki/David_Muoka. Not counted, as superseded by current listings: HEIGHT: 6-11 (article text from an earlier signing, not a profile); HEIGHT: 6-10 (his UNLV college roster); WEIGHT: 211 (the 2020-21 Lamar roster).",
    "source": [
     "https://basketball.realgm.com/player/David-Muoka/Summary/152615",
     "https://en.wikipedia.org/wiki/David_Muoka",
@@ -144,10 +182,10 @@
   "De'Andre Davis": {
    "BIRTHDAY": "",
    "COLLEGE / TEAM": "Ole Miss",
-   "DRAFT": "",
+   "DRAFT": "2025",
    "HEIGHT": "6-6",
    "NATIONALITY": "United States",
-   "PICK": "",
+   "PICK": "UND",
    "POS": "",
    "WEIGHT": "",
    "field_sources": {
@@ -156,24 +194,31 @@
      "https://en.wikipedia.org/wiki/Dre_Davis",
      "https://gleague.nba.com/player/1643105/d'andre-davis"
     ],
+    "DRAFT": [
+     "https://basketball.realgm.com/player/Dre-Davis/Summary/135489",
+     "https://en.wikipedia.org/wiki/Dre_Davis"
+    ],
     "HEIGHT": [
      "https://basketball.realgm.com/player/Dre-Davis/Summary/135489",
      "https://en.wikipedia.org/wiki/Dre_Davis",
      "https://gleague.nba.com/player/1643105/d'andre-davis",
-     "https://olemisssports.com/sports/mens-basketball/roster/dre-davis/5374",
      "https://www.basketball-reference.com/players/d/davisdr01.html"
     ],
     "NATIONALITY": [
      "https://basketball.realgm.com/player/Dre-Davis/Summary/135489",
      "https://www.nba.com/player/1643105/dandre-davis"
+    ],
+    "PICK": [
+     "https://basketball.realgm.com/player/Dre-Davis/Summary/135489",
+     "https://en.wikipedia.org/wiki/Dre_Davis",
+     "https://www.nba.com/player/1643105/dandre-davis"
     ]
    },
-   "note": "Wing from Indianapolis, also called Dre Davis, who played at Louisville, Seton Hall and Ole Miss and went undrafted in 2025. Brooklyn signed him to a training camp deal on Sept. 18, 2025 and waived him the next day, the $85,300 on the 2025-26 row. Undrafted per https://www.nba.com/player/1643105/dandre-davis, https://basketball.realgm.com/player/Dre-Davis/Summary/135489, https://en.wikipedia.org/wiki/Dre_Davis; DRAFT and PICK are left blank. COLLEGE / TEAM: the G League page writes Mississippi; the NBA.com page leaves Last Attended blank.",
+   "note": "Wing from Indianapolis, also called Dre Davis, who played at Louisville, Seton Hall and Ole Miss and went undrafted in 2025. Brooklyn signed him to a training camp deal on Sept. 18, 2025 and waived him the next day, the $85,300 on the 2025-26 row. Undrafted per https://www.nba.com/player/1643105/dandre-davis, https://basketball.realgm.com/player/Dre-Davis/Summary/135489, https://en.wikipedia.org/wiki/Dre_Davis. COLLEGE / TEAM: the G League page writes Mississippi; the NBA.com page leaves Last Attended blank. Not counted, as superseded by current listings: BIRTHDAY: August 23, 2001 (his Ole Miss college roster); POS: G (his Ole Miss college roster); HEIGHT: 6-6 (his Ole Miss college roster); WEIGHT: 212 (older profile) (an older cached RealGM profile); WEIGHT: 215 (his Ole Miss college roster).",
    "source": [
     "https://basketball.realgm.com/player/Dre-Davis/Summary/135489",
     "https://en.wikipedia.org/wiki/Dre_Davis",
     "https://gleague.nba.com/player/1643105/d'andre-davis",
-    "https://olemisssports.com/sports/mens-basketball/roster/dre-davis/5374",
     "https://www.basketball-reference.com/players/d/davisdr01.html",
     "https://www.nba.com/player/1643105/dandre-davis"
    ]
@@ -184,7 +229,7 @@
    "DRAFT": "",
    "HEIGHT": "6-8",
    "NATIONALITY": "",
-   "PICK": "",
+   "PICK": "UND",
    "POS": "",
    "WEIGHT": "209",
    "field_sources": {
@@ -203,13 +248,17 @@
      "https://gleague.nba.com/player/1642947/eli-john-ndiaye",
      "https://www.basketball-reference.com/players/n/ndiayel01.html"
     ],
+    "PICK": [
+     "https://basketball.realgm.com/player/Eli-NDiaye/Summary/136290",
+     "https://www.nba.com/player/1642947/eli-john-ndiaye"
+    ],
     "WEIGHT": [
      "https://en.wikipedia.org/wiki/Eli_Ndiaye",
      "https://gleague.nba.com/player/1642947/eli-john-ndiaye",
      "https://www.basketball-reference.com/players/n/ndiayel01.html"
     ]
    },
-   "note": "Forward listed by the NBA as Eli John Ndiaye, from Real Madrid, who went undrafted in 2025. Atlanta signed him to a two-way contract on July 3, 2025 and waived him on Dec. 31, 2025. Undrafted per https://www.nba.com/player/1642947/eli-john-ndiaye, https://basketball.realgm.com/player/Eli-NDiaye/Summary/136290; DRAFT and PICK are left blank.",
+   "note": "Forward listed by the NBA as Eli John Ndiaye, from Real Madrid, who went undrafted in 2025. Atlanta signed him to a two-way contract on July 3, 2025 and waived him on Dec. 31, 2025. Undrafted per https://www.nba.com/player/1642947/eli-john-ndiaye, https://basketball.realgm.com/player/Eli-NDiaye/Summary/136290.",
    "source": [
     "https://basketball.realgm.com/player/Eli-NDiaye/Summary/136290",
     "https://en.wikipedia.org/wiki/Eli_Ndiaye",
@@ -222,12 +271,12 @@
   "Gabe McGlothan": {
    "BIRTHDAY": "3/3/1999",
    "COLLEGE / TEAM": "Grand Canyon",
-   "DRAFT": "",
+   "DRAFT": "2024",
    "HEIGHT": "",
    "NATIONALITY": "United States",
-   "PICK": "",
+   "PICK": "UND",
    "POS": "F",
-   "WEIGHT": "",
+   "WEIGHT": "235",
    "field_sources": {
     "BIRTHDAY": [
      "https://basketball.realgm.com/player/Gabe-McGlothan/Bio/107957",
@@ -240,8 +289,17 @@
      "https://www.basketball-reference.com/players/m/mcgloga01.html",
      "https://www.nba.com/player/1642440/gabe-mcglothan"
     ],
+    "DRAFT": [
+     "https://basketball.realgm.com/player/Gabe-McGlothan/Bio/107957",
+     "https://en.wikipedia.org/wiki/Gabe_McGlothan"
+    ],
     "NATIONALITY": [
      "https://basketball.realgm.com/player/Gabe-McGlothan/Bio/107957",
+     "https://www.nba.com/player/1642440/gabe-mcglothan"
+    ],
+    "PICK": [
+     "https://basketball.realgm.com/player/Gabe-McGlothan/Bio/107957",
+     "https://en.wikipedia.org/wiki/Gabe_McGlothan",
      "https://www.nba.com/player/1642440/gabe-mcglothan"
     ],
     "POS": [
@@ -249,9 +307,15 @@
      "https://en.wikipedia.org/wiki/Gabe_McGlothan",
      "https://www.basketball-reference.com/players/m/mcgloga01.html",
      "https://www.nba.com/player/1642440/gabe-mcglothan"
+    ],
+    "WEIGHT": [
+     "https://basketball.realgm.com/player/Gabe-McGlothan/Bio/107957",
+     "https://en.wikipedia.org/wiki/Gabe_McGlothan",
+     "https://www.basketball-reference.com/players/m/mcgloga01.html",
+     "https://www.nba.com/player/1642440/gabe-mcglothan"
     ]
    },
-   "note": "Forward from Grand Canyon, after Southeast Missouri State, who went undrafted in 2024. Indiana signed him to a 10-day hardship contract on Dec. 16, 2025 from the Noblesville Boom, which is the 2025-26 row. Undrafted per https://www.nba.com/player/1642440/gabe-mcglothan, https://basketball.realgm.com/player/Gabe-McGlothan/Bio/107957, https://en.wikipedia.org/wiki/Gabe_McGlothan; DRAFT and PICK are left blank.",
+   "note": "Forward from Grand Canyon, after Southeast Missouri State, who went undrafted in 2024. Indiana signed him to a 10-day hardship contract on Dec. 16, 2025 from the Noblesville Boom, which is the 2025-26 row. Undrafted per https://www.nba.com/player/1642440/gabe-mcglothan, https://basketball.realgm.com/player/Gabe-McGlothan/Bio/107957, https://en.wikipedia.org/wiki/Gabe_McGlothan. Not counted, as superseded by current listings: WEIGHT: 220 (the 2020-21 Grand Canyon team page).",
    "source": [
     "https://basketball.realgm.com/player/Gabe-McGlothan/Bio/107957",
     "https://en.wikipedia.org/wiki/Gabe_McGlothan",
@@ -297,10 +361,10 @@
   "Kyle Mangas": {
    "BIRTHDAY": "4/8/1999",
    "COLLEGE / TEAM": "Indiana Wesleyan",
-   "DRAFT": "",
+   "DRAFT": "2021",
    "HEIGHT": "6-4",
    "NATIONALITY": "United States",
-   "PICK": "",
+   "PICK": "UND",
    "POS": "G",
    "WEIGHT": "200",
    "field_sources": {
@@ -315,6 +379,10 @@
      "https://gleague.nba.com/player/1630667/kyle-mangas",
      "https://www.basketball-reference.com/players/m/mangaky01.html"
     ],
+    "DRAFT": [
+     "https://basketball.realgm.com/player/Kyle-Mangas/Summary/167770",
+     "https://en.wikipedia.org/wiki/Kyle_Mangas"
+    ],
     "HEIGHT": [
      "https://basketball.realgm.com/player/Kyle-Mangas/Summary/167770",
      "https://en.wikipedia.org/wiki/Kyle_Mangas",
@@ -323,6 +391,11 @@
     ],
     "NATIONALITY": [
      "https://basketball.realgm.com/player/Kyle-Mangas/Summary/167770",
+     "https://www.nba.com/player/1630667/kyle-mangas"
+    ],
+    "PICK": [
+     "https://basketball.realgm.com/player/Kyle-Mangas/Summary/167770",
+     "https://en.wikipedia.org/wiki/Kyle_Mangas",
      "https://www.nba.com/player/1630667/kyle-mangas"
     ],
     "POS": [
@@ -338,7 +411,7 @@
      "https://www.nba.com/player/1630667/kyle-mangas"
     ]
    },
-   "note": "Guard from Indiana Wesleyan who went undrafted in 2021. San Antonio signed him to a two-way contract from the Austin Spurs on Dec. 12, 2025 and waived him around Dec. 21, 2025, the 2025-26 row. Undrafted per https://www.nba.com/player/1630667/kyle-mangas, https://basketball.realgm.com/player/Kyle-Mangas/Summary/167770, https://en.wikipedia.org/wiki/Kyle_Mangas; DRAFT and PICK are left blank. COLLEGE / TEAM: the NBA.com player page shows USA in its Last Attended field, which is not a school.",
+   "note": "Guard from Indiana Wesleyan who went undrafted in 2021. San Antonio signed him to a two-way contract from the Austin Spurs on Dec. 12, 2025 and waived him around Dec. 21, 2025, the 2025-26 row. Undrafted per https://www.nba.com/player/1630667/kyle-mangas, https://basketball.realgm.com/player/Kyle-Mangas/Summary/167770, https://en.wikipedia.org/wiki/Kyle_Mangas. COLLEGE / TEAM: the NBA.com player page shows USA in its Last Attended field, which is not a school.",
    "source": [
     "https://basketball.realgm.com/player/Kyle-Mangas/Summary/167770",
     "https://en.wikipedia.org/wiki/Kyle_Mangas",
@@ -366,11 +439,11 @@
    "BIRTHDAY": "2/23/2004",
    "COLLEGE / TEAM": "Mega Basket",
    "DRAFT": "2024",
-   "HEIGHT": "",
+   "HEIGHT": "6-8",
    "NATIONALITY": "",
    "PICK": "43",
    "POS": "",
-   "WEIGHT": "",
+   "WEIGHT": "214",
    "field_sources": {
     "BIRTHDAY": [
      "https://basketball.realgm.com/player/Nikola-Djurisic/Summary/152577",
@@ -390,14 +463,26 @@
      "https://www.basketball-reference.com/players/d/djurini01.html",
      "https://www.nba.com/player/1642365/nikola-djurisic"
     ],
+    "HEIGHT": [
+     "https://basketball.realgm.com/player/Nikola-Djurisic/Summary/152577",
+     "https://en.wikipedia.org/wiki/Nikola_%C4%90uri%C5%A1i%C4%87",
+     "https://www.basketball-reference.com/players/d/djurini01.html",
+     "https://www.nba.com/player/1642365/nikola-djurisic"
+    ],
     "PICK": [
+     "https://basketball.realgm.com/player/Nikola-Djurisic/Summary/152577",
+     "https://en.wikipedia.org/wiki/Nikola_%C4%90uri%C5%A1i%C4%87",
+     "https://www.basketball-reference.com/players/d/djurini01.html",
+     "https://www.nba.com/player/1642365/nikola-djurisic"
+    ],
+    "WEIGHT": [
      "https://basketball.realgm.com/player/Nikola-Djurisic/Summary/152577",
      "https://en.wikipedia.org/wiki/Nikola_%C4%90uri%C5%A1i%C4%87",
      "https://www.basketball-reference.com/players/d/djurini01.html",
      "https://www.nba.com/player/1642365/nikola-djurisic"
     ]
    },
-   "note": "Wing from Mega Basket, born in Belgium, taken 43rd by Miami in 2024 and traded to Atlanta. He signed a standard Hawks contract in July 2025 and was waived on Feb. 18, 2026. COLLEGE / TEAM: RealGM writes the club by its sponsor name, KK Mega Bemax.",
+   "note": "Wing from Mega Basket, born in Belgium, taken 43rd by Miami in 2024 and traded to Atlanta. He signed a standard Hawks contract in July 2025 and was waived on Feb. 18, 2026. COLLEGE / TEAM: RealGM writes the club by its sponsor name, KK Mega Bemax. Not counted, as superseded by current listings: HEIGHT: 6-7 (the 2024 pre-draft profile); WEIGHT: 209 (the 2024 pre-draft profile); NATIONALITY: Serbia (the 2024 pre-draft profile).",
    "source": [
     "https://basketball.realgm.com/player/Nikola-Djurisic/Summary/152577",
     "https://en.wikipedia.org/wiki/Nikola_%C4%90uri%C5%A1i%C4%87",
@@ -409,12 +494,12 @@
   "RJ Luis": {
    "BIRTHDAY": "11/27/2002",
    "COLLEGE / TEAM": "St. John's",
-   "DRAFT": "",
+   "DRAFT": "2025",
    "HEIGHT": "",
    "NATIONALITY": "United States",
-   "PICK": "",
+   "PICK": "UND",
    "POS": "",
-   "WEIGHT": "",
+   "WEIGHT": "215",
    "field_sources": {
     "BIRTHDAY": [
      "https://basketball.realgm.com/player/RJ-Luis/Bio/180104",
@@ -427,12 +512,25 @@
      "https://www.basketball-reference.com/players/l/luisrj01.html",
      "https://www.nba.com/player/1642961/rj-luis-jr"
     ],
+    "DRAFT": [
+     "https://basketball.realgm.com/player/RJ-Luis/Bio/180104",
+     "https://en.wikipedia.org/wiki/RJ_Luis_Jr."
+    ],
     "NATIONALITY": [
      "https://basketball.realgm.com/player/RJ-Luis/Bio/180104",
      "https://www.nba.com/player/1642961/rj-luis-jr"
+    ],
+    "PICK": [
+     "https://basketball.realgm.com/player/RJ-Luis/Bio/180104",
+     "https://en.wikipedia.org/wiki/RJ_Luis_Jr.",
+     "https://www.nba.com/player/1642961/rj-luis-jr"
+    ],
+    "WEIGHT": [
+     "https://basketball.realgm.com/player/RJ-Luis/Bio/180104",
+     "https://en.wikipedia.org/wiki/RJ_Luis_Jr."
     ]
    },
-   "note": "RJ Luis Jr., the 2024-25 Big East Player of the Year at St. John's, who went undrafted in 2025. Boston acquired him from Utah in August 2025 and waived him in October 2025, the 2025-26 row; he committed to LSU in May 2026, after his NBA stint, so St. John's stays his last school here. Undrafted per https://www.nba.com/player/1642961/rj-luis-jr, https://basketball.realgm.com/player/RJ-Luis/Bio/180104, https://en.wikipedia.org/wiki/RJ_Luis_Jr.; DRAFT and PICK are left blank.",
+   "note": "RJ Luis Jr., the 2024-25 Big East Player of the Year at St. John's, who went undrafted in 2025. Boston acquired him from Utah in August 2025 and waived him in October 2025, the 2025-26 row; he committed to LSU in May 2026, after his NBA stint, so St. John's stays his last school here. Undrafted per https://www.nba.com/player/1642961/rj-luis-jr, https://basketball.realgm.com/player/RJ-Luis/Bio/180104, https://en.wikipedia.org/wiki/RJ_Luis_Jr.. Not counted, as superseded by current listings: POS: G (the 2025 pre-draft profile); HEIGHT: 6-7 (the 2025 pre-draft profile); HEIGHT: 6-7 (his St. John's college roster); WEIGHT: 215 (the 2025 pre-draft profile); WEIGHT: 215 (his St. John's college roster); WEIGHT: 196 (his Sports-Reference college page).",
    "source": [
     "https://basketball.realgm.com/player/RJ-Luis/Bio/180104",
     "https://en.wikipedia.org/wiki/RJ_Luis_Jr.",
@@ -443,12 +541,12 @@
   "Tamar Bates": {
    "BIRTHDAY": "2/21/2003",
    "COLLEGE / TEAM": "Missouri",
-   "DRAFT": "",
-   "HEIGHT": "",
+   "DRAFT": "2025",
+   "HEIGHT": "6-4",
    "NATIONALITY": "United States",
-   "PICK": "",
+   "PICK": "UND",
    "POS": "G",
-   "WEIGHT": "",
+   "WEIGHT": "195",
    "field_sources": {
     "BIRTHDAY": [
      "https://basketball.realgm.com/player/Tamar-Bates/Bio/152728",
@@ -462,8 +560,23 @@
      "https://www.basketball-reference.com/players/b/batesta01.html",
      "https://www.nba.com/player/1642926/tamar-bates"
     ],
+    "DRAFT": [
+     "https://basketball.realgm.com/player/Tamar-Bates/Bio/152728",
+     "https://en.wikipedia.org/wiki/Tamar_Bates"
+    ],
+    "HEIGHT": [
+     "https://basketball.realgm.com/player/Tamar-Bates/Bio/152728",
+     "https://en.wikipedia.org/wiki/Tamar_Bates",
+     "https://www.basketball-reference.com/players/b/batesta01.html",
+     "https://www.nba.com/player/1642926/tamar-bates"
+    ],
     "NATIONALITY": [
      "https://basketball.realgm.com/player/Tamar-Bates/Bio/152728",
+     "https://www.nba.com/player/1642926/tamar-bates"
+    ],
+    "PICK": [
+     "https://basketball.realgm.com/player/Tamar-Bates/Bio/152728",
+     "https://en.wikipedia.org/wiki/Tamar_Bates",
      "https://www.nba.com/player/1642926/tamar-bates"
     ],
     "POS": [
@@ -471,9 +584,15 @@
      "https://en.wikipedia.org/wiki/Tamar_Bates",
      "https://www.basketball-reference.com/players/b/batesta01.html",
      "https://www.nba.com/player/1642926/tamar-bates"
+    ],
+    "WEIGHT": [
+     "https://basketball.realgm.com/player/Tamar-Bates/Bio/152728",
+     "https://en.wikipedia.org/wiki/Tamar_Bates",
+     "https://www.basketball-reference.com/players/b/batesta01.html",
+     "https://www.nba.com/player/1642926/tamar-bates"
     ]
    },
-   "note": "Guard from Missouri, after Indiana, who went undrafted in 2025. Denver signed him to a two-way contract in summer 2025 and waived him on March 4, 2026, which is the 2025-26 row. Undrafted per https://www.nba.com/player/1642926/tamar-bates, https://basketball.realgm.com/player/Tamar-Bates/Bio/152728, https://en.wikipedia.org/wiki/Tamar_Bates; DRAFT and PICK are left blank.",
+   "note": "Guard from Missouri, after Indiana, who went undrafted in 2025. Denver signed him to a two-way contract in summer 2025 and waived him on March 4, 2026, which is the 2025-26 row. Undrafted per https://www.nba.com/player/1642926/tamar-bates, https://basketball.realgm.com/player/Tamar-Bates/Bio/152728, https://en.wikipedia.org/wiki/Tamar_Bates. Not counted, as superseded by current listings: HEIGHT: 6-5 (the 2025 pre-draft profile); HEIGHT: 6-5 (his Missouri college roster); HEIGHT: 6-5 (his Sports-Reference college page); WEIGHT: 195 (his Missouri college roster); WEIGHT: 193 (his Sports-Reference college page).",
    "source": [
     "https://basketball.realgm.com/player/Tamar-Bates/Bio/152728",
     "https://en.wikipedia.org/wiki/Tamar_Bates",
@@ -484,10 +603,10 @@
   "Terry Roberts": {
    "BIRTHDAY": "9/7/2000",
    "COLLEGE / TEAM": "Georgia",
-   "DRAFT": "",
-   "HEIGHT": "",
+   "DRAFT": "2023",
+   "HEIGHT": "6-3",
    "NATIONALITY": "United States",
-   "PICK": "",
+   "PICK": "UND",
    "POS": "G",
    "WEIGHT": "180",
    "field_sources": {
@@ -503,32 +622,41 @@
      "https://gleague.nba.com/player/1642011/terry-roberts",
      "https://www.basketball-reference.com/players/r/roberte02.html"
     ],
+    "DRAFT": [
+     "https://basketball.realgm.com/player/Terry-Roberts/Summary/161708",
+     "https://en.wikipedia.org/wiki/Terry_Roberts_(basketball)"
+    ],
+    "HEIGHT": [
+     "https://basketball.realgm.com/player/Terry-Roberts/Summary/161708",
+     "https://en.wikipedia.org/wiki/Terry_Roberts_(basketball)",
+     "https://gleague.nba.com/player/1642011/terry-roberts",
+     "https://www.basketball-reference.com/players/r/roberte02.html"
+    ],
     "NATIONALITY": [
      "https://basketball.realgm.com/player/Terry-Roberts/Summary/161708",
      "https://stats.gleague.nba.com/player/1642011/advanced"
     ],
+    "PICK": [
+     "https://basketball.realgm.com/player/Terry-Roberts/Summary/161708",
+     "https://en.wikipedia.org/wiki/Terry_Roberts_(basketball)",
+     "https://gleague.nba.com/player/1642011/terry-roberts"
+    ],
     "POS": [
      "https://basketball.realgm.com/player/Terry-Roberts/Summary/161708",
-     "https://bradleybraves.com/sports/mens-basketball/roster/terry-roberts/12725",
      "https://en.wikipedia.org/wiki/Terry_Roberts_(basketball)",
-     "https://georgiadogs.com/sports/mens-basketball/roster/terry-roberts/6887",
      "https://gleague.nba.com/player/1642011/terry-roberts",
      "https://www.basketball-reference.com/players/r/roberte02.html"
     ],
     "WEIGHT": [
      "https://basketball.realgm.com/player/Terry-Roberts/Summary/161708",
-     "https://bradleybraves.com/sports/mens-basketball/roster/terry-roberts/12725",
      "https://en.wikipedia.org/wiki/Terry_Roberts_(basketball)",
-     "https://georgiadogs.com/sports/mens-basketball/roster/terry-roberts/6887",
      "https://gleague.nba.com/player/1642011/terry-roberts"
     ]
    },
-   "note": "Guard from North Amityville, N.Y., who played at Florida SouthWestern State, Bradley and Georgia and went undrafted in 2023. Brooklyn signed him to a camp contract with a $25,000 partial guarantee on Oct. 13, 2025 and waived him the next day, which is the 2025-26 row. Undrafted per https://basketball.realgm.com/player/Terry-Roberts/Summary/161708, https://en.wikipedia.org/wiki/Terry_Roberts_(basketball), https://gleague.nba.com/player/1642011/terry-roberts; DRAFT and PICK are left blank. COLLEGE / TEAM: Basketball-Reference and Wikipedia list every college he attended, ending with Georgia.",
+   "note": "Guard from North Amityville, N.Y., who played at Florida SouthWestern State, Bradley and Georgia and went undrafted in 2023. Brooklyn signed him to a camp contract with a $25,000 partial guarantee on Oct. 13, 2025 and waived him the next day, which is the 2025-26 row. Undrafted per https://basketball.realgm.com/player/Terry-Roberts/Summary/161708, https://en.wikipedia.org/wiki/Terry_Roberts_(basketball), https://gleague.nba.com/player/1642011/terry-roberts. COLLEGE / TEAM: Basketball-Reference and Wikipedia list every college he attended, ending with Georgia. Not counted, as superseded by current listings: POS: G (his Bradley college roster); POS: Guard (his Georgia college roster); HEIGHT: 6-3 (his Georgia college roster); HEIGHT: 6'3 (his Bradley college roster); HEIGHT: 6-foot-2 (article text about his camp signing, not a profile); WEIGHT: 180 (his Georgia college roster); WEIGHT: 180 (his Bradley college roster).",
    "source": [
     "https://basketball.realgm.com/player/Terry-Roberts/Summary/161708",
-    "https://bradleybraves.com/sports/mens-basketball/roster/terry-roberts/12725",
     "https://en.wikipedia.org/wiki/Terry_Roberts_(basketball)",
-    "https://georgiadogs.com/sports/mens-basketball/roster/terry-roberts/6887",
     "https://gleague.nba.com/player/1642011/terry-roberts",
     "https://stats.gleague.nba.com/player/1642011/advanced",
     "https://www.basketball-reference.com/players/r/roberte02.html"
@@ -538,11 +666,11 @@
    "BIRTHDAY": "12/25/2005",
    "COLLEGE / TEAM": "Georgetown",
    "DRAFT": "2025",
-   "HEIGHT": "",
+   "HEIGHT": "6-9",
    "NATIONALITY": "United States",
-   "PICK": "",
+   "PICK": "15",
    "POS": "",
-   "WEIGHT": "",
+   "WEIGHT": "250",
    "field_sources": {
     "BIRTHDAY": [
      "https://basketball.realgm.com/player/Thomas-Sorber/Summary/201515",
@@ -563,19 +691,36 @@
      "https://www.nba.com/player/1642850/thomas-sorber",
      "https://www.thescore.com/nba/news/3291720/thomas-sorber-goes-to-thunder-with-15-th-pick"
     ],
+    "HEIGHT": [
+     "https://basketball.realgm.com/player/Thomas-Sorber/Summary/201515",
+     "https://en.wikipedia.org/wiki/Thomas_Sorber",
+     "https://www.basketball-reference.com/players/s/sorbeth01.html",
+     "https://www.nba.com/player/1642850/thomas-sorber"
+    ],
     "NATIONALITY": [
      "https://basketball.realgm.com/player/Thomas-Sorber/Summary/201515",
-     "https://en.wikipedia.org/wiki/2025_NBA_draft",
-     "https://www.nba.com/draft/2025/prospects/thomas-sorber"
+     "https://en.wikipedia.org/wiki/2025_NBA_draft"
+    ],
+    "PICK": [
+     "https://basketball.realgm.com/player/Thomas-Sorber/Summary/201515",
+     "https://en.wikipedia.org/wiki/Thomas_Sorber",
+     "https://www.basketball-reference.com/players/s/sorbeth01.html",
+     "https://www.nba.com/player/1642850/thomas-sorber",
+     "https://www.thescore.com/nba/news/3291720/thomas-sorber-goes-to-thunder-with-15-th-pick"
+    ],
+    "WEIGHT": [
+     "https://basketball.realgm.com/player/Thomas-Sorber/Summary/201515",
+     "https://en.wikipedia.org/wiki/Thomas_Sorber",
+     "https://www.basketball-reference.com/players/s/sorbeth01.html",
+     "https://www.nba.com/player/1642850/thomas-sorber"
     ]
    },
-   "note": "Georgetown big man from Trenton, N.J., drafted by Oklahoma City in 2025, who tore the ACL in his right knee in September 2025 and missed his whole rookie season, so his 2025-26 row has a salary and no games.",
+   "note": "Georgetown big man from Trenton, N.J., drafted by Oklahoma City in 2025, who tore the ACL in his right knee in September 2025 and missed his whole rookie season, so his 2025-26 row has a salary and no games. Not counted, as superseded by current listings: POS: F-C (the 2025 pre-draft profile); POS: Forward / Center (his Georgetown college roster); HEIGHT: 6-10 (his Georgetown college roster); WEIGHT: 263 lbs (the 2025 pre-draft profile); WEIGHT: 270 lbs (the July 2025 Summer League roster); WEIGHT: 262 lbs (a draft-night article); WEIGHT: 255 (his Georgetown college roster); NATIONALITY: United States (the 2025 pre-draft profile); PICK: 15 (his Georgetown college roster); PICK: 18 (a single search extract its own agent flagged as unverified; NBA.com's player page and every other source say 15).",
    "source": [
     "https://basketball.realgm.com/player/Thomas-Sorber/Summary/201515",
     "https://en.wikipedia.org/wiki/2025_NBA_draft",
     "https://en.wikipedia.org/wiki/Thomas_Sorber",
     "https://www.basketball-reference.com/players/s/sorbeth01.html",
-    "https://www.nba.com/draft/2025/prospects/thomas-sorber",
     "https://www.nba.com/player/1642850/thomas-sorber",
     "https://www.thescore.com/nba/news/3291720/thomas-sorber-goes-to-thunder-with-15-th-pick"
    ]
@@ -583,17 +728,16 @@
   "Trevon Scott": {
    "BIRTHDAY": "11/25/1996",
    "COLLEGE / TEAM": "Cincinnati",
-   "DRAFT": "",
+   "DRAFT": "2020",
    "HEIGHT": "6-8",
    "NATIONALITY": "United States",
-   "PICK": "",
+   "PICK": "UND",
    "POS": "F",
    "WEIGHT": "225",
    "field_sources": {
     "BIRTHDAY": [
      "https://basketball.realgm.com/player/Tre-Scott/Summary/84083",
      "https://en.wikipedia.org/wiki/Trevon_Scott",
-     "https://gobearcats.com/sports/mens-basketball/roster/player/tre-scott",
      "https://www.basketball-reference.com/players/s/scotttr01.html",
      "https://www.nba.com/player/1630286/trevon-scott"
     ],
@@ -603,10 +747,14 @@
      "https://www.basketball-reference.com/players/s/scotttr01.html",
      "https://www.nba.com/player/1630286/trevon-scott"
     ],
+    "DRAFT": [
+     "https://basketball.realgm.com/player/Tre-Scott/Summary/84083",
+     "https://en.wikipedia.org/wiki/Trevon_Scott",
+     "https://gleague.nba.com/news/brooklyn-nets-sign-trevon-scott-to-10-day-contract"
+    ],
     "HEIGHT": [
      "https://basketball.realgm.com/player/Tre-Scott/Summary/84083",
      "https://en.wikipedia.org/wiki/Trevon_Scott",
-     "https://gobearcats.com/sports/mens-basketball/roster/player/tre-scott",
      "https://www.basketball-reference.com/players/s/scotttr01.html",
      "https://www.nba.com/player/1630286/trevon-scott"
     ],
@@ -614,28 +762,30 @@
      "https://basketball.realgm.com/player/Tre-Scott/Summary/84083",
      "https://www.nba.com/player/1630286/trevon-scott"
     ],
+    "PICK": [
+     "https://basketball.realgm.com/player/Tre-Scott/Summary/84083",
+     "https://en.wikipedia.org/wiki/Trevon_Scott",
+     "https://gleague.nba.com/news/brooklyn-nets-sign-trevon-scott-to-10-day-contract"
+    ],
     "POS": [
      "https://basketball.realgm.com/player/Tre-Scott/Summary/84083",
      "https://en.wikipedia.org/wiki/Trevon_Scott",
      "https://gleague.nba.com/player/1630286/trevon-scott",
-     "https://gobearcats.com/sports/mens-basketball/roster/player/tre-scott",
      "https://www.basketball-reference.com/players/s/scotttr01.html"
     ],
     "WEIGHT": [
      "https://basketball.realgm.com/player/Tre-Scott/Summary/84083",
      "https://en.wikipedia.org/wiki/Trevon_Scott",
-     "https://gobearcats.com/sports/mens-basketball/roster/player/tre-scott",
      "https://www.basketball-reference.com/players/s/scotttr01.html",
      "https://www.nba.com/player/1630286/trevon-scott"
     ]
    },
-   "note": "Forward, also listed as Tre Scott, who played four seasons at Cincinnati and went undrafted in 2020. Brooklyn signed him to a camp contract in October 2025, waived him, and called him up from the Long Island Nets on 10-day contracts in April 2026, which together are the 2025-26 row. Undrafted per https://en.wikipedia.org/wiki/Trevon_Scott, https://basketball.realgm.com/player/Tre-Scott/Summary/84083, https://gleague.nba.com/news/brooklyn-nets-sign-trevon-scott-to-10-day-contract; DRAFT and PICK are left blank.",
+   "note": "Forward, also listed as Tre Scott, who played four seasons at Cincinnati and went undrafted in 2020. Brooklyn signed him to a camp contract in October 2025, waived him, and called him up from the Long Island Nets on 10-day contracts in April 2026, which together are the 2025-26 row. Undrafted per https://en.wikipedia.org/wiki/Trevon_Scott, https://basketball.realgm.com/player/Tre-Scott/Summary/84083, https://gleague.nba.com/news/brooklyn-nets-sign-trevon-scott-to-10-day-contract. Not counted, as superseded by current listings: BIRTHDAY: Nov. 25, 1996 (his Cincinnati college roster); POS: Forward (his Cincinnati college roster); HEIGHT: 6-8 (his Cincinnati college roster); WEIGHT: 225 (his Cincinnati college roster).",
    "source": [
     "https://basketball.realgm.com/player/Tre-Scott/Summary/84083",
     "https://en.wikipedia.org/wiki/Trevon_Scott",
     "https://gleague.nba.com/news/brooklyn-nets-sign-trevon-scott-to-10-day-contract",
     "https://gleague.nba.com/player/1630286/trevon-scott",
-    "https://gobearcats.com/sports/mens-basketball/roster/player/tre-scott",
     "https://www.basketball-reference.com/players/s/scotttr01.html",
     "https://www.nba.com/player/1630286/trevon-scott"
    ]
@@ -643,21 +793,30 @@
   "Tyreke Key": {
    "BIRTHDAY": "10/29/1998",
    "COLLEGE / TEAM": "Tennessee",
-   "DRAFT": "",
-   "HEIGHT": "",
+   "DRAFT": "2023",
+   "HEIGHT": "6-2",
    "NATIONALITY": "United States",
-   "PICK": "",
+   "PICK": "UND",
    "POS": "G",
-   "WEIGHT": "",
+   "WEIGHT": "207",
    "field_sources": {
     "BIRTHDAY": [
      "https://basketball.realgm.com/player/Tyreke-Key/Summary/121564",
      "https://en.wikipedia.org/wiki/Tyreke_Key",
      "https://gleague.nba.com/player/1642615/tyreke-key",
-     "https://utsports.com/sports/mens-basketball/roster/tyreke-key/17575",
      "https://www.basketball-reference.com/players/k/keyty01.html"
     ],
     "COLLEGE / TEAM": [
+     "https://basketball.realgm.com/player/Tyreke-Key/Summary/121564",
+     "https://en.wikipedia.org/wiki/Tyreke_Key",
+     "https://gleague.nba.com/player/1642615/tyreke-key",
+     "https://www.basketball-reference.com/players/k/keyty01.html"
+    ],
+    "DRAFT": [
+     "https://basketball.realgm.com/player/Tyreke-Key/Summary/121564",
+     "https://en.wikipedia.org/wiki/Tyreke_Key"
+    ],
+    "HEIGHT": [
      "https://basketball.realgm.com/player/Tyreke-Key/Summary/121564",
      "https://en.wikipedia.org/wiki/Tyreke_Key",
      "https://gleague.nba.com/player/1642615/tyreke-key",
@@ -667,27 +826,35 @@
      "https://basketball.realgm.com/player/Tyreke-Key/Summary/121564",
      "https://gleague.nba.com/player/1642615/tyreke-key"
     ],
+    "PICK": [
+     "https://basketball.realgm.com/player/Tyreke-Key/Summary/121564",
+     "https://en.wikipedia.org/wiki/Tyreke_Key",
+     "https://gleague.nba.com/player/1642615/tyreke-key"
+    ],
     "POS": [
      "https://basketball.realgm.com/player/Tyreke-Key/Summary/121564",
      "https://en.wikipedia.org/wiki/Tyreke_Key",
      "https://gleague.nba.com/player/1642615/tyreke-key",
-     "https://utsports.com/sports/mens-basketball/roster/2022-23",
+     "https://www.basketball-reference.com/players/k/keyty01.html"
+    ],
+    "WEIGHT": [
+     "https://basketball.realgm.com/player/Tyreke-Key/Summary/121564",
+     "https://en.wikipedia.org/wiki/Tyreke_Key",
+     "https://gleague.nba.com/player/1642615/tyreke-key",
      "https://www.basketball-reference.com/players/k/keyty01.html"
     ]
    },
-   "note": "Guard from Celina, Tenn., who played at Indiana State and Tennessee and went undrafted in 2023. Toronto called him up from Raptors 905 on April 6, 2026 and waived him on April 10, which is the 2025-26 row. Undrafted per https://basketball.realgm.com/player/Tyreke-Key/Summary/121564, https://en.wikipedia.org/wiki/Tyreke_Key, https://gleague.nba.com/player/1642615/tyreke-key; DRAFT and PICK are left blank. COLLEGE / TEAM: Basketball-Reference and Wikipedia list every college he attended, ending with Tennessee.",
+   "note": "Guard from Celina, Tenn., who played at Indiana State and Tennessee and went undrafted in 2023. Toronto called him up from Raptors 905 on April 6, 2026 and waived him on April 10, which is the 2025-26 row. Undrafted per https://basketball.realgm.com/player/Tyreke-Key/Summary/121564, https://en.wikipedia.org/wiki/Tyreke_Key, https://gleague.nba.com/player/1642615/tyreke-key. COLLEGE / TEAM: Basketball-Reference and Wikipedia list every college he attended, ending with Tennessee. Not counted, as superseded by current listings: BIRTHDAY: Oct. 29, 1998 (his Tennessee college roster); POS: G (his 2022-23 Tennessee roster); HEIGHT: 6' 2'' (his 2022-23 Tennessee roster); HEIGHT: 6-3 (his Indiana State roster); WEIGHT: 211 (his 2022-23 Tennessee roster); WEIGHT: 205 (his Indiana State roster).",
    "source": [
     "https://basketball.realgm.com/player/Tyreke-Key/Summary/121564",
     "https://en.wikipedia.org/wiki/Tyreke_Key",
     "https://gleague.nba.com/player/1642615/tyreke-key",
-    "https://utsports.com/sports/mens-basketball/roster/2022-23",
-    "https://utsports.com/sports/mens-basketball/roster/tyreke-key/17575",
     "https://www.basketball-reference.com/players/k/keyty01.html"
    ]
   }
  },
  "fields": {
-  "field_sources": "for an entry built from searched sources, the URLs behind each filled column, keyed by the column name. A column is filled only where at least two independent publishers state the identical value (nba.com and the sites under it count as one publisher); where they disagree, or only one states it, the column is left blank, and nothing is inferred from anything else. An undrafted man has DRAFT and PICK blank, and the note says he went undrafted.",
+  "field_sources": "for an entry built from searched sources, the URLs behind each filled column, keyed by the column name. A column is filled only where at least two independent publishers state the identical value (nba.com and the sites under it count as one publisher), judged on current listings only: the latest NBA, G League and team pages and current-season profiles. A college roster, a pre-draft profile, a past-season roster or an article's passing mention is set aside, and the note names what was. Where current listings disagree, or fewer than two state it, the column is left blank, and nothing is inferred from anything else. An undrafted man is written the way bio.csv writes one: PICK is UND, and DRAFT is his draft class year where two publishers state it.",
   "note": "who this man is and why bio.csv has no row for him",
   "row": "every other key is a bio.csv column, spelled and formatted exactly as that sheet spells it: BIRTHDAY as M/D/YYYY, HEIGHT as feet-inches, NATIONALITY in full, PICK as the overall pick or the literal UND for an undrafted man whose DRAFT is still his draft class year. The build reads them through the same parser bio.csv goes through, so a value here cannot take a shape a sheet value could not.",
   "seasons": "the seasons under `spelled` that are this man's and not the other man's, checked by hand against the sources. An entry with seasons is a person in his own right as well as a bio: the build files those seasons under this entry's key, which carries a birth year the way bio.csv writes one, and leaves every other season under that spelling where it was. An entry without seasons only fills a bio and moves nothing.",
