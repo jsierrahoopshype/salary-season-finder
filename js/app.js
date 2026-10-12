@@ -1532,7 +1532,11 @@
     if (f.draftMax != null && (record.draft_pick == null || record.draft_pick > f.draftMax)) return false;
 
     // Undrafted filter
-    if (_undraftedFilter && record.draft_pick != null) return false;
+    // Undrafted is what bio.csv says (PICK UND, carried as record.undrafted),
+    // or no draft year and no pick at all. A year with no numbered pick and no
+    // flag is a territorial or supplemental-draft pick: drafted.
+    if (_undraftedFilter && !(record.undrafted ||
+        (record.draft_pick == null && record.draft_year == null))) return false;
 
     // Draft year
     if (f.draftYearMin != null && (record.draft_year == null || record.draft_year < f.draftYearMin)) return false;
@@ -1753,6 +1757,7 @@
         college: latest.college,
         draft_year: latest.draft_year,
         draft_pick: latest.draft_pick,
+        undrafted: latest.undrafted,
       });
     });
 

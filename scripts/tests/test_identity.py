@@ -314,6 +314,7 @@ def test_a_name_biocsv_has_never_heard_of_still_takes_its_stand_in():
     assert index.bio(who) == {
         "pos": "", "height": "", "weight": None, "nationality": "",
         "college": "TCU", "draft_year": 2024, "draft_pick": None, "birthday": "",
+        "undrafted": True,
     }
 
 
@@ -327,6 +328,7 @@ def test_a_bio_block_reads_a_sheet_row_the_same_way_whichever_sheet_it_is_on():
         "pos": "G", "height": "6-4", "weight": 190,
         "nationality": "United States", "college": "William & Mary",
         "draft_year": 2015, "draft_pick": 45, "birthday": "2/9/1993",
+        "undrafted": False,
     }
     assert B.bio_block({})["draft_pick"] is None
 
