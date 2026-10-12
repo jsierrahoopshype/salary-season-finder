@@ -108,6 +108,8 @@ jobs:
           set -euo pipefail
           PYTHONHASHSEED=0 python build_data.py --local > /tmp/new.log
           tail -12 /tmp/new.log
+          # what data/roster_status.json came out as: columns, contracts, check
+          grep -A16 "Roster status:" /tmp/new.log || true
           cp data/data.json /tmp/new.json
 
       - name: Report every record that moved
