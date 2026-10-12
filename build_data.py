@@ -1922,6 +1922,9 @@ def build_data():
     abbreviations_matched, abbreviations_not_matched = {}, {}
     names_not_matched = {}
     salary_by_person = {}
+    #: (spelling key, season) -> the person it became, so that
+    #: data/roster_status.json can put each sheet row on the name data.json prints
+    pid_of_key = {}
     for (nk, season), recs in salary_csv_lookup.items():
         for rec in recs:
             spelled = rec["player_original"]
@@ -1936,6 +1939,7 @@ def build_data():
                     "spelled": spelled, "season": season, "reason": why,
                     "team": rec.get("team", ""), "salary": 0})["salary"] += rec["salary"]
             pid = persons.resolve(full or spelled, season)
+            pid_of_key[(nk, season)] = pid
             # A stand-in bio in data/bio_overrides.json is a match: somebody
             # has checked who he is, which is what this log asks for.
             if (pid[0] == "new" and id(rec) in tab_row_ids and not why
@@ -2832,6 +2836,18 @@ def build_data():
         f.write("\n")
     print(f"    Written to {sources_path}")
 
+    # The current season's roster, beside data.json and stamped with the same
+    # build time. Never allowed to stop the build: data.json is already written,
+    # and a stale roster file says so itself through its "built".
+    try:
+        write_roster_status(
+            output, player_season_list, persons, pid_of_key, cyro_seasons,
+            sal_2526_current_csv, sal_2526_dead_csv, future_sal_csv)
+    except Exception as exc:  # noqa: BLE001
+        import traceback
+        traceback.print_exc()
+        print(f"::warning::data/roster_status.json was not rebuilt: {exc!r}")
+
     size_mb = os.path.getsize(out_path) / 1024 / 1024
     print(f"    Written to {out_path}")
     print(f"    File size: {size_mb:.2f} MB")
@@ -2847,6 +2863,352 @@ def build_data():
     print("\n" + "=" * 60)
     print("Build complete!")
     print("=" * 60)
+
+
+# ── Roster status: data/roster_status.json ─────────────────────────────
+# One entry per man with money in the current season: who he plays for now,
+# on what kind of contract, what that team pays him, what former teams still
+# owe him, and his birth date. Written by the same run as data.json and
+# stamped with its meta.built, so the two always describe the same moment.
+# Salary Ladder reads it (docs/salary-ladder-spec.md section 25 in that repo).
+#
+# data.json cannot answer this on its own: Cyro's two sheets are summed per
+# team before they reach it, so a club that both pays a man and owes him dead
+# money reads as one figure there. Both sheets are read again here, kept apart.
+
+ROSTER_STATUS_PATH = os.path.join(OUT_DIR, "roster_status.json")
+
+#: The words the sheets write for a contract's status, upper-cased with runs of
+#: spaces closed up, and the one value roster_status.json gives each. Anything
+#: not listed is "unknown": a status nobody has mapped is never guessed at.
+CONTRACT_STATUSES = {
+    "GUARANTEED": "guaranteed",
+    "FULLY GUARANTEED": "guaranteed",
+    "NOT G": "non_guaranteed",
+    "NOT": "non_guaranteed",
+    "NOT GUARANTEED": "non_guaranteed",
+    "NON GUARANTEED": "non_guaranteed",
+    "NON-GUARANTEED": "non_guaranteed",
+    "NG": "non_guaranteed",
+    "PARTIAL G": "partial",
+    "PARTIAL": "partial",
+    "PARTIALLY GUARANTEED": "partial",
+    "PARTIAL GUARANTEE": "partial",
+    "TWO-WAY": "two_way",
+    "TWO WAY": "two_way",
+    "2-WAY": "two_way",
+    "2 WAY": "two_way",
+    "10-DAY": "ten_day",
+    "10 DAY": "ten_day",
+    "TEN-DAY": "ten_day",
+    "TEN DAY": "ten_day",
+}
+
+ROSTER_CONTRACTS = ("guaranteed", "non_guaranteed", "partial", "two_way",
+                    "ten_day", "dead_money_only", "unknown")
+
+
+def contract_from_status(raw):
+    """A sheet's status cell as a roster contract type, or None if unmapped."""
+    key = " ".join((raw or "").upper().split())
+    return CONTRACT_STATUSES.get(key)
+
+
+def is_status_header(name):
+    """'ST 26-27', 'STATUS 26-27' and a bare 'STATUS' are status columns."""
+    return bool(re.match(r"^(ST|STATUS)(\s+\d{2}-\d{2})?$", name))
+
+
+def status_column_after(header, salary_col):
+    """The status column belonging to the salary column at ``salary_col``.
+
+    The sheets lay a season out as salary, cap hold, status, so it is the first
+    status column after the salary and before the next season's salary. Read by
+    position rather than by label because the labels are not reliable: the
+    future sheet heads both its 2025-26 and its 2026-27 status 'ST 26-27'.
+    """
+    for i in range(salary_col + 1, len(header)):
+        name = header[i]
+        if (name.isdigit() and len(name) == 4) or name.startswith("SALARY"):
+            return None
+        if is_status_header(name):
+            return i
+    return None
+
+
+def read_roster_sheets(current_csv, dead_csv, season):
+    """Cyro's two sheets for one season, each man's money kept apart by sheet.
+
+    Returns ``{normalised name: {"player", "current": {team: dollars},
+    "dead": {team: dollars}, "status": {team: raw status}}}`` and the column
+    headers each sheet came with, for the log. Rows are read the way
+    process_cyro_salaries reads them, with one difference: a row with no TEAM
+    is kept here under the team "", where data.json drops its money, so that
+    the check in roster_status_problems names him rather than losing him too.
+    """
+    parts = {}
+    headers = {}
+
+    def entry(nk, player):
+        return parts.setdefault(nk, {"player": player, "current": defaultdict(int),
+                                     "dead": defaultdict(int), "status": {}})
+
+    if current_csv:
+        reader = csv.reader(io.StringIO(current_csv))
+        h = [c.strip().upper() for c in next(reader, None) or []]
+        headers["current"] = h
+        player_col = h.index("PLAYER") if "PLAYER" in h else 0
+        team_col = h.index("TEAM") if "TEAM" in h else 2
+        salary_col = next((i for i, name in enumerate(h)
+                           if name.isdigit() and len(name) == 4
+                           and year_to_season(int(name)) == season), None)
+        status_col = (status_column_after(h, salary_col)
+                      if salary_col is not None else None)
+        if salary_col is not None:
+            for cols in reader:
+                player = cols[player_col].strip() if len(cols) > player_col else ""
+                if not player or len(cols) <= salary_col:
+                    continue
+                salary = parse_salary(cols[salary_col])
+                if not salary:
+                    continue
+                team = cols[team_col].strip() if len(cols) > team_col else ""
+                team_abbr = normalize_team(team) if team else ""
+                e = entry(normalize_name(player), player)
+                e["current"][team_abbr] += salary
+                if status_col is not None and len(cols) > status_col:
+                    raw = cols[status_col].strip()
+                    if raw:
+                        e["status"][team_abbr] = raw
+
+    if dead_csv:
+        reader = csv.reader(io.StringIO(dead_csv))
+        h = [c.strip().upper() for c in next(reader, None) or []]
+        headers["dead"] = h
+        player_col = h.index("PLAYER") if "PLAYER" in h else 0
+        team_col = h.index("TEAM") if "TEAM" in h else 3
+        start, end = season.split("-")
+        label = f"{start[-2:]}-{end}"
+        salary_col = next((i for i, name in enumerate(h)
+                           if re.search(r"SALARY\s+" + re.escape(label) + r"\b", name)),
+                          None)
+        if salary_col is not None:
+            for cols in reader:
+                player = cols[player_col].strip() if len(cols) > player_col else ""
+                if not player or len(cols) <= salary_col:
+                    continue
+                salary = parse_salary(cols[salary_col])
+                if not salary:
+                    continue
+                team = cols[team_col].strip() if len(cols) > team_col else ""
+                team_abbr = normalize_team(team) if team else ""
+                entry(normalize_name(player), player)["dead"][team_abbr] += salary
+
+    for e in parts.values():
+        e["current"] = dict(e["current"])
+        e["dead"] = dict(e["dead"])
+    return parts, headers
+
+
+def read_future_statuses(future_csv, season):
+    """``{(normalised name, team): raw status}`` off the future sheet's season.
+
+    The second sheet with a status column. Keyed on the team as well as the man
+    so a status written for one club is never read as another club's contract.
+    """
+    if not future_csv:
+        return {}
+    reader = csv.reader(io.StringIO(future_csv))
+    h = [c.strip().upper() for c in next(reader, None) or []]
+    player_col = h.index("PLAYER") if "PLAYER" in h else 0
+    team_col = h.index("TEAM") if "TEAM" in h else 1
+    salary_col = next((i for i, name in enumerate(h)
+                       if name.isdigit() and len(name) == 4
+                       and year_to_season(int(name)) == season), None)
+    if salary_col is None:
+        return {}
+    status_col = status_column_after(h, salary_col)
+    if status_col is None:
+        return {}
+    out = {}
+    for cols in reader:
+        if len(cols) <= max(player_col, status_col):
+            continue
+        player = cols[player_col].strip()
+        raw = cols[status_col].strip()
+        if not player or not raw or not parse_salary(cols[salary_col]):
+            continue
+        team = cols[team_col].strip() if len(cols) > team_col else ""
+        out[(normalize_name(player), normalize_team(team) if team else "")] = raw
+    return out
+
+
+def iso_birth_date(value):
+    """bio.csv's 'M/D/YYYY' (or an ISO date) as 'YYYY-MM-DD'; None otherwise."""
+    value = (value or "").strip()
+    for fmt in ("%m/%d/%Y", "%Y-%m-%d"):
+        try:
+            return datetime.strptime(value, fmt).date().isoformat()
+        except ValueError:
+            continue
+    return None
+
+
+def roster_birth_date(persons, pid):
+    """His birth date: data/bio_overrides.json first, then bio.csv, else None.
+
+    Read straight off the register rather than through ``persons.bio`` so that
+    asking does not mark a stand-in bio as used. A date neither source carries,
+    or one that does not parse, stays None: it is never worked out from an age.
+    """
+    if not pid:
+        return None
+    sources = (persons.overrides.get(pid[1:]) or {},
+               (persons.people.get(pid) or {}).get("bio") or {})
+    for bio in sources:
+        iso = iso_birth_date(bio.get("birthday"))
+        if iso:
+            return iso
+    return None
+
+
+def roster_entry(player, salary, parts, future_status, birth_date):
+    """One man's roster_status.json entry.
+
+    ``parts`` is his read_roster_sheets entry (None if the sheets had none) and
+    ``future_status`` the future sheet's statuses for him, keyed on team.
+    ``total`` is his data.json salary; whether the sheets add up to it is
+    roster_status_problems' question, not this one's.
+    """
+    current = dict((parts or {}).get("current") or {})
+    dead = dict((parts or {}).get("dead") or {})
+    current_teams = sorted(t for t, v in current.items() if v)
+    team, contract = None, "unknown"
+    if len(current_teams) == 1 and current_teams[0]:
+        team = current_teams[0]
+        raw = (((parts or {}).get("status") or {}).get(team)
+               or future_status.get(team) or "")
+        contract = contract_from_status(raw) or "unknown"
+    elif not current_teams and any(dead.values()):
+        contract = "dead_money_only"
+    # Anything else (no team on the row, or two teams on the current sheet)
+    # leaves the team null: the sheet does not say which club he is with.
+    return {
+        "player": player,
+        "team": team,
+        "contract": contract,
+        "current_salary": sum(current.values()),
+        "dead_money": [{"team": t or None, "amount": v}
+                       for t, v in sorted(dead.items()) if v],
+        "total": salary,
+        "birth_date": birth_date,
+    }
+
+
+def roster_status_problems(entries, salary_by_player):
+    """Every entry where current_salary + dead money, total and data.json differ.
+
+    Also every data.json man the file has no entry for. Returns a list of
+    sentences; empty means the file balances. The build prints them as
+    warnings and writes the file regardless.
+    """
+    problems = []
+    seen = set()
+    for e in entries:
+        seen.add(e["player"])
+        parts = e["current_salary"] + sum(d["amount"] for d in e["dead_money"])
+        data = salary_by_player.get(e["player"])
+        if not (parts == e["total"] == data):
+            problems.append(
+                "{}: current {:,} + dead {:,} = {:,}; total {:,}; data.json {}".format(
+                    e["player"], e["current_salary"], parts - e["current_salary"],
+                    parts, e["total"] or 0,
+                    "{:,}".format(data) if data is not None else "has no salary"))
+    for player in sorted(set(salary_by_player) - seen):
+        problems.append(f"{player}: in data.json, not in roster_status.json")
+    return problems
+
+
+def write_roster_status(output, player_season_list, persons, pid_of_key,
+                        cyro_seasons, current_csv, dead_csv, future_csv,
+                        path=ROSTER_STATUS_PATH):
+    """Write data/roster_status.json for the first season Cyro's sheets answer for."""
+    print("\n    Roster status:")
+    if not cyro_seasons:
+        print("::warning::roster_status.json: Cyro's sheets answer for no season; not written")
+        return None
+    season = min(cyro_seasons, key=lambda s: season_to_year(s) or 0)
+    parts, headers = read_roster_sheets(current_csv, dead_csv, season)
+    for sheet, h in sorted(headers.items()):
+        print(f"      {sheet} sheet columns: {[c for c in h if c]}")
+    future = read_future_statuses(future_csv, season)
+
+    # Each sheet row onto the person data.json prints, through the same
+    # resolution the build used. Two spellings of one man come together here.
+    by_pid = {}
+    unplaced = []
+    for nk, part in parts.items():
+        pid = pid_of_key.get((nk, season))
+        if pid is None:
+            # Money the sheets carry that never became a data.json record,
+            # which is a row with no TEAM and nothing else.
+            unplaced.append(part["player"])
+            continue
+        mine = by_pid.setdefault(pid, {"current": defaultdict(int),
+                                       "dead": defaultdict(int), "status": {},
+                                       "future": {}})
+        for t, v in part["current"].items():
+            mine["current"][t] += v
+        for t, v in part["dead"].items():
+            mine["dead"][t] += v
+        mine["status"].update(part["status"])
+        for (fnk, team), raw in future.items():
+            if fnk == nk:
+                mine["future"][team] = raw
+
+    records = [ps for ps in player_season_list if ps["season"] == season]
+    entries = []
+    for ps in records:
+        player = persons.display(ps["pid"])
+        mine = by_pid.get(ps["pid"])
+        entries.append(roster_entry(
+            player, ps["salary"], mine, (mine or {}).get("future") or {},
+            roster_birth_date(persons, ps["pid"])))
+    entries.sort(key=lambda e: (normalize_name(e["player"]), e["player"]))
+
+    salary_by_player = {e["player"]: e["total"] for e in entries}
+    problems = roster_status_problems(entries, salary_by_player)
+    contracts = Counter(e["contract"] for e in entries)
+    unmapped = Counter(
+        raw for mine in by_pid.values()
+        for raw in list(mine["status"].values()) + list(mine["future"].values())
+        if contract_from_status(raw) is None)
+    print(f"      {season}: {len(entries)} players, "
+          f"{sum(1 for e in entries if e['team'])} with a current team, "
+          f"{sum(1 for e in entries if e['birth_date'])} with a birth date")
+    print(f"      contracts: {dict(sorted(contracts.items()))}")
+    if unmapped:
+        print(f"      status words read as unknown: {dict(sorted(unmapped.items()))}")
+    if unplaced:
+        print(f"::warning::roster_status.json: {len(unplaced)} sheet rows with "
+              f"{season} money reach no data.json record: {', '.join(sorted(unplaced))}")
+    if problems:
+        print(f"::warning::roster_status.json: {len(problems)} players where current "
+              f"salary + dead money does not equal the data.json salary")
+        for line in problems[:40]:
+            print(f"      {line}")
+    else:
+        print("      current salary + dead money = total = data.json for every player")
+
+    with open(path, "w", encoding="utf-8") as fh:
+        json.dump({
+            "built": output["meta"]["built"],
+            "season": season,
+            "players": entries,
+        }, fh, indent=1)
+        fh.write("\n")
+    print(f"      Written to {path}")
+    return entries, problems
 
 
 if __name__ == "__main__":

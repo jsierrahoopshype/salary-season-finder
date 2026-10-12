@@ -108,6 +108,8 @@ jobs:
           set -euo pipefail
           PYTHONHASHSEED=0 python build_data.py --local > /tmp/new.log
           tail -12 /tmp/new.log
+          # what data/roster_status.json came out as: columns, contracts, check
+          grep -A16 "Roster status:" /tmp/new.log || true
           cp data/data.json /tmp/new.json
 
       - name: Report every record that moved
@@ -185,6 +187,10 @@ jobs:
           git add -A "${PAGE_PATHS[@]}" data/data.json data/factoids.json \
             data/team_corrections_report.json data/salary_sources_report.json \
             reports/
+          # on its own, so a build that did not write it stages the rest anyway
+          if [ -f data/roster_status.json ]; then
+            git add data/roster_status.json
+          fi
           if git diff --cached --quiet; then
             echo "Nothing to commit"
             exit 0

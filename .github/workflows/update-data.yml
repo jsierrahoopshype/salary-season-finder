@@ -126,6 +126,12 @@ jobs:
           # describe different days.
           git add data/data.json data/team_corrections_report.json \
             data/salary_sources_report.json reports/
+          # Stamped with the same build time as data.json; Salary Ladder reads
+          # the two together. Added on its own line so that a build which did
+          # not write it can never keep data.json from being committed.
+          if [ -f data/roster_status.json ]; then
+            git add data/roster_status.json
+          fi
 
           # The source sheets go in once a week. A checkout holding older
           # copies than data.json means anything recomputed locally silently
