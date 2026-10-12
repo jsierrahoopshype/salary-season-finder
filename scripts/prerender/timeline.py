@@ -254,7 +254,7 @@ def _scopes(idx, record):
 def _draft_scopes(record):
     """Every draft boundary a man was taken after, broadest first."""
     pick = record.get("draft_pick")
-    if pick is None and record.get("draft_year") is None:
+    if F.is_undrafted(record):
         return [("draft_range", "undrafted")]
     if not pick:
         return []

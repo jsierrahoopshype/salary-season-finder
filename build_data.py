@@ -212,7 +212,19 @@ def bio_block(row):
         "draft_year": parse_int(row.get("DRAFT")),
         "draft_pick": parse_int(row.get("PICK")),
         "birthday": (row.get("BIRTHDAY") or "").strip(),
+        "undrafted": is_undrafted_pick(row.get("PICK")),
     }
+
+
+#: How bio.csv writes a man who went undrafted in the draft his DRAFT column
+#: names: UND, and ND on the rows added since 2020. T (a territorial pick) and SD
+#: (the supplemental draft) also leave PICK without a number, and those men were
+#: drafted, so neither is here.
+UNDRAFTED_PICKS = ("UND", "ND")
+
+
+def is_undrafted_pick(value):
+    return (value or "").strip().upper() in UNDRAFTED_PICKS
 
 
 class PersonIndex:
@@ -2373,6 +2385,11 @@ def build_data():
             "height": bio.get("height", ""),
             "weight": bio.get("weight"),
         }
+        # Only where it is true, for the same reason as age_source below: a
+        # draft_pick of null reads the same for a man who went undrafted and a
+        # man nobody has a pick for, and this is what tells the two apart.
+        if bio.get("undrafted"):
+            record["undrafted"] = True
         # Written only where the age was worked out rather than recorded, so
         # that the common case costs the reader nothing: 16,329 of the 18,914
         # records carry an age the stats sheet recorded and 2,156 carry one

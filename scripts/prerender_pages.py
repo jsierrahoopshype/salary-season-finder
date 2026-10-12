@@ -212,7 +212,7 @@ def related_links(idx, ident, lookup):
     pick = last.get("draft_pick")
     if pick and 1 <= pick <= F.MAX_DRAFT_SLOT:
         candidates.append(("pick", str(pick), "No. {} picks".format(pick)))
-    elif pick is None and last.get("draft_year") is None:
+    elif F.is_undrafted(last):
         candidates.append(("pick", "undrafted", "Undrafted players"))
 
     # the same gate the engine uses: a name carrying a son's bio metadata joins

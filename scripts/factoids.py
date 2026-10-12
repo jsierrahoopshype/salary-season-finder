@@ -198,6 +198,20 @@ FIRST_DRAFT_YEAR_IN_WINDOW = 1990
 #: those players are pre-window anyway.
 MAX_DRAFT_SLOT = 60
 
+
+def is_undrafted(record):
+    """Whether this record's man went undrafted.
+
+    bio.csv writes him with PICK UND (or ND) and keeps his draft class year, and
+    build_data.py carries that as ``undrafted``. A man with no draft year and no
+    pick at all is read as undrafted too, as he always has been. A man with a
+    year and no numbered pick who is not flagged was drafted all the same: a
+    territorial pick or a supplemental-draft pick.
+    """
+    if record.get("undrafted"):
+        return True
+    return record.get("draft_pick") is None and record.get("draft_year") is None
+
 #: Where data/continents.json lives: nationality -> the region that counts the
 #: player. Read by this engine and by the prerender; build_data.py never sees it.
 CONTINENTS_PATH = os.path.join("data", "continents.json")
@@ -1458,7 +1472,7 @@ def _cohorts_for(record, idx):
     pick = record.get("draft_pick")
     if pick and 1 <= pick <= MAX_DRAFT_SLOT:
         out.append(("draft_slot", str(pick), "by a No. {} pick".format(pick)))
-    elif pick is None and draft_year is None:
+    elif is_undrafted(record):
         out.append(("draft_slot", "undrafted", "by an undrafted player"))
 
     college = (record.get("college") or "").strip()

@@ -229,6 +229,12 @@ COHORT_NOUN = {
 }
 
 
+def _fact_subject(fact):
+    """The player a cohort fact is about: its key ends "...|player|season"."""
+    parts = (fact.get("key") or "").split("|")
+    return parts[-2] if len(parts) >= 2 else None
+
+
 def cohort_page(idx, entity, identities, facts_by_cohort, media=None,
                 linker=None, family_members=None, relatives=None):
     owners = _owner_map(identities)
@@ -247,7 +253,21 @@ def cohort_page(idx, entity, identities, facts_by_cohort, media=None,
             name=name, name_lower=lower, noun=own_noun)
         title = C.title_for(entity.family, name)
 
-    top = _top_paid(idx, entity.records, 1)
+    # A draft class is the men taken in it. Those who went undrafted that year
+    # are listed below them on their own, and nothing above that list (the
+    # summary, the three tables, the roll call) counts them.
+    records, players = entity.records, entity.players
+    went, went_players = [], []
+    if entity.family == "draft":
+        went = [r for r in entity.records if F.is_undrafted(r)]
+        if went:
+            went_names = {r["player"] for r in went}
+            went_idents = {id(owners.get(id(r))) for r in went if owners.get(id(r))}
+            records = [r for r in entity.records if not F.is_undrafted(r)]
+            went_players = [p for p in entity.players if id(p) in went_idents]
+            players = [p for p in entity.players if id(p) not in went_idents]
+
+    top = _top_paid(idx, records, 1)
     if top:
         leader = owners.get(id(top[0]))
         leader_name = leader.name if leader else top[0]["player"]
@@ -257,13 +277,18 @@ def cohort_page(idx, entity, identities, facts_by_cohort, media=None,
     else:
         description = "Every NBA salary for {}.".format(noun)
 
-    paid_seasons = sum(1 for r in entity.records if _paid(idx, r) and r.get("salary"))
-    career = _career_entries(idx, entity.players)
+    paid_seasons = sum(1 for r in records if _paid(idx, r) and r.get("salary"))
+    career = _career_entries(idx, players)
     career_html = _career_rows(idx, career, C.TABLE_ROWS, media)
     current_html, current_count, current = _current_rows(
-        idx, entity.records, owners, C.TABLE_ROWS, media)
-    paid = _paid_entries(idx, entity.records, owners, C.TABLE_ROWS)
+        idx, records, owners, C.TABLE_ROWS, media)
+    paid = _paid_entries(idx, records, owners, C.TABLE_ROWS)
     facts = facts_by_cohort.get((entity.family, entity.key), [])
+    if went:
+        # The engine's claims about a class name whoever ranks in it. One about
+        # a man listed below as undrafted is not the summary's to make.
+        facts = [(season, fact) for season, fact in facts
+                 if _fact_subject(fact) not in went_names]
 
     # The summary carries the page's own numbers, so the description's one fact
     # is not repeated in the body as well.
@@ -290,7 +315,7 @@ def cohort_page(idx, entity, identities, facts_by_cohort, media=None,
             "Top {} of {} paid seasons on file. Contracted future seasons are "
             "left out because that money has not been paid.".format(
                 min(C.TABLE_ROWS, paid_seasons), paid_seasons),
-            _season_salary_rows(idx, entity.records, owners, C.TABLE_ROWS, media),
+            _season_salary_rows(idx, records, owners, C.TABLE_ROWS, media),
         ),
         section(
             "On a roster in {}".format(idx.current_season),
@@ -299,10 +324,21 @@ def cohort_page(idx, entity, identities, facts_by_cohort, media=None,
         ),
         section(
             "Every player",
-            "{} in all.".format(len(entity.players)),
-            roll_call([(p.name, p.slug, None) for p in entity.players], "player"),
+            "{} in all.".format(len(players)),
+            roll_call([(p.name, p.slug, None) for p in players], "player"),
         ),
     ]
+    if went_players:
+        went_career = _career_entries(idx, went_players)
+        body.append(section(
+            "Went undrafted in {}".format(name),
+            "{} {} in the {} draft and went undrafted, by money already "
+            "paid.".format(len(went_players),
+                           "player was" if len(went_players) == 1 else "players were",
+                           name),
+            _career_rows(idx, went_career, C.TABLE_ROWS, media)
+            + roll_call([(p.name, p.slug, None) for p in went_players], "player"),
+        ))
     if relatives:
         body.append(section(
             "Related pages",
