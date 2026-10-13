@@ -347,9 +347,11 @@ def test_the_shipped_stand_in_bios_name_their_sources_and_use_the_sheets_formats
         block = B.bio_block(entry)
         # A field nobody could confirm is left blank rather than guessed, the
         # way bio.csv leaves one. What is filled has to be in the sheet's own
-        # format, read back through the sheet's own parser.
+        # format, read back through the sheet's own parser. PICK UND on its
+        # own counts: it is the only thing that puts a man on the Undrafted
+        # page, now that no draft data at all means unknown.
         assert any(block[k] for k in ("birthday", "nationality", "college",
-                                      "draft_year", "height")), name
+                                      "draft_year", "height", "undrafted")), name
         if block["height"]:
             assert re.fullmatch(r"\d-\d{1,2}", block["height"]), (name, block["height"])
         if block["birthday"]:

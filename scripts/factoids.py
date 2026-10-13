@@ -202,15 +202,15 @@ MAX_DRAFT_SLOT = 60
 def is_undrafted(record):
     """Whether this record's man went undrafted.
 
-    bio.csv writes him with PICK UND (or ND) and keeps his draft class year, and
-    build_data.py carries that as ``undrafted``. A man with no draft year and no
-    pick at all is read as undrafted too, as he always has been. A man with a
-    year and no numbered pick who is not flagged was drafted all the same: a
-    territorial pick or a supplemental-draft pick.
+    Only what bio.csv says: PICK UND (or ND), which build_data.py carries as
+    ``undrafted``. A man with no draft year and no pick is not known to have
+    gone undrafted, only not known at all: AJ Dybantsa, the 2026 No. 1 pick,
+    sat on the Undrafted page while bio.csv had no row for him. He joins no
+    draft group until somebody records one. A man with a year and no numbered
+    pick who is not flagged was drafted all the same: a territorial pick or a
+    supplemental-draft pick.
     """
-    if record.get("undrafted"):
-        return True
-    return record.get("draft_pick") is None and record.get("draft_year") is None
+    return bool(record.get("undrafted"))
 
 #: Where data/continents.json lives: nationality -> the region that counts the
 #: player. Read by this engine and by the prerender; build_data.py never sees it.

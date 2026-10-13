@@ -2640,8 +2640,10 @@ def test_a_draft_standing_names_the_broadest_range_he_holds():
     assert TL._draft_scopes({"draft_pick": 27, "draft_year": 2013}) == [
         ("draft_range", "5"), ("draft_range", "10"),
         ("draft_range", "14"), ("draft_range", "20")]
-    assert TL._draft_scopes({"draft_pick": None, "draft_year": None}) == [
-        ("draft_range", "undrafted")]
+    assert TL._draft_scopes({"draft_pick": None, "draft_year": None,
+                             "undrafted": True}) == [("draft_range", "undrafted")]
+    # no draft data is unknown, not undrafted
+    assert TL._draft_scopes({"draft_pick": None, "draft_year": None}) == []
 
 
 def test_a_draft_class_counts_from_its_fifth_season():
