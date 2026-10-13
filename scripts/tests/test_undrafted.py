@@ -46,8 +46,11 @@ def test_a_flagged_man_is_undrafted_whatever_his_draft_year():
     assert F.is_undrafted(rec(draft_year=None, draft_pick=None, undrafted=True))
 
 
-def test_no_year_and_no_pick_keeps_its_old_reading():
-    assert F.is_undrafted(rec(draft_year=None, draft_pick=None))
+def test_no_draft_data_is_unknown_not_undrafted():
+    # AJ Dybantsa, the 2026 No. 1 pick, sat on the Undrafted page while
+    # bio.csv had no row for him
+    assert not F.is_undrafted(rec(draft_year=None, draft_pick=None))
+    assert not F.is_undrafted(rec())
 
 
 def test_a_drafted_man_is_never_undrafted():
@@ -80,6 +83,11 @@ def test_a_territorial_pick_stays_out_of_the_undrafted_group():
     assert ("draft_slot", "undrafted") not in found
 
 
+def test_a_man_with_no_draft_data_joins_no_draft_group():
+    found = _cohorts(rec(draft_year=None, draft_pick=None))
+    assert not {kind for kind, _key in found} & {"draft_class", "draft_slot"}
+
+
 def test_a_numbered_pick_is_where_it_was():
     found = _cohorts(rec(draft_year=2016, draft_pick=12))
     assert ("draft_slot", "12") in found
@@ -90,12 +98,13 @@ def test_the_timeline_measures_an_undrafted_man_against_the_undrafted():
     assert TL._draft_scopes(rec(draft_year=2016, draft_pick=None, undrafted=True)) \
         == [("draft_range", "undrafted")]
     assert TL._draft_scopes(rec(draft_year=1965, draft_pick=None)) == []
+    assert TL._draft_scopes(rec(draft_year=None, draft_pick=None)) == []
 
 
 def test_the_tools_undrafted_filter_reads_the_flag():
     app = open(os.path.join(REPO, "js", "app.js"), encoding="utf-8").read()
-    assert "record.undrafted ||" in app
-    assert "(record.draft_pick == null && record.draft_year == null)" in app
+    assert "if (_undraftedFilter && !record.undrafted) return false;" in app
+    assert "(record.draft_pick == null && record.draft_year == null)" not in app
 
 
 # --------------------------------------------------------------------------

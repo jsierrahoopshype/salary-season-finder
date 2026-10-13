@@ -4581,7 +4581,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3510,
+    "comparison_size": 3260,
     "contracted": false,
     "family": "cohort",
     "id": "7f3a2aeea421a3e4",
@@ -4594,7 +4594,7 @@
      "value": 42846615
     },
     "rank": 2,
-    "scope_note": "Cohort of 1201 players and 3511 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 966 players and 3261 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Austin Reaves' $41.2 million in 2026-27 is the second-highest single-season salary by an undrafted player, behind Fred VanVleet's $42.8 million (2024-25).",
     "type": "approaches",
     "value": 41240250
@@ -4679,7 +4679,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3511,
+    "comparison_size": 3261,
     "contracted": true,
     "family": "cohort",
     "id": "a196f374f3612624",
@@ -4692,7 +4692,7 @@
      "value": 42846615
     },
     "rank": 1,
-    "scope_note": "Cohort of 1201 players and 3511 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 966 players and 3261 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Austin Reaves' $43 million in 2027-28 would be the highest single-season salary by an undrafted player, passing Fred VanVleet's $42.8 million (2024-25).",
     "type": "sets",
     "value": 42954030
@@ -4797,7 +4797,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3511,
+    "comparison_size": 3261,
     "contracted": true,
     "family": "cohort",
     "id": "bc9b7df923edf480",
@@ -4810,7 +4810,7 @@
      "value": 42846615
     },
     "rank": 1,
-    "scope_note": "Cohort of 1201 players and 3511 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 966 players and 3261 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Austin Reaves' $46.3 million in 2028-29 would be the highest single-season salary by an undrafted player, passing Fred VanVleet's $42.8 million (2024-25).",
     "type": "sets",
     "value": 46253250
@@ -4935,7 +4935,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3511,
+    "comparison_size": 3261,
     "contracted": true,
     "family": "cohort",
     "id": "4977229454189f0d",
@@ -4948,7 +4948,7 @@
      "value": 42846615
     },
     "rank": 1,
-    "scope_note": "Cohort of 1201 players and 3511 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 966 players and 3261 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Austin Reaves' $49.6 million in 2029-30 would be the highest single-season salary by an undrafted player, passing Fred VanVleet's $42.8 million (2024-25).",
     "type": "sets",
     "value": 49552470
@@ -21589,7 +21589,7 @@
    },
    {
     "ahead": "Fred VanVleet and Wesley Matthews",
-    "comparison_size": 1199,
+    "comparison_size": 964,
     "contracted": false,
     "family": "cohort",
     "id": "70946b6264dc3fb7",
@@ -21602,7 +21602,7 @@
      "value": 215684923
     },
     "rank": 3,
-    "scope_note": "Ranked on money already paid against 1200 careers in this cohort, active players included. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. Duncan Robinson is still playing, so this is his total to date.",
+    "scope_note": "Ranked on money already paid against 965 careers in this cohort, active players included. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. Duncan Robinson is still playing, so this is his total to date.",
     "text": "Duncan Robinson will have earned $106.1 million by the end of 2026-27, the third-most by an undrafted player, behind Fred VanVleet and Wesley Matthews.",
     "type": "approaches",
     "value": 106097612
@@ -24241,7 +24241,7 @@
   "Fred VanVleet|2020-21": [
    {
     "ahead": null,
-    "comparison_size": 2443,
+    "comparison_size": 2323,
     "contracted": false,
     "family": "cohort",
     "id": "509f750fa3575c3b",
@@ -24254,7 +24254,7 @@
      "value": 19360228
     },
     "rank": 1,
-    "scope_note": "Cohort of 830 players and 3511 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 721 players and 3261 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Fred VanVleet's $21.2 million in 2020-21 was the highest single-season salary by an undrafted player, passing Wesley Matthews' $19.4 million (2018-19).",
     "type": "sets",
     "value": 21250000
@@ -24263,7 +24263,7 @@
   "Fred VanVleet|2022-23": [
    {
     "ahead": null,
-    "comparison_size": 2789,
+    "comparison_size": 2661,
     "contracted": false,
     "family": "cohort",
     "id": "ebd3ee7c33405aa2",
@@ -24276,7 +24276,7 @@
      "value": 21250000
     },
     "rank": 1,
-    "scope_note": "Cohort of 943 players and 3511 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 826 players and 3261 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Fred VanVleet's $21.2 million in 2022-23 tied the highest single-season salary by an undrafted player, matching his own $21.2 million (2020-21).",
     "type": "ties",
     "value": 21250000
@@ -24321,7 +24321,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2961,
+    "comparison_size": 2827,
     "contracted": false,
     "family": "cohort",
     "id": "5eb4e2b5459ec4fe",
@@ -24334,7 +24334,7 @@
      "value": 21250000
     },
     "rank": 1,
-    "scope_note": "Cohort of 989 players and 3511 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 867 players and 3261 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Fred VanVleet's $40.8 million in 2023-24 was the highest single-season salary by an undrafted player, breaking his own mark of $21.2 million in 2020-21.",
     "type": "sets",
     "value": 40806300
@@ -24379,7 +24379,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3102,
+    "comparison_size": 2960,
     "contracted": false,
     "family": "cohort",
     "id": "293ecbcddc7f1fd1",
@@ -24392,7 +24392,7 @@
      "value": 40806300
     },
     "rank": 1,
-    "scope_note": "Cohort of 1027 players and 3511 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 900 players and 3261 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Fred VanVleet's $42.8 million in 2024-25 was the highest single-season salary by an undrafted player, breaking his own mark of $40.8 million in 2023-24.",
     "type": "sets",
     "value": 42846615
@@ -24435,7 +24435,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 1199,
+    "comparison_size": 964,
     "contracted": false,
     "family": "cohort",
     "id": "0a430af6552e59a3",
@@ -24448,14 +24448,14 @@
      "value": 118030476
     },
     "rank": 1,
-    "scope_note": "Ranked on money already paid against 1200 careers in this cohort, active players included. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. Fred VanVleet is still playing, so this is his total to date.",
+    "scope_note": "Ranked on money already paid against 965 careers in this cohort, active players included. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. Fred VanVleet is still playing, so this is his total to date.",
     "text": "Fred VanVleet will have earned $215.7 million by the end of 2026-27, more than any other undrafted player, ahead of Wesley Matthews' $118 million (2023-24).",
     "type": "sets",
     "value": 215684923
    },
    {
     "ahead": null,
-    "comparison_size": 3510,
+    "comparison_size": 3260,
     "contracted": false,
     "family": "cohort",
     "id": "0ab3d23080162dca",
@@ -24468,7 +24468,7 @@
      "value": 42846615
     },
     "rank": 4,
-    "scope_note": "Cohort of 1201 players and 3511 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 966 players and 3261 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Fred VanVleet's $25 million in 2026-27 is the fourth-highest single-season salary by an undrafted player, behind his own $42.8 million (2024-25).",
     "type": "approaches",
     "value": 25000000
@@ -54927,7 +54927,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3511,
+    "comparison_size": 3261,
     "contracted": true,
     "family": "cohort",
     "id": "822d54b1ff8d2eb2",
@@ -54940,7 +54940,7 @@
      "value": 42846615
     },
     "rank": 4,
-    "scope_note": "Cohort of 1201 players and 3511 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 966 players and 3261 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Naz Reid's $25 million in 2027-28 would be the fourth-highest single-season salary by an undrafted player, behind Fred VanVleet's $42.8 million (2024-25).",
     "type": "approaches",
     "value": 25000000
@@ -54965,7 +54965,7 @@
   "Naz Reid|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3511,
+    "comparison_size": 3261,
     "contracted": true,
     "family": "cohort",
     "id": "dcd99ad4f7d6fc5e",
@@ -54978,7 +54978,7 @@
      "value": 42846615
     },
     "rank": 4,
-    "scope_note": "Cohort of 1201 players and 3511 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 966 players and 3261 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Naz Reid's $26.7 million in 2028-29 would be the fourth-highest single-season salary by an undrafted player, behind Fred VanVleet's $42.8 million (2024-25).",
     "type": "approaches",
     "value": 26724138
@@ -55003,7 +55003,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3511,
+    "comparison_size": 3261,
     "contracted": true,
     "family": "cohort",
     "id": "45ca6fcd4bfb98c1",
@@ -55016,7 +55016,7 @@
      "value": 42846615
     },
     "rank": 4,
-    "scope_note": "Cohort of 1201 players and 3511 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 966 players and 3261 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Naz Reid's $28.4 million in 2029-30 would be the fourth-highest single-season salary by an undrafted player, behind Fred VanVleet's $42.8 million (2024-25).",
     "type": "approaches",
     "value": 28448276
@@ -74237,7 +74237,7 @@
   "Wesley Matthews|2016-17": [
    {
     "ahead": null,
-    "comparison_size": 1866,
+    "comparison_size": 1772,
     "contracted": false,
     "family": "cohort",
     "id": "ae5602ffa128d6fb",
@@ -74250,7 +74250,7 @@
      "value": 16407500
     },
     "rank": 1,
-    "scope_note": "Cohort of 621 players and 3511 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 535 players and 3261 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Wesley Matthews' $17.1 million in 2016-17 was the highest single-season salary by an undrafted player, breaking his own mark of $16.4 million in 2015-16.",
     "type": "sets",
     "value": 17145838
@@ -74275,7 +74275,7 @@
   "Wesley Matthews|2017-18": [
    {
     "ahead": null,
-    "comparison_size": 2020,
+    "comparison_size": 1915,
     "contracted": false,
     "family": "cohort",
     "id": "e2afffdbfc8cb9ef",
@@ -74288,7 +74288,7 @@
      "value": 17145838
     },
     "rank": 1,
-    "scope_note": "Cohort of 683 players and 3511 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 587 players and 3261 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Wesley Matthews' $17.9 million in 2017-18 was the highest single-season salary by an undrafted player, breaking his own mark of $17.1 million in 2016-17.",
     "type": "sets",
     "value": 17884175
@@ -74313,7 +74313,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2168,
+    "comparison_size": 2052,
     "contracted": false,
     "family": "cohort",
     "id": "c68bfcc91a91fbc8",
@@ -74326,7 +74326,7 @@
      "value": 19245370
     },
     "rank": 1,
-    "scope_note": "Cohort of 741 players and 3511 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 635 players and 3261 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Wesley Matthews' $19.4 million in 2018-19 was the highest single-season salary by an undrafted player, passing Tyler Johnson's $19.2 million (2018-19).",
     "type": "sets",
     "value": 19360228
