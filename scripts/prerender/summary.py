@@ -28,6 +28,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -158,6 +159,9 @@ class Names(object):
         return out
 
     def mentions(self, text):
+        if self.family == "draft":
+            # "2026-27" is a season, not the 2026 draft class
+            return len(re.findall(r"{}(?!-\d\d)".format(re.escape(self.token)), text))
         return sum(text.count(token) for token in self.tokens)
 
 
