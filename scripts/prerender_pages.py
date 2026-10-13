@@ -41,6 +41,7 @@ from prerender import slugs as S  # noqa: E402
 from prerender import linkify  # noqa: E402
 from prerender import seasons  # noqa: E402
 from prerender import droughts  # noqa: E402
+from prerender import leaders  # noqa: E402
 from prerender import timeline as TL  # noqa: E402
 from prerender.media import Media  # noqa: E402
 from prerender.phrasing import drop_mirrors, straighten  # noqa: E402
@@ -128,7 +129,8 @@ def group_factoids(factoids):
 PAST_SEASON_TYPES = frozenset({"sets", "ties", "milestone", "rank_shift"})
 
 
-def player_facts(idx, by_player_facts, ident, current_key, droughts_built=None):
+def player_facts(idx, by_player_facts, ident, current_key, droughts_built=None,
+                 leads=None):
     """This man's claims, as the two to four sentences his page prints.
 
     A page for one segment of a split key carries only that segment's seasons.
@@ -155,8 +157,13 @@ def player_facts(idx, by_player_facts, ident, current_key, droughts_built=None):
     if droughts_built:
         pair = droughts.summary_line(droughts_built, idx.canonical(ident.name))
     one_season = len({r["season"] for r in ident.records}) == 1
+    # The groups he leads open the paragraph (prerender.leaders).
+    mine = (leads or {}).get(ident.key) or []
+    lines, gives_total = leaders.sentences(ident.name, mine)
     return seasons.summary(idx, ident.name, rows, player=ident.data_key,
-                           drought=pair, one_season=one_season)
+                           drought=pair, one_season=one_season,
+                           leads=lines, lead_fields={lead.field for lead in mine},
+                           lead_total=gives_total)
 
 
 def tool_filter_link(idx, ident):
@@ -571,9 +578,10 @@ def main(argv=None):
     # asking it 3,353 times.
     events = TL.build(idx)
     droughts_built = droughts.build(idx)
+    group_leads = leaders.build(idx, built["cohorts"], built["players"])
     for ident in built["players"]:
         facts = player_facts(idx, by_player_facts, ident, current_key,
-                             droughts_built)
+                             droughts_built, group_leads)
         # The same gate the summary is held to: where one data key covers two
         # men and the split is unchecked, nothing is claimed about either.
         story = (TL.lines(idx, ident.records, events)

@@ -686,7 +686,8 @@ def _player_summary(who):
 
 
 def _sentences(body):
-    return [s for s in re.split(r"(?<=\.)\s+", body) if s.strip()]
+    # "No. 15 pick" is not the end of a sentence
+    return [s for s in re.split(r"(?<=\.)(?<!No\.)\s+", body) if s.strip()]
 
 
 @built
@@ -715,7 +716,9 @@ def test_a_summary_names_him_once_and_then_says_he():
 
 @built
 def test_a_record_held_for_years_is_said_once_with_its_span():
-    plain = _player_summary("giannis-antetokounmpo")
+    # Giannis Antetokounmpo was the example until he led groups of his own;
+    # his paragraph now opens with those (see the group-leader tests below)
+    plain = _player_summary("ja-morant")
     assert "every season since" in plain
     assert plain.count("highest-paid") == 1, plain
 
@@ -733,14 +736,32 @@ def test_a_summary_makes_one_superlative_claim_a_sentence():
 
 @built
 def test_a_summary_frames_the_season_being_played():
-    plain = _player_summary("giannis-antetokounmpo")
+    plain = _player_summary("ja-morant")
     assert "By the end of 2026-27 he'll have earned" in plain
 
 
 @built
 def test_a_record_still_to_come_is_conditional():
-    plain = _player_summary("giannis-antetokounmpo")
+    plain = _player_summary("ja-morant")
     assert "would be the biggest single-season salary" in plain
+
+
+@built
+def test_a_group_leader_page_opens_on_the_group_it_leads():
+    plain = _player_summary("fred-vanvleet")
+    assert plain.startswith(
+        "Fred VanVleet is the highest-paid undrafted player ever, both in a "
+        "single season ($42.8 million in 2024-25) and in career earnings ("), plain
+    # Austin Reaves's signed 2027-28 is above the record
+    assert "Austin Reaves is contracted to pass the single-season mark in " \
+        "2027-28." in plain, plain
+
+
+@built
+def test_a_career_total_the_leader_line_gives_is_not_said_twice():
+    plain = _player_summary("giannis-antetokounmpo")
+    assert "in career earnings ($" in plain, plain
+    assert "have earned" not in plain, plain
 
 
 @built

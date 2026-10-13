@@ -47,7 +47,8 @@ MIN_SPAN = 2
 HOLDING = ("sets", "ties")
 
 
-def summary(idx, name, rows, player=None, drought=("", ""), one_season=False):
+def summary(idx, name, rows, player=None, drought=("", ""), one_season=False,
+            leads=(), lead_fields=(), lead_total=False):
     """Two to four sentences about one man, or [] where he has nothing.
 
     ``rows`` is [(season, fact)] for him, already filtered for mirrors, and
@@ -59,15 +60,21 @@ def summary(idx, name, rows, player=None, drought=("", ""), one_season=False):
     "He earned $20,000 through 2014-15", which is the table above it written out
     in words and the only line the section would hold. That section is dropped
     rather than printed, and the figure stays where it belongs, in the table.
+
+    ``leads`` are the group-leader sentences (prerender.leaders), which open
+    the paragraph. A record run in a group they name is not said again, and
+    where ``lead_total`` says they gave his career total the career sentence
+    is left out rather than printing the figure twice.
     """
     held = _by_field(idx, rows)
     spans = _spans(idx, held)
-    sentences, used = [], set()
+    sentences, used = list(leads), set()
+    lead_fields = set(lead_fields)
 
-    best = _pick_span(spans)
+    best = _pick_span(spans, skip=lead_fields)
     if best:
         used.add(best["field"])
-        sentences.append(_span_sentence(idx, name, best))
+        sentences.append(_span_sentence(idx, "he" if sentences else name, best))
 
     # Each field is named once in the paragraph: "the highest-paid Duke player
     # every season" followed by "more than any other Duke player" is one fact
@@ -79,7 +86,8 @@ def summary(idx, name, rows, player=None, drought=("", ""), one_season=False):
         used.add(ahead_field)
 
     subject = "he" if sentences else name
-    total, field = _career_sentence(idx, rows, subject, player, used)
+    total, field = (None, None) if lead_total else _career_sentence(
+        idx, rows, subject, player, used | lead_fields)
     # No field means the engine found nothing to compare the total against, so
     # the sentence is the total and nothing more.
     bare_total = bool(total) and field is None
@@ -110,7 +118,7 @@ def summary(idx, name, rows, player=None, drought=("", ""), one_season=False):
     # A page with only one thing to say gets a second from the next-widest
     # record he holds, so the section is a paragraph rather than a line.
     while len(sentences) < MIN_SENTENCES:
-        nxt = _pick_span(spans, skip=used)
+        nxt = _pick_span(spans, skip=used | lead_fields)
         if not nxt:
             break
         used.add(nxt["field"])
