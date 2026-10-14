@@ -1,7 +1,7 @@
 {
  "changes_posted": 11,
- "last_commit": "8c616e372efbb3fe0e4c7ea62985fcb43c88a0a3",
- "last_run": "2026-10-13T13:21:55Z",
+ "last_commit": "9b6a0f8c604a138b8b59d79ed0781fb1dc50cc4e",
+ "last_run": "2026-10-14T11:02:41Z",
  "league_year_opened": "2026-07-01",
  "raises": [
   {
@@ -9,6 +9,24 @@
    "date": "2026-10-11",
    "player": "Brandin Podziemski",
    "season": "2030-31"
+  },
+  {
+   "amount": 42872265,
+   "date": "2026-10-14",
+   "player": "Brandin Podziemski",
+   "season": "2030-31"
+  },
+  {
+   "amount": 28646754,
+   "date": "2026-10-14",
+   "player": "Donovan Mitchell",
+   "season": "2030-31"
+  },
+  {
+   "amount": 14332143,
+   "date": "2026-10-14",
+   "player": "Payton Pritchard",
+   "season": "2029-30"
   },
   {
    "amount": 2811242,
