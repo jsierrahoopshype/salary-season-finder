@@ -203,7 +203,7 @@
   "Aaron Gordon|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "83890bf2534670d9",
@@ -323,7 +323,7 @@
   "Aaron Gordon|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "7f8d85a5950c1c6a",
@@ -959,7 +959,7 @@
   "Al Horford|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "5dbc3ae1e0a44a95",
@@ -1221,7 +1221,7 @@
   "Alex Caruso|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "4347e3d1ea4a8c87",
@@ -1515,7 +1515,7 @@
   "Alperen Sengun|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "e7a5ab22c664631c",
@@ -1573,7 +1573,7 @@
   "Alperen Sengun|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "be3321b126029504",
@@ -1647,7 +1647,7 @@
   "Alperen Sengun|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "a2735db9a5cfe900",
@@ -1765,7 +1765,7 @@
   "Amen Thompson|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "2339eee32a1ca211",
@@ -1803,7 +1803,7 @@
   "Amen Thompson|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "92de23b3a108eb74",
@@ -1859,7 +1859,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2213,
+    "comparison_size": 2211,
     "contracted": true,
     "family": "negative_space",
     "id": "75f9f0674ffea8c8",
@@ -2897,7 +2897,7 @@
   "Andrew Wiggins|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "e2d9f735fccc116c",
@@ -3463,7 +3463,7 @@
   "Anthony Davis|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 637,
+    "comparison_size": 635,
     "contracted": false,
     "family": "cap_context",
     "id": "18d0d2ece0a36426",
@@ -3483,7 +3483,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "815a3c27a94db5d1",
@@ -3787,16 +3787,16 @@
     "id": "13baad1617b123cd",
     "key": "cap_pct_season|Anthony Davis|2027-28",
     "lead": null,
-    "margin": 0.0,
+    "margin": -0.4,
     "previous_holder": {
-     "player": "Giannis Antetokounmpo",
+     "player": "Donovan Mitchell",
      "season": "2027-28",
-     "value": 36.0
+     "value": 36.4
     },
-    "rank": 1,
+    "rank": 2,
     "scope_note": "Share of the 2027-28 salary cap, ranked within that season. Contracted salary against a projected cap. This salary is contracted, not money already paid.",
-    "text": "Anthony Davis' $62.8 million salary would take up 36.0% of the 2027-28 cap, tying the largest share of the cap in 2027-28, matching Giannis Antetokounmpo's 36.0% (2027-28).",
-    "type": "ties",
+    "text": "Anthony Davis' $62.8 million salary would take up 36.0% of the 2027-28 cap, the second-largest share of the cap in 2027-28, behind Donovan Mitchell's 36.4% (2027-28).",
+    "type": "approaches",
     "value": 36.0
    },
    {
@@ -4207,7 +4207,7 @@
   "Anthony Edwards|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "ccc283f632feb2e0",
@@ -4325,7 +4325,7 @@
   "Anthony Edwards|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "1a05fb7ab95486b7",
@@ -4403,7 +4403,7 @@
   "Anthony Edwards|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "1a04a25b6a7d2d3c",
@@ -4589,7 +4589,7 @@
   "Ausar Thompson|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "2b32006fa59beed1",
@@ -4709,7 +4709,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2213,
+    "comparison_size": 2211,
     "contracted": false,
     "family": "negative_space",
     "id": "55fc2bce26e9e40d",
@@ -4731,7 +4731,7 @@
   "Austin Reaves|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "35a90c32630b9577",
@@ -4807,7 +4807,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2883,
+    "comparison_size": 2881,
     "contracted": true,
     "family": "negative_space",
     "id": "bed34ccfa342301b",
@@ -4827,7 +4827,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2213,
+    "comparison_size": 2211,
     "contracted": true,
     "family": "negative_space",
     "id": "77c85cc22d07f14f",
@@ -4849,7 +4849,7 @@
   "Austin Reaves|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "8ef2cf713191e35b",
@@ -4945,7 +4945,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2883,
+    "comparison_size": 2881,
     "contracted": true,
     "family": "negative_space",
     "id": "6e116546f8c39710",
@@ -4965,7 +4965,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2213,
+    "comparison_size": 2211,
     "contracted": true,
     "family": "negative_space",
     "id": "61c0b9bd0051495f",
@@ -4987,7 +4987,7 @@
   "Austin Reaves|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "e62f60a545624c2a",
@@ -5083,7 +5083,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2883,
+    "comparison_size": 2881,
     "contracted": true,
     "family": "negative_space",
     "id": "7a389fe06ee0265e",
@@ -5103,7 +5103,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2213,
+    "comparison_size": 2211,
     "contracted": true,
     "family": "negative_space",
     "id": "f835ee4e96212714",
@@ -5247,7 +5247,7 @@
   "Ayo Dosunmu|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "b393799d38aef49f",
@@ -5459,7 +5459,7 @@
   "Bam Adebayo|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "a05a0442ba787e43",
@@ -5615,7 +5615,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2883,
+    "comparison_size": 2881,
     "contracted": false,
     "family": "negative_space",
     "id": "b73d3ea17b2831db",
@@ -5653,7 +5653,7 @@
   "Bam Adebayo|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "2dda7e285228192f",
@@ -5769,7 +5769,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2883,
+    "comparison_size": 2881,
     "contracted": true,
     "family": "negative_space",
     "id": "d6f732f3b0afcc78",
@@ -5791,7 +5791,7 @@
   "Bam Adebayo|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "6d00c00fea6044b5",
@@ -5927,7 +5927,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2883,
+    "comparison_size": 2881,
     "contracted": true,
     "family": "negative_space",
     "id": "64697fcac4c2bb0b",
@@ -6759,7 +6759,7 @@
   "Bobby Portis|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "6ff4ea6ec2f6b5d9",
@@ -7599,7 +7599,7 @@
   "Bradley Beal|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "15ad1b21b4523db0",
@@ -7623,7 +7623,7 @@
     "id": "0488c5c11bb13c9d",
     "key": "cohort_season|draft_class|2023|Brandin Podziemski|2027-28",
     "lead": null,
-    "margin": 858842,
+    "margin": 885160,
     "previous_holder": {
      "player": "Toumani Camara",
      "season": "2026-27",
@@ -7631,9 +7631,9 @@
     },
     "rank": 1,
     "scope_note": "Cohort of 90 players and 274 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Brandin Podziemski's $18.9 million in 2027-28 would be the highest single-season salary in the 2023 draft class, passing Toumani Camara's $18.1 million (2026-27).",
+    "text": "Brandin Podziemski's $19 million in 2027-28 would be the highest single-season salary in the 2023 draft class, passing Toumani Camara's $18.1 million (2026-27).",
     "type": "sets",
-    "value": 18939200
+    "value": 18965518
    }
   ],
   "Brandin Podziemski|2028-29": [
@@ -7645,7 +7645,7 @@
     "id": "401d61ed2ab70733",
     "key": "cohort_season|draft_class|2023|Brandin Podziemski|2028-29",
     "lead": null,
-    "margin": 2359642,
+    "margin": 2402401,
     "previous_holder": {
      "player": "Toumani Camara",
      "season": "2026-27",
@@ -7653,9 +7653,9 @@
     },
     "rank": 1,
     "scope_note": "Cohort of 90 players and 274 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Brandin Podziemski's $20.4 million in 2028-29 would be the highest single-season salary in the 2023 draft class, passing Toumani Camara's $18.1 million (2026-27).",
+    "text": "Brandin Podziemski's $20.5 million in 2028-29 would be the highest single-season salary in the 2023 draft class, passing Toumani Camara's $18.1 million (2026-27).",
     "type": "sets",
-    "value": 20440000
+    "value": 20482759
    }
   ],
   "Brandin Podziemski|2029-30": [
@@ -7699,7 +7699,7 @@
   "Brandin Podziemski|2030-31": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "78364e646c29c40b",
@@ -7721,7 +7721,7 @@
     "id": "5ee5f34f9d7277cc",
     "key": "cohort_season|draft_class|2023|Brandin Podziemski|2030-31",
     "lead": null,
-    "margin": 30540442,
+    "margin": 30471365,
     "previous_holder": {
      "player": "Toumani Camara",
      "season": "2026-27",
@@ -7731,7 +7731,7 @@
     "scope_note": "Cohort of 90 players and 274 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Brandin Podziemski's $48.6 million in 2030-31 would be the highest single-season salary in the 2023 draft class, 2.5 times as much as the next player in the 2023 draft class, Toumani Camara.",
     "type": "sets",
-    "value": 48620800
+    "value": 48551723
    },
    {
     "ahead": null,
@@ -7741,7 +7741,7 @@
     "id": "bb432a8eda165cdb",
     "key": "cohort_season|draft_slot|19|Brandin Podziemski|2030-31",
     "lead": null,
-    "margin": 9350650,
+    "margin": 9281573,
     "previous_holder": {
      "player": "Tobias Harris",
      "season": "2023-24",
@@ -7751,17 +7751,17 @@
     "scope_note": "Cohort of 42 players and 313 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Brandin Podziemski's $48.6 million in 2030-31 would be the highest single-season salary by a No. 19 pick, passing Tobias Harris' $39.3 million (2023-24).",
     "type": "sets",
-    "value": 48620800
+    "value": 48551723
    },
    {
     "ahead": null,
-    "comparison_size": 2883,
+    "comparison_size": 2881,
     "contracted": true,
     "family": "negative_space",
     "id": "ab9b1eb9a8786400",
     "key": "no_all_nba|Brandin Podziemski|2030-31",
     "lead": null,
-    "margin": -867500,
+    "margin": -936577,
     "previous_holder": {
      "player": "Bam Adebayo",
      "season": "2026-27",
@@ -7771,17 +7771,17 @@
     "scope_note": "Comparison set is every player with no All-NBA selection on record, active or retired, taken at each one's best paid season. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Brandin Podziemski is still active, so this describes selections to date. This salary is contracted, not money already paid.",
     "text": "Brandin Podziemski's $48.6 million in 2030-31 would be the fourth-highest single-season salary for a player without an All-NBA selection, behind Bam Adebayo's $49.5 million (2026-27).",
     "type": "approaches",
-    "value": 48620800
+    "value": 48551723
    },
    {
     "ahead": null,
-    "comparison_size": 2213,
+    "comparison_size": 2211,
     "contracted": true,
     "family": "negative_space",
     "id": "927dd3ac07ccf161",
     "key": "no_all_star|Brandin Podziemski|2030-31",
     "lead": null,
-    "margin": 6120800,
+    "margin": 6051723,
     "previous_holder": {
      "player": "OG Anunoby",
      "season": "2026-27",
@@ -7791,7 +7791,7 @@
     "scope_note": "Comparison set is every player with no All-Star selection on record, active or retired, taken at each one's best paid season. Careers that began before 1990-91, names that merge two players and seasons whose selection lists failed the audit are excluded. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Brandin Podziemski is still active, so this describes selections to date. This salary is contracted, not money already paid.",
     "text": "Brandin Podziemski's $48.6 million in 2030-31 would be the highest single-season salary for a player without an All-Star selection, passing OG Anunoby's $42.5 million (2026-27).",
     "type": "sets",
-    "value": 48620800
+    "value": 48551723
    },
    {
     "ahead": null,
@@ -7807,7 +7807,7 @@
     "scope_note": "First season inside the top 10. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Brandin Podziemski's salary in 2030-31 would put him in the league's top 10 for the first time in his career.",
     "type": "rank_shift",
-    "value": 48620800
+    "value": 48551723
    }
   ],
   "Brandon Ingram|2020-21": [
@@ -7963,7 +7963,7 @@
   "Brandon Ingram|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "584510639688b6d5",
@@ -8081,7 +8081,7 @@
   "Brandon Ingram|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "687f66b3e55661e3",
@@ -8817,7 +8817,7 @@
   "CJ McCollum|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "151389f4d94e919f",
@@ -9055,7 +9055,7 @@
   "Cade Cunningham|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "317d87483438705c",
@@ -9213,7 +9213,7 @@
   "Cade Cunningham|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "c8b8b796998d73b0",
@@ -9331,7 +9331,7 @@
   "Cade Cunningham|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "2105464b90ad2d52",
@@ -9347,7 +9347,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "b9c3d7d5710520e1",
@@ -9483,7 +9483,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 201,
+    "comparison_size": 202,
     "contracted": true,
     "family": "rank_shift",
     "id": "d6c847be0f0384b6",
@@ -9501,7 +9501,7 @@
   "Cade Cunningham|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 99,
+    "comparison_size": 100,
     "contracted": true,
     "family": "cap_context",
     "id": "942a012eb7dc37bb",
@@ -9521,7 +9521,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "c5f83c62544ed448",
@@ -9717,7 +9717,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 100,
+    "comparison_size": 101,
     "contracted": true,
     "family": "rank_shift",
     "id": "a8422ce934be03ce",
@@ -10005,7 +10005,7 @@
   "Cameron Johnson|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "6ee6935c51afee38",
@@ -10671,7 +10671,7 @@
   "Chet Holmgren|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "8448d766f3816b94",
@@ -10785,7 +10785,7 @@
   "Chet Holmgren|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "eafa537592f2157d",
@@ -10883,7 +10883,7 @@
   "Chet Holmgren|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "7130cc8cc5b18332",
@@ -10979,7 +10979,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 100,
+    "comparison_size": 101,
     "contracted": true,
     "family": "rank_shift",
     "id": "d5999fa6a74d3509",
@@ -11003,21 +11003,21 @@
     "id": "a8d77f7653e6308e",
     "key": "cap_pct_season|Chet Holmgren|2030-31",
     "lead": null,
-    "margin": -10.9,
+    "margin": -12.0,
     "previous_holder": {
-     "player": "Shai Gilgeous-Alexander",
+     "player": "Donovan Mitchell",
      "season": "2030-31",
-     "value": 37.9
+     "value": 39.0
     },
     "rank": 3,
     "scope_note": "Share of the 2030-31 salary cap, ranked within that season. Contracted salary against a projected cap. This salary is contracted, not money already paid.",
-    "text": "Chet Holmgren's $54.4 million salary would take up 27.0% of the 2030-31 cap, the third-largest share of the cap in 2030-31, behind Shai Gilgeous-Alexander's 37.9% (2030-31).",
+    "text": "Chet Holmgren's $54.4 million salary would take up 27.0% of the 2030-31 cap, the third-largest share of the cap in 2030-31, behind Donovan Mitchell's 39.0% (2030-31).",
     "type": "approaches",
     "value": 27.0
    },
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "f8a87f1b38a3cba8",
@@ -11913,7 +11913,7 @@
   "Christian Braun|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "69ba3289c3b05f43",
@@ -12069,7 +12069,7 @@
   "Clint Capela|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "781298bc8562f2c9",
@@ -12145,7 +12145,7 @@
   "Coby White|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "5750e350c999bf2c",
@@ -12345,7 +12345,7 @@
   "Collin Sexton|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "14acfb56b1b9be26",
@@ -13205,7 +13205,7 @@
   "Damian Lillard|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "b6a63a98ea9f30e0",
@@ -13387,7 +13387,7 @@
   "Daniel Gafford|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "cc2b426ebd082bfc",
@@ -13923,7 +13923,7 @@
   "Darius Garland|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "40ed62772769a0cd",
@@ -14039,7 +14039,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 22,
+    "comparison_size": 23,
     "contracted": false,
     "family": "rank_shift",
     "id": "3f778e396c17c1d9",
@@ -14048,7 +14048,7 @@
     "margin": null,
     "previous_holder": null,
     "rank": 1,
-    "scope_note": "Same franchise in consecutive seasons. Roster of 22 players with a salary on file.",
+    "scope_note": "Same franchise in consecutive seasons. Roster of 23 players with a salary on file.",
     "text": "Darius Garland is the Clippers' highest-paid player in 2026-27 after ranking second on the roster in 2025-26.",
     "type": "rank_shift",
     "value": 42166510
@@ -14057,7 +14057,7 @@
   "Darius Garland|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "79b997d0ebe3a2ac",
@@ -14133,7 +14133,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 533,
+    "comparison_size": 534,
     "contracted": true,
     "family": "franchise",
     "id": "447c48f6f042c402",
@@ -14153,7 +14153,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2883,
+    "comparison_size": 2881,
     "contracted": true,
     "family": "negative_space",
     "id": "8dd66ccbd2768f0c",
@@ -14571,7 +14571,7 @@
   "De'Aaron Fox|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "88d89a791b46ab03",
@@ -14707,7 +14707,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 557,
+    "comparison_size": 556,
     "contracted": false,
     "family": "franchise",
     "id": "50b1816cba910711",
@@ -14729,7 +14729,7 @@
   "De'Aaron Fox|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "05cefa4fb309053f",
@@ -14825,7 +14825,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 558,
+    "comparison_size": 557,
     "contracted": true,
     "family": "franchise",
     "id": "d9482f5b2933f6a4",
@@ -14847,7 +14847,7 @@
   "De'Aaron Fox|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "bc496d0fbeb79ea3",
@@ -14963,7 +14963,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 558,
+    "comparison_size": 557,
     "contracted": true,
     "family": "franchise",
     "id": "3bf39f964a60b0ab",
@@ -14985,7 +14985,7 @@
   "De'Aaron Fox|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 99,
+    "comparison_size": 100,
     "contracted": true,
     "family": "cap_context",
     "id": "77e7389932baafa5",
@@ -15005,7 +15005,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "bc243947ec90550f",
@@ -15181,7 +15181,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 558,
+    "comparison_size": 557,
     "contracted": true,
     "family": "franchise",
     "id": "ff6a3ad1c21a0e62",
@@ -15201,7 +15201,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 100,
+    "comparison_size": 101,
     "contracted": true,
     "family": "rank_shift",
     "id": "a40e4ad10c6b2062",
@@ -15219,7 +15219,7 @@
   "De'Andre Hunter|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "c287ded9f0574cc3",
@@ -16479,7 +16479,7 @@
   "Dejounte Murray|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "e01bbeb595f5c89e",
@@ -17083,7 +17083,7 @@
   "Derrick White|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "894c33bbf857168b",
@@ -17141,7 +17141,7 @@
   "Derrick White|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "51357fc15f611e5d",
@@ -17199,7 +17199,7 @@
   "Desmond Bane|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "621142013090df22",
@@ -17295,7 +17295,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2213,
+    "comparison_size": 2211,
     "contracted": false,
     "family": "negative_space",
     "id": "9e9417c571944efd",
@@ -17317,7 +17317,7 @@
   "Desmond Bane|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "76ed9b9645501a64",
@@ -17373,7 +17373,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2213,
+    "comparison_size": 2211,
     "contracted": true,
     "family": "negative_space",
     "id": "0198f2a397ab9f44",
@@ -17395,7 +17395,7 @@
   "Desmond Bane|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "34ad3e24c645a3c3",
@@ -17471,7 +17471,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2883,
+    "comparison_size": 2881,
     "contracted": true,
     "family": "negative_space",
     "id": "1a23c18d58aa0765",
@@ -17491,7 +17491,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2213,
+    "comparison_size": 2211,
     "contracted": true,
     "family": "negative_space",
     "id": "0cf825789e77704e",
@@ -17967,7 +17967,7 @@
   "Devin Booker|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "ca0a9eca33c6f40b",
@@ -18191,15 +18191,15 @@
     "id": "844cbfeeb60ff8fb",
     "key": "cap_pct_season|Devin Booker|2027-28",
     "lead": null,
-    "margin": -1.0,
+    "margin": -1.4,
     "previous_holder": {
-     "player": "Anthony Davis",
+     "player": "Donovan Mitchell",
      "season": "2027-28",
-     "value": 36.0
+     "value": 36.4
     },
-    "rank": 8,
+    "rank": 9,
     "scope_note": "Share of the 2027-28 salary cap, ranked within that season. Contracted salary against a projected cap. This salary is contracted, not money already paid.",
-    "text": "Devin Booker's $61 million salary would take up 35.0% of the 2027-28 cap, the eighth-largest share of the cap in 2027-28, behind Anthony Davis' 36.0% (2027-28).",
+    "text": "Devin Booker's $61 million salary would take up 35.0% of the 2027-28 cap, the ninth-largest share of the cap in 2027-28, behind Donovan Mitchell's 36.4% (2027-28).",
     "type": "approaches",
     "value": 35.0
    },
@@ -18367,27 +18367,27 @@
   "Devin Booker|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 200,
+    "comparison_size": 201,
     "contracted": true,
     "family": "cap_context",
     "id": "686536a2a85890a4",
     "key": "cap_pct_season|Devin Booker|2028-29",
     "lead": null,
-    "margin": 1.5,
+    "margin": 0.7,
     "previous_holder": {
-     "player": "Jayson Tatum",
+     "player": "Donovan Mitchell",
      "season": "2028-29",
-     "value": 36.7
+     "value": 37.5
     },
     "rank": 1,
     "scope_note": "Share of the 2028-29 salary cap, ranked within that season. Contracted salary against a projected cap. This salary is contracted, not money already paid.",
-    "text": "Devin Booker's $69.9 million salary would take up 38.2% of the 2028-29 cap, the largest share of the cap in 2028-29, passing Jayson Tatum's 36.7% (2028-29).",
+    "text": "Devin Booker's $69.9 million salary would take up 38.2% of the 2028-29 cap, the largest share of the cap in 2028-29, passing Donovan Mitchell's 37.5% (2028-29).",
     "type": "sets",
     "value": 38.2
    },
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "5c1c3a5327dbca57",
@@ -18563,7 +18563,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 201,
+    "comparison_size": 202,
     "contracted": true,
     "family": "rank_shift",
     "id": "e3b778db4aae0345",
@@ -18581,27 +18581,27 @@
   "Devin Booker|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 99,
+    "comparison_size": 100,
     "contracted": true,
     "family": "cap_context",
     "id": "cf80fbb54fac91b2",
     "key": "cap_pct_season|Devin Booker|2029-30",
     "lead": null,
-    "margin": 2.1,
+    "margin": 1.0,
     "previous_holder": {
-     "player": "Jayson Tatum",
+     "player": "Donovan Mitchell",
      "season": "2029-30",
-     "value": 37.2
+     "value": 38.3
     },
     "rank": 1,
     "scope_note": "Share of the 2029-30 salary cap, ranked within that season. Contracted salary against a projected cap. This salary is contracted, not money already paid.",
-    "text": "Devin Booker's $75.5 million salary would take up 39.3% of the 2029-30 cap, the largest share of the cap in 2029-30, passing Jayson Tatum's 37.2% (2029-30).",
+    "text": "Devin Booker's $75.5 million salary would take up 39.3% of the 2029-30 cap, the largest share of the cap in 2029-30, passing Donovan Mitchell's 38.3% (2029-30).",
     "type": "sets",
     "value": 39.3
    },
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "06275d61e35e2d62",
@@ -18897,7 +18897,7 @@
   "Devin Vassell|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "8185427c3756b429",
@@ -19017,7 +19017,7 @@
   "Devin Vassell|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "19654e08ead51275",
@@ -19347,7 +19347,7 @@
   "Dillon Brooks|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "0312e2d7cfcf3eb7",
@@ -19975,7 +19975,7 @@
   "Domantas Sabonis|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "d3813328a20a9686",
@@ -20131,7 +20131,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 526,
+    "comparison_size": 525,
     "contracted": false,
     "family": "franchise",
     "id": "5c3fc09f1e9ed907",
@@ -20153,7 +20153,7 @@
   "Domantas Sabonis|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "46959a65be2e190a",
@@ -20229,7 +20229,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 527,
+    "comparison_size": 526,
     "contracted": true,
     "family": "franchise",
     "id": "4012a12d3038090d",
@@ -20621,7 +20621,7 @@
   "Donovan Mitchell|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "701b93144ef37c78",
@@ -20825,33 +20825,49 @@
     "id": "0e81d0acc6ef3279",
     "key": "cap_pct_season|Donovan Mitchell|2027-28",
     "lead": null,
-    "margin": -1.1,
+    "margin": 0.4,
     "previous_holder": {
      "player": "Anthony Davis",
      "season": "2027-28",
      "value": 36.0
     },
-    "rank": 10,
+    "rank": 1,
     "scope_note": "Share of the 2027-28 salary cap, ranked within that season. Contracted salary against a projected cap. This salary is contracted, not money already paid.",
-    "text": "Donovan Mitchell's $60.9 million salary would take up 34.9% of the 2027-28 cap, the 10th-largest share of the cap in 2027-28, behind Anthony Davis' 36.0% (2027-28).",
-    "type": "approaches",
-    "value": 34.9
+    "text": "Donovan Mitchell's $63.5 million salary would take up 36.4% of the 2027-28 cap, the largest share of the cap in 2027-28, passing Anthony Davis' 36.0% (2027-28).",
+    "type": "sets",
+    "value": 36.4
    },
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "f0c2af6ffa04c5de",
     "key": "career_milestone|Donovan Mitchell|2027-28|250000000",
     "lead": null,
-    "margin": 49553339.0,
+    "margin": 52163324.0,
     "previous_holder": null,
     "rank": null,
     "scope_note": "Career earnings are nominal dollars. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. 45 other players had reached it.",
     "text": "Donovan Mitchell is on track to pass $250 million in career earnings in 2027-28 if his salaries are paid in full.",
     "type": "milestone",
-    "value": 299553339
+    "value": 302163324
+   },
+   {
+    "ahead": null,
+    "comparison_size": 3360,
+    "contracted": true,
+    "family": "career_earnings",
+    "id": "4489be90dff6cce8",
+    "key": "career_milestone|Donovan Mitchell|2027-28|300000000",
+    "lead": null,
+    "margin": 2163324.0,
+    "previous_holder": null,
+    "rank": null,
+    "scope_note": "Career earnings are nominal dollars. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. 29 other players had reached it.",
+    "text": "Donovan Mitchell is on track to pass $300 million in career earnings in 2027-28 if his salaries are paid in full.",
+    "type": "milestone",
+    "value": 302163324
    },
    {
     "ahead": null,
@@ -20861,7 +20877,7 @@
     "id": "a6dd4ed5c7017ff5",
     "key": "cohort_season|college_position|Louisville|G|Donovan Mitchell|2027-28",
     "lead": null,
-    "margin": 10794372,
+    "margin": 13404357,
     "previous_holder": {
      "player": "Donovan Mitchell",
      "season": "2026-27",
@@ -20869,9 +20885,9 @@
     },
     "rank": 1,
     "scope_note": "Cohort of 17 players and 71 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Donovan Mitchell's $60.9 million in 2027-28 would be the highest single-season salary among Louisville guards, breaking his own mark of $50.1 million in 2026-27.",
+    "text": "Donovan Mitchell's $63.5 million in 2027-28 would be the highest single-season salary among Louisville guards, breaking his own mark of $50.1 million in 2026-27.",
     "type": "sets",
-    "value": 60900000
+    "value": 63509985
    },
    {
     "ahead": null,
@@ -20881,7 +20897,7 @@
     "id": "b21dfaef2ecbebfe",
     "key": "cohort_season|college|Louisville|Donovan Mitchell|2027-28",
     "lead": null,
-    "margin": 10794372,
+    "margin": 13404357,
     "previous_holder": {
      "player": "Donovan Mitchell",
      "season": "2026-27",
@@ -20889,9 +20905,9 @@
     },
     "rank": 1,
     "scope_note": "Cohort of 35 players and 160 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Donovan Mitchell's $60.9 million in 2027-28 would be the highest single-season salary among players out of Louisville, breaking his own mark of $50.1 million in 2026-27.",
+    "text": "Donovan Mitchell's $63.5 million in 2027-28 would be the highest single-season salary among players out of Louisville, breaking his own mark of $50.1 million in 2026-27.",
     "type": "sets",
-    "value": 60900000
+    "value": 63509985
    },
    {
     "ahead": null,
@@ -20901,7 +20917,7 @@
     "id": "c4544828ae12fd81",
     "key": "cohort_season|draft_class|2017|Donovan Mitchell|2027-28",
     "lead": null,
-    "margin": 2443434,
+    "margin": 5053419,
     "previous_holder": {
      "player": "Jayson Tatum",
      "season": "2026-27",
@@ -20909,9 +20925,9 @@
     },
     "rank": 1,
     "scope_note": "Cohort of 107 players and 468 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Donovan Mitchell's $60.9 million in 2027-28 would be the highest single-season salary in the 2017 draft class, passing Jayson Tatum's $58.5 million (2026-27).",
+    "text": "Donovan Mitchell's $63.5 million in 2027-28 would be the highest single-season salary in the 2017 draft class, passing Jayson Tatum's $58.5 million (2026-27).",
     "type": "sets",
-    "value": 60900000
+    "value": 63509985
    },
    {
     "ahead": null,
@@ -20921,7 +20937,7 @@
     "id": "2f7ae1231d76a715",
     "key": "cohort_season|draft_slot|13|Donovan Mitchell|2027-28",
     "lead": null,
-    "margin": 3821272,
+    "margin": 6431257,
     "previous_holder": {
      "player": "Devin Booker",
      "season": "2026-27",
@@ -20929,9 +20945,9 @@
     },
     "rank": 1,
     "scope_note": "Cohort of 45 players and 376 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Donovan Mitchell's $60.9 million in 2027-28 would be the highest single-season salary by a No. 13 pick, passing Devin Booker's $57.1 million (2026-27).",
+    "text": "Donovan Mitchell's $63.5 million in 2027-28 would be the highest single-season salary by a No. 13 pick, passing Devin Booker's $57.1 million (2026-27).",
     "type": "sets",
-    "value": 60900000
+    "value": 63509985
    },
    {
     "ahead": null,
@@ -20941,17 +20957,17 @@
     "id": "eaa84d53ed5b562b",
     "key": "cohort_season|nationality|United States|Donovan Mitchell|2027-28",
     "lead": null,
-    "margin": -1687158,
+    "margin": 922827,
     "previous_holder": {
      "player": "Stephen Curry",
      "season": "2026-27",
      "value": 62587158
     },
-    "rank": 2,
+    "rank": 1,
     "scope_note": "Cohort of 2479 players and 14645 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Donovan Mitchell's $60.9 million in 2027-28 would be the second-highest single-season salary by a player from the United States, behind Stephen Curry's $62.6 million (2026-27).",
-    "type": "approaches",
-    "value": 60900000
+    "text": "Donovan Mitchell's $63.5 million in 2027-28 would be the highest single-season salary by a player from the United States, passing Stephen Curry's $62.6 million (2026-27).",
+    "type": "sets",
+    "value": 63509985
    },
    {
     "ahead": null,
@@ -20961,17 +20977,17 @@
     "id": "e7799a229e5d1cf7",
     "key": "cohort_season|pick_range|lottery|Donovan Mitchell|2027-28",
     "lead": null,
-    "margin": -1687158,
+    "margin": 922827,
     "previous_holder": {
      "player": "Stephen Curry",
      "season": "2026-27",
      "value": 62587158
     },
-    "rank": 2,
+    "rank": 1,
     "scope_note": "Cohort of 647 players and 5962 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Donovan Mitchell's $60.9 million in 2027-28 would be the second-highest single-season salary by a lottery pick, behind Stephen Curry's $62.6 million (2026-27).",
-    "type": "approaches",
-    "value": 60900000
+    "text": "Donovan Mitchell's $63.5 million in 2027-28 would be the highest single-season salary by a lottery pick, passing Stephen Curry's $62.6 million (2026-27).",
+    "type": "sets",
+    "value": 63509985
    },
    {
     "ahead": null,
@@ -20981,17 +20997,17 @@
     "id": "10a5c25f8d45dce3",
     "key": "cohort_season|position|G|Donovan Mitchell|2027-28",
     "lead": null,
-    "margin": -1687158,
+    "margin": 922827,
     "previous_holder": {
      "player": "Stephen Curry",
      "season": "2026-27",
      "value": 62587158
     },
-    "rank": 2,
+    "rank": 1,
     "scope_note": "Cohort of 1377 players and 7644 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Donovan Mitchell's $60.9 million in 2027-28 would be the second-highest single-season salary by a guard, behind Stephen Curry's $62.6 million (2026-27).",
-    "type": "approaches",
-    "value": 60900000
+    "text": "Donovan Mitchell's $63.5 million in 2027-28 would be the highest single-season salary by a guard, passing Stephen Curry's $62.6 million (2026-27).",
+    "type": "sets",
+    "value": 63509985
    },
    {
     "ahead": null,
@@ -21001,7 +21017,7 @@
     "id": "47a0951d9c465b95",
     "key": "franchise|CLE|Donovan Mitchell|2027-28",
     "lead": null,
-    "margin": 10794372,
+    "margin": 13404357,
     "previous_holder": {
      "player": "Donovan Mitchell",
      "season": "2026-27",
@@ -21009,63 +21025,47 @@
     },
     "rank": 1,
     "scope_note": "Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
-    "text": "Donovan Mitchell's $60.9 million in 2027-28 would be the highest single-season salary in Cavaliers history, breaking his own mark of $50.1 million in 2026-27.",
+    "text": "Donovan Mitchell's $63.5 million in 2027-28 would be the highest single-season salary in Cavaliers history, breaking his own mark of $50.1 million in 2026-27.",
     "type": "sets",
-    "value": 60900000
+    "value": 63509985
    },
    {
     "ahead": null,
     "comparison_size": 351,
     "contracted": true,
     "family": "rank_shift",
-    "id": "5b1d0f5e11e77289",
-    "key": "rank_league_top10|Donovan Mitchell|2027-28",
+    "id": "9e6cb24d74a117c7",
+    "key": "rank_league_first|Donovan Mitchell|2027-28",
     "lead": null,
     "margin": null,
     "previous_holder": null,
-    "rank": 10,
-    "scope_note": "First season inside the top 10. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
-    "text": "Donovan Mitchell's salary in 2027-28 would put him in the league's top 10 for the first time in his career.",
+    "rank": 1,
+    "scope_note": "First season at No. 1. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "text": "Donovan Mitchell would be the highest-paid player in the league in 2027-28 for the first time in his career.",
     "type": "rank_shift",
-    "value": 60900000
+    "value": 63509985
    }
   ],
   "Donovan Mitchell|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 200,
+    "comparison_size": 201,
     "contracted": true,
     "family": "cap_context",
     "id": "440818e010034a86",
     "key": "cap_pct_season|Donovan Mitchell|2028-29",
     "lead": null,
-    "margin": -2.3,
+    "margin": -0.7,
     "previous_holder": {
      "player": "Devin Booker",
      "season": "2028-29",
      "value": 38.2
     },
-    "rank": 5,
+    "rank": 2,
     "scope_note": "Share of the 2028-29 salary cap, ranked within that season. Contracted salary against a projected cap. This salary is contracted, not money already paid.",
-    "text": "Donovan Mitchell's $65.8 million salary would take up 35.9% of the 2028-29 cap, the fifth-largest share of the cap in 2028-29, behind Devin Booker's 38.2% (2028-29).",
+    "text": "Donovan Mitchell's $68.6 million salary would take up 37.5% of the 2028-29 cap, the second-largest share of the cap in 2028-29, behind Devin Booker's 38.2% (2028-29).",
     "type": "approaches",
-    "value": 35.9
-   },
-   {
-    "ahead": null,
-    "comparison_size": 3362,
-    "contracted": true,
-    "family": "career_earnings",
-    "id": "47e4e277588f1340",
-    "key": "career_milestone|Donovan Mitchell|2028-29|300000000",
-    "lead": null,
-    "margin": 65325339.0,
-    "previous_holder": null,
-    "rank": null,
-    "scope_note": "Career earnings are nominal dollars. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. 29 other players had reached it.",
-    "text": "Donovan Mitchell is on track to pass $300 million in career earnings in 2028-29 if his salaries are paid in full.",
-    "type": "milestone",
-    "value": 365325339
+    "value": 37.5
    },
    {
     "ahead": null,
@@ -21075,7 +21075,7 @@
     "id": "9b730aa978fe5ee5",
     "key": "cohort_season|college_position|Louisville|G|Donovan Mitchell|2028-29",
     "lead": null,
-    "margin": 15666372,
+    "margin": 18485156,
     "previous_holder": {
      "player": "Donovan Mitchell",
      "season": "2026-27",
@@ -21083,9 +21083,9 @@
     },
     "rank": 1,
     "scope_note": "Cohort of 17 players and 71 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Donovan Mitchell's $65.8 million in 2028-29 would be the highest single-season salary among Louisville guards, breaking his own mark of $50.1 million in 2026-27.",
+    "text": "Donovan Mitchell's $68.6 million in 2028-29 would be the highest single-season salary among Louisville guards, breaking his own mark of $50.1 million in 2026-27.",
     "type": "sets",
-    "value": 65772000
+    "value": 68590784
    },
    {
     "ahead": null,
@@ -21095,7 +21095,7 @@
     "id": "1df0740a4db35579",
     "key": "cohort_season|college|Louisville|Donovan Mitchell|2028-29",
     "lead": null,
-    "margin": 15666372,
+    "margin": 18485156,
     "previous_holder": {
      "player": "Donovan Mitchell",
      "season": "2026-27",
@@ -21103,9 +21103,9 @@
     },
     "rank": 1,
     "scope_note": "Cohort of 35 players and 160 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Donovan Mitchell's $65.8 million in 2028-29 would be the highest single-season salary among players out of Louisville, breaking his own mark of $50.1 million in 2026-27.",
+    "text": "Donovan Mitchell's $68.6 million in 2028-29 would be the highest single-season salary among players out of Louisville, breaking his own mark of $50.1 million in 2026-27.",
     "type": "sets",
-    "value": 65772000
+    "value": 68590784
    },
    {
     "ahead": null,
@@ -21115,7 +21115,7 @@
     "id": "f34b4a9f375dc4ad",
     "key": "cohort_season|draft_class|2017|Donovan Mitchell|2028-29",
     "lead": null,
-    "margin": 7315434,
+    "margin": 10134218,
     "previous_holder": {
      "player": "Jayson Tatum",
      "season": "2026-27",
@@ -21123,9 +21123,9 @@
     },
     "rank": 1,
     "scope_note": "Cohort of 107 players and 468 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Donovan Mitchell's $65.8 million in 2028-29 would be the highest single-season salary in the 2017 draft class, passing Jayson Tatum's $58.5 million (2026-27).",
+    "text": "Donovan Mitchell's $68.6 million in 2028-29 would be the highest single-season salary in the 2017 draft class, passing Jayson Tatum's $58.5 million (2026-27).",
     "type": "sets",
-    "value": 65772000
+    "value": 68590784
    },
    {
     "ahead": null,
@@ -21135,7 +21135,7 @@
     "id": "a20eb2c28fa8aa34",
     "key": "cohort_season|draft_slot|13|Donovan Mitchell|2028-29",
     "lead": null,
-    "margin": 8693272,
+    "margin": 11512056,
     "previous_holder": {
      "player": "Devin Booker",
      "season": "2026-27",
@@ -21143,9 +21143,9 @@
     },
     "rank": 1,
     "scope_note": "Cohort of 45 players and 376 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Donovan Mitchell's $65.8 million in 2028-29 would be the highest single-season salary by a No. 13 pick, passing Devin Booker's $57.1 million (2026-27).",
+    "text": "Donovan Mitchell's $68.6 million in 2028-29 would be the highest single-season salary by a No. 13 pick, passing Devin Booker's $57.1 million (2026-27).",
     "type": "sets",
-    "value": 65772000
+    "value": 68590784
    },
    {
     "ahead": null,
@@ -21155,7 +21155,7 @@
     "id": "9a4825494c4b6df8",
     "key": "cohort_season|nationality|United States|Donovan Mitchell|2028-29",
     "lead": null,
-    "margin": 3184842,
+    "margin": 6003626,
     "previous_holder": {
      "player": "Stephen Curry",
      "season": "2026-27",
@@ -21163,9 +21163,9 @@
     },
     "rank": 1,
     "scope_note": "Cohort of 2479 players and 14645 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Donovan Mitchell's $65.8 million in 2028-29 would be the highest single-season salary by a player from the United States, passing Stephen Curry's $62.6 million (2026-27).",
+    "text": "Donovan Mitchell's $68.6 million in 2028-29 would be the highest single-season salary by a player from the United States, passing Stephen Curry's $62.6 million (2026-27).",
     "type": "sets",
-    "value": 65772000
+    "value": 68590784
    },
    {
     "ahead": null,
@@ -21175,7 +21175,7 @@
     "id": "fa5ec4412599c339",
     "key": "cohort_season|pick_range|lottery|Donovan Mitchell|2028-29",
     "lead": null,
-    "margin": 3184842,
+    "margin": 6003626,
     "previous_holder": {
      "player": "Stephen Curry",
      "season": "2026-27",
@@ -21183,9 +21183,9 @@
     },
     "rank": 1,
     "scope_note": "Cohort of 647 players and 5962 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Donovan Mitchell's $65.8 million in 2028-29 would be the highest single-season salary by a lottery pick, passing Stephen Curry's $62.6 million (2026-27).",
+    "text": "Donovan Mitchell's $68.6 million in 2028-29 would be the highest single-season salary by a lottery pick, passing Stephen Curry's $62.6 million (2026-27).",
     "type": "sets",
-    "value": 65772000
+    "value": 68590784
    },
    {
     "ahead": null,
@@ -21195,7 +21195,7 @@
     "id": "2084bc05d7e30f65",
     "key": "cohort_season|position|G|Donovan Mitchell|2028-29",
     "lead": null,
-    "margin": 3184842,
+    "margin": 6003626,
     "previous_holder": {
      "player": "Stephen Curry",
      "season": "2026-27",
@@ -21203,9 +21203,9 @@
     },
     "rank": 1,
     "scope_note": "Cohort of 1377 players and 7644 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Donovan Mitchell's $65.8 million in 2028-29 would be the highest single-season salary by a guard, passing Stephen Curry's $62.6 million (2026-27).",
+    "text": "Donovan Mitchell's $68.6 million in 2028-29 would be the highest single-season salary by a guard, passing Stephen Curry's $62.6 million (2026-27).",
     "type": "sets",
-    "value": 65772000
+    "value": 68590784
    },
    {
     "ahead": null,
@@ -21215,7 +21215,7 @@
     "id": "a0a9c77cf86ed0d2",
     "key": "franchise|CLE|Donovan Mitchell|2028-29",
     "lead": null,
-    "margin": 15666372,
+    "margin": 18485156,
     "previous_holder": {
      "player": "Donovan Mitchell",
      "season": "2026-27",
@@ -21223,47 +21223,47 @@
     },
     "rank": 1,
     "scope_note": "Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
-    "text": "Donovan Mitchell's $65.8 million in 2028-29 would be the highest single-season salary in Cavaliers history, breaking his own mark of $50.1 million in 2026-27.",
+    "text": "Donovan Mitchell's $68.6 million in 2028-29 would be the highest single-season salary in Cavaliers history, breaking his own mark of $50.1 million in 2026-27.",
     "type": "sets",
-    "value": 65772000
+    "value": 68590784
    }
   ],
   "Donovan Mitchell|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 99,
+    "comparison_size": 100,
     "contracted": true,
     "family": "cap_context",
     "id": "951f964bfe1d4786",
     "key": "cap_pct_season|Donovan Mitchell|2029-30",
     "lead": null,
-    "margin": -2.5,
+    "margin": -1.0,
     "previous_holder": {
      "player": "Devin Booker",
      "season": "2029-30",
      "value": 39.3
     },
-    "rank": 4,
+    "rank": 2,
     "scope_note": "Share of the 2029-30 salary cap, ranked within that season. Contracted salary against a projected cap. This salary is contracted, not money already paid.",
-    "text": "Donovan Mitchell's $70.6 million salary would take up 36.8% of the 2029-30 cap, the fourth-largest share of the cap in 2029-30, behind Devin Booker's 39.3% (2029-30).",
+    "text": "Donovan Mitchell's $73.7 million salary would take up 38.3% of the 2029-30 cap, the second-largest share of the cap in 2029-30, behind Devin Booker's 39.3% (2029-30).",
     "type": "approaches",
-    "value": 36.8
+    "value": 38.3
    },
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "f487c370eda072c0",
     "key": "career_milestone|Donovan Mitchell|2029-30|400000000",
     "lead": null,
-    "margin": 35969339.0,
+    "margin": 44425691.0,
     "previous_holder": null,
     "rank": null,
     "scope_note": "Career earnings are nominal dollars. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. 10 other players had reached it.",
     "text": "Donovan Mitchell is on track to pass $400 million in career earnings in 2029-30 if his salaries are paid in full.",
     "type": "milestone",
-    "value": 435969339
+    "value": 444425691
    },
    {
     "ahead": null,
@@ -21273,7 +21273,7 @@
     "id": "8360c04780992085",
     "key": "cohort_season|college_position|Louisville|G|Donovan Mitchell|2029-30",
     "lead": null,
-    "margin": 20538372,
+    "margin": 23565955,
     "previous_holder": {
      "player": "Donovan Mitchell",
      "season": "2026-27",
@@ -21281,9 +21281,9 @@
     },
     "rank": 1,
     "scope_note": "Cohort of 17 players and 71 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Donovan Mitchell's $70.6 million in 2029-30 would be the highest single-season salary among Louisville guards, breaking his own mark of $50.1 million in 2026-27.",
+    "text": "Donovan Mitchell's $73.7 million in 2029-30 would be the highest single-season salary among Louisville guards, breaking his own mark of $50.1 million in 2026-27.",
     "type": "sets",
-    "value": 70644000
+    "value": 73671583
    },
    {
     "ahead": null,
@@ -21293,7 +21293,7 @@
     "id": "d11a490f1eb2bd85",
     "key": "cohort_season|college|Louisville|Donovan Mitchell|2029-30",
     "lead": null,
-    "margin": 20538372,
+    "margin": 23565955,
     "previous_holder": {
      "player": "Donovan Mitchell",
      "season": "2026-27",
@@ -21301,9 +21301,9 @@
     },
     "rank": 1,
     "scope_note": "Cohort of 35 players and 160 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Donovan Mitchell's $70.6 million in 2029-30 would be the highest single-season salary among players out of Louisville, breaking his own mark of $50.1 million in 2026-27.",
+    "text": "Donovan Mitchell's $73.7 million in 2029-30 would be the highest single-season salary among players out of Louisville, breaking his own mark of $50.1 million in 2026-27.",
     "type": "sets",
-    "value": 70644000
+    "value": 73671583
    },
    {
     "ahead": null,
@@ -21313,7 +21313,7 @@
     "id": "d330d23a388ba07c",
     "key": "cohort_season|draft_class|2017|Donovan Mitchell|2029-30",
     "lead": null,
-    "margin": 12187434,
+    "margin": 15215017,
     "previous_holder": {
      "player": "Jayson Tatum",
      "season": "2026-27",
@@ -21321,9 +21321,9 @@
     },
     "rank": 1,
     "scope_note": "Cohort of 107 players and 468 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Donovan Mitchell's $70.6 million in 2029-30 would be the highest single-season salary in the 2017 draft class, passing Jayson Tatum's $58.5 million (2026-27).",
+    "text": "Donovan Mitchell's $73.7 million in 2029-30 would be the highest single-season salary in the 2017 draft class, passing Jayson Tatum's $58.5 million (2026-27).",
     "type": "sets",
-    "value": 70644000
+    "value": 73671583
    },
    {
     "ahead": null,
@@ -21333,7 +21333,7 @@
     "id": "eabc4f9b3e167878",
     "key": "cohort_season|draft_slot|13|Donovan Mitchell|2029-30",
     "lead": null,
-    "margin": 13565272,
+    "margin": 16592855,
     "previous_holder": {
      "player": "Devin Booker",
      "season": "2026-27",
@@ -21341,9 +21341,9 @@
     },
     "rank": 1,
     "scope_note": "Cohort of 45 players and 376 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Donovan Mitchell's $70.6 million in 2029-30 would be the highest single-season salary by a No. 13 pick, passing Devin Booker's $57.1 million (2026-27).",
+    "text": "Donovan Mitchell's $73.7 million in 2029-30 would be the highest single-season salary by a No. 13 pick, passing Devin Booker's $57.1 million (2026-27).",
     "type": "sets",
-    "value": 70644000
+    "value": 73671583
    },
    {
     "ahead": null,
@@ -21353,7 +21353,7 @@
     "id": "29aab197efe5ea72",
     "key": "cohort_season|nationality|United States|Donovan Mitchell|2029-30",
     "lead": null,
-    "margin": 8056842,
+    "margin": 11084425,
     "previous_holder": {
      "player": "Stephen Curry",
      "season": "2026-27",
@@ -21361,9 +21361,9 @@
     },
     "rank": 1,
     "scope_note": "Cohort of 2479 players and 14645 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Donovan Mitchell's $70.6 million in 2029-30 would be the highest single-season salary by a player from the United States, passing Stephen Curry's $62.6 million (2026-27).",
+    "text": "Donovan Mitchell's $73.7 million in 2029-30 would be the highest single-season salary by a player from the United States, passing Stephen Curry's $62.6 million (2026-27).",
     "type": "sets",
-    "value": 70644000
+    "value": 73671583
    },
    {
     "ahead": null,
@@ -21373,7 +21373,7 @@
     "id": "aefe8f5c289622dc",
     "key": "cohort_season|pick_range|lottery|Donovan Mitchell|2029-30",
     "lead": null,
-    "margin": 8056842,
+    "margin": 11084425,
     "previous_holder": {
      "player": "Stephen Curry",
      "season": "2026-27",
@@ -21381,9 +21381,9 @@
     },
     "rank": 1,
     "scope_note": "Cohort of 647 players and 5962 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Donovan Mitchell's $70.6 million in 2029-30 would be the highest single-season salary by a lottery pick, passing Stephen Curry's $62.6 million (2026-27).",
+    "text": "Donovan Mitchell's $73.7 million in 2029-30 would be the highest single-season salary by a lottery pick, passing Stephen Curry's $62.6 million (2026-27).",
     "type": "sets",
-    "value": 70644000
+    "value": 73671583
    },
    {
     "ahead": null,
@@ -21393,7 +21393,7 @@
     "id": "5aab644702ae5752",
     "key": "cohort_season|position|G|Donovan Mitchell|2029-30",
     "lead": null,
-    "margin": 8056842,
+    "margin": 11084425,
     "previous_holder": {
      "player": "Stephen Curry",
      "season": "2026-27",
@@ -21401,9 +21401,9 @@
     },
     "rank": 1,
     "scope_note": "Cohort of 1377 players and 7644 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Donovan Mitchell's $70.6 million in 2029-30 would be the highest single-season salary by a guard, passing Stephen Curry's $62.6 million (2026-27).",
+    "text": "Donovan Mitchell's $73.7 million in 2029-30 would be the highest single-season salary by a guard, passing Stephen Curry's $62.6 million (2026-27).",
     "type": "sets",
-    "value": 70644000
+    "value": 73671583
    },
    {
     "ahead": null,
@@ -21413,7 +21413,7 @@
     "id": "35dffeb1d97e8ea0",
     "key": "franchise|CLE|Donovan Mitchell|2029-30",
     "lead": null,
-    "margin": 20538372,
+    "margin": 23565955,
     "previous_holder": {
      "player": "Donovan Mitchell",
      "season": "2026-27",
@@ -21421,9 +21421,9 @@
     },
     "rank": 1,
     "scope_note": "Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
-    "text": "Donovan Mitchell's $70.6 million in 2029-30 would be the highest single-season salary in Cavaliers history, breaking his own mark of $50.1 million in 2026-27.",
+    "text": "Donovan Mitchell's $73.7 million in 2029-30 would be the highest single-season salary in Cavaliers history, breaking his own mark of $50.1 million in 2026-27.",
     "type": "sets",
-    "value": 70644000
+    "value": 73671583
    }
   ],
   "Donovan Mitchell|2030-31": [
@@ -21435,33 +21435,33 @@
     "id": "aa27f4ec556e23ef",
     "key": "cap_pct_season|Donovan Mitchell|2030-31",
     "lead": null,
-    "margin": -0.5,
+    "margin": 1.1,
     "previous_holder": {
      "player": "Shai Gilgeous-Alexander",
      "season": "2030-31",
      "value": 37.9
     },
-    "rank": 2,
+    "rank": 1,
     "scope_note": "Share of the 2030-31 salary cap, ranked within that season. Contracted salary against a projected cap. This salary is contracted, not money already paid.",
-    "text": "Donovan Mitchell's $75.5 million salary would take up 37.4% of the 2030-31 cap, the second-largest share of the cap in 2030-31, behind Shai Gilgeous-Alexander's 37.9% (2030-31).",
-    "type": "approaches",
-    "value": 37.4
+    "text": "Donovan Mitchell's $78.8 million salary would take up 39.0% of the 2030-31 cap, the largest share of the cap in 2030-31, passing Shai Gilgeous-Alexander's 37.9% (2030-31).",
+    "type": "sets",
+    "value": 39.0
    },
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "1c879e4b3b3fe3e9",
     "key": "career_milestone|Donovan Mitchell|2030-31|500000000",
     "lead": null,
-    "margin": 11485339.0,
+    "margin": 23178073.0,
     "previous_holder": null,
     "rank": null,
     "scope_note": "Career earnings are nominal dollars. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. 3 other players had reached it.",
     "text": "Donovan Mitchell is on track to pass $500 million in career earnings in 2030-31 if his salaries are paid in full.",
     "type": "milestone",
-    "value": 511485339
+    "value": 523178073
    },
    {
     "ahead": null,
@@ -21471,7 +21471,7 @@
     "id": "186969e6a4ac8dfe",
     "key": "cohort_season|college_position|Louisville|G|Donovan Mitchell|2030-31",
     "lead": null,
-    "margin": 25410372,
+    "margin": 28646754,
     "previous_holder": {
      "player": "Donovan Mitchell",
      "season": "2026-27",
@@ -21479,9 +21479,9 @@
     },
     "rank": 1,
     "scope_note": "Cohort of 17 players and 71 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Donovan Mitchell's $75.5 million in 2030-31 would be the highest single-season salary among Louisville guards, breaking his own mark of $50.1 million in 2026-27.",
+    "text": "Donovan Mitchell's $78.8 million in 2030-31 would be the highest single-season salary among Louisville guards, breaking his own mark of $50.1 million in 2026-27.",
     "type": "sets",
-    "value": 75516000
+    "value": 78752382
    },
    {
     "ahead": null,
@@ -21491,7 +21491,7 @@
     "id": "a48083f8c360231b",
     "key": "cohort_season|college|Louisville|Donovan Mitchell|2030-31",
     "lead": null,
-    "margin": 25410372,
+    "margin": 28646754,
     "previous_holder": {
      "player": "Donovan Mitchell",
      "season": "2026-27",
@@ -21499,9 +21499,9 @@
     },
     "rank": 1,
     "scope_note": "Cohort of 35 players and 160 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Donovan Mitchell's $75.5 million in 2030-31 would be the highest single-season salary among players out of Louisville, breaking his own mark of $50.1 million in 2026-27.",
+    "text": "Donovan Mitchell's $78.8 million in 2030-31 would be the highest single-season salary among players out of Louisville, breaking his own mark of $50.1 million in 2026-27.",
     "type": "sets",
-    "value": 75516000
+    "value": 78752382
    },
    {
     "ahead": null,
@@ -21511,7 +21511,7 @@
     "id": "2b07688a45e73873",
     "key": "cohort_season|draft_class|2017|Donovan Mitchell|2030-31",
     "lead": null,
-    "margin": 17059434,
+    "margin": 20295816,
     "previous_holder": {
      "player": "Jayson Tatum",
      "season": "2026-27",
@@ -21519,9 +21519,9 @@
     },
     "rank": 1,
     "scope_note": "Cohort of 107 players and 468 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Donovan Mitchell's $75.5 million in 2030-31 would be the highest single-season salary in the 2017 draft class, passing Jayson Tatum's $58.5 million (2026-27).",
+    "text": "Donovan Mitchell's $78.8 million in 2030-31 would be the highest single-season salary in the 2017 draft class, passing Jayson Tatum's $58.5 million (2026-27).",
     "type": "sets",
-    "value": 75516000
+    "value": 78752382
    },
    {
     "ahead": null,
@@ -21531,7 +21531,7 @@
     "id": "7b875f42c3cd3353",
     "key": "cohort_season|draft_slot|13|Donovan Mitchell|2030-31",
     "lead": null,
-    "margin": 18437272,
+    "margin": 21673654,
     "previous_holder": {
      "player": "Devin Booker",
      "season": "2026-27",
@@ -21539,9 +21539,9 @@
     },
     "rank": 1,
     "scope_note": "Cohort of 45 players and 376 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Donovan Mitchell's $75.5 million in 2030-31 would be the highest single-season salary by a No. 13 pick, passing Devin Booker's $57.1 million (2026-27).",
+    "text": "Donovan Mitchell's $78.8 million in 2030-31 would be the highest single-season salary by a No. 13 pick, passing Devin Booker's $57.1 million (2026-27).",
     "type": "sets",
-    "value": 75516000
+    "value": 78752382
    },
    {
     "ahead": null,
@@ -21551,7 +21551,7 @@
     "id": "9022a97505e8e23f",
     "key": "cohort_season|nationality|United States|Donovan Mitchell|2030-31",
     "lead": null,
-    "margin": 12928842,
+    "margin": 16165224,
     "previous_holder": {
      "player": "Stephen Curry",
      "season": "2026-27",
@@ -21559,9 +21559,9 @@
     },
     "rank": 1,
     "scope_note": "Cohort of 2479 players and 14645 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Donovan Mitchell's $75.5 million in 2030-31 would be the highest single-season salary by a player from the United States, passing Stephen Curry's $62.6 million (2026-27).",
+    "text": "Donovan Mitchell's $78.8 million in 2030-31 would be the highest single-season salary by a player from the United States, passing Stephen Curry's $62.6 million (2026-27).",
     "type": "sets",
-    "value": 75516000
+    "value": 78752382
    },
    {
     "ahead": null,
@@ -21571,7 +21571,7 @@
     "id": "f7d932c1c3777803",
     "key": "cohort_season|pick_range|lottery|Donovan Mitchell|2030-31",
     "lead": null,
-    "margin": 12928842,
+    "margin": 16165224,
     "previous_holder": {
      "player": "Stephen Curry",
      "season": "2026-27",
@@ -21579,9 +21579,9 @@
     },
     "rank": 1,
     "scope_note": "Cohort of 647 players and 5962 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Donovan Mitchell's $75.5 million in 2030-31 would be the highest single-season salary by a lottery pick, passing Stephen Curry's $62.6 million (2026-27).",
+    "text": "Donovan Mitchell's $78.8 million in 2030-31 would be the highest single-season salary by a lottery pick, passing Stephen Curry's $62.6 million (2026-27).",
     "type": "sets",
-    "value": 75516000
+    "value": 78752382
    },
    {
     "ahead": null,
@@ -21591,7 +21591,7 @@
     "id": "e74c984cfebd0cd5",
     "key": "cohort_season|position|G|Donovan Mitchell|2030-31",
     "lead": null,
-    "margin": 12928842,
+    "margin": 16165224,
     "previous_holder": {
      "player": "Stephen Curry",
      "season": "2026-27",
@@ -21599,9 +21599,9 @@
     },
     "rank": 1,
     "scope_note": "Cohort of 1377 players and 7644 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
-    "text": "Donovan Mitchell's $75.5 million in 2030-31 would be the highest single-season salary by a guard, passing Stephen Curry's $62.6 million (2026-27).",
+    "text": "Donovan Mitchell's $78.8 million in 2030-31 would be the highest single-season salary by a guard, passing Stephen Curry's $62.6 million (2026-27).",
     "type": "sets",
-    "value": 75516000
+    "value": 78752382
    },
    {
     "ahead": null,
@@ -21611,7 +21611,7 @@
     "id": "d72491d4ac04b1da",
     "key": "franchise|CLE|Donovan Mitchell|2030-31",
     "lead": null,
-    "margin": 25410372,
+    "margin": 28646754,
     "previous_holder": {
      "player": "Donovan Mitchell",
      "season": "2026-27",
@@ -21619,9 +21619,9 @@
     },
     "rank": 1,
     "scope_note": "Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
-    "text": "Donovan Mitchell's $75.5 million in 2030-31 would be the highest single-season salary in Cavaliers history, breaking his own mark of $50.1 million in 2026-27.",
+    "text": "Donovan Mitchell's $78.8 million in 2030-31 would be the highest single-season salary in Cavaliers history, breaking his own mark of $50.1 million in 2026-27.",
     "type": "sets",
-    "value": 75516000
+    "value": 78752382
    }
   ],
   "Donte DiVincenzo|2026-27": [
@@ -21649,7 +21649,7 @@
   "Dorian Finney-Smith|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "ee053c77bf9ebbf2",
@@ -21865,7 +21865,7 @@
   "Draymond Green|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "1b17ceb9b942b715",
@@ -22003,7 +22003,7 @@
   "Duncan Robinson|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "83b91d70be38f628",
@@ -22421,7 +22421,7 @@
   "Dyson Daniels|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "b59a6181b0e60dcb",
@@ -23219,7 +23219,7 @@
   "Evan Mobley|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "621f73d801bcd871",
@@ -23353,7 +23353,7 @@
   "Evan Mobley|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "390a5adf2f27efd8",
@@ -23431,7 +23431,7 @@
   "Evan Mobley|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "f165325506779c0e",
@@ -23547,7 +23547,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 201,
+    "comparison_size": 202,
     "contracted": true,
     "family": "rank_shift",
     "id": "5e693b887beb871b",
@@ -23565,7 +23565,7 @@
   "Evan Mobley|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 99,
+    "comparison_size": 100,
     "contracted": true,
     "family": "cap_context",
     "id": "a164d050bceb065e",
@@ -23585,7 +23585,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "0513e6bf848cd5e8",
@@ -23601,7 +23601,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "d82d901912862ee8",
@@ -23897,7 +23897,7 @@
   "Franz Wagner|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "fb6583302fbf38a3",
@@ -24113,7 +24113,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2213,
+    "comparison_size": 2211,
     "contracted": false,
     "family": "negative_space",
     "id": "e57243613563eb46",
@@ -24255,7 +24255,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2883,
+    "comparison_size": 2881,
     "contracted": true,
     "family": "negative_space",
     "id": "e22abec174436e7c",
@@ -24275,7 +24275,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2213,
+    "comparison_size": 2211,
     "contracted": true,
     "family": "negative_space",
     "id": "e7a6a1f881e55176",
@@ -24297,7 +24297,7 @@
   "Franz Wagner|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "1997f3c96b5459e1",
@@ -24433,7 +24433,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2883,
+    "comparison_size": 2881,
     "contracted": true,
     "family": "negative_space",
     "id": "508d61dc52b0781b",
@@ -24453,7 +24453,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2213,
+    "comparison_size": 2211,
     "contracted": true,
     "family": "negative_space",
     "id": "82cc318bd8e32b5c",
@@ -24475,7 +24475,7 @@
   "Franz Wagner|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "a89fc814ad97daad",
@@ -24611,7 +24611,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2883,
+    "comparison_size": 2881,
     "contracted": true,
     "family": "negative_space",
     "id": "efb6bf18c252d392",
@@ -24631,7 +24631,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2213,
+    "comparison_size": 2211,
     "contracted": true,
     "family": "negative_space",
     "id": "64bdf6e0e8ea6dcc",
@@ -24869,7 +24869,7 @@
   "Fred VanVleet|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "9dc224badf1263ea",
@@ -25329,7 +25329,7 @@
   "Gary Trent Jr|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "c9af6cc23a95859f",
@@ -26271,7 +26271,7 @@
   "Giannis Antetokounmpo|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 637,
+    "comparison_size": 635,
     "contracted": false,
     "family": "cap_context",
     "id": "303188806ec615d6",
@@ -26539,21 +26539,21 @@
     "id": "cbefcca4fdeb673a",
     "key": "cap_pct_season|Giannis Antetokounmpo|2027-28",
     "lead": null,
-    "margin": 0.0,
+    "margin": -0.4,
     "previous_holder": {
-     "player": "Anthony Davis",
+     "player": "Donovan Mitchell",
      "season": "2027-28",
-     "value": 36.0
+     "value": 36.4
     },
-    "rank": 1,
+    "rank": 2,
     "scope_note": "Share of the 2027-28 salary cap, ranked within that season. Contracted salary against a projected cap. This salary is contracted, not money already paid.",
-    "text": "Giannis Antetokounmpo's $62.8 million salary would take up 36.0% of the 2027-28 cap, tying the largest share of the cap in 2027-28, matching Anthony Davis' 36.0% (2027-28).",
-    "type": "ties",
+    "text": "Giannis Antetokounmpo's $62.8 million salary would take up 36.0% of the 2027-28 cap, the second-largest share of the cap in 2027-28, behind Donovan Mitchell's 36.4% (2027-28).",
+    "type": "approaches",
     "value": 36.0
    },
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "754859047786028d",
@@ -28297,7 +28297,7 @@
   "Herb Jones|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "f8893d2daa024aa2",
@@ -28559,7 +28559,7 @@
   "Immanuel Quickley|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "db39b0a488ffce80",
@@ -28639,7 +28639,7 @@
   "Immanuel Quickley|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "44b0968938af3f01",
@@ -28763,7 +28763,7 @@
   "Isaiah Hartenstein|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "e08f866ae3d3ae66",
@@ -28883,7 +28883,7 @@
   "Isaiah Hartenstein|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "ba0df98aa4872d1b",
@@ -29171,7 +29171,7 @@
   "Ivica Zubac|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "4133da88e8c00cd6",
@@ -29505,7 +29505,7 @@
   "Ja Morant|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "7e0321f7f0676b48",
@@ -29603,7 +29603,7 @@
   "Ja Morant|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "1e956b8a154138af",
@@ -29853,7 +29853,7 @@
   "Jabari Smith|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "59de74fe4e172109",
@@ -29913,7 +29913,7 @@
   "Jabari Smith|2030-31": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "96eab4b72f5e5b5c",
@@ -30049,7 +30049,7 @@
   "Jaden McDaniels|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "e1d14d1679968f70",
@@ -30189,7 +30189,7 @@
   "Jakob Poeltl|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "c7cdb5be2e4c9416",
@@ -30207,7 +30207,7 @@
   "Jakob Poeltl|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "e50f95b3511508d0",
@@ -30225,7 +30225,7 @@
   "Jakob Poeltl|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "e21c7a73a6681dfb",
@@ -30381,7 +30381,7 @@
   "Jalen Brunson|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "30770278a979aa30",
@@ -30621,7 +30621,7 @@
   "Jalen Brunson|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "38e945b72bac3b1e",
@@ -30883,7 +30883,7 @@
   "Jalen Duren|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "eb3db18a6a0ca742",
@@ -30961,7 +30961,7 @@
   "Jalen Duren|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "891de014483c1074",
@@ -31039,7 +31039,7 @@
   "Jalen Duren|2030-31": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "d319799270e21af2",
@@ -31133,7 +31133,7 @@
   "Jalen Green|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "884cf0a7044dc6d7",
@@ -31271,7 +31271,7 @@
   "Jalen Johnson|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "3c21371bbc561aa1",
@@ -31371,7 +31371,7 @@
   "Jalen Johnson|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "01d4a4975d67b740",
@@ -31495,7 +31495,7 @@
   "Jalen Suggs|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "ec1f4813ca9755c8",
@@ -31513,7 +31513,7 @@
   "Jalen Suggs|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "ac18dbd55b97151c",
@@ -31629,7 +31629,7 @@
   "Jalen Williams|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "5f793533ae1a7842",
@@ -31707,7 +31707,7 @@
   "Jalen Williams|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "302b2c961a43c606",
@@ -31785,7 +31785,7 @@
   "Jalen Williams|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "4d227d6839579ed4",
@@ -31861,7 +31861,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 100,
+    "comparison_size": 101,
     "contracted": true,
     "family": "rank_shift",
     "id": "30d603ba5c6c8c54",
@@ -31885,21 +31885,21 @@
     "id": "ece50bdca8b2980f",
     "key": "cap_pct_season|Jalen Williams|2030-31",
     "lead": null,
-    "margin": -10.9,
+    "margin": -12.0,
     "previous_holder": {
-     "player": "Shai Gilgeous-Alexander",
+     "player": "Donovan Mitchell",
      "season": "2030-31",
-     "value": 37.9
+     "value": 39.0
     },
     "rank": 3,
     "scope_note": "Share of the 2030-31 salary cap, ranked within that season. Contracted salary against a projected cap. This salary is contracted, not money already paid.",
-    "text": "Jalen Williams' $54.4 million salary would take up 27.0% of the 2030-31 cap, the third-largest share of the cap in 2030-31, behind Shai Gilgeous-Alexander's 37.9% (2030-31).",
+    "text": "Jalen Williams' $54.4 million salary would take up 27.0% of the 2030-31 cap, the third-largest share of the cap in 2030-31, behind Donovan Mitchell's 39.0% (2030-31).",
     "type": "approaches",
     "value": 27.0
    },
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "65bacbb108e11305",
@@ -32169,7 +32169,7 @@
   "Jamal Murray|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "b821afdf44fcf504",
@@ -32387,7 +32387,7 @@
   "Jamal Murray|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "37a0fcb9ae0b310c",
@@ -32685,7 +32685,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 201,
+    "comparison_size": 202,
     "contracted": true,
     "family": "rank_shift",
     "id": "a93b9d0adccb757a",
@@ -33019,7 +33019,7 @@
   "James Harden|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3361,
+    "comparison_size": 3359,
     "contracted": false,
     "family": "career_earnings",
     "id": "aba2012b1ec732d0",
@@ -33181,7 +33181,7 @@
   "James Harden|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "bb0e5ed8065ed27d",
@@ -33381,7 +33381,7 @@
   "Jaren Jackson Jr|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "b696b1b63dc446b6",
@@ -33497,7 +33497,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 546,
+    "comparison_size": 545,
     "contracted": false,
     "family": "franchise",
     "id": "af20a69fd776a77b",
@@ -33517,7 +33517,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2883,
+    "comparison_size": 2881,
     "contracted": false,
     "family": "negative_space",
     "id": "a31c5db028623937",
@@ -33537,7 +33537,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 21,
+    "comparison_size": 20,
     "contracted": false,
     "family": "rank_shift",
     "id": "9d69346620f53fa0",
@@ -33546,7 +33546,7 @@
     "margin": null,
     "previous_holder": null,
     "rank": 1,
-    "scope_note": "Same franchise in consecutive seasons. Roster of 21 players with a salary on file.",
+    "scope_note": "Same franchise in consecutive seasons. Roster of 20 players with a salary on file.",
     "text": "Jaren Jackson Jr is the Jazz's highest-paid player in 2026-27 after ranking second on the roster in 2025-26.",
     "type": "rank_shift",
     "value": 49000000
@@ -33555,7 +33555,7 @@
   "Jaren Jackson Jr|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "172521767da55be2",
@@ -33631,7 +33631,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 547,
+    "comparison_size": 546,
     "contracted": true,
     "family": "franchise",
     "id": "33f4042daf576fed",
@@ -33651,7 +33651,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2883,
+    "comparison_size": 2881,
     "contracted": true,
     "family": "negative_space",
     "id": "1c7bb0d30cf48c97",
@@ -33673,7 +33673,7 @@
   "Jaren Jackson Jr|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "6c72a040c97ce8a5",
@@ -33749,7 +33749,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 547,
+    "comparison_size": 546,
     "contracted": true,
     "family": "franchise",
     "id": "a449cb932e7b80d5",
@@ -33769,7 +33769,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2883,
+    "comparison_size": 2881,
     "contracted": true,
     "family": "negative_space",
     "id": "19fbed0726e8bb85",
@@ -33807,7 +33807,7 @@
   "Jaren Jackson Jr|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "a1e6843226e2cb14",
@@ -33883,7 +33883,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 547,
+    "comparison_size": 546,
     "contracted": true,
     "family": "franchise",
     "id": "4513fea44e63a275",
@@ -33903,7 +33903,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2883,
+    "comparison_size": 2881,
     "contracted": true,
     "family": "negative_space",
     "id": "8ba529af81fab2db",
@@ -33923,7 +33923,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 100,
+    "comparison_size": 101,
     "contracted": true,
     "family": "rank_shift",
     "id": "3a17223dd70dd92a",
@@ -34167,7 +34167,7 @@
   "Jarrett Allen|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "45de59c19cae7b4b",
@@ -34205,7 +34205,7 @@
   "Jarrett Allen|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "6a8b83e544536776",
@@ -34531,7 +34531,7 @@
   "Jaylen Brown|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "b75c208d935494e1",
@@ -34775,21 +34775,21 @@
     "id": "6fd5fceac0976e72",
     "key": "cap_pct_season|Jaylen Brown|2027-28",
     "lead": null,
-    "margin": -0.6,
+    "margin": -1.0,
     "previous_holder": {
-     "player": "Anthony Davis",
+     "player": "Donovan Mitchell",
      "season": "2027-28",
-     "value": 36.0
+     "value": 36.4
     },
-    "rank": 6,
+    "rank": 7,
     "scope_note": "Share of the 2027-28 salary cap, ranked within that season. Contracted salary against a projected cap. This salary is contracted, not money already paid.",
-    "text": "Jaylen Brown's $61.7 million salary would take up 35.4% of the 2027-28 cap, the sixth-largest share of the cap in 2027-28, behind Anthony Davis' 36.0% (2027-28).",
+    "text": "Jaylen Brown's $61.7 million salary would take up 35.4% of the 2027-28 cap, the seventh-largest share of the cap in 2027-28, behind Donovan Mitchell's 36.4% (2027-28).",
     "type": "approaches",
     "value": 35.4
    },
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "1435537f941ab942",
@@ -34983,27 +34983,7 @@
   "Jaylen Brown|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 200,
-    "contracted": true,
-    "family": "cap_context",
-    "id": "74fa769dbe8ec105",
-    "key": "cap_pct_season|Jaylen Brown|2028-29",
-    "lead": null,
-    "margin": -2.3,
-    "previous_holder": {
-     "player": "Devin Booker",
-     "season": "2028-29",
-     "value": 38.2
-    },
-    "rank": 5,
-    "scope_note": "Share of the 2028-29 salary cap, ranked within that season. Contracted salary against a projected cap. This salary is contracted, not money already paid.",
-    "text": "Jaylen Brown's $65.6 million salary would take up 35.9% of the 2028-29 cap, the fifth-largest share of the cap in 2028-29, behind Devin Booker's 38.2% (2028-29).",
-    "type": "approaches",
-    "value": 35.9
-   },
-   {
-    "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "54fce672db9e2665",
@@ -35401,7 +35381,7 @@
   "Jayson Tatum|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 637,
+    "comparison_size": 635,
     "contracted": false,
     "family": "cap_context",
     "id": "5819f24d380bbc71",
@@ -35421,7 +35401,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "6d6f44738fc3cd56",
@@ -35685,21 +35665,21 @@
     "id": "09e50a389baf8b78",
     "key": "cap_pct_season|Jayson Tatum|2027-28",
     "lead": null,
-    "margin": 0.0,
+    "margin": -0.4,
     "previous_holder": {
-     "player": "Anthony Davis",
+     "player": "Donovan Mitchell",
      "season": "2027-28",
-     "value": 36.0
+     "value": 36.4
     },
-    "rank": 1,
+    "rank": 2,
     "scope_note": "Share of the 2027-28 salary cap, ranked within that season. Contracted salary against a projected cap. This salary is contracted, not money already paid.",
-    "text": "Jayson Tatum's $62.8 million salary would take up 36.0% of the 2027-28 cap, tying the largest share of the cap in 2027-28, matching Anthony Davis' 36.0% (2027-28).",
-    "type": "ties",
+    "text": "Jayson Tatum's $62.8 million salary would take up 36.0% of the 2027-28 cap, the second-largest share of the cap in 2027-28, behind Donovan Mitchell's 36.4% (2027-28).",
+    "type": "approaches",
     "value": 36.0
    },
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "5573fd5f5cb45173",
@@ -35897,7 +35877,7 @@
   "Jayson Tatum|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 200,
+    "comparison_size": 201,
     "contracted": true,
     "family": "cap_context",
     "id": "10c8cbf25fb70c0b",
@@ -35909,9 +35889,9 @@
      "season": "2028-29",
      "value": 38.2
     },
-    "rank": 2,
+    "rank": 3,
     "scope_note": "Share of the 2028-29 salary cap, ranked within that season. Contracted salary against a projected cap. This salary is contracted, not money already paid.",
-    "text": "Jayson Tatum's $67.1 million salary would take up 36.7% of the 2028-29 cap, the second-largest share of the cap in 2028-29, behind Devin Booker's 38.2% (2028-29).",
+    "text": "Jayson Tatum's $67.1 million salary would take up 36.7% of the 2028-29 cap, the third-largest share of the cap in 2028-29, behind Devin Booker's 38.2% (2028-29).",
     "type": "approaches",
     "value": 36.7
    },
@@ -36099,7 +36079,7 @@
   "Jayson Tatum|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 99,
+    "comparison_size": 100,
     "contracted": true,
     "family": "cap_context",
     "id": "0f524eefbfceec9a",
@@ -36111,15 +36091,15 @@
      "season": "2029-30",
      "value": 39.3
     },
-    "rank": 2,
+    "rank": 3,
     "scope_note": "Share of the 2029-30 salary cap, ranked within that season. Contracted salary against a projected cap. This salary is contracted, not money already paid.",
-    "text": "Jayson Tatum's $71.4 million salary would take up 37.2% of the 2029-30 cap, the second-largest share of the cap in 2029-30, behind Devin Booker's 39.3% (2029-30).",
+    "text": "Jayson Tatum's $71.4 million salary would take up 37.2% of the 2029-30 cap, the third-largest share of the cap in 2029-30, behind Devin Booker's 39.3% (2029-30).",
     "type": "approaches",
     "value": 37.2
    },
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "e09cae620e116f75",
@@ -36571,7 +36551,7 @@
   "Jerami Grant|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "5480e5cc2afc111b",
@@ -37401,7 +37381,7 @@
   "Jimmy Butler|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "99e7c9d814661f8e",
@@ -38587,21 +38567,21 @@
     "id": "5d498253662a0d1c",
     "key": "cap_pct_season|Joel Embiid|2027-28",
     "lead": null,
-    "margin": -0.2,
+    "margin": -0.6,
     "previous_holder": {
-     "player": "Anthony Davis",
+     "player": "Donovan Mitchell",
      "season": "2027-28",
-     "value": 36.0
+     "value": 36.4
     },
-    "rank": 5,
+    "rank": 6,
     "scope_note": "Share of the 2027-28 salary cap, ranked within that season. Contracted salary against a projected cap. This salary is contracted, not money already paid.",
-    "text": "Joel Embiid's $62.4 million salary would take up 35.8% of the 2027-28 cap, the fifth-largest share of the cap in 2027-28, behind Anthony Davis' 36.0% (2027-28).",
+    "text": "Joel Embiid's $62.4 million salary would take up 35.8% of the 2027-28 cap, the sixth-largest share of the cap in 2027-28, behind Donovan Mitchell's 36.4% (2027-28).",
     "type": "approaches",
     "value": 35.8
    },
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "005816314ce9117d",
@@ -38795,7 +38775,7 @@
   "Joel Embiid|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 200,
+    "comparison_size": 201,
     "contracted": true,
     "family": "cap_context",
     "id": "49d4200046bda4aa",
@@ -38807,15 +38787,15 @@
      "season": "2028-29",
      "value": 38.2
     },
-    "rank": 3,
+    "rank": 4,
     "scope_note": "Share of the 2028-29 salary cap, ranked within that season. Contracted salary against a projected cap. This salary is contracted, not money already paid.",
-    "text": "Joel Embiid's $67 million salary would take up 36.6% of the 2028-29 cap, the third-largest share of the cap in 2028-29, behind Devin Booker's 38.2% (2028-29).",
+    "text": "Joel Embiid's $67 million salary would take up 36.6% of the 2028-29 cap, the fourth-largest share of the cap in 2028-29, behind Devin Booker's 38.2% (2028-29).",
     "type": "approaches",
     "value": 36.6
    },
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "2fd4d5225aa6e46e",
@@ -39063,7 +39043,7 @@
   "John Collins|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "3c8bf683ebae8f83",
@@ -40437,7 +40417,7 @@
   "Jordan Poole|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "734a6f818554bc58",
@@ -40635,7 +40615,7 @@
   "Josh Giddey|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "fc9ba512c17d9597",
@@ -40653,7 +40633,7 @@
   "Josh Hart|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "e070394eb1463559",
@@ -41421,7 +41401,7 @@
   "Julius Randle|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "a1f002731fc0c50f",
@@ -41499,7 +41479,7 @@
   "Julius Randle|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "8bda2a1efb59414a",
@@ -42537,7 +42517,7 @@
   "Karl-Anthony Towns|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "a3738b1a3a703b22",
@@ -42901,21 +42881,21 @@
     "id": "80f34857e76d03f8",
     "key": "cap_pct_season|Karl-Anthony Towns|2027-28",
     "lead": null,
-    "margin": -1.0,
+    "margin": -1.4,
     "previous_holder": {
-     "player": "Anthony Davis",
+     "player": "Donovan Mitchell",
      "season": "2027-28",
-     "value": 36.0
+     "value": 36.4
     },
-    "rank": 8,
+    "rank": 9,
     "scope_note": "Share of the 2027-28 salary cap, ranked within that season. Contracted salary against a projected cap. This salary is contracted, not money already paid.",
-    "text": "Karl-Anthony Towns' $61 million salary would take up 35.0% of the 2027-28 cap, the eighth-largest share of the cap in 2027-28, behind Anthony Davis' 36.0% (2027-28).",
+    "text": "Karl-Anthony Towns' $61 million salary would take up 35.0% of the 2027-28 cap, the ninth-largest share of the cap in 2027-28, behind Donovan Mitchell's 36.4% (2027-28).",
     "type": "approaches",
     "value": 35.0
    },
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "5a4a879ce9844451",
@@ -43601,7 +43581,7 @@
   "Kawhi Leonard|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "0e79ce26e268a032",
@@ -43821,7 +43801,7 @@
   "Kawhi Leonard|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "dc3c6b43cc75a694",
@@ -44235,7 +44215,7 @@
   "Keegan Murray|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "1641d8d7575b06a2",
@@ -44311,7 +44291,7 @@
   "Keegan Murray|2030-31": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "7c2ba46efe4015b0",
@@ -45031,7 +45011,7 @@
   "Kentavious Caldwell-Pope|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "e768662f2f8c8f61",
@@ -46021,7 +46001,7 @@
   "Kevin Durant|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3361,
+    "comparison_size": 3359,
     "contracted": false,
     "family": "career_earnings",
     "id": "247311cf62e9c109",
@@ -46509,7 +46489,7 @@
   "Kevin Huerter|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "377b08c8c9034a3c",
@@ -46991,7 +46971,7 @@
   "Keyonte George|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "f41788b9360b6a50",
@@ -47589,7 +47569,7 @@
   "Khris Middleton|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "17cf60800e6fd264",
@@ -48321,7 +48301,7 @@
   "Kristaps Porzingis|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "942fe12310ca79a2",
@@ -49525,7 +49505,7 @@
   "Kyrie Irving|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "a8eed3f0611074bf",
@@ -49737,7 +49717,7 @@
   "LaMelo Ball|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "b347a64fe5def48f",
@@ -49793,7 +49773,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2883,
+    "comparison_size": 2881,
     "contracted": true,
     "family": "negative_space",
     "id": "b7100c1df9dfd862",
@@ -49815,7 +49795,7 @@
   "LaMelo Ball|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "cae80ad4e86986b9",
@@ -49871,7 +49851,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2883,
+    "comparison_size": 2881,
     "contracted": true,
     "family": "negative_space",
     "id": "dacf336f9ca747d5",
@@ -50085,7 +50065,7 @@
   "Lauri Markkanen|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "76177cfacc3b285d",
@@ -50221,7 +50201,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 546,
+    "comparison_size": 545,
     "contracted": false,
     "family": "franchise",
     "id": "0fb161622ff8aabb",
@@ -50241,7 +50221,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2883,
+    "comparison_size": 2881,
     "contracted": false,
     "family": "negative_space",
     "id": "908d196dc754677a",
@@ -50261,7 +50241,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 21,
+    "comparison_size": 20,
     "contracted": false,
     "family": "rank_shift",
     "id": "44312c18b5ea9bd3",
@@ -50270,7 +50250,7 @@
     "margin": null,
     "previous_holder": null,
     "rank": 2,
-    "scope_note": "Same franchise in consecutive seasons. Roster of 21 players with a salary on file.",
+    "scope_note": "Same franchise in consecutive seasons. Roster of 20 players with a salary on file.",
     "text": "Lauri Markkanen is no longer the Jazz's highest-paid player in 2026-27 after holding that spot in 2025-26.",
     "type": "rank_shift",
     "value": 46113154
@@ -50279,7 +50259,7 @@
   "Lauri Markkanen|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "f47d65ba4e5419d3",
@@ -50355,7 +50335,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 547,
+    "comparison_size": 546,
     "contracted": true,
     "family": "franchise",
     "id": "6b90ce7862800679",
@@ -50375,7 +50355,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2883,
+    "comparison_size": 2881,
     "contracted": true,
     "family": "negative_space",
     "id": "85bdaf4b89fdcfe3",
@@ -50397,7 +50377,7 @@
   "Lauri Markkanen|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "9bc423c93ed96442",
@@ -50513,7 +50493,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 547,
+    "comparison_size": 546,
     "contracted": true,
     "family": "franchise",
     "id": "56e29dcc72eebb40",
@@ -50533,7 +50513,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2883,
+    "comparison_size": 2881,
     "contracted": true,
     "family": "negative_space",
     "id": "9c529bbbf0e7c4ce",
@@ -51299,7 +51279,7 @@
   "LeBron James|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3361,
+    "comparison_size": 3359,
     "contracted": false,
     "family": "career_earnings",
     "id": "c92b9197efc2f1d9",
@@ -51777,7 +51757,7 @@
   "Luka Doncic|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "bc137519faef4b75",
@@ -51911,7 +51891,7 @@
   "Luka Doncic|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "16f07b2a5a94cfac",
@@ -51927,7 +51907,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "3de3e55e52780154",
@@ -52245,7 +52225,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 201,
+    "comparison_size": 202,
     "contracted": true,
     "family": "rank_shift",
     "id": "2db7546dffe824f0",
@@ -52737,7 +52717,7 @@
   "Malik Monk|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "de6e2d7e0b26a950",
@@ -53299,7 +53279,7 @@
   "Marcus Smart|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "1bb502c04b0b2901",
@@ -53895,7 +53875,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2213,
+    "comparison_size": 2211,
     "contracted": false,
     "family": "negative_space",
     "id": "b0c3b7753077c399",
@@ -54017,7 +53997,7 @@
   "Mikal Bridges|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "54f745ba0be9fb69",
@@ -54075,7 +54055,7 @@
   "Mikal Bridges|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "baae048784f49b4f",
@@ -54133,7 +54113,7 @@
   "Mikal Bridges|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "0dc094b15a0e2dc0",
@@ -54209,7 +54189,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2213,
+    "comparison_size": 2211,
     "contracted": true,
     "family": "negative_space",
     "id": "2282377c7a0a05c9",
@@ -54713,7 +54693,7 @@
   "Mike Conley|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "2e88a1f6d134d9ef",
@@ -54897,7 +54877,7 @@
   "Mitchell Robinson|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "5ea0554726bce29b",
@@ -55349,7 +55329,7 @@
   "Myles Turner|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "9202dee20aef9851",
@@ -55511,7 +55491,7 @@
   "Naz Reid|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "6c0fea82bcc02cb2",
@@ -55587,7 +55567,7 @@
   "Naz Reid|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "ce739719f7e7f179",
@@ -55635,7 +55615,7 @@
     "previous_holder": null,
     "rank": 1,
     "scope_note": "Same franchise in consecutive seasons. Roster of 1 players with a salary on file.",
-    "text": "Neemias Queta would be the Celtics' highest-paid player in 2030-31 after ranking second on the roster in 2029-30.",
+    "text": "Neemias Queta would be the Celtics' highest-paid player in 2030-31 after ranking third on the roster in 2029-30.",
     "type": "rank_shift",
     "value": 15500000
    }
@@ -56133,7 +56113,7 @@
   "Nicolas Claxton|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "7caf301ac980bb36",
@@ -57119,7 +57099,7 @@
   "Nikola Jokic|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 637,
+    "comparison_size": 635,
     "contracted": false,
     "family": "cap_context",
     "id": "239bac848a894b82",
@@ -57447,21 +57427,21 @@
     "id": "bb66588c11f56c0a",
     "key": "cap_pct_season|Nikola Jokic|2027-28",
     "lead": null,
-    "margin": 0.0,
+    "margin": -0.4,
     "previous_holder": {
-     "player": "Anthony Davis",
+     "player": "Donovan Mitchell",
      "season": "2027-28",
-     "value": 36.0
+     "value": 36.4
     },
-    "rank": 1,
+    "rank": 2,
     "scope_note": "Share of the 2027-28 salary cap, ranked within that season. Contracted salary against a projected cap. This salary is contracted, not money already paid.",
-    "text": "Nikola Jokic's $62.8 million salary would take up 36.0% of the 2027-28 cap, tying the largest share of the cap in 2027-28, matching Anthony Davis' 36.0% (2027-28).",
-    "type": "ties",
+    "text": "Nikola Jokic's $62.8 million salary would take up 36.0% of the 2027-28 cap, the second-largest share of the cap in 2027-28, behind Donovan Mitchell's 36.4% (2027-28).",
+    "type": "approaches",
     "value": 36.0
    },
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "7c1133da8e63e4a3",
@@ -57633,22 +57613,6 @@
     "scope_note": "Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. This salary is contracted, not money already paid.",
     "text": "Nikola Jokic's $62.8 million in 2027-28 would be the highest single-season salary in Nuggets history, breaking his own mark of $59 million in 2026-27.",
     "type": "sets",
-    "value": 62841702
-   },
-   {
-    "ahead": null,
-    "comparison_size": 351,
-    "contracted": true,
-    "family": "rank_shift",
-    "id": "fb833f61c8061484",
-    "key": "rank_league_first|Nikola Jokic|2027-28",
-    "lead": null,
-    "margin": null,
-    "previous_holder": null,
-    "rank": 1,
-    "scope_note": "First season at No. 1. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
-    "text": "Nikola Jokic would be the highest-paid player in the league in 2027-28 for the first time in his career.",
-    "type": "rank_shift",
     "value": 62841702
    }
   ],
@@ -58201,7 +58165,7 @@
   "Norman Powell|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "20ee76982ce2795a",
@@ -58485,7 +58449,7 @@
   "OG Anunoby|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "cdea5b8e93ed7bfe",
@@ -58641,7 +58605,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2213,
+    "comparison_size": 2211,
     "contracted": false,
     "family": "negative_space",
     "id": "a728bb879b7750a9",
@@ -58663,7 +58627,7 @@
   "OG Anunoby|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "f0dcbc624fa99af7",
@@ -58759,7 +58723,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2883,
+    "comparison_size": 2881,
     "contracted": true,
     "family": "negative_space",
     "id": "cd7efb2c19b4c8b5",
@@ -58779,7 +58743,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2213,
+    "comparison_size": 2211,
     "contracted": true,
     "family": "negative_space",
     "id": "1dc08be2ced942e7",
@@ -58801,7 +58765,7 @@
   "OG Anunoby|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "56ffeedc605cfd90",
@@ -58897,7 +58861,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2883,
+    "comparison_size": 2881,
     "contracted": true,
     "family": "negative_space",
     "id": "fb998c0e8164922a",
@@ -58917,7 +58881,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2213,
+    "comparison_size": 2211,
     "contracted": true,
     "family": "negative_space",
     "id": "02613f45914d4252",
@@ -59259,7 +59223,7 @@
   "PJ Washington|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "13cf4e246e39e6ea",
@@ -59295,7 +59259,7 @@
   "PJ Washington|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "bf3098a1efdb8551",
@@ -59481,7 +59445,7 @@
   "Paolo Banchero|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "74323d5c5ad83d77",
@@ -59577,7 +59541,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2883,
+    "comparison_size": 2881,
     "contracted": true,
     "family": "negative_space",
     "id": "2e369dbe91580bee",
@@ -59599,7 +59563,7 @@
   "Paolo Banchero|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "aa0ae812cbff3de8",
@@ -59695,7 +59659,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2883,
+    "comparison_size": 2881,
     "contracted": true,
     "family": "negative_space",
     "id": "bc55f30299f46330",
@@ -59717,7 +59681,7 @@
   "Paolo Banchero|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "bb355b7cec31b0c8",
@@ -59813,7 +59777,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2883,
+    "comparison_size": 2881,
     "contracted": true,
     "family": "negative_space",
     "id": "5927449da6dcfcd6",
@@ -59833,7 +59797,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 100,
+    "comparison_size": 101,
     "contracted": true,
     "family": "rank_shift",
     "id": "7ea3ad22bdd968b9",
@@ -59873,21 +59837,21 @@
     "id": "e8e2e69ee2e9bfca",
     "key": "cap_pct_season|Paolo Banchero|2030-31",
     "lead": null,
-    "margin": -10.9,
+    "margin": -12.0,
     "previous_holder": {
-     "player": "Shai Gilgeous-Alexander",
+     "player": "Donovan Mitchell",
      "season": "2030-31",
-     "value": 37.9
+     "value": 39.0
     },
     "rank": 3,
     "scope_note": "Share of the 2030-31 salary cap, ranked within that season. Contracted salary against a projected cap. This salary is contracted, not money already paid.",
-    "text": "Paolo Banchero's $54.4 million salary would take up 27.0% of the 2030-31 cap, the third-largest share of the cap in 2030-31, behind Shai Gilgeous-Alexander's 37.9% (2030-31).",
+    "text": "Paolo Banchero's $54.4 million salary would take up 27.0% of the 2030-31 cap, the third-largest share of the cap in 2030-31, behind Donovan Mitchell's 39.0% (2030-31).",
     "type": "approaches",
     "value": 27.0
    },
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "fa0becda172cdde4",
@@ -60003,7 +59967,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2883,
+    "comparison_size": 2881,
     "contracted": true,
     "family": "negative_space",
     "id": "52c1ca9d21fd557e",
@@ -60473,7 +60437,7 @@
   "Pascal Siakam|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "cf3d342ceba1fb7b",
@@ -60671,7 +60635,7 @@
   "Pascal Siakam|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "90e28231568491bf",
@@ -61069,7 +61033,7 @@
   "Patrick Williams|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "15c4f8a5583f942f",
@@ -61837,7 +61801,7 @@
   "Paul George|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3361,
+    "comparison_size": 3359,
     "contracted": false,
     "family": "career_earnings",
     "id": "36718f0ed925368f",
@@ -62079,7 +62043,7 @@
   "Paul George|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "8ae2350a43ca2412",
@@ -62544,6 +62508,90 @@
     "text": "Paul Reed's $5.6 million in 2026-27 is the second-highest single-season salary by a No. 58 pick, behind his own $7.7 million (2023-24).",
     "type": "approaches",
     "value": 5602689
+   }
+  ],
+  "Payton Pritchard|2028-29": [
+   {
+    "ahead": null,
+    "comparison_size": 117,
+    "contracted": true,
+    "family": "cohort",
+    "id": "7a9ce2ee59fbbec7",
+    "key": "cohort_season|college|Oregon|Payton Pritchard|2028-29",
+    "lead": null,
+    "margin": -527671,
+    "previous_holder": {
+     "player": "Dillon Brooks",
+     "season": "2023-24",
+     "value": 22627671
+    },
+    "rank": 4,
+    "scope_note": "Cohort of 20 players and 117 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "text": "Payton Pritchard's $22.1 million in 2028-29 would be the fourth-highest single-season salary among players out of Oregon, behind Dillon Brooks' $22.6 million (2023-24).",
+    "type": "approaches",
+    "value": 22100000
+   },
+   {
+    "ahead": null,
+    "comparison_size": 267,
+    "contracted": true,
+    "family": "cohort",
+    "id": "337a7b9f06d1aca4",
+    "key": "cohort_season|draft_slot|26|Payton Pritchard|2028-29",
+    "lead": null,
+    "margin": 2100000,
+    "previous_holder": {
+     "player": "George Hill",
+     "season": "2017-18",
+     "value": 20000000
+    },
+    "rank": 1,
+    "scope_note": "Cohort of 39 players and 267 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "text": "Payton Pritchard's $22.1 million in 2028-29 would be the highest single-season salary by a No. 26 pick, passing George Hill's $20 million (2017-18).",
+    "type": "sets",
+    "value": 22100000
+   }
+  ],
+  "Payton Pritchard|2029-30": [
+   {
+    "ahead": null,
+    "comparison_size": 117,
+    "contracted": true,
+    "family": "cohort",
+    "id": "5bb77c04c9d39480",
+    "key": "cohort_season|college|Oregon|Payton Pritchard|2029-30",
+    "lead": null,
+    "margin": -527671,
+    "previous_holder": {
+     "player": "Dillon Brooks",
+     "season": "2023-24",
+     "value": 22627671
+    },
+    "rank": 4,
+    "scope_note": "Cohort of 20 players and 117 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "text": "Payton Pritchard's $22.1 million in 2029-30 would be the fourth-highest single-season salary among players out of Oregon, behind Dillon Brooks' $22.6 million (2023-24).",
+    "type": "approaches",
+    "value": 22100000
+   },
+   {
+    "ahead": null,
+    "comparison_size": 267,
+    "contracted": true,
+    "family": "cohort",
+    "id": "b5d596d3cbae92ab",
+    "key": "cohort_season|draft_slot|26|Payton Pritchard|2029-30",
+    "lead": null,
+    "margin": 2100000,
+    "previous_holder": {
+     "player": "George Hill",
+     "season": "2017-18",
+     "value": 20000000
+    },
+    "rank": 1,
+    "scope_note": "Cohort of 39 players and 267 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "text": "Payton Pritchard's $22.1 million in 2029-30 would be the highest single-season salary by a No. 26 pick, passing George Hill's $20 million (2017-18).",
+    "type": "sets",
+    "value": 22100000
    }
   ],
   "Pelle Larsson|2027-28": [
@@ -63167,7 +63215,7 @@
   "Robert Williams|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "72ab845098e7c0fa",
@@ -63913,7 +63961,7 @@
   "Rudy Gobert|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "c2f7d035cf4bf152",
@@ -65437,7 +65485,7 @@
   "Scottie Barnes|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "f18f188855d1c518",
@@ -65631,7 +65679,7 @@
   "Scottie Barnes|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "c4a88bb292143fba",
@@ -65747,7 +65795,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2883,
+    "comparison_size": 2881,
     "contracted": true,
     "family": "negative_space",
     "id": "53c80a3e1845278f",
@@ -65769,7 +65817,7 @@
   "Scottie Barnes|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "5d53280c6cc31fe5",
@@ -65885,7 +65933,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2883,
+    "comparison_size": 2881,
     "contracted": true,
     "family": "negative_space",
     "id": "10d722ee8904f433",
@@ -65907,7 +65955,7 @@
   "Scottie Barnes|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "d637140833ad9fa1",
@@ -66023,7 +66071,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2883,
+    "comparison_size": 2881,
     "contracted": true,
     "family": "negative_space",
     "id": "bd3275ac6c447031",
@@ -66097,7 +66145,7 @@
   "Shaedon Sharpe|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "33f2bb9f28fad227",
@@ -66333,21 +66381,21 @@
     "id": "e51f2b2e894f50ba",
     "key": "cap_pct_season|Shai Gilgeous-Alexander|2027-28",
     "lead": null,
-    "margin": -0.7,
+    "margin": -1.1,
     "previous_holder": {
-     "player": "Anthony Davis",
+     "player": "Donovan Mitchell",
      "season": "2027-28",
-     "value": 36.0
+     "value": 36.4
     },
-    "rank": 7,
+    "rank": 8,
     "scope_note": "Share of the 2027-28 salary cap, ranked within that season. Contracted salary against a projected cap. This salary is contracted, not money already paid.",
-    "text": "Shai Gilgeous-Alexander's $61.6 million salary would take up 35.3% of the 2027-28 cap, the seventh-largest share of the cap in 2027-28, behind Anthony Davis' 36.0% (2027-28).",
+    "text": "Shai Gilgeous-Alexander's $61.6 million salary would take up 35.3% of the 2027-28 cap, the eighth-largest share of the cap in 2027-28, behind Donovan Mitchell's 36.4% (2027-28).",
     "type": "approaches",
     "value": 35.3
    },
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "de13e8e3aa8f51ff",
@@ -66363,7 +66411,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "fecd15d7dd5acbb6",
@@ -66567,7 +66615,7 @@
     "lead": null,
     "margin": null,
     "previous_holder": null,
-    "rank": 7,
+    "rank": 8,
     "scope_note": "First season inside the top 10. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Shai Gilgeous-Alexander's salary in 2027-28 would put him in the league's top 10 for the first time in his career.",
     "type": "rank_shift",
@@ -66593,7 +66641,7 @@
   "Shai Gilgeous-Alexander|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 200,
+    "comparison_size": 201,
     "contracted": true,
     "family": "cap_context",
     "id": "63db69296b1dd0b9",
@@ -66605,15 +66653,15 @@
      "season": "2028-29",
      "value": 38.2
     },
-    "rank": 4,
+    "rank": 5,
     "scope_note": "Share of the 2028-29 salary cap, ranked within that season. Contracted salary against a projected cap. This salary is contracted, not money already paid.",
-    "text": "Shai Gilgeous-Alexander's $66.5 million salary would take up 36.4% of the 2028-29 cap, the fourth-largest share of the cap in 2028-29, behind Devin Booker's 38.2% (2028-29).",
+    "text": "Shai Gilgeous-Alexander's $66.5 million salary would take up 36.4% of the 2028-29 cap, the fifth-largest share of the cap in 2028-29, behind Devin Booker's 38.2% (2028-29).",
     "type": "approaches",
     "value": 36.4
    },
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "d67e0d52a9a9e8b6",
@@ -66811,7 +66859,7 @@
   "Shai Gilgeous-Alexander|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 99,
+    "comparison_size": 100,
     "contracted": true,
     "family": "cap_context",
     "id": "9c30947b9a12e129",
@@ -66823,9 +66871,9 @@
      "season": "2029-30",
      "value": 39.3
     },
-    "rank": 2,
+    "rank": 3,
     "scope_note": "Share of the 2029-30 salary cap, ranked within that season. Contracted salary against a projected cap. This salary is contracted, not money already paid.",
-    "text": "Shai Gilgeous-Alexander's $71.5 million salary would take up 37.2% of the 2029-30 cap, the second-largest share of the cap in 2029-30, behind Devin Booker's 39.3% (2029-30).",
+    "text": "Shai Gilgeous-Alexander's $71.5 million salary would take up 37.2% of the 2029-30 cap, the third-largest share of the cap in 2029-30, behind Devin Booker's 39.3% (2029-30).",
     "type": "approaches",
     "value": 37.2
    },
@@ -67019,21 +67067,21 @@
     "id": "6702c95e4c7a0ea1",
     "key": "cap_pct_season|Shai Gilgeous-Alexander|2030-31",
     "lead": null,
-    "margin": 0.5,
+    "margin": -1.1,
     "previous_holder": {
      "player": "Donovan Mitchell",
      "season": "2030-31",
-     "value": 37.4
+     "value": 39.0
     },
-    "rank": 1,
+    "rank": 2,
     "scope_note": "Share of the 2030-31 salary cap, ranked within that season. Contracted salary against a projected cap. This salary is contracted, not money already paid.",
-    "text": "Shai Gilgeous-Alexander's $76.4 million salary would take up 37.9% of the 2030-31 cap, the largest share of the cap in 2030-31, passing Donovan Mitchell's 37.4% (2030-31).",
-    "type": "sets",
+    "text": "Shai Gilgeous-Alexander's $76.4 million salary would take up 37.9% of the 2030-31 cap, the second-largest share of the cap in 2030-31, behind Donovan Mitchell's 39.0% (2030-31).",
+    "type": "approaches",
     "value": 37.9
    },
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "662512705a7c6e03",
@@ -68861,7 +68909,7 @@
   "Stephen Curry|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 637,
+    "comparison_size": 635,
     "contracted": false,
     "family": "cap_context",
     "id": "858ea700ecf4aec3",
@@ -68881,7 +68929,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "dafb3b2d7b2cf422",
@@ -68897,7 +68945,7 @@
    },
    {
     "ahead": "LeBron James and Kevin Durant",
-    "comparison_size": 3361,
+    "comparison_size": 3359,
     "contracted": false,
     "family": "career_earnings",
     "id": "a7e1ea9c74487758",
@@ -69829,7 +69877,7 @@
   "Steven Adams|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "c704ebac4481bd50",
@@ -71949,7 +71997,7 @@
   "Trae Young|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "d884f603bd03620d",
@@ -72107,7 +72155,7 @@
   "Trae Young|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "683d1b8894271639",
@@ -72205,7 +72253,7 @@
   "Trae Young|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "d4dbd4b85ccdb212",
@@ -72319,7 +72367,7 @@
   "Trae Young|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "52232c454b9ffd32",
@@ -72495,7 +72543,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 100,
+    "comparison_size": 101,
     "contracted": true,
     "family": "rank_shift",
     "id": "bf29865c8d61cceb",
@@ -72705,7 +72753,7 @@
   "Trey Murphy|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "713c796a77e7a75b",
@@ -73117,7 +73165,7 @@
   "Tyrese Haliburton|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "fce554406dcca6d9",
@@ -73331,7 +73379,7 @@
   "Tyrese Haliburton|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "a11ae0fe5329dbfd",
@@ -73465,7 +73513,7 @@
   "Tyrese Haliburton|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "6af1bfb3bdd84d39",
@@ -73643,7 +73691,7 @@
   "Tyrese Maxey|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "84080ea786aa72cf",
@@ -73721,7 +73769,7 @@
   "Tyrese Maxey|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "3f557e1834d5ab97",
@@ -73779,7 +73827,7 @@
   "Tyrese Maxey|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "ec16b60d77209409",
@@ -74335,7 +74383,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 558,
+    "comparison_size": 557,
     "contracted": true,
     "family": "franchise",
     "id": "6b34f2547f29ce18",
@@ -74357,7 +74405,7 @@
   "Victor Wembanyama|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "f5adb720a36d2239",
@@ -74413,7 +74461,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 558,
+    "comparison_size": 557,
     "contracted": true,
     "family": "franchise",
     "id": "05fc3501b1c5b275",
@@ -74435,7 +74483,7 @@
   "Victor Wembanyama|2029-30": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "458831bef867271c",
@@ -74491,7 +74539,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 558,
+    "comparison_size": 557,
     "contracted": true,
     "family": "franchise",
     "id": "513c3a78ecb4f9fc",
@@ -74679,7 +74727,7 @@
   "Walker Kessler|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "349216910924199e",
@@ -74819,7 +74867,7 @@
   "Wendell Carter Jr|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "c0e70a938cf5a299",
@@ -75599,7 +75647,7 @@
   "Zach LaVine|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": false,
     "family": "career_earnings",
     "id": "324884b778ef2c65",
@@ -75755,7 +75803,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 526,
+    "comparison_size": 525,
     "contracted": false,
     "family": "franchise",
     "id": "9c1e400730ad642a",
@@ -75775,7 +75823,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2883,
+    "comparison_size": 2881,
     "contracted": false,
     "family": "negative_space",
     "id": "0d38a0daacf77e21",
@@ -76263,7 +76311,7 @@
   "Zion Williamson|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 3362,
+    "comparison_size": 3360,
     "contracted": true,
     "family": "career_earnings",
     "id": "b3b63d3bd84658c9",
@@ -76359,7 +76407,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 2883,
+    "comparison_size": 2881,
     "contracted": true,
     "family": "negative_space",
     "id": "0b17d8087441d51f",
@@ -76381,7 +76429,7 @@
  },
  "meta": {
   "current_season": "2026-27",
-  "factoid_count": 3845,
+  "factoid_count": 3847,
   "families": [
    "cap_context",
    "career_earnings",
@@ -76566,7 +76614,7 @@
    "split_season_records": 2215,
    "truncated_careers": 359
   },
-  "record_count": 1379,
+  "record_count": 1381,
   "scope_first_season": "1990-91",
   "seasons_covered": [
    "2016-17",
