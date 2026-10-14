@@ -3,7 +3,7 @@
   "current": {
    "2024-25": {
     "also_in_the_historical_tab": 457,
-    "dollars_offered": 4968370515,
+    "dollars_offered": 4967791938,
     "missing_from_the_historical_tab": [
      {
       "player": "Hayden Gray",
@@ -194,10 +194,6 @@
       "salary": 578577
      },
      {
-      "player": "Mohamed Wague",
-      "salary": 578577
-     },
-     {
       "player": "Nick Martinelli",
       "salary": 578577
      },
@@ -306,11 +302,11 @@
       "salary": 100000
      }
     ],
-    "player_seasons_offered": 532
+    "player_seasons_offered": 531
    },
    "2025-26": {
     "also_in_the_historical_tab": 531,
-    "dollars_offered": 5375364671,
+    "dollars_offered": 5375042957,
     "missing_from_the_historical_tab": [
      {
       "player": "Trey Lyles",
@@ -389,10 +385,6 @@
       "salary": 321714
      },
      {
-      "player": "Mohamed Wague",
-      "salary": 321714
-     },
-     {
       "player": "Ja'Kobi Gillespie",
       "salary": 157640
      },
@@ -441,7 +433,7 @@
       "salary": 113171
      }
     ],
-    "player_seasons_offered": 563
+    "player_seasons_offered": 562
    }
   },
   "dead": {
@@ -570,11 +562,6 @@
    {
     "player": "Michael Ajayi",
     "salary": 157640,
-    "season": "2025-26"
-   },
-   {
-    "player": "Mohamed Wague",
-    "salary": 321714,
     "season": "2025-26"
    },
    {
@@ -1598,20 +1585,20 @@
    "historical": 624
   },
   "2026-27": {
-   "current_and_dead": 638,
-   "future": 616
+   "current_and_dead": 636,
+   "future": 614
   },
   "2027-28": {
    "current_and_dead": 351,
    "future": 341
   },
   "2028-29": {
-   "current_and_dead": 201,
-   "future": 193
+   "current_and_dead": 202,
+   "future": 194
   },
   "2029-30": {
-   "current_and_dead": 100,
-   "future": 97
+   "current_and_dead": 101,
+   "future": 98
   },
   "2030-31": {
    "current_and_dead": 20,

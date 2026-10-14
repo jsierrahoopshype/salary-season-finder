@@ -1,5 +1,5 @@
 {
- "built": "2026-10-13T13:17:11.580618",
+ "built": "2026-10-14T10:57:39.354032",
  "season": "2026-27",
  "players": [
   {
@@ -19,15 +19,6 @@
    "dead_money": [],
    "total": 11000000,
    "birth_date": "1999-10-16"
-  },
-  {
-   "player": "Aaron Nkrumah",
-   "team": "SAC",
-   "contract": "non_guaranteed",
-   "current_salary": 1357763,
-   "dead_money": [],
-   "total": 1357763,
-   "birth_date": null
   },
   {
    "player": "Aaron Wiggins",
@@ -1198,15 +1189,6 @@
    "birth_date": "2001-04-19"
   },
   {
-   "player": "Damari Monsanto",
-   "team": "SAC",
-   "contract": "non_guaranteed",
-   "current_salary": 1357763,
-   "dead_money": [],
-   "total": 1357763,
-   "birth_date": null
-  },
-  {
    "player": "Damian Lillard",
    "team": "POR",
    "contract": "guaranteed",
@@ -1833,6 +1815,15 @@
    "current_salary": 678882,
    "dead_money": [],
    "total": 678882,
+   "birth_date": null
+  },
+  {
+   "player": "Fletcher Loyer",
+   "team": "LAC",
+   "contract": "non_guaranteed",
+   "current_salary": 1357763,
+   "dead_money": [],
+   "total": 1357763,
    "birth_date": null
   },
   {
@@ -3078,6 +3069,15 @@
    "birth_date": "2004-03-03"
   },
   {
+   "player": "Jorge Diaz Graham",
+   "team": "DAL",
+   "contract": "non_guaranteed",
+   "current_salary": 1357763,
+   "dead_money": [],
+   "total": 1357763,
+   "birth_date": null
+  },
+  {
    "player": "Jose Alvarado",
    "team": "NYK",
    "contract": "guaranteed",
@@ -3967,15 +3967,6 @@
    "birth_date": "1997-03-04"
   },
   {
-   "player": "Matt Cross",
-   "team": "DAL",
-   "contract": "non_guaranteed",
-   "current_salary": 1357763,
-   "dead_money": [],
-   "total": 1357763,
-   "birth_date": null
-  },
-  {
    "player": "Max Christie",
    "team": "DAL",
    "contract": "guaranteed",
@@ -4127,15 +4118,6 @@
    "dead_money": [],
    "total": 2622139,
    "birth_date": "2005-04-29"
-  },
-  {
-   "player": "Mohamed Wague",
-   "team": "UTA",
-   "contract": "non_guaranteed",
-   "current_salary": 1357763,
-   "dead_money": [],
-   "total": 1357763,
-   "birth_date": null
   },
   {
    "player": "Morez Johnson",
@@ -4836,15 +4818,6 @@
    "dead_money": [],
    "total": 29616071,
    "birth_date": "2000-06-14"
-  },
-  {
-   "player": "RJ Davis",
-   "team": "SAS",
-   "contract": "non_guaranteed",
-   "current_salary": 1357763,
-   "dead_money": [],
-   "total": 1357763,
-   "birth_date": null
   },
   {
    "player": "Rob Dillingham",
@@ -5698,6 +5671,15 @@
    "dead_money": [],
    "total": 16868246,
    "birth_date": "2004-01-04"
+  },
+  {
+   "player": "Viktor Lakhin",
+   "team": "SAC",
+   "contract": "non_guaranteed",
+   "current_salary": 1357763,
+   "dead_money": [],
+   "total": 1357763,
+   "birth_date": null
   },
   {
    "player": "Vit Krejci",
