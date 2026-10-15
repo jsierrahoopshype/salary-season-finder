@@ -1,5 +1,5 @@
 {
- "built": "2026-10-14T10:57:39.354032",
+ "built": "2026-10-15T10:38:43.924666",
  "season": "2026-27",
  "players": [
   {
@@ -280,6 +280,15 @@
    "dead_money": [],
    "total": 6000000,
    "birth_date": "1999-06-08"
+  },
+  {
+   "player": "Aniwaniwa Tait-Jones",
+   "team": "LAL",
+   "contract": "non_guaranteed",
+   "current_salary": 1357763,
+   "dead_money": [],
+   "total": 1357763,
+   "birth_date": null
   },
   {
    "player": "Anthony Black",
@@ -769,15 +778,6 @@
    "birth_date": null
   },
   {
-   "player": "Cam Christie",
-   "team": "LAC",
-   "contract": "non_guaranteed",
-   "current_salary": 2296271,
-   "dead_money": [],
-   "total": 2296271,
-   "birth_date": "2005-07-24"
-  },
-  {
    "player": "Cam Spencer",
    "team": "MEM",
    "contract": "guaranteed",
@@ -1061,15 +1061,6 @@
    ],
    "total": 3700000,
    "birth_date": "2000-05-15"
-  },
-  {
-   "player": "Cole Swider",
-   "team": "LAL",
-   "contract": "non_guaranteed",
-   "current_salary": 2537526,
-   "dead_money": [],
-   "total": 2537526,
-   "birth_date": "1999-05-08"
   },
   {
    "player": "Coleman Hawkins",
@@ -1917,6 +1908,15 @@
    "birth_date": "1994-12-06"
   },
   {
+   "player": "Giorgi Bezhanishvili",
+   "team": "ATL",
+   "contract": "non_guaranteed",
+   "current_salary": 1357763,
+   "dead_money": [],
+   "total": 1357763,
+   "birth_date": null
+  },
+  {
    "player": "Goga Bitadze",
    "team": "ORL",
    "contract": "guaranteed",
@@ -2664,15 +2664,6 @@
    "dead_money": [],
    "total": 6000000,
    "birth_date": "2000-05-23"
-  },
-  {
-   "player": "Jaxson Robinson",
-   "team": "CLE",
-   "contract": "non_guaranteed",
-   "current_salary": 1357763,
-   "dead_money": [],
-   "total": 1357763,
-   "birth_date": null
   },
   {
    "player": "Jay Huff",
@@ -3870,15 +3861,6 @@
    "dead_money": [],
    "total": 20190035,
    "birth_date": "1998-02-04"
-  },
-  {
-   "player": "Malik Williams",
-   "team": "SAS",
-   "contract": "non_guaranteed",
-   "current_salary": 2449421,
-   "dead_money": [],
-   "total": 2449421,
-   "birth_date": "1998-08-26"
   },
   {
    "player": "Maliq Brown",
@@ -5154,15 +5136,6 @@
    "birth_date": "1995-12-10"
   },
   {
-   "player": "Taelon Peter",
-   "team": "SAS",
-   "contract": "non_guaranteed",
-   "current_salary": 2185116,
-   "dead_money": [],
-   "total": 2185116,
-   "birth_date": "2002-02-27"
-  },
-  {
    "player": "Taj Gibson",
    "team": null,
    "contract": "dead_money_only",
@@ -5220,15 +5193,6 @@
    "dead_money": [],
    "total": 3815861,
    "birth_date": "1994-03-22"
-  },
-  {
-   "player": "Taylor Funk",
-   "team": "UTA",
-   "contract": "non_guaranteed",
-   "current_salary": 1357763,
-   "dead_money": [],
-   "total": 1357763,
-   "birth_date": null
   },
   {
    "player": "Taylor Hendricks",
@@ -5447,13 +5411,18 @@
    "birth_date": "2003-05-02"
   },
   {
-   "player": "Trey Jemison",
-   "team": "TOR",
-   "contract": "two_way",
-   "current_salary": 678882,
-   "dead_money": [],
-   "total": 678882,
-   "birth_date": "1999-11-28"
+   "player": "Trey Jamison",
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "TOR",
+     "amount": 91000
+    }
+   ],
+   "total": 91000,
+   "birth_date": null
   },
   {
    "player": "Trey Lyles",
