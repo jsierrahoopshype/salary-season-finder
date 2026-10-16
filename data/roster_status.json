@@ -1,5 +1,5 @@
 {
- "built": "2026-10-15T10:38:43.924666",
+ "built": "2026-10-16T10:25:43.589303",
  "season": "2026-27",
  "players": [
   {
@@ -751,6 +751,15 @@
    "birth_date": "2001-09-25"
   },
   {
+   "player": "Caleb Houstan",
+   "team": "POR",
+   "contract": "non_guaranteed",
+   "current_salary": 2625627,
+   "dead_money": [],
+   "total": 2625627,
+   "birth_date": "2003-01-09"
+  },
+  {
    "player": "Caleb Love",
    "team": "PHI",
    "contract": "two_way",
@@ -1159,6 +1168,15 @@
    "current_salary": 4965480,
    "dead_money": [],
    "total": 4965480,
+   "birth_date": null
+  },
+  {
+   "player": "DaJuan Gordon",
+   "team": "CHA",
+   "contract": "non_guaranteed",
+   "current_salary": 1357763,
+   "dead_money": [],
+   "total": 1357763,
    "birth_date": null
   },
   {
@@ -1593,11 +1611,16 @@
   },
   {
    "player": "Drew Eubanks",
-   "team": "NYK",
-   "contract": "non_guaranteed",
-   "current_salary": 3506659,
-   "dead_money": [],
-   "total": 3506659,
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "NYK",
+     "amount": 15000
+    }
+   ],
+   "total": 15000,
    "birth_date": "1997-02-01"
   },
   {
@@ -4404,15 +4427,6 @@
    "birth_date": "1998-03-04"
   },
   {
-   "player": "Ochai Agbaji",
-   "team": "NYK",
-   "contract": "non_guaranteed",
-   "current_salary": 2625627,
-   "dead_money": [],
-   "total": 2625627,
-   "birth_date": "2000-04-20"
-  },
-  {
    "player": "OG Anunoby",
    "team": "NYK",
    "contract": "guaranteed",
@@ -5303,15 +5317,6 @@
    "birth_date": "2000-07-26"
   },
   {
-   "player": "Tony Bradley",
-   "team": "NYK",
-   "contract": "non_guaranteed",
-   "current_salary": 3506659,
-   "dead_money": [],
-   "total": 3506659,
-   "birth_date": "1998-01-08"
-  },
-  {
    "player": "Toumani Camara",
    "team": "POR",
    "contract": "guaranteed",
@@ -5721,15 +5726,6 @@
    "dead_money": [],
    "total": 3688320,
    "birth_date": "2006-02-10"
-  },
-  {
-   "player": "Wyatt Fricks",
-   "team": "CHA",
-   "contract": "non_guaranteed",
-   "current_salary": 1357763,
-   "dead_money": [],
-   "total": 1357763,
-   "birth_date": null
   },
   {
    "player": "Yang Hansen",
