@@ -1,7 +1,7 @@
 {
- "changes_posted": 0,
- "last_commit": "8b3b402b745cb026f607a7c26cb524c0cf961c31",
- "last_run": "2026-10-17T10:01:40Z",
+ "changes_posted": 91,
+ "last_commit": "10ef1b9bec924454f7dcebfc6adf633af9f302e8",
+ "last_run": "2026-10-18T10:15:46Z",
  "league_year_opened": "2026-07-01",
  "raises": [
   {
@@ -21,6 +21,12 @@
    "date": "2026-10-14",
    "player": "Donovan Mitchell",
    "season": "2030-31"
+  },
+  {
+   "amount": 15158689,
+   "date": "2026-10-18",
+   "player": "Payton Pritchard",
+   "season": "2029-30"
   },
   {
    "amount": 14332143,
