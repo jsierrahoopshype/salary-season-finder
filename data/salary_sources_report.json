@@ -3,11 +3,55 @@
   "current": {
    "2024-25": {
     "also_in_the_historical_tab": 457,
-    "dollars_offered": 4967791938,
+    "dollars_offered": 5423546499,
     "missing_from_the_historical_tab": [
      {
-      "player": "Hayden Gray",
-      "salary": 12648321
+      "player": "Alex Toohey",
+      "salary": 23000000
+     },
+     {
+      "player": "Brice Williams",
+      "salary": 23000000
+     },
+     {
+      "player": "Drew Timme",
+      "salary": 23000000
+     },
+     {
+      "player": "Jake Stephens",
+      "salary": 23000000
+     },
+     {
+      "player": "Jalon Moore",
+      "salary": 23000000
+     },
+     {
+      "player": "John Poulakidas",
+      "salary": 23000000
+     },
+     {
+      "player": "John Ukomadu",
+      "salary": 23000000
+     },
+     {
+      "player": "Johni Broome",
+      "salary": 23000000
+     },
+     {
+      "player": "Marcus Garrett",
+      "salary": 23000000
+     },
+     {
+      "player": "Norchad Omier",
+      "salary": 23000000
+     },
+     {
+      "player": "Tyler Burton",
+      "salary": 23000000
+     },
+     {
+      "player": "Viktor Lakhin",
+      "salary": 23000000
      },
      {
       "player": "Mouhamadou Gueye",
@@ -22,8 +66,8 @@
       "salary": 2162606
      },
      {
-      "player": "John Poulakidas",
-      "salary": 1157153
+      "player": "Miye Oni",
+      "salary": 1891857
      },
      {
       "player": "AJ Dybantsa",
@@ -238,10 +282,6 @@
       "salary": 344234
      },
      {
-      "player": "Alex Toohey",
-      "salary": 331365
-     },
-     {
       "player": "Tony Bradley",
       "salary": 330395
      },
@@ -294,23 +334,51 @@
       "salary": 131903
      },
      {
-      "player": "Drew Timme",
-      "salary": 113055
-     },
-     {
       "player": "Izaiyah Nelson",
       "salary": 100000
      }
     ],
-    "player_seasons_offered": 531
+    "player_seasons_offered": 540
    },
    "2025-26": {
-    "also_in_the_historical_tab": 531,
-    "dollars_offered": 5375042957,
+    "also_in_the_historical_tab": 532,
+    "dollars_offered": 5433863163,
     "missing_from_the_historical_tab": [
      {
       "player": "Trey Lyles",
       "salary": 3571495
+     },
+     {
+      "player": "Brice Williams",
+      "salary": 3080921
+     },
+     {
+      "player": "Elfrid Payton",
+      "salary": 3080921
+     },
+     {
+      "player": "Jake Stephens",
+      "salary": 3080921
+     },
+     {
+      "player": "Jalon Moore",
+      "salary": 3080921
+     },
+     {
+      "player": "John Ukomadu",
+      "salary": 3080921
+     },
+     {
+      "player": "KJ Martin",
+      "salary": 3080921
+     },
+     {
+      "player": "Marcus Garrett",
+      "salary": 3080921
+     },
+     {
+      "player": "Viktor Lakhin",
+      "salary": 3080921
      },
      {
       "player": "Tarik Biberovic",
@@ -381,10 +449,6 @@
       "salary": 405359
      },
      {
-      "player": "KJ Martin",
-      "salary": 321714
-     },
-     {
       "player": "Ja'Kobi Gillespie",
       "salary": 157640
      },
@@ -433,7 +497,7 @@
       "salary": 113171
      }
     ],
-    "player_seasons_offered": 562
+    "player_seasons_offered": 570
    }
   },
   "dead": {
@@ -452,7 +516,7 @@
   "teams_filled_in": []
  },
  "filled_from_current_sheet_missing_from_tab": {
-  "already_answered_for_by_the_tab_or_the_dead_sheet": 531,
+  "already_answered_for_by_the_tab_or_the_dead_sheet": 532,
   "left_out_for_no_games": [
    {
     "player": "AK Okereke",
@@ -475,6 +539,11 @@
     "season": "2025-26"
    },
    {
+    "player": "Brice Williams",
+    "salary": 3080921,
+    "season": "2025-26"
+   },
+   {
     "player": "Bryce Hopkins",
     "salary": 636435,
     "season": "2025-26"
@@ -482,6 +551,11 @@
    {
     "player": "Dillon Mitchell",
     "salary": 490128,
+    "season": "2025-26"
+   },
+   {
+    "player": "Elfrid Payton",
+    "salary": 3080921,
     "season": "2025-26"
    },
    {
@@ -510,6 +584,11 @@
     "season": "2025-26"
    },
    {
+    "player": "Jake Stephens",
+    "salary": 3080921,
+    "season": "2025-26"
+   },
+   {
     "player": "Ja'Kobi Gillespie",
     "salary": 157640,
     "season": "2025-26"
@@ -517,6 +596,11 @@
    {
     "player": "Jalen Bridges",
     "salary": 636435,
+    "season": "2025-26"
+   },
+   {
+    "player": "Jalon Moore",
+    "salary": 3080921,
     "season": "2025-26"
    },
    {
@@ -530,13 +614,18 @@
     "season": "2025-26"
    },
    {
+    "player": "John Ukomadu",
+    "salary": 3080921,
+    "season": "2025-26"
+   },
+   {
     "player": "Josh Dix",
     "salary": 141554,
     "season": "2025-26"
    },
    {
     "player": "KJ Martin",
-    "salary": 321714,
+    "salary": 3080921,
     "season": "2025-26"
    },
    {
@@ -552,6 +641,11 @@
    {
     "player": "Maliq Brown",
     "salary": 157640,
+    "season": "2025-26"
+   },
+   {
+    "player": "Marcus Garrett",
+    "salary": 3080921,
     "season": "2025-26"
    },
    {
@@ -607,6 +701,11 @@
    {
     "player": "Ugonna Onyenso",
     "salary": 141554,
+    "season": "2025-26"
+   },
+   {
+    "player": "Viktor Lakhin",
+    "salary": 3080921,
     "season": "2025-26"
    }
   ],
@@ -1585,12 +1684,12 @@
    "historical": 624
   },
   "2026-27": {
-   "current_and_dead": 631,
-   "future": 607
+   "current_and_dead": 555,
+   "future": 527
   },
   "2027-28": {
-   "current_and_dead": 350,
-   "future": 340
+   "current_and_dead": 348,
+   "future": 338
   },
   "2028-29": {
    "current_and_dead": 202,
