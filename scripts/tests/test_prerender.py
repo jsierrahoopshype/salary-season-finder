@@ -568,7 +568,42 @@ def test_a_phone_drops_the_secondary_columns():
     assert wide == ["Tm rank", "Age", "GP", "PPG", "RPG", "APG"]
     css = read(os.path.join("css", "styles.css"))
     phone = css[css.index("@media (max-width: 699.98px) {"):]
-    assert "table.player-season-table .ps-wide {\n    display: none;" in phone
+    phone = phone[:phone.index("\n}\n")]
+    assert "table.player-season-table .ps-wide,\n" in phone
+    assert "display: none;" in phone
+
+
+def test_a_phone_shows_money_in_millions_at_a_readable_size():
+    css = read(os.path.join("css", "styles.css"))
+    base = css[css.index("table.player-season-table .ps-money-short {"):]
+    assert "display: none;" in base[:base.index("}")]
+    for start in ("@media (max-width: 699.98px) {",
+                  "@container ps-frame (max-width: 500px) {"):
+        phone = css[css.index(start):]
+        phone = phone[:phone.index("\n}\n")]
+        assert "table.player-season-table .ps-money-full {\n    display: none;" in phone
+        assert ".ps-money-short {\n    display: inline;" in phone
+        # .72rem of the site's 115% root is 13.2px
+        assert "font-size: .72rem;" in phone
+        assert "font-size: .6" not in phone and "font-size: .5" not in phone
+
+
+def test_the_compact_money_rounds_to_one_decimal_or_two_under_ten_million():
+    html = _season_table([
+        {"player": "test", "season": "2020-21", "team": "MIN",
+         "salary": 1964760, "career_earnings": 1964760},
+        {"player": "test", "season": "2026-27", "team": "MIN",
+         "salary": 26200001, "career_earnings": 83701226},
+        {"player": "test", "season": "2029-30", "team": "MIN",
+         "salary": 9996000, "career_earnings": 181521914},
+        {"player": "test", "season": "2030-31", "team": "MIN",
+         "salary": 750000, "career_earnings": 12250000},
+    ])
+    short = re.findall(r'<span class="ps-money-short">([^<]+)</span>', html)
+    assert short == ["$1.96M", "$1.96M", "$26.2M", "$83.7M",
+                     "$10.0M", "$181.5M", "$0.75M", "$12.3M"]
+    full = re.findall(r'<span class="ps-money-full">([^<]+)</span>', html)
+    assert full[:2] == ["$1,964,760", "$1,964,760"]
 
 
 def test_the_season_table_is_never_a_sideways_scroller():
