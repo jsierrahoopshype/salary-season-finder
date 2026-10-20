@@ -1073,6 +1073,10 @@ table.player-season-table td.ps-career {
   color: var(--text-secondary);
 }
 
+table.player-season-table .ps-money-short {
+  display: none;
+}
+
 /* the header goes with its column, not with the row of headers */
 table.player-season-table th.ps-team,
 table.player-season-table td.ps-team {
@@ -1865,9 +1869,8 @@ table.nba-table td.awards-cell {
    and padding come in, the headers may break onto two lines ("% of / cap")
    and a season's award badges wrap in a narrower stack. 668px and under (a
    player page on a phone, or the tool beside its sidebar): the type comes in
-   again. Below a 700px window, or in a frame of 500px or less, only Season,
-   Team, Salary, % of cap, Lg rank and Career $ remain: Tm rank, Age, GP, PPG, RPG and APG drop out, so the
-   money fits a phone without the table scrolling sideways.
+   again for all twelve columns. The phone table, six columns and money in
+   millions, has its own block below and overrides this one.
    ========================================================================== */
 
 @container ps-frame (max-width: 952px) {
@@ -1925,20 +1928,6 @@ table.nba-table td.awards-cell {
   }
 }
 
-@media (max-width: 699.98px) {
-  table.player-season-table .ps-wide {
-    display: none;
-  }
-}
-
-/* the same six columns when the frame itself is phone-narrow, which a wider
-   window can still leave the tool's view beside its sidebar */
-@container ps-frame (max-width: 500px) {
-  table.player-season-table .ps-wide {
-    display: none;
-  }
-}
-
 @container ps-frame (max-width: 668px) {
   table.player-season-table {
     font-size: .62rem;
@@ -1956,6 +1945,82 @@ table.nba-table td.awards-cell {
 
   table.player-season-table .ps-team-sep {
     margin: 0 .1rem;
+  }
+
+  table.player-season-table th:first-child,
+  table.player-season-table td:first-child {
+    padding-left: .35rem;
+  }
+
+  table.player-season-table th:last-child,
+  table.player-season-table td:last-child {
+    padding-right: .35rem;
+  }
+}
+
+/* The phone table: below a 700px window, or in a frame of 500px or less
+   (which a wider window can still leave the tool's view beside its
+   sidebar), only Season, Team, Salary, % of cap, Lg rank and Career $
+   show, the money in millions ($26.2M, $1.96M), at a readable size. The
+   two blocks are the same rules; CSS cannot put a media and a container
+   condition on one block. */
+@media (max-width: 699.98px) {
+  table.player-season-table .ps-wide,
+  table.player-season-table .ps-money-full {
+    display: none;
+  }
+
+  table.player-season-table .ps-money-short {
+    display: inline;
+  }
+
+  /* 13.2px at the site's 115% root: nothing in the phone table is smaller */
+  table.player-season-table,
+  table.player-season-table thead th,
+  .ps-team-amt {
+    font-size: .72rem;
+  }
+
+  table.player-season-table thead th,
+  table.player-season-table td,
+  table.player-season-table tbody th {
+    padding-left: .2rem;
+    padding-right: .2rem;
+  }
+
+  table.player-season-table th:first-child,
+  table.player-season-table td:first-child {
+    padding-left: .35rem;
+  }
+
+  table.player-season-table th:last-child,
+  table.player-season-table td:last-child {
+    padding-right: .35rem;
+  }
+}
+
+@container ps-frame (max-width: 500px) {
+  table.player-season-table .ps-wide,
+  table.player-season-table .ps-money-full {
+    display: none;
+  }
+
+  table.player-season-table .ps-money-short {
+    display: inline;
+  }
+
+  /* 13.2px at the site's 115% root: nothing in the phone table is smaller */
+  table.player-season-table,
+  table.player-season-table thead th,
+  .ps-team-amt {
+    font-size: .72rem;
+  }
+
+  table.player-season-table thead th,
+  table.player-season-table td,
+  table.player-season-table tbody th {
+    padding-left: .2rem;
+    padding-right: .2rem;
   }
 
   table.player-season-table th:first-child,

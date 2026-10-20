@@ -8,7 +8,9 @@
  *   - the table is wider than its frame, or any cell spills past it,
  *   - anything between the table and the page is a sideways scroller,
  *   - the wrong columns show (12 from 700px up, 6 below),
- *   - award badges show below 768px, or the CONTRACTED tag is back.
+ *   - award badges show below 768px, or the CONTRACTED tag is back,
+ *   - below 700px: Salary and Career $ not in millions ($26.2M), or any
+ *     text in the table under 13px; from 700px: not the full figures.
  *
  * Pages: Jaden McDaniels, plus the pages most likely to be widest, picked
  * from every built player page by the longest team cell, the most awards in
@@ -30,6 +32,7 @@ const DESKTOP_COLUMNS = ['Season', 'Team', 'Salary', '% of cap', 'Lg rank',
 const PHONE_COLUMNS = ['Season', 'Team', 'Salary', '% of cap', 'Lg rank',
   'Career $'];
 const PER_METRIC = 6;
+const PHONE_MIN_FONT_PX = 13;
 
 function text(html) {
   return html.replace(/<[^>]+>/g, '').replace(/&[a-z#0-9]+;/g, 'x');
@@ -110,6 +113,18 @@ function measure() {
     .some((el) => getComputedStyle(el).display !== 'none' && el.getBoundingClientRect().height > 0);
   out.badgeCount = table.querySelectorAll('.ps-season-awards .award-badge').length;
   out.contractedTag = /contracted/i.test(table.innerText);
+  // what a money cell shows, and the smallest text anywhere in the table
+  const shown = (sel) => [...table.querySelectorAll(sel)]
+    .filter((el) => el.getClientRects().length > 0).map((el) => el.textContent);
+  out.moneyShort = shown('td.ps-salary .ps-money-short, td.ps-career .ps-money-short');
+  out.moneyFull = shown('td.ps-salary .ps-money-full, td.ps-career .ps-money-full');
+  out.minFontPx = Infinity;
+  const walker = document.createTreeWalker(table, NodeFilter.SHOW_TEXT);
+  for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+    const el = node.parentElement;
+    if (!node.textContent.trim() || el.getClientRects().length === 0) continue;
+    out.minFontPx = Math.min(out.minFontPx, parseFloat(getComputedStyle(el).fontSize));
+  }
   return out;
 }
 
@@ -134,7 +149,16 @@ async function main() {
         if (width < 768 && m.badgesShown) m.problems.push('award badges show below 768px');
         if (width >= 768 && m.badgeCount && !m.badgesShown) m.problems.push('award badges hidden at ' + width + 'px');
         if (m.contractedTag) m.problems.push('the CONTRACTED tag is still in the table');
-        const line = width + 'px ' + slug + ': table ' + m.tableWidth + '/' + m.frameWidth + 'px';
+        if (width < 700) {
+          if (m.moneyFull.length) m.problems.push('full money figures show below 700px: ' + m.moneyFull[0]);
+          const bad = m.moneyShort.filter((t) => !/^-?\$\d+\.\d{1,2}M$/.test(t));
+          if (!m.moneyShort.length || bad.length) m.problems.push('money not in millions below 700px: ' + (bad[0] || 'none shown'));
+          if (m.minFontPx < PHONE_MIN_FONT_PX) m.problems.push('table text at ' + m.minFontPx + 'px, under ' + PHONE_MIN_FONT_PX + 'px');
+        } else {
+          if (m.moneyShort.length) m.problems.push('short money shows at ' + width + 'px: ' + m.moneyShort[0]);
+          if (!m.moneyFull.length) m.problems.push('no full money figures at ' + width + 'px');
+        }
+        const line = width + 'px ' + slug + ': table ' + m.tableWidth + '/' + m.frameWidth + 'px, text >= ' + m.minFontPx + 'px';
         if (m.problems.length) {
           failures.push(line + '\n    ' + m.problems.join('\n    '));
           console.log('FAIL ' + line);

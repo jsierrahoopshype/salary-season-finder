@@ -2468,6 +2468,23 @@
     return "$" + n;
   }
 
+  // Money in millions for a phone's Salary and Career $ columns: one decimal,
+  // two under $10M ($26.2M, $1.96M, $181.5M). A figure that rounds up to
+  // $10M at two decimals takes one, so it never reads "$10.00M".
+  function fmtSalaryCompact(val) {
+    var m = Math.abs(val) / 1000000;
+    var two = Math.round(m * 100) / 100 < 10;
+    return (val < 0 ? "-" : "") + "$" + m.toFixed(two ? 2 : 1) + "M";
+  }
+
+  // Both forms ride in the cell; the stylesheet shows the full figure and,
+  // where the table drops to its phone columns, the compact one instead.
+  function playerSeasonMoneyCell(val) {
+    if (val == null) return '<span class="ps-empty">-</span>';
+    return '<span class="ps-money-full">' + fmtSalary(val) + "</span>" +
+      '<span class="ps-money-short">' + fmtSalaryCompact(val) + "</span>";
+  }
+
   function playerSeasonTeamCell(record, clickable, links) {
     var ts = record.team_salaries;
     var teamUrls = (links && links.team) || null;
@@ -2577,7 +2594,7 @@
             break;
           case "salary":
           case "career_earnings":
-            cell = v == null ? '<span class="ps-empty">-</span>' : fmtSalary(v);
+            cell = playerSeasonMoneyCell(v);
             break;
           case "salary_cap_pct":
             cell = v == null ? '<span class="ps-empty">-</span>' : fmtPct(v);
