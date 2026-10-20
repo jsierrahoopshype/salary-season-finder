@@ -1,9 +1,15 @@
 {
- "changes_posted": 0,
- "last_commit": "9c9e4cfa0894447f25473f2e81b8a1f6924b8e25",
- "last_run": "2026-10-19T11:48:50Z",
+ "changes_posted": 18,
+ "last_commit": "68f86e10754014a156d5f91a07dfdc8baba74c9a",
+ "last_run": "2026-10-20T10:49:18Z",
  "league_year_opened": "2026-07-01",
  "raises": [
+  {
+   "amount": 55029114,
+   "date": "2026-10-20",
+   "player": "Cason Wallace",
+   "season": "2030-31"
+  },
   {
    "amount": 42941342,
    "date": "2026-10-11",
@@ -23,6 +29,12 @@
    "season": "2030-31"
   },
   {
+   "amount": 26695374,
+   "date": "2026-10-20",
+   "player": "Brandon Miller",
+   "season": "2029-30"
+  },
+  {
    "amount": 15158689,
    "date": "2026-10-18",
    "player": "Payton Pritchard",
@@ -33,6 +45,18 @@
    "date": "2026-10-14",
    "player": "Payton Pritchard",
    "season": "2029-30"
+  },
+  {
+   "amount": 13799999,
+   "date": "2026-10-20",
+   "player": "Jaden McDaniels",
+   "season": "2029-30"
+  },
+  {
+   "amount": 8143729,
+   "date": "2026-10-20",
+   "player": "Oso Ighodaro",
+   "season": "2030-31"
   },
   {
    "amount": 2811242,
