@@ -1684,24 +1684,24 @@
    "historical": 624
   },
   "2026-27": {
-   "current_and_dead": 555,
-   "future": 527
+   "current_and_dead": 554,
+   "future": 520
   },
   "2027-28": {
-   "current_and_dead": 348,
-   "future": 338
+   "current_and_dead": 345,
+   "future": 335
   },
   "2028-29": {
-   "current_and_dead": 202,
-   "future": 194
+   "current_and_dead": 203,
+   "future": 195
   },
   "2029-30": {
-   "current_and_dead": 101,
-   "future": 98
+   "current_and_dead": 105,
+   "future": 102
   },
   "2030-31": {
-   "current_and_dead": 20,
-   "future": 18
+   "current_and_dead": 23,
+   "future": 21
   }
  },
  "rows_that_repeated_once_two_spellings_became_one_man": {

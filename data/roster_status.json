@@ -1,5 +1,5 @@
 {
- "built": "2026-10-19T11:44:04.535643",
+ "built": "2026-10-20T10:44:55.762679",
  "season": "2026-27",
  "players": [
   {
@@ -39,13 +39,18 @@
    "birth_date": "2006-08-13"
   },
   {
-   "player": "Adam Flagler",
-   "team": "SAC",
-   "contract": "two_way",
-   "current_salary": 678882,
-   "dead_money": [],
-   "total": 678882,
-   "birth_date": "1999-12-01"
+   "player": "Adam Flager",
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "SAC",
+     "amount": 91000
+    }
+   ],
+   "total": 91000,
+   "birth_date": null
   },
   {
    "player": "Aday Mara",
@@ -878,15 +883,6 @@
    "birth_date": "2003-02-09"
   },
   {
-   "player": "CJ Huntley",
-   "team": "PHX",
-   "contract": "two_way",
-   "current_salary": 678882,
-   "dead_money": [],
-   "total": 678882,
-   "birth_date": "2002-01-06"
-  },
-  {
    "player": "CJ McCollum",
    "team": "ATL",
    "contract": "guaranteed",
@@ -1028,10 +1024,15 @@
   },
   {
    "player": "Dalton Knecht",
-   "team": "LAL",
-   "contract": "guaranteed",
-   "current_salary": 4201080,
-   "dead_money": [],
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "LAL",
+     "amount": 4201080
+    }
+   ],
    "total": 4201080,
    "birth_date": "2001-04-19"
   },
@@ -1444,6 +1445,15 @@
    "birth_date": "1997-02-01"
   },
   {
+   "player": "Drew Timme",
+   "team": "PHX",
+   "contract": "non_guaranteed",
+   "current_salary": 2449421,
+   "dead_money": [],
+   "total": 2449421,
+   "birth_date": "2000-09-09"
+  },
+  {
    "player": "Dru Smith",
    "team": "MIA",
    "contract": "guaranteed",
@@ -1464,19 +1474,24 @@
   {
    "player": "Duop Reath",
    "team": "PHX",
-   "contract": "non_guaranteed",
-   "current_salary": 2537526,
+   "contract": "two_way",
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 2537526,
+   "total": 678882,
    "birth_date": "1996-06-26"
   },
   {
    "player": "Dwight Powell",
-   "team": "DAL",
-   "contract": "partial",
-   "current_salary": 3876529,
-   "dead_money": [],
-   "total": 3876529,
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "DAL",
+     "amount": 1000000
+    }
+   ],
+   "total": 1000000,
    "birth_date": "1991-07-20"
   },
   {
@@ -2775,10 +2790,10 @@
   {
    "player": "Julian Phillips",
    "team": "HOU",
-   "contract": "non_guaranteed",
-   "current_salary": 2537526,
+   "contract": "two_way",
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 2537526,
+   "total": 678882,
    "birth_date": "2003-11-05"
   },
   {
@@ -3018,10 +3033,15 @@
   },
   {
    "player": "Kevin Porter",
-   "team": "MIL",
-   "contract": "guaranteed",
-   "current_salary": 5390700,
-   "dead_money": [],
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "MIL",
+     "amount": 5390700
+    }
+   ],
    "total": 5390700,
    "birth_date": "2000-05-04"
   },
@@ -3133,15 +3153,6 @@
    "dead_money": [],
    "total": 2622139,
    "birth_date": "2002-05-30"
-  },
-  {
-   "player": "Koby Brea",
-   "team": "PHX",
-   "contract": "two_way",
-   "current_salary": 678882,
-   "dead_money": [],
-   "total": 678882,
-   "birth_date": "2002-11-06"
   },
   {
    "player": "Kon Knueppel",
@@ -3528,10 +3539,15 @@
   },
   {
    "player": "Micah Peavy",
-   "team": "MEM",
-   "contract": "guaranteed",
-   "current_salary": 2150917,
-   "dead_money": [],
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "MEM",
+     "amount": 2150917
+    }
+   ],
    "total": 2150917,
    "birth_date": "2001-07-16"
   },
@@ -3944,10 +3960,10 @@
   {
    "player": "Oscar Tshiebwe",
    "team": "HOU",
-   "contract": "non_guaranteed",
-   "current_salary": 2537526,
+   "contract": "two_way",
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 2537526,
+   "total": 678882,
    "birth_date": "1999-11-27"
   },
   {
@@ -4071,6 +4087,15 @@
    "dead_money": [],
    "total": 2296271,
    "birth_date": "2001-02-23"
+  },
+  {
+   "player": "Pete Nance",
+   "team": "MIL",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [],
+   "total": 678882,
+   "birth_date": "2000-02-19"
   },
   {
    "player": "Peter Suder",
@@ -4433,15 +4458,6 @@
    "dead_money": [],
    "total": 2461462,
    "birth_date": "2000-11-10"
-  },
-  {
-   "player": "Sean Pedulla",
-   "team": "HOU",
-   "contract": "two_way",
-   "current_salary": 678882,
-   "dead_money": [],
-   "total": 678882,
-   "birth_date": "2002-10-10"
   },
   {
    "player": "Sergio De Larrea",
@@ -5046,10 +5062,15 @@
   },
   {
    "player": "Walter Clayton Jr",
-   "team": "MEM",
-   "contract": "guaranteed",
+   "team": null,
+   "contract": "unknown",
    "current_salary": 4190520,
-   "dead_money": [],
+   "dead_money": [
+    {
+     "team": "MEM",
+     "amount": 4190520
+    }
+   ],
    "total": 4190520,
    "birth_date": "2003-03-06"
   },
