@@ -956,10 +956,10 @@ table.nba-table tbody tr:hover td:nth-child(2) {
 
    The single-player view. Same table.lb tokens as the results table, but a
    fixed column set and a fixed order (oldest season first, so seasons already
-   under contract land at the bottom), and its own scroll frame: this one stays
-   a sideways scroller at every width rather than switching to cards, with the
-   season column frozen at the left edge. .ps-scroll is the only thing that
-   scrolls sideways — the page body never does.
+   under contract land at the bottom). It fits its frame at every width with
+   no sideways scroll: a season's awards sit under the season, the padding is
+   tight, and below 700px the secondary columns drop out. .ps-scroll stays
+   for the entity pages' ranked tables, which still use it.
    ========================================================================== */
 
 .player-view {
@@ -998,9 +998,21 @@ table.nba-table tbody tr:hover td:nth-child(2) {
   max-width: 100%;
 }
 
+/* The season table's frame. Not a scroller: the table is built to fit it.
+   clip only rounds the corners (border-collapse cells cannot take a radius),
+   and unlike hidden it makes no scroll container. */
+.ps-frame {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  overflow: clip;
+  max-width: 100%;
+  container: ps-frame / inline-size;
+}
+
 table.player-season-table {
   width: 100%;
-  min-width: 46rem;
   border-collapse: collapse;
   font-size: .82rem;
 }
@@ -1013,7 +1025,7 @@ table.player-season-table thead th {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: .04em;
-  padding: .6rem .55rem;
+  padding: .6rem .4rem;
   text-align: left;
   white-space: nowrap;
   border-bottom: 1px solid var(--border);
@@ -1037,7 +1049,7 @@ table.player-season-table tbody tr:hover {
 
 table.player-season-table td,
 table.player-season-table tbody th {
-  padding: .45rem .55rem;
+  padding: .45rem .4rem;
   text-align: left;
   vertical-align: middle;
   font-family: var(--mono);
@@ -1067,32 +1079,34 @@ table.player-season-table td.ps-team {
   text-align: left;
 }
 
-/* one line per season is the whole point of this table, so the award badges
-   run along the row and ride the container's sideways scroll rather than
-   wrapping and stretching the row to four or five lines */
-table.player-season-table th.ps-awards,
-table.player-season-table td.ps-awards {
-  text-align: left;
-  /* Every award shows, and the column is held to a width the rest of the table
-     leaves room for, so the badges wrap down the cell instead of pushing the
-     last column past the right edge of the scroller and cutting it in half. A
-     definite width is what an auto-layout table honours; max-width alone it
-     treats as a suggestion and overruns. */
-  white-space: normal;
-  width: 7.5rem;
-  min-width: 7.5rem;
-  max-width: 7.5rem;
-  padding-left: .4rem;
-  padding-right: .4rem;
-  line-height: 1.45;
+/* the first and last columns keep their distance from the frame */
+table.player-season-table th:first-child,
+table.player-season-table td:first-child {
+  padding-left: .7rem;
 }
 
-/* A badge whose own label is wider than the column breaks rather than
-   hanging out of it. Badges elsewhere keep their one line. */
-table.player-season-table td.ps-awards .award-badge {
+table.player-season-table th:last-child,
+table.player-season-table td:last-child {
+  padding-right: .7rem;
+}
+
+/* A season's awards, under the season label. Every award shows; the badges
+   wrap down the cell rather than widening the season column, and one whose
+   own label is wider than the column breaks rather than hanging out of it. */
+.ps-season-awards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .15rem;
+  margin-top: .2rem;
+  max-width: 10rem;
+  white-space: normal;
+  line-height: 1.35;
+}
+
+table.player-season-table .ps-season-awards .award-badge {
+  margin: 0;
   white-space: normal;
   overflow-wrap: anywhere;
-  margin: .05rem 0 .05rem .05rem;
 }
 
 .ps-empty {
@@ -1110,7 +1124,6 @@ table.player-season-table th.ps-season {
   background: var(--surface);
   font-family: var(--mono);
   font-weight: 600;
-  min-width: 7.4rem;
 }
 
 table.player-season-table thead th.ps-season {
@@ -1130,18 +1143,21 @@ table.player-season-table tbody tr:hover th.ps-season {
   display: inline-block;
 }
 
-/* split team cell for a mid-season move: "OKC $26.2M / NYK $8.7M" */
+/* split team cell for a mid-season move: "OKC $26.2M / NYK $8.7M". The
+   parts stay whole but may stack when the table is short of room. */
 .ps-team-split {
   display: inline-flex;
   align-items: baseline;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   white-space: nowrap;
   gap: .15rem;
 }
 
+/* .9em of the table's .82rem is the .74rem it always was, and it follows the
+   table's type down on smaller screens */
 .ps-team-amt {
   color: var(--text-secondary);
-  font-size: .74rem;
+  font-size: .9em;
 }
 
 .ps-team-sep {
@@ -1170,33 +1186,11 @@ table.player-season-table tbody tr.ps-contracted td.ps-salary {
   color: var(--orange);
 }
 
-.ps-tag {
-  display: inline-block;
-  font-family: var(--mono);
-  font-size: .52rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: .05em;
-  padding: .08rem .3rem;
-  border-radius: 4px;
-  background: var(--orange);
-  color: #fff;
-  margin-left: .35rem;
-  vertical-align: middle;
-}
-
 .ps-note {
-  display: flex;
-  align-items: center;
-  gap: .35rem;
   font-family: var(--mono);
   font-size: .62rem;
   color: var(--text-secondary);
   margin-top: .5rem;
-}
-
-.ps-note .ps-tag {
-  margin-left: 0;
 }
 
 /* ==========================================================================
@@ -1544,16 +1538,10 @@ table.player-season-table tbody tr.ps-contracted td.ps-salary {
     font-size: .88rem;
   }
 
-  /* the player season table keeps its columns and scrolls sideways inside
-     .ps-scroll rather than joining the table-to-cards switch above — one row
-     per season is the point of it */
+  /* the player season table stays a table rather than joining the
+     table-to-cards switch above — one row per season is the point of it */
   table.player-season-table {
     font-size: .76rem;
-    min-width: 42rem;
-  }
-
-  table.player-season-table th.ps-season {
-    min-width: 6.6rem;
   }
 
   .ps-name {
@@ -1861,8 +1849,122 @@ table.nba-table td.awards-cell {
 @media (max-width: 767.98px) {
   table.nba-table td.awards-cell,
   table.nba-table th.awards-header,
-  table.player-season-table th.ps-awards,
-  table.player-season-table td.ps-awards {
+  table.player-season-table .ps-season-awards {
     display: none;
+  }
+}
+
+/* ==========================================================================
+   Player season table, narrower frames.
+
+   Sized on the frame's own width (.ps-frame is the container), not the
+   window's: a player page gives the table the whole column, while the tool's
+   single-player view shares the window with the filter sidebar.
+
+   952px and under (a player page in a window of 1000px or less): the type
+   and padding come in, the headers may break onto two lines ("% of / cap")
+   and a season's award badges wrap in a narrower stack. 668px and under (a
+   player page on a phone, or the tool beside its sidebar): the type comes in
+   again. Below a 700px window, or in a frame of 500px or less, only Season,
+   Team, Salary, % of cap, Lg rank and Career $ remain: Tm rank, Age, GP, PPG, RPG and APG drop out, so the
+   money fits a phone without the table scrolling sideways.
+   ========================================================================== */
+
+@container ps-frame (max-width: 952px) {
+  table.player-season-table {
+    font-size: .72rem;
+  }
+
+  table.player-season-table thead th {
+    padding: .5rem .3rem;
+    white-space: normal;
+    line-height: 1.25;
+    vertical-align: bottom;
+  }
+
+  table.player-season-table td,
+  table.player-season-table tbody th {
+    padding: .45rem .3rem;
+  }
+
+  table.player-season-table th:first-child,
+  table.player-season-table td:first-child {
+    padding-left: .55rem;
+  }
+
+  table.player-season-table th:last-child,
+  table.player-season-table td:last-child {
+    padding-right: .55rem;
+  }
+
+  .ps-season-awards {
+    max-width: 5.5rem;
+  }
+
+  /* more than one team in a season: one per line when the column is short
+     of room, a split's amount beside its team or under it */
+  table.player-season-table td.ps-team {
+    white-space: normal;
+  }
+
+  .ps-team-split {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .2rem;
+  }
+
+  .ps-team-split .ps-team-sep {
+    display: none;
+  }
+
+  .ps-team-part {
+    display: inline-flex;
+    flex-wrap: wrap;
+    column-gap: .3em;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 699.98px) {
+  table.player-season-table .ps-wide {
+    display: none;
+  }
+}
+
+/* the same six columns when the frame itself is phone-narrow, which a wider
+   window can still leave the tool's view beside its sidebar */
+@container ps-frame (max-width: 500px) {
+  table.player-season-table .ps-wide {
+    display: none;
+  }
+}
+
+@container ps-frame (max-width: 668px) {
+  table.player-season-table {
+    font-size: .62rem;
+  }
+
+  table.player-season-table thead th {
+    font-size: .54rem;
+    padding: .45rem .15rem;
+  }
+
+  table.player-season-table td,
+  table.player-season-table tbody th {
+    padding: .45rem .15rem;
+  }
+
+  table.player-season-table .ps-team-sep {
+    margin: 0 .1rem;
+  }
+
+  table.player-season-table th:first-child,
+  table.player-season-table td:first-child {
+    padding-left: .35rem;
+  }
+
+  table.player-season-table th:last-child,
+  table.player-season-table td:last-child {
+    padding-right: .35rem;
   }
 }

@@ -2439,23 +2439,23 @@
      ============================================ */
 
   // Season, Team, Salary, % of cap, League rank, Team rank, Career earnings,
-  // Age and Awards as specified; Exp / GP / PPG / RPG / APG carried over from
-  // the per-season cards this table replaces, so no field is lost.
+  // Age, GP, PPG, RPG and APG. A season's awards ride as badges under the
+  // season link rather than in a column of their own, so the table fits the
+  // page without scrolling sideways. ps-wide marks the columns a phone drops
+  // (below 700px) so the money columns keep their room.
   const PLAYER_SEASON_COLUMNS = [
     { key: "season",             label: "Season",    cls: "ps-season" },
     { key: "team",               label: "Team",      cls: "ps-team" },
     { key: "salary",             label: "Salary",    cls: "ps-num ps-salary" },
     { key: "salary_cap_pct",     label: "% of cap",  cls: "ps-num" },
     { key: "salary_rank_league", label: "Lg rank",   cls: "ps-num" },
-    { key: "salary_rank_team",   label: "Tm rank",   cls: "ps-num" },
+    { key: "salary_rank_team",   label: "Tm rank",   cls: "ps-num ps-wide" },
     { key: "career_earnings",    label: "Career $",  cls: "ps-num ps-career" },
-    { key: "age",                label: "Age",       cls: "ps-num" },
-    { key: "years_exp",          label: "Exp",       cls: "ps-num" },
-    { key: "gp",                 label: "GP",        cls: "ps-num" },
-    { key: "ppg",                label: "PPG",       cls: "ps-num" },
-    { key: "rpg",                label: "RPG",       cls: "ps-num" },
-    { key: "apg",                label: "APG",       cls: "ps-num" },
-    { key: "awards",             label: "Awards",    cls: "ps-awards" },
+    { key: "age",                label: "Age",       cls: "ps-num ps-wide" },
+    { key: "gp",                 label: "GP",        cls: "ps-num ps-wide" },
+    { key: "ppg",                label: "PPG",       cls: "ps-num ps-wide" },
+    { key: "rpg",                label: "RPG",       cls: "ps-num ps-wide" },
+    { key: "apg",                label: "APG",       cls: "ps-num ps-wide" },
   ];
 
   // Short money for the split-team cell, where two or three figures share one
@@ -2500,12 +2500,16 @@
 
     var teams = String(record.team || "").split(",").map(function (t) { return t.trim(); }).filter(Boolean);
     if (teams.length === 0) return "-";
-    return teams.map(wrap).join('<span class="ps-team-sep">/</span>');
+    // <wbr> lets a narrow table put each team on its own line
+    return teams.map(wrap).join('<span class="ps-team-sep">/</span><wbr>');
   }
 
-  function playerSeasonAwardsCell(awards, clickable, links) {
-    if (!awards || awards.length === 0) return '<span class="ps-empty">-</span>';
-    return awardBadges(awards, null, clickable, links && links.awards);
+  // A season's awards, as badges under the season label. Empty when there
+  // are none, so a season with no award is just its label.
+  function playerSeasonAwards(awards, clickable, links) {
+    if (!awards || awards.length === 0) return "";
+    return '<span class="ps-season-awards">' +
+      awardBadges(awards, null, clickable, links && links.awards) + "</span>";
   }
 
   /**
@@ -2525,7 +2529,7 @@
    *                       {team: {ATL: url}, season: {"2026-27": url},
    *                        awards: "<tool root>"}. A cell with no URL in the
    *                       map is left as plain text.
-   * @returns {string} HTML for the scroll container plus the table
+   * @returns {string} HTML for the frame plus the table
    */
   function buildPlayerSeasonTable(records, opts) {
     opts = opts || {};
@@ -2544,7 +2548,7 @@
         '<span class="ps-count">' + rows.length + (rows.length === 1 ? " season" : " seasons") + "</span></div>";
     }
 
-    html += '<div class="ps-scroll"><table class="player-season-table"><thead><tr>';
+    html += '<div class="ps-frame"><table class="player-season-table"><thead><tr>';
     PLAYER_SEASON_COLUMNS.forEach(function (col) {
       html += '<th class="' + col.cls + '" scope="col">' + escHtml(col.label) + "</th>";
     });
@@ -2565,7 +2569,7 @@
               label = '<a href="' + escAttr(seasonHref) + '">' + label + "</a>";
             }
             cell = '<th class="' + col.cls + '" scope="row"><span class="ps-season-label">' + label + "</span>" +
-              (isFuture ? '<span class="ps-tag">contracted</span>' : "") + "</th>";
+              playerSeasonAwards(r.awards, clickable, links) + "</th>";
             html += cell;
             return;
           case "team":
@@ -2583,9 +2587,6 @@
           case "apg":
             cell = v == null ? '<span class="ps-empty">-</span>' : fmtStat(v);
             break;
-          case "awards":
-            cell = playerSeasonAwardsCell(v, clickable, links);
-            break;
           default:
             cell = v == null || v === "" ? '<span class="ps-empty">-</span>' : escHtml(String(v));
         }
@@ -2598,7 +2599,7 @@
     html += "</tbody></table></div>";
 
     if (rows.some(function (r) { return currentYear > 0 && seasonYear(r.season) > currentYear; })) {
-      html += '<p class="ps-note"><span class="ps-tag">contracted</span> Scheduled money on a signed deal, not money already paid.</p>';
+      html += '<p class="ps-note">Shaded rows: scheduled salary, not yet paid.</p>';
     }
 
     return html;

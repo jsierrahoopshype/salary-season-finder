@@ -515,9 +515,71 @@ def test_the_404_links_the_tool_root_and_every_hub():
 def test_the_season_table_is_the_tools_own_component():
     """Not a second copy of it: the markup is what js/app.js emits."""
     html = read(os.path.join("player", "cade-cunningham", "index.html"))
-    assert '<table class="player-season-table">' in html
-    assert 'class="ps-scroll"' in html
+    assert '<div class="ps-frame"><table class="player-season-table">' in html
     assert 'class="ps-season-label"' in html
+
+
+def _built_season_table(slug):
+    html = read(os.path.join("player", slug, "index.html"))
+    table = html[html.index('<div class="ps-frame">'):]
+    return table[:table.index("</table>")], html
+
+
+@built
+def test_the_season_table_has_no_exp_awards_or_contracted_column():
+    table, _html = _built_season_table("jaden-mcdaniels")
+    head = table[:table.index("</thead>")]
+    labels = re.findall(r'scope="col">([^<]+)</th>', head)
+    assert labels == ["Season", "Team", "Salary", "% of cap", "Lg rank",
+                      "Tm rank", "Career $", "Age", "GP", "PPG", "RPG", "APG"]
+    assert "ps-awards" not in table
+    assert "contracted</span>" not in table
+    assert "ps-tag" not in table
+
+
+@built
+def test_future_seasons_stay_shaded_and_the_legend_is_one_line():
+    table, html = _built_season_table("jaden-mcdaniels")
+    rows = re.findall(r'<tr class="([^"]*)"><th class="ps-season" scope="row">'
+                      r'<span class="ps-season-label"><a [^>]*>([^<]+)</a>', table)
+    shaded = [season for cls, season in rows if "ps-contracted" in cls]
+    assert shaded == ["2027-28", "2028-29", "2029-30"]
+    # the season being played is not shaded
+    assert ("ps-row", "2026-27") in rows
+    assert '<p class="ps-note">Shaded rows: scheduled salary, not yet paid.</p>' in html
+
+
+@built
+def test_a_seasons_awards_sit_under_its_season_link():
+    table, _html = _built_season_table("kyrie-irving")
+    cells = re.findall(r'<th class="ps-season" scope="row">(.*?)</th>', table)
+    with_awards = [c for c in cells if "ps-season-awards" in c]
+    assert with_awards
+    for cell in with_awards:
+        assert cell.index("ps-season-label") < cell.index("ps-season-awards")
+        assert '<a class="award-badge' in cell
+
+
+def test_a_phone_drops_the_secondary_columns():
+    app = read(os.path.join("js", "app.js"))
+    block = app[app.index("const PLAYER_SEASON_COLUMNS = ["):]
+    block = block[:block.index("];")]
+    wide = re.findall(r'label: "([^"]+)",\s*cls: "[^"]*ps-wide', block)
+    assert wide == ["Tm rank", "Age", "GP", "PPG", "RPG", "APG"]
+    css = read(os.path.join("css", "styles.css"))
+    phone = css[css.index("@media (max-width: 699.98px) {"):]
+    assert "table.player-season-table .ps-wide {\n    display: none;" in phone
+
+
+def test_the_season_table_is_never_a_sideways_scroller():
+    css = read(os.path.join("css", "styles.css"))
+    frame = css[css.index(".ps-frame {"):]
+    frame = frame[:frame.index("}")]
+    assert "overflow-x" not in frame
+    assert "auto" not in frame and "scroll" not in frame
+    table = css[css.index("table.player-season-table {"):]
+    table = table[:table.index("}")]
+    assert "min-width" not in table
 
 
 @built
@@ -876,8 +938,8 @@ def test_the_tool_no_longer_truncates_a_career_to_one_award():
     assert "function summarizeAwards" in app
     assert "award_counts" in app
     css = read(os.path.join("css", "styles.css"))
-    awards_cell = css[css.index("td.ps-awards"):]
-    assert "white-space: normal" in awards_cell.split("}")[0]
+    badges = css[css.index(".ps-season-awards .award-badge {"):]
+    assert "white-space: normal" in badges.split("}")[0]
 
 
 @built
@@ -1044,8 +1106,8 @@ def test_a_target_is_linked_once_per_sentence():
 def test_awards_are_hidden_below_768px():
     css = read(os.path.join("css", "styles.css"))
     block = css[css.rindex("@media (max-width: 768px)"):]
-    for selector in ("td.awards-cell", "th.awards-header", "th.ps-awards",
-                     "td.ps-awards"):
+    for selector in ("td.awards-cell", "th.awards-header",
+                     "table.player-season-table .ps-season-awards"):
         assert selector in block, selector
     assert "display: none" in block
     # the filter itself is untouched
@@ -1723,13 +1785,13 @@ def test_the_award_chip_list_matches_the_markup():
     assert in_js == in_html
 
 
-def test_the_awards_column_is_held_to_a_width_so_its_badges_wrap():
+def test_the_season_awards_are_held_to_a_width_so_its_badges_wrap():
     css = read(os.path.join("css", "styles.css"))
-    block = css[css.index("table.player-season-table th.ps-awards,"):]
+    block = css[css.index(".ps-season-awards {"):]
     block = block[:block.index("}")]
     assert "white-space: normal;" in block
-    assert "width: 7.5rem;" in block
-    badge = css[css.index("table.player-season-table td.ps-awards .award-badge"):]
+    assert "max-width:" in block
+    badge = css[css.index("table.player-season-table .ps-season-awards .award-badge"):]
     badge = badge[:badge.index("}")]
     assert "overflow-wrap: anywhere;" in badge
 
@@ -1980,7 +2042,7 @@ def test_the_losing_season_is_spared_the_cap_between_two_arrivals():
 ALIGN = {
     "hm-who": "left", "hm-text": "left", "hm-word": "left",
     "hm-num": "right", "hm-money": "right",
-    "ps-season": "left", "ps-team": "left", "ps-awards": "left",
+    "ps-season": "left", "ps-team": "left",
     "ps-num": "right",
     # the tool's own results table
     "text-cell": "left", "player-name": "left", "awards-cell": "left",
@@ -1988,7 +2050,7 @@ ALIGN = {
 }
 
 #: Classes that only decorate: colour, weight, width, flex order.
-PLAIN = {"hm-span", "hm-seasons", "ps-salary", "ps-career"}
+PLAIN = {"hm-span", "hm-seasons", "ps-salary", "ps-career", "ps-wide"}
 
 
 def _align_rules(css):
