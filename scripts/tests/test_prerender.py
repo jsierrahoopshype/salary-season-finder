@@ -589,6 +589,7 @@ def test_a_phone_shows_money_in_millions_at_a_readable_size():
 
 
 def test_the_compact_money_rounds_to_one_decimal_or_two_under_ten_million():
+    """Under $1M it is the nearest thousand instead: see the test below."""
     html = _season_table([
         {"player": "test", "season": "2020-21", "team": "MIN",
          "salary": 1964760, "career_earnings": 1964760},
@@ -601,9 +602,27 @@ def test_the_compact_money_rounds_to_one_decimal_or_two_under_ten_million():
     ])
     short = re.findall(r'<span class="ps-money-short">([^<]+)</span>', html)
     assert short == ["$1.96M", "$1.96M", "$26.2M", "$83.7M",
-                     "$10.0M", "$181.5M", "$0.75M", "$12.3M"]
+                     "$10.0M", "$181.5M", "$750K", "$12.3M"]
     full = re.findall(r'<span class="ps-money-full">([^<]+)</span>', html)
     assert full[:2] == ["$1,964,760", "$1,964,760"]
+
+
+def test_the_compact_money_under_a_million_is_the_nearest_thousand():
+    html = _season_table([
+        {"player": "test", "season": "2020-21", "team": "MIN",
+         "salary": 750000, "career_earnings": 507499},
+        {"player": "test", "season": "2021-22", "team": "MIN",
+         "salary": 506500, "career_earnings": 999499},
+        {"player": "test", "season": "2022-23", "team": "MIN",
+         "salary": 999500, "career_earnings": 1000000},
+        {"player": "test", "season": "2023-24", "team": "MIN",
+         "salary": 400, "career_earnings": 1004999},
+    ])
+    short = re.findall(r'<span class="ps-money-short">([^<]+)</span>', html)
+    # $999,500 would round to "$1000K", so it takes the million form, and
+    # $400 would be "$0K", so it stays exact
+    assert short == ["$750K", "$507K", "$507K", "$999K",
+                     "$1.00M", "$1.00M", "$400", "$1.00M"]
 
 
 def test_the_season_table_is_never_a_sideways_scroller():

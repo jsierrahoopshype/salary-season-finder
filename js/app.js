@@ -2468,13 +2468,19 @@
     return "$" + n;
   }
 
-  // Money in millions for a phone's Salary and Career $ columns: one decimal,
-  // two under $10M ($26.2M, $1.96M, $181.5M). A figure that rounds up to
-  // $10M at two decimals takes one, so it never reads "$10.00M".
+  // Compact money for a phone's Salary and Career $ columns. Under $1M, the
+  // nearest thousand ($750K, $507K); from $1M, millions to one decimal, two
+  // under $10M ($1.96M, $26.2M, $181.5M). A figure that rounds up to the next
+  // unit takes that unit's form, so it never reads "$1000K" or "$10.00M",
+  // and one too small to be a thousand stays exact rather than "$0K".
   function fmtSalaryCompact(val) {
+    var sign = val < 0 ? "-" : "";
+    var k = Math.round(Math.abs(val) / 1000);
+    if (k === 0) return fmtSalary(val);
+    if (k < 1000) return sign + "$" + k + "K";
     var m = Math.abs(val) / 1000000;
     var two = Math.round(m * 100) / 100 < 10;
-    return (val < 0 ? "-" : "") + "$" + m.toFixed(two ? 2 : 1) + "M";
+    return sign + "$" + m.toFixed(two ? 2 : 1) + "M";
   }
 
   // Both forms ride in the cell; the stylesheet shows the full figure and,

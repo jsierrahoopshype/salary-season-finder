@@ -9,7 +9,7 @@
  *   - anything between the table and the page is a sideways scroller,
  *   - the wrong columns show (12 from 700px up, 6 below),
  *   - award badges show below 768px, or the CONTRACTED tag is back,
- *   - below 700px: Salary and Career $ not in millions ($26.2M), or any
+ *   - below 700px: Salary and Career $ not compact ($26.2M, $750K), or any
  *     text in the table under 13px; from 700px: not the full figures.
  *
  * Pages: Jaden McDaniels, plus the pages most likely to be widest, picked
@@ -151,8 +151,8 @@ async function main() {
         if (m.contractedTag) m.problems.push('the CONTRACTED tag is still in the table');
         if (width < 700) {
           if (m.moneyFull.length) m.problems.push('full money figures show below 700px: ' + m.moneyFull[0]);
-          const bad = m.moneyShort.filter((t) => !/^-?\$\d+\.\d{1,2}M$/.test(t));
-          if (!m.moneyShort.length || bad.length) m.problems.push('money not in millions below 700px: ' + (bad[0] || 'none shown'));
+          const bad = m.moneyShort.filter((t) => !/^-?\$(\d+\.\d{1,2}M|\d{1,3}K|\d{1,3})$/.test(t));
+          if (!m.moneyShort.length || bad.length) m.problems.push('money not in compact form below 700px: ' + (bad[0] || 'none shown'));
           if (m.minFontPx < PHONE_MIN_FONT_PX) m.problems.push('table text at ' + m.minFontPx + 'px, under ' + PHONE_MIN_FONT_PX + 'px');
         } else {
           if (m.moneyShort.length) m.problems.push('short money shows at ' + width + 'px: ' + m.moneyShort[0]);
