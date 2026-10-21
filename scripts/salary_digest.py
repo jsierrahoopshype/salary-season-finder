@@ -378,8 +378,15 @@ def player_url(slugs, name):
 
 
 # ── comparing two builds ───────────────────────────────────────────────
+#: build_data.MIN_SALARY. A season under it is a sheet's placeholder, which
+#: the build leaves out of data.json; a data.json built before that rule can
+#: still hold one, and its leaving is not money coming off anyone's books.
+MIN_SALARY = 1000
+
+
 def by_key(data):
-    return {(r["player"], r["season"]): r for r in data.get("seasons") or []}
+    return {(r["player"], r["season"]): r for r in data.get("seasons") or []
+            if r.get("salary") is None or r["salary"] >= MIN_SALARY}
 
 
 def last_season(records, player):

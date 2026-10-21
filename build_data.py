@@ -159,6 +159,13 @@ NAME_SUFFIXES = ("jr", "sr", "ii", "iii", "iv", "v")
 # drafted in 1976, cannot be the man paid in 2005-06.
 MAX_CAREER_SPAN = 25
 
+#: A season salary under this is a placeholder in a sheet, not money anyone
+#: is paid (Bradley Beal's 2030-31 came through as $7). Such a season is left
+#: out of data.json altogether, so no page shows it and no rank, career total
+#: or digest counts it. The source figure is left as the sheet has it; every
+#: record left out is printed in the build log and listed in meta.
+MIN_SALARY = 1000
+
 SUFFIX_DISPLAY = {
     "jr": "Jr", "sr": "Sr", "ii": "II", "iii": "III", "iv": "IV", "v": "V",
 }
@@ -221,6 +228,29 @@ def bio_block(row):
 #: (the supplemental draft) also leave PICK without a number, and those men were
 #: drafted, so neither is here.
 UNDRAFTED_PICKS = ("UND", "ND")
+
+
+def drop_token_salaries(records, display=lambda pid: pid):
+    """Split player-seasons into those kept and those under MIN_SALARY.
+
+    Returns (kept, skipped). Each skipped entry is a plain dict naming the
+    player, season, team and salary, oldest season first, so the list can go
+    to whoever keeps the sheet.
+    """
+    kept, skipped = [], []
+    for rec in records:
+        salary = rec.get("salary")
+        if salary is not None and salary < MIN_SALARY:
+            skipped.append({
+                "player": display(rec["pid"]),
+                "season": rec["season"],
+                "team": rec.get("team") or "",
+                "salary": salary,
+            })
+        else:
+            kept.append(rec)
+    skipped.sort(key=lambda r: (r["season"], r["player"]))
+    return kept, skipped
 
 
 def is_undrafted_pick(value):
@@ -2235,7 +2265,13 @@ def build_data():
                 if rec.get("team_salaries"):
                     ps_map[key]["team_salaries"] = rec["team_salaries"]
 
-    player_season_list = list(ps_map.values())
+    player_season_list, skipped_salaries = drop_token_salaries(
+        list(ps_map.values()), persons.display)
+    print(f"    Skipped {len(skipped_salaries)} season(s) with a salary under "
+          f"${MIN_SALARY:,} (left out of data.json, listed in meta):")
+    for rec in skipped_salaries:
+        print(f"      WARNING: skipped {rec['player']} {rec['season']} "
+              f"{rec['team'] or '(no team)'} ${rec['salary']:,}")
     print(f"    Total player-season records: {len(player_season_list)}")
     print(f"    {len(persons.unknown)} names bio.csv has no row for")
     if persons.adopted:
@@ -2498,6 +2534,12 @@ def build_data():
             "has_stats": bool(stats_lookup),
             "has_awards": bool(awards_lookup),
             "has_bio": bool(persons.people),
+            # seasons left out for a salary under MIN_SALARY: a sheet's
+            # placeholder, kept here so the list can go to whoever fixes it
+            "skipped_salaries": {
+                "min_salary": MIN_SALARY,
+                "records": skipped_salaries,
+            },
             "age_source": (
                 "A record with an age and no age_source carries the age the "
                 "stats sheet recorded for that season. age_source 'birth_date' "
