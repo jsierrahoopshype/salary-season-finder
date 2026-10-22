@@ -152,7 +152,7 @@ HEAD = """<!DOCTYPE html>
 
 FOOT = """</main>
 <footer class="site-footer">
-Anything wrong? Contact us at <a href="mailto:hoopshype@hoopshype.com">hoopshype@hoopshype.com</a>
+Anything wrong? Contact us at <a href="mailto:hoopsmatic@hoopsmatic.com">hoopsmatic@hoopsmatic.com</a>
 </footer>
 </body>
 </html>
