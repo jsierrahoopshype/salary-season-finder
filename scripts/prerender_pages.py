@@ -214,7 +214,6 @@ def related_links(idx, ident, lookup):
         ("draft", str(last.get("draft_year") or ""), "{} draft class".format(last.get("draft_year"))),
         ("position", (F.position_group(last.get("pos"))[0] or ""),
          {"G": "Guards", "F": "Forwards", "C": "Centers"}.get(F.position_group(last.get("pos"))[0] or "", "")),
-        ("agent", (last.get("agent") or "").strip(), (last.get("agent") or "").strip()),
     ]
     pick = last.get("draft_pick")
     if pick and 1 <= pick <= F.MAX_DRAFT_SLOT:
@@ -228,7 +227,7 @@ def related_links(idx, ident, lookup):
     for family, key, label in candidates:
         if not key or not label:
             continue
-        if family != "agent" and not cohorts_ok:
+        if not cohorts_ok:
             continue
         slug = lookup.get((family, key))
         if slug and (family, slug) not in seen:

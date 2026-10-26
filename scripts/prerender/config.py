@@ -125,14 +125,6 @@ FAMILIES = {
         "hub": "college-positions", "label": "Colleges by position",
         "label_one": "College position",
     },
-    # The agent field is unverified, which is why the factoid family is off. The
-    # pages are built so the hub links somewhere real, but they are noindex and
-    # out of the sitemap until the field is trusted.
-    "agent": {
-        "dir": "agent", "indexable": bool(AGENT_FACTOIDS_ENABLED),
-        "cohort": None, "hub": "agents", "label": "Agents",
-        "label_one": "Agent",
-    },
 }
 
 #: Hub slug -> the family it indexes. Hubs are always indexable: they are how a
@@ -194,7 +186,6 @@ TITLES = {
         "Highest-Paid {name} in NBA History | HoopsMatic",
         "Highest-Paid {name} | HoopsMatic",
     ),
-    "agent": ("{name}: NBA Clients and Salaries | HoopsMatic", None),
 }
 
 #: The three award-drought pages: top-level, indexable, and emitted beside the
@@ -223,7 +214,6 @@ HUB_TITLES = {
     "draft-classes": "NBA Salaries by Draft Class | HoopsMatic",
     "picks": "NBA Salaries by Draft Pick | HoopsMatic",
     "positions": "NBA Salaries by Position | HoopsMatic",
-    "agents": "NBA Salaries by Agent | HoopsMatic",
 }
 
 HUB_HEADINGS = {
@@ -235,7 +225,6 @@ HUB_HEADINGS = {
     "draft-classes": "NBA salaries by draft class",
     "picks": "NBA salaries by draft pick",
     "positions": "NBA salaries by position",
-    "agents": "NBA salaries by agent",
 }
 
 

@@ -209,12 +209,6 @@ def build_cohorts(idx, identities):
             bucket["records"].append(record)
             bucket["players"].add(ident.key)
 
-        agent = record.get("agent")
-        if agent and record["season"] in idx.agent_seasons_safe:
-            bucket = buckets[("agent", agent)]
-            bucket["records"].append(record)
-            bucket["players"].add(ident.key)
-
     by_key = {ident.key: ident for ident in identities}
     out = []
     for (family, ckey), bucket in buckets.items():
