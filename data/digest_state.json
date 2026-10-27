@@ -1,7 +1,7 @@
 {
- "changes_posted": 11,
- "last_commit": "04061d2ab868807027641f844f6f3a9e69fafc6d",
- "last_run": "2026-10-27T13:46:39Z",
+ "changes_posted": 15,
+ "last_commit": "92c3b277546856f62d9c2f5d148c6893f8cf235d",
+ "last_run": "2026-10-25T10:33:56Z",
  "league_year_opened": "2026-07-01",
  "raises": [
   {
@@ -78,12 +78,6 @@
   },
   {
    "amount": 3122805,
-   "date": "2026-10-27",
-   "player": "Sergio De Larrea",
-   "season": "2029-30"
-  },
-  {
-   "amount": 3122805,
    "date": "2026-10-25",
    "player": "Sergio de Larrea",
    "season": "2029-30"
@@ -99,18 +93,6 @@
    "date": "2026-10-25",
    "player": "Danny Wolf",
    "season": "2028-29"
-  },
-  {
-   "amount": 2252519,
-   "date": "2026-10-27",
-   "player": "Terrence Shannon",
-   "season": "2027-28"
-  },
-  {
-   "amount": 628607,
-   "date": "2026-10-27",
-   "player": "Ron Harper",
-   "season": "2029-30"
   }
  ],
  "readme": "The build scripts/salary_digest.py last read. Committed so that a rerun of the workflow compares against the same place and never posts a day's changes twice. raises holds every raise the digest has seen since the league year opened on July 1, which is what a raise is ranked against; entries before that date are dropped."
