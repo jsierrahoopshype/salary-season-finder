@@ -1,15 +1,15 @@
 {
- "built": "2026-10-27T13:45:00.140915",
- "season": "2024-25",
+ "built": "2026-10-25T10:29:17.713459",
+ "season": "2026-27",
  "players": [
   {
    "player": "Aaron Gordon",
    "team": "DEN",
    "contract": "guaranteed",
-   "current_salary": 22841455,
+   "current_salary": 31978037,
    "dead_money": [],
-   "total": 22841455,
-   "birth_date": null
+   "total": 31978037,
+   "birth_date": "1995-09-16"
   },
   {
    "player": "Aaron Nesmith",
@@ -18,501 +18,715 @@
    "current_salary": 11000000,
    "dead_money": [],
    "total": 11000000,
-   "birth_date": null
+   "birth_date": "1999-10-16"
   },
   {
    "player": "Aaron Wiggins",
    "team": "ATL",
    "contract": "guaranteed",
-   "current_salary": 10514017,
+   "current_salary": 9028038,
    "dead_money": [],
-   "total": 10514017,
+   "total": 9028038,
+   "birth_date": "1999-01-02"
+  },
+  {
+   "player": "Ace Bailey",
+   "team": "UTA",
+   "contract": "guaranteed",
+   "current_salary": 9523080,
+   "dead_money": [],
+   "total": 9523080,
+   "birth_date": "2006-08-13"
+  },
+  {
+   "player": "Adam Flager",
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "SAC",
+     "amount": 91000
+    }
+   ],
+   "total": 91000,
    "birth_date": null
   },
   {
    "player": "Aday Mara",
    "team": "OKC",
    "contract": "guaranteed",
-   "current_salary": 981902,
+   "current_salary": 5791680,
    "dead_money": [],
-   "total": 981902,
-   "birth_date": null
+   "total": 5791680,
+   "birth_date": "2005-04-07"
   },
   {
    "player": "Adem Bona",
    "team": "PHI",
    "contract": "guaranteed",
-   "current_salary": 1157153,
+   "current_salary": 2296271,
    "dead_money": [],
-   "total": 1157153,
-   "birth_date": null
+   "total": 2296271,
+   "birth_date": "2003-03-28"
+  },
+  {
+   "player": "Adou Thiero",
+   "team": "LAL",
+   "contract": "guaranteed",
+   "current_salary": 2150917,
+   "dead_money": [],
+   "total": 2150917,
+   "birth_date": "2004-05-08"
   },
   {
    "player": "AJ Dybantsa",
    "team": "WAS",
    "contract": "guaranteed",
-   "current_salary": 981902,
+   "current_salary": 14748000,
    "dead_money": [],
-   "total": 981902,
+   "total": 14748000,
    "birth_date": null
   },
   {
    "player": "AJ Green",
    "team": "MIL",
    "contract": "guaranteed",
-   "current_salary": 2120693,
+   "current_salary": 10044644,
    "dead_money": [],
-   "total": 2120693,
-   "birth_date": null
+   "total": 10044644,
+   "birth_date": "1999-09-27"
   },
   {
    "player": "AJ Johnson",
    "team": "NOP",
    "contract": "guaranteed",
-   "current_salary": 2795294,
+   "current_salary": 3237120,
    "dead_money": [],
-   "total": 2795294,
-   "birth_date": null
+   "total": 3237120,
+   "birth_date": "2004-12-01"
   },
   {
    "player": "Ajay Mitchell",
    "team": "OKC",
    "contract": "guaranteed",
-   "current_salary": 3000000,
+   "current_salary": 2850000,
    "dead_money": [],
-   "total": 3000000,
+   "total": 2850000,
+   "birth_date": "2002-06-25"
+  },
+  {
+   "player": "AK Okereke",
+   "team": "LAL",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [],
+   "total": 678882,
    "birth_date": null
   },
   {
    "player": "Al Horford",
    "team": "GSW",
    "contract": "guaranteed",
-   "current_salary": 9500000,
+   "current_salary": 6822000,
    "dead_money": [],
-   "total": 9500000,
-   "birth_date": null
+   "total": 6822000,
+   "birth_date": "1986-06-03"
   },
   {
    "player": "Alex Caruso",
    "team": "OKC",
    "contract": "guaranteed",
-   "current_salary": 9890000,
+   "current_salary": 19550160,
    "dead_money": [],
-   "total": 9890000,
-   "birth_date": null
+   "total": 19550160,
+   "birth_date": "1994-02-28"
   },
   {
    "player": "Alex Karaban",
    "team": "SAC",
    "contract": "guaranteed",
-   "current_salary": 981902,
+   "current_salary": 2948280,
    "dead_money": [],
-   "total": 981902,
-   "birth_date": null
+   "total": 2948280,
+   "birth_date": "2002-11-11"
+  },
+  {
+   "player": "Alex Morales",
+   "team": "ORL",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [],
+   "total": 678882,
+   "birth_date": "1997-11-21"
   },
   {
    "player": "Alex Sarr",
    "team": "WAS",
    "contract": "guaranteed",
-   "current_salary": 11245680,
+   "current_salary": 12370680,
    "dead_money": [],
-   "total": 11245680,
-   "birth_date": null
+   "total": 12370680,
+   "birth_date": "2005-04-26"
+  },
+  {
+   "player": "Alijah Martin",
+   "team": "TOR",
+   "contract": "guaranteed",
+   "current_salary": 2185116,
+   "dead_money": [],
+   "total": 2185116,
+   "birth_date": "2001-12-26"
   },
   {
    "player": "Allen Graves",
    "team": "TOR",
    "contract": "guaranteed",
-   "current_salary": 981902,
+   "current_salary": 4065720,
    "dead_money": [],
-   "total": 981902,
-   "birth_date": null
+   "total": 4065720,
+   "birth_date": "2006-01-01"
   },
   {
    "player": "Alperen Sengun",
    "team": "HOU",
    "contract": "guaranteed",
-   "current_salary": 5424654,
+   "current_salary": 35642202,
    "dead_money": [],
-   "total": 5424654,
-   "birth_date": null
+   "total": 35642202,
+   "birth_date": "2002-07-25"
+  },
+  {
+   "player": "Alpha Diallo",
+   "team": "DEN",
+   "contract": "guaranteed",
+   "current_salary": 1357763,
+   "dead_money": [],
+   "total": 1357763,
+   "birth_date": "1997-06-19"
+  },
+  {
+   "player": "Amari Williams",
+   "team": "BOS",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [],
+   "total": 678882,
+   "birth_date": "2002-01-28"
   },
   {
    "player": "Amen Thompson",
    "team": "HOU",
    "contract": "guaranteed",
-   "current_salary": 9249960,
+   "current_salary": 12258609,
    "dead_money": [],
-   "total": 9249960,
-   "birth_date": null
+   "total": 12258609,
+   "birth_date": "2003-01-30"
   },
   {
    "player": "Andre Drummond",
    "team": "NYK",
    "contract": "guaranteed",
-   "current_salary": 5000000,
+   "current_salary": 3876529,
    "dead_money": [],
-   "total": 5000000,
-   "birth_date": null
+   "total": 3876529,
+   "birth_date": "1993-08-10"
   },
   {
    "player": "Andrew Nembhard",
    "team": "IND",
    "contract": "guaranteed",
-   "current_salary": 2019699,
+   "current_salary": 19550160,
    "dead_money": [],
-   "total": 2019699,
-   "birth_date": null
+   "total": 19550160,
+   "birth_date": "2000-01-16"
   },
   {
    "player": "Andrew Wiggins",
    "team": "MIA",
    "contract": "guaranteed",
-   "current_salary": 26276786,
+   "current_salary": 30169644,
    "dead_money": [],
-   "total": 26276786,
-   "birth_date": null
+   "total": 30169644,
+   "birth_date": "1995-02-23"
   },
   {
    "player": "Anfernee Simons",
    "team": "PHI",
    "contract": "guaranteed",
-   "current_salary": 25892857,
+   "current_salary": 6000000,
    "dead_money": [],
-   "total": 25892857,
-   "birth_date": null
+   "total": 6000000,
+   "birth_date": "1999-06-08"
   },
   {
    "player": "Anthony Black",
    "team": "ORL",
    "contract": "guaranteed",
-   "current_salary": 7607760,
+   "current_salary": 10106315,
    "dead_money": [],
-   "total": 7607760,
-   "birth_date": null
+   "total": 10106315,
+   "birth_date": "2004-01-20"
   },
   {
    "player": "Anthony Davis",
    "team": "WAS",
    "contract": "guaranteed",
-   "current_salary": 43219440,
+   "current_salary": 58456566,
    "dead_money": [],
-   "total": 43219440,
-   "birth_date": null
+   "total": 58456566,
+   "birth_date": "1993-03-11"
   },
   {
    "player": "Anthony Edwards",
    "team": "MIN",
    "contract": "guaranteed",
-   "current_salary": 42176400,
+   "current_salary": 48924624,
    "dead_money": [],
-   "total": 42176400,
-   "birth_date": null
+   "total": 48924624,
+   "birth_date": "2001-08-05"
   },
   {
    "player": "Anthony Gill",
    "team": "WAS",
-   "contract": "guaranteed",
-   "current_salary": 2237691,
+   "contract": "non_guaranteed",
+   "current_salary": 3066143,
    "dead_money": [],
-   "total": 2237691,
-   "birth_date": null
+   "total": 3066143,
+   "birth_date": "1992-10-17"
   },
   {
    "player": "Ariel Hukporti",
    "team": "PHI",
    "contract": "guaranteed",
-   "current_salary": 1064049,
+   "current_salary": 3400000,
    "dead_money": [],
-   "total": 1064049,
-   "birth_date": null
+   "total": 3400000,
+   "birth_date": "2002-04-12"
   },
   {
    "player": "Arthur Kaluma",
    "team": "LAL",
-   "contract": "guaranteed",
-   "current_salary": 596581,
+   "contract": "two_way",
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 596581,
+   "total": 678882,
    "birth_date": null
+  },
+  {
+   "player": "Asa Newell",
+   "team": "ATL",
+   "contract": "guaranteed",
+   "current_salary": 3399480,
+   "dead_money": [],
+   "total": 3399480,
+   "birth_date": "2005-10-05"
   },
   {
    "player": "Ausar Thompson",
    "team": "DET",
    "contract": "guaranteed",
-   "current_salary": 8376000,
+   "current_salary": 11117925,
    "dead_money": [],
-   "total": 8376000,
-   "birth_date": null
+   "total": 11117925,
+   "birth_date": "2003-01-30"
   },
   {
    "player": "Austin Reaves",
    "team": "LAL",
    "contract": "guaranteed",
-   "current_salary": 12976362,
+   "current_salary": 41240250,
    "dead_money": [],
-   "total": 12976362,
-   "birth_date": null
+   "total": 41240250,
+   "birth_date": "1998-05-29"
   },
   {
    "player": "Ayo Dosunmu",
    "team": "MIN",
    "contract": "guaranteed",
-   "current_salary": 7000000,
+   "current_salary": 19310345,
    "dead_money": [],
-   "total": 7000000,
-   "birth_date": null
+   "total": 19310345,
+   "birth_date": "2000-01-17"
+  },
+  {
+   "player": "Baba Miller",
+   "team": "LAC",
+   "contract": "guaranteed",
+   "current_salary": 1705630,
+   "dead_money": [],
+   "total": 1705630,
+   "birth_date": "2004-02-07"
   },
   {
    "player": "Bam Adebayo",
    "team": "MIA",
    "contract": "guaranteed",
-   "current_salary": 34848340,
+   "current_salary": 49488300,
    "dead_money": [],
-   "total": 34848340,
-   "birth_date": null
+   "total": 49488300,
+   "birth_date": "1997-07-18"
   },
   {
    "player": "Baylor Scheierman",
    "team": "BOS",
    "contract": "guaranteed",
-   "current_salary": 2494320,
+   "current_salary": 2744040,
    "dead_money": [],
-   "total": 2494320,
-   "birth_date": null
+   "total": 2744040,
+   "birth_date": "2000-09-26"
+  },
+  {
+   "player": "Ben Saraf",
+   "team": "BKN",
+   "contract": "guaranteed",
+   "current_salary": 3028560,
+   "dead_money": [],
+   "total": 3028560,
+   "birth_date": "2006-04-14"
   },
   {
    "player": "Ben Sheppard",
    "team": "IND",
    "contract": "guaranteed",
-   "current_salary": 2663880,
+   "current_salary": 5031668,
    "dead_money": [],
-   "total": 2663880,
-   "birth_date": null
+   "total": 5031668,
+   "birth_date": "2001-07-16"
+  },
+  {
+   "player": "Ben Simmons",
+   "team": "SAC",
+   "contract": "non_guaranteed",
+   "current_salary": 3524115,
+   "dead_money": [],
+   "total": 3524115,
+   "birth_date": "1996-07-20"
   },
   {
    "player": "Bennedict Mathurin",
    "team": "NOP",
    "contract": "guaranteed",
-   "current_salary": 7245720,
+   "current_salary": 7500000,
    "dead_money": [],
-   "total": 7245720,
-   "birth_date": null
+   "total": 7500000,
+   "birth_date": "2002-06-19"
   },
   {
    "player": "Bennett Stirtz",
    "team": "OKC",
    "contract": "guaranteed",
-   "current_salary": 981902,
+   "current_salary": 4717320,
    "dead_money": [],
-   "total": 981902,
-   "birth_date": null
+   "total": 4717320,
+   "birth_date": "2003-10-03"
   },
   {
    "player": "Bilal Coulibaly",
    "team": "WAS",
    "contract": "guaranteed",
-   "current_salary": 6945240,
+   "current_salary": 9240012,
    "dead_money": [],
-   "total": 6945240,
-   "birth_date": null
+   "total": 9240012,
+   "birth_date": "2004-07-26"
+  },
+  {
+   "player": "Blake Hinson",
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "UTA",
+     "amount": 91000
+    }
+   ],
+   "total": 91000,
+   "birth_date": "1999-12-26"
   },
   {
    "player": "Bobby Portis",
    "team": "MIA",
    "contract": "guaranteed",
-   "current_salary": 12578286,
+   "current_salary": 14521414,
    "dead_money": [],
-   "total": 12578286,
-   "birth_date": null
+   "total": 14521414,
+   "birth_date": "1995-02-10"
   },
   {
    "player": "Bogdan Bogdanovic",
    "team": "HOU",
    "contract": "guaranteed",
-   "current_salary": 17260000,
+   "current_salary": 3524115,
    "dead_money": [],
-   "total": 17260000,
+   "total": 3524115,
+   "birth_date": "1992-08-18"
+  },
+  {
+   "player": "Bogoljub Markovic",
+   "team": "MIL",
+   "contract": "guaranteed",
+   "current_salary": 1357763,
+   "dead_money": [],
+   "total": 1357763,
    "birth_date": null
   },
   {
    "player": "Bones Hyland",
    "team": "MIN",
-   "contract": "two_way",
-   "current_salary": 147988,
+   "contract": "guaranteed",
+   "current_salary": 2846555,
    "dead_money": [],
-   "total": 147988,
+   "total": 2846555,
+   "birth_date": "2000-09-14"
+  },
+  {
+   "player": "Braden Smith",
+   "team": "IND",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [],
+   "total": 678882,
    "birth_date": null
   },
   {
    "player": "Bradley Beal",
    "team": "LAC",
    "contract": "guaranteed",
-   "current_salary": 50203930,
-   "dead_money": [],
-   "total": 50203930,
-   "birth_date": null
+   "current_salary": 6424800,
+   "dead_money": [
+    {
+     "team": "PHX",
+     "amount": 19383010
+    }
+   ],
+   "total": 25807810,
+   "birth_date": "1993-06-28"
   },
   {
    "player": "Branden Carlson",
    "team": "POR",
-   "contract": "two_way",
-   "current_salary": 218765,
+   "contract": "guaranteed",
+   "current_salary": 2449421,
    "dead_money": [],
-   "total": 218765,
-   "birth_date": null
+   "total": 2449421,
+   "birth_date": "1999-06-14"
   },
   {
    "player": "Brandin Podziemski",
    "team": "GSW",
    "contract": "guaranteed",
-   "current_salary": 3519960,
+   "current_salary": 5679458,
    "dead_money": [],
-   "total": 3519960,
-   "birth_date": null
+   "total": 5679458,
+   "birth_date": "2003-02-25"
+  },
+  {
+   "player": "Brandon Clarke",
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "MEM",
+     "amount": 12500000
+    }
+   ],
+   "total": 12500000,
+   "birth_date": "1996-09-19"
   },
   {
    "player": "Brandon Ingram",
    "team": "LAC",
    "contract": "guaranteed",
-   "current_salary": 36016200,
+   "current_salary": 40000000,
    "dead_money": [],
-   "total": 36016200,
-   "birth_date": null
+   "total": 40000000,
+   "birth_date": "1997-09-02"
   },
   {
    "player": "Brandon Miller",
    "team": "CHA",
    "contract": "guaranteed",
-   "current_salary": 11424600,
+   "current_salary": 15104626,
    "dead_money": [],
-   "total": 11424600,
-   "birth_date": null
+   "total": 15104626,
+   "birth_date": "2002-11-22"
   },
   {
    "player": "Brandon Williams",
    "team": "GSW",
-   "contract": "guaranteed",
-   "current_salary": 47989,
+   "contract": "partial",
+   "current_salary": 2625627,
    "dead_money": [],
-   "total": 47989,
-   "birth_date": null
+   "total": 2625627,
+   "birth_date": "1999-11-22"
   },
   {
    "player": "Brayden Burries",
    "team": "MIL",
    "contract": "guaranteed",
-   "current_salary": 981902,
+   "current_salary": 6417360,
    "dead_money": [],
-   "total": 981902,
-   "birth_date": null
+   "total": 6417360,
+   "birth_date": "2005-09-18"
   },
   {
    "player": "Brice Sensabaugh",
    "team": "UTA",
    "contract": "guaranteed",
-   "current_salary": 2571480,
+   "current_salary": 4862237,
    "dead_money": [],
-   "total": 2571480,
-   "birth_date": null
+   "total": 4862237,
+   "birth_date": "2003-10-30"
   },
   {
    "player": "Bronny James",
    "team": "LAL",
    "contract": "guaranteed",
-   "current_salary": 1157153,
+   "current_salary": 2296271,
    "dead_money": [],
-   "total": 1157153,
-   "birth_date": null
+   "total": 2296271,
+   "birth_date": "2004-10-06"
   },
   {
    "player": "Brook Lopez",
    "team": "LAC",
    "contract": "guaranteed",
-   "current_salary": 23000000,
+   "current_salary": 9187500,
    "dead_money": [],
-   "total": 23000000,
-   "birth_date": null
+   "total": 9187500,
+   "birth_date": "1988-04-01"
+  },
+  {
+   "player": "Brooks Barnhizer",
+   "team": "OKC",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [],
+   "total": 678882,
+   "birth_date": "2002-03-02"
+  },
+  {
+   "player": "Bruce Thornton",
+   "team": "HOU",
+   "contract": "guaranteed",
+   "current_salary": 1357763,
+   "dead_money": [],
+   "total": 1357763,
+   "birth_date": "2003-09-14"
+  },
+  {
+   "player": "Bryce Hopkins",
+   "team": "DEN",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [],
+   "total": 678882,
+   "birth_date": "2002-09-07"
   },
   {
    "player": "Bryce McGowens",
    "team": "NOP",
-   "contract": "two_way",
-   "current_salary": 578577,
+   "contract": "guaranteed",
+   "current_salary": 2584539,
    "dead_money": [],
-   "total": 578577,
-   "birth_date": null
+   "total": 2584539,
+   "birth_date": "2002-11-08"
   },
   {
    "player": "Buddy Hield",
    "team": "CHI",
    "contract": "guaranteed",
-   "current_salary": 8780488,
+   "current_salary": 9658536,
    "dead_money": [],
-   "total": 8780488,
-   "birth_date": null
+   "total": 9658536,
+   "birth_date": "1992-12-17"
   },
   {
    "player": "Cade Cunningham",
    "team": "DET",
    "contract": "guaranteed",
-   "current_salary": 13940809,
+   "current_salary": 50105628,
    "dead_money": [],
-   "total": 13940809,
-   "birth_date": null
+   "total": 50105628,
+   "birth_date": "2001-09-25"
+  },
+  {
+   "player": "Caleb Love",
+   "team": "PHI",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [],
+   "total": 678882,
+   "birth_date": "2001-09-27"
   },
   {
    "player": "Caleb Martin",
    "team": "DAL",
    "contract": "guaranteed",
-   "current_salary": 9186594,
+   "current_salary": 10001494,
    "dead_money": [],
-   "total": 9186594,
-   "birth_date": null
+   "total": 10001494,
+   "birth_date": "1995-09-28"
   },
   {
    "player": "Caleb Wilson",
    "team": "CHI",
    "contract": "guaranteed",
-   "current_salary": 981902,
+   "current_salary": 10683720,
    "dead_money": [],
-   "total": 981902,
-   "birth_date": null
+   "total": 10683720,
+   "birth_date": "2006-07-18"
+  },
+  {
+   "player": "Cam Christie",
+   "team": "LAC",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [],
+   "total": 678882,
+   "birth_date": "2005-07-24"
   },
   {
    "player": "Cam Spencer",
    "team": "MEM",
-   "contract": "two_way",
-   "current_salary": 578577,
+   "contract": "guaranteed",
+   "current_salary": 2411090,
    "dead_money": [],
-   "total": 578577,
-   "birth_date": null
+   "total": 2411090,
+   "birth_date": "2000-04-06"
   },
   {
    "player": "Cam Whitmore",
    "team": "DEN",
-   "contract": "guaranteed",
-   "current_salary": 3379080,
-   "dead_money": [],
-   "total": 3379080,
-   "birth_date": null
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [
+    {
+     "team": "CLE",
+     "amount": 1819437
+    }
+   ],
+   "total": 2498319,
+   "birth_date": "2004-07-08"
   },
   {
    "player": "Cameron Boozer",
    "team": "MEM",
    "contract": "guaranteed",
-   "current_salary": 981902,
+   "current_salary": 11849760,
    "dead_money": [],
-   "total": 981902,
-   "birth_date": null
+   "total": 11849760,
+   "birth_date": "2007-07-18"
   },
   {
    "player": "Cameron Carr",
    "team": "LAL",
    "contract": "guaranteed",
-   "current_salary": 981902,
+   "current_salary": 3315360,
    "dead_money": [],
-   "total": 981902,
+   "total": 3315360,
    "birth_date": null
   },
   {
@@ -522,736 +736,1108 @@
    "current_salary": 23062500,
    "dead_money": [],
    "total": 23062500,
-   "birth_date": null
+   "birth_date": "1996-03-03"
   },
   {
    "player": "Caris LeVert",
    "team": "MIL",
    "contract": "guaranteed",
-   "current_salary": 16615384,
+   "current_salary": 14809200,
    "dead_money": [],
-   "total": 16615384,
-   "birth_date": null
+   "total": 14809200,
+   "birth_date": "1994-08-25"
   },
   {
    "player": "Carlton Carrington",
    "team": "WAS",
    "contract": "guaranteed",
-   "current_salary": 4454880,
+   "current_salary": 4900560,
    "dead_money": [],
-   "total": 4454880,
+   "total": 4900560,
+   "birth_date": "2005-07-21"
+  },
+  {
+   "player": "Carson Cooper",
+   "team": "MEM",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [],
+   "total": 678882,
    "birth_date": null
+  },
+  {
+   "player": "Carter Bryant",
+   "team": "SAS",
+   "contract": "guaranteed",
+   "current_salary": 5145360,
+   "dead_money": [],
+   "total": 5145360,
+   "birth_date": "2005-11-26"
   },
   {
    "player": "Cason Wallace",
    "team": "OKC",
    "contract": "guaranteed",
-   "current_salary": 5555880,
+   "current_salary": 7420806,
    "dead_money": [],
-   "total": 5555880,
-   "birth_date": null
+   "total": 7420806,
+   "birth_date": "2003-11-07"
+  },
+  {
+   "player": "Cedric Coward",
+   "team": "MEM",
+   "contract": "guaranteed",
+   "current_salary": 6001080,
+   "dead_money": [],
+   "total": 6001080,
+   "birth_date": "2003-09-11"
+  },
+  {
+   "player": "Chaney Johnson",
+   "team": "BKN",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [],
+   "total": 678882,
+   "birth_date": "2002-06-20"
   },
   {
    "player": "Charles Bassey",
    "team": "GSW",
-   "contract": "guaranteed",
-   "current_salary": 2162606,
+   "contract": "partial",
+   "current_salary": 2845883,
    "dead_money": [],
-   "total": 2162606,
-   "birth_date": null
+   "total": 2845883,
+   "birth_date": "2000-10-28"
+  },
+  {
+   "player": "Chaz Lanier",
+   "team": "DET",
+   "contract": "guaranteed",
+   "current_salary": 2150917,
+   "dead_money": [],
+   "total": 2150917,
+   "birth_date": "2001-12-19"
   },
   {
    "player": "Chet Holmgren",
    "team": "OKC",
    "contract": "guaranteed",
-   "current_salary": 10880640,
+   "current_salary": 41240250,
    "dead_money": [],
-   "total": 10880640,
-   "birth_date": null
+   "total": 41240250,
+   "birth_date": "2002-05-01"
   },
   {
    "player": "Chris Cenac",
    "team": "BOS",
    "contract": "guaranteed",
-   "current_salary": 981902,
+   "current_salary": 2988120,
    "dead_money": [],
-   "total": 981902,
+   "total": 2988120,
    "birth_date": null
+  },
+  {
+   "player": "Chris Manon",
+   "team": "LAL",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [],
+   "total": 678882,
+   "birth_date": "2001-12-09"
   },
   {
    "player": "Chris Youngblood",
    "team": "POR",
    "contract": "two_way",
-   "current_salary": 141554,
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 141554,
-   "birth_date": null
+   "total": 678882,
+   "birth_date": "2002-02-09"
   },
   {
    "player": "Christian Anderson",
    "team": "CHA",
    "contract": "guaranteed",
-   "current_salary": 981902,
+   "current_salary": 4257480,
    "dead_money": [],
-   "total": 981902,
-   "birth_date": null
+   "total": 4257480,
+   "birth_date": "2006-04-02"
   },
   {
    "player": "Christian Braun",
    "team": "DEN",
    "contract": "guaranteed",
-   "current_salary": 3089640,
+   "current_salary": 21551726,
    "dead_money": [],
-   "total": 3089640,
-   "birth_date": null
+   "total": 21551726,
+   "birth_date": "2001-04-17"
+  },
+  {
+   "player": "Chucky Hepburn",
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "TOR",
+     "amount": 91000
+    }
+   ],
+   "total": 91000,
+   "birth_date": "2003-02-09"
   },
   {
    "player": "CJ McCollum",
    "team": "ATL",
    "contract": "guaranteed",
-   "current_salary": 33333333,
+   "current_salary": 21000000,
    "dead_money": [],
-   "total": 33333333,
-   "birth_date": null
+   "total": 21000000,
+   "birth_date": "1991-09-19"
   },
   {
    "player": "Clint Capela",
    "team": "HOU",
    "contract": "guaranteed",
-   "current_salary": 22265280,
+   "current_salary": 7035000,
    "dead_money": [],
-   "total": 22265280,
-   "birth_date": null
+   "total": 7035000,
+   "birth_date": "1994-05-18"
   },
   {
    "player": "Coby White",
    "team": "CHA",
    "contract": "guaranteed",
-   "current_salary": 12000000,
+   "current_salary": 26811593,
    "dead_money": [],
-   "total": 12000000,
-   "birth_date": null
+   "total": 26811593,
+   "birth_date": "2000-02-16"
   },
   {
    "player": "Cody Williams",
    "team": "MIN",
    "contract": "guaranteed",
-   "current_salary": 5469120,
+   "current_salary": 6015600,
    "dead_money": [],
-   "total": 5469120,
-   "birth_date": null
+   "total": 6015600,
+   "birth_date": "2004-11-20"
+  },
+  {
+   "player": "Cole Anthony",
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "MEM",
+     "amount": 3700000
+    }
+   ],
+   "total": 3700000,
+   "birth_date": "2000-05-15"
   },
   {
    "player": "Colin Castleton",
    "team": "ORL",
-   "contract": "guaranteed",
-   "current_salary": 100000,
+   "contract": "two_way",
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 100000,
-   "birth_date": null
+   "total": 678882,
+   "birth_date": "2000-05-25"
   },
   {
    "player": "Collin Gillespie",
    "team": "PHX",
-   "contract": "two_way",
-   "current_salary": 578577,
+   "contract": "guaranteed",
+   "current_salary": 10714286,
    "dead_money": [],
-   "total": 578577,
-   "birth_date": null
+   "total": 10714286,
+   "birth_date": "1999-06-25"
+  },
+  {
+   "player": "Collin Murray-Boyles",
+   "team": "TOR",
+   "contract": "guaranteed",
+   "current_salary": 6649560,
+   "dead_money": [],
+   "total": 6649560,
+   "birth_date": "2005-06-10"
   },
   {
    "player": "Collin Sexton",
    "team": "LAL",
    "contract": "guaranteed",
-   "current_salary": 18150000,
+   "current_salary": 9366000,
    "dead_money": [],
-   "total": 18150000,
-   "birth_date": null
+   "total": 9366000,
+   "birth_date": "1999-01-04"
+  },
+  {
+   "player": "Cooper Flagg",
+   "team": "DAL",
+   "contract": "guaranteed",
+   "current_salary": 14517480,
+   "dead_money": [],
+   "total": 14517480,
+   "birth_date": "2006-12-21"
   },
   {
    "player": "Corey Kispert",
    "team": "ATL",
    "contract": "guaranteed",
-   "current_salary": 5705887,
+   "current_salary": 13975000,
    "dead_money": [],
-   "total": 5705887,
-   "birth_date": null
+   "total": 13975000,
+   "birth_date": "1999-03-03"
+  },
+  {
+   "player": "Cormac Ryan",
+   "team": "MIL",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [],
+   "total": 678882,
+   "birth_date": "1998-10-26"
   },
   {
    "player": "Craig Porter",
    "team": "CLE",
-   "contract": "guaranteed",
-   "current_salary": 1891857,
+   "contract": "non_guaranteed",
+   "current_salary": 2406205,
    "dead_money": [],
-   "total": 1891857,
-   "birth_date": null
+   "total": 2406205,
+   "birth_date": "2000-02-26"
   },
   {
    "player": "Daeqwon Plowden",
    "team": "SAC",
-   "contract": "two_way",
-   "current_salary": 347451,
+   "contract": "guaranteed",
+   "current_salary": 2449422,
    "dead_money": [],
-   "total": 347451,
-   "birth_date": null
+   "total": 2449422,
+   "birth_date": "1998-08-29"
   },
   {
    "player": "Dailyn Swain",
    "team": "CHI",
    "contract": "guaranteed",
-   "current_salary": 981902,
+   "current_salary": 4965480,
    "dead_money": [],
-   "total": 981902,
+   "total": 4965480,
    "birth_date": null
   },
   {
    "player": "Dalton Knecht",
    "team": "NYK",
-   "contract": "guaranteed",
-   "current_salary": 3819120,
-   "dead_money": [],
-   "total": 3819120,
-   "birth_date": null
+   "contract": "two_way",
+   "current_salary": 667177,
+   "dead_money": [
+    {
+     "team": "LAL",
+     "amount": 4201080
+    }
+   ],
+   "total": 4868257,
+   "birth_date": "2001-04-19"
   },
   {
    "player": "Damian Lillard",
    "team": "POR",
    "contract": "guaranteed",
-   "current_salary": 48787676,
-   "dead_money": [],
-   "total": 48787676,
-   "birth_date": null
+   "current_salary": 13398800,
+   "dead_money": [
+    {
+     "team": "MIL",
+     "amount": 22516603
+    }
+   ],
+   "total": 35915403,
+   "birth_date": "1990-07-15"
+  },
+  {
+   "player": "D'Angelo Russell",
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "MEM",
+     "amount": 5969250
+    }
+   ],
+   "total": 5969250,
+   "birth_date": "1996-02-23"
   },
   {
    "player": "Daniel Gafford",
    "team": "DAL",
    "contract": "guaranteed",
-   "current_salary": 13394160,
+   "current_salary": 17263584,
    "dead_money": [],
-   "total": 13394160,
-   "birth_date": null
+   "total": 17263584,
+   "birth_date": "1998-10-01"
   },
   {
    "player": "Daniss Jenkins",
    "team": "DET",
-   "contract": "two_way",
-   "current_salary": 578577,
+   "contract": "guaranteed",
+   "current_salary": 4000000,
    "dead_money": [],
-   "total": 578577,
-   "birth_date": null
+   "total": 4000000,
+   "birth_date": "2001-08-17"
+  },
+  {
+   "player": "Danny Wolf",
+   "team": "BKN",
+   "contract": "guaranteed",
+   "current_salary": 2941440,
+   "dead_money": [],
+   "total": 2941440,
+   "birth_date": "2004-05-05"
   },
   {
    "player": "Darius Acuff",
    "team": "SAC",
    "contract": "guaranteed",
-   "current_salary": 981902,
+   "current_salary": 8021640,
    "dead_money": [],
-   "total": 981902,
-   "birth_date": null
+   "total": 8021640,
+   "birth_date": "2006-11-16"
   },
   {
    "player": "Darius Garland",
    "team": "LAC",
    "contract": "guaranteed",
-   "current_salary": 36725670,
+   "current_salary": 42166510,
    "dead_money": [],
-   "total": 36725670,
-   "birth_date": null
+   "total": 42166510,
+   "birth_date": "2000-01-26"
   },
   {
    "player": "DaRon Holmes",
    "team": "DEN",
    "contract": "guaranteed",
-   "current_salary": 3065640,
+   "current_salary": 3372120,
    "dead_money": [],
-   "total": 3065640,
-   "birth_date": null
+   "total": 3372120,
+   "birth_date": "2002-08-15"
   },
   {
    "player": "Darryn Peterson",
    "team": "UTA",
    "contract": "guaranteed",
-   "current_salary": 981902,
+   "current_salary": 13195320,
    "dead_money": [],
-   "total": 981902,
-   "birth_date": null
+   "total": 13195320,
+   "birth_date": "2007-01-17"
+  },
+  {
+   "player": "David Jones",
+   "team": "SAS",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [],
+   "total": 678882,
+   "birth_date": "2001-11-24"
   },
   {
    "player": "Davion Mitchell",
    "team": "MIA",
    "contract": "guaranteed",
-   "current_salary": 6451077,
+   "current_salary": 12400000,
    "dead_money": [],
-   "total": 6451077,
-   "birth_date": null
+   "total": 12400000,
+   "birth_date": "1998-09-05"
   },
   {
    "player": "Day'Ron Sharpe",
    "team": "BKN",
    "contract": "guaranteed",
-   "current_salary": 3989122,
+   "current_salary": 10000000,
    "dead_money": [],
-   "total": 3989122,
-   "birth_date": null
+   "total": 10000000,
+   "birth_date": "2001-11-06"
   },
   {
    "player": "De'Aaron Fox",
    "team": "SAS",
    "contract": "guaranteed",
-   "current_salary": 34848340,
+   "current_salary": 49488300,
    "dead_money": [],
-   "total": 34848340,
-   "birth_date": null
+   "total": 49488300,
+   "birth_date": "1997-12-20"
   },
   {
    "player": "Dean Wade",
    "team": "PHI",
    "contract": "guaranteed",
-   "current_salary": 6166667,
+   "current_salary": 9000000,
    "dead_money": [],
-   "total": 6166667,
-   "birth_date": null
+   "total": 9000000,
+   "birth_date": "1996-11-20"
   },
   {
    "player": "Deandre Ayton",
    "team": "WAS",
    "contract": "guaranteed",
-   "current_salary": 34005126,
+   "current_salary": 8104000,
    "dead_money": [],
-   "total": 34005126,
-   "birth_date": null
+   "total": 8104000,
+   "birth_date": "1998-07-23"
   },
   {
    "player": "De'Andre Hunter",
    "team": "SAC",
    "contract": "guaranteed",
-   "current_salary": 21696429,
+   "current_salary": 24910714,
    "dead_money": [],
-   "total": 21696429,
-   "birth_date": null
+   "total": 24910714,
+   "birth_date": "1997-12-02"
   },
   {
    "player": "DeAndre Jordan",
    "team": "NOP",
    "contract": "guaranteed",
-   "current_salary": 3303771,
+   "current_salary": 3876529,
    "dead_money": [],
-   "total": 3303771,
-   "birth_date": null
+   "total": 3876529,
+   "birth_date": "1988-07-21"
   },
   {
    "player": "De'Anthony Melton",
    "team": "GSW",
    "contract": "guaranteed",
-   "current_salary": 12822000,
+   "current_salary": 6064000,
    "dead_money": [],
-   "total": 12822000,
-   "birth_date": null
+   "total": 6064000,
+   "birth_date": "1998-05-28"
   },
   {
    "player": "Dejounte Murray",
    "team": "NOP",
    "contract": "guaranteed",
-   "current_salary": 28817135,
+   "current_salary": 32785071,
    "dead_money": [],
-   "total": 28817135,
-   "birth_date": null
+   "total": 32785071,
+   "birth_date": "1996-09-19"
   },
   {
    "player": "DeMar DeRozan",
    "team": "DEN",
    "contract": "guaranteed",
-   "current_salary": 23400000,
-   "dead_money": [],
-   "total": 23400000,
-   "birth_date": null
+   "current_salary": 3876529,
+   "dead_money": [
+    {
+     "team": "SAC",
+     "amount": 3333333
+    }
+   ],
+   "total": 7209862,
+   "birth_date": "1989-08-07"
   },
   {
    "player": "Deni Avdija",
    "team": "POR",
    "contract": "guaranteed",
-   "current_salary": 15625000,
+   "current_salary": 13125000,
    "dead_money": [],
-   "total": 15625000,
-   "birth_date": null
+   "total": 13125000,
+   "birth_date": "2001-01-03"
   },
   {
    "player": "Dennis Schroeder",
    "team": "CHA",
    "contract": "guaranteed",
-   "current_salary": 13025250,
+   "current_salary": 14809200,
    "dead_money": [],
-   "total": 13025250,
-   "birth_date": null
+   "total": 14809200,
+   "birth_date": "1993-09-15"
   },
   {
    "player": "Dereck Lively",
    "team": "DAL",
    "contract": "guaranteed",
-   "current_salary": 5014560,
+   "current_salary": 7239130,
    "dead_money": [],
-   "total": 5014560,
-   "birth_date": null
+   "total": 7239130,
+   "birth_date": "2004-02-12"
+  },
+  {
+   "player": "Derik Queen",
+   "team": "NOP",
+   "contract": "guaranteed",
+   "current_salary": 5416080,
+   "dead_money": [],
+   "total": 5416080,
+   "birth_date": "2004-12-27"
   },
   {
    "player": "Derrick Jones",
    "team": "LAC",
    "contract": "guaranteed",
-   "current_salary": 9523810,
+   "current_salary": 10476190,
    "dead_money": [],
-   "total": 9523810,
-   "birth_date": null
+   "total": 10476190,
+   "birth_date": "1997-02-15"
   },
   {
    "player": "Derrick White",
    "team": "BOS",
    "contract": "guaranteed",
-   "current_salary": 19821429,
+   "current_salary": 30348000,
    "dead_money": [],
-   "total": 19821429,
-   "birth_date": null
+   "total": 30348000,
+   "birth_date": "1994-07-02"
   },
   {
    "player": "Desmond Bane",
    "team": "ORL",
    "contract": "guaranteed",
-   "current_salary": 34005250,
+   "current_salary": 39446090,
    "dead_money": [],
-   "total": 34005250,
-   "birth_date": null
+   "total": 39446090,
+   "birth_date": "1998-06-25"
   },
   {
    "player": "Devin Booker",
    "team": "PHX",
    "contract": "guaranteed",
-   "current_salary": 49205800,
+   "current_salary": 57078728,
    "dead_money": [],
-   "total": 49205800,
-   "birth_date": null
+   "total": 57078728,
+   "birth_date": "1996-10-30"
   },
   {
    "player": "Devin Carter",
    "team": "BOS",
-   "contract": "guaranteed",
-   "current_salary": 4689000,
-   "dead_money": [],
-   "total": 4689000,
-   "birth_date": null
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [
+    {
+     "team": "ATL",
+     "amount": 5158080
+    }
+   ],
+   "total": 5836962,
+   "birth_date": "2002-03-18"
   },
   {
    "player": "Devin Vassell",
    "team": "SAS",
    "contract": "guaranteed",
-   "current_salary": 29347826,
+   "current_salary": 27500000,
    "dead_money": [],
-   "total": 29347826,
-   "birth_date": null
+   "total": 27500000,
+   "birth_date": "2000-08-23"
+  },
+  {
+   "player": "Didi Louzada",
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "POR",
+     "amount": 268032
+    }
+   ],
+   "total": 268032,
+   "birth_date": "1999-07-02"
   },
   {
    "player": "Dillon Brooks",
    "team": "PHX",
    "contract": "guaranteed",
-   "current_salary": 23255493,
+   "current_salary": 20992727,
    "dead_money": [],
-   "total": 23255493,
-   "birth_date": null
+   "total": 20992727,
+   "birth_date": "1996-01-22"
   },
   {
-   "player": "Dillon Jones",
-   "team": "PHI",
-   "contract": "guaranteed",
-   "current_salary": 2622360,
+   "player": "Dillon Mitchell",
+   "team": "BOS",
+   "contract": "two_way",
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 2622360,
+   "total": 678882,
    "birth_date": null
   },
   {
    "player": "Domantas Sabonis",
    "team": "SAC",
    "contract": "guaranteed",
-   "current_salary": 39200000,
+   "current_salary": 45472000,
    "dead_money": [],
-   "total": 39200000,
-   "birth_date": null
+   "total": 45472000,
+   "birth_date": "1996-05-03"
   },
   {
    "player": "Dominick Barlow",
    "team": "PHI",
    "contract": "guaranteed",
-   "current_salary": 491887,
+   "current_salary": 3415000,
    "dead_money": [],
-   "total": 491887,
-   "birth_date": null
+   "total": 3415000,
+   "birth_date": "2003-05-26"
   },
   {
    "player": "Donovan Clingan",
    "team": "POR",
    "contract": "guaranteed",
-   "current_salary": 6836400,
+   "current_salary": 7519920,
    "dead_money": [],
-   "total": 6836400,
-   "birth_date": null
+   "total": 7519920,
+   "birth_date": "2004-02-23"
   },
   {
    "player": "Donovan Mitchell",
    "team": "CLE",
    "contract": "guaranteed",
-   "current_salary": 35410310,
+   "current_salary": 50105628,
    "dead_money": [],
-   "total": 35410310,
-   "birth_date": null
+   "total": 50105628,
+   "birth_date": "1996-09-07"
   },
   {
    "player": "Donte DiVincenzo",
    "team": "MIN",
    "contract": "guaranteed",
-   "current_salary": 11445000,
+   "current_salary": 12535000,
    "dead_money": [],
-   "total": 11445000,
-   "birth_date": null
+   "total": 12535000,
+   "birth_date": "1997-01-31"
   },
   {
    "player": "Dorian Finney-Smith",
    "team": "ATL",
    "contract": "guaranteed",
-   "current_salary": 14924167,
+   "current_salary": 14196974,
    "dead_money": [],
-   "total": 14924167,
-   "birth_date": null
+   "total": 14196974,
+   "birth_date": "1993-05-04"
+  },
+  {
+   "player": "Drake Powell",
+   "team": "BKN",
+   "contract": "guaranteed",
+   "current_salary": 3540600,
+   "dead_money": [],
+   "total": 3540600,
+   "birth_date": "2005-09-08"
   },
   {
    "player": "Draymond Green",
    "team": "GSW",
    "contract": "guaranteed",
-   "current_salary": 24107143,
+   "current_salary": 27678571,
    "dead_money": [],
-   "total": 24107143,
-   "birth_date": null
+   "total": 27678571,
+   "birth_date": "1990-03-04"
+  },
+  {
+   "player": "Drew Eubanks",
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "NYK",
+     "amount": 15000
+    }
+   ],
+   "total": 15000,
+   "birth_date": "1997-02-01"
   },
   {
    "player": "Drew Timme",
    "team": "PHX",
-   "contract": "guaranteed",
-   "current_salary": 23000000,
+   "contract": "non_guaranteed",
+   "current_salary": 2449421,
    "dead_money": [],
-   "total": 23000000,
-   "birth_date": null
+   "total": 2449421,
+   "birth_date": "2000-09-09"
   },
   {
    "player": "Dru Smith",
    "team": "MIA",
-   "contract": "two_way",
-   "current_salary": 578577,
+   "contract": "guaranteed",
+   "current_salary": 2584539,
    "dead_money": [],
-   "total": 578577,
-   "birth_date": null
+   "total": 2584539,
+   "birth_date": "1997-12-30"
   },
   {
    "player": "Duncan Robinson",
    "team": "DET",
-   "contract": "guaranteed",
-   "current_salary": 19406000,
+   "contract": "partial",
+   "current_salary": 15992957,
    "dead_money": [],
-   "total": 19406000,
-   "birth_date": null
+   "total": 15992957,
+   "birth_date": "1994-04-22"
   },
   {
    "player": "Duop Reath",
    "team": "PHX",
-   "contract": "guaranteed",
-   "current_salary": 2048780,
+   "contract": "two_way",
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 2048780,
-   "birth_date": null
+   "total": 678882,
+   "birth_date": "1996-06-26"
+  },
+  {
+   "player": "Dwight Powell",
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "DAL",
+     "amount": 1000000
+    }
+   ],
+   "total": 1000000,
+   "birth_date": "1991-07-20"
+  },
+  {
+   "player": "Dylan Cardwell",
+   "team": "SAC",
+   "contract": "guaranteed",
+   "current_salary": 2150917,
+   "dead_money": [],
+   "total": 2150917,
+   "birth_date": "2001-12-26"
+  },
+  {
+   "player": "Dylan Harper",
+   "team": "SAS",
+   "contract": "guaranteed",
+   "current_salary": 12989040,
+   "dead_money": [],
+   "total": 12989040,
+   "birth_date": "2006-03-02"
   },
   {
    "player": "Dyson Daniels",
    "team": "ATL",
    "contract": "guaranteed",
-   "current_salary": 6059520,
+   "current_salary": 25000000,
    "dead_money": [],
-   "total": 6059520,
-   "birth_date": null
+   "total": 25000000,
+   "birth_date": "2003-03-17"
   },
   {
    "player": "Ebuka Okorie",
    "team": "DET",
    "contract": "guaranteed",
-   "current_salary": 981902,
+   "current_salary": 4481280,
    "dead_money": [],
-   "total": 981902,
+   "total": 4481280,
    "birth_date": null
+  },
+  {
+   "player": "Egor Demin",
+   "team": "BKN",
+   "contract": "guaranteed",
+   "current_salary": 7233720,
+   "dead_money": [],
+   "total": 7233720,
+   "birth_date": "2006-03-03"
+  },
+  {
+   "player": "EJ Liddell",
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "PHX",
+     "amount": 706898
+    }
+   ],
+   "total": 706898,
+   "birth_date": "2000-12-18"
   },
   {
    "player": "Elijah Harkless",
    "team": "DET",
    "contract": "two_way",
-   "current_salary": 331365,
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 331365,
+   "total": 678882,
+   "birth_date": "2000-02-03"
+  },
+  {
+   "player": "Emanuel Sharp",
+   "team": "SAC",
+   "contract": "guaranteed",
+   "current_salary": 1357763,
+   "dead_money": [],
+   "total": 1357763,
+   "birth_date": "2004-07-03"
+  },
+  {
+   "player": "Enrique Freeman",
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "MIN",
+     "amount": 91000
+    }
+   ],
+   "total": 91000,
+   "birth_date": "2000-07-29"
+  },
+  {
+   "player": "Ernest Udeh",
+   "team": "CLE",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [],
+   "total": 678882,
    "birth_date": null
+  },
+  {
+   "player": "Ethan Thompson",
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "IND",
+     "amount": 75000
+    }
+   ],
+   "total": 75000,
+   "birth_date": "1999-05-04"
   },
   {
    "player": "Evan Mobley",
    "team": "CLE",
    "contract": "guaranteed",
-   "current_salary": 11227657,
+   "current_salary": 50105628,
    "dead_money": [],
-   "total": 11227657,
-   "birth_date": null
+   "total": 50105628,
+   "birth_date": "2001-06-18"
+  },
+  {
+   "player": "Felix Okpara",
+   "team": "WAS",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [],
+   "total": 678882,
+   "birth_date": "2004-04-20"
   },
   {
    "player": "Franz Wagner",
    "team": "ORL",
    "contract": "guaranteed",
-   "current_salary": 7007092,
+   "current_salary": 41754690,
    "dead_money": [],
-   "total": 7007092,
-   "birth_date": null
+   "total": 41754690,
+   "birth_date": "2001-08-27"
   },
   {
    "player": "Fred VanVleet",
    "team": "HOU",
    "contract": "guaranteed",
-   "current_salary": 42846615,
+   "current_salary": 25000000,
    "dead_money": [],
-   "total": 42846615,
-   "birth_date": null
+   "total": 25000000,
+   "birth_date": "1994-02-25"
   },
   {
-   "player": "Gary Payton",
+   "player": "Gary Harris",
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "DET",
+     "amount": 3815861
+    }
+   ],
+   "total": 3815861,
+   "birth_date": "1994-09-14"
+  },
+  {
+   "player": "Gary Payton II",
    "team": "GSW",
    "contract": "guaranteed",
-   "current_salary": 9130000,
+   "current_salary": 3876529,
    "dead_money": [],
-   "total": 9130000,
-   "birth_date": null
+   "total": 3876529,
+   "birth_date": "1992-12-01"
   },
   {
    "player": "Gary Trent Jr",
    "team": "MIL",
    "contract": "guaranteed",
-   "current_salary": 2613120,
+   "current_salary": 15200000,
    "dead_money": [],
-   "total": 2613120,
-   "birth_date": null
+   "total": 15200000,
+   "birth_date": "1999-01-18"
   },
   {
    "player": "Georges Niang",
    "team": "GSW",
-   "contract": "guaranteed",
-   "current_salary": 3303771,
+   "contract": "partial",
+   "current_salary": 3876529,
    "dead_money": [],
-   "total": 3303771,
-   "birth_date": null
+   "total": 3876529,
+   "birth_date": "1993-06-17"
   },
   {
    "player": "GG Jackson",
    "team": "MEM",
    "contract": "guaranteed",
-   "current_salary": 1891857,
+   "current_salary": 2406205,
    "dead_money": [],
-   "total": 1891857,
-   "birth_date": null
+   "total": 2406205,
+   "birth_date": "2004-12-17"
   },
   {
    "player": "Giannis Antetokounmpo",
    "team": "MIA",
    "contract": "guaranteed",
-   "current_salary": 48787676,
+   "current_salary": 58456566,
    "dead_money": [],
-   "total": 48787676,
-   "birth_date": null
+   "total": 58456566,
+   "birth_date": "1994-12-06"
   },
   {
    "player": "Goga Bitadze",
    "team": "ORL",
    "contract": "guaranteed",
-   "current_salary": 9057971,
+   "current_salary": 7608696,
    "dead_money": [],
-   "total": 9057971,
-   "birth_date": null
+   "total": 7608696,
+   "birth_date": "1999-07-20"
   },
   {
    "player": "Gradey Dick",
    "team": "LAC",
    "contract": "guaranteed",
-   "current_salary": 4763760,
+   "current_salary": 7131510,
    "dead_money": [],
-   "total": 4763760,
-   "birth_date": null
+   "total": 7131510,
+   "birth_date": "2003-11-20"
+  },
+  {
+   "player": "Graham Ike",
+   "team": "GSW",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [],
+   "total": 678882,
+   "birth_date": "2002-08-03"
   },
   {
    "player": "Grant Nelson",
    "team": "BKN",
    "contract": "two_way",
-   "current_salary": 578577,
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 578577,
-   "birth_date": null
+   "total": 678882,
+   "birth_date": "2002-03-18"
   },
   {
    "player": "Grant Williams",
    "team": "CHA",
    "contract": "guaranteed",
-   "current_salary": 13025250,
+   "current_salary": 14265750,
    "dead_money": [],
-   "total": 13025250,
-   "birth_date": null
+   "total": 14265750,
+   "birth_date": "1998-11-30"
   },
   {
    "player": "Grayson Allen",
    "team": "CHA",
    "contract": "guaranteed",
-   "current_salary": 15625000,
+   "current_salary": 18125000,
    "dead_money": [],
-   "total": 15625000,
-   "birth_date": null
+   "total": 18125000,
+   "birth_date": "1995-10-08"
   },
   {
    "player": "Gui Santos",
    "team": "GSW",
    "contract": "guaranteed",
-   "current_salary": 1891857,
+   "current_salary": 4629630,
    "dead_money": [],
-   "total": 1891857,
-   "birth_date": null
+   "total": 4629630,
+   "birth_date": "2002-06-22"
   },
   {
    "player": "Hannes Steinbach",
    "team": "CHA",
    "contract": "guaranteed",
-   "current_salary": 981902,
+   "current_salary": 5227200,
    "dead_money": [],
-   "total": 981902,
-   "birth_date": null
+   "total": 5227200,
+   "birth_date": "2006-05-01"
   },
   {
    "player": "Harrison Barnes",
    "team": "SAS",
    "contract": "guaranteed",
-   "current_salary": 18000000,
+   "current_salary": 8000000,
    "dead_money": [],
-   "total": 18000000,
-   "birth_date": null
+   "total": 8000000,
+   "birth_date": "1992-05-30"
   },
   {
    "player": "Harrison Ingram",
    "team": "UTA",
    "contract": "two_way",
-   "current_salary": 578577,
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 578577,
+   "total": 678882,
+   "birth_date": "2002-11-27"
+  },
+  {
+   "player": "Henri Veesaar",
+   "team": "ATL",
+   "contract": "guaranteed",
+   "current_salary": 1357763,
+   "dead_money": [],
+   "total": 1357763,
    "birth_date": null
   },
   {
    "player": "Herb Jones",
    "team": "NOP",
    "contract": "guaranteed",
-   "current_salary": 12976362,
+   "current_salary": 14898786,
    "dead_money": [],
-   "total": 12976362,
-   "birth_date": null
+   "total": 14898786,
+   "birth_date": "1998-10-06"
+  },
+  {
+   "player": "Hugo Gonzalez",
+   "team": "BOS",
+   "contract": "guaranteed",
+   "current_salary": 2923560,
+   "dead_money": [],
+   "total": 2923560,
+   "birth_date": "2006-02-05"
+  },
+  {
+   "player": "Hunter Dickinson",
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "NOP",
+     "amount": 91000
+    }
+   ],
+   "total": 91000,
+   "birth_date": "2000-11-25"
   },
   {
    "player": "Immanuel Quickley",
@@ -1260,70 +1846,93 @@
    "current_salary": 32500000,
    "dead_money": [],
    "total": 32500000,
-   "birth_date": null
+   "birth_date": "1999-06-17"
   },
   {
    "player": "Isaac Jones",
    "team": "DET",
-   "contract": "guaranteed",
-   "current_salary": 152957,
+   "contract": "two_way",
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 152957,
-   "birth_date": null
+   "total": 678882,
+   "birth_date": "2000-07-11"
   },
   {
    "player": "Isaac Okoro",
    "team": "CHI",
    "contract": "guaranteed",
-   "current_salary": 10185186,
+   "current_salary": 11814814,
    "dead_money": [],
-   "total": 10185186,
-   "birth_date": null
+   "total": 11814814,
+   "birth_date": "2001-01-26"
   },
   {
    "player": "Isaiah Collier",
    "team": "UTA",
    "contract": "guaranteed",
-   "current_salary": 2512680,
+   "current_salary": 2763960,
    "dead_money": [],
-   "total": 2512680,
-   "birth_date": null
+   "total": 2763960,
+   "birth_date": "2004-10-08"
   },
   {
    "player": "Isaiah Crawford",
    "team": "HOU",
-   "contract": "two_way",
-   "current_salary": 578577,
+   "contract": "partial",
+   "current_salary": 2449421,
    "dead_money": [],
-   "total": 578577,
-   "birth_date": null
+   "total": 2449421,
+   "birth_date": "2001-11-01"
+  },
+  {
+   "player": "Isaiah Evans",
+   "team": "MIN",
+   "contract": "guaranteed",
+   "current_salary": 1357763,
+   "dead_money": [],
+   "total": 1357763,
+   "birth_date": "2005-12-06"
   },
   {
    "player": "Isaiah Hartenstein",
    "team": "OKC",
    "contract": "guaranteed",
-   "current_salary": 30000000,
+   "current_salary": 23148148,
    "dead_money": [],
-   "total": 30000000,
-   "birth_date": null
+   "total": 23148148,
+   "birth_date": "1998-05-05"
   },
   {
    "player": "Isaiah Jackson",
    "team": "LAC",
    "contract": "guaranteed",
-   "current_salary": 4435381,
+   "current_salary": 7000000,
    "dead_money": [],
-   "total": 4435381,
-   "birth_date": null
+   "total": 7000000,
+   "birth_date": "2002-01-10"
   },
   {
    "player": "Isaiah Joe",
    "team": "DET",
    "contract": "guaranteed",
-   "current_salary": 12991650,
+   "current_salary": 11323006,
    "dead_money": [],
-   "total": 12991650,
-   "birth_date": null
+   "total": 11323006,
+   "birth_date": "1999-07-02"
+  },
+  {
+   "player": "Isaiah Stevens",
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "SAC",
+     "amount": 91000
+    }
+   ],
+   "total": 91000,
+   "birth_date": "2000-11-01"
   },
   {
    "player": "Isaiah Stewart",
@@ -1332,115 +1941,124 @@
    "current_salary": 15000000,
    "dead_money": [],
    "total": 15000000,
-   "birth_date": null
+   "birth_date": "2001-05-22"
   },
   {
    "player": "Ivica Zubac",
    "team": "IND",
    "contract": "guaranteed",
-   "current_salary": 11743210,
+   "current_salary": 20342140,
    "dead_money": [],
-   "total": 11743210,
-   "birth_date": null
+   "total": 20342140,
+   "birth_date": "1997-03-18"
   },
   {
    "player": "Izaiyah Nelson",
    "team": "ORL",
-   "contract": "guaranteed",
-   "current_salary": 100000,
+   "contract": "two_way",
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 100000,
+   "total": 678882,
    "birth_date": null
   },
   {
    "player": "Ja Morant",
    "team": "POR",
    "contract": "guaranteed",
-   "current_salary": 36725670,
+   "current_salary": 42166510,
    "dead_money": [],
-   "total": 36725670,
-   "birth_date": null
+   "total": 42166510,
+   "birth_date": "1999-08-10"
   },
   {
    "player": "Jabari Smith",
    "team": "HOU",
    "contract": "guaranteed",
-   "current_salary": 9770880,
+   "current_salary": 23643411,
    "dead_money": [],
-   "total": 9770880,
-   "birth_date": null
+   "total": 23643411,
+   "birth_date": "2003-05-13"
   },
   {
    "player": "Jabari Walker",
    "team": "PHI",
-   "contract": "guaranteed",
-   "current_salary": 2019699,
+   "contract": "partial",
+   "current_salary": 2584539,
    "dead_money": [],
-   "total": 2019699,
+   "total": 2584539,
+   "birth_date": "2002-07-30"
+  },
+  {
+   "player": "Jaden Akins",
+   "team": "NYK",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [],
+   "total": 678882,
    "birth_date": null
   },
   {
    "player": "Jaden Bradley",
    "team": "TOR",
-   "contract": "two_way",
-   "current_salary": 344234,
+   "contract": "guaranteed",
+   "current_salary": 1357763,
    "dead_money": [],
-   "total": 344234,
-   "birth_date": null
+   "total": 1357763,
+   "birth_date": "2003-09-14"
   },
   {
    "player": "Jaden Hardy",
    "team": "LAL",
    "contract": "guaranteed",
-   "current_salary": 2019699,
+   "current_salary": 6000000,
    "dead_money": [],
-   "total": 2019699,
-   "birth_date": null
+   "total": 6000000,
+   "birth_date": "2002-07-05"
   },
   {
    "player": "Jaden McDaniels",
    "team": "MIN",
    "contract": "guaranteed",
-   "current_salary": 23017242,
+   "current_salary": 26200001,
    "dead_money": [],
-   "total": 23017242,
-   "birth_date": null
+   "total": 26200001,
+   "birth_date": "2000-09-29"
   },
   {
    "player": "Jae'Sean Tate",
    "team": "HOU",
-   "contract": "guaranteed",
-   "current_salary": 7565217,
+   "contract": "partial",
+   "current_salary": 3066143,
    "dead_money": [],
-   "total": 7565217,
-   "birth_date": null
+   "total": 3066143,
+   "birth_date": "1995-10-28"
   },
   {
    "player": "Jahmai Mashack",
    "team": "MEM",
    "contract": "two_way",
-   "current_salary": 578577,
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 578577,
-   "birth_date": null
+   "total": 678882,
+   "birth_date": "2002-11-10"
   },
   {
    "player": "Jaime Jaquez",
    "team": "MIL",
    "contract": "guaranteed",
-   "current_salary": 3685800,
+   "current_salary": 5939141,
    "dead_money": [],
-   "total": 3685800,
-   "birth_date": null
+   "total": 5939141,
+   "birth_date": "2001-02-18"
   },
   {
    "player": "Jake LaRavia",
    "team": "LAL",
    "contract": "guaranteed",
-   "current_salary": 3352680,
+   "current_salary": 6000000,
    "dead_money": [],
-   "total": 3352680,
-   "birth_date": null
+   "total": 6000000,
+   "birth_date": "2001-11-03"
   },
   {
    "player": "Jakob Poeltl",
@@ -1449,871 +2067,1170 @@
    "current_salary": 19500000,
    "dead_money": [],
    "total": 19500000,
-   "birth_date": null
+   "birth_date": "1995-10-15"
   },
   {
    "player": "Ja'Kobe Walter",
    "team": "TOR",
    "contract": "guaranteed",
-   "current_salary": 3465000,
+   "current_salary": 3811800,
    "dead_money": [],
-   "total": 3465000,
-   "birth_date": null
+   "total": 3811800,
+   "birth_date": "2004-09-04"
   },
   {
    "player": "Ja'Kobi Gillespie",
    "team": "SAS",
    "contract": "two_way",
-   "current_salary": 344234,
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 344234,
-   "birth_date": null
+   "total": 678882,
+   "birth_date": "2004-03-10"
   },
   {
    "player": "Jalen Brunson",
    "team": "NYK",
    "contract": "guaranteed",
-   "current_salary": 24960001,
+   "current_salary": 37739521,
    "dead_money": [],
-   "total": 24960001,
-   "birth_date": null
+   "total": 37739521,
+   "birth_date": "1996-08-31"
   },
   {
    "player": "Jalen Duren",
    "team": "DET",
    "contract": "guaranteed",
-   "current_salary": 4536840,
+   "current_salary": 40160643,
    "dead_money": [],
-   "total": 4536840,
-   "birth_date": null
+   "total": 40160643,
+   "birth_date": "2003-11-18"
   },
   {
    "player": "Jalen Green",
    "team": "PHX",
    "contract": "guaranteed",
-   "current_salary": 12483048,
+   "current_salary": 36251166,
    "dead_money": [],
-   "total": 12483048,
-   "birth_date": null
+   "total": 36251166,
+   "birth_date": "2002-02-09"
   },
   {
    "player": "Jalen Johnson",
    "team": "ATL",
    "contract": "guaranteed",
-   "current_salary": 4510905,
+   "current_salary": 30000000,
    "dead_money": [],
-   "total": 4510905,
-   "birth_date": null
+   "total": 30000000,
+   "birth_date": "2001-12-18"
   },
   {
    "player": "Jalen Pickett",
    "team": "LAC",
-   "contract": "guaranteed",
-   "current_salary": 1891857,
+   "contract": "two_way",
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 1891857,
-   "birth_date": null
+   "total": 678882,
+   "birth_date": "1999-10-22"
+  },
+  {
+   "player": "Jalen Slawson",
+   "team": "IND",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [],
+   "total": 678882,
+   "birth_date": "1999-10-22"
   },
   {
    "player": "Jalen Smith",
    "team": "CHI",
    "contract": "guaranteed",
-   "current_salary": 8571429,
+   "current_salary": 9428571,
    "dead_money": [],
-   "total": 8571429,
-   "birth_date": null
+   "total": 9428571,
+   "birth_date": "2000-03-16"
   },
   {
    "player": "Jalen Suggs",
    "team": "ORL",
    "contract": "guaranteed",
-   "current_salary": 9188385,
+   "current_salary": 32400000,
    "dead_money": [],
-   "total": 9188385,
-   "birth_date": null
+   "total": 32400000,
+   "birth_date": "2001-06-03"
   },
   {
    "player": "Jalen Williams",
    "team": "OKC",
    "contract": "guaranteed",
-   "current_salary": 4775760,
+   "current_salary": 41240250,
    "dead_money": [],
-   "total": 4775760,
-   "birth_date": null
+   "total": 41240250,
+   "birth_date": "2001-04-14"
   },
   {
    "player": "Jalen Wilson",
    "team": "ATL",
-   "contract": "guaranteed",
-   "current_salary": 1891857,
+   "contract": "two_way",
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 1891857,
-   "birth_date": null
+   "total": 678882,
+   "birth_date": "2000-11-04"
   },
   {
    "player": "Jamal Cain",
    "team": "ORL",
-   "contract": "two_way",
-   "current_salary": 578577,
+   "contract": "non_guaranteed",
+   "current_salary": 2584539,
    "dead_money": [],
-   "total": 578577,
-   "birth_date": null
+   "total": 2584539,
+   "birth_date": "1999-03-20"
   },
   {
    "player": "Jamal Murray",
    "team": "DEN",
    "contract": "guaranteed",
-   "current_salary": 36016200,
+   "current_salary": 50105628,
    "dead_money": [],
-   "total": 36016200,
-   "birth_date": null
+   "total": 50105628,
+   "birth_date": "1997-02-23"
   },
   {
    "player": "Jamal Shead",
    "team": "TOR",
    "contract": "guaranteed",
-   "current_salary": 1862265,
+   "current_salary": 2296271,
    "dead_money": [],
-   "total": 1862265,
-   "birth_date": null
+   "total": 2296271,
+   "birth_date": "2002-07-24"
   },
   {
    "player": "Jamaree Bouyea",
    "team": "PHX",
-   "contract": "two_way",
-   "current_salary": 135120,
+   "contract": "non_guaranteed",
+   "current_salary": 2584539,
    "dead_money": [],
-   "total": 135120,
+   "total": 2584539,
+   "birth_date": "1999-06-27"
+  },
+  {
+   "player": "Jamarion Sharp",
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "LAC",
+     "amount": 91000
+    }
+   ],
+   "total": 91000,
    "birth_date": null
   },
   {
    "player": "James Harden",
    "team": "CLE",
    "contract": "guaranteed",
-   "current_salary": 33653846,
+   "current_salary": 30647619,
    "dead_money": [],
-   "total": 33653846,
-   "birth_date": null
+   "total": 30647619,
+   "birth_date": "1989-08-26"
+  },
+  {
+   "player": "James Wiseman",
+   "team": "NYK",
+   "contract": "non_guaranteed",
+   "current_salary": 3066143,
+   "dead_money": [],
+   "total": 3066143,
+   "birth_date": "2001-03-31"
+  },
+  {
+   "player": "Jamir Watkins",
+   "team": "WAS",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [],
+   "total": 678882,
+   "birth_date": "2001-07-06"
   },
   {
    "player": "Jamison Battle",
    "team": "TOR",
    "contract": "guaranteed",
-   "current_salary": 1000000,
+   "current_salary": 2296271,
    "dead_money": [],
-   "total": 1000000,
-   "birth_date": null
+   "total": 2296271,
+   "birth_date": "2001-05-10"
   },
   {
    "player": "Jarace Walker",
    "team": "IND",
    "contract": "guaranteed",
-   "current_salary": 6362520,
+   "current_salary": 8478541,
    "dead_money": [],
-   "total": 6362520,
-   "birth_date": null
+   "total": 8478541,
+   "birth_date": "2003-09-04"
   },
   {
    "player": "Jared McCain",
    "team": "OKC",
    "contract": "guaranteed",
-   "current_salary": 4020360,
+   "current_salary": 4422600,
    "dead_money": [],
-   "total": 4020360,
-   "birth_date": null
+   "total": 4422600,
+   "birth_date": "2004-02-20"
   },
   {
    "player": "Jaren Jackson Jr",
    "team": "UTA",
    "contract": "guaranteed",
-   "current_salary": 25257798,
+   "current_salary": 49000000,
    "dead_money": [],
-   "total": 25257798,
+   "total": 49000000,
+   "birth_date": "1999-09-15"
+  },
+  {
+   "player": "Jaron Pierre",
+   "team": "NOP",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [],
+   "total": 678882,
    "birth_date": null
   },
   {
    "player": "Jarred Vanderbilt",
    "team": "LAL",
    "contract": "guaranteed",
-   "current_salary": 10714286,
+   "current_salary": 12428571,
    "dead_money": [],
-   "total": 10714286,
-   "birth_date": null
+   "total": 12428571,
+   "birth_date": "1999-04-03"
   },
   {
    "player": "Jarrett Allen",
    "team": "CLE",
    "contract": "guaranteed",
-   "current_salary": 20000000,
+   "current_salary": 28000000,
    "dead_money": [],
-   "total": 20000000,
-   "birth_date": null
+   "total": 28000000,
+   "birth_date": "1998-04-21"
+  },
+  {
+   "player": "Jase Richardson",
+   "team": "ORL",
+   "contract": "guaranteed",
+   "current_salary": 3132360,
+   "dead_money": [],
+   "total": 3132360,
+   "birth_date": "2005-10-16"
+  },
+  {
+   "player": "JaVale McGee",
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "DAL",
+     "amount": 2208856
+    }
+   ],
+   "total": 2208856,
+   "birth_date": "1988-01-19"
+  },
+  {
+   "player": "Javon Small",
+   "team": "MEM",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [],
+   "total": 678882,
+   "birth_date": "2002-12-19"
   },
   {
    "player": "Javonte Green",
    "team": "DET",
    "contract": "guaranteed",
-   "current_salary": 696955,
+   "current_salary": 3943679,
    "dead_money": [],
-   "total": 696955,
-   "birth_date": null
+   "total": 3943679,
+   "birth_date": "1993-07-23"
   },
   {
    "player": "Jaxson Hayes",
    "team": "UTA",
    "contract": "guaranteed",
-   "current_salary": 2463946,
+   "current_salary": 6000000,
    "dead_money": [],
-   "total": 2463946,
-   "birth_date": null
+   "total": 6000000,
+   "birth_date": "2000-05-23"
   },
   {
    "player": "Jay Huff",
    "team": "IND",
    "contract": "guaranteed",
-   "current_salary": 2088033,
+   "current_salary": 2667944,
    "dead_money": [],
-   "total": 2088033,
-   "birth_date": null
+   "total": 2667944,
+   "birth_date": "1997-08-25"
   },
   {
    "player": "Jayden Quaintance",
    "team": "SAS",
    "contract": "guaranteed",
-   "current_salary": 981902,
+   "current_salary": 3902760,
    "dead_money": [],
-   "total": 981902,
+   "total": 3902760,
    "birth_date": null
   },
   {
    "player": "Jaylen Brown",
    "team": "PHI",
    "contract": "guaranteed",
-   "current_salary": 49205800,
+   "current_salary": 57736350,
    "dead_money": [],
-   "total": 49205800,
-   "birth_date": null
+   "total": 57736350,
+   "birth_date": "1996-10-24"
   },
   {
    "player": "Jaylen Clark",
    "team": "MIN",
    "contract": "guaranteed",
-   "current_salary": 492323,
+   "current_salary": 3086420,
    "dead_money": [],
-   "total": 492323,
-   "birth_date": null
+   "total": 3086420,
+   "birth_date": "2001-10-13"
   },
   {
    "player": "Jaylen Wells",
    "team": "MEM",
-   "contract": "guaranteed",
-   "current_salary": 1157153,
+   "contract": "partial",
+   "current_salary": 2296271,
    "dead_money": [],
-   "total": 1157153,
-   "birth_date": null
+   "total": 2296271,
+   "birth_date": "2003-08-26"
+  },
+  {
+   "player": "Jaylin Sellers",
+   "team": "CHI",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [],
+   "total": 678882,
+   "birth_date": "2003-06-03"
   },
   {
    "player": "Jaylin Williams",
    "team": "OKC",
    "contract": "guaranteed",
-   "current_salary": 2019699,
+   "current_salary": 7774648,
    "dead_money": [],
-   "total": 2019699,
-   "birth_date": null
+   "total": 7774648,
+   "birth_date": "2002-06-29"
   },
   {
    "player": "Jaylon Tyson",
    "team": "CLE",
    "contract": "guaranteed",
-   "current_salary": 3326160,
+   "current_salary": 3658560,
    "dead_money": [],
-   "total": 3326160,
-   "birth_date": null
+   "total": 3658560,
+   "birth_date": "2002-12-02"
+  },
+  {
+   "player": "Jayson Kent",
+   "team": "POR",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [],
+   "total": 678882,
+   "birth_date": "2002-02-03"
   },
   {
    "player": "Jayson Tatum",
    "team": "BOS",
    "contract": "guaranteed",
-   "current_salary": 34848340,
+   "current_salary": 58456566,
    "dead_money": [],
-   "total": 34848340,
-   "birth_date": null
+   "total": 58456566,
+   "birth_date": "1998-03-03"
   },
   {
    "player": "Jerami Grant",
    "team": "MEM",
    "contract": "guaranteed",
-   "current_salary": 29793104,
+   "current_salary": 34206898,
    "dead_money": [],
-   "total": 29793104,
-   "birth_date": null
+   "total": 34206898,
+   "birth_date": "1994-03-12"
+  },
+  {
+   "player": "Jeremiah Fears",
+   "team": "NOP",
+   "contract": "guaranteed",
+   "current_salary": 7896240,
+   "dead_money": [],
+   "total": 7896240,
+   "birth_date": "2006-10-14"
   },
   {
    "player": "Jericho Sims",
    "team": "MIL",
    "contract": "guaranteed",
-   "current_salary": 2092344,
+   "current_salary": 2801346,
    "dead_money": [],
-   "total": 2092344,
-   "birth_date": null
+   "total": 2801346,
+   "birth_date": "1998-10-20"
   },
   {
    "player": "Jett Howard",
    "team": "DAL",
-   "contract": "guaranteed",
-   "current_salary": 5278320,
+   "contract": "two_way",
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 5278320,
-   "birth_date": null
+   "total": 678882,
+   "birth_date": "2003-09-14"
   },
   {
    "player": "Jevon Carter",
    "team": "ORL",
    "contract": "guaranteed",
-   "current_salary": 6500000,
+   "current_salary": 3506659,
    "dead_money": [],
-   "total": 6500000,
-   "birth_date": null
+   "total": 3506659,
+   "birth_date": "1995-09-14"
   },
   {
    "player": "Jimmy Butler",
    "team": "GSW",
    "contract": "guaranteed",
-   "current_salary": 48798677,
+   "current_salary": 56832773,
    "dead_money": [],
-   "total": 48798677,
-   "birth_date": null
+   "total": 56832773,
+   "birth_date": "1989-09-14"
+  },
+  {
+   "player": "Joan Beringer",
+   "team": "MIN",
+   "contract": "guaranteed",
+   "current_salary": 4411200,
+   "dead_money": [],
+   "total": 4411200,
+   "birth_date": "2006-11-01"
   },
   {
    "player": "Jock Landale",
    "team": "ATL",
    "contract": "guaranteed",
-   "current_salary": 8000000,
+   "current_salary": 14100000,
    "dead_money": [],
-   "total": 8000000,
-   "birth_date": null
+   "total": 14100000,
+   "birth_date": "1995-10-25"
   },
   {
    "player": "Joel Embiid",
    "team": "PHI",
    "contract": "guaranteed",
-   "current_salary": 51415938,
+   "current_salary": 57736350,
    "dead_money": [],
-   "total": 51415938,
-   "birth_date": null
+   "total": 57736350,
+   "birth_date": "1994-03-16"
   },
   {
    "player": "John Collins",
    "team": "DET",
    "contract": "guaranteed",
-   "current_salary": 26580000,
+   "current_salary": 17000000,
    "dead_money": [],
-   "total": 26580000,
-   "birth_date": null
+   "total": 17000000,
+   "birth_date": "1997-09-23"
+  },
+  {
+   "player": "John Konchar",
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "MIN",
+     "amount": 2055000
+    }
+   ],
+   "total": 2055000,
+   "birth_date": "1996-03-22"
+  },
+  {
+   "player": "John Tonje",
+   "team": "POR",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [],
+   "total": 678882,
+   "birth_date": "2001-04-23"
+  },
+  {
+   "player": "Johni Broome",
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "LAC",
+     "amount": 2150917
+    }
+   ],
+   "total": 2150917,
+   "birth_date": "2002-07-19"
   },
   {
    "player": "Johnny Furphy",
    "team": "IND",
    "contract": "guaranteed",
-   "current_salary": 1850842,
+   "current_salary": 2296271,
    "dead_money": [],
-   "total": 1850842,
-   "birth_date": null
+   "total": 2296271,
+   "birth_date": "2004-12-07"
+  },
+  {
+   "player": "Jonas Valanciunas",
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "DEN",
+     "amount": 666667
+    }
+   ],
+   "total": 666667,
+   "birth_date": "1992-05-06"
   },
   {
    "player": "Jonathan Isaac",
    "team": "ORL",
    "contract": "guaranteed",
-   "current_salary": 27600000,
-   "dead_money": [],
-   "total": 27600000,
-   "birth_date": null
+   "current_salary": 3524115,
+   "dead_money": [
+    {
+     "team": "ORL",
+     "amount": 8000000
+    }
+   ],
+   "total": 11524115,
+   "birth_date": "1997-10-03"
   },
   {
    "player": "Jonathan Kuminga",
    "team": "MIN",
    "contract": "guaranteed",
-   "current_salary": 7636307,
+   "current_salary": 6064000,
    "dead_money": [],
-   "total": 7636307,
-   "birth_date": null
+   "total": 6064000,
+   "birth_date": "2002-10-06"
   },
   {
    "player": "Jonathan Mogbo",
    "team": "SAC",
-   "contract": "guaranteed",
-   "current_salary": 1862265,
+   "contract": "two_way",
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 1862265,
-   "birth_date": null
+   "total": 678882,
+   "birth_date": "2001-10-29"
   },
   {
    "player": "Jordan Clarkson",
    "team": "NYK",
    "contract": "guaranteed",
-   "current_salary": 14092577,
+   "current_salary": 3876529,
    "dead_money": [],
-   "total": 14092577,
-   "birth_date": null
+   "total": 3876529,
+   "birth_date": "1992-06-07"
   },
   {
    "player": "Jordan Goodwin",
    "team": "PHX",
    "contract": "guaranteed",
-   "current_salary": 223718,
+   "current_salary": 5864198,
    "dead_money": [],
-   "total": 223718,
-   "birth_date": null
+   "total": 5864198,
+   "birth_date": "1998-10-23"
   },
   {
    "player": "Jordan Hawkins",
    "team": "CHI",
-   "contract": "guaranteed",
-   "current_salary": 4525680,
-   "dead_money": [],
-   "total": 4525680,
-   "birth_date": null
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [
+    {
+     "team": "MEM",
+     "amount": 6343013
+    }
+   ],
+   "total": 7021895,
+   "birth_date": "2002-04-29"
   },
   {
    "player": "Jordan McLaughlin",
    "team": "SAS",
    "contract": "guaranteed",
-   "current_salary": 2425403,
+   "current_salary": 3286399,
    "dead_money": [],
-   "total": 2425403,
-   "birth_date": null
+   "total": 3286399,
+   "birth_date": "1996-04-09"
   },
   {
    "player": "Jordan Miller",
    "team": "LAC",
    "contract": "guaranteed",
-   "current_salary": 1050000,
+   "current_salary": 5300000,
    "dead_money": [],
-   "total": 1050000,
-   "birth_date": null
+   "total": 5300000,
+   "birth_date": "2000-01-23"
   },
   {
    "player": "Jordan Poole",
    "team": "NOP",
    "contract": "guaranteed",
-   "current_salary": 29651786,
+   "current_salary": 34044642,
    "dead_money": [],
-   "total": 29651786,
-   "birth_date": null
+   "total": 34044642,
+   "birth_date": "1999-06-19"
   },
   {
    "player": "Jordan Walsh",
    "team": "BOS",
    "contract": "guaranteed",
-   "current_salary": 1891857,
+   "current_salary": 2406205,
    "dead_money": [],
-   "total": 1891857,
-   "birth_date": null
+   "total": 2406205,
+   "birth_date": "2004-03-03"
   },
   {
    "player": "Jose Alvarado",
    "team": "NYK",
    "contract": "guaranteed",
-   "current_salary": 1988598,
+   "current_salary": 4439656,
    "dead_money": [],
-   "total": 1988598,
-   "birth_date": null
+   "total": 4439656,
+   "birth_date": "1998-04-12"
   },
   {
    "player": "Josh Dix",
    "team": "OKC",
-   "contract": "guaranteed",
-   "current_salary": 596581,
+   "contract": "two_way",
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 596581,
+   "total": 678882,
    "birth_date": null
   },
   {
    "player": "Josh Giddey",
    "team": "CHI",
    "contract": "guaranteed",
-   "current_salary": 8352367,
+   "current_salary": 25000000,
    "dead_money": [],
-   "total": 8352367,
-   "birth_date": null
+   "total": 25000000,
+   "birth_date": "2002-10-10"
   },
   {
    "player": "Josh Green",
    "team": "UTA",
    "contract": "guaranteed",
-   "current_salary": 12654321,
+   "current_salary": 14679012,
    "dead_money": [],
-   "total": 12654321,
-   "birth_date": null
+   "total": 14679012,
+   "birth_date": "2000-11-16"
   },
   {
    "player": "Josh Hart",
    "team": "NYK",
    "contract": "guaranteed",
-   "current_salary": 18144000,
+   "current_salary": 20923760,
    "dead_money": [],
-   "total": 18144000,
-   "birth_date": null
+   "total": 20923760,
+   "birth_date": "1995-03-06"
   },
   {
    "player": "Josh Minott",
    "team": "BKN",
    "contract": "guaranteed",
-   "current_salary": 2019699,
+   "current_salary": 4500000,
    "dead_money": [],
-   "total": 2019699,
-   "birth_date": null
+   "total": 4500000,
+   "birth_date": "2002-11-25"
   },
   {
    "player": "Josh Okogie",
    "team": "UTA",
    "contract": "guaranteed",
-   "current_salary": 8250000,
+   "current_salary": 6000000,
    "dead_money": [],
-   "total": 8250000,
-   "birth_date": null
+   "total": 6000000,
+   "birth_date": "1998-09-01"
   },
   {
    "player": "Joshua Jefferson",
    "team": "BKN",
    "contract": "guaranteed",
-   "current_salary": 981902,
+   "current_salary": 2969520,
    "dead_money": [],
-   "total": 981902,
+   "total": 2969520,
    "birth_date": null
   },
   {
    "player": "Jrue Holiday",
    "team": "POR",
    "contract": "guaranteed",
-   "current_salary": 30000000,
+   "current_salary": 34800000,
    "dead_money": [],
-   "total": 30000000,
-   "birth_date": null
+   "total": 34800000,
+   "birth_date": "1990-06-12"
   },
   {
    "player": "Julian Champagnie",
    "team": "SAS",
    "contract": "guaranteed",
-   "current_salary": 3000000,
+   "current_salary": 15350000,
    "dead_money": [],
-   "total": 3000000,
-   "birth_date": null
+   "total": 15350000,
+   "birth_date": "2001-06-29"
   },
   {
    "player": "Julian Phillips",
    "team": "HOU",
-   "contract": "guaranteed",
-   "current_salary": 1891857,
+   "contract": "two_way",
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 1891857,
-   "birth_date": null
+   "total": 678882,
+   "birth_date": "2003-11-05"
   },
   {
    "player": "Julian Reese",
    "team": "NOP",
-   "contract": "guaranteed",
-   "current_salary": 596581,
+   "contract": "two_way",
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 596581,
-   "birth_date": null
+   "total": 678882,
+   "birth_date": "2003-06-30"
   },
   {
    "player": "Julian Strawther",
    "team": "DEN",
    "contract": "guaranteed",
-   "current_salary": 2552520,
+   "current_salary": 4826931,
    "dead_money": [],
-   "total": 2552520,
-   "birth_date": null
+   "total": 4826931,
+   "birth_date": "2002-04-18"
   },
   {
    "player": "Julius Randle",
    "team": "BKN",
    "contract": "guaranteed",
-   "current_salary": 33073920,
+   "current_salary": 33333334,
    "dead_money": [],
-   "total": 33073920,
-   "birth_date": null
+   "total": 33333334,
+   "birth_date": "1994-11-29"
   },
   {
    "player": "Justin Champagnie",
    "team": "WAS",
-   "contract": "guaranteed",
-   "current_salary": 1800000,
+   "contract": "non_guaranteed",
+   "current_salary": 2667944,
    "dead_money": [],
-   "total": 1800000,
-   "birth_date": null
+   "total": 2667944,
+   "birth_date": "2001-06-29"
   },
   {
    "player": "Justin Edwards",
    "team": "PHI",
    "contract": "guaranteed",
-   "current_salary": 425619,
+   "current_salary": 2411090,
    "dead_money": [],
-   "total": 425619,
-   "birth_date": null
+   "total": 2411090,
+   "birth_date": "2003-12-16"
   },
   {
    "player": "Jusuf Nurkic",
    "team": "UTA",
    "contract": "guaranteed",
-   "current_salary": 18125000,
+   "current_salary": 11458333,
    "dead_money": [],
-   "total": 18125000,
-   "birth_date": null
+   "total": 11458333,
+   "birth_date": "1994-08-23"
+  },
+  {
+   "player": "Kam Jones",
+   "team": "MIL",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [
+    {
+     "team": "CHI",
+     "amount": 1075459
+    }
+   ],
+   "total": 1754341,
+   "birth_date": "2002-02-25"
   },
   {
    "player": "Karim Lopez",
    "team": "MEM",
    "contract": "guaranteed",
-   "current_salary": 981902,
+   "current_salary": 3746760,
    "dead_money": [],
-   "total": 981902,
+   "total": 3746760,
    "birth_date": null
   },
   {
    "player": "Karl-Anthony Towns",
    "team": "NYK",
    "contract": "guaranteed",
-   "current_salary": 49205800,
+   "current_salary": 57078728,
    "dead_money": [],
-   "total": 49205800,
-   "birth_date": null
+   "total": 57078728,
+   "birth_date": "1995-11-15"
   },
   {
    "player": "Karlo Matkovic",
    "team": "NOP",
    "contract": "guaranteed",
-   "current_salary": 1407153,
+   "current_salary": 2296271,
    "dead_money": [],
-   "total": 1407153,
-   "birth_date": null
+   "total": 2296271,
+   "birth_date": "2001-03-30"
+  },
+  {
+   "player": "Kasparas Jakucionis",
+   "team": "MIL",
+   "contract": "guaranteed",
+   "current_salary": 3841680,
+   "dead_money": [],
+   "total": 3841680,
+   "birth_date": "2006-05-29"
   },
   {
    "player": "Kawhi Leonard",
    "team": "TOR",
    "contract": "guaranteed",
-   "current_salary": 49205800,
+   "current_salary": 50300000,
    "dead_money": [],
-   "total": 49205800,
-   "birth_date": null
+   "total": 50300000,
+   "birth_date": "1991-06-29"
   },
   {
    "player": "Keaton Wagler",
    "team": "LAC",
    "contract": "guaranteed",
-   "current_salary": 981902,
+   "current_salary": 9674760,
    "dead_money": [],
-   "total": 981902,
-   "birth_date": null
+   "total": 9674760,
+   "birth_date": "2007-02-03"
   },
   {
    "player": "Keegan Murray",
    "team": "SAC",
    "contract": "guaranteed",
-   "current_salary": 8809560,
+   "current_salary": 24137936,
    "dead_money": [],
-   "total": 8809560,
-   "birth_date": null
+   "total": 24137936,
+   "birth_date": "2000-08-19"
   },
   {
    "player": "Keldon Johnson",
    "team": "SAS",
    "contract": "guaranteed",
-   "current_salary": 19000000,
+   "current_salary": 18000000,
    "dead_money": [],
-   "total": 19000000,
-   "birth_date": null
+   "total": 18000000,
+   "birth_date": "1999-10-11"
   },
   {
    "player": "Kel'el Ware",
    "team": "MIL",
    "contract": "guaranteed",
-   "current_salary": 4231800,
+   "current_salary": 4654920,
    "dead_money": [],
-   "total": 4231800,
-   "birth_date": null
+   "total": 4654920,
+   "birth_date": "2004-04-20"
   },
   {
    "player": "Kelly Oubre",
    "team": "IND",
    "contract": "guaranteed",
-   "current_salary": 7983000,
+   "current_salary": 8050000,
    "dead_money": [],
-   "total": 7983000,
-   "birth_date": null
+   "total": 8050000,
+   "birth_date": "1995-12-09"
   },
   {
    "player": "Kenrich Williams",
    "team": "OKC",
    "contract": "guaranteed",
-   "current_salary": 6669000,
+   "current_salary": 5000000,
    "dead_money": [],
-   "total": 6669000,
-   "birth_date": null
+   "total": 5000000,
+   "birth_date": "1994-12-02"
   },
   {
    "player": "Kentavious Caldwell-Pope",
    "team": "PHI",
    "contract": "guaranteed",
-   "current_salary": 22757000,
-   "dead_money": [],
-   "total": 22757000,
-   "birth_date": null
+   "current_salary": 3876529,
+   "dead_money": [
+    {
+     "team": "MEM",
+     "amount": 17744971
+    }
+   ],
+   "total": 21621500,
+   "birth_date": "1993-02-18"
   },
   {
    "player": "Keon Ellis",
    "team": "BKN",
    "contract": "guaranteed",
-   "current_salary": 2120693,
+   "current_salary": 9000000,
    "dead_money": [],
-   "total": 2120693,
-   "birth_date": null
+   "total": 9000000,
+   "birth_date": "2000-01-08"
   },
   {
    "player": "Keshad Johnson",
    "team": "MIA",
-   "contract": "guaranteed",
-   "current_salary": 724883,
+   "contract": "two_way",
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 724883,
-   "birth_date": null
+   "total": 678882,
+   "birth_date": "2001-06-23"
+  },
+  {
+   "player": "Keshon Gilbert",
+   "team": "ATL",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [],
+   "total": 678882,
+   "birth_date": "2003-06-30"
   },
   {
    "player": "Kevin Durant",
    "team": "HOU",
    "contract": "guaranteed",
-   "current_salary": 51179021,
+   "current_salary": 43902439,
    "dead_money": [],
-   "total": 51179021,
-   "birth_date": null
+   "total": 43902439,
+   "birth_date": "1988-09-29"
   },
   {
    "player": "Kevin Huerter",
    "team": "DET",
    "contract": "guaranteed",
-   "current_salary": 16830357,
+   "current_salary": 9507042,
    "dead_money": [],
-   "total": 16830357,
-   "birth_date": null
+   "total": 9507042,
+   "birth_date": "1998-08-27"
+  },
+  {
+   "player": "Kevin McCullar",
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "NYK",
+     "amount": 91000
+    }
+   ],
+   "total": 91000,
+   "birth_date": "2001-03-25"
+  },
+  {
+   "player": "Kevin Porter",
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "MIL",
+     "amount": 5390700
+    }
+   ],
+   "total": 5390700,
+   "birth_date": "2000-05-04"
   },
   {
    "player": "Kevon Looney",
    "team": "LAL",
    "contract": "guaranteed",
-   "current_salary": 8000000,
+   "current_salary": 3876529,
    "dead_money": [],
-   "total": 8000000,
-   "birth_date": null
+   "total": 3876529,
+   "birth_date": "1996-02-06"
   },
   {
    "player": "Keyonte George",
    "team": "UTA",
    "contract": "guaranteed",
-   "current_salary": 4084200,
+   "current_salary": 6563925,
    "dead_money": [],
-   "total": 4084200,
+   "total": 6563925,
+   "birth_date": "2003-11-08"
+  },
+  {
+   "player": "Khalifa Diop",
+   "team": "CLE",
+   "contract": "guaranteed",
+   "current_salary": 1357763,
+   "dead_money": [],
+   "total": 1357763,
    "birth_date": null
+  },
+  {
+   "player": "Khaman Maluach",
+   "team": "PHX",
+   "contract": "guaranteed",
+   "current_salary": 6316680,
+   "dead_money": [],
+   "total": 6316680,
+   "birth_date": "2006-09-14"
   },
   {
    "player": "Khris Middleton",
    "team": "WAS",
    "contract": "guaranteed",
-   "current_salary": 31000000,
+   "current_salary": 5591122,
    "dead_money": [],
-   "total": 31000000,
-   "birth_date": null
+   "total": 5591122,
+   "birth_date": "1991-08-12"
   },
   {
    "player": "Kingston Flemings",
    "team": "ATL",
    "contract": "guaranteed",
-   "current_salary": 981902,
+   "current_salary": 7348680,
    "dead_money": [],
-   "total": 981902,
-   "birth_date": null
+   "total": 7348680,
+   "birth_date": "2007-01-03"
+  },
+  {
+   "player": "KJ Simpson",
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "DEN",
+     "amount": 91000
+    }
+   ],
+   "total": 91000,
+   "birth_date": "2002-08-08"
   },
   {
    "player": "Klay Thompson",
    "team": "MIA",
    "contract": "guaranteed",
-   "current_salary": 15873016,
+   "current_salary": 5600000,
+   "dead_money": [
+    {
+     "team": "DAL",
+     "amount": 7660317
+    }
+   ],
+   "total": 13260317,
+   "birth_date": "1990-02-08"
+  },
+  {
+   "player": "Koa Peat",
+   "team": "PHX",
+   "contract": "guaranteed",
+   "current_salary": 2926800,
    "dead_money": [],
-   "total": 15873016,
-   "birth_date": null
+   "total": 2926800,
+   "birth_date": "2007-01-20"
   },
   {
    "player": "Kobe Brown",
    "team": "IND",
-   "contract": "guaranteed",
-   "current_salary": 2533920,
+   "contract": "two_way",
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 2533920,
-   "birth_date": null
+   "total": 678882,
+   "birth_date": "2000-01-01"
   },
   {
    "player": "Kobe Bufkin",
    "team": "UTA",
-   "contract": "guaranteed",
-   "current_salary": 23000000,
+   "contract": "two_way",
+   "current_salary": 663276,
    "dead_money": [],
-   "total": 23000000,
-   "birth_date": null
+   "total": 663276,
+   "birth_date": "2003-09-21"
   },
   {
    "player": "Kobe Sanders",
    "team": "LAC",
-   "contract": "two_way",
-   "current_salary": 302411,
+   "contract": "guaranteed",
+   "current_salary": 2622139,
    "dead_money": [],
-   "total": 302411,
-   "birth_date": null
+   "total": 2622139,
+   "birth_date": "2002-05-30"
+  },
+  {
+   "player": "Kon Knueppel",
+   "team": "CHA",
+   "contract": "guaranteed",
+   "current_salary": 10516560,
+   "dead_money": [],
+   "total": 10516560,
+   "birth_date": "2005-08-03"
   },
   {
    "player": "Kris Dunn",
    "team": "LAC",
    "contract": "guaranteed",
-   "current_salary": 5168000,
+   "current_salary": 5684800,
    "dead_money": [],
-   "total": 5168000,
-   "birth_date": null
+   "total": 5684800,
+   "birth_date": "1994-03-18"
   },
   {
    "player": "Kris Murray",
    "team": "MEM",
    "contract": "guaranteed",
-   "current_salary": 2990040,
+   "current_salary": 5315004,
    "dead_money": [],
-   "total": 2990040,
-   "birth_date": null
+   "total": 5315004,
+   "birth_date": "2000-08-19"
   },
   {
    "player": "Kristaps Porzingis",
    "team": "GSW",
    "contract": "guaranteed",
-   "current_salary": 29268293,
+   "current_salary": 20000000,
    "dead_money": [],
-   "total": 29268293,
-   "birth_date": null
+   "total": 20000000,
+   "birth_date": "1995-08-02"
   },
   {
    "player": "Kylan Boswell",
    "team": "CHA",
    "contract": "two_way",
-   "current_salary": 344234,
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 344234,
+   "total": 678882,
    "birth_date": null
   },
   {
    "player": "Kyle Anderson",
    "team": "TOR",
    "contract": "guaranteed",
-   "current_salary": 8780488,
+   "current_salary": 3876529,
    "dead_money": [],
-   "total": 8780488,
-   "birth_date": null
+   "total": 3876529,
+   "birth_date": "1993-09-20"
   },
   {
    "player": "Kyle Filipowski",
@@ -2322,619 +3239,824 @@
    "current_salary": 3000000,
    "dead_money": [],
    "total": 3000000,
-   "birth_date": null
+   "birth_date": "2003-11-07"
   },
   {
    "player": "Kyle Kuzma",
    "team": "MIL",
    "contract": "guaranteed",
-   "current_salary": 24456060,
+   "current_salary": 20490152,
    "dead_money": [],
-   "total": 24456060,
-   "birth_date": null
+   "total": 20490152,
+   "birth_date": "1995-07-24"
   },
   {
    "player": "Kyrie Irving",
    "team": "DAL",
    "contract": "guaranteed",
-   "current_salary": 40000000,
+   "current_salary": 39491282,
    "dead_money": [],
-   "total": 40000000,
-   "birth_date": null
+   "total": 39491282,
+   "birth_date": "1992-03-23"
   },
   {
    "player": "Kyshawn George",
    "team": "WAS",
    "contract": "guaranteed",
-   "current_salary": 2825520,
+   "current_salary": 3108000,
    "dead_money": [],
-   "total": 2825520,
-   "birth_date": null
+   "total": 3108000,
+   "birth_date": "2003-12-02"
   },
   {
    "player": "Labaron Philon",
    "team": "PHI",
    "contract": "guaranteed",
-   "current_salary": 981902,
+   "current_salary": 3597120,
    "dead_money": [],
-   "total": 981902,
-   "birth_date": null
+   "total": 3597120,
+   "birth_date": "2005-11-24"
   },
   {
    "player": "LaMelo Ball",
    "team": "MIN",
    "contract": "guaranteed",
-   "current_salary": 35147000,
+   "current_salary": 40770520,
    "dead_money": [],
-   "total": 35147000,
-   "birth_date": null
+   "total": 40770520,
+   "birth_date": "2001-08-22"
   },
   {
    "player": "Landry Shamet",
    "team": "NYK",
    "contract": "guaranteed",
-   "current_salary": 1682008,
+   "current_salary": 5490967,
    "dead_money": [],
-   "total": 1682008,
-   "birth_date": null
+   "total": 5490967,
+   "birth_date": "1997-03-13"
   },
   {
    "player": "Larry Nance Jr",
    "team": "IND",
    "contract": "guaranteed",
-   "current_salary": 11205000,
+   "current_salary": 3876529,
    "dead_money": [],
-   "total": 11205000,
-   "birth_date": null
+   "total": 3876529,
+   "birth_date": "1993-01-01"
   },
   {
    "player": "Lauri Markkanen",
    "team": "UTA",
    "contract": "guaranteed",
-   "current_salary": 42176400,
+   "current_salary": 46113154,
    "dead_money": [],
-   "total": 42176400,
-   "birth_date": null
+   "total": 46113154,
+   "birth_date": "1997-05-22"
   },
   {
    "player": "Leaky Black",
    "team": "SAC",
    "contract": "two_way",
-   "current_salary": 578577,
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 578577,
-   "birth_date": null
+   "total": 678882,
+   "birth_date": "1999-06-14"
   },
   {
    "player": "LeBron James",
    "team": "PHI",
    "contract": "guaranteed",
-   "current_salary": 48728845,
+   "current_salary": 3876529,
    "dead_money": [],
-   "total": 48728845,
-   "birth_date": null
+   "total": 3876529,
+   "birth_date": "1984-12-30"
   },
   {
    "player": "Leonard Miller",
    "team": "CHI",
    "contract": "guaranteed",
-   "current_salary": 1891857,
+   "current_salary": 2406205,
    "dead_money": [],
-   "total": 1891857,
-   "birth_date": null
+   "total": 2406205,
+   "birth_date": "2003-11-26"
+  },
+  {
+   "player": "Liam McNeeley",
+   "team": "CHA",
+   "contract": "guaranteed",
+   "current_salary": 2902080,
+   "dead_money": [],
+   "total": 2902080,
+   "birth_date": "2005-10-10"
+  },
+  {
+   "player": "LJ Cryer",
+   "team": "GSW",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [],
+   "total": 678882,
+   "birth_date": "2001-10-09"
   },
   {
    "player": "Luguentz Dort",
    "team": "ATL",
    "contract": "guaranteed",
-   "current_salary": 17000000,
+   "current_salary": 17222222,
    "dead_money": [],
-   "total": 17000000,
-   "birth_date": null
+   "total": 17222222,
+   "birth_date": "1999-04-19"
   },
   {
    "player": "Luka Doncic",
    "team": "LAL",
    "contract": "guaranteed",
-   "current_salary": 43031940,
+   "current_salary": 51033600,
    "dead_money": [],
-   "total": 43031940,
-   "birth_date": null
+   "total": 51033600,
+   "birth_date": "1999-02-28"
   },
   {
    "player": "Luka Garza",
    "team": "BOS",
    "contract": "guaranteed",
-   "current_salary": 2162606,
+   "current_salary": 2801346,
    "dead_money": [],
-   "total": 2162606,
-   "birth_date": null
+   "total": 2801346,
+   "birth_date": "1998-12-27"
   },
   {
    "player": "Luke Kennard",
    "team": "PHX",
    "contract": "guaranteed",
-   "current_salary": 9250000,
+   "current_salary": 6064000,
    "dead_money": [],
-   "total": 9250000,
-   "birth_date": null
+   "total": 6064000,
+   "birth_date": "1996-06-24"
   },
   {
    "player": "Luke Kornet",
    "team": "SAS",
    "contract": "guaranteed",
-   "current_salary": 2800834,
+   "current_salary": 10450000,
    "dead_money": [],
-   "total": 2800834,
+   "total": 10450000,
+   "birth_date": "1995-07-15"
+  },
+  {
+   "player": "Malachi Smith",
+   "team": "TOR",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [],
+   "total": 678882,
+   "birth_date": "1999-12-06"
+  },
+  {
+   "player": "Malevy Leons",
+   "team": "GSW",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [],
+   "total": 678882,
+   "birth_date": "1999-09-23"
+  },
+  {
+   "player": "Malik Dia",
+   "team": "NOP",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [],
+   "total": 678882,
    "birth_date": null
   },
   {
    "player": "Malik Monk",
    "team": "SAC",
    "contract": "guaranteed",
-   "current_salary": 17405203,
+   "current_salary": 20190035,
    "dead_money": [],
-   "total": 17405203,
-   "birth_date": null
+   "total": 20190035,
+   "birth_date": "1998-02-04"
   },
   {
    "player": "Maliq Brown",
    "team": "SAS",
    "contract": "two_way",
-   "current_salary": 344234,
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 344234,
-   "birth_date": null
+   "total": 678882,
+   "birth_date": "2003-11-16"
+  },
+  {
+   "player": "Mamadi Diakite",
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "MEM",
+     "amount": 464050
+    }
+   ],
+   "total": 464050,
+   "birth_date": "1997-01-21"
   },
   {
    "player": "Marcus Sasser",
    "team": "DAL",
    "contract": "guaranteed",
-   "current_salary": 2755080,
+   "current_salary": 5198983,
    "dead_money": [],
-   "total": 2755080,
-   "birth_date": null
+   "total": 5198983,
+   "birth_date": "2000-09-21"
   },
   {
    "player": "Marcus Smart",
    "team": "HOU",
    "contract": "guaranteed",
-   "current_salary": 20210285,
+   "current_salary": 6064000,
    "dead_money": [],
-   "total": 20210285,
-   "birth_date": null
+   "total": 6064000,
+   "birth_date": "1994-03-06"
   },
   {
    "player": "Mario Hezonja",
    "team": "CLE",
-   "contract": "guaranteed",
-   "current_salary": 2162606,
+   "contract": "non_guaranteed",
+   "current_salary": 2845883,
    "dead_money": [],
-   "total": 2162606,
-   "birth_date": null
+   "total": 2845883,
+   "birth_date": "1995-02-25"
   },
   {
    "player": "Mark Williams",
    "team": "PHX",
    "contract": "guaranteed",
-   "current_salary": 4094280,
+   "current_salary": 11728395,
    "dead_money": [],
-   "total": 4094280,
-   "birth_date": null
+   "total": 11728395,
+   "birth_date": "2001-12-16"
   },
   {
    "player": "Marvin Bagley",
    "team": "DEN",
    "contract": "guaranteed",
-   "current_salary": 12500000,
+   "current_salary": 3506659,
    "dead_money": [],
-   "total": 12500000,
-   "birth_date": null
+   "total": 3506659,
+   "birth_date": "1999-03-14"
   },
   {
    "player": "Matas Buzelis",
    "team": "CHI",
    "contract": "guaranteed",
-   "current_salary": 5195520,
+   "current_salary": 5715360,
    "dead_money": [],
-   "total": 5195520,
-   "birth_date": null
+   "total": 5715360,
+   "birth_date": "2004-10-13"
   },
   {
    "player": "Matisse Thybulle",
    "team": "LAL",
    "contract": "guaranteed",
-   "current_salary": 11025000,
+   "current_salary": 3286399,
    "dead_money": [],
-   "total": 11025000,
-   "birth_date": null
+   "total": 3286399,
+   "birth_date": "1997-03-04"
   },
   {
    "player": "Max Christie",
    "team": "DAL",
    "contract": "guaranteed",
-   "current_salary": 7142857,
+   "current_salary": 8285714,
    "dead_money": [],
-   "total": 7142857,
-   "birth_date": null
+   "total": 8285714,
+   "birth_date": "2003-02-10"
   },
   {
    "player": "Max Strus",
    "team": "LAC",
    "contract": "guaranteed",
-   "current_salary": 15212068,
+   "current_salary": 16660836,
    "dead_money": [],
-   "total": 15212068,
+   "total": 16660836,
+   "birth_date": "1996-03-28"
+  },
+  {
+   "player": "Maxime Raynaud",
+   "team": "SAC",
+   "contract": "guaranteed",
+   "current_salary": 2150917,
+   "dead_money": [],
+   "total": 2150917,
+   "birth_date": "2003-04-07"
+  },
+  {
+   "player": "Meleek Thomas",
+   "team": "CLE",
+   "contract": "guaranteed",
+   "current_salary": 1357763,
+   "dead_money": [],
+   "total": 1357763,
    "birth_date": null
+  },
+  {
+   "player": "Micah Peavy",
+   "team": "OKC",
+   "contract": "two_way",
+   "current_salary": 663276,
+   "dead_money": [
+    {
+     "team": "MEM",
+     "amount": 2150917
+    }
+   ],
+   "total": 2814193,
+   "birth_date": "2001-07-16"
   },
   {
    "player": "Micah Potter",
    "team": "POR",
-   "contract": "two_way",
-   "current_salary": 578577,
+   "contract": "non_guaranteed",
+   "current_salary": 2801346,
    "dead_money": [],
-   "total": 578577,
-   "birth_date": null
+   "total": 2801346,
+   "birth_date": "1998-04-06"
   },
   {
    "player": "Michael Ajayi",
    "team": "CHA",
    "contract": "two_way",
-   "current_salary": 344234,
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 344234,
+   "total": 678882,
    "birth_date": null
   },
   {
    "player": "Michael Porter",
    "team": "BKN",
    "contract": "guaranteed",
-   "current_salary": 35859950,
+   "current_salary": 40806150,
    "dead_money": [],
-   "total": 35859950,
-   "birth_date": null
+   "total": 40806150,
+   "birth_date": "1998-06-29"
   },
   {
    "player": "Mikal Bridges",
    "team": "NYK",
    "contract": "guaranteed",
-   "current_salary": 23300000,
+   "current_salary": 33482145,
    "dead_money": [],
-   "total": 23300000,
-   "birth_date": null
+   "total": 33482145,
+   "birth_date": "1996-08-30"
   },
   {
    "player": "Mike Conley",
    "team": "BOS",
    "contract": "guaranteed",
-   "current_salary": 9975962,
+   "current_salary": 3876529,
    "dead_money": [],
-   "total": 9975962,
-   "birth_date": null
+   "total": 3876529,
+   "birth_date": "1987-10-11"
   },
   {
    "player": "Mikel Brown",
    "team": "BKN",
    "contract": "guaranteed",
-   "current_salary": 981902,
+   "current_salary": 8787000,
    "dead_money": [],
-   "total": 981902,
-   "birth_date": null
+   "total": 8787000,
+   "birth_date": "2006-04-03"
   },
   {
    "player": "Miles Bridges",
    "team": "PHX",
    "contract": "guaranteed",
-   "current_salary": 27173913,
+   "current_salary": 22826087,
    "dead_money": [],
-   "total": 27173913,
-   "birth_date": null
+   "total": 22826087,
+   "birth_date": "1998-03-21"
   },
   {
    "player": "Miles McBride",
    "team": "NYK",
    "contract": "guaranteed",
-   "current_salary": 4710144,
+   "current_salary": 3956523,
    "dead_money": [],
-   "total": 4710144,
-   "birth_date": null
+   "total": 3956523,
+   "birth_date": "2000-09-08"
   },
   {
    "player": "Mitchell Robinson",
    "team": "BOS",
    "contract": "guaranteed",
-   "current_salary": 14318182,
+   "current_salary": 15044000,
    "dead_money": [],
-   "total": 14318182,
-   "birth_date": null
+   "total": 15044000,
+   "birth_date": "1998-04-01"
+  },
+  {
+   "player": "Mo Bamba",
+   "team": "UTA",
+   "contract": "partial",
+   "current_salary": 3506659,
+   "dead_money": [],
+   "total": 3506659,
+   "birth_date": "1998-05-12"
+  },
+  {
+   "player": "Mohamed Diawara",
+   "team": "NYK",
+   "contract": "guaranteed",
+   "current_salary": 2622139,
+   "dead_money": [],
+   "total": 2622139,
+   "birth_date": "2005-04-29"
   },
   {
    "player": "Morez Johnson",
    "team": "DAL",
    "contract": "guaranteed",
-   "current_salary": 981902,
+   "current_salary": 6754800,
    "dead_money": [],
-   "total": 981902,
-   "birth_date": null
+   "total": 6754800,
+   "birth_date": "2006-01-25"
   },
   {
    "player": "Moritz Wagner",
    "team": "BKN",
    "contract": "guaranteed",
-   "current_salary": 11000000,
+   "current_salary": 9000000,
    "dead_money": [],
-   "total": 11000000,
-   "birth_date": null
+   "total": 9000000,
+   "birth_date": "1997-04-26"
   },
   {
    "player": "Moses Moody",
    "team": "GSW",
    "contract": "guaranteed",
-   "current_salary": 5803269,
+   "current_salary": 12500000,
    "dead_money": [],
-   "total": 5803269,
-   "birth_date": null
+   "total": 12500000,
+   "birth_date": "2002-05-31"
   },
   {
    "player": "Mouhamed Gueye",
    "team": "ATL",
-   "contract": "guaranteed",
-   "current_salary": 1891857,
+   "contract": "non_guaranteed",
+   "current_salary": 2406205,
    "dead_money": [],
-   "total": 1891857,
-   "birth_date": null
+   "total": 2406205,
+   "birth_date": "2002-11-09"
+  },
+  {
+   "player": "Moussa Cisse",
+   "team": "DAL",
+   "contract": "partial",
+   "current_salary": 2185116,
+   "dead_money": [],
+   "total": 2185116,
+   "birth_date": "2002-09-10"
   },
   {
    "player": "Moussa Diabate",
    "team": "CHA",
    "contract": "guaranteed",
-   "current_salary": 957763,
+   "current_salary": 2461462,
    "dead_money": [],
-   "total": 957763,
-   "birth_date": null
+   "total": 2461462,
+   "birth_date": "2002-01-21"
   },
   {
    "player": "Myles Turner",
    "team": "MIL",
    "contract": "guaranteed",
-   "current_salary": 19928500,
+   "current_salary": 26584164,
    "dead_money": [],
-   "total": 19928500,
-   "birth_date": null
+   "total": 26584164,
+   "birth_date": "1996-03-24"
+  },
+  {
+   "player": "Myron Gardner",
+   "team": "MIA",
+   "contract": "partial",
+   "current_salary": 2150917,
+   "dead_money": [],
+   "total": 2150917,
+   "birth_date": "2001-05-21"
   },
   {
    "player": "Nae'Qwan Tomlin",
    "team": "CLE",
-   "contract": "two_way",
-   "current_salary": 138337,
+   "contract": "guaranteed",
+   "current_salary": 2411090,
    "dead_money": [],
-   "total": 138337,
-   "birth_date": null
+   "total": 2411090,
+   "birth_date": "2000-12-10"
   },
   {
    "player": "Naji Marshall",
    "team": "DAL",
    "contract": "guaranteed",
-   "current_salary": 8571429,
+   "current_salary": 9428571,
    "dead_money": [],
-   "total": 8571429,
-   "birth_date": null
+   "total": 9428571,
+   "birth_date": "1998-01-24"
+  },
+  {
+   "player": "Nassir Little",
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "PHX",
+     "amount": 3107143
+    }
+   ],
+   "total": 3107143,
+   "birth_date": "2000-02-11"
   },
   {
    "player": "Nate Ament",
    "team": "MIL",
    "contract": "guaranteed",
-   "current_salary": 981902,
+   "current_salary": 5502000,
    "dead_money": [],
-   "total": 981902,
+   "total": 5502000,
+   "birth_date": "2006-12-10"
+  },
+  {
+   "player": "Nate Bittle",
+   "team": "TOR",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [],
+   "total": 678882,
    "birth_date": null
   },
   {
    "player": "Naz Reid",
    "team": "CHA",
    "contract": "guaranteed",
-   "current_salary": 13986432,
+   "current_salary": 23275862,
    "dead_money": [],
-   "total": 13986432,
-   "birth_date": null
+   "total": 23275862,
+   "birth_date": "1999-08-26"
   },
   {
    "player": "Neemias Queta",
    "team": "BOS",
    "contract": "guaranteed",
-   "current_salary": 2162606,
+   "current_salary": 2667944,
    "dead_money": [],
-   "total": 2162606,
-   "birth_date": null
+   "total": 2667944,
+   "birth_date": "1999-07-13"
   },
   {
    "player": "Nick Martinelli",
    "team": "LAC",
    "contract": "two_way",
-   "current_salary": 578577,
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 578577,
-   "birth_date": null
+   "total": 678882,
+   "birth_date": "2004-04-20"
   },
   {
    "player": "Nick Richards",
    "team": "MIA",
-   "contract": "guaranteed",
-   "current_salary": 5000000,
+   "contract": "non_guaranteed",
+   "current_salary": 3066143,
    "dead_money": [],
-   "total": 5000000,
-   "birth_date": null
+   "total": 3066143,
+   "birth_date": "1997-11-29"
   },
   {
    "player": "Nickeil Alexander-Walker",
    "team": "ATL",
    "contract": "guaranteed",
-   "current_salary": 4312500,
+   "current_salary": 14403710,
    "dead_money": [],
-   "total": 4312500,
-   "birth_date": null
+   "total": 14403710,
+   "birth_date": "1998-09-02"
   },
   {
    "player": "Nicolas Claxton",
    "team": "CHI",
    "contract": "guaranteed",
-   "current_salary": 27556817,
+   "current_salary": 23320738,
    "dead_money": [],
-   "total": 27556817,
-   "birth_date": null
+   "total": 23320738,
+   "birth_date": "1999-04-17"
   },
   {
    "player": "Nikola Jokic",
    "team": "DEN",
    "contract": "guaranteed",
-   "current_salary": 51415938,
+   "current_salary": 59033114,
    "dead_money": [],
-   "total": 51415938,
-   "birth_date": null
+   "total": 59033114,
+   "birth_date": "1995-02-19"
   },
   {
    "player": "Nikola Jovic",
    "team": "MIA",
    "contract": "guaranteed",
-   "current_salary": 2464200,
+   "current_salary": 16200000,
    "dead_money": [],
-   "total": 2464200,
-   "birth_date": null
+   "total": 16200000,
+   "birth_date": "2003-06-09"
   },
   {
    "player": "Nikola Topic",
    "team": "OKC",
    "contract": "guaranteed",
-   "current_salary": 4935960,
+   "current_salary": 5429760,
    "dead_money": [],
-   "total": 4935960,
-   "birth_date": null
+   "total": 5429760,
+   "birth_date": "2005-08-10"
   },
   {
    "player": "Nikola Vucevic",
    "team": "ORL",
    "contract": "guaranteed",
-   "current_salary": 20000000,
+   "current_salary": 3876529,
    "dead_money": [],
-   "total": 20000000,
-   "birth_date": null
+   "total": 3876529,
+   "birth_date": "1990-10-24"
+  },
+  {
+   "player": "Nique Clifford",
+   "team": "SAC",
+   "contract": "guaranteed",
+   "current_salary": 3263400,
+   "dead_money": [],
+   "total": 3263400,
+   "birth_date": "2002-02-09"
+  },
+  {
+   "player": "Noa Essengue",
+   "team": "CHI",
+   "contract": "guaranteed",
+   "current_salary": 5701200,
+   "dead_money": [],
+   "total": 5701200,
+   "birth_date": "2006-12-18"
   },
   {
    "player": "Noah Clowney",
    "team": "BKN",
    "contract": "guaranteed",
-   "current_salary": 3244080,
+   "current_salary": 5414034,
    "dead_money": [],
-   "total": 3244080,
-   "birth_date": null
+   "total": 5414034,
+   "birth_date": "2004-07-14"
+  },
+  {
+   "player": "Noah Penda",
+   "team": "ORL",
+   "contract": "guaranteed",
+   "current_salary": 2150917,
+   "dead_money": [],
+   "total": 2150917,
+   "birth_date": "2005-01-07"
+  },
+  {
+   "player": "Nolan Traore",
+   "team": "BKN",
+   "contract": "guaranteed",
+   "current_salary": 4002000,
+   "dead_money": [],
+   "total": 4002000,
+   "birth_date": "2006-05-28"
   },
   {
    "player": "Norman Powell",
    "team": "CHI",
    "contract": "guaranteed",
-   "current_salary": 19241379,
+   "current_salary": 21500000,
    "dead_money": [],
-   "total": 19241379,
-   "birth_date": null
+   "total": 21500000,
+   "birth_date": "1993-05-25"
   },
   {
    "player": "Obi Toppin",
    "team": "IND",
    "contract": "guaranteed",
-   "current_salary": 12975000,
+   "current_salary": 15000000,
    "dead_money": [],
-   "total": 12975000,
-   "birth_date": null
+   "total": 15000000,
+   "birth_date": "1998-03-04"
   },
   {
    "player": "OG Anunoby",
    "team": "NYK",
    "contract": "guaranteed",
-   "current_salary": 36637932,
+   "current_salary": 42500000,
    "dead_money": [],
-   "total": 36637932,
-   "birth_date": null
+   "total": 42500000,
+   "birth_date": "1997-07-17"
   },
   {
    "player": "Olivier-Maxence Prosper",
    "team": "MEM",
    "contract": "guaranteed",
-   "current_salary": 2870400,
-   "dead_money": [],
-   "total": 2870400,
-   "birth_date": null
+   "current_salary": 2497812,
+   "dead_money": [
+    {
+     "team": "DAL",
+     "amount": 1002360
+    }
+   ],
+   "total": 3500172,
+   "birth_date": "2002-07-03"
   },
   {
    "player": "Onyeka Okongwu",
    "team": "ATL",
    "contract": "guaranteed",
-   "current_salary": 14000000,
+   "current_salary": 16120000,
    "dead_money": [],
-   "total": 14000000,
-   "birth_date": null
+   "total": 16120000,
+   "birth_date": "2000-12-11"
   },
   {
    "player": "Oscar Tshiebwe",
    "team": "HOU",
    "contract": "two_way",
-   "current_salary": 578577,
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 578577,
-   "birth_date": null
+   "total": 678882,
+   "birth_date": "1999-11-27"
   },
   {
    "player": "Oso Ighodaro",
    "team": "PHX",
-   "contract": "guaranteed",
-   "current_salary": 1157153,
+   "contract": "partial",
+   "current_salary": 2296271,
    "dead_money": [],
-   "total": 1157153,
+   "total": 2296271,
+   "birth_date": "2002-07-14"
+  },
+  {
+   "player": "Otega Oweh",
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "OKC",
+     "amount": 339441
+    }
+   ],
+   "total": 339441,
    "birth_date": null
   },
   {
    "player": "Ousmane Dieng",
    "team": "MIL",
    "contract": "guaranteed",
-   "current_salary": 5027040,
+   "current_salary": 5750000,
    "dead_money": [],
-   "total": 5027040,
-   "birth_date": null
+   "total": 5750000,
+   "birth_date": "2003-05-21"
   },
   {
    "player": "Pacome Dadiet",
    "team": "NYK",
    "contract": "guaranteed",
-   "current_salary": 1808080,
+   "current_salary": 2983680,
    "dead_money": [],
-   "total": 1808080,
-   "birth_date": null
+   "total": 2983680,
+   "birth_date": "2005-07-27"
   },
   {
    "player": "Paolo Banchero",
    "team": "ORL",
    "contract": "guaranteed",
-   "current_salary": 12160800,
+   "current_salary": 41240250,
    "dead_money": [],
-   "total": 12160800,
-   "birth_date": null
+   "total": 41240250,
+   "birth_date": "2002-11-12"
   },
   {
    "player": "Pascal Siakam",
    "team": "IND",
    "contract": "guaranteed",
-   "current_salary": 42176400,
+   "current_salary": 48924624,
    "dead_money": [],
-   "total": 42176400,
-   "birth_date": null
+   "total": 48924624,
+   "birth_date": "1994-04-02"
   },
   {
    "player": "Pat Spencer",
    "team": "PHX",
-   "contract": "guaranteed",
-   "current_salary": 438810,
+   "contract": "two_way",
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 438810,
-   "birth_date": null
+   "total": 678882,
+   "birth_date": "1996-07-04"
   },
   {
    "player": "Patrick Williams",
@@ -2943,844 +4065,1196 @@
    "current_salary": 18000000,
    "dead_money": [],
    "total": 18000000,
-   "birth_date": null
+   "birth_date": "2001-08-26"
   },
   {
    "player": "Paul George",
    "team": "BOS",
    "contract": "guaranteed",
-   "current_salary": 49205800,
+   "current_salary": 54126380,
    "dead_money": [],
-   "total": 49205800,
-   "birth_date": null
+   "total": 54126380,
+   "birth_date": "1990-05-02"
   },
   {
    "player": "Paul Reed",
    "team": "DET",
-   "contract": "guaranteed",
-   "current_salary": 1530375,
+   "contract": "non_guaranteed",
+   "current_salary": 5602689,
    "dead_money": [],
-   "total": 1530375,
-   "birth_date": null
+   "total": 5602689,
+   "birth_date": "1999-06-14"
   },
   {
    "player": "Payton Pritchard",
    "team": "BOS",
    "contract": "guaranteed",
-   "current_salary": 6696429,
+   "current_salary": 7767857,
    "dead_money": [],
-   "total": 6696429,
-   "birth_date": null
+   "total": 7767857,
+   "birth_date": "1998-01-28"
+  },
+  {
+   "player": "Payton Sandfort",
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "OKC",
+     "amount": 90700
+    }
+   ],
+   "total": 90700,
+   "birth_date": "2002-07-12"
   },
   {
    "player": "Pelle Larsson",
    "team": "MIA",
    "contract": "guaranteed",
-   "current_salary": 1157153,
+   "current_salary": 2296271,
    "dead_money": [],
-   "total": 1157153,
-   "birth_date": null
+   "total": 2296271,
+   "birth_date": "2001-02-23"
   },
   {
    "player": "Pete Nance",
    "team": "MIL",
-   "contract": "guaranteed",
-   "current_salary": 23000000,
+   "contract": "two_way",
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 23000000,
+   "total": 678882,
+   "birth_date": "2000-02-19"
+  },
+  {
+   "player": "Peter Suder",
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "LAL",
+     "amount": 91000
+    }
+   ],
+   "total": 91000,
    "birth_date": null
   },
   {
    "player": "Peyton Watson",
    "team": "CLE",
    "contract": "guaranteed",
-   "current_salary": 2413560,
+   "current_salary": 20465116,
    "dead_money": [],
-   "total": 2413560,
-   "birth_date": null
+   "total": 20465116,
+   "birth_date": "2002-09-11"
   },
   {
    "player": "PJ Hall",
    "team": "CHA",
    "contract": "two_way",
-   "current_salary": 578577,
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 578577,
-   "birth_date": null
+   "total": 678882,
+   "birth_date": "2002-02-21"
   },
   {
    "player": "PJ Washington",
    "team": "DAL",
    "contract": "guaranteed",
-   "current_salary": 15500000,
+   "current_salary": 19813044,
    "dead_money": [],
-   "total": 15500000,
-   "birth_date": null
+   "total": 19813044,
+   "birth_date": "1998-08-23"
   },
   {
    "player": "Precious Achiuwa",
    "team": "SAC",
    "contract": "guaranteed",
-   "current_salary": 6000000,
+   "current_salary": 5477000,
    "dead_money": [],
-   "total": 6000000,
-   "birth_date": null
+   "total": 5477000,
+   "birth_date": "1999-09-19"
   },
   {
    "player": "Quadir Copeland",
    "team": "HOU",
    "contract": "two_way",
-   "current_salary": 344234,
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 344234,
+   "total": 678882,
    "birth_date": null
   },
   {
    "player": "Quentin Grimes",
    "team": "LAL",
    "contract": "guaranteed",
-   "current_salary": 4296682,
+   "current_salary": 13953489,
    "dead_money": [],
-   "total": 4296682,
-   "birth_date": null
+   "total": 13953489,
+   "birth_date": "2000-05-08"
   },
   {
    "player": "Quenton Jackson",
    "team": "IND",
-   "contract": "two_way",
-   "current_salary": 578577,
+   "contract": "guaranteed",
+   "current_salary": 2584539,
    "dead_money": [],
-   "total": 578577,
-   "birth_date": null
+   "total": 2584539,
+   "birth_date": "1998-09-15"
   },
   {
    "player": "Quinten Post",
    "team": "MEM",
    "contract": "guaranteed",
-   "current_salary": 438920,
+   "current_salary": 9500000,
    "dead_money": [],
-   "total": 438920,
-   "birth_date": null
+   "total": 9500000,
+   "birth_date": "2000-03-21"
+  },
+  {
+   "player": "Rasheer Fleming",
+   "team": "PHX",
+   "contract": "guaranteed",
+   "current_salary": 2150917,
+   "dead_money": [],
+   "total": 2150917,
+   "birth_date": "2004-07-10"
   },
   {
    "player": "Rayan Rupert",
    "team": "PHI",
-   "contract": "guaranteed",
-   "current_salary": 1891857,
+   "contract": "two_way",
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 1891857,
-   "birth_date": null
+   "total": 678882,
+   "birth_date": "2004-05-31"
   },
   {
    "player": "RayJ Dennis",
    "team": "ATL",
    "contract": "two_way",
-   "current_salary": 324931,
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 324931,
-   "birth_date": null
+   "total": 678882,
+   "birth_date": "2001-03-30"
+  },
+  {
+   "player": "Reece Beekman",
+   "team": "WAS",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [],
+   "total": 678882,
+   "birth_date": "2001-10-08"
   },
   {
    "player": "Reed Sheppard",
    "team": "HOU",
    "contract": "guaranteed",
-   "current_salary": 10098960,
+   "current_salary": 11108880,
    "dead_money": [],
-   "total": 10098960,
-   "birth_date": null
+   "total": 11108880,
+   "birth_date": "2004-06-24"
+  },
+  {
+   "player": "Ricky Rubio",
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "CLE",
+     "amount": 424672
+    }
+   ],
+   "total": 424672,
+   "birth_date": "1990-10-21"
   },
   {
    "player": "Riley Minix",
    "team": "CLE",
    "contract": "two_way",
-   "current_salary": 157640,
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 157640,
-   "birth_date": null
+   "total": 678882,
+   "birth_date": "2000-09-22"
   },
   {
    "player": "RJ Barrett",
    "team": "TOR",
    "contract": "guaranteed",
-   "current_salary": 25794643,
+   "current_salary": 29616071,
    "dead_money": [],
-   "total": 25794643,
-   "birth_date": null
+   "total": 29616071,
+   "birth_date": "2000-06-14"
+  },
+  {
+   "player": "Rob Dillingham",
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "CHA",
+     "amount": 6889320
+    }
+   ],
+   "total": 6889320,
+   "birth_date": "2005-01-04"
   },
   {
    "player": "Robert Williams",
    "team": "POR",
    "contract": "guaranteed",
-   "current_salary": 12428571,
+   "current_salary": 14000000,
    "dead_money": [],
-   "total": 12428571,
-   "birth_date": null
+   "total": 14000000,
+   "birth_date": "1997-10-17"
   },
   {
-   "player": "Ron Harper",
-   "team": "BOS",
+   "player": "Rocco Zikarsky",
+   "team": "MIN",
    "contract": "two_way",
-   "current_salary": 315280,
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 315280,
-   "birth_date": null
+   "total": 678882,
+   "birth_date": "2006-07-11"
+  },
+  {
+   "player": "Ron Harper Jr",
+   "team": "BOS",
+   "contract": "guaranteed",
+   "current_salary": 3150752,
+   "dead_money": [],
+   "total": 3150752,
+   "birth_date": "2000-04-12"
   },
   {
    "player": "Ron Holland",
    "team": "DET",
    "contract": "guaranteed",
-   "current_salary": 8245320,
+   "current_salary": 9069600,
    "dead_money": [],
-   "total": 8245320,
-   "birth_date": null
+   "total": 9069600,
+   "birth_date": "2005-07-07"
   },
   {
    "player": "Royce O'Neale",
    "team": "CHA",
    "contract": "guaranteed",
-   "current_salary": 9375000,
+   "current_salary": 10875000,
    "dead_money": [],
-   "total": 9375000,
-   "birth_date": null
+   "total": 10875000,
+   "birth_date": "1993-06-05"
   },
   {
    "player": "Rudy Gobert",
    "team": "MIN",
    "contract": "guaranteed",
-   "current_salary": 43827586,
+   "current_salary": 36500000,
    "dead_money": [],
-   "total": 43827586,
-   "birth_date": null
+   "total": 36500000,
+   "birth_date": "1992-06-26"
   },
   {
    "player": "Rui Hachimura",
    "team": "LAC",
    "contract": "guaranteed",
-   "current_salary": 17000000,
+   "current_salary": 14000000,
    "dead_money": [],
-   "total": 17000000,
-   "birth_date": null
+   "total": 14000000,
+   "birth_date": "1998-02-08"
+  },
+  {
+   "player": "Ryan Conwell",
+   "team": "MIA",
+   "contract": "guaranteed",
+   "current_salary": 1357763,
+   "dead_money": [],
+   "total": 1357763,
+   "birth_date": "2004-06-15"
   },
   {
    "player": "Ryan Dunn",
    "team": "PHX",
    "contract": "guaranteed",
-   "current_salary": 2530800,
+   "current_salary": 2784240,
    "dead_money": [],
-   "total": 2530800,
-   "birth_date": null
+   "total": 2784240,
+   "birth_date": "2003-01-07"
+  },
+  {
+   "player": "Ryan Kalkbrenner",
+   "team": "CHA",
+   "contract": "guaranteed",
+   "current_salary": 2411090,
+   "dead_money": [],
+   "total": 2411090,
+   "birth_date": "2002-01-17"
+  },
+  {
+   "player": "Ryan Nembhard",
+   "team": "DEN",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [
+    {
+     "team": "CHA",
+     "amount": 2150917
+    }
+   ],
+   "total": 2829799,
+   "birth_date": "2003-03-10"
   },
   {
    "player": "Ryan Rollins",
    "team": "MIL",
    "contract": "guaranteed",
-   "current_salary": 491887,
+   "current_salary": 4000000,
    "dead_money": [],
-   "total": 491887,
-   "birth_date": null
+   "total": 4000000,
+   "birth_date": "2002-07-03"
   },
   {
    "player": "Saddiq Bey",
    "team": "NOP",
    "contract": "guaranteed",
-   "current_salary": 6440678,
+   "current_salary": 6557080,
    "dead_money": [],
-   "total": 6440678,
-   "birth_date": null
+   "total": 6557080,
+   "birth_date": "1999-04-09"
   },
   {
    "player": "Sam Hauser",
    "team": "BOS",
    "contract": "guaranteed",
-   "current_salary": 2092344,
+   "current_salary": 10848215,
    "dead_money": [],
-   "total": 2092344,
-   "birth_date": null
+   "total": 10848215,
+   "birth_date": "1997-12-08"
   },
   {
    "player": "Sam Merrill",
    "team": "CLE",
    "contract": "guaranteed",
-   "current_salary": 2164993,
+   "current_salary": 9160715,
    "dead_money": [],
-   "total": 2164993,
-   "birth_date": null
+   "total": 9160715,
+   "birth_date": "1996-05-15"
   },
   {
    "player": "Sandro Mamukelashvili",
    "team": "LAL",
    "contract": "guaranteed",
-   "current_salary": 2162606,
+   "current_salary": 13000000,
    "dead_money": [],
-   "total": 2162606,
-   "birth_date": null
+   "total": 13000000,
+   "birth_date": "1999-05-23"
   },
   {
    "player": "Santiago Aldama",
    "team": "DAL",
    "contract": "guaranteed",
-   "current_salary": 3960531,
+   "current_salary": 17007043,
    "dead_money": [],
-   "total": 3960531,
-   "birth_date": null
+   "total": 17007043,
+   "birth_date": "2001-01-10"
   },
   {
    "player": "Scoot Henderson",
    "team": "POR",
    "contract": "guaranteed",
-   "current_salary": 10259160,
+   "current_salary": 13585523,
    "dead_money": [],
-   "total": 10259160,
-   "birth_date": null
+   "total": 13585523,
+   "birth_date": "2004-02-03"
   },
   {
    "player": "Scottie Barnes",
    "team": "TOR",
    "contract": "guaranteed",
-   "current_salary": 10130980,
+   "current_salary": 41754690,
    "dead_money": [],
-   "total": 10130980,
-   "birth_date": null
+   "total": 41754690,
+   "birth_date": "2001-08-01"
   },
   {
    "player": "Scotty Pippen Jr",
    "team": "MEM",
    "contract": "guaranteed",
-   "current_salary": 2087519,
+   "current_salary": 2461462,
    "dead_money": [],
-   "total": 2087519,
-   "birth_date": null
+   "total": 2461462,
+   "birth_date": "2000-11-10"
   },
   {
    "player": "Sean Pedulla",
    "team": "SAC",
-   "contract": "guaranteed",
-   "current_salary": 4689000,
+   "contract": "two_way",
+   "current_salary": 667177,
    "dead_money": [],
-   "total": 4689000,
-   "birth_date": null
+   "total": 667177,
+   "birth_date": "2002-10-10"
   },
   {
-   "player": "Sergio De Larrea",
+   "player": "Sergio de Larrea",
    "team": "DAL",
    "contract": "guaranteed",
-   "current_salary": 981902,
+   "current_salary": 3182280,
    "dead_money": [],
-   "total": 981902,
-   "birth_date": null
+   "total": 3182280,
+   "birth_date": "2005-12-04"
   },
   {
    "player": "Shaedon Sharpe",
    "team": "POR",
    "contract": "guaranteed",
-   "current_salary": 6614160,
+   "current_salary": 20089286,
    "dead_money": [],
-   "total": 6614160,
-   "birth_date": null
+   "total": 20089286,
+   "birth_date": "2003-05-30"
   },
   {
    "player": "Shai Gilgeous-Alexander",
    "team": "OKC",
    "contract": "guaranteed",
-   "current_salary": 35859950,
+   "current_salary": 40806150,
    "dead_money": [],
-   "total": 35859950,
-   "birth_date": null
+   "total": 40806150,
+   "birth_date": "1998-07-12"
   },
   {
    "player": "Sidy Cissoko",
    "team": "POR",
-   "contract": "two_way",
-   "current_salary": 209114,
+   "contract": "guaranteed",
+   "current_salary": 2497812,
    "dead_money": [],
-   "total": 209114,
-   "birth_date": null
+   "total": 2497812,
+   "birth_date": "2004-04-02"
   },
   {
    "player": "Simone Fontecchio",
    "team": "MIA",
    "contract": "guaranteed",
-   "current_salary": 7692308,
+   "current_salary": 2625627,
    "dead_money": [],
-   "total": 7692308,
-   "birth_date": null
+   "total": 2625627,
+   "birth_date": "1995-12-09"
+  },
+  {
+   "player": "Sion James",
+   "team": "CHA",
+   "contract": "guaranteed",
+   "current_salary": 2411090,
+   "dead_money": [],
+   "total": 2411090,
+   "birth_date": "2002-12-04"
   },
   {
    "player": "Spencer Jones",
    "team": "DEN",
-   "contract": "two_way",
-   "current_salary": 578577,
+   "contract": "guaranteed",
+   "current_salary": 6000000,
    "dead_money": [],
-   "total": 578577,
-   "birth_date": null
+   "total": 6000000,
+   "birth_date": "2001-06-14"
   },
   {
    "player": "Stephen Curry",
    "team": "GSW",
    "contract": "guaranteed",
-   "current_salary": 55761216,
+   "current_salary": 62587158,
    "dead_money": [],
-   "total": 55761216,
-   "birth_date": null
+   "total": 62587158,
+   "birth_date": "1988-03-14"
   },
   {
    "player": "Stephon Castle",
    "team": "SAS",
    "contract": "guaranteed",
-   "current_salary": 9105120,
+   "current_salary": 10015920,
    "dead_money": [],
-   "total": 9105120,
-   "birth_date": null
+   "total": 10015920,
+   "birth_date": "2004-11-01"
   },
   {
    "player": "Steven Adams",
    "team": "HOU",
    "contract": "guaranteed",
-   "current_salary": 12600000,
+   "current_salary": 13000000,
    "dead_money": [],
-   "total": 12600000,
-   "birth_date": null
+   "total": 13000000,
+   "birth_date": "1993-07-20"
   },
   {
    "player": "Sviatoslav Mykhailiuk",
    "team": "UTA",
    "contract": "guaranteed",
-   "current_salary": 3500000,
+   "current_salary": 3850000,
    "dead_money": [],
-   "total": 3500000,
-   "birth_date": null
+   "total": 3850000,
+   "birth_date": "1997-06-10"
+  },
+  {
+   "player": "Tacko Fall",
+   "team": "PHI",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [],
+   "total": 678882,
+   "birth_date": "1995-12-10"
+  },
+  {
+   "player": "Taj Gibson",
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "NOP",
+     "amount": 148828
+    }
+   ],
+   "total": 148828,
+   "birth_date": "1985-06-24"
+  },
+  {
+   "player": "Tamar Bates",
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "UTA",
+     "amount": 91000
+    }
+   ],
+   "total": 91000,
+   "birth_date": "2003-02-21"
   },
   {
    "player": "Tari Eason",
    "team": "HOU",
    "contract": "guaranteed",
-   "current_salary": 3695160,
+   "current_salary": 14053356,
    "dead_money": [],
-   "total": 3695160,
-   "birth_date": null
+   "total": 14053356,
+   "birth_date": "2001-05-10"
   },
   {
    "player": "Tarik Biberovic",
    "team": "DAL",
-   "contract": "two_way",
-   "current_salary": 578577,
+   "contract": "guaranteed",
+   "current_salary": 3000000,
    "dead_money": [],
-   "total": 578577,
+   "total": 3000000,
    "birth_date": null
   },
   {
    "player": "Tarris Reed",
    "team": "SAS",
    "contract": "guaranteed",
-   "current_salary": 981902,
+   "current_salary": 3076920,
    "dead_money": [],
-   "total": 981902,
-   "birth_date": null
+   "total": 3076920,
+   "birth_date": "2003-08-05"
   },
   {
    "player": "Taurean Prince",
    "team": "DET",
    "contract": "guaranteed",
-   "current_salary": 2988550,
+   "current_salary": 3815861,
    "dead_money": [],
-   "total": 2988550,
-   "birth_date": null
+   "total": 3815861,
+   "birth_date": "1994-03-22"
   },
   {
    "player": "Taylor Hendricks",
    "team": "MEM",
    "contract": "guaranteed",
-   "current_salary": 5848680,
+   "current_salary": 7805900,
    "dead_money": [],
-   "total": 5848680,
-   "birth_date": null
+   "total": 7805900,
+   "birth_date": "2003-11-22"
   },
   {
    "player": "Terance Mann",
    "team": "BKN",
    "contract": "guaranteed",
-   "current_salary": 11423077,
+   "current_salary": 15500000,
    "dead_money": [],
-   "total": 11423077,
-   "birth_date": null
+   "total": 15500000,
+   "birth_date": "1996-10-18"
   },
   {
-   "player": "Terrence Shannon",
+   "player": "Terrence Shannon Jr",
    "team": "MIN",
    "contract": "guaranteed",
-   "current_salary": 2546640,
+   "current_salary": 2801640,
    "dead_money": [],
-   "total": 2546640,
-   "birth_date": null
+   "total": 2801640,
+   "birth_date": "2000-07-30"
   },
   {
    "player": "Thomas Bryant",
    "team": "CLE",
    "contract": "guaranteed",
-   "current_salary": 2800834,
+   "current_salary": 3524115,
    "dead_money": [],
-   "total": 2800834,
-   "birth_date": null
+   "total": 3524115,
+   "birth_date": "1997-07-31"
+  },
+  {
+   "player": "Thomas Sorber",
+   "team": "OKC",
+   "contract": "guaranteed",
+   "current_salary": 4887720,
+   "dead_money": [],
+   "total": 4887720,
+   "birth_date": "2005-12-25"
   },
   {
    "player": "Tidjane Salaun",
    "team": "CHA",
    "contract": "guaranteed",
-   "current_salary": 7488720,
+   "current_salary": 8237880,
    "dead_money": [],
-   "total": 7488720,
-   "birth_date": null
+   "total": 8237880,
+   "birth_date": "2005-08-10"
   },
   {
    "player": "Tim Hardaway Jr",
    "team": "MIA",
    "contract": "guaranteed",
-   "current_salary": 16193183,
+   "current_salary": 6065000,
    "dead_money": [],
-   "total": 16193183,
-   "birth_date": null
+   "total": 6065000,
+   "birth_date": "1992-03-16"
   },
   {
    "player": "TJ McConnell",
    "team": "IND",
    "contract": "guaranteed",
-   "current_salary": 9500000,
+   "current_salary": 11000000,
    "dead_money": [],
-   "total": 9500000,
-   "birth_date": null
+   "total": 11000000,
+   "birth_date": "1992-03-25"
+  },
+  {
+   "player": "Tobe Awaka",
+   "team": "CHI",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [],
+   "total": 678882,
+   "birth_date": "2004-01-30"
   },
   {
    "player": "Tobi Lawal",
    "team": "DAL",
-   "contract": "guaranteed",
-   "current_salary": 596581,
+   "contract": "two_way",
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 596581,
-   "birth_date": null
+   "total": 678882,
+   "birth_date": "2003-05-01"
   },
   {
    "player": "Tobias Harris",
    "team": "SAS",
    "contract": "guaranteed",
-   "current_salary": 25365854,
+   "current_salary": 15044000,
    "dead_money": [],
-   "total": 25365854,
-   "birth_date": null
+   "total": 15044000,
+   "birth_date": "1992-07-15"
   },
   {
    "player": "Tolu Smith",
    "team": "DET",
-   "contract": "two_way",
-   "current_salary": 315280,
+   "contract": "non_guaranteed",
+   "current_salary": 2411090,
    "dead_money": [],
-   "total": 315280,
-   "birth_date": null
+   "total": 2411090,
+   "birth_date": "2000-07-26"
   },
   {
    "player": "Tony Bradley",
    "team": "UTA",
-   "contract": "guaranteed",
-   "current_salary": 330395,
+   "contract": "non_guaranteed",
+   "current_salary": 3506659,
    "dead_money": [],
-   "total": 330395,
-   "birth_date": null
+   "total": 3506659,
+   "birth_date": "1998-01-08"
   },
   {
    "player": "Toumani Camara",
    "team": "POR",
    "contract": "guaranteed",
-   "current_salary": 1891857,
+   "current_salary": 18080358,
    "dead_money": [],
-   "total": 1891857,
-   "birth_date": null
+   "total": 18080358,
+   "birth_date": "2000-05-08"
   },
   {
    "player": "Trae Young",
    "team": "WAS",
    "contract": "guaranteed",
-   "current_salary": 43031940,
+   "current_salary": 49488300,
    "dead_money": [],
-   "total": 43031940,
-   "birth_date": null
+   "total": 49488300,
+   "birth_date": "1998-09-19"
   },
   {
    "player": "Trayce Jackson-Davis",
    "team": "TOR",
    "contract": "guaranteed",
-   "current_salary": 1891857,
+   "current_salary": 2406205,
    "dead_money": [],
-   "total": 1891857,
+   "total": 2406205,
+   "birth_date": "2000-02-22"
+  },
+  {
+   "player": "Tre Donaldson",
+   "team": "MIA",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [],
+   "total": 678882,
    "birth_date": null
+  },
+  {
+   "player": "Tre Johnson",
+   "team": "WAS",
+   "contract": "guaranteed",
+   "current_salary": 8649600,
+   "dead_money": [],
+   "total": 8649600,
+   "birth_date": "2006-03-07"
   },
   {
    "player": "Tre Jones",
    "team": "CHI",
    "contract": "guaranteed",
-   "current_salary": 9104167,
+   "current_salary": 8000000,
    "dead_money": [],
-   "total": 9104167,
-   "birth_date": null
+   "total": 8000000,
+   "birth_date": "2000-01-08"
   },
   {
    "player": "Tre Mann",
    "team": "WAS",
    "contract": "guaranteed",
-   "current_salary": 4908373,
+   "current_salary": 8000000,
    "dead_money": [],
-   "total": 4908373,
-   "birth_date": null
+   "total": 8000000,
+   "birth_date": "2001-02-03"
   },
   {
    "player": "Trendon Watford",
    "team": "NOP",
-   "contract": "guaranteed",
-   "current_salary": 2726603,
+   "contract": "partial",
+   "current_salary": 2845883,
    "dead_money": [],
-   "total": 2726603,
-   "birth_date": null
+   "total": 2845883,
+   "birth_date": "2000-11-09"
+  },
+  {
+   "player": "Trevon Brazile",
+   "team": "DEN",
+   "contract": "guaranteed",
+   "current_salary": 1357763,
+   "dead_money": [],
+   "total": 1357763,
+   "birth_date": "2003-01-07"
   },
   {
    "player": "Trey Alexander",
    "team": "UTA",
    "contract": "two_way",
-   "current_salary": 578577,
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 578577,
+   "total": 678882,
+   "birth_date": "2003-05-02"
+  },
+  {
+   "player": "Trey Jamison",
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "TOR",
+     "amount": 91000
+    }
+   ],
+   "total": 91000,
    "birth_date": null
   },
   {
    "player": "Trey Lyles",
    "team": "MIN",
-   "contract": "guaranteed",
-   "current_salary": 3303771,
+   "contract": "partial",
+   "current_salary": 3876529,
    "dead_money": [],
-   "total": 3303771,
-   "birth_date": null
+   "total": 3876529,
+   "birth_date": "1995-11-05"
   },
   {
    "player": "Trey Murphy",
    "team": "NOP",
    "contract": "guaranteed",
-   "current_salary": 5159854,
+   "current_salary": 27000000,
    "dead_money": [],
-   "total": 5159854,
-   "birth_date": null
+   "total": 27000000,
+   "birth_date": "2000-06-18"
   },
   {
    "player": "Tristan Da Silva",
    "team": "ORL",
    "contract": "guaranteed",
-   "current_salary": 3628440,
+   "current_salary": 3991200,
    "dead_money": [],
-   "total": 3628440,
-   "birth_date": null
+   "total": 3991200,
+   "birth_date": "2001-05-15"
+  },
+  {
+   "player": "Tristan Enaruna",
+   "team": "CLE",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [],
+   "total": 678882,
+   "birth_date": "2001-06-26"
   },
   {
    "player": "Tristan Vukcevic",
    "team": "WAS",
-   "contract": "two_way",
-   "current_salary": 578577,
+   "contract": "guaranteed",
+   "current_salary": 3000000,
    "dead_money": [],
-   "total": 578577,
-   "birth_date": null
+   "total": 3000000,
+   "birth_date": "2003-03-11"
   },
   {
    "player": "Ty Jerome",
    "team": "MEM",
    "contract": "guaranteed",
-   "current_salary": 2560975,
+   "current_salary": 9220050,
    "dead_money": [],
-   "total": 2560975,
+   "total": 9220050,
+   "birth_date": "1997-07-08"
+  },
+  {
+   "player": "Tyler Bilodeau",
+   "team": "BKN",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [],
+   "total": 678882,
    "birth_date": null
   },
   {
    "player": "Tyler Herro",
    "team": "MIL",
    "contract": "guaranteed",
-   "current_salary": 29000000,
+   "current_salary": 33000000,
    "dead_money": [],
-   "total": 29000000,
-   "birth_date": null
+   "total": 33000000,
+   "birth_date": "2000-01-20"
   },
   {
    "player": "Tyler Kolek",
    "team": "NYK",
    "contract": "guaranteed",
-   "current_salary": 2087519,
+   "current_salary": 2296271,
    "dead_money": [],
-   "total": 2087519,
-   "birth_date": null
+   "total": 2296271,
+   "birth_date": "2001-03-27"
   },
   {
    "player": "Tyler Nickel",
    "team": "NYK",
    "contract": "two_way",
-   "current_salary": 578577,
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 578577,
+   "total": 678882,
    "birth_date": null
+  },
+  {
+   "player": "Tyler Smith",
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "HOU",
+     "amount": 85300
+    }
+   ],
+   "total": 85300,
+   "birth_date": "2004-11-02"
   },
   {
    "player": "Tyrese Haliburton",
    "team": "IND",
    "contract": "guaranteed",
-   "current_salary": 42176400,
+   "current_salary": 48924624,
    "dead_money": [],
-   "total": 42176400,
-   "birth_date": null
+   "total": 48924624,
+   "birth_date": "2000-02-29"
   },
   {
    "player": "Tyrese Maxey",
    "team": "PHI",
    "contract": "guaranteed",
-   "current_salary": 35147000,
+   "current_salary": 40770520,
    "dead_money": [],
-   "total": 35147000,
-   "birth_date": null
+   "total": 40770520,
+   "birth_date": "2000-11-04"
+  },
+  {
+   "player": "Tyrese Proctor",
+   "team": "CLE",
+   "contract": "guaranteed",
+   "current_salary": 2150917,
+   "dead_money": [],
+   "total": 2150917,
+   "birth_date": "2004-01-04"
   },
   {
    "player": "Tyus Jones",
    "team": "DEN",
    "contract": "guaranteed",
-   "current_salary": 3303771,
+   "current_salary": 3876529,
    "dead_money": [],
-   "total": 3303771,
-   "birth_date": null
+   "total": 3876529,
+   "birth_date": "1996-05-10"
   },
   {
    "player": "Ugonna Onyenso",
    "team": "DET",
-   "contract": "guaranteed",
-   "current_salary": 596581,
+   "contract": "two_way",
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 596581,
+   "total": 678882,
    "birth_date": null
+  },
+  {
+   "player": "Vasilije Micic",
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "MIL",
+     "amount": 666667
+    }
+   ],
+   "total": 666667,
+   "birth_date": "1994-01-13"
   },
   {
    "player": "Victor Wembanyama",
    "team": "SAS",
    "contract": "guaranteed",
-   "current_salary": 12768960,
+   "current_salary": 16868246,
    "dead_money": [],
-   "total": 12768960,
-   "birth_date": null
+   "total": 16868246,
+   "birth_date": "2004-01-04"
   },
   {
    "player": "Vit Krejci",
    "team": "POR",
    "contract": "guaranteed",
-   "current_salary": 2162606,
+   "current_salary": 2667944,
    "dead_money": [],
-   "total": 2162606,
-   "birth_date": null
+   "total": 2667944,
+   "birth_date": "2000-06-19"
+  },
+  {
+   "player": "VJ Edgecombe",
+   "team": "PHI",
+   "contract": "guaranteed",
+   "current_salary": 11663880,
+   "dead_money": [],
+   "total": 11663880,
+   "birth_date": "2005-07-30"
+  },
+  {
+   "player": "Vladislav Goldin",
+   "team": "MIA",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [],
+   "total": 678882,
+   "birth_date": "2001-05-12"
   },
   {
    "player": "Walker Kessler",
    "team": "LAL",
    "contract": "guaranteed",
-   "current_salary": 2965920,
+   "current_salary": 30108821,
    "dead_money": [],
-   "total": 2965920,
-   "birth_date": null
+   "total": 30108821,
+   "birth_date": "2001-07-26"
+  },
+  {
+   "player": "Walter Clayton Jr",
+   "team": "DAL",
+   "contract": "two_way",
+   "current_salary": 678882,
+   "dead_money": [
+    {
+     "team": "MEM",
+     "amount": 4190520
+    }
+   ],
+   "total": 4869402,
+   "birth_date": "2003-03-06"
   },
   {
    "player": "Wendell Carter Jr",
    "team": "ORL",
    "contract": "guaranteed",
-   "current_salary": 11950000,
+   "current_salary": 18102000,
    "dead_money": [],
-   "total": 11950000,
-   "birth_date": null
+   "total": 18102000,
+   "birth_date": "1999-04-16"
+  },
+  {
+   "player": "Will Richard",
+   "team": "GSW",
+   "contract": "guaranteed",
+   "current_salary": 2150917,
+   "dead_money": [],
+   "total": 2150917,
+   "birth_date": "2002-12-24"
+  },
+  {
+   "player": "Will Riley",
+   "team": "WAS",
+   "contract": "guaranteed",
+   "current_salary": 3688320,
+   "dead_money": [],
+   "total": 3688320,
+   "birth_date": "2006-02-10"
+  },
+  {
+   "player": "Yang Hansen",
+   "team": "POR",
+   "contract": "guaranteed",
+   "current_salary": 4643520,
+   "dead_money": [],
+   "total": 4643520,
+   "birth_date": "2005-06-26"
+  },
+  {
+   "player": "Yanic Konan Niederhauser",
+   "team": "LAC",
+   "contract": "guaranteed",
+   "current_salary": 2880960,
+   "dead_money": [],
+   "total": 2880960,
+   "birth_date": "2003-03-14"
+  },
+  {
+   "player": "Yaxel Lendeborg",
+   "team": "GSW",
+   "contract": "guaranteed",
+   "current_salary": 6096240,
+   "dead_money": [],
+   "total": 6096240,
+   "birth_date": "2002-09-30"
   },
   {
    "player": "Yves Missi",
    "team": "NOP",
    "contract": "guaranteed",
-   "current_salary": 3193200,
+   "current_salary": 3512760,
    "dead_money": [],
-   "total": 3193200,
-   "birth_date": null
+   "total": 3512760,
+   "birth_date": "2004-05-14"
   },
   {
    "player": "Zaccharie Risacher",
    "team": "DAL",
    "contract": "guaranteed",
-   "current_salary": 12569040,
+   "current_salary": 13826040,
    "dead_money": [],
-   "total": 12569040,
-   "birth_date": null
+   "total": 13826040,
+   "birth_date": "2005-04-08"
   },
   {
    "player": "Zach Collins",
    "team": "CHI",
    "contract": "guaranteed",
-   "current_salary": 16741200,
+   "current_salary": 8500000,
    "dead_money": [],
-   "total": 16741200,
-   "birth_date": null
+   "total": 8500000,
+   "birth_date": "1997-11-19"
   },
   {
    "player": "Zach Edey",
    "team": "MEM",
    "contract": "guaranteed",
-   "current_salary": 5756880,
+   "current_salary": 6332760,
    "dead_money": [],
-   "total": 5756880,
-   "birth_date": null
+   "total": 6332760,
+   "birth_date": "2002-05-14"
   },
   {
    "player": "Zach LaVine",
    "team": "SAC",
    "contract": "guaranteed",
-   "current_salary": 44531940,
+   "current_salary": 48967380,
    "dead_money": [],
-   "total": 44531940,
-   "birth_date": null
+   "total": 48967380,
+   "birth_date": "1995-03-10"
   },
   {
    "player": "Zeke Nnaji",
    "team": "DEN",
    "contract": "guaranteed",
-   "current_salary": 8888889,
+   "current_salary": 7466667,
    "dead_money": [],
-   "total": 8888889,
-   "birth_date": null
+   "total": 7466667,
+   "birth_date": "2001-01-09"
   },
   {
    "player": "Ziaire Williams",
    "team": "LAL",
    "contract": "guaranteed",
-   "current_salary": 6133005,
+   "current_salary": 2845883,
    "dead_money": [],
-   "total": 6133005,
-   "birth_date": null
+   "total": 2845883,
+   "birth_date": "2001-09-12"
   },
   {
    "player": "Zion Williamson",
    "team": "NOP",
    "contract": "guaranteed",
-   "current_salary": 36725670,
+   "current_salary": 42166510,
    "dead_money": [],
-   "total": 36725670,
-   "birth_date": null
+   "total": 42166510,
+   "birth_date": "2000-07-06"
   },
   {
    "player": "Zuby Ejiofor",
    "team": "ATL",
    "contract": "guaranteed",
-   "current_salary": 981902,
+   "current_salary": 3453360,
    "dead_money": [],
-   "total": 981902,
-   "birth_date": null
+   "total": 3453360,
+   "birth_date": "2004-04-20"
   },
   {
    "player": "Zyon Pullin",
    "team": "MIN",
    "contract": "two_way",
-   "current_salary": 302411,
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 302411,
-   "birth_date": null
+   "total": 678882,
+   "birth_date": "2001-03-03"
   }
  ]
 }
