@@ -87,16 +87,39 @@ jobs:
 
       - name: Validate downloads
         run: |
+          # Google can answer a slow export with an error page instead of the CSV,
+          # and an error page passes a plain line count. On Oct 27, 2026 one did:
+          # the build read no historical salaries, no stats and no bios, and the
+          # digest posted false "no longer on the books" items. So each file must
+          # look like a CSV, and a sheet with a copy committed in data_sources/
+          # must keep its header and at least 90% of that copy's lines.
           for f in data_sources/stats.csv data_sources/salaries_historical.csv data_sources/salaries_2526_current.csv data_sources/salaries_2526_dead.csv data_sources/awards.csv data_sources/bio.csv; do
             if [ ! -s "$f" ]; then
-              echo "ERROR: $f is empty or missing"
+              echo "::error::$f is empty or missing"
               exit 1
             fi
             lines=$(wc -l < "$f")
             echo "$f: $lines lines"
             if [ "$lines" -lt 10 ]; then
-              echo "ERROR: $f has too few lines, download may have failed"
+              echo "::error::$f has too few lines, download may have failed"
               exit 1
+            fi
+            if head -c 200 "$f" | grep -qi '<html\|<!doctype'; then
+              echo "::error::$f is a web page, not a CSV (Google sent an error page)"
+              exit 1
+            fi
+            if git cat-file -e "HEAD:$f" 2>/dev/null; then
+              old_lines=$(git show "HEAD:$f" | wc -l)
+              old_head=$(git show "HEAD:$f" | head -1 | cut -c1-40)
+              new_head=$(head -1 "$f" | cut -c1-40)
+              if [ "$new_head" != "$old_head" ]; then
+                echo "::error::$f header changed from '$old_head' to '$new_head'"
+                exit 1
+              fi
+              if [ $((lines * 10)) -lt $((old_lines * 9)) ]; then
+                echo "::error::$f shrank from $old_lines to $lines lines"
+                exit 1
+              fi
             fi
           done
           echo "All CSV files validated."
