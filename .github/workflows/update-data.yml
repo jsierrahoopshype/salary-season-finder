@@ -46,35 +46,42 @@ jobs:
         run: |
           mkdir -p data_sources
           UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-          CURL_OPTS="-sL --retry 3 --retry-delay 5 --max-time 60 -H \"User-Agent: $UA\""
+          CURL_OPTS="-sL --retry 3 --retry-delay 5 --max-time 300 -H \"User-Agent: $UA\""
           
           echo "Downloading stats..."
           eval curl $CURL_OPTS -o data_sources/stats.csv \
-            "\"https://docs.google.com/spreadsheets/d/1ZrDfzqiC31Hu3YCtxT4aZbZF4QVCVyGe6wBytR2LF30/export?format=csv&gid=0\""
+            "\"https://docs.google.com/spreadsheets/d/1ZrDfzqiC31Hu3YCtxT4aZbZF4QVCVyGe6wBytR2LF30/export?format=csv&gid=0\"" \
+            || { echo "::error::Google Sheets download failed or timed out: stats.csv"; exit 1; }
           sleep 2
           echo "Downloading historical salaries..."
           eval curl $CURL_OPTS -o data_sources/salaries_historical.csv \
-            "\"https://docs.google.com/spreadsheets/d/1ZrDfzqiC31Hu3YCtxT4aZbZF4QVCVyGe6wBytR2LF30/export?format=csv&gid=1151460858\""
+            "\"https://docs.google.com/spreadsheets/d/1ZrDfzqiC31Hu3YCtxT4aZbZF4QVCVyGe6wBytR2LF30/export?format=csv&gid=1151460858\"" \
+            || { echo "::error::Google Sheets download failed or timed out: salaries_historical.csv"; exit 1; }
           sleep 2
           echo "Downloading future salaries (2026-27 onwards)..."
           eval curl $CURL_OPTS -o data_sources/salaries_future.csv \
-            "\"https://docs.google.com/spreadsheets/d/1ZrDfzqiC31Hu3YCtxT4aZbZF4QVCVyGe6wBytR2LF30/export?format=csv&gid=1555460703\""
+            "\"https://docs.google.com/spreadsheets/d/1ZrDfzqiC31Hu3YCtxT4aZbZF4QVCVyGe6wBytR2LF30/export?format=csv&gid=1555460703\"" \
+            || { echo "::error::Google Sheets download failed or timed out: salaries_future.csv"; exit 1; }
           sleep 2
           echo "Downloading 2025-26 current salaries (Cyro)..."
           eval curl $CURL_OPTS -o data_sources/salaries_2526_current.csv \
-            "\"https://docs.google.com/spreadsheets/d/14TQPdQ9mDhHMMMQa5vcs0coL98ZloHORtYElDikKoWY/export?format=csv&gid=1402642613\""
+            "\"https://docs.google.com/spreadsheets/d/14TQPdQ9mDhHMMMQa5vcs0coL98ZloHORtYElDikKoWY/export?format=csv&gid=1402642613\"" \
+            || { echo "::error::Google Sheets download failed or timed out: salaries_2526_current.csv"; exit 1; }
           sleep 2
           echo "Downloading 2025-26 dead money (Cyro)..."
           eval curl $CURL_OPTS -o data_sources/salaries_2526_dead.csv \
-            "\"https://docs.google.com/spreadsheets/d/14TQPdQ9mDhHMMMQa5vcs0coL98ZloHORtYElDikKoWY/export?format=csv&gid=1668033956\""
+            "\"https://docs.google.com/spreadsheets/d/14TQPdQ9mDhHMMMQa5vcs0coL98ZloHORtYElDikKoWY/export?format=csv&gid=1668033956\"" \
+            || { echo "::error::Google Sheets download failed or timed out: salaries_2526_dead.csv"; exit 1; }
           sleep 2
           echo "Downloading awards..."
           eval curl $CURL_OPTS -o data_sources/awards.csv \
-            "\"https://docs.google.com/spreadsheets/d/1ZrDfzqiC31Hu3YCtxT4aZbZF4QVCVyGe6wBytR2LF30/export?format=csv&gid=1456513900\""
+            "\"https://docs.google.com/spreadsheets/d/1ZrDfzqiC31Hu3YCtxT4aZbZF4QVCVyGe6wBytR2LF30/export?format=csv&gid=1456513900\"" \
+            || { echo "::error::Google Sheets download failed or timed out: awards.csv"; exit 1; }
           sleep 2
           echo "Downloading bio..."
           eval curl $CURL_OPTS -o data_sources/bio.csv \
-            "\"https://docs.google.com/spreadsheets/d/1ZrDfzqiC31Hu3YCtxT4aZbZF4QVCVyGe6wBytR2LF30/export?format=csv&gid=1488063724\""
+            "\"https://docs.google.com/spreadsheets/d/1ZrDfzqiC31Hu3YCtxT4aZbZF4QVCVyGe6wBytR2LF30/export?format=csv&gid=1488063724\"" \
+            || { echo "::error::Google Sheets download failed or timed out: bio.csv"; exit 1; }
           echo "Download complete. File sizes:"
           wc -c data_sources/*.csv
 

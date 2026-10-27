@@ -61,12 +61,13 @@ jobs:
         run: |
           mkdir -p data_sources
           UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-          CURL_OPTS="-sL --retry 3 --retry-delay 5 --max-time 60 -H \"User-Agent: $UA\""
+          CURL_OPTS="-sL --retry 3 --retry-delay 5 --max-time 300 -H \"User-Agent: $UA\""
           sheet=1ZrDfzqiC31Hu3YCtxT4aZbZF4QVCVyGe6wBytR2LF30
           cyro=14TQPdQ9mDhHMMMQa5vcs0coL98ZloHORtYElDikKoWY
           fetch () {  # fetch <file> <sheet id> <gid>
             eval curl $CURL_OPTS -o "data_sources/$1" \
-              "\"https://docs.google.com/spreadsheets/d/$2/export?format=csv&gid=$3\""
+              "\"https://docs.google.com/spreadsheets/d/$2/export?format=csv&gid=$3\"" \
+              || { echo "::error::Google Sheets download failed or timed out: $1"; exit 1; }
             sleep 2
           }
           fetch stats.csv                $sheet 0
