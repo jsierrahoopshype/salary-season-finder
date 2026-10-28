@@ -15,8 +15,9 @@ permissions:
   contents: write
 
 env:
-  #: The source sheets this repo tracks, committed weekly so a checkout never
-  #: lags the data built from them. The two Cyro sheets are not in this list
+  #: The source sheets this repo tracks, committed with every data.json they
+  #: built (and on Mondays regardless) so a checkout never lags the data built
+  #: from them. The two Cyro sheets are not in this list
   #: because they are not tracked at all, which is why no local run can
   #: reproduce a full build; that is a separate decision.
   SOURCE_FILES: >-
@@ -163,24 +164,32 @@ jobs:
             git add data/roster_status.json
           fi
 
-          # The source sheets go in once a week. A checkout holding older
-          # copies than data.json means anything recomputed locally silently
-          # disagrees with what is published: they sat five weeks behind on
-          # 2026-10-04, where 498 records of a finished 2025-26 read 72 games
-          # against the stats file's 54. Daily would keep them honest to the
-          # hour and add a few hundred megabytes of history a year for it,
-          # since stats.csv alone is 5 MB and most of its rows move during the
-          # season. Weekly caps the drift at six days and the cost at a
-          # fifty-second of it. Monday is the day; a run that fails or is
-          # skipped simply waits for the next one.
-          if [ "$(date -u +%u)" = "1" ]; then
-            echo "Monday: the source sheets go in with the data"
+          # The source sheets go in whenever data.json does, and on Mondays
+          # regardless. A checkout holding older copies than data.json means
+          # anything recomputed locally silently disagrees with what is
+          # published: they sat five weeks behind on 2026-10-04, where 498
+          # records of a finished 2025-26 read 72 games against the stats
+          # file's 54. The tests hold the committed stats sheet to the data
+          # (test_the_stats_sheet_covers_every_season_the_data_has_stats_for
+          # and _is_never_behind_the_data_inside_a_season), and the page job
+          # runs them before it commits. A weekly-only rule broke that: on
+          # 2026-10-25 the data took the first 2026-27 games, the sheet on file
+          # had none, and no page was committed again until a person rebuilt
+          # them. During the season data.json moves every day, so the sheets
+          # do too; stats.csv is 5 MB but only the current season's rows move,
+          # and git stores each day as a small delta. A day when only a sheet
+          # moved, in rows data.json does not use, still waits for Monday.
+          if ! git diff --cached --quiet data/data.json; then
+            echo "data.json moved: the source sheets that built it go in with it"
+            git add $SOURCE_FILES
+          elif [ "$(date -u +%u)" = "1" ]; then
+            echo "Monday: the source sheets go in"
             git add $SOURCE_FILES
           else
-            echo "Not Monday: the source sheets stay as last committed"
+            echo "data.json unchanged and not Monday: the sheets stay as last committed"
             git checkout -- $SOURCE_FILES 2>/dev/null || true
           fi
-          # On a day that is not Monday, a pull that moved only a source sheet
+          # A pull that moved only a source sheet on a day that is not Monday
           # leaves nothing staged, and "git commit" on an empty index fails the
           # step. Nothing to say is not a failure.
           if git diff --cached --quiet; then
