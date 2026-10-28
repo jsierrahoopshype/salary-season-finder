@@ -26,6 +26,9 @@ OUT_DIR = os.path.join(BASE_DIR, "data")
 
 SHEET_ID = "1ZrDfzqiC31Hu3YCtxT4aZbZF4QVCVyGe6wBytR2LF30"
 CYRO_SHEET_ID = "14TQPdQ9mDhHMMMQa5vcs0coL98ZloHORtYElDikKoWY"
+# The light HoopsMatic spreadsheet. Salaries and Bio Data moved there from the
+# All-Time Database (SHEET_ID) in Oct 2026, when that one got too big to export.
+LIGHT_SHEET_ID = "1Wxqb2qD848ZEb0jVpVkJfN4-XzKy5qhOmdWMeFTe1ow"
 
 # Map from local filename -> (sheet_id, gid). salaries_future.csv is not
 # downloaded: the All-Time Database's "Future Salaries" tab (gid 1555460703) is
@@ -33,11 +36,11 @@ CYRO_SHEET_ID = "14TQPdQ9mDhHMMMQa5vcs0coL98ZloHORtYElDikKoWY"
 # salaries_2526_current.csv (scripts/future_salaries_from_salary_tab.py).
 CSV_SOURCES = {
     "stats.csv":                (SHEET_ID, "0"),
-    "salaries_historical.csv":  (SHEET_ID, "1151460858"),
+    "salaries_historical.csv":  (LIGHT_SHEET_ID, "1225567186"),
     "salaries_2526_current.csv": (CYRO_SHEET_ID, "1402642613"),
     "salaries_2526_dead.csv":   (CYRO_SHEET_ID, "1668033956"),
     "awards.csv":               (SHEET_ID, "1456513900"),
-    "bio.csv":                  (SHEET_ID, "1488063724"),
+    "bio.csv":                  (LIGHT_SHEET_ID, "1048341184"),
 }
 
 # ── Team abbreviation mapping ──────────────────────────────────────────
