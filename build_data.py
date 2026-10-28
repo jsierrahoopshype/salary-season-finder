@@ -24,22 +24,23 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 SOURCES_DIR = os.path.join(BASE_DIR, "data_sources")
 OUT_DIR = os.path.join(BASE_DIR, "data")
 
-SHEET_ID = "1ZrDfzqiC31Hu3YCtxT4aZbZF4QVCVyGe6wBytR2LF30"
 CYRO_SHEET_ID = "14TQPdQ9mDhHMMMQa5vcs0coL98ZloHORtYElDikKoWY"
-# The light HoopsMatic spreadsheet. Salaries and Bio Data moved there from the
-# All-Time Database (SHEET_ID) in Oct 2026, when that one got too big to export.
+# The light HoopsMatic spreadsheet. Salaries, Awards and Bio Data moved there from
+# the All-Time Database (1ZrDfzqi...) in Oct 2026, when that one got too big to export.
+# stats.csv is the RS Stats table nba-player-data rebuilds daily without a sheet.
+STATS_CSV_URL = "https://raw.githubusercontent.com/jsierrahoopshype/nba-player-data/main/data/stats/rs-stats.csv"
 LIGHT_SHEET_ID = "1Wxqb2qD848ZEb0jVpVkJfN4-XzKy5qhOmdWMeFTe1ow"
 
-# Map from local filename -> (sheet_id, gid). salaries_future.csv is not
+# Map from local filename -> (sheet_id, gid), or a full URL. salaries_future.csv is not
 # downloaded: the All-Time Database's "Future Salaries" tab (gid 1555460703) is
 # only IMPORTRANGEs of the Cyro "Salary" tab, so download_csvs() rebuilds it from
 # salaries_2526_current.csv (scripts/future_salaries_from_salary_tab.py).
 CSV_SOURCES = {
-    "stats.csv":                (SHEET_ID, "0"),
+    "stats.csv":                STATS_CSV_URL,
     "salaries_historical.csv":  (LIGHT_SHEET_ID, "1225567186"),
     "salaries_2526_current.csv": (CYRO_SHEET_ID, "1402642613"),
     "salaries_2526_dead.csv":   (CYRO_SHEET_ID, "1668033956"),
-    "awards.csv":               (SHEET_ID, "1456513900"),
+    "awards.csv":               (LIGHT_SHEET_ID, "0"),
     "bio.csv":                  (LIGHT_SHEET_ID, "1048341184"),
 }
 
@@ -663,8 +664,9 @@ def download_csvs():
     """Download all CSVs from Google Sheets into data_sources/."""
     import urllib.request
     os.makedirs(SOURCES_DIR, exist_ok=True)
-    for filename, (sheet_id, gid) in CSV_SOURCES.items():
-        url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv&gid={gid}"
+    for filename, source in CSV_SOURCES.items():
+        url = source if isinstance(source, str) else (
+            f"https://docs.google.com/spreadsheets/d/{source[0]}/export?format=csv&gid={source[1]}")
         path = os.path.join(SOURCES_DIR, filename)
         print(f"  Downloading {filename}...")
         try:

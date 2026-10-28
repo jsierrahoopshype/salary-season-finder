@@ -49,12 +49,15 @@ jobs:
           UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
           CURL_OPTS="-sL --retry 3 --retry-delay 5 --max-time 300 -H \"User-Agent: $UA\""
           
+          # Stats: the RS Stats table nba-player-data rebuilds daily at 05:35 UTC from NBA
+          # box scores (past seasons frozen), in the tab's layout. It replaced the
+          # All-Time Database's RS Stats tab in Oct 2026.
           echo "Downloading stats..."
           eval curl $CURL_OPTS -o data_sources/stats.csv \
-            "\"https://docs.google.com/spreadsheets/d/1ZrDfzqiC31Hu3YCtxT4aZbZF4QVCVyGe6wBytR2LF30/export?format=csv&gid=0\"" \
-            || { echo "::error::Google Sheets download failed or timed out: stats.csv"; exit 1; }
+            "\"https://raw.githubusercontent.com/jsierrahoopshype/nba-player-data/main/data/stats/rs-stats.csv\"" \
+            || { echo "::error::Download failed or timed out: stats.csv"; exit 1; }
           sleep 2
-          # Historical salaries and bio come from the light HoopsMatic spreadsheet
+          # Historical salaries, awards and bio come from the light HoopsMatic spreadsheet
           # (1Wxqb2qD...) since Oct 2026; the All-Time Database got too big to export.
           echo "Downloading historical salaries..."
           eval curl $CURL_OPTS -o data_sources/salaries_historical.csv \
@@ -80,7 +83,7 @@ jobs:
           sleep 2
           echo "Downloading awards..."
           eval curl $CURL_OPTS -o data_sources/awards.csv \
-            "\"https://docs.google.com/spreadsheets/d/1ZrDfzqiC31Hu3YCtxT4aZbZF4QVCVyGe6wBytR2LF30/export?format=csv&gid=1456513900\"" \
+            "\"https://docs.google.com/spreadsheets/d/1Wxqb2qD848ZEb0jVpVkJfN4-XzKy5qhOmdWMeFTe1ow/export?format=csv&gid=0\"" \
             || { echo "::error::Google Sheets download failed or timed out: awards.csv"; exit 1; }
           sleep 2
           echo "Downloading bio..."
