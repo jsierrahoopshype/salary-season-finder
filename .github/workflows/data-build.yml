@@ -62,10 +62,9 @@ jobs:
           mkdir -p data_sources
           UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
           CURL_OPTS="-sL --retry 3 --retry-delay 5 --max-time 300 -H \"User-Agent: $UA\""
-          sheet=1ZrDfzqiC31Hu3YCtxT4aZbZF4QVCVyGe6wBytR2LF30
           cyro=14TQPdQ9mDhHMMMQa5vcs0coL98ZloHORtYElDikKoWY
-          # The light HoopsMatic spreadsheet: Salaries and Bio Data moved there from
-          # the All-Time Database ($sheet) in Oct 2026, when it got too big to export.
+          # The light HoopsMatic spreadsheet: Salaries, Awards and Bio Data moved there from
+          # the All-Time Database (1ZrDfzqi...) in Oct 2026, when it got too big to export.
           light=1Wxqb2qD848ZEb0jVpVkJfN4-XzKy5qhOmdWMeFTe1ow
           fetch () {  # fetch <file> <sheet id> <gid>
             eval curl $CURL_OPTS -o "data_sources/$1" \
@@ -73,7 +72,9 @@ jobs:
               || { echo "::error::Google Sheets download failed or timed out: $1"; exit 1; }
             sleep 2
           }
-          fetch stats.csv                $sheet 0
+          # The RS Stats table nba-player-data rebuilds daily (see update-data.yml)
+          eval curl $CURL_OPTS -o data_sources/stats.csv "\"https://raw.githubusercontent.com/jsierrahoopshype/nba-player-data/main/data/stats/rs-stats.csv\"" \
+            || { echo "::error::Download failed or timed out: stats.csv"; exit 1; }
           fetch salaries_historical.csv  $light 1225567186
           fetch salaries_2526_current.csv $cyro 1402642613
           # Future Salaries is IMPORTRANGEs of that Salary tab: rebuilt from it.
@@ -81,7 +82,7 @@ jobs:
             data_sources/salaries_2526_current.csv data_sources/salaries_future.csv \
             || { echo "::error::Could not build salaries_future.csv"; exit 1; }
           fetch salaries_2526_dead.csv   $cyro 1668033956
-          fetch awards.csv               $sheet 1456513900
+          fetch awards.csv               $light 0
           fetch bio.csv                  $light 1048341184
           wc -c data_sources/*.csv
 
