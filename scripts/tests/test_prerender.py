@@ -1897,9 +1897,11 @@ def test_the_daily_build_commits_every_source_sheet_it_tracks():
     disagree with what is served. It is how a replay of the stats half of the
     build nearly rolled a finished 2025-26 back to partial numbers.
 
-    Committed weekly rather than daily: stats.csv alone is 5 MB and most of
-    its rows move during the season, so daily would cost a few hundred
-    megabytes of history a year to cap the drift at a day instead of a week.
+    Committed with every data.json they built, and on Mondays regardless. A
+    Monday-only rule let the committed stats sheet fall behind the data during
+    the season, which fails the two stats-sheet tests below, and the page job
+    runs those before it commits: on 2026-10-25 the first 2026-27 games
+    reached data.json and no page was committed after it.
     """
     workflow = read(os.path.join(".github", "workflows", "update-data.yml"))
     marker = "SOURCE_FILES: >-"
@@ -1910,11 +1912,18 @@ def test_the_daily_build_commits_every_source_sheet_it_tracks():
     # every tracked file is in the list, and the list invents nothing
     assert set(listed.split()) == set(TRACKED_SOURCES)
 
-    # staged on Monday, reverted otherwise, and never an empty commit
+    # staged whenever data.json is, and on Monday; reverted otherwise; and
+    # never an empty commit
     block = workflow[workflow.index("git add data/data.json"):]
     # to the command, not to the comment that names it
     block = block[:block.index("git commit -m")]
+    assert "if ! git diff --cached --quiet data/data.json; then" in block
     assert 'date -u +%u' in block and '= "1"' in block
+    # the data.json branch is the first one, so it stages the sheets whatever
+    # the day
+    first = block[block.index("if ! git diff --cached --quiet data/data.json"):]
+    first = first[:first.index("elif")]
+    assert "git add $SOURCE_FILES" in first
     assert "git add $SOURCE_FILES" in block
     assert "git checkout -- $SOURCE_FILES" in block
     assert "git diff --cached --quiet" in block
