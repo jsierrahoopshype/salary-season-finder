@@ -1,5 +1,5 @@
 {
- "built": "2026-10-25T10:29:17.713459",
+ "built": "2026-10-28T20:15:10.515217",
  "season": "2026-27",
  "players": [
   {
@@ -487,7 +487,7 @@
    "current_salary": 678882,
    "dead_money": [],
    "total": 678882,
-   "birth_date": null
+   "birth_date": "2003-07-25"
   },
   {
    "player": "Bradley Beal",
@@ -835,7 +835,7 @@
    "current_salary": 2988120,
    "dead_money": [],
    "total": 2988120,
-   "birth_date": null
+   "birth_date": "2007-02-01"
   },
   {
    "player": "Chris Manon",
@@ -1025,7 +1025,7 @@
    "current_salary": 4965480,
    "dead_money": [],
    "total": 4965480,
-   "birth_date": null
+   "birth_date": "2005-07-15"
   },
   {
    "player": "Dalton Knecht",
@@ -1452,10 +1452,10 @@
   {
    "player": "Drew Timme",
    "team": "PHX",
-   "contract": "non_guaranteed",
-   "current_salary": 2449421,
+   "contract": "two_way",
+   "current_salary": 678882,
    "dead_money": [],
-   "total": 2449421,
+   "total": 678882,
    "birth_date": "2000-09-09"
   },
   {
@@ -1533,7 +1533,7 @@
    "current_salary": 4481280,
    "dead_money": [],
    "total": 4481280,
-   "birth_date": null
+   "birth_date": "2007-04-10"
   },
   {
    "player": "Egor Demin",
@@ -1578,16 +1578,16 @@
   },
   {
    "player": "Enrique Freeman",
-   "team": null,
-   "contract": "dead_money_only",
-   "current_salary": 0,
+   "team": "MIN",
+   "contract": "two_way",
+   "current_salary": 651571,
    "dead_money": [
     {
      "team": "MIN",
      "amount": 91000
     }
    ],
-   "total": 91000,
+   "total": 742571,
    "birth_date": "2000-07-29"
   },
   {
@@ -1995,7 +1995,7 @@
    "current_salary": 678882,
    "dead_money": [],
    "total": 678882,
-   "birth_date": null
+   "birth_date": "2003-02-25"
   },
   {
    "player": "Jaden Bradley",
@@ -2723,7 +2723,7 @@
    "current_salary": 678882,
    "dead_money": [],
    "total": 678882,
-   "birth_date": null
+   "birth_date": "2004-06-29"
   },
   {
    "player": "Josh Giddey",
@@ -2777,7 +2777,7 @@
    "current_salary": 2969520,
    "dead_money": [],
    "total": 2969520,
-   "birth_date": null
+   "birth_date": "2003-11-21"
   },
   {
    "player": "Jrue Holiday",
@@ -3164,9 +3164,9 @@
    "player": "Kobe Bufkin",
    "team": "UTA",
    "contract": "two_way",
-   "current_salary": 663276,
+   "current_salary": 667177,
    "dead_money": [],
-   "total": 663276,
+   "total": 667177,
    "birth_date": "2003-09-21"
   },
   {
@@ -3559,7 +3559,7 @@
    "current_salary": 1357763,
    "dead_money": [],
    "total": 1357763,
-   "birth_date": null
+   "birth_date": "2006-08-06"
   },
   {
    "player": "Micah Peavy",
