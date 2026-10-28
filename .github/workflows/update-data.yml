@@ -59,15 +59,17 @@ jobs:
             "\"https://docs.google.com/spreadsheets/d/1ZrDfzqiC31Hu3YCtxT4aZbZF4QVCVyGe6wBytR2LF30/export?format=csv&gid=1151460858\"" \
             || { echo "::error::Google Sheets download failed or timed out: salaries_historical.csv"; exit 1; }
           sleep 2
-          echo "Downloading future salaries (2026-27 onwards)..."
-          eval curl $CURL_OPTS -o data_sources/salaries_future.csv \
-            "\"https://docs.google.com/spreadsheets/d/1ZrDfzqiC31Hu3YCtxT4aZbZF4QVCVyGe6wBytR2LF30/export?format=csv&gid=1555460703\"" \
-            || { echo "::error::Google Sheets download failed or timed out: salaries_future.csv"; exit 1; }
-          sleep 2
           echo "Downloading 2025-26 current salaries (Cyro)..."
           eval curl $CURL_OPTS -o data_sources/salaries_2526_current.csv \
             "\"https://docs.google.com/spreadsheets/d/14TQPdQ9mDhHMMMQa5vcs0coL98ZloHORtYElDikKoWY/export?format=csv&gid=1402642613\"" \
             || { echo "::error::Google Sheets download failed or timed out: salaries_2526_current.csv"; exit 1; }
+          # Future salaries (2026-27 onwards): the All-Time Database's "Future Salaries"
+          # tab is only IMPORTRANGEs of this same Salary tab (columns A, C, K:Z), so it
+          # is rebuilt from the copy just downloaded instead of waiting on that sheet.
+          echo "Building future salaries from the Salary tab..."
+          python scripts/future_salaries_from_salary_tab.py \
+            data_sources/salaries_2526_current.csv data_sources/salaries_future.csv \
+            || { echo "::error::Could not build salaries_future.csv from salaries_2526_current.csv"; exit 1; }
           sleep 2
           echo "Downloading 2025-26 dead money (Cyro)..."
           eval curl $CURL_OPTS -o data_sources/salaries_2526_dead.csv \

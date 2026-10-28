@@ -27,11 +27,13 @@ OUT_DIR = os.path.join(BASE_DIR, "data")
 SHEET_ID = "1ZrDfzqiC31Hu3YCtxT4aZbZF4QVCVyGe6wBytR2LF30"
 CYRO_SHEET_ID = "14TQPdQ9mDhHMMMQa5vcs0coL98ZloHORtYElDikKoWY"
 
-# Map from local filename -> (sheet_id, gid)
+# Map from local filename -> (sheet_id, gid). salaries_future.csv is not
+# downloaded: the All-Time Database's "Future Salaries" tab (gid 1555460703) is
+# only IMPORTRANGEs of the Cyro "Salary" tab, so download_csvs() rebuilds it from
+# salaries_2526_current.csv (scripts/future_salaries_from_salary_tab.py).
 CSV_SOURCES = {
     "stats.csv":                (SHEET_ID, "0"),
     "salaries_historical.csv":  (SHEET_ID, "1151460858"),
-    "salaries_future.csv":      (SHEET_ID, "1555460703"),
     "salaries_2526_current.csv": (CYRO_SHEET_ID, "1402642613"),
     "salaries_2526_dead.csv":   (CYRO_SHEET_ID, "1668033956"),
     "awards.csv":               (SHEET_ID, "1456513900"),
@@ -671,6 +673,15 @@ def download_csvs():
             print(f"    Saved {len(data):,} bytes to {path}")
         except Exception as e:
             print(f"    FAILED: {e}")
+    current = os.path.join(SOURCES_DIR, "salaries_2526_current.csv")
+    if os.path.exists(current):
+        sys.path.insert(0, os.path.join(BASE_DIR, "scripts"))
+        from future_salaries_from_salary_tab import future_salaries_csv
+        with open(current, encoding="utf-8", newline="") as f:
+            text = future_salaries_csv(f.read())
+        with open(os.path.join(SOURCES_DIR, "salaries_future.csv"), "w", encoding="utf-8", newline="") as f:
+            f.write(text)
+        print(f"  Built salaries_future.csv from salaries_2526_current.csv")
 
 
 def load_salary_cap():

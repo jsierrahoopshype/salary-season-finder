@@ -72,8 +72,11 @@ jobs:
           }
           fetch stats.csv                $sheet 0
           fetch salaries_historical.csv  $sheet 1151460858
-          fetch salaries_future.csv      $sheet 1555460703
           fetch salaries_2526_current.csv $cyro 1402642613
+          # Future Salaries is IMPORTRANGEs of that Salary tab: rebuilt from it.
+          python scripts/future_salaries_from_salary_tab.py \
+            data_sources/salaries_2526_current.csv data_sources/salaries_future.csv \
+            || { echo "::error::Could not build salaries_future.csv"; exit 1; }
           fetch salaries_2526_dead.csv   $cyro 1668033956
           fetch awards.csv               $sheet 1456513900
           fetch bio.csv                  $sheet 1488063724
