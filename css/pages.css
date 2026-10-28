@@ -422,11 +422,24 @@ table.hm-rank-table .hm-rank {
   height: 28px;
   border-radius: 50%;
   object-fit: cover;
-  background: var(--surface-2, var(--surface));
+  overflow: hidden;
+  background: #e8e8ed;
   border: 1px solid var(--border);
   flex: 0 0 auto;
   vertical-align: middle;
   margin-right: .45rem;
+}
+
+/* no headshot on file: his initials in the same circle */
+.hm-face-initials {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  color: #55555c;
 }
 
 .hm-flag {

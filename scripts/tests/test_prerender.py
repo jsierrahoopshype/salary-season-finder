@@ -1016,8 +1016,9 @@ def test_headshots_are_matched_with_punctuation_and_accents_stripped():
     assert match_key("A.J. Price") == match_key("AJ Price")
     assert match_key("Nikola Jokić") == match_key("Nikola Jokic")
     media = Media(REPO)
-    assert media.face_src(["LeBron James"]).endswith("2544-lebron-james.webp")
-    assert media.face_src(["Nobody At All"]).endswith("player_silhouette.svg")
+    assert media.face_src(["LeBron James"]).endswith(
+        "/players/headshots/face-fill/2544-lebron-james.webp")
+    assert media.face_src(["Nobody At All"]) is None
 
 
 # --------------------------------------------------------------------------

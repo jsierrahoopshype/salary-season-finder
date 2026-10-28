@@ -21,8 +21,7 @@ import unicodedata
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE = "https://jsierrahoopshype.github.io/nba-headshots"
 METADATA = "players/metadata/players_all.json"
-FACE2 = "players/headshots/face2-160"
-FACE = "players/headshots/face"
+FACE_FILL = "players/headshots/face-fill"
 OUT = os.path.join(REPO, "data", "headshots.json")
 
 
@@ -51,7 +50,7 @@ def _from_clone(path):
             for line in out if line.endswith(suffix)
         }
 
-    return meta, listing(FACE2, ".webp"), listing(FACE, ".png")
+    return meta, listing(FACE_FILL, ".webp")
 
 
 def _from_network():
@@ -60,12 +59,12 @@ def _from_network():
     with urllib.request.urlopen(BASE + "/" + METADATA, timeout=60) as fh:
         meta = json.loads(fh.read().decode("utf-8"))
     # The Pages site has no directory listing, so the metadata's own filenames
-    # are the source of truth and both sizes are assumed present.
+    # are the source of truth: face-fill has the same stems as face.
     stems = {
         "{}-{}".format(p["nba_id"], p["slug"])
         for p in meta["players"] if (p.get("headshot") or {}).get("face")
     }
-    return meta, stems, stems
+    return meta, stems
 
 
 def main(argv=None):
@@ -75,36 +74,32 @@ def main(argv=None):
     args = parser.parse_args(argv)
 
     if args.from_clone:
-        meta, face2, face = _from_clone(args.from_clone)
+        meta, fill = _from_clone(args.from_clone)
     else:
-        meta, face2, face = _from_network()
+        meta, fill = _from_network()
 
-    faces, fallback = {}, {}
+    faces = {}
     for player in meta["players"]:
         stem = "{}-{}".format(player["nba_id"], player["slug"])
         key = norm(player["full_name"])
-        if stem in face2:
+        if stem in fill:
             faces.setdefault(key, stem)
-        elif stem in face:
-            fallback.setdefault(key, stem)
 
     payload = {
         "readme": (
             "Player name (no diacritics, no punctuation, lower case) to the "
             "file stem of his headshot in jsierrahoopshype/nba-headshots. "
-            "'faces' are in players/headshots/face2-160 as .webp, 'fallback' "
-            "only in players/headshots/face as .png. Anything missing gets "
-            "fallbacks/player_silhouette.svg. Refresh with "
+            "'faces' are in players/headshots/face-fill as .webp. Anything "
+            "missing gets the player's initials. Refresh with "
             "scripts/fetch_headshot_ids.py."
         ),
         "source": BASE,
         "generated_from": meta.get("generated_at"),
         "faces": dict(sorted(faces.items())),
-        "fallback": dict(sorted(fallback.items())),
     }
     with open(OUT, "w", encoding="utf-8") as fh:
         fh.write(json.dumps(payload, ensure_ascii=False, sort_keys=True, indent=1) + "\n")
-    print("{} faces, {} fallback only -> {}".format(len(faces), len(fallback), OUT))
+    print("{} faces -> {}".format(len(faces), OUT))
     return 0
 
 
