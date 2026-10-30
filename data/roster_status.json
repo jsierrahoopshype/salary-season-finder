@@ -1,5 +1,5 @@
 {
- "built": "2026-10-29T12:02:54.598326",
+ "built": "2026-10-30T11:56:17.527132",
  "season": "2026-27",
  "players": [
   {
@@ -448,6 +448,15 @@
    ],
    "total": 91000,
    "birth_date": "1999-12-26"
+  },
+  {
+   "player": "Blake Wesley",
+   "team": "LAC",
+   "contract": "ten_day",
+   "current_salary": 150898,
+   "dead_money": [],
+   "total": 150898,
+   "birth_date": "2003-03-16"
   },
   {
    "player": "Bobby Portis",
@@ -2886,7 +2895,7 @@
    "current_salary": 3746760,
    "dead_money": [],
    "total": 3746760,
-   "birth_date": null
+   "birth_date": "2007-04-12"
   },
   {
    "player": "Karl-Anthony Towns",

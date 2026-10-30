@@ -41,14 +41,14 @@ Day'Ron Sharpe,Brooklyn,,,,"$10,000,000","$10,000,000",GUARANTEED,"$10,000,000",
 Keon Ellis,Brooklyn,,,,"$9,000,000","$9,000,000",GUARANTEED,"$9,000,000",$0,TEAM OPT,,,,,,,,,,"$13,422,280"
 Moritz Wagner,Brooklyn,,,,"$9,000,000","$9,000,000",GUARANTEED,"$9,450,000",$0,TEAM OPT,,,,,,,,,,"$25,000,000"
 Mikel Brown,Brooklyn,,,,"$8,787,000","$8,787,000",GUARANTEED,"$9,226,440","$9,226,440",GUARANTEED,"$9,666,000",$0,TEAM OPT,"$12,256,488",$0,TEAM OPT,,,,"$18,995,342"
-Egor Demin,Brooklyn,,,,"$7,233,720","$7,233,720",GUARANTEED,"$7,578,240",$0,TEAM OPT,"$9,639,521",$0,TEAM OPT,,,,,,,"$14,122,920"
+Egor Demin,Brooklyn,,,,"$7,233,720","$7,233,720",GUARANTEED,"$7,578,240","$7,578,240",GUARANTEED,"$9,639,521",$0,TEAM OPT,,,,,,,"$21,701,160"
 Noah Clowney,Brooklyn,,,,"$5,414,034","$5,414,034",GUARANTEED,,,,,,,,,,,,,"$12,056,754"
 Josh Minott,Brooklyn,,,,"$4,500,000","$4,500,000",GUARANTEED,"$4,500,000",$0,TEAM OPT,,,,,,,,,,"$8,898,569"
-Nolan Traore,Brooklyn,,,,"$4,002,000","$4,002,000",GUARANTEED,"$4,193,040",$0,TEAM OPT,"$6,457,282",$0,TEAM OPT,,,,,,,"$7,813,560"
-Drake Powell,Brooklyn,,,,"$3,540,600","$3,540,600",GUARANTEED,"$3,709,320",$0,TEAM OPT,"$6,101,831",$0,TEAM OPT,,,,,,,"$6,912,840"
-Ben Saraf,Brooklyn,,,,"$3,028,560","$3,028,560",GUARANTEED,"$3,172,920",$0,TEAM OPT,"$5,720,775",$0,TEAM OPT,,,,,,,"$5,913,120"
+Nolan Traore,Brooklyn,,,,"$4,002,000","$4,002,000",GUARANTEED,"$4,193,040","$4,193,040",GUARANTEED,"$6,457,282",$0,TEAM OPT,,,,,,,"$12,006,600"
+Drake Powell,Brooklyn,,,,"$3,540,600","$3,540,600",GUARANTEED,"$3,709,320","$3,709,320",GUARANTEED,"$6,101,831",$0,TEAM OPT,,,,,,,"$10,622,160"
+Ben Saraf,Brooklyn,,,,"$3,028,560","$3,028,560",GUARANTEED,"$3,172,920","$3,172,920",GUARANTEED,"$5,720,775",$0,TEAM OPT,,,,,,,"$9,086,040"
 Joshua Jefferson,Brooklyn,,,,"$2,969,520","$2,969,520",GUARANTEED,"$3,118,560","$3,118,560",GUARANTEED,"$3,266,880",$0,TEAM OPT,"$5,896,718",$0,TEAM OPT,,,,"$7,069,982"
-Danny Wolf,Brooklyn,,,,"$2,941,440","$2,941,440",GUARANTEED,"$3,081,840",$0,TEAM OPT,"$5,559,639",$0,TEAM OPT,,,,,,,"$5,742,720"
+Danny Wolf,Brooklyn,,,,"$2,941,440","$2,941,440",GUARANTEED,"$3,081,840","$3,081,840",GUARANTEED,"$5,559,639",$0,TEAM OPT,,,,,,,"$8,824,560"
 Chaney Johnson,Brooklyn,,,,"$678,882",$0,TWO-WAY,,,,,,,,,,,,,$0
 Grant Nelson,Brooklyn,,,,"$678,882",$0,TWO-WAY,,,,,,,,,,,,,$0
 Tyler Bilodeau,Brooklyn,,,,"$678,882",$0,TWO-WAY,,,,,,,,,,,,,"$1,131,970"
@@ -221,12 +221,13 @@ Isaiah Jackson,LA Clippers,,,,"$7,000,000","$7,000,000",GUARANTEED,"$6,400,000",
 Bradley Beal,LA Clippers,,,,"$6,424,800","$6,424,800",GUARANTEED,"$6,746,040","$3,373,020",PLAYER OPT,,,,,,,,,,"$65,355,750"
 Kris Dunn,LA Clippers,,,,"$5,684,800","$5,684,800",GUARANTEED,,,,,,,,,,,,,"$16,279,200"
 Jordan Miller,LA Clippers,,,,"$5,300,000","$5,300,000",GUARANTEED,"$5,000,000",$0,NOT G,"$5,000,000",$0,TEAM OPT,,,,,,,"$7,062,637"
-Yanic Konan Niederhauser,LA Clippers,,,,"$2,880,960","$2,880,960",GUARANTEED,"$3,018,480",$0,TEAM OPT,"$5,448,356",$0,TEAM OPT,,,,,,,"$5,624,760"
+Yanic Konan Niederhauser,LA Clippers,,,,"$2,880,960","$2,880,960",GUARANTEED,"$3,018,480","$3,018,480",GUARANTEED,"$5,448,356",$0,TEAM OPT,,,,,,,"$8,643,240"
 Kobe Sanders,LA Clippers,,,,"$2,622,139","$2,622,139",GUARANTEED,"$2,753,246","$2,753,246",GUARANTEED,"$2,884,353",$0,NOT G,"$3,019,000",$0,TEAM OPT,,,,"$5,850,882"
 Baba Miller,LA Clippers,,,,"$1,705,630","$1,705,630",GUARANTEED,"$2,294,370","$2,294,370",GUARANTEED,"$2,694,363",$0,NOT G,"$2,918,152",$0,TEAM OPT,,,,"$4,000,000"
 Jalen Pickett,LA Clippers,,,,"$678,882",$0,TWO-WAY,,,,,,,,,,,,,"$4,113,534"
 Cam Christie,LA Clippers,,,,"$678,882",$0,TWO-WAY,,,,,,,,,,,,,"$1,131,970"
 Nick Martinelli,LA Clippers,,,,"$678,882",$0,TWO-WAY,"$716,081",$0,TWO-WAY,,,,,,,,,,$0
+Blake Wesley,LA Clippers,,,,"$150,898","$140,771",10-DAY,,,,,,,,,,,,,"$5,143,921"
 Luka Doncic,LA Lakers,,,,"$51,033,600","$51,033,600",GUARANTEED,"$55,116,288","$55,116,288",GUARANTEED,"$59,198,976","$59,198,976",PLAYER OPT,,,,,,,"$254,380,464"
 Austin Reaves,LA Lakers,,,,"$41,240,250","$41,240,250",GUARANTEED,"$42,954,030","$42,954,030",GUARANTEED,"$46,253,250","$46,253,250",GUARANTEED,"$49,552,470","$49,552,470",PLAYER OPT,,,,"$206,913,936"
 Walker Kessler,LA Lakers,,,,"$30,108,821","$30,108,821",GUARANTEED,"$31,614,262","$31,614,262",GUARANTEED,"$33,119,703","$33,119,703",GUARANTEED,"$34,625,144","$34,625,144",PLAYER OPT,,,,"$137,312,788"
@@ -244,7 +245,7 @@ Bronny James,LA Lakers,,,,"$2,296,271","$2,296,271",GUARANTEED,"$2,486,995",$0,T
 Adou Thiero,LA Lakers,,,,"$2,150,917","$2,150,917",GUARANTEED,"$2,525,901",$0,TEAM OPT,,,,,,,,,,"$3,423,787"
 Chris Manon,LA Lakers,,,,"$678,882",$0,TWO-WAY,,,,,,,,,,,,,$0
 Arthur Kaluma,LA Lakers,,,,"$678,882",$0,TWO-WAY,,,,,,,,,,,,,"$596,581"
-Lawson Lovering,LA Lakers,,,,"$647,669",$0,TWO-WAY,,,,,,,,,,,,,$0
+Lawson Lovering,LA Lakers,,,,"$647,669",$0,TWO-WAY,"$716,081",$0,TWO-WAY,,,,,,,,,,$0
 Jerami Grant,Memphis,,,,"$34,206,898","$34,206,898",GUARANTEED,"$36,413,790","$36,413,790",PLAYER OPT,,,,,,,,,,"$132,413,793"
 Isaiah Stewart,Memphis,,,,"$15,000,000","$15,000,000",GUARANTEED,"$15,000,000",$0,TEAM OPT,,,,,,,,,,"$45,000,000"
 Cameron Boozer,Memphis,,,,"$11,849,760","$11,849,760",GUARANTEED,"$12,441,840","$12,441,840",GUARANTEED,"$13,034,880",$0,TEAM OPT,"$16,476,088",$0,TEAM OPT,,,,"$25,273,502"
@@ -341,10 +342,10 @@ Josh Hart,New York,,,,"$20,923,760","$20,923,760",GUARANTEED,"$22,375,280",$0,TE
 Landry Shamet,New York,,,,"$5,490,967","$5,490,967",GUARANTEED,"$5,737,500","$5,737,500",GUARANTEED,"$6,162,500","$1,581,241",PARTIAL G,"$6,587,500","$1,690,292",PLAYER OPT,,,,"$19,262,929"
 Jose Alvarado,New York,,,,"$4,439,656","$4,439,656",GUARANTEED,"$4,794,828","$4,794,828",GUARANTEED,"$5,150,000","$2,765,516",PARTIAL G,,,,,,,"$18,488,598"
 Miles McBride,New York,,,,"$3,956,523","$3,956,523",GUARANTEED,,,,,,,,,,,,,"$13,000,000"
-Andre Drummond,New York,,,,"$3,876,529","$2,449,421",GUARANTEED,,,,,,,,,,,,,"$13,876,529"
 Jordan Clarkson,New York,,,,"$3,876,529","$2,449,421",GUARANTEED,,,,,,,,,,,,,"$21,603,259"
+Andre Drummond,New York,,,,"$3,876,529","$2,449,421",GUARANTEED,,,,,,,,,,,,,"$13,876,529"
 James Wiseman,New York,,,,"$3,066,143",$0,NOT G,,,,,,,,,,,,,$0
-Pacome Dadiet,New York,,,,"$2,983,680","$2,983,680",GUARANTEED,"$5,373,608",$0,TEAM OPT,,,,,,,,,,"$7,639,360"
+Pacome Dadiet,New York,,,,"$2,983,680","$2,983,680",GUARANTEED,,,,,,,,,,,,,"$7,639,360"
 Mohamed Diawara,New York,,,,"$2,622,139","$2,622,139",GUARANTEED,"$2,753,246","$2,753,246",GUARANTEED,"$2,884,353",$0,NOT G,"$3,019,474",$0,TEAM OPT,,,,"$6,648,255"
 Tyler Kolek,New York,,,,"$2,296,271","$2,296,271",GUARANTEED,"$2,486,995",$0,TEAM OPT,,,,,,,,,,"$6,575,687"
 Jaden Akins,New York,,,,"$678,882",$0,TWO-WAY,,,,,,,,,,,,,"$1,131,970"
@@ -430,8 +431,8 @@ Robert Williams,Portland,,,,"$14,000,000","$14,000,000",GUARANTEED,"$14,500,000"
 Scoot Henderson,Portland,,,,"$13,585,523","$13,585,523",GUARANTEED,,,,,,,,,,,,,"$34,592,723"
 Damian Lillard,Portland,,,,"$13,398,800","$13,398,800",GUARANTEED,"$14,104,000","$14,104,000",PLAYER OPT,,,,,,,,,,"$90,394,476"
 Deni Avdija,Portland,,,,"$13,125,000","$13,125,000",GUARANTEED,"$11,875,000","$11,875,000",GUARANTEED,,,,,,,,,,"$55,000,000"
-Donovan Clingan,Portland,,,,"$7,519,920","$7,519,920",GUARANTEED,"$9,550,298",$0,TEAM OPT,,,,,,,,,,"$21,534,720"
-Yang Hansen,Portland,,,,"$4,643,520","$4,643,520",GUARANTEED,"$4,864,920",$0,TEAM OPT,"$7,462,787",$0,TEAM OPT,,,,,,,"$9,065,880"
+Donovan Clingan,Portland,,,,"$7,519,920","$7,519,920",GUARANTEED,"$9,550,298","$9,550,298",GUARANTEED,,,,,,,,,,"$31,085,018"
+Yang Hansen,Portland,,,,"$4,643,520","$4,643,520",GUARANTEED,"$4,864,920","$4,864,920",GUARANTEED,"$7,462,787",$0,TEAM OPT,,,,,,,"$13,930,800"
 Micah Potter,Portland,,,,"$2,801,346",$0,NOT G,,,,,,,,,,,,,"$1,527,805"
 Vit Krejci,Portland,,,,"$2,667,944","$2,667,944",GUARANTEED,"$3,005,085",$0,TEAM OPT,,,,,,,,,,"$7,180,128"
 Sidy Cissoko,Portland,,,,"$2,497,812","$2,497,812",GUARANTEED,,,,,,,,,,,,,"$3,184,055"
@@ -558,7 +559,6 @@ Cole Anthony,,,,,,,,,,,,,,,,,,,,"$12,900,000"
 Blake Hinson,,,,,,,,,,,,,,,,,,,,$0
 Gary Harris,,,,,,,,,,,,,,,,,,,,"$11,134,153"
 Pat Connaughton,,,,,,,,,,,,,,,,,,,,"$10,739,683"
-Blake Wesley,,,,,,,,,,,,,,,,,,,,"$5,003,150"
 Tyson Etienne,,,,,,,,,,,,,,,,,,,,$0
 Maxi Kleber,,,,,,,,,,,,,,,,,,,,"$22,000,000"
 Killian Hayes,,,,,,,,,,,,,,,,,,,,"$444,658"
@@ -608,9 +608,9 @@ Dariq Whitehead,,,,,,,,,,,,,,,,,,,,$0
 Mac McClung,,,,,,,,,,,,,,,,,,,,$0
 Luke Travers,,,,,,,,,,,,,,,,,,,,$0
 Lucas Williamson,,,,,,,,,,,,,,,,,,,,$0
-Chris Paul,,,,,,,,,,,,,,,,,,,,"$10,983,000"
 Miles Kelly,,,,,,,,,,,,,,,,,,,,$0
 Patrick Baldwin,,,,,,,,,,,,,,,,,,,,$0
+Chris Paul,,,,,,,,,,,,,,,,,,,,"$10,983,000"
 TyTy Washington,,,,,,,,,,,,,,,,,,,,$0
 Taj Gibson,,,,,,,,,,,,,,,,,,,,"$4,264,524"
 Omer Yurtseven,,,,,,,,,,,,,,,,,,,,$0
@@ -626,8 +626,8 @@ Garrett Temple,,,,,,,,,,,,,,,,,,,,"$6,937,924"
 Jahmir Young,,,,,,,,,,,,,,,,,,,,"$23,546"
 Payton Sandfort,,,,,,,,,,,,,,,,,,,,$0
 Alex Antetokounmpo,,,,,,,,,,,,,,,,,,,,$0
-Eric Gordon,,,,,,,,,,,,,,,,,,,,$0
 Wendell Moore,,,,,,,,,,,,,,,,,,,,$0
+Eric Gordon,,,,,,,,,,,,,,,,,,,,$0
 CJ Huntley,,,,,,,,,,,,,,,,,,,,$0
 Dalano Banton,,,,,,,,,,,,,,,,,,,,"$2,225,263"
 Isaiah Stevens,,,,,,,,,,,,,,,,,,,,$0
