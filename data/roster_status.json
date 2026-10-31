@@ -1,5 +1,5 @@
 {
- "built": "2026-10-30T11:56:17.527132",
+ "built": "2026-10-31T11:30:09.094638",
  "season": "2026-27",
  "players": [
   {
@@ -3971,6 +3971,15 @@
    "dead_money": [],
    "total": 15000000,
    "birth_date": "1998-03-04"
+  },
+  {
+   "player": "Ochai Agbaji",
+   "team": "OKC",
+   "contract": "non_guaranteed",
+   "current_salary": 2474729,
+   "dead_money": [],
+   "total": 2474729,
+   "birth_date": "2000-04-20"
   },
   {
    "player": "OG Anunoby",

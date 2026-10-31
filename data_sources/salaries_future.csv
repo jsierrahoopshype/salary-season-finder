@@ -15,8 +15,8 @@ Asa Newell,Atlanta,,,,"$3,399,480","$3,399,480",GUARANTEED,"$3,560,880",$0,TEAM 
 Mouhamed Gueye,Atlanta,,,,"$2,406,205",$0,NOT G,,,,,,,,,,,,,"$4,113,534"
 Henri Veesaar,Atlanta,,,,"$1,357,763","$1,357,763",GUARANTEED,"$2,294,370","$2,294,370",GUARANTEED,"$2,694,363",$0,NOT G,"$2,918,152",$0,TEAM OPT,,,,"$3,652,133"
 Jalen Wilson,Atlanta,,,,"$678,882",$0,TWO-WAY,,,,,,,,,,,,,"$4,113,534"
-RayJ Dennis,Atlanta,,,,"$678,882",$0,TWO-WAY,,,,,,,,,,,,,$0
 Keshon Gilbert,Atlanta,,,,"$678,882",$0,TWO-WAY,,,,,,,,,,,,,$0
+RayJ Dennis,Atlanta,,,,"$678,882",$0,TWO-WAY,,,,,,,,,,,,,$0
 Jayson Tatum,Boston,,,,"$58,456,566","$58,456,566",GUARANTEED,"$62,786,682","$62,786,682",GUARANTEED,"$67,116,798","$67,116,798",GUARANTEED,"$71,446,914","$71,446,914",PLAYER OPT,,,,"$348,781,750"
 Paul George,Boston,,,,"$54,126,380","$54,126,380",GUARANTEED,"$56,586,670","$56,586,670",PLAYER OPT,,,,,,,,,,"$211,584,940"
 Derrick White,Boston,,,,"$30,348,000","$30,348,000",GUARANTEED,"$32,596,000","$32,596,000",GUARANTEED,"$34,844,000","$34,844,000",PLAYER OPT,,,,,,,"$145,709,429"
@@ -26,9 +26,9 @@ Payton Pritchard,Boston,,,,"$7,767,857","$7,767,857",GUARANTEED,"$8,303,571","$8
 Mike Conley,Boston,,,,"$3,876,529","$2,449,421",GUARANTEED,,,,,,,,,,,,,"$15,001,218"
 Ron Harper Jr,Boston,,,,"$3,150,752","$3,150,752",GUARANTEED,"$3,308,290","$3,308,290",GUARANTEED,"$3,465,828",$0,NOT G,"$3,779,359",$0,TEAM OPT,,,,"$6,582,087"
 Chris Cenac,Boston,,,,"$2,988,120","$2,988,120",GUARANTEED,"$3,137,640","$3,137,640",GUARANTEED,"$3,287,400",$0,TEAM OPT,"$5,930,470",$0,TEAM OPT,,,,"$7,107,662"
-Hugo Gonzalez,Boston,,,,"$2,923,560","$2,923,560",GUARANTEED,"$3,062,640",$0,TEAM OPT,"$5,528,065",$0,TEAM OPT,,,,,,,"$5,707,440"
+Hugo Gonzalez,Boston,,,,"$2,923,560","$2,923,560",GUARANTEED,"$3,062,640","$3,062,640",GUARANTEED,"$5,528,065",$0,TEAM OPT,,,,,,,"$8,770,080"
 Luka Garza,Boston,,,,"$2,801,346","$2,801,346",GUARANTEED,,,,,,,,,,,,,"$7,425,415"
-Baylor Scheierman,Boston,,,,"$2,744,040","$2,744,040",GUARANTEED,"$4,952,992",$0,TEAM OPT,,,,,,,,,,"$7,857,360"
+Baylor Scheierman,Boston,,,,"$2,744,040","$2,744,040",GUARANTEED,"$4,952,992","$4,952,992",GUARANTEED,,,,,,,,,,"$12,810,352"
 Neemias Queta,Boston,,,,"$2,667,944","$2,667,944",GUARANTEED,"$12,500,000","$12,500,000",GUARANTEED,"$13,500,000","$13,500,000",GUARANTEED,"$14,500,000","$14,500,000",GUARANTEED,"$15,500,000","$15,500,000",GUAANTEED,"$63,180,128"
 Jordan Walsh,Boston,,,,"$2,406,205","$2,406,205",GUARANTEED,"$5,000,000","$5,000,000",GUARANTEED,"$5,250,000","$5,250,000",GUARANTEED,"$5,500,000",$0,TEAM OPT,,,,"$16,769,739"
 Devin Carter,Boston,,,,"$678,882",$0,TWO-WAY,,,,,,,,,,,,,"$9,612,720"
@@ -182,7 +182,7 @@ Jabari Smith,Houston,,,,"$23,643,411","$23,643,411",GUARANTEED,"$21,751,940","$2
 Tari Eason,Houston,,,,"$14,053,356","$14,053,356",GUARANTEED,"$15,177,624","$15,177,624",GUARANTEED,"$16,301,892","$16,301,892",GUARANTEED,"$17,426,160","$17,426,160",GUARANTEED,"$18,550,428","$18,550,428",PLAYER OPT,"$90,880,386"
 Steven Adams,Houston,,,,"$13,000,000","$13,000,000",GUARANTEED,"$11,869,566","$11,869,566",GUARANTEED,,,,,,,,,,"$51,600,000"
 Amen Thompson,Houston,,,,"$12,258,609","$12,258,609",GUARANTEED,"$35,862,069","$35,862,069",GUARANTEED,"$38,731,034","$38,731,034",GUARANTEED,"$41,600,000","$41,600,000",GUARANTEED,"$44,468,966","$44,468,966",GUARANTEED,"$239,199,169"
-Reed Sheppard,Houston,,,,"$11,108,880","$11,108,880",GUARANTEED,"$14,041,624",$0,TEAM OPT,,,,,,,,,,"$31,811,400"
+Reed Sheppard,Houston,,,,"$11,108,880","$11,108,880",GUARANTEED,"$14,041,624","$14,041,624",GUARANTEED,,,,,,,,,,"$45,853,024"
 Clint Capela,Houston,,,,"$7,035,000","$7,035,000",GUARANTEED,"$7,370,000","$7,370,000",GUARANTEED,,,,,,,,,,"$43,370,280"
 Marcus Smart,Houston,,,,"$6,064,000","$6,064,000",GUARANTEED,"$6,367,200","$6,367,200",PLAYER OPT,,,,,,,,,,"$37,775,485"
 Bogdan Bogdanovic,Houston,,,,"$3,524,115","$2,449,421",GUARANTEED,,,,,,,,,,,,,"$36,804,115"
@@ -306,12 +306,12 @@ Jaden McDaniels,Minnesota,,,,"$26,200,001","$26,200,001",GUARANTEED,"$28,006,898
 Ayo Dosunmu,Minnesota,,,,"$19,310,345","$19,310,345",GUARANTEED,"$20,855,173","$20,855,173",GUARANTEED,"$22,400,001","$22,400,001",GUARANTEED,"$23,944,829","$23,944,829",GUARANTEED,"$25,489,652","$25,489,652",PLAYER OPT,"$126,518,518"
 Donte DiVincenzo,Minnesota,,,,"$12,535,000","$12,535,000",GUARANTEED,,,,,,,,,,,,,"$35,970,000"
 Jonathan Kuminga,Minnesota,,,,"$6,064,000","$6,064,000",GUARANTEED,"$6,367,200","$6,367,200",PLAYER OPT,,,,,,,,,,"$43,867,076"
-Cody Williams,Minnesota,,,,"$6,015,600","$6,015,600",GUARANTEED,"$7,669,890",$0,TEAM OPT,,,,,,,,,,"$17,227,200"
-Joan Beringer,Minnesota,,,,"$4,411,200","$4,411,200",GUARANTEED,"$4,621,200",$0,TEAM OPT,"$7,098,163",$0,TEAM OPT,,,,,,,"$8,612,280"
+Cody Williams,Minnesota,,,,"$6,015,600","$6,015,600",GUARANTEED,,,,,,,,,,,,,"$17,227,200"
+Joan Beringer,Minnesota,,,,"$4,411,200","$4,411,200",GUARANTEED,"$4,621,200","$4,621,200",GUARANTEED,"$7,098,163",$0,TEAM OPT,,,,,,,"$13,233,480"
 Trey Lyles,Minnesota,,,,"$3,876,529","$1,500,000",PARTIAL G,,,,,,,,,,,,,"$8,375,266"
 Jaylen Clark,Minnesota,,,,"$3,086,420","$3,086,420",GUARANTEED,"$3,333,334","$3,333,334",GUARANTEED,"$3,580,246","$3,580,246",GUARANTEED,,,,,,,"$12,684,220"
 Bones Hyland,Minnesota,,,,"$2,846,555","$2,449,421",GUARANTEED,,,,,,,,,,,,,"$5,308,018"
-Terrence Shannon,Minnesota,,,,"$2,801,640","$2,801,640",GUARANTEED,"$5,054,159",$0,TEAM OPT,,,,,,,,,,"$8,022,360"
+Terrence Shannon,Minnesota,,,,"$2,801,640","$2,801,640",GUARANTEED,"$5,054,159","$5,054,159",GUARANTEED,,,,,,,,,,"$13,076,519"
 Isaiah Evans,Minnesota,,,,"$1,357,763","$1,357,763",GUARANTEED,"$2,294,370","$2,294,370",GUARANTEED,"$2,694,363","$2,694,363",GUARANTEED,"$2,918,152",$0,TEAM OPT,,,,"$6,346,496"
 Zyon Pullin,Minnesota,,,,"$678,882",$0,TWO-WAY,,,,,,,,,,,,,$0
 Rocco Zikarsky,Minnesota,,,,"$678,882",$0,TWO-WAY,,,,,,,,,,,,,$0
@@ -365,6 +365,7 @@ Thomas Sorber,Oklahoma City,,,,"$4,887,720","$4,887,720",GUARANTEED,"$5,120,400"
 Bennett Stirtz,Oklahoma City,,,,"$4,717,320","$4,717,320",GUARANTEED,"$4,953,240","$4,953,240",GUARANTEED,"$5,189,400",$0,TEAM OPT,"$7,960,540",$0,TEAM OPT,,,,"$10,652,462"
 Jared McCain,Oklahoma City,,,,"$4,422,600","$4,422,600",GUARANTEED,"$6,784,268",$0,TEAM OPT,,,,,,,,,,"$12,664,320"
 Ajay Mitchell,Oklahoma City,,,,"$2,850,000","$2,850,000",GUARANTEED,"$2,850,000",$0,TEAM OPT,,,,,,,,,,"$8,850,000"
+Ochai Agbaji,Oklahoma City,,,,"$2,474,729",$0,NOT G,,,,,,,,,,,,,"$10,693,805"
 Brooks Barnhizer,Oklahoma City,,,,"$678,882",$0,TWO-WAY,,,,,,,,,,,,,$0
 Josh Dix,Oklahoma City,,,,"$678,882",$0,TWO-WAY,,,,,,,,,,,,,"$596,581"
 Micah Peavy,Oklahoma City,,,,"$663,276",$0,TWO-WAY,,,,,,,,,,,,,"$1,272,870"
@@ -534,26 +535,25 @@ John Konchar,,,,,,,,,,,,,,,,,,,,"$12,330,000"
 Nicolas Batum,,,,,,,,,,,,,,,,,,,,"$10,269,600"
 Guerschon Yabusele,,,,,,,,,,,,,,,,,,,,"$7,587,519"
 Cam Thomas,,,,,,,,,,,,,,,,,,,,"$4,041,249"
-Dwight Powell,,,,,,,,,,,,,,,,,,,,"$8,000,000"
 Aaron Holiday,,,,,,,,,,,,,,,,,,,,"$7,748,921"
 Jaden Ivey,,,,,,,,,,,,,,,,,,,,"$21,395,348"
 Vince Williams Jr,,,,,,,,,,,,,,,,,,,,"$2,120,693"
-Ochai Agbaji,,,,,,,,,,,,,,,,,,,,"$10,693,805"
+Dwight Powell,,,,,,,,,,,,,,,,,,,,"$8,000,000"
 Kevin Love,,,,,,,,,,,,,,,,,,,,"$8,000,000"
 Sharife Cooper,,,,,,,,,,,,,,,,,,,,$0
 Rob Dillingham,,,,,,,,,,,,,,,,,,,,"$12,839,040"
 Jeremy Sochan,,,,,,,,,,,,,,,,,,,,"$6,376,668"
-Tyrese Martin,,,,,,,,,,,,,,,,,,,,"$635,853"
 Kelly Olynyk,,,,,,,,,,,,,,,,,,,,"$26,250,000"
 Gabe Vincent,,,,,,,,,,,,,,,,,,,,"$22,500,000"
+Tyrese Martin,,,,,,,,,,,,,,,,,,,,"$635,853"
 Lonzo Ball,,,,,,,,,,,,,,,,,,,,"$21,395,348"
 Dalen Terry,,,,,,,,,,,,,,,,,,,,"$26,080,921"
-Keaton Wallace,,,,,,,,,,,,,,,,,,,,"$2,296,274"
 Drew Eubanks,,,,,,,,,,,,,,,,,,,,"$8,080,921"
+Keaton Wallace,,,,,,,,,,,,,,,,,,,,"$2,296,274"
 Ethan Thompson,,,,,,,,,,,,,,,,,,,,$0
-D'Angelo Russell,,,,,,,,,,,,,,,,,,,,"$24,377,307"
 Nick Smith,,,,,,,,,,,,,,,,,,,,"$2,600,397"
 Cameron Payne,,,,,,,,,,,,,,,,,,,,"$3,003,427"
+D'Angelo Russell,,,,,,,,,,,,,,,,,,,,"$24,377,307"
 Amir Coffey,,,,,,,,,,,,,,,,,,,,"$6,812,707"
 Cole Anthony,,,,,,,,,,,,,,,,,,,,"$12,900,000"
 Blake Hinson,,,,,,,,,,,,,,,,,,,,$0
@@ -575,8 +575,8 @@ Christian Koloko,,,,,,,,,,,,,,,,,,,,$0
 Malaki Branham,,,,,,,,,,,,,,,,,,,,"$3,217,920"
 Jeremiah Robinson-Earl,,,,,,,,,,,,,,,,,,,,"$2,196,970"
 John Poulakidas,,,,,,,,,,,,,,,,,,,,"$26,080,921"
-KJ Simpson,,,,,,,,,,,,,,,,,,,,$0
 Isaiah Livers,,,,,,,,,,,,,,,,,,,,$0
+KJ Simpson,,,,,,,,,,,,,,,,,,,,$0
 Tyler Burton,,,,,,,,,,,,,,,,,,,,"$26,080,921"
 Tyler Burton,,,,,,,,,,,,,,,,,,,,$0
 Andre Jackson,,,,,,,,,,,,,,,,,,,,"$4,113,534"
@@ -596,8 +596,8 @@ Adama Bal,,,,,,,,,,,,,,,,,,,,$0
 Jeff Green,,,,,,,,,,,,,,,,,,,,"$11,634,153"
 Haywood Highsmith,,,,,,,,,,,,,,,,,,,,"$6,027,984"
 Caleb Houstan,,,,,,,,,,,,,,,,,,,,"$2,019,699"
-Xavier Tillman,,,,,,,,,,,,,,,,,,,,"$4,784,366"
 Tyler Smith,,,,,,,,,,,,,,,,,,,,"$1,157,153"
+Xavier Tillman,,,,,,,,,,,,,,,,,,,,"$4,784,366"
 Andersson Garcia,,,,,,,,,,,,,,,,,,,,$0
 Koby Brea,,,,,,,,,,,,,,,,,,,,$0
 Kadary Richmond,,,,,,,,,,,,,,,,,,,,$0
@@ -605,13 +605,13 @@ Hunter Tyson,,,,,,,,,,,,,,,,,,,,"$1,891,857"
 Curtis Jones,,,,,,,,,,,,,,,,,,,,$0
 Johnny Juzang,,,,,,,,,,,,,,,,,,,,"$3,087,519"
 Dariq Whitehead,,,,,,,,,,,,,,,,,,,,$0
-Mac McClung,,,,,,,,,,,,,,,,,,,,$0
 Luke Travers,,,,,,,,,,,,,,,,,,,,$0
 Lucas Williamson,,,,,,,,,,,,,,,,,,,,$0
 Miles Kelly,,,,,,,,,,,,,,,,,,,,$0
 Patrick Baldwin,,,,,,,,,,,,,,,,,,,,$0
 Chris Paul,,,,,,,,,,,,,,,,,,,,"$10,983,000"
 TyTy Washington,,,,,,,,,,,,,,,,,,,,$0
+Mac McClung,,,,,,,,,,,,,,,,,,,,$0
 Taj Gibson,,,,,,,,,,,,,,,,,,,,"$4,264,524"
 Omer Yurtseven,,,,,,,,,,,,,,,,,,,,$0
 Bismack Biyombo,,,,,,,,,,,,,,,,,,,,"$4,431,615"
@@ -634,11 +634,11 @@ Isaiah Stevens,,,,,,,,,,,,,,,,,,,,$0
 Chris Boucher,,,,,,,,,,,,,,,,,,,,"$10,810,000"
 Tristen Newton,,,,,,,,,,,,,,,,,,,,"$26,080,921"
 Mark Sears,,,,,,,,,,,,,,,,,,,,$0
-Nigel Hayes,,,,,,,,,,,,,,,,,,,,$0
 Emanuel Miller,,,,,,,,,,,,,,,,,,,,$0
 Mouhamadou Gueye,,,,,,,,,,,,,,,,,,,,"$8,022,092"
 Bobi Klintman,,,,,,,,,,,,,,,,,,,,"$1,257,153"
 Monte Morris,,,,,,,,,,,,,,,,,,,,"$2,800,834"
+Nigel Hayes,,,,,,,,,,,,,,,,,,,,$0
 Johni Broome,,,,,,,,,,,,,,,,,,,,"$26,080,921"
 Trey Jemison,,,,,,,,,,,,,,,,,,,,$0
 Kyle Lowry,,,,,,,,,,,,,,,,,,,,"$6,937,924"
