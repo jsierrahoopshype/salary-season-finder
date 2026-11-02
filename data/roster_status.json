@@ -1,5 +1,5 @@
 {
- "built": "2026-11-01T12:26:34.476812",
+ "built": "2026-11-02T14:24:17.159273",
  "season": "2026-27",
  "players": [
   {
@@ -741,7 +741,7 @@
    "current_salary": 3315360,
    "dead_money": [],
    "total": 3315360,
-   "birth_date": null
+   "birth_date": "2004-11-21"
   },
   {
    "player": "Cameron Johnson",
@@ -777,7 +777,7 @@
    "current_salary": 678882,
    "dead_money": [],
    "total": 678882,
-   "birth_date": null
+   "birth_date": "2004-04-09"
   },
   {
    "player": "Carter Bryant",
