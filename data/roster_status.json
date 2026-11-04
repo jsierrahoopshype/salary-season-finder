@@ -1,5 +1,5 @@
 {
- "built": "2026-11-03T13:22:50.368842",
+ "built": "2026-11-04T13:34:17.099621",
  "season": "2026-27",
  "players": [
   {
@@ -1042,6 +1042,15 @@
    "birth_date": "2005-07-15"
   },
   {
+   "player": "Dalen Terry",
+   "team": "OKC",
+   "contract": "non_guaranteed",
+   "current_salary": 2399280,
+   "dead_money": [],
+   "total": 2399280,
+   "birth_date": "2002-07-12"
+  },
+  {
    "player": "Dalton Knecht",
    "team": "NYK",
    "contract": "two_way",
@@ -1592,16 +1601,16 @@
   },
   {
    "player": "Enrique Freeman",
-   "team": "MIN",
-   "contract": "two_way",
-   "current_salary": 651571,
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
    "dead_money": [
     {
      "team": "MIN",
-     "amount": 91000
+     "amount": 111473
     }
    ],
-   "total": 742571,
+   "total": 111473,
    "birth_date": "2000-07-29"
   },
   {
@@ -3953,6 +3962,15 @@
    "dead_money": [],
    "total": 4002000,
    "birth_date": "2006-05-28"
+  },
+  {
+   "player": "Norchad Omier",
+   "team": "CLE",
+   "contract": "two_way",
+   "current_salary": 620358,
+   "dead_money": [],
+   "total": 620358,
+   "birth_date": "2001-08-28"
   },
   {
    "player": "Norman Powell",
