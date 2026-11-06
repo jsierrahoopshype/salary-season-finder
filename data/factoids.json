@@ -29731,7 +29731,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 546,
+    "comparison_size": 545,
     "contracted": true,
     "family": "franchise",
     "id": "4e8c7a95d95b6975",
@@ -29849,7 +29849,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 546,
+    "comparison_size": 545,
     "contracted": true,
     "family": "franchise",
     "id": "04afef61b2a3a8a4",
@@ -41797,7 +41797,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 545,
+    "comparison_size": 544,
     "contracted": false,
     "family": "franchise",
     "id": "19ccdb64f68f5998",
@@ -42055,7 +42055,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 546,
+    "comparison_size": 545,
     "contracted": true,
     "family": "franchise",
     "id": "e8139d30a134050a",
@@ -52443,7 +52443,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 546,
+    "comparison_size": 545,
     "contracted": true,
     "family": "franchise",
     "id": "fa23706128290b04",
@@ -56551,7 +56551,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 545,
+    "comparison_size": 544,
     "contracted": false,
     "family": "franchise",
     "id": "3392d1d83198efdc",
@@ -56669,7 +56669,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 546,
+    "comparison_size": 545,
     "contracted": true,
     "family": "franchise",
     "id": "43df59b9ebc38f19",
@@ -56807,7 +56807,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 546,
+    "comparison_size": 545,
     "contracted": true,
     "family": "franchise",
     "id": "bb2ad5decf229109",
@@ -63335,7 +63335,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 18,
+    "comparison_size": 19,
     "contracted": false,
     "family": "rank_shift",
     "id": "7231de655e0ee26c",
@@ -63344,7 +63344,7 @@
     "margin": null,
     "previous_holder": null,
     "rank": 2,
-    "scope_note": "Same franchise in consecutive seasons. Roster of 18 players with a salary on file.",
+    "scope_note": "Same franchise in consecutive seasons. Roster of 19 players with a salary on file.",
     "text": "Scottie Barnes is no longer the Raptors' highest-paid player in 2026-27 after holding that spot in 2025-26.",
     "type": "rank_shift",
     "value": 41754690
@@ -74152,7 +74152,7 @@
    "seasons_without_all_star_game": [
     "1998-99"
    ],
-   "split_season_records": 2216,
+   "split_season_records": 2217,
    "truncated_careers": 359
   },
   "record_count": 1320,
