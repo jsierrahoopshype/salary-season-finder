@@ -101,10 +101,9 @@ Craig Porter,Cleveland,,,,"$2,406,205",$0,NOT G,,,,,,,,,,,,,"$4,113,534"
 Tyrese Proctor,Cleveland,,,,"$2,150,917","$2,150,917",GUARANTEED,"$2,525,901","$500,000",PARTIAL G,"$2,735,698",$0,TEAM OPT,,,,,,,"$3,923,787"
 Meleek Thomas,Cleveland,,,,"$1,357,763","$1,357,763",GUARANTEED,"$2,294,370","$2,294,370",GUARANTEED,"$2,694,363","$2,694,363",GUARANTEED,"$2,918,152",$0,TEAM OPT,,,,"$6,346,496"
 Khalifa Diop,Cleveland,,,,"$1,357,763","$1,357,763",GUARANTEED,"$2,294,371",$0,NOT G,"$2,694,363",$0,NOT G,"$2,918,152",$0,TEAM OPT,,,,"$1,357,763"
-Tristan Enaruna,Cleveland,,,,"$678,882",$0,TWO-WAY,,,,,,,,,,,,,$0
-Riley Minix,,,,,,,,,,,,,,,,,,,,$0
 Ernest Udeh,Cleveland,,,,"$678,882",$0,TWO-WAY,,,,,,,,,,,,,$0
 Norchad Omier,Cleveland,,,,"$620,358",$0,TWO-WAY,,,,,,,,,,,,,"$26,080,921"
+Riley Minix,Cleveland,,,,"$608,653",$0,TWO-WAY,,,,,,,,,,,,,$0
 Kyrie Irving,Dallas,,,,"$39,491,282","$39,491,282",GUARANTEED,"$42,416,562","$42,416,562",PLAYER OPT,,,,,,,,,,"$158,473,846"
 PJ Washington,Dallas,,,,"$19,813,044","$19,813,044",GUARANTEED,"$21,398,088","$21,398,088",GUARANTEED,"$22,983,132","$22,983,132",GUARANTEED,"$24,568,176","$24,568,176",GUARANTEED,,,,"$118,414,614"
 Daniel Gafford,Dallas,,,,"$17,263,584","$17,263,584",GUARANTEED,"$18,126,763","$18,126,763",GUARANTEED,"$18,989,942","$18,989,942",GUARANTEED,,,,,,,"$82,160,769"
@@ -264,7 +263,7 @@ GG Jackson,Memphis,,,,"$2,406,205","$2,406,205",GUARANTEED,,,,,$0,,,,,,,,"$6,519
 Jaylen Wells,Memphis,,,,"$2,296,271","$2,296,271",PARTIAL G,"$2,486,995",$0,TEAM OPT,,,,,,,,,,"$5,408,801"
 Javon Small,Memphis,,,,"$678,882",$0,TWO-WAY,,,,,,,,,,,,,$0
 Jahmai Mashack,Memphis,,,,"$678,882",$0,TWO-WAY,,,,,,,,,,,,,$0
-Carson Cooper,Memphis,,,,"$678,882",$0,TWO-WAY,"$716,081",$0,TWO-WAY,,,,,,,,,,$0
+Richie Saunders,Memphis,,,,"$608,653",$0,TWO-WAY,,,,,,,,,,,,,"$596,581"
 Giannis Antetokounmpo,Miami,,,,"$58,456,566","$58,456,566",GUARANTEED,"$62,786,682","$62,786,682",PLAYER OPT,,,,,,,,,,"$224,157,374"
 Bam Adebayo,Miami,,,,"$49,488,300","$49,488,300",GUARANTEED,"$53,447,364","$53,447,364",GUARANTEED,"$57,406,428","$57,406,428",PLAYER OPT,,,,,,,"$232,287,052"
 Andrew Wiggins,Miami,,,,"$30,169,644","$30,169,644",GUARANTEED,"$16,510,000","$16,510,000",GUARANTEED,"$17,320,356","$17,320,356",PLAYER OPT,,,,,,,"$118,500,001"
@@ -588,6 +587,7 @@ KJ Simpson,,,,,,,,,,,,,,,,,,,,$0
 DeJon Jarreau,,,,,,,,,,,,,,,,,,,,$0
 Garrison Mathews,,,,,,,,,,,,,,,,,,,,"$2,230,253"
 Alondes Williams,,,,,,,,,,,,,,,,,,,,$0
+Tristan Enaruna,,,,,,,,,,,,,,,,,,,,$0
 Seth Curry,,,,,,,,,,,,,,,,,,,,"$6,081,601"
 Thanasis Antetokounmpo,,,,,,,,,,,,,,,,,,,,"$2,874,436"
 David Roddy,,,,,,,,,,,,,,,,,,,,$0
@@ -614,10 +614,10 @@ Taj Gibson,,,,,,,,,,,,,,,,,,,,"$4,264,524"
 Omer Yurtseven,,,,,,,,,,,,,,,,,,,,$0
 Mac McClung,,,,,,,,,,,,,,,,,,,,$0
 Bismack Biyombo,,,,,,,,,,,,,,,,,,,,"$4,431,615"
-Chris Paul,,,,,,,,,,,,,,,,,,,,"$10,983,000"
 Olivier Sarr,,,,,,,,,,,,,,,,,,,,$0
 Josh Oduro,,,,,,,,,,,,,,,,,,,,$0
 Antonio Reeves,,,,,,,,,,,,,,,,,,,,"$26,080,921"
+Chris Paul,,,,,,,,,,,,,,,,,,,,"$10,983,000"
 DaQuan Jeffries,,,,,,,,,,,,,,,,,,,,"$2,425,404"
 Skal Labissiere,,,,,,,,,,,,,,,,,,,,$0
 Toby Okani,,,,,,,,,,,,,,,,,,,,$0
@@ -655,12 +655,12 @@ Kyle Lowry,,,,,,,,,,,,,,,,,,,,"$6,937,924"
 Hunter Sallis,,,,,,,,,,,,,,,,,,,,$0
 Trentyn Flowers,,,,,,,,,,,,,,,,,,,,$0
 Max Shulga,,,,,,,,,,,,,,,,,,,,"$212,145"
+Carson Cooper,,,,,,,,,,,,,,,,,,,,$0
 Drew Peterson,,,,,,,,,,,,,,,,,,,,$0
 Markelle Fultz,,,,,,,,,,,,,,,,,,,,"$981,902"
 N'Faly Dante,,,,,,,,,,,,,,,,,,,,$0
 AK Okereke,,,,,,,,,,,,,,,,,,,,$0
 Colby Jones,,,,,,,,,,,,,,,,,,,,"$2,120,691"
-Otega Oweh,,,,,,,,,,,,,,,,,,,,"$596,581"
 Jahmyl Telfort,,,,,,,,,,,,,,,,,,,,$0
 Dario Saric,,,,,,,,,,,,,,,,,,,,"$5,168,000"
 Chucky Hepburn,,,,,,,,,,,,,,,,,,,,$0
