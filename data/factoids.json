@@ -3393,7 +3393,7 @@
   "Anthony Davis|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 339,
+    "comparison_size": 338,
     "contracted": true,
     "family": "cap_context",
     "id": "13baad1617b123cd",
@@ -10397,7 +10397,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 563,
+    "comparison_size": 564,
     "contracted": true,
     "family": "franchise",
     "id": "5729362e8cbea2dd",
@@ -10697,7 +10697,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 562,
+    "comparison_size": 563,
     "contracted": false,
     "family": "franchise",
     "id": "f32b6ca3291c426c",
@@ -10717,7 +10717,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 20,
+    "comparison_size": 21,
     "contracted": false,
     "family": "rank_shift",
     "id": "934b42b15677803e",
@@ -10726,7 +10726,7 @@
     "margin": null,
     "previous_holder": null,
     "rank": 1,
-    "scope_note": "Same franchise in consecutive seasons. Roster of 20 players with a salary on file.",
+    "scope_note": "Same franchise in consecutive seasons. Roster of 21 players with a salary on file.",
     "text": "Chet Holmgren is the Thunder's highest-paid player in 2026-27 after ranking fifth on the roster in 2025-26.",
     "type": "rank_shift",
     "value": 41240250
@@ -10811,7 +10811,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 563,
+    "comparison_size": 564,
     "contracted": true,
     "family": "franchise",
     "id": "9f33c7d7a67fd453",
@@ -10925,7 +10925,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 563,
+    "comparison_size": 564,
     "contracted": true,
     "family": "franchise",
     "id": "3ae8fa25b0ac5e0c",
@@ -11023,7 +11023,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 563,
+    "comparison_size": 564,
     "contracted": true,
     "family": "franchise",
     "id": "184d67d1c1643a8e",
@@ -11157,7 +11157,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 563,
+    "comparison_size": 564,
     "contracted": true,
     "family": "franchise",
     "id": "d2a0e2e71d7c3c35",
@@ -17823,7 +17823,7 @@
   "Devin Booker|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 339,
+    "comparison_size": 338,
     "contracted": true,
     "family": "cap_context",
     "id": "844cbfeeb60ff8fb",
@@ -19649,7 +19649,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 523,
+    "comparison_size": 522,
     "contracted": false,
     "family": "franchise",
     "id": "5c3fc09f1e9ed907",
@@ -19747,7 +19747,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 524,
+    "comparison_size": 523,
     "contracted": true,
     "family": "franchise",
     "id": "4012a12d3038090d",
@@ -19767,7 +19767,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 13,
+    "comparison_size": 12,
     "contracted": true,
     "family": "rank_shift",
     "id": "aa0b48776b2724f2",
@@ -19776,7 +19776,7 @@
     "margin": null,
     "previous_holder": null,
     "rank": 1,
-    "scope_note": "Same franchise in consecutive seasons. Roster of 13 players with a salary on file.",
+    "scope_note": "Same franchise in consecutive seasons. Roster of 12 players with a salary on file.",
     "text": "Domantas Sabonis would be the Kings' highest-paid player in 2027-28 after ranking second on the roster in 2026-27.",
     "type": "rank_shift",
     "value": 48608000
@@ -20337,7 +20337,7 @@
   "Donovan Mitchell|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 339,
+    "comparison_size": 338,
     "contracted": true,
     "family": "cap_context",
     "id": "0e81d0acc6ef3279",
@@ -20549,7 +20549,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 340,
+    "comparison_size": 339,
     "contracted": true,
     "family": "rank_shift",
     "id": "9e6cb24d74a117c7",
@@ -25821,7 +25821,7 @@
   "Giannis Antetokounmpo|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 339,
+    "comparison_size": 338,
     "contracted": true,
     "family": "cap_context",
     "id": "cbefcca4fdeb673a",
@@ -30723,7 +30723,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 562,
+    "comparison_size": 563,
     "contracted": false,
     "family": "franchise",
     "id": "1f3149b71be6cb46",
@@ -30743,7 +30743,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 20,
+    "comparison_size": 21,
     "contracted": false,
     "family": "rank_shift",
     "id": "b9844bee0fa2cc15",
@@ -30752,7 +30752,7 @@
     "margin": null,
     "previous_holder": null,
     "rank": 1,
-    "scope_note": "Same franchise in consecutive seasons. Roster of 20 players with a salary on file.",
+    "scope_note": "Same franchise in consecutive seasons. Roster of 21 players with a salary on file.",
     "text": "Jalen Williams is the Thunder's highest-paid player in 2026-27 after ranking 10th on the roster in 2025-26.",
     "type": "rank_shift",
     "value": 41240250
@@ -30817,7 +30817,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 563,
+    "comparison_size": 564,
     "contracted": true,
     "family": "franchise",
     "id": "09c09e1e5ad1e566",
@@ -30895,7 +30895,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 563,
+    "comparison_size": 564,
     "contracted": true,
     "family": "franchise",
     "id": "92b2dafea473be20",
@@ -30973,7 +30973,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 563,
+    "comparison_size": 564,
     "contracted": true,
     "family": "franchise",
     "id": "627237c0b384b15f",
@@ -31087,7 +31087,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 563,
+    "comparison_size": 564,
     "contracted": true,
     "family": "franchise",
     "id": "dc860a2e6e006bd5",
@@ -33767,7 +33767,7 @@
   "Jaylen Brown|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 339,
+    "comparison_size": 338,
     "contracted": true,
     "family": "cap_context",
     "id": "6fd5fceac0976e72",
@@ -34657,7 +34657,7 @@
   "Jayson Tatum|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 339,
+    "comparison_size": 338,
     "contracted": true,
     "family": "cap_context",
     "id": "09e50a389baf8b78",
@@ -37541,7 +37541,7 @@
   "Joel Embiid|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 339,
+    "comparison_size": 338,
     "contracted": true,
     "family": "cap_context",
     "id": "5d498253662a0d1c",
@@ -41819,7 +41819,7 @@
   "Karl-Anthony Towns|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 339,
+    "comparison_size": 338,
     "contracted": true,
     "family": "cap_context",
     "id": "80f34857e76d03f8",
@@ -43173,7 +43173,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 7,
+    "comparison_size": 6,
     "contracted": true,
     "family": "rank_shift",
     "id": "5aeb619b6e91b2c9",
@@ -43182,7 +43182,7 @@
     "margin": null,
     "previous_holder": null,
     "rank": 1,
-    "scope_note": "Same franchise in consecutive seasons. Roster of 7 players with a salary on file.",
+    "scope_note": "Same franchise in consecutive seasons. Roster of 6 players with a salary on file.",
     "text": "Keegan Murray would be the Kings' highest-paid player in 2028-29 after ranking second on the roster in 2027-28.",
     "type": "rank_shift",
     "value": 27999999
@@ -55427,7 +55427,7 @@
   "Nikola Jokic|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 339,
+    "comparison_size": 338,
     "contracted": true,
     "family": "cap_context",
     "id": "bb66588c11f56c0a",
@@ -64011,7 +64011,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 562,
+    "comparison_size": 563,
     "contracted": false,
     "family": "franchise",
     "id": "9b0c103a429e148d",
@@ -64031,7 +64031,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 20,
+    "comparison_size": 21,
     "contracted": false,
     "family": "rank_shift",
     "id": "32693f6889a867bd",
@@ -64040,7 +64040,7 @@
     "margin": null,
     "previous_holder": null,
     "rank": 3,
-    "scope_note": "Same franchise in consecutive seasons. Roster of 20 players with a salary on file.",
+    "scope_note": "Same franchise in consecutive seasons. Roster of 21 players with a salary on file.",
     "text": "Shai Gilgeous-Alexander is no longer the Thunder's highest-paid player in 2026-27 after holding that spot in 2025-26.",
     "type": "rank_shift",
     "value": 40806150
@@ -64049,7 +64049,7 @@
   "Shai Gilgeous-Alexander|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 339,
+    "comparison_size": 338,
     "contracted": true,
     "family": "cap_context",
     "id": "e51f2b2e894f50ba",
@@ -64261,7 +64261,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 563,
+    "comparison_size": 564,
     "contracted": true,
     "family": "franchise",
     "id": "9d77a8766383a13e",
@@ -64281,7 +64281,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 340,
+    "comparison_size": 339,
     "contracted": true,
     "family": "rank_shift",
     "id": "40f7e4ca57654a70",
@@ -64511,7 +64511,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 563,
+    "comparison_size": 564,
     "contracted": true,
     "family": "franchise",
     "id": "026dd0e2debc04d5",
@@ -64713,7 +64713,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 563,
+    "comparison_size": 564,
     "contracted": true,
     "family": "franchise",
     "id": "1feeb0f3b67fcc44",
@@ -64931,7 +64931,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 563,
+    "comparison_size": 564,
     "contracted": true,
     "family": "franchise",
     "id": "cda518ef163d14ea",
@@ -73313,7 +73313,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 523,
+    "comparison_size": 522,
     "contracted": false,
     "family": "franchise",
     "id": "9c1e400730ad642a",
