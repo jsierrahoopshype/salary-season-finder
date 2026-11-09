@@ -1,5 +1,5 @@
 {
- "built": "2026-11-08T12:32:40.731200",
+ "built": "2026-11-09T14:50:15.855521",
  "season": "2026-27",
  "players": [
   {
@@ -1048,11 +1048,16 @@
   },
   {
    "player": "Dalen Terry",
-   "team": "OKC",
-   "contract": "non_guaranteed",
-   "current_salary": 2399280,
-   "dead_money": [],
-   "total": 2399280,
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "OKC",
+     "amount": 105629
+    }
+   ],
+   "total": 105629,
    "birth_date": "2002-07-12"
   },
   {
@@ -3925,7 +3930,7 @@
   },
   {
    "player": "Nique Clifford",
-   "team": "SAC",
+   "team": "OKC",
    "contract": "guaranteed",
    "current_salary": 3263400,
    "dead_money": [],
