@@ -1,7 +1,7 @@
 {
  "changes_posted": 2,
- "last_commit": "cf14a5182c7e2f9c860c7cc1e7bdb8e1a3ccdd8f",
- "last_run": "2026-11-09T14:55:02Z",
+ "last_commit": "bb0b00589203befb0292ede5f32f9a39c8bed4bf",
+ "last_run": "2026-11-10T14:08:08Z",
  "league_year_opened": "2026-07-01",
  "raises": [
   {
@@ -101,9 +101,21 @@
    "season": "2027-28"
   },
   {
+   "amount": 95723,
+   "date": "2026-11-10",
+   "player": "Norchad Omier",
+   "season": "2027-28"
+  },
+  {
    "amount": 68412,
    "date": "2026-10-30",
    "player": "Lawson Lovering",
+   "season": "2027-28"
+  },
+  {
+   "amount": 16428,
+   "date": "2026-11-10",
+   "player": "Riley Minix",
    "season": "2027-28"
   }
  ],
