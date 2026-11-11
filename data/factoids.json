@@ -3393,7 +3393,7 @@
   "Anthony Davis|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 340,
+    "comparison_size": 339,
     "contracted": true,
     "family": "cap_context",
     "id": "13baad1617b123cd",
@@ -17823,7 +17823,7 @@
   "Devin Booker|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 340,
+    "comparison_size": 339,
     "contracted": true,
     "family": "cap_context",
     "id": "844cbfeeb60ff8fb",
@@ -20337,7 +20337,7 @@
   "Donovan Mitchell|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 340,
+    "comparison_size": 339,
     "contracted": true,
     "family": "cap_context",
     "id": "0e81d0acc6ef3279",
@@ -20549,7 +20549,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 341,
+    "comparison_size": 340,
     "contracted": true,
     "family": "rank_shift",
     "id": "9e6cb24d74a117c7",
@@ -25821,7 +25821,7 @@
   "Giannis Antetokounmpo|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 340,
+    "comparison_size": 339,
     "contracted": true,
     "family": "cap_context",
     "id": "cbefcca4fdeb673a",
@@ -33767,7 +33767,7 @@
   "Jaylen Brown|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 340,
+    "comparison_size": 339,
     "contracted": true,
     "family": "cap_context",
     "id": "6fd5fceac0976e72",
@@ -34657,7 +34657,7 @@
   "Jayson Tatum|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 340,
+    "comparison_size": 339,
     "contracted": true,
     "family": "cap_context",
     "id": "09e50a389baf8b78",
@@ -35705,7 +35705,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 513,
+    "comparison_size": 512,
     "contracted": false,
     "family": "franchise",
     "id": "9e0b0053ca375049",
@@ -35787,7 +35787,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 514,
+    "comparison_size": 513,
     "contracted": true,
     "family": "franchise",
     "id": "b7ce4096c1ba5bbd",
@@ -37541,7 +37541,7 @@
   "Joel Embiid|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 340,
+    "comparison_size": 339,
     "contracted": true,
     "family": "cap_context",
     "id": "5d498253662a0d1c",
@@ -41819,7 +41819,7 @@
   "Karl-Anthony Towns|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 340,
+    "comparison_size": 339,
     "contracted": true,
     "family": "cap_context",
     "id": "80f34857e76d03f8",
@@ -50265,7 +50265,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 21,
+    "comparison_size": 22,
     "contracted": false,
     "family": "rank_shift",
     "id": "76ba49f9c74ce81b",
@@ -50274,7 +50274,7 @@
     "margin": null,
     "previous_holder": null,
     "rank": 1,
-    "scope_note": "Same franchise in consecutive seasons. Roster of 21 players with a salary on file.",
+    "scope_note": "Same franchise in consecutive seasons. Roster of 22 players with a salary on file.",
     "text": "Luka Doncic is the Lakers' highest-paid player in 2026-27 after ranking second on the roster in 2025-26.",
     "type": "rank_shift",
     "value": 51033600
@@ -55427,7 +55427,7 @@
   "Nikola Jokic|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 340,
+    "comparison_size": 339,
     "contracted": true,
     "family": "cap_context",
     "id": "bb66588c11f56c0a",
@@ -64049,7 +64049,7 @@
   "Shai Gilgeous-Alexander|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 340,
+    "comparison_size": 339,
     "contracted": true,
     "family": "cap_context",
     "id": "e51f2b2e894f50ba",
@@ -64281,7 +64281,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 341,
+    "comparison_size": 340,
     "contracted": true,
     "family": "rank_shift",
     "id": "40f7e4ca57654a70",
@@ -74152,7 +74152,7 @@
    "seasons_without_all_star_game": [
     "1998-99"
    ],
-   "split_season_records": 2217,
+   "split_season_records": 2218,
    "truncated_careers": 359
   },
   "record_count": 1320,
