@@ -1,5 +1,5 @@
 {
- "built": "2026-11-11T13:20:18.991680",
+ "built": "2026-11-12T14:23:54.695924",
  "season": "2026-27",
  "players": [
   {
@@ -2330,7 +2330,7 @@
    "current_salary": 678882,
    "dead_money": [],
    "total": 678882,
-   "birth_date": null
+   "birth_date": "2002-07-12"
   },
   {
    "player": "Jarred Vanderbilt",
@@ -2605,16 +2605,16 @@
   },
   {
    "player": "Johni Broome",
-   "team": null,
-   "contract": "dead_money_only",
-   "current_salary": 0,
+   "team": "MIN",
+   "contract": "two_way",
+   "current_salary": 593046,
    "dead_money": [
     {
      "team": "LAC",
      "amount": 2150917
     }
    ],
-   "total": 2150917,
+   "total": 2743963,
    "birth_date": "2002-07-19"
   },
   {
@@ -3553,6 +3553,15 @@
    "dead_money": [],
    "total": 3506659,
    "birth_date": "1999-03-14"
+  },
+  {
+   "player": "Mason Plumlee",
+   "team": "SAC",
+   "contract": "non_guaranteed",
+   "current_salary": 3386393,
+   "dead_money": [],
+   "total": 3386393,
+   "birth_date": "1990-03-05"
   },
   {
    "player": "Matas Buzelis",
