@@ -586,7 +586,7 @@
      "value": 27696430
     },
     "rank": 1,
-    "scope_note": "Cohort of 427 players and 3314 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 427 players and 3315 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Al Horford's $27.7 million in 2017-18 was the highest single-season salary by a center, passing Shaquille O'Neal's $27.7 million (2004-05).",
     "type": "sets",
     "value": 27734405
@@ -720,7 +720,7 @@
      "value": 27734405
     },
     "rank": 1,
-    "scope_note": "Cohort of 437 players and 3314 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 437 players and 3315 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Al Horford's $28.9 million in 2018-19 was the highest single-season salary by a center, breaking his own mark of $27.7 million in 2017-18.",
     "type": "sets",
     "value": 28928710
@@ -1958,7 +1958,7 @@
      "value": 15334769
     },
     "rank": 1,
-    "scope_note": "Cohort of 95 players and 347 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 95 players and 348 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Andrew Nembhard's $18.1 million in 2025-26 was the highest single-season salary in the 2022 draft class, passing Paolo Banchero's $15.3 million (2025-26).",
     "type": "sets",
     "value": 18102000
@@ -3075,7 +3075,7 @@
   "Anthony Davis|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 561,
+    "comparison_size": 562,
     "contracted": false,
     "family": "cap_context",
     "id": "18d0d2ece0a36426",
@@ -3291,7 +3291,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 14651,
+    "comparison_size": 14652,
     "contracted": false,
     "family": "cohort",
     "id": "97fafb703b2403dc",
@@ -3304,7 +3304,7 @@
      "value": 62587158
     },
     "rank": 3,
-    "scope_note": "Cohort of 2519 players and 14652 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 2519 players and 14653 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Anthony Davis' $58.5 million in 2026-27 is the third-highest single-season salary by a player from the United States, behind Stephen Curry and Stephen Curry.",
     "type": "approaches",
     "value": 58456566
@@ -3493,7 +3493,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 14652,
+    "comparison_size": 14653,
     "contracted": true,
     "family": "cohort",
     "id": "2b69cb0edb39d5ee",
@@ -3506,7 +3506,7 @@
      "value": 62587158
     },
     "rank": 1,
-    "scope_note": "Cohort of 2519 players and 14652 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 2519 players and 14653 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Anthony Davis' $62.8 million in 2027-28 would be the highest single-season salary by a player from the United States, passing Stephen Curry's $62.6 million (2026-27).",
     "type": "sets",
     "value": 62786682
@@ -4301,7 +4301,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3248,
+    "comparison_size": 3249,
     "contracted": false,
     "family": "cohort",
     "id": "7f3a2aeea421a3e4",
@@ -4314,7 +4314,7 @@
      "value": 42846615
     },
     "rank": 2,
-    "scope_note": "Cohort of 974 players and 3249 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 974 players and 3250 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Austin Reaves' $41.2 million in 2026-27 is the second-highest single-season salary by an undrafted player, behind Fred VanVleet's $42.8 million (2024-25).",
     "type": "approaches",
     "value": 41240250
@@ -4399,7 +4399,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3249,
+    "comparison_size": 3250,
     "contracted": true,
     "family": "cohort",
     "id": "a196f374f3612624",
@@ -4412,7 +4412,7 @@
      "value": 42846615
     },
     "rank": 1,
-    "scope_note": "Cohort of 974 players and 3249 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 974 players and 3250 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Austin Reaves' $43 million in 2027-28 would be the highest single-season salary by an undrafted player, passing Fred VanVleet's $42.8 million (2024-25).",
     "type": "sets",
     "value": 42954030
@@ -4517,7 +4517,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3249,
+    "comparison_size": 3250,
     "contracted": true,
     "family": "cohort",
     "id": "bc9b7df923edf480",
@@ -4530,7 +4530,7 @@
      "value": 42846615
     },
     "rank": 1,
-    "scope_note": "Cohort of 974 players and 3249 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 974 players and 3250 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Austin Reaves' $46.3 million in 2028-29 would be the highest single-season salary by an undrafted player, passing Fred VanVleet's $42.8 million (2024-25).",
     "type": "sets",
     "value": 46253250
@@ -4655,7 +4655,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3249,
+    "comparison_size": 3250,
     "contracted": true,
     "family": "cohort",
     "id": "4977229454189f0d",
@@ -4668,7 +4668,7 @@
      "value": 42846615
     },
     "rank": 1,
-    "scope_note": "Cohort of 974 players and 3249 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 974 players and 3250 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Austin Reaves' $49.6 million in 2029-30 would be the highest single-season salary by an undrafted player, passing Fred VanVleet's $42.8 million (2024-25).",
     "type": "sets",
     "value": 49552470
@@ -5499,7 +5499,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3314,
+    "comparison_size": 3315,
     "contracted": true,
     "family": "cohort",
     "id": "810d9cafe577d271",
@@ -5512,7 +5512,7 @@
      "value": 59033114
     },
     "rank": 3,
-    "scope_note": "Cohort of 523 players and 3314 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 523 players and 3315 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Bam Adebayo's $57.4 million in 2028-29 would be the third-highest single-season salary by a center, behind Nikola Jokic and Joel Embiid.",
     "type": "approaches",
     "value": 57406428
@@ -9485,7 +9485,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 14652,
+    "comparison_size": 14653,
     "contracted": true,
     "family": "cohort",
     "id": "77ebda3ec17e8833",
@@ -9498,7 +9498,7 @@
      "value": 62587158
     },
     "rank": 2,
-    "scope_note": "Cohort of 2519 players and 14652 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 2519 players and 14653 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Cade Cunningham's $61.2 million in 2029-30 would be the second-highest single-season salary by a player from the United States, behind Stephen Curry's $62.6 million (2026-27).",
     "type": "approaches",
     "value": 61240212
@@ -10317,7 +10317,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 14652,
+    "comparison_size": 14653,
     "contracted": true,
     "family": "cohort",
     "id": "f8f5dc8d68036a74",
@@ -10330,7 +10330,7 @@
      "value": 62587158
     },
     "rank": 3,
-    "scope_note": "Cohort of 2519 players and 14652 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 2519 players and 14653 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Cason Wallace's $59.6 million in 2030-31 would be the third-highest single-season salary by a player from the United States, behind Stephen Curry and Stephen Curry.",
     "type": "approaches",
     "value": 59586207
@@ -10677,7 +10677,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 346,
+    "comparison_size": 347,
     "contracted": false,
     "family": "cohort",
     "id": "871dfdb46d3c84bf",
@@ -10690,7 +10690,7 @@
      "value": 41240250
     },
     "rank": 1,
-    "scope_note": "Cohort of 96 players and 347 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 96 players and 348 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Chet Holmgren's $41.2 million in 2026-27 ties the highest single-season salary in the 2022 draft class, matching Jalen Williams' $41.2 million (2026-27).",
     "type": "ties",
     "value": 41240250
@@ -10771,7 +10771,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 347,
+    "comparison_size": 348,
     "contracted": true,
     "family": "cohort",
     "id": "c02c67233dca4a41",
@@ -10784,7 +10784,7 @@
      "value": 41240250
     },
     "rank": 1,
-    "scope_note": "Cohort of 96 players and 347 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 96 players and 348 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Chet Holmgren's $44.5 million in 2027-28 would be the highest single-season salary in the 2022 draft class, breaking his own mark of $41.2 million in 2026-27.",
     "type": "sets",
     "value": 44539470
@@ -10885,7 +10885,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 347,
+    "comparison_size": 348,
     "contracted": true,
     "family": "cohort",
     "id": "fe7d534b7a9f8bce",
@@ -10898,7 +10898,7 @@
      "value": 41240250
     },
     "rank": 1,
-    "scope_note": "Cohort of 96 players and 347 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 96 players and 348 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Chet Holmgren's $47.8 million in 2028-29 would be the highest single-season salary in the 2022 draft class, breaking his own mark of $41.2 million in 2026-27.",
     "type": "sets",
     "value": 47838690
@@ -10983,7 +10983,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 347,
+    "comparison_size": 348,
     "contracted": true,
     "family": "cohort",
     "id": "8e5033d3c1c65bfc",
@@ -10996,7 +10996,7 @@
      "value": 41240250
     },
     "rank": 1,
-    "scope_note": "Cohort of 96 players and 347 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 96 players and 348 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Chet Holmgren's $51.1 million in 2029-30 would be the highest single-season salary in the 2022 draft class, breaking his own mark of $41.2 million in 2026-27.",
     "type": "sets",
     "value": 51137910
@@ -11117,7 +11117,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 347,
+    "comparison_size": 348,
     "contracted": true,
     "family": "cohort",
     "id": "1615cec0215204c8",
@@ -11130,7 +11130,7 @@
      "value": 41240250
     },
     "rank": 1,
-    "scope_note": "Cohort of 96 players and 347 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 96 players and 348 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Chet Holmgren's $54.4 million in 2030-31 would be the highest single-season salary in the 2022 draft class, breaking his own mark of $41.2 million in 2026-27.",
     "type": "sets",
     "value": 54437130
@@ -14971,7 +14971,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 14652,
+    "comparison_size": 14653,
     "contracted": true,
     "family": "cohort",
     "id": "31bdac70149cf13c",
@@ -14984,7 +14984,7 @@
      "value": 62587158
     },
     "rank": 2,
-    "scope_note": "Cohort of 2519 players and 14652 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 2519 players and 14653 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "De'Aaron Fox's $61.4 million in 2029-30 would be the second-highest single-season salary by a player from the United States, behind Stephen Curry's $62.6 million (2026-27).",
     "type": "approaches",
     "value": 61365492
@@ -17923,7 +17923,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 14652,
+    "comparison_size": 14653,
     "contracted": true,
     "family": "cohort",
     "id": "eac31bc75c1e990b",
@@ -17936,7 +17936,7 @@
      "value": 62587158
     },
     "rank": 2,
-    "scope_note": "Cohort of 2519 players and 14652 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 2519 players and 14653 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Devin Booker's $61 million in 2027-28 would be the second-highest single-season salary by a player from the United States, behind Stephen Curry's $62.6 million (2026-27).",
     "type": "approaches",
     "value": 61015192
@@ -18121,7 +18121,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 14652,
+    "comparison_size": 14653,
     "contracted": true,
     "family": "cohort",
     "id": "fba5e5d7b98ba85b",
@@ -18134,7 +18134,7 @@
      "value": 62587158
     },
     "rank": 1,
-    "scope_note": "Cohort of 2519 players and 14652 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 2519 players and 14653 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Devin Booker's $69.9 million in 2028-29 would be the highest single-season salary by a player from the United States, passing Stephen Curry's $62.6 million (2026-27).",
     "type": "sets",
     "value": 69877500
@@ -18335,7 +18335,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 14652,
+    "comparison_size": 14653,
     "contracted": true,
     "family": "cohort",
     "id": "3544d7f507ef29a3",
@@ -18348,7 +18348,7 @@
      "value": 62587158
     },
     "rank": 1,
-    "scope_note": "Cohort of 2519 players and 14652 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 2519 players and 14653 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Devin Booker's $75.5 million in 2029-30 would be the highest single-season salary by a player from the United States, passing Stephen Curry's $62.6 million (2026-27).",
     "type": "sets",
     "value": 75467700
@@ -20469,7 +20469,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 14652,
+    "comparison_size": 14653,
     "contracted": true,
     "family": "cohort",
     "id": "eaa84d53ed5b562b",
@@ -20482,7 +20482,7 @@
      "value": 62587158
     },
     "rank": 1,
-    "scope_note": "Cohort of 2519 players and 14652 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 2519 players and 14653 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Donovan Mitchell's $63.5 million in 2027-28 would be the highest single-season salary by a player from the United States, passing Stephen Curry's $62.6 million (2026-27).",
     "type": "sets",
     "value": 63509985
@@ -20667,7 +20667,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 14652,
+    "comparison_size": 14653,
     "contracted": true,
     "family": "cohort",
     "id": "9a4825494c4b6df8",
@@ -20680,7 +20680,7 @@
      "value": 62587158
     },
     "rank": 1,
-    "scope_note": "Cohort of 2519 players and 14652 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 2519 players and 14653 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Donovan Mitchell's $68.6 million in 2028-29 would be the highest single-season salary by a player from the United States, passing Stephen Curry's $62.6 million (2026-27).",
     "type": "sets",
     "value": 68590784
@@ -20865,7 +20865,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 14652,
+    "comparison_size": 14653,
     "contracted": true,
     "family": "cohort",
     "id": "29aab197efe5ea72",
@@ -20878,7 +20878,7 @@
      "value": 62587158
     },
     "rank": 1,
-    "scope_note": "Cohort of 2519 players and 14652 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 2519 players and 14653 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Donovan Mitchell's $73.7 million in 2029-30 would be the highest single-season salary by a player from the United States, passing Stephen Curry's $62.6 million (2026-27).",
     "type": "sets",
     "value": 73671583
@@ -21063,7 +21063,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 14652,
+    "comparison_size": 14653,
     "contracted": true,
     "family": "cohort",
     "id": "9022a97505e8e23f",
@@ -21076,7 +21076,7 @@
      "value": 62587158
     },
     "rank": 1,
-    "scope_note": "Cohort of 2519 players and 14652 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 2519 players and 14653 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Donovan Mitchell's $78.8 million in 2030-31 would be the highest single-season salary by a player from the United States, passing Stephen Curry's $62.6 million (2026-27).",
     "type": "sets",
     "value": 78752382
@@ -22795,7 +22795,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3314,
+    "comparison_size": 3315,
     "contracted": true,
     "family": "cohort",
     "id": "1ca199e2940d6f7c",
@@ -22808,7 +22808,7 @@
      "value": 59033114
     },
     "rank": 3,
-    "scope_note": "Cohort of 523 players and 3314 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 523 players and 3315 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Evan Mobley's $57.5 million in 2028-29 would be the third-highest single-season salary by a center, behind Nikola Jokic and Joel Embiid.",
     "type": "approaches",
     "value": 57528684
@@ -22965,7 +22965,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 14652,
+    "comparison_size": 14653,
     "contracted": true,
     "family": "cohort",
     "id": "b917a392ebe1b581",
@@ -22978,7 +22978,7 @@
      "value": 62587158
     },
     "rank": 2,
-    "scope_note": "Cohort of 2519 players and 14652 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 2519 players and 14653 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Evan Mobley's $61.2 million in 2029-30 would be the second-highest single-season salary by a player from the United States, behind Stephen Curry's $62.6 million (2026-27).",
     "type": "approaches",
     "value": 61240212
@@ -23025,7 +23025,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3314,
+    "comparison_size": 3315,
     "contracted": true,
     "family": "cohort",
     "id": "1bc0043c64779296",
@@ -23038,7 +23038,7 @@
      "value": 59033114
     },
     "rank": 1,
-    "scope_note": "Cohort of 523 players and 3314 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 523 players and 3315 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Evan Mobley's $61.2 million in 2029-30 would be the highest single-season salary by a center, passing Nikola Jokic's $59 million (2026-27).",
     "type": "sets",
     "value": 61240212
@@ -23992,7 +23992,7 @@
      "value": 19360228
     },
     "rank": 1,
-    "scope_note": "Cohort of 721 players and 3249 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 721 players and 3250 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Fred VanVleet's $21.2 million in 2020-21 was the highest single-season salary by an undrafted player, passing Wesley Matthews' $19.4 million (2018-19).",
     "type": "sets",
     "value": 21250000
@@ -24014,7 +24014,7 @@
      "value": 21250000
     },
     "rank": 1,
-    "scope_note": "Cohort of 826 players and 3249 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 826 players and 3250 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Fred VanVleet's $21.2 million in 2022-23 tied the highest single-season salary by an undrafted player, matching his own $21.2 million (2020-21).",
     "type": "ties",
     "value": 21250000
@@ -24072,7 +24072,7 @@
      "value": 21250000
     },
     "rank": 1,
-    "scope_note": "Cohort of 867 players and 3249 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 867 players and 3250 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Fred VanVleet's $40.8 million in 2023-24 was the highest single-season salary by an undrafted player, breaking his own mark of $21.2 million in 2020-21.",
     "type": "sets",
     "value": 40806300
@@ -24130,7 +24130,7 @@
      "value": 40806300
     },
     "rank": 1,
-    "scope_note": "Cohort of 900 players and 3249 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 900 players and 3250 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Fred VanVleet's $42.8 million in 2024-25 was the highest single-season salary by an undrafted player, breaking his own mark of $40.8 million in 2023-24.",
     "type": "sets",
     "value": 42846615
@@ -24193,7 +24193,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3248,
+    "comparison_size": 3249,
     "contracted": false,
     "family": "cohort",
     "id": "0ab3d23080162dca",
@@ -24206,7 +24206,7 @@
      "value": 42846615
     },
     "rank": 4,
-    "scope_note": "Cohort of 974 players and 3249 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 974 players and 3250 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Fred VanVleet's $25 million in 2026-27 is the fourth-highest single-season salary by an undrafted player, behind his own $42.8 million (2024-25).",
     "type": "approaches",
     "value": 25000000
@@ -25559,7 +25559,7 @@
   "Giannis Antetokounmpo|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 561,
+    "comparison_size": 562,
     "contracted": false,
     "family": "cap_context",
     "id": "303188806ec615d6",
@@ -29911,7 +29911,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 346,
+    "comparison_size": 347,
     "contracted": false,
     "family": "cohort",
     "id": "bb5b8030c79bf976",
@@ -29924,7 +29924,7 @@
      "value": 41240250
     },
     "rank": 4,
-    "scope_note": "Cohort of 96 players and 347 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 96 players and 348 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Jalen Duren's $40.2 million in 2026-27 is the fourth-highest single-season salary in the 2022 draft class, behind Chet Holmgren's $41.2 million (2026-27).",
     "type": "approaches",
     "value": 40160643
@@ -29973,7 +29973,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 347,
+    "comparison_size": 348,
     "contracted": true,
     "family": "cohort",
     "id": "6f764b69bfc57c88",
@@ -29986,7 +29986,7 @@
      "value": 41240250
     },
     "rank": 5,
-    "scope_note": "Cohort of 96 players and 347 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 96 players and 348 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Jalen Duren's $36.9 million in 2027-28 would be the fifth-highest single-season salary in the 2022 draft class, behind Chet Holmgren's $41.2 million (2026-27).",
     "type": "approaches",
     "value": 36947792
@@ -30051,7 +30051,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 347,
+    "comparison_size": 348,
     "contracted": true,
     "family": "cohort",
     "id": "279410502223ba36",
@@ -30064,7 +30064,7 @@
      "value": 41240250
     },
     "rank": 5,
-    "scope_note": "Cohort of 96 players and 347 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 96 players and 348 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Jalen Duren's $39 million in 2028-29 would be the fifth-highest single-season salary in the 2022 draft class, behind Chet Holmgren's $41.2 million (2026-27).",
     "type": "approaches",
     "value": 38955824
@@ -30129,7 +30129,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 347,
+    "comparison_size": 348,
     "contracted": true,
     "family": "cohort",
     "id": "15253ea90a27915c",
@@ -30142,7 +30142,7 @@
      "value": 41240250
     },
     "rank": 4,
-    "scope_note": "Cohort of 96 players and 347 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 96 players and 348 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Jalen Duren's $41 million in 2029-30 would be the fourth-highest single-season salary in the 2022 draft class, behind Chet Holmgren's $41.2 million (2026-27).",
     "type": "approaches",
     "value": 40963856
@@ -30207,7 +30207,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 347,
+    "comparison_size": 348,
     "contracted": true,
     "family": "cohort",
     "id": "7de58e8714bfd417",
@@ -30220,7 +30220,7 @@
      "value": 41240250
     },
     "rank": 1,
-    "scope_note": "Cohort of 96 players and 347 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 96 players and 348 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Jalen Duren's $43 million in 2030-31 would be the highest single-season salary in the 2022 draft class, passing Chet Holmgren's $41.2 million (2026-27).",
     "type": "sets",
     "value": 42971885
@@ -30683,7 +30683,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 346,
+    "comparison_size": 347,
     "contracted": false,
     "family": "cohort",
     "id": "c63c282c1d1d9fcf",
@@ -30696,7 +30696,7 @@
      "value": 41240250
     },
     "rank": 1,
-    "scope_note": "Cohort of 96 players and 347 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 96 players and 348 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Jalen Williams' $41.2 million in 2026-27 ties the highest single-season salary in the 2022 draft class, matching Chet Holmgren's $41.2 million (2026-27).",
     "type": "ties",
     "value": 41240250
@@ -30777,7 +30777,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 347,
+    "comparison_size": 348,
     "contracted": true,
     "family": "cohort",
     "id": "659384557758b263",
@@ -30790,7 +30790,7 @@
      "value": 41240250
     },
     "rank": 1,
-    "scope_note": "Cohort of 96 players and 347 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 96 players and 348 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Jalen Williams' $44.5 million in 2027-28 would be the highest single-season salary in the 2022 draft class, ahead of Chet Holmgren's $41.2 million (2026-27).",
     "type": "sets",
     "value": 44539470
@@ -30855,7 +30855,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 347,
+    "comparison_size": 348,
     "contracted": true,
     "family": "cohort",
     "id": "e95f0a9c304bc70e",
@@ -30868,7 +30868,7 @@
      "value": 41240250
     },
     "rank": 1,
-    "scope_note": "Cohort of 96 players and 347 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 96 players and 348 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Jalen Williams' $47.8 million in 2028-29 would be the highest single-season salary in the 2022 draft class, ahead of Chet Holmgren's $41.2 million (2026-27).",
     "type": "sets",
     "value": 47838690
@@ -30933,7 +30933,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 347,
+    "comparison_size": 348,
     "contracted": true,
     "family": "cohort",
     "id": "efa3b8b6083cdd92",
@@ -30946,7 +30946,7 @@
      "value": 41240250
     },
     "rank": 1,
-    "scope_note": "Cohort of 96 players and 347 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 96 players and 348 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Jalen Williams' $51.1 million in 2029-30 would be the highest single-season salary in the 2022 draft class, ahead of Chet Holmgren's $41.2 million (2026-27).",
     "type": "sets",
     "value": 51137910
@@ -31047,7 +31047,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 347,
+    "comparison_size": 348,
     "contracted": true,
     "family": "cohort",
     "id": "cf50ea17dca459cc",
@@ -31060,7 +31060,7 @@
      "value": 41240250
     },
     "rank": 1,
-    "scope_note": "Cohort of 96 players and 347 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 96 players and 348 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Jalen Williams' $54.4 million in 2030-31 would be the highest single-season salary in the 2022 draft class, ahead of Chet Holmgren's $41.2 million (2026-27).",
     "type": "sets",
     "value": 54437130
@@ -33665,7 +33665,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 14651,
+    "comparison_size": 14652,
     "contracted": false,
     "family": "cohort",
     "id": "4cdac6d9d8c6c065",
@@ -33678,7 +33678,7 @@
      "value": 62587158
     },
     "rank": 5,
-    "scope_note": "Cohort of 2519 players and 14652 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 2519 players and 14653 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Jaylen Brown's $57.7 million in 2026-27 is the fifth-highest single-season salary by a player from the United States, behind Stephen Curry's $62.6 million (2026-27).",
     "type": "approaches",
     "value": 57736350
@@ -33863,7 +33863,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 14652,
+    "comparison_size": 14653,
     "contracted": true,
     "family": "cohort",
     "id": "106d043421af2c76",
@@ -33876,7 +33876,7 @@
      "value": 62587158
     },
     "rank": 2,
-    "scope_note": "Cohort of 2519 players and 14652 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 2519 players and 14653 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Jaylen Brown's $61.7 million in 2027-28 would be the second-highest single-season salary by a player from the United States, behind Stephen Curry's $62.6 million (2026-27).",
     "type": "approaches",
     "value": 61672814
@@ -34057,7 +34057,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 14652,
+    "comparison_size": 14653,
     "contracted": true,
     "family": "cohort",
     "id": "44ce90ec3c88521e",
@@ -34070,7 +34070,7 @@
      "value": 62587158
     },
     "rank": 1,
-    "scope_note": "Cohort of 2519 players and 14652 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 2519 players and 14653 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Jaylen Brown's $65.6 million in 2028-29 would be the highest single-season salary by a player from the United States, passing Stephen Curry's $62.6 million (2026-27).",
     "type": "sets",
     "value": 65609278
@@ -34379,7 +34379,7 @@
   "Jayson Tatum|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 561,
+    "comparison_size": 562,
     "contracted": false,
     "family": "cap_context",
     "id": "5819f24d380bbc71",
@@ -34555,7 +34555,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 14651,
+    "comparison_size": 14652,
     "contracted": false,
     "family": "cohort",
     "id": "adee653ec823a5fc",
@@ -34568,7 +34568,7 @@
      "value": 62587158
     },
     "rank": 3,
-    "scope_note": "Cohort of 2519 players and 14652 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 2519 players and 14653 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Jayson Tatum's $58.5 million in 2026-27 is the third-highest single-season salary by a player from the United States, behind Stephen Curry and Stephen Curry.",
     "type": "approaches",
     "value": 58456566
@@ -34773,7 +34773,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 14652,
+    "comparison_size": 14653,
     "contracted": true,
     "family": "cohort",
     "id": "63994a3110d9e53e",
@@ -34786,7 +34786,7 @@
      "value": 62587158
     },
     "rank": 1,
-    "scope_note": "Cohort of 2519 players and 14652 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 2519 players and 14653 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Jayson Tatum's $62.8 million in 2027-28 would be the highest single-season salary by a player from the United States, passing Stephen Curry's $62.6 million (2026-27).",
     "type": "sets",
     "value": 62786682
@@ -34975,7 +34975,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 14652,
+    "comparison_size": 14653,
     "contracted": true,
     "family": "cohort",
     "id": "ff51f73be1cd0acf",
@@ -34988,7 +34988,7 @@
      "value": 62587158
     },
     "rank": 1,
-    "scope_note": "Cohort of 2519 players and 14652 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 2519 players and 14653 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Jayson Tatum's $67.1 million in 2028-29 would be the highest single-season salary by a player from the United States, passing Stephen Curry's $62.6 million (2026-27).",
     "type": "sets",
     "value": 67116798
@@ -35193,7 +35193,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 14652,
+    "comparison_size": 14653,
     "contracted": true,
     "family": "cohort",
     "id": "f9319d028b706173",
@@ -35206,7 +35206,7 @@
      "value": 62587158
     },
     "rank": 1,
-    "scope_note": "Cohort of 2519 players and 14652 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 2519 players and 14653 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Jayson Tatum's $71.4 million in 2029-30 would be the highest single-season salary by a player from the United States, passing Stephen Curry's $62.6 million (2026-27).",
     "type": "sets",
     "value": 71446914
@@ -37002,7 +37002,7 @@
      "value": 47607350
     },
     "rank": 1,
-    "scope_note": "Cohort of 491 players and 3314 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 491 players and 3315 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Joel Embiid's $47.6 million in 2023-24 tied the highest single-season salary by a center, matching Nikola Jokic's $47.6 million (2023-24).",
     "type": "ties",
     "value": 47607350
@@ -37152,7 +37152,7 @@
      "value": 51415938
     },
     "rank": 1,
-    "scope_note": "Cohort of 505 players and 3314 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 505 players and 3315 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Joel Embiid's $51.4 million in 2024-25 tied the highest single-season salary by a center, matching Nikola Jokic's $51.4 million (2024-25).",
     "type": "ties",
     "value": 51415938
@@ -37270,7 +37270,7 @@
      "value": 55224526
     },
     "rank": 1,
-    "scope_note": "Cohort of 519 players and 3314 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 519 players and 3315 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Joel Embiid's $55.2 million in 2025-26 tied the highest single-season salary by a center, matching Nikola Jokic's $55.2 million (2025-26).",
     "type": "ties",
     "value": 55224526
@@ -37439,7 +37439,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 14651,
+    "comparison_size": 14652,
     "contracted": false,
     "family": "cohort",
     "id": "81e24bf26e575088",
@@ -37452,7 +37452,7 @@
      "value": 62587158
     },
     "rank": 5,
-    "scope_note": "Cohort of 2519 players and 14652 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 2519 players and 14653 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Joel Embiid's $57.7 million in 2026-27 is the fifth-highest single-season salary by a player from the United States, behind Stephen Curry's $62.6 million (2026-27).",
     "type": "approaches",
     "value": 57736350
@@ -37499,7 +37499,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3313,
+    "comparison_size": 3314,
     "contracted": false,
     "family": "cohort",
     "id": "022107e9a5e7aa8a",
@@ -37512,7 +37512,7 @@
      "value": 59033114
     },
     "rank": 2,
-    "scope_note": "Cohort of 523 players and 3314 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 523 players and 3315 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Joel Embiid's $57.7 million in 2026-27 is the second-highest single-season salary by a center, behind Nikola Jokic's $59 million (2026-27).",
     "type": "approaches",
     "value": 57736350
@@ -37637,7 +37637,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 14652,
+    "comparison_size": 14653,
     "contracted": true,
     "family": "cohort",
     "id": "d0ac9b1ee91d90d8",
@@ -37650,7 +37650,7 @@
      "value": 62587158
     },
     "rank": 2,
-    "scope_note": "Cohort of 2519 players and 14652 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 2519 players and 14653 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Joel Embiid's $62.4 million in 2027-28 would be the second-highest single-season salary by a player from the United States, behind Stephen Curry's $62.6 million (2026-27).",
     "type": "approaches",
     "value": 62355258
@@ -37697,7 +37697,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3314,
+    "comparison_size": 3315,
     "contracted": true,
     "family": "cohort",
     "id": "f42d503c0ba27c19",
@@ -37710,7 +37710,7 @@
      "value": 59033114
     },
     "rank": 1,
-    "scope_note": "Cohort of 523 players and 3314 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 523 players and 3315 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Joel Embiid's $62.4 million in 2027-28 would be the highest single-season salary by a center, passing Nikola Jokic's $59 million (2026-27).",
     "type": "sets",
     "value": 62355258
@@ -37851,7 +37851,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 14652,
+    "comparison_size": 14653,
     "contracted": true,
     "family": "cohort",
     "id": "106db75719f6ca09",
@@ -37864,7 +37864,7 @@
      "value": 62587158
     },
     "rank": 1,
-    "scope_note": "Cohort of 2519 players and 14652 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 2519 players and 14653 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Joel Embiid's $67 million in 2028-29 would be the highest single-season salary by a player from the United States, passing Stephen Curry's $62.6 million (2026-27).",
     "type": "sets",
     "value": 66974166
@@ -37911,7 +37911,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3314,
+    "comparison_size": 3315,
     "contracted": true,
     "family": "cohort",
     "id": "6ea8c7eb23244f18",
@@ -37924,7 +37924,7 @@
      "value": 59033114
     },
     "rank": 1,
-    "scope_note": "Cohort of 523 players and 3314 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 523 players and 3315 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Joel Embiid's $67 million in 2028-29 would be the highest single-season salary by a center, passing Nikola Jokic's $59 million (2026-27).",
     "type": "sets",
     "value": 66974166
@@ -39497,7 +39497,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 18,
+    "comparison_size": 19,
     "contracted": false,
     "family": "rank_shift",
     "id": "b7d5d9c24586d178",
@@ -39506,7 +39506,7 @@
     "margin": null,
     "previous_holder": null,
     "rank": 1,
-    "scope_note": "Same franchise in consecutive seasons. Roster of 18 players with a salary on file.",
+    "scope_note": "Same franchise in consecutive seasons. Roster of 19 players with a salary on file.",
     "text": "Josh Giddey is the Bulls' highest-paid player in 2026-27 after ranking second on the roster in 2025-26.",
     "type": "rank_shift",
     "value": 25000000
@@ -41737,7 +41737,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3313,
+    "comparison_size": 3314,
     "contracted": false,
     "family": "cohort",
     "id": "f92b30c681bfa1b3",
@@ -41750,7 +41750,7 @@
      "value": 59033114
     },
     "rank": 3,
-    "scope_note": "Cohort of 523 players and 3314 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 523 players and 3315 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Karl-Anthony Towns' $57.1 million in 2026-27 is the third-highest single-season salary by a center, behind Nikola Jokic and Joel Embiid.",
     "type": "approaches",
     "value": 57078728
@@ -41995,7 +41995,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3314,
+    "comparison_size": 3315,
     "contracted": true,
     "family": "cohort",
     "id": "9cecaee0dd2aac8e",
@@ -42008,7 +42008,7 @@
      "value": 59033114
     },
     "rank": 1,
-    "scope_note": "Cohort of 523 players and 3314 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 523 players and 3315 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Karl-Anthony Towns' $61 million in 2027-28 would be the highest single-season salary by a center, passing Nikola Jokic's $59 million (2026-27).",
     "type": "sets",
     "value": 61015192
@@ -42779,7 +42779,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 14652,
+    "comparison_size": 14653,
     "contracted": true,
     "family": "cohort",
     "id": "8c5902a5fc664c32",
@@ -42792,7 +42792,7 @@
      "value": 62587158
     },
     "rank": 3,
-    "scope_note": "Cohort of 2519 players and 14652 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 2519 players and 14653 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Kawhi Leonard's $58.9 million in 2028-29 would be the third-highest single-season salary by a player from the United States, behind Stephen Curry and Stephen Curry.",
     "type": "approaches",
     "value": 58900000
@@ -43249,7 +43249,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 347,
+    "comparison_size": 348,
     "contracted": true,
     "family": "cohort",
     "id": "ab9b733f506ce568",
@@ -43262,7 +43262,7 @@
      "value": 41240250
     },
     "rank": 5,
-    "scope_note": "Cohort of 96 players and 347 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 96 players and 348 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Keegan Murray's $31.9 million in 2030-31 would be the fifth-highest single-season salary in the 2022 draft class, behind Chet Holmgren's $41.2 million (2026-27).",
     "type": "approaches",
     "value": 31862067
@@ -53629,7 +53629,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3249,
+    "comparison_size": 3250,
     "contracted": true,
     "family": "cohort",
     "id": "822d54b1ff8d2eb2",
@@ -53642,7 +53642,7 @@
      "value": 42846615
     },
     "rank": 4,
-    "scope_note": "Cohort of 974 players and 3249 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 974 players and 3250 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Naz Reid's $25 million in 2027-28 would be the fourth-highest single-season salary by an undrafted player, behind Fred VanVleet's $42.8 million (2024-25).",
     "type": "approaches",
     "value": 25000000
@@ -53651,7 +53651,7 @@
   "Naz Reid|2028-29": [
    {
     "ahead": null,
-    "comparison_size": 3249,
+    "comparison_size": 3250,
     "contracted": true,
     "family": "cohort",
     "id": "dcd99ad4f7d6fc5e",
@@ -53664,7 +53664,7 @@
      "value": 42846615
     },
     "rank": 4,
-    "scope_note": "Cohort of 974 players and 3249 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 974 players and 3250 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Naz Reid's $26.7 million in 2028-29 would be the fourth-highest single-season salary by an undrafted player, behind Fred VanVleet's $42.8 million (2024-25).",
     "type": "approaches",
     "value": 26724138
@@ -53689,7 +53689,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3249,
+    "comparison_size": 3250,
     "contracted": true,
     "family": "cohort",
     "id": "45ca6fcd4bfb98c1",
@@ -53702,7 +53702,7 @@
      "value": 42846615
     },
     "rank": 4,
-    "scope_note": "Cohort of 974 players and 3249 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 974 players and 3250 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Naz Reid's $28.4 million in 2029-30 would be the fourth-highest single-season salary by an undrafted player, behind Fred VanVleet's $42.8 million (2024-25).",
     "type": "approaches",
     "value": 28448276
@@ -54670,7 +54670,7 @@
      "value": 47607350
     },
     "rank": 1,
-    "scope_note": "Cohort of 491 players and 3314 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 491 players and 3315 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Nikola Jokic's $47.6 million in 2023-24 tied the highest single-season salary by a center, matching Joel Embiid's $47.6 million (2023-24).",
     "type": "ties",
     "value": 47607350
@@ -54864,7 +54864,7 @@
      "value": 51415938
     },
     "rank": 1,
-    "scope_note": "Cohort of 505 players and 3314 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 505 players and 3315 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Nikola Jokic's $51.4 million in 2024-25 tied the highest single-season salary by a center, matching Joel Embiid's $51.4 million (2024-25).",
     "type": "ties",
     "value": 51415938
@@ -55058,7 +55058,7 @@
      "value": 55224526
     },
     "rank": 1,
-    "scope_note": "Cohort of 519 players and 3314 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 519 players and 3315 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Nikola Jokic's $55.2 million in 2025-26 tied the highest single-season salary by a center, matching Joel Embiid's $55.2 million (2025-26).",
     "type": "ties",
     "value": 55224526
@@ -55127,7 +55127,7 @@
   "Nikola Jokic|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 561,
+    "comparison_size": 562,
     "contracted": false,
     "family": "cap_context",
     "id": "239bac848a894b82",
@@ -55367,7 +55367,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3313,
+    "comparison_size": 3314,
     "contracted": false,
     "family": "cohort",
     "id": "a02f2278ece240aa",
@@ -55380,7 +55380,7 @@
      "value": 57736350
     },
     "rank": 1,
-    "scope_note": "Cohort of 523 players and 3314 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 523 players and 3315 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Nikola Jokic's $59 million in 2026-27 is the highest single-season salary by a center, passing Joel Embiid's $57.7 million (2026-27).",
     "type": "sets",
     "value": 59033114
@@ -55565,7 +55565,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 3314,
+    "comparison_size": 3315,
     "contracted": true,
     "family": "cohort",
     "id": "4b4bf61981da773b",
@@ -55578,7 +55578,7 @@
      "value": 59033114
     },
     "rank": 1,
-    "scope_note": "Cohort of 523 players and 3314 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 523 players and 3315 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Nikola Jokic's $62.8 million in 2027-28 would be the highest single-season salary by a center, breaking his own mark of $59 million in 2026-27.",
     "type": "sets",
     "value": 62841702
@@ -57296,7 +57296,7 @@
      "value": 9891240
     },
     "rank": 1,
-    "scope_note": "Cohort of 79 players and 347 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 79 players and 348 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Paolo Banchero's $11.1 million in 2022-23 was the highest single-season salary in the 2022 draft class, passing Chet Holmgren's $9.9 million (2022-23).",
     "type": "sets",
     "value": 11055120
@@ -57318,7 +57318,7 @@
      "value": 11055120
     },
     "rank": 1,
-    "scope_note": "Cohort of 89 players and 347 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 89 players and 348 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Paolo Banchero's $11.6 million in 2023-24 was the highest single-season salary in the 2022 draft class, breaking his own mark of $11.1 million in 2022-23.",
     "type": "sets",
     "value": 11608080
@@ -57340,7 +57340,7 @@
      "value": 11608080
     },
     "rank": 1,
-    "scope_note": "Cohort of 92 players and 347 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 92 players and 348 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Paolo Banchero's $12.2 million in 2024-25 was the highest single-season salary in the 2022 draft class, breaking his own mark of $11.6 million in 2023-24.",
     "type": "sets",
     "value": 12160800
@@ -57409,7 +57409,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 346,
+    "comparison_size": 347,
     "contracted": false,
     "family": "cohort",
     "id": "325a0c9401ecfeec",
@@ -57422,7 +57422,7 @@
      "value": 41240250
     },
     "rank": 1,
-    "scope_note": "Cohort of 96 players and 347 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 96 players and 348 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Paolo Banchero's $41.2 million in 2026-27 ties the highest single-season salary in the 2022 draft class, matching Chet Holmgren's $41.2 million (2026-27).",
     "type": "ties",
     "value": 41240250
@@ -57507,7 +57507,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 347,
+    "comparison_size": 348,
     "contracted": true,
     "family": "cohort",
     "id": "fdb95124a824d377",
@@ -57520,7 +57520,7 @@
      "value": 41240250
     },
     "rank": 1,
-    "scope_note": "Cohort of 96 players and 347 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 96 players and 348 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Paolo Banchero's $44.5 million in 2027-28 would be the highest single-season salary in the 2022 draft class, ahead of Chet Holmgren's $41.2 million (2026-27).",
     "type": "sets",
     "value": 44539470
@@ -57625,7 +57625,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 347,
+    "comparison_size": 348,
     "contracted": true,
     "family": "cohort",
     "id": "c9777fcfa578f9aa",
@@ -57638,7 +57638,7 @@
      "value": 41240250
     },
     "rank": 1,
-    "scope_note": "Cohort of 96 players and 347 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 96 players and 348 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Paolo Banchero's $47.8 million in 2028-29 would be the highest single-season salary in the 2022 draft class, ahead of Chet Holmgren's $41.2 million (2026-27).",
     "type": "sets",
     "value": 47838690
@@ -57743,7 +57743,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 347,
+    "comparison_size": 348,
     "contracted": true,
     "family": "cohort",
     "id": "ffc5aa5bcdd27da5",
@@ -57756,7 +57756,7 @@
      "value": 41240250
     },
     "rank": 1,
-    "scope_note": "Cohort of 96 players and 347 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 96 players and 348 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Paolo Banchero's $51.1 million in 2029-30 would be the highest single-season salary in the 2022 draft class, ahead of Chet Holmgren's $41.2 million (2026-27).",
     "type": "sets",
     "value": 51137910
@@ -57913,7 +57913,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 347,
+    "comparison_size": 348,
     "contracted": true,
     "family": "cohort",
     "id": "6fbad36d0878c284",
@@ -57926,7 +57926,7 @@
      "value": 41240250
     },
     "rank": 1,
-    "scope_note": "Cohort of 96 players and 347 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 96 players and 348 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Paolo Banchero's $54.4 million in 2030-31 would be the highest single-season salary in the 2022 draft class, ahead of Chet Holmgren's $41.2 million (2026-27).",
     "type": "sets",
     "value": 54437130
@@ -59130,7 +59130,7 @@
      "value": 18100000
     },
     "rank": 1,
-    "scope_note": "Cohort of 15 players and 87 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 15 players and 88 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Paul George's $19.3 million in 2017-18 was the highest single-season salary among players out of Fresno State, breaking his own mark of $18.1 million in 2016-17.",
     "type": "sets",
     "value": 19300000
@@ -59168,7 +59168,7 @@
      "value": 19300000
     },
     "rank": 1,
-    "scope_note": "Cohort of 15 players and 87 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 15 players and 88 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Paul George's $30.6 million in 2018-19 was the highest single-season salary among players out of Fresno State, breaking his own mark of $19.3 million in 2017-18.",
     "type": "sets",
     "value": 30560700
@@ -59226,7 +59226,7 @@
      "value": 30560700
     },
     "rank": 1,
-    "scope_note": "Cohort of 16 players and 87 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 16 players and 88 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Paul George's $33 million in 2019-20 was the highest single-season salary among players out of Fresno State, breaking his own mark of $30.6 million in 2018-19.",
     "type": "sets",
     "value": 33005556
@@ -59304,7 +59304,7 @@
      "value": 33005556
     },
     "rank": 1,
-    "scope_note": "Cohort of 16 players and 87 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 16 players and 88 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Paul George's $35.5 million in 2020-21 was the highest single-season salary among players out of Fresno State, breaking his own mark of $33 million in 2019-20.",
     "type": "sets",
     "value": 35450412
@@ -59382,7 +59382,7 @@
      "value": 35450412
     },
     "rank": 1,
-    "scope_note": "Cohort of 16 players and 87 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 16 players and 88 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Paul George's $39.3 million in 2021-22 was the highest single-season salary among players out of Fresno State, breaking his own mark of $35.5 million in 2020-21.",
     "type": "sets",
     "value": 39344970
@@ -59460,7 +59460,7 @@
      "value": 39344970
     },
     "rank": 1,
-    "scope_note": "Cohort of 17 players and 87 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 17 players and 88 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Paul George's $42.5 million in 2022-23 was the highest single-season salary among players out of Fresno State, breaking his own mark of $39.3 million in 2021-22.",
     "type": "sets",
     "value": 42492492
@@ -59538,7 +59538,7 @@
      "value": 42492492
     },
     "rank": 1,
-    "scope_note": "Cohort of 17 players and 87 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 17 players and 88 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Paul George's $45.6 million in 2023-24 was the highest single-season salary among players out of Fresno State, breaking his own mark of $42.5 million in 2022-23.",
     "type": "sets",
     "value": 45640084
@@ -59616,7 +59616,7 @@
      "value": 45640084
     },
     "rank": 1,
-    "scope_note": "Cohort of 17 players and 87 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 17 players and 88 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Paul George's $49.2 million in 2024-25 was the highest single-season salary among players out of Fresno State, breaking his own mark of $45.6 million in 2023-24.",
     "type": "sets",
     "value": 49205800
@@ -59694,7 +59694,7 @@
      "value": 49205800
     },
     "rank": 1,
-    "scope_note": "Cohort of 17 players and 87 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 17 players and 88 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Paul George's $51.7 million in 2025-26 was the highest single-season salary among players out of Fresno State, breaking his own mark of $49.2 million in 2024-25.",
     "type": "sets",
     "value": 51666090
@@ -59903,7 +59903,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 86,
+    "comparison_size": 87,
     "contracted": false,
     "family": "cohort",
     "id": "fdbdcb38a8714e4f",
@@ -59916,7 +59916,7 @@
      "value": 51666090
     },
     "rank": 1,
-    "scope_note": "Cohort of 17 players and 87 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 17 players and 88 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Paul George's $54.1 million in 2026-27 is the highest single-season salary among players out of Fresno State, breaking his own mark of $51.7 million in 2025-26.",
     "type": "sets",
     "value": 54126380
@@ -60001,7 +60001,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 87,
+    "comparison_size": 88,
     "contracted": true,
     "family": "cohort",
     "id": "0099325ac19088fc",
@@ -60014,7 +60014,7 @@
      "value": 54126380
     },
     "rank": 1,
-    "scope_note": "Cohort of 17 players and 87 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 17 players and 88 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Paul George's $56.6 million in 2027-28 would be the highest single-season salary among players out of Fresno State, breaking his own mark of $54.1 million in 2026-27.",
     "type": "sets",
     "value": 56586670
@@ -61490,7 +61490,7 @@
      "value": 31650600
     },
     "rank": 1,
-    "scope_note": "Cohort of 475 players and 3314 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 475 players and 3315 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Rudy Gobert's $35.3 million in 2021-22 was the highest single-season salary by a center, passing Karl-Anthony Towns' $31.7 million (2021-22).",
     "type": "sets",
     "value": 35344828
@@ -61604,7 +61604,7 @@
      "value": 35344828
     },
     "rank": 1,
-    "scope_note": "Cohort of 483 players and 3314 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 483 players and 3315 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Rudy Gobert's $38.2 million in 2022-23 was the highest single-season salary by a center, breaking his own mark of $35.3 million in 2021-22.",
     "type": "sets",
     "value": 38172414
@@ -65070,7 +65070,7 @@
      "value": 33285709
     },
     "rank": 1,
-    "scope_note": "Cohort of 1874 players and 14652 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 1874 players and 14653 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Stephen Curry's $34.7 million in 2017-18 was the highest single-season salary by a player from the United States, passing LeBron James' $33.3 million (2017-18).",
     "type": "sets",
     "value": 34682550
@@ -65280,7 +65280,7 @@
      "value": 35665000
     },
     "rank": 1,
-    "scope_note": "Cohort of 1955 players and 14652 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 1955 players and 14653 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Stephen Curry's $37.5 million in 2018-19 was the highest single-season salary by a player from the United States, passing Russell Westbrook's $35.7 million (2018-19).",
     "type": "sets",
     "value": 37457154
@@ -65458,7 +65458,7 @@
      "value": 38506482
     },
     "rank": 1,
-    "scope_note": "Cohort of 2028 players and 14652 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 2028 players and 14653 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Stephen Curry's $40.2 million in 2019-20 was the highest single-season salary by a player from the United States, passing Chris Paul's $38.5 million (2019-20).",
     "type": "sets",
     "value": 40231758
@@ -65636,7 +65636,7 @@
      "value": 41358814
     },
     "rank": 1,
-    "scope_note": "Cohort of 2099 players and 14652 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 2099 players and 14653 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Stephen Curry's $43 million in 2020-21 was the highest single-season salary by a player from the United States, passing Chris Paul's $41.4 million (2020-21).",
     "type": "sets",
     "value": 43006362
@@ -65814,7 +65814,7 @@
      "value": 44310840
     },
     "rank": 1,
-    "scope_note": "Cohort of 2190 players and 14652 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 2190 players and 14653 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Stephen Curry's $45.8 million in 2021-22 was the highest single-season salary by a player from the United States, passing James Harden's $44.3 million (2021-22).",
     "type": "sets",
     "value": 45780966
@@ -65992,7 +65992,7 @@
      "value": 47345760
     },
     "rank": 1,
-    "scope_note": "Cohort of 2260 players and 14652 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 2260 players and 14653 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Stephen Curry's $48.1 million in 2022-23 was the highest single-season salary by a player from the United States, passing John Wall's $47.3 million (2022-23).",
     "type": "sets",
     "value": 48070014
@@ -66154,7 +66154,7 @@
      "value": 48070014
     },
     "rank": 1,
-    "scope_note": "Cohort of 2334 players and 14652 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 2334 players and 14653 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Stephen Curry's $51.9 million in 2023-24 was the highest single-season salary by a player from the United States, breaking his own mark of $48.1 million in 2022-23.",
     "type": "sets",
     "value": 51915615
@@ -66332,7 +66332,7 @@
      "value": 51915615
     },
     "rank": 1,
-    "scope_note": "Cohort of 2395 players and 14652 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 2395 players and 14653 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Stephen Curry's $55.8 million in 2024-25 was the highest single-season salary by a player from the United States, breaking his own mark of $51.9 million in 2023-24.",
     "type": "sets",
     "value": 55761217
@@ -66494,7 +66494,7 @@
      "value": 55761217
     },
     "rank": 1,
-    "scope_note": "Cohort of 2477 players and 14652 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 2477 players and 14653 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Stephen Curry's $59.6 million in 2025-26 was the highest single-season salary by a player from the United States, breaking his own mark of $55.8 million in 2024-25.",
     "type": "sets",
     "value": 59606817
@@ -66583,7 +66583,7 @@
   "Stephen Curry|2026-27": [
    {
     "ahead": null,
-    "comparison_size": 561,
+    "comparison_size": 562,
     "contracted": false,
     "family": "cap_context",
     "id": "858ea700ecf4aec3",
@@ -66799,7 +66799,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 14651,
+    "comparison_size": 14652,
     "contracted": false,
     "family": "cohort",
     "id": "3c9d8dd1eca4ef9b",
@@ -66812,7 +66812,7 @@
      "value": 59606817
     },
     "rank": 1,
-    "scope_note": "Cohort of 2519 players and 14652 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 2519 players and 14653 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Stephen Curry's $62.6 million in 2026-27 is the highest single-season salary by a player from the United States, breaking his own mark of $59.6 million in 2025-26.",
     "type": "sets",
     "value": 62587158
@@ -67003,7 +67003,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 14652,
+    "comparison_size": 14653,
     "contracted": true,
     "family": "cohort",
     "id": "073fbe0e7a2d4df7",
@@ -67016,7 +67016,7 @@
      "value": 62587158
     },
     "rank": 2,
-    "scope_note": "Cohort of 2519 players and 14652 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 2519 players and 14653 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Stephen Curry's $60.2 million in 2028-29 would be the second-highest single-season salary by a player from the United States, behind his own $62.6 million (2026-27).",
     "type": "approaches",
     "value": 60156000
@@ -67404,7 +67404,7 @@
      "value": 29542010
     },
     "rank": 1,
-    "scope_note": "Cohort of 459 players and 3314 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 459 players and 3315 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Steven Adams' $29.6 million in 2020-21 was the highest single-season salary by a center, passing Joel Embiid's $29.5 million (2020-21).",
     "type": "sets",
     "value": 29592695
@@ -70053,7 +70053,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 14652,
+    "comparison_size": 14653,
     "contracted": true,
     "family": "cohort",
     "id": "ca6d3b2f3778c00b",
@@ -70066,7 +70066,7 @@
      "value": 62587158
     },
     "rank": 5,
-    "scope_note": "Cohort of 2519 players and 14652 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 2519 players and 14653 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Trae Young's $58.4 million in 2029-30 would be the fifth-highest single-season salary by a player from the United States, behind Stephen Curry's $62.6 million (2026-27).",
     "type": "approaches",
     "value": 58396194
@@ -72193,7 +72193,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 346,
+    "comparison_size": 347,
     "contracted": false,
     "family": "cohort",
     "id": "56ed84544fd2cc44",
@@ -72206,7 +72206,7 @@
      "value": 41240250
     },
     "rank": 5,
-    "scope_note": "Cohort of 96 players and 347 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 96 players and 348 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Walker Kessler's $30.1 million in 2026-27 is the fifth-highest single-season salary in the 2022 draft class, behind Chet Holmgren's $41.2 million (2026-27).",
     "type": "approaches",
     "value": 30108821
@@ -72255,7 +72255,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 347,
+    "comparison_size": 348,
     "contracted": true,
     "family": "cohort",
     "id": "745567a7624c5311",
@@ -72268,7 +72268,7 @@
      "value": 41240250
     },
     "rank": 5,
-    "scope_note": "Cohort of 96 players and 347 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 96 players and 348 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Walker Kessler's $31.6 million in 2027-28 would be the fifth-highest single-season salary in the 2022 draft class, behind Chet Holmgren's $41.2 million (2026-27).",
     "type": "approaches",
     "value": 31614262
@@ -72333,7 +72333,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 347,
+    "comparison_size": 348,
     "contracted": true,
     "family": "cohort",
     "id": "2ee022bd44a80c16",
@@ -72346,7 +72346,7 @@
      "value": 41240250
     },
     "rank": 5,
-    "scope_note": "Cohort of 96 players and 347 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 96 players and 348 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Walker Kessler's $33.1 million in 2028-29 would be the fifth-highest single-season salary in the 2022 draft class, behind Chet Holmgren's $41.2 million (2026-27).",
     "type": "approaches",
     "value": 33119703
@@ -72395,7 +72395,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 347,
+    "comparison_size": 348,
     "contracted": true,
     "family": "cohort",
     "id": "b4a764e8bc3b59d5",
@@ -72408,7 +72408,7 @@
      "value": 41240250
     },
     "rank": 5,
-    "scope_note": "Cohort of 96 players and 347 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
+    "scope_note": "Cohort of 96 players and 348 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. This salary is contracted, not money already paid.",
     "text": "Walker Kessler's $34.6 million in 2029-30 would be the fifth-highest single-season salary in the 2022 draft class, behind Chet Holmgren's $41.2 million (2026-27).",
     "type": "approaches",
     "value": 34625144
@@ -72490,7 +72490,7 @@
      "value": 17145838
     },
     "rank": 1,
-    "scope_note": "Cohort of 587 players and 3249 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 587 players and 3250 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Wesley Matthews' $17.9 million in 2017-18 was the highest single-season salary by an undrafted player, breaking his own mark of $17.1 million in 2016-17.",
     "type": "sets",
     "value": 17884175
@@ -72528,7 +72528,7 @@
      "value": 19245370
     },
     "rank": 1,
-    "scope_note": "Cohort of 635 players and 3249 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
+    "scope_note": "Cohort of 635 players and 3250 player seasons. Comparison set covers seasons through 2026-27; contracted future seasons are excluded because that money has not been paid. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms.",
     "text": "Wesley Matthews' $19.4 million in 2018-19 was the highest single-season salary by an undrafted player, passing Tyler Johnson's $19.2 million (2018-19).",
     "type": "sets",
     "value": 19360228
@@ -74098,7 +74098,6 @@
     "Ochai Agbaji",
     "Olivier Sarr",
     "Omer Yurtseven",
-    "Orlando Robinson",
     "Pat Connaughton",
     "Patrick Baldwin",
     "RJ Luis",
