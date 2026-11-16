@@ -1,5 +1,5 @@
 {
- "built": "2026-11-15T13:15:13.162940",
+ "built": "2026-11-16T14:25:42.039148",
  "season": "2026-27",
  "players": [
   {
@@ -3040,11 +3040,16 @@
   },
   {
    "player": "Keshon Gilbert",
-   "team": "ATL",
-   "contract": "two_way",
-   "current_salary": 678882,
-   "dead_money": [],
-   "total": 678882,
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "ATL",
+     "amount": 105344
+    }
+   ],
+   "total": 105344,
    "birth_date": "2003-06-30"
   },
   {
@@ -3475,7 +3480,7 @@
    "current_salary": 678882,
    "dead_money": [],
    "total": 678882,
-   "birth_date": null
+   "birth_date": "2004-02-04"
   },
   {
    "player": "Malik Monk",
@@ -4287,6 +4292,15 @@
    "birth_date": "2000-03-21"
   },
   {
+   "player": "Rafael Castro",
+   "team": "ATL",
+   "contract": "two_way",
+   "current_salary": 577440,
+   "dead_money": [],
+   "total": 577440,
+   "birth_date": null
+  },
+  {
    "player": "Rasheer Fleming",
    "team": "PHX",
    "contract": "guaranteed",
@@ -4908,7 +4922,7 @@
    "current_salary": 678882,
    "dead_money": [],
    "total": 678882,
-   "birth_date": null
+   "birth_date": "2003-12-11"
   },
   {
    "player": "Tre Johnson",

@@ -345,10 +345,6 @@
       "salary": 1131970
      },
      {
-      "player": "AK Okereke",
-      "salary": 636435
-     },
-     {
       "player": "Ben Simmons",
       "salary": 636435
      },
@@ -366,6 +362,10 @@
      },
      {
       "player": "Malik Dia",
+      "salary": 636435
+     },
+     {
+      "player": "Rafael Castro",
       "salary": 636435
      },
      {
@@ -450,11 +450,6 @@
  "filled_from_current_sheet_missing_from_tab": {
   "already_answered_for_by_the_tab_or_the_dead_sheet": 530,
   "left_out_for_no_games": [
-   {
-    "player": "AK Okereke",
-    "salary": 636435,
-    "season": "2025-26"
-   },
    {
     "player": "Arthur Kaluma",
     "salary": 141554,
@@ -548,6 +543,11 @@
    {
     "player": "Quadir Copeland",
     "salary": 157640,
+    "season": "2025-26"
+   },
+   {
+    "player": "Rafael Castro",
+    "salary": 636435,
     "season": "2025-26"
    },
    {
@@ -1566,7 +1566,7 @@
    "historical": 624
   },
   "2026-27": {
-   "current_and_dead": 563,
+   "current_and_dead": 564,
    "future": 526
   },
   "2027-28": {
