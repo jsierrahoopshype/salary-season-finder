@@ -2,7 +2,7 @@
  "cutover": {
   "current": {
    "2024-25": {
-    "also_in_the_historical_tab": 451,
+    "also_in_the_historical_tab": 450,
     "dollars_offered": 5191635517,
     "missing_from_the_historical_tab": [
      {
@@ -199,6 +199,10 @@
      },
      {
       "player": "Jahmai Mashack",
+      "salary": 578577
+     },
+     {
+      "player": "Jonas Aidoo",
       "salary": 578577
      },
      {
@@ -1566,7 +1570,7 @@
    "historical": 624
   },
   "2026-27": {
-   "current_and_dead": 564,
+   "current_and_dead": 565,
    "future": 526
   },
   "2027-28": {

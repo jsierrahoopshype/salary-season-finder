@@ -1,5 +1,5 @@
 {
- "built": "2026-11-16T14:25:42.039148",
+ "built": "2026-11-17T15:18:10.138336",
  "season": "2026-27",
  "players": [
   {
@@ -2627,6 +2627,15 @@
    "birth_date": "2004-12-07"
   },
   {
+   "player": "Jonas Aidoo",
+   "team": "UTA",
+   "contract": "two_way",
+   "current_salary": 573538,
+   "dead_money": [],
+   "total": 573538,
+   "birth_date": null
+  },
+  {
    "player": "Jonas Valanciunas",
    "team": null,
    "contract": "dead_money_only",
@@ -3046,10 +3055,10 @@
    "dead_money": [
     {
      "team": "ATL",
-     "amount": 105344
+     "amount": 109245
     }
    ],
-   "total": 105344,
+   "total": 109245,
    "birth_date": "2003-06-30"
   },
   {
@@ -3535,7 +3544,7 @@
   {
    "player": "Mario Hezonja",
    "team": "CLE",
-   "contract": "non_guaranteed",
+   "contract": "guaranteed",
    "current_salary": 2845883,
    "dead_money": [],
    "total": 2845883,
@@ -4971,11 +4980,16 @@
   },
   {
    "player": "Trey Alexander",
-   "team": "UTA",
-   "contract": "two_way",
-   "current_salary": 678882,
-   "dead_money": [],
-   "total": 678882,
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "UTA",
+     "amount": 109245
+    }
+   ],
+   "total": 109245,
    "birth_date": "2003-05-02"
   },
   {
