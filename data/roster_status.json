@@ -1,5 +1,5 @@
 {
- "built": "2026-11-17T15:18:10.138336",
+ "built": "2026-11-18T14:53:49.786802",
  "season": "2026-27",
  "players": [
   {
@@ -451,10 +451,15 @@
   },
   {
    "player": "Blake Wesley",
-   "team": "LAC",
-   "contract": "ten_day",
-   "current_salary": 150898,
-   "dead_money": [],
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "LAC",
+     "amount": 150898
+    }
+   ],
    "total": 150898,
    "birth_date": "2003-03-16"
   },
@@ -2630,9 +2635,9 @@
    "player": "Jonas Aidoo",
    "team": "UTA",
    "contract": "two_way",
-   "current_salary": 573538,
+   "current_salary": 569637,
    "dead_money": [],
-   "total": 573538,
+   "total": 569637,
    "birth_date": null
   },
   {
@@ -4304,9 +4309,9 @@
    "player": "Rafael Castro",
    "team": "ATL",
    "contract": "two_way",
-   "current_salary": 577440,
+   "current_salary": 573538,
    "dead_money": [],
-   "total": 577440,
+   "total": 573538,
    "birth_date": null
   },
   {
