@@ -1,7 +1,7 @@
 {
- "changes_posted": 3,
- "last_commit": "e207c53cda9d056d8f27db73d88daaa659d3ca9f",
- "last_run": "2026-11-17T15:22:27Z",
+ "changes_posted": 2,
+ "last_commit": "4d404ab48241a8884da94ff16c2f76652405aadf",
+ "last_run": "2026-11-18T14:58:26Z",
  "league_year_opened": "2026-07-01",
  "raises": [
   {
@@ -98,6 +98,12 @@
    "amount": 588898,
    "date": "2026-11-04",
    "player": "Dalen Terry",
+   "season": "2027-28"
+  },
+  {
+   "amount": 146444,
+   "date": "2026-11-18",
+   "player": "Jonas Aidoo",
    "season": "2027-28"
   },
   {
