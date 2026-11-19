@@ -2,7 +2,7 @@
  "cutover": {
   "current": {
    "2024-25": {
-    "also_in_the_historical_tab": 450,
+    "also_in_the_historical_tab": 449,
     "dollars_offered": 5191635517,
     "missing_from_the_historical_tab": [
      {
@@ -24,6 +24,10 @@
      {
       "player": "Tyler Burton",
       "salary": 23000000
+     },
+     {
+      "player": "Zack Austin",
+      "salary": 8120000
      },
      {
       "player": "Mouhamadou Gueye",
@@ -1570,7 +1574,7 @@
    "historical": 624
   },
   "2026-27": {
-   "current_and_dead": 565,
+   "current_and_dead": 566,
    "future": 525
   },
   "2027-28": {

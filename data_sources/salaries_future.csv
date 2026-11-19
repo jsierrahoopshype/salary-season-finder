@@ -84,7 +84,7 @@ Matas Buzelis,Chicago,,,,"$5,715,360","$5,715,360",GUARANTEED,"$7,584,283","$7,5
 Noa Essengue,Chicago,,,,"$5,701,200","$5,701,200",GUARANTEED,"$5,972,760","$5,972,760",GUARANTEED,"$8,230,463",$0,TEAM OPT,,,,,,,"$17,103,480"
 Dailyn Swain,Chicago,,,,"$4,965,480","$4,965,480",GUARANTEED,"$5,213,760","$15,485,760",GUARANTEED,"$5,461,920",$0,TEAM OPT,"$8,373,123",$0,TEAM OPT,,,,"$11,161,142"
 Leonard Miller,Chicago,,,,"$2,406,205","$2,406,205",GUARANTEED,,,,,,,,,,,,,"$6,519,739"
-Orlando Robinson,Chicago,,,,"$2,263,472",$0,NOT G,,,,,,,,,,,,,$0
+Orlando Robinson,Chicago,,,,"$2,263,472",$0,NOT G,"$2,988,178",$0,TEAM OPT,,,,,,,,,,$0
 Jordan Hawkins,Chicago,,,,"$678,882",$0,TWO-WAY,,,,,,,,,,,,,"$9,267,000"
 Jaylin Sellers,Chicago,,,,"$678,882",$0,TWO-WAY,,,,,,,,,,,,,$0
 Tobe Awaka,Chicago,,,,"$678,882",$0,TWO-WAY,,,,,,,,,,,,,$0
@@ -104,7 +104,7 @@ Meleek Thomas,Cleveland,,,,"$1,357,763","$1,357,763",GUARANTEED,"$2,294,370","$2
 Khalifa Diop,Cleveland,,,,"$1,357,763","$1,357,763",GUARANTEED,"$2,294,371",$0,NOT G,"$2,694,363",$0,NOT G,"$2,918,152",$0,TEAM OPT,,,,"$1,357,763"
 Ernest Udeh,Cleveland,,,,"$678,882",$0,TWO-WAY,,,,,,,,,,,,,$0
 Norchad Omier,Cleveland,,,,"$620,358",$0,TWO-WAY,"$716,081",$0,TWO-WAY,,,,,,,,,,"$26,080,921"
-Riley Minix,Cleveland,,,,"$608,653",$0,TWO-WAY,"$716,081",$0,TWO-WAY,,,,,,,,,,$0
+Zack Austin,Cleveland,,,,"$565,735",$0,TWO-WAY,,,,,,,,,,,,,"$8,120,000"
 Kyrie Irving,Dallas,,,,"$39,491,282","$39,491,282",GUARANTEED,"$42,416,562","$42,416,562",PLAYER OPT,,,,,,,,,,"$158,473,846"
 PJ Washington,Dallas,,,,"$19,813,044","$19,813,044",GUARANTEED,"$21,398,088","$21,398,088",GUARANTEED,"$22,983,132","$22,983,132",GUARANTEED,"$24,568,176","$24,568,176",GUARANTEED,,,,"$118,414,614"
 Daniel Gafford,Dallas,,,,"$17,263,584","$17,263,584",GUARANTEED,"$18,126,763","$18,126,763",GUARANTEED,"$18,989,942","$18,989,942",GUARANTEED,,,,,,,"$82,160,769"
@@ -228,7 +228,6 @@ Baba Miller,LA Clippers,,,,"$1,705,630","$1,705,630",GUARANTEED,"$2,294,370","$2
 Jalen Pickett,LA Clippers,,,,"$678,882",$0,TWO-WAY,,,,,,,,,,,,,"$4,113,534"
 Cam Christie,LA Clippers,,,,"$678,882",$0,TWO-WAY,,,,,,,,,,,,,"$1,131,970"
 Nick Martinelli,LA Clippers,,,,"$678,882",$0,TWO-WAY,"$716,081",$0,TWO-WAY,,,,,,,,,,$0
-Blake Wesley,,,,,,,,,,,,,,,,,,,,"$5,003,150"
 Luka Doncic,LA Lakers,,,,"$51,033,600","$51,033,600",GUARANTEED,"$55,116,288","$55,116,288",GUARANTEED,"$59,198,976","$59,198,976",PLAYER OPT,,,,,,,"$254,380,464"
 Austin Reaves,LA Lakers,,,,"$41,240,250","$41,240,250",GUARANTEED,"$42,954,030","$42,954,030",GUARANTEED,"$46,253,250","$46,253,250",GUARANTEED,"$49,552,470","$49,552,470",PLAYER OPT,,,,"$206,913,936"
 Walker Kessler,LA Lakers,,,,"$30,108,821","$30,108,821",GUARANTEED,"$31,614,262","$31,614,262",GUARANTEED,"$33,119,703","$33,119,703",GUARANTEED,"$34,625,144","$34,625,144",PLAYER OPT,,,,"$137,312,788"
@@ -538,58 +537,59 @@ Nicolas Batum,,,,,,,,,,,,,,,,,,,,"$10,269,600"
 Guerschon Yabusele,,,,,,,,,,,,,,,,,,,,"$7,587,519"
 Jaden Ivey,,,,,,,,,,,,,,,,,,,,"$21,395,348"
 Cam Thomas,,,,,,,,,,,,,,,,,,,,"$4,041,249"
-Aaron Holiday,,,,,,,,,,,,,,,,,,,,"$7,748,921"
 Dwight Powell,,,,,,,,,,,,,,,,,,,,"$8,000,000"
+Aaron Holiday,,,,,,,,,,,,,,,,,,,,"$7,748,921"
 Ochai Agbaji,,,,,,,,,,,,,,,,,,,,"$10,693,805"
 Sharife Cooper,,,,,,,,,,,,,,,,,,,,$0
 Vince Williams Jr,,,,,,,,,,,,,,,,,,,,"$2,120,693"
 Kevin Love,,,,,,,,,,,,,,,,,,,,"$8,000,000"
 Gabe Vincent,,,,,,,,,,,,,,,,,,,,"$22,500,000"
-Kelly Olynyk,,,,,,,,,,,,,,,,,,,,"$26,250,000"
 Rob Dillingham,,,,,,,,,,,,,,,,,,,,"$12,839,040"
-Jeremy Sochan,,,,,,,,,,,,,,,,,,,,"$6,376,668"
+Kelly Olynyk,,,,,,,,,,,,,,,,,,,,"$26,250,000"
 Dalen Terry,,,,,,,,,,,,,,,,,,,,"$26,080,921"
-Tyrese Martin,,,,,,,,,,,,,,,,,,,,"$635,853"
+Jeremy Sochan,,,,,,,,,,,,,,,,,,,,"$6,376,668"
 Ethan Thompson,,,,,,,,,,,,,,,,,,,,$0
+Tyrese Martin,,,,,,,,,,,,,,,,,,,,"$635,853"
 Cameron Payne,,,,,,,,,,,,,,,,,,,,"$3,003,427"
 Lonzo Ball,,,,,,,,,,,,,,,,,,,,"$21,395,348"
 Blake Hinson,,,,,,,,,,,,,,,,,,,,$0
 Tyson Etienne,,,,,,,,,,,,,,,,,,,,$0
 Amir Coffey,,,,,,,,,,,,,,,,,,,,"$6,812,707"
 Killian Hayes,,,,,,,,,,,,,,,,,,,,"$444,658"
-Drew Eubanks,,,,,,,,,,,,,,,,,,,,"$8,080,921"
 Bez Mbeng,,,,,,,,,,,,,,,,,,,,"$73,153"
+Drew Eubanks,,,,,,,,,,,,,,,,,,,,"$8,080,921"
 Nick Smith,,,,,,,,,,,,,,,,,,,,"$2,600,397"
-Keaton Wallace,,,,,,,,,,,,,,,,,,,,"$2,296,274"
+EJ Liddell,,,,,,,,,,,,,,,,,,,,$0
 Kennedy Chandler,,,,,,,,,,,,,,,,,,,,$0
 Lachlan Olbrich,,,,,,,,,,,,,,,,,,,,$0
 Gary Harris,,,,,,,,,,,,,,,,,,,,"$11,134,153"
-EJ Liddell,,,,,,,,,,,,,,,,,,,,$0
+Keaton Wallace,,,,,,,,,,,,,,,,,,,,"$2,296,274"
 Taelon Peter,,,,,,,,,,,,,,,,,,,,$0
 Maxi Kleber,,,,,,,,,,,,,,,,,,,,"$22,000,000"
+Blake Wesley,,,,,,,,,,,,,,,,,,,,"$5,003,150"
 AJ Lawson,,,,,,,,,,,,,,,,,,,,"$127,343"
 Pat Connaughton,,,,,,,,,,,,,,,,,,,,"$10,739,683"
 Doug McDermott,,,,,,,,,,,,,,,,,,,,"$6,937,924"
 Lindy Waters III,,,,,,,,,,,,,,,,,,,,"$4,658,433"
 Christian Koloko,,,,,,,,,,,,,,,,,,,,$0
 JD Davison,,,,,,,,,,,,,,,,,,,,"$94,027"
-D'Angelo Russell,,,,,,,,,,,,,,,,,,,,"$24,377,307"
 John Poulakidas,,,,,,,,,,,,,,,,,,,,"$26,080,921"
 Malaki Branham,,,,,,,,,,,,,,,,,,,,"$3,217,920"
 Tyler Burton,,,,,,,,,,,,,,,,,,,,"$26,080,921"
 Tyler Burton,,,,,,,,,,,,,,,,,,,,$0
 Cole Anthony,,,,,,,,,,,,,,,,,,,,"$12,900,000"
+D'Angelo Russell,,,,,,,,,,,,,,,,,,,,"$24,377,307"
 Andre Jackson,,,,,,,,,,,,,,,,,,,,"$4,113,534"
 MarJon Beauchamp,,,,,,,,,,,,,,,,,,,,$0
 Yuki Kawamura,,,,,,,,,,,,,,,,,,,,$0
 Jeenathan Williams,,,,,,,,,,,,,,,,,,,,"$515,881"
 Joe Ingles,,,,,,,,,,,,,,,,,,,,"$6,937,924"
 DeJon Jarreau,,,,,,,,,,,,,,,,,,,,$0
-Isaiah Livers,,,,,,,,,,,,,,,,,,,,$0
 Garrison Mathews,,,,,,,,,,,,,,,,,,,,"$2,230,253"
 Alondes Williams,,,,,,,,,,,,,,,,,,,,$0
 Tristan Enaruna,,,,,,,,,,,,,,,,,,,,$0
 Jeremiah Robinson-Earl,,,,,,,,,,,,,,,,,,,,"$2,196,970"
+Isaiah Livers,,,,,,,,,,,,,,,,,,,,$0
 Seth Curry,,,,,,,,,,,,,,,,,,,,"$6,081,601"
 David Roddy,,,,,,,,,,,,,,,,,,,,$0
 KJ Simpson,,,,,,,,,,,,,,,,,,,,$0
@@ -611,6 +611,7 @@ Jeff Green,,,,,,,,,,,,,,,,,,,,"$11,634,153"
 Xavier Tillman,,,,,,,,,,,,,,,,,,,,"$4,784,366"
 Trey Alexander,,,,,,,,,,,,,,,,,,,,$0
 TyTy Washington,,,,,,,,,,,,,,,,,,,,$0
+Riley Minix,,,,,,,,,,,,,,,,,,,,$0
 Taj Gibson,,,,,,,,,,,,,,,,,,,,"$4,264,524"
 Caleb Houstan,,,,,,,,,,,,,,,,,,,,"$2,019,699"
 Omer Yurtseven,,,,,,,,,,,,,,,,,,,,$0
@@ -659,7 +660,6 @@ Drew Peterson,,,,,,,,,,,,,,,,,,,,$0
 Markelle Fultz,,,,,,,,,,,,,,,,,,,,"$981,902"
 Mark Sears,,,,,,,,,,,,,,,,,,,,$0
 Monte Morris,,,,,,,,,,,,,,,,,,,,"$2,800,834"
-Cody Martin,,,,,,,,,,,,,,,,,,,,"$8,120,000"
 Colby Jones,,,,,,,,,,,,,,,,,,,,"$2,120,691"
 Jahmyl Telfort,,,,,,,,,,,,,,,,,,,,$0
 Dario Saric,,,,,,,,,,,,,,,,,,,,"$5,168,000"

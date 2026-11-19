@@ -1,5 +1,5 @@
 {
- "built": "2026-11-18T14:53:49.786802",
+ "built": "2026-11-19T14:59:31.112620",
  "season": "2026-27",
  "players": [
   {
@@ -4384,16 +4384,16 @@
   },
   {
    "player": "Riley Minix",
-   "team": "CLE",
-   "contract": "two_way",
-   "current_salary": 608653,
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
    "dead_money": [
     {
      "team": "CLE",
-     "amount": 91000
+     "amount": 123171
     }
    ],
-   "total": 699653,
+   "total": 123171,
    "birth_date": "2000-09-22"
   },
   {
@@ -5336,6 +5336,15 @@
    "dead_money": [],
    "total": 48967380,
    "birth_date": "1995-03-10"
+  },
+  {
+   "player": "Zack Austin",
+   "team": "CLE",
+   "contract": "two_way",
+   "current_salary": 565735,
+   "dead_money": [],
+   "total": 565735,
+   "birth_date": null
   },
   {
    "player": "Zeke Nnaji",
