@@ -535,14 +535,6 @@ select.filter-input {
   letter-spacing: -.03em;
 }
 
-.hdr .brand {
-  font-family: var(--mono);
-  font-size: .7rem;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: .08em;
-}
-
 /* breadcrumb bar (cell-click filters) */
 .breadcrumb-bar {
   display: flex;
@@ -1329,10 +1321,6 @@ table.player-season-table tbody tr.ps-contracted td.ps-salary {
 
   .hdr h1 {
     font-size: 1.15rem;
-  }
-
-  .hdr .brand {
-    display: none;
   }
 
   /* the wrapper stops being a scroll frame — the cards are the layout */
