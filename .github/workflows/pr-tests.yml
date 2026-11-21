@@ -14,7 +14,10 @@ permissions:
 
 jobs:
   tests:
-    runs-on: ubuntu-latest
+    # Pinned, not ubuntu-latest: since November 2026 ubuntu-latest is 26.04,
+    # where Playwright (1.56.1 below) has no Chromium build and
+    # "playwright install --with-deps chromium" fails. 24.04 is supported.
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout repository
