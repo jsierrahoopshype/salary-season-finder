@@ -53,12 +53,12 @@
   max-width: 48rem;
 }
 
+/* The "Salary data starts in ..." note: a plain sentence in the lede's
+   type, not a small-caps label (no eyebrows on HoopsMatic). */
 .hm-scope {
-  font-family: var(--mono);
-  font-size: .64rem;
-  text-transform: uppercase;
-  letter-spacing: .06em;
+  font-size: .9rem;
   color: var(--text-secondary);
+  max-width: 48rem;
   margin-bottom: 1.4rem;
 }
 
@@ -337,7 +337,8 @@ table.hm-rank-table .hm-rank {
     font-size: 1.2rem;
   }
 
-  .hm-lede {
+  .hm-lede,
+  .hm-scope {
     font-size: .84rem;
   }
 }
