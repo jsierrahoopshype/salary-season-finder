@@ -1,25 +1,5 @@
 {
  "entries": {
-  "AJ Dybantsa": {
-   "DRAFT": "2026",
-   "PICK": "1",
-   "field_sources": {
-    "DRAFT": [
-     "https://www.basketball-reference.com/draft/NBA_2026.html",
-     "https://en.wikipedia.org/wiki/2026_NBA_draft"
-    ],
-    "PICK": [
-     "https://www.basketball-reference.com/draft/NBA_2026.html",
-     "https://en.wikipedia.org/wiki/2026_NBA_draft"
-    ]
-   },
-   "note": "BYU forward taken first overall by Washington in the 2026 draft. Not counted: nothing set aside; all three publishers agree on No. 1. Only DRAFT and PICK were researched for this entry; every other column is blank until someone checks it.",
-   "source": [
-    "https://www.basketball-reference.com/draft/NBA_2026.html",
-    "https://en.wikipedia.org/wiki/2026_NBA_draft",
-    "https://basketball.realgm.com/wiretap/286234/2026-NBA-Draft-First-Round-Results-AJ-Dybantsa-Darryn-Peterson-Cameron-Boozer-Picked-Top-3"
-   ]
-  },
   "AK Okereke": {
    "DRAFT": "",
    "PICK": "UND",
@@ -181,50 +161,6 @@
     "https://en.wikipedia.org/wiki/Augustas_Mar%C4%8Diulionis",
     "https://www.basketball-reference.com/players/m/marciau01.html",
     "https://www.nba.com/player/1643051/augustas-marciulionis"
-   ]
-  },
-  "Bogoljub Markovic": {
-   "DRAFT": "2025",
-   "PICK": "47",
-   "field_sources": {
-    "DRAFT": [
-     "https://www.basketball-reference.com/players/m/markobo01.html",
-     "https://en.wikipedia.org/wiki/Bogoljub_Markovi%C4%87",
-     "https://basketball.realgm.com/player/Bogoljub-Markovic/Summary/182945"
-    ],
-    "PICK": [
-     "https://www.basketball-reference.com/players/m/markobo01.html",
-     "https://en.wikipedia.org/wiki/Bogoljub_Markovi%C4%87",
-     "https://basketball.realgm.com/player/Bogoljub-Markovic/Summary/182945"
-    ]
-   },
-   "note": "Serbian 6-11 forward (KK Mega / OKK Beograd) drafted by Milwaukee 47th overall in 2025 (stashed), who signed with the Bucks on July 1, 2026. bref says '2nd round (17th pick, 47th overall)'; RealGM profile says Round 2, Pick 17 = overall 47 (converted), and a RealGM summer-league roster says #47. Not counted: nothing set aside. Only DRAFT and PICK were researched for this entry; every other column is blank until someone checks it.",
-   "source": [
-    "https://www.basketball-reference.com/players/m/markobo01.html",
-    "https://en.wikipedia.org/wiki/Bogoljub_Markovi%C4%87",
-    "https://en.wikipedia.org/wiki/2025_NBA_draft",
-    "https://basketball.realgm.com/player/Bogoljub-Markovic/Summary/182945",
-    "https://basketball.realgm.com/nba/teams/Milwaukee-Bucks/16/Rosters/Summer_League/2026"
-   ]
-  },
-  "Cameron Carr": {
-   "DRAFT": "2026",
-   "PICK": "24",
-   "field_sources": {
-    "DRAFT": [
-     "https://www.basketball-reference.com/draft/NBA_2026.html",
-     "https://en.wikipedia.org/wiki/2026_NBA_draft"
-    ],
-    "PICK": [
-     "https://www.basketball-reference.com/draft/NBA_2026.html",
-     "https://en.wikipedia.org/wiki/2026_NBA_draft"
-    ]
-   },
-   "note": "Baylor guard, taken No. 24 overall in the 2026 draft; Basketball-Reference lists the pick under New York, Wikipedia as LA Lakers (from New York), and he is on the Lakers for 2026-27. Both state pick 24. Not counted: nothing disagreeing on the pick. Only DRAFT and PICK were researched for this entry; every other column is blank until someone checks it.",
-   "source": [
-    "https://www.basketball-reference.com/draft/NBA_2026.html",
-    "https://en.wikipedia.org/wiki/2026_NBA_draft",
-    "https://www.basketball-reference.com/players/c/carrca01.html"
    ]
   },
   "Christoph Tilly": {
@@ -648,26 +584,6 @@
     "https://www.basketball-reference.com/players/j/joineja01.html"
    ]
   },
-  "Jaron Pierre": {
-   "DRAFT": "2026",
-   "PICK": "58",
-   "field_sources": {
-    "DRAFT": [
-     "https://www.basketball-reference.com/players/p/pierrja01.html",
-     "https://en.wikipedia.org/wiki/Jaron_Pierre_Jr."
-    ],
-    "PICK": [
-     "https://www.basketball-reference.com/players/p/pierrja01.html",
-     "https://en.wikipedia.org/wiki/Jaron_Pierre_Jr."
-    ]
-   },
-   "note": "Jaron Pierre Jr., an SMU guard from New Orleans. The Pelicans drafted him 58th overall in 2026 and signed him to a two-way contract in July 2026. Not counted: nothing disagreed. Only DRAFT and PICK were researched for this entry; every other column is blank until someone checks it.",
-   "source": [
-    "https://www.basketball-reference.com/players/p/pierrja01.html",
-    "https://en.wikipedia.org/wiki/Jaron_Pierre_Jr.",
-    "https://en.wikipedia.org/wiki/2026_NBA_draft"
-   ]
-  },
   "Jaxson Robinson": {
    "DRAFT": "2025",
    "PICK": "UND",
@@ -789,31 +705,6 @@
     "https://en.wikipedia.org/wiki/Josh_Davis_(basketball,_born_1991)"
    ],
    "spelled": "Josh Davis"
-  },
-  "Karim Lopez": {
-   "DRAFT": "2026",
-   "PICK": "21",
-   "field_sources": {
-    "DRAFT": [
-     "https://www.basketball-reference.com/draft/NBA_2026.html",
-     "https://en.wikipedia.org/wiki/2026_NBA_draft",
-     "https://www.nba.com/news/2026-nba-draft-order"
-    ],
-    "PICK": [
-     "https://www.basketball-reference.com/draft/NBA_2026.html",
-     "https://en.wikipedia.org/wiki/2026_NBA_draft",
-     "https://www.nba.com/news/2026-nba-draft-order"
-    ]
-   },
-   "note": "Mexican forward from the New Zealand Breakers (NBL Next Stars), picked 21st (Detroit's selection) and sent to Memphis. Every source agrees on pick 21. Basketball-reference and Spanish Wikipedia list the drafting team as Detroit, and the others as Memphis; that is a pick-ownership difference, not a pick-number conflict. Not counted: none. Only DRAFT and PICK were researched for this entry; every other column is blank until someone checks it.",
-   "source": [
-    "https://www.basketball-reference.com/draft/NBA_2026.html",
-    "https://en.wikipedia.org/wiki/2026_NBA_draft",
-    "https://es.wikipedia.org/wiki/Draft_de_la_NBA_de_2026",
-    "https://www.nba.com/news/2026-nba-draft-order",
-    "https://www.espn.com/nba/draft/rounds",
-    "https://basketball.realgm.com/wiretap/286234/2026-NBA-Draft-Tracker-Live-Results-Picks-Trade-Updates"
-   ]
   },
   "Khalifa Diop": {
    "DRAFT": "2022",
