@@ -3393,7 +3393,7 @@
   "Anthony Davis|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 341,
+    "comparison_size": 340,
     "contracted": true,
     "family": "cap_context",
     "id": "13baad1617b123cd",
@@ -17823,7 +17823,7 @@
   "Devin Booker|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 341,
+    "comparison_size": 340,
     "contracted": true,
     "family": "cap_context",
     "id": "844cbfeeb60ff8fb",
@@ -20337,7 +20337,7 @@
   "Donovan Mitchell|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 341,
+    "comparison_size": 340,
     "contracted": true,
     "family": "cap_context",
     "id": "0e81d0acc6ef3279",
@@ -20549,7 +20549,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 342,
+    "comparison_size": 341,
     "contracted": true,
     "family": "rank_shift",
     "id": "9e6cb24d74a117c7",
@@ -24287,7 +24287,7 @@
     "id": "2002f51f4919435e",
     "key": "cohort_career|nationality|Nigeria|Gabe Vincent|2026-27",
     "lead": null,
-    "margin": -32373996,
+    "margin": -32392883,
     "previous_holder": {
      "player": "Al-Farouq Aminu",
      "season": "2021-22",
@@ -24297,7 +24297,7 @@
     "scope_note": "Ranked on money already paid against 29 careers in this cohort, active players included. Salary data starts in 1990-91; earlier salaries were far smaller in dollar terms. Gabe Vincent is still playing, so this is his total to date.",
     "text": "Gabe Vincent will have earned $39.9 million by the end of 2026-27, the second-most by a player from Nigeria, behind Al-Farouq Aminu's $72.3 million (2021-22).",
     "type": "approaches",
-    "value": 39888289
+    "value": 39869402
    }
   ],
   "Gary Harris|2018-19": [
@@ -25843,7 +25843,7 @@
   "Giannis Antetokounmpo|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 341,
+    "comparison_size": 340,
     "contracted": true,
     "family": "cap_context",
     "id": "cbefcca4fdeb673a",
@@ -33789,7 +33789,7 @@
   "Jaylen Brown|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 341,
+    "comparison_size": 340,
     "contracted": true,
     "family": "cap_context",
     "id": "6fd5fceac0976e72",
@@ -34679,7 +34679,7 @@
   "Jayson Tatum|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 341,
+    "comparison_size": 340,
     "contracted": true,
     "family": "cap_context",
     "id": "09e50a389baf8b78",
@@ -37563,7 +37563,7 @@
   "Joel Embiid|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 341,
+    "comparison_size": 340,
     "contracted": true,
     "family": "cap_context",
     "id": "5d498253662a0d1c",
@@ -41841,7 +41841,7 @@
   "Karl-Anthony Towns|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 341,
+    "comparison_size": 340,
     "contracted": true,
     "family": "cap_context",
     "id": "80f34857e76d03f8",
@@ -55471,7 +55471,7 @@
   "Nikola Jokic|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 341,
+    "comparison_size": 340,
     "contracted": true,
     "family": "cap_context",
     "id": "bb66588c11f56c0a",
@@ -64093,7 +64093,7 @@
   "Shai Gilgeous-Alexander|2027-28": [
    {
     "ahead": null,
-    "comparison_size": 341,
+    "comparison_size": 340,
     "contracted": true,
     "family": "cap_context",
     "id": "e51f2b2e894f50ba",
@@ -64325,7 +64325,7 @@
    },
    {
     "ahead": null,
-    "comparison_size": 342,
+    "comparison_size": 341,
     "contracted": true,
     "family": "rank_shift",
     "id": "40f7e4ca57654a70",
