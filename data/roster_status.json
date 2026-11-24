@@ -1,5 +1,5 @@
 {
- "built": "2026-11-23T16:59:35.588578",
+ "built": "2026-11-24T16:47:35.506399",
  "season": "2026-27",
  "players": [
   {
@@ -1691,9 +1691,9 @@
    "player": "Gabe Vincent",
    "team": "SAC",
    "contract": "non_guaranteed",
-   "current_salary": 2663116,
+   "current_salary": 2644229,
    "dead_money": [],
-   "total": 2663116,
+   "total": 2644229,
    "birth_date": "1996-06-14"
   },
   {
@@ -4076,11 +4076,16 @@
   },
   {
    "player": "Orlando Robinson",
-   "team": "CHI",
-   "contract": "non_guaranteed",
-   "current_salary": 2263472,
-   "dead_money": [],
-   "total": 2263472,
+   "team": null,
+   "contract": "dead_money_only",
+   "current_salary": 0,
+   "dead_money": [
+    {
+     "team": "CHI",
+     "amount": 196168
+    }
+   ],
+   "total": 196168,
    "birth_date": "2000-07-10"
   },
   {
