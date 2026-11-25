@@ -90,7 +90,7 @@ def main(argv=None):
             "Player name (no diacritics, no punctuation, lower case) to the "
             "file stem of his headshot in jsierrahoopshype/nba-headshots. "
             "'faces' are in players/headshots/face-fill as .webp. Anything "
-            "missing gets the player's initials. Refresh with "
+            "missing gets no picture, just the name. Refresh with "
             "scripts/fetch_headshot_ids.py."
         ),
         "source": BASE,

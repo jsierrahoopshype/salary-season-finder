@@ -3,8 +3,8 @@
 Headshots come from jsierrahoopshype/nba-headshots, the same GitHub Pages
 site the other HoopsMatic tools read (the face-fill set: the face fills the
 circle), through the mapping committed at data/headshots.json so the build
-never goes to the network. A name with no headshot on file gets his initials
-in the same grey circle.
+never goes to the network. A name with no headshot on file gets no picture
+at all (no initials circle), just his name.
 
 Flags are the flag-icons SVGs copied into assets/flags (licence beside them),
 the same set nba-career-map uses. Nothing is hotlinked from flagcdn or any
@@ -48,17 +48,6 @@ def _load(repo, path, key):
         return json.load(fh).get(key) or {}
 
 
-SUFFIXES = {"Jr", "Sr", "II", "III", "IV", "V"}
-
-
-def initials(name):
-    """"Gary Trent Jr." -> "GT", "Nikola Jokić" -> "NJ", "Nenê" -> "N"."""
-    words = [w for w in str(name).replace(".", " ").split() if w not in SUFFIXES]
-    if not words:
-        return "?"
-    return (words[0][0] + (words[-1][0] if len(words) > 1 else "")).upper()
-
-
 class Media(object):
     def __init__(self, repo):
         self.faces = _load(repo, HEADSHOTS_PATH, "faces")
@@ -66,7 +55,7 @@ class Media(object):
 
     # ---- headshots -------------------------------------------------------
     def face_src(self, names):
-        """The headshot for any spelling of a name, or None (initials)."""
+        """The headshot for any spelling of a name, or None (no picture)."""
         for name in names:
             key = match_key(name)
             if key in self.faces:
@@ -79,10 +68,7 @@ class Media(object):
         names += sorted({r["player"] for r in ident.records})
         src = self.face_src(names)
         if src is None:
-            return (
-                '<span class="hm-face hm-face-initials" role="img" '
-                'aria-label="{}">{}</span>'
-            ).format(esc(ident.name), esc(initials(ident.name)))
+            return ""
         return (
             '<img class="hm-face" src="{}" width="{}" height="{}" '
             'loading="lazy" decoding="async" alt="{}">'
