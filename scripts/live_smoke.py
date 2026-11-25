@@ -58,7 +58,7 @@ PAGES = (
     (ROOT + "/country/canada/",
      "Highest-Paid NBA Players from Canada of All Time | HoopsMatic",
      (COHORT_EARNINGS,)),
-    (ROOT + "/draft/2013/", "Highest-Paid Players of the 2013 NBA Draft | HoopsMatic",
+    (ROOT + "/draft/2013/", "2013 NBA Draft: Who Earned the Most | HoopsMatic",
      (COHORT_EARNINGS,)),
     (ROOT + "/pick/8/", "Highest-Paid No. 8 Picks in NBA History | HoopsMatic",
      (COHORT_EARNINGS,)),
