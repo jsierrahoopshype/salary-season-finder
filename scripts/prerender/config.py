@@ -157,9 +157,11 @@ TITLES = {
         "Highest-Paid NBA Players from {name} of All Time | HoopsMatic",
         "Highest-Paid NBA Players from {name} | HoopsMatic",
     ),
+    # Leads with the year, as people search it ("1995 nba draft"): these
+    # pages sat at positions 10-28 for those searches with the old
+    # "Highest-Paid Players of the ..." wording (Jorge, November 25, 2026).
     "draft": (
-        "Highest-Paid Players of the {name} NBA Draft | HoopsMatic",
-        "Highest-Paid {name} NBA Draft Picks | HoopsMatic",
+        "{name} NBA Draft: Who Earned the Most | HoopsMatic", None,
     ),
     "pick": (
         "Highest-Paid No. {name} Picks in NBA History | HoopsMatic",
