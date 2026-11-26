@@ -1,5 +1,5 @@
 {
- "built": "2026-11-25T16:35:26.418096",
+ "built": "2026-11-26T16:07:51.187842",
  "season": "2026-27",
  "players": [
   {
@@ -3109,16 +3109,16 @@
   },
   {
    "player": "Kevin Porter",
-   "team": null,
-   "contract": "dead_money_only",
-   "current_salary": 0,
+   "team": "ORL",
+   "contract": "guaranteed",
+   "current_salary": 2431769,
    "dead_money": [
     {
      "team": "MIL",
      "amount": 5390700
     }
    ],
-   "total": 5390700,
+   "total": 7822469,
    "birth_date": "2000-05-04"
   },
   {
